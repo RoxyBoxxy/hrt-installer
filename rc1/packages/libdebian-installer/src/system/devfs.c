@@ -132,7 +132,7 @@ ssize_t di_system_devfs_map_from (const char *path, char *buf, size_t n)
     }
     e++;
   }
-  if (!e->name || !S_ISBLK(s.st_mode)) {
+  if (!e->name) {
 #ifdef TEST
     fprintf(stderr, "(unknown device)\n");
 #endif
