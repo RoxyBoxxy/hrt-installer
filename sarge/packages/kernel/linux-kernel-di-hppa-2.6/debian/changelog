@@ -1,3 +1,44 @@
+linux-kernel-di-hppa-2.6 (1.1) unstable; urgency=low
+
+  * Joey Hess
+    - Try to deal with masses of new/modularised drivers in the new version
+      of the kernel.
+    - Add DAC960, cciss, cpqarray to scsi-modules.
+    - Add a new cdrom-modules package containing all the extra cdrom modules.
+    - Add all the ide pci chipset drivers to ide-modules.
+    - Added dozens of scsi drivers to scsi-modules.
+    - Add sata-modules package.
+    - Add xfs-modules package.
+    - Add socket-modules package (so dhcp will work again).
+    - Add firewire-core-modules package.
+    - Left out all the wireless and pcmcia stuff.
+    - Left defxx out of net-modules as it's not clear if it's common and
+      I noticed many other drivers/net/ things are missing anyway.
+
+ -- Joey Hess <joeyh@debian.org>  Tue, 15 Feb 2005 20:49:21 -0500
+
+linux-kernel-di-hppa-2.6 (1.0) unstable; urgency=low
+
+  * Joey Hess
+    - Switch to -2 kernel abiname.
+    - hil_kbd, hil_mlc, hp_sdc_mlc, hp_sdc, and hilkbd are marked 
+      optional since there are no such modules in the new 32 bit 
+      kernel.
+    - Hack package-list to make usb-storage-modules depend on 
+      ide-modules; it depends on ide-core-modules normally but for some 
+      reason there is no such package for hppa. Some change in the usb 
+      modules in the new kernel made this necessary.
+    - Gratuitous version number bump.
+
+ -- Joey Hess <joeyh@debian.org>  Mon, 14 Feb 2005 19:27:29 -0500
+
+linux-kernel-di-hppa-2.6 (0.5) unstable; urgency=high
+
+  * Bdale Garbee
+    - add isofs to ide-modules
+
+ -- Bdale Garbee <bdale@gag.com>  Sat, 15 Jan 2005 17:41:29 -0700
+
 linux-kernel-di-hppa-2.6 (0.4) unstable; urgency=high
 
   * Bdale Garbee
