@@ -298,13 +298,13 @@ ARC -&gt; MILO
 >arc</command
 >). По причинам, указанным выше, мы рекомендуем переключиться на SRM перед установкой &debian;. </para
 ><para
->Как и на других архитектурах, вы должны установить самую свежую из доступных ревизий прошивки <footnote
+>Как и на других архитектурах, вы должны установить самую свежую из доступных ревизий микропрограммы <footnote
 ><para
->За исключением Jensen, где Linux не поддерживается на версиях прошивки новее 1.7 - смотрите <ulink url="&url-jensen-howto;"
+>За исключением Jensen, где Linux не поддерживается на версиях микропрограммы новее 1.7 &mdash; смотрите <ulink url="&url-jensen-howto;"
 ></ulink
 > для более полной информации</para
 ></footnote
-> перед установкой &debian;. Для Alpha, обновления прошивки можно получить с <ulink url="&url-alpha-firmware;"
+> перед установкой &debian;. Для Alpha, обновление микропрограммы можно получить с <ulink url="&url-alpha-firmware;"
 >Alpha Firmware Updates</ulink
 >. </para>
  </sect2>
@@ -2253,7 +2253,7 @@ boot <replaceable
   </sect2>
 
 
-  <sect2 arch="sparc">
+  <sect2 arch="sparc" condition="supports-floppy-boot">
   <title
 >Загрузка с дискет</title>
 <para
@@ -2329,15 +2329,15 @@ Memory:<replaceable
 >mem=64m</userinput
 > означают 64МБ ОЗУ. </para
 ><para condition="supports-serial-console"
->Если вы загружаетесь через последовательную консоль, обычно ядро обнаруживает это автоматически<phrase arch="mipsel"
+>Если вы загружаетесь через консоль на последовательном порту, обычно ядро обнаруживает это автоматически<phrase arch="mipsel"
 > (кроме DECstations)</phrase
->. Если к компьютеру подключёны видеокарта (framebuffer) и клавиатура, а вы хотите загрузиться через последовательную консоль, вам надо передать ядру параметр <userinput
+>. Если к компьютеру подключёны видеокарта (framebuffer) и клавиатура, а вы хотите загрузиться через консоль на последовательном порту, вам надо передать ядру параметр <userinput
 >console=<replaceable
 >device</replaceable
 ></userinput
 >, где <replaceable
 >device</replaceable
-> &mdash; это ваше последовательное устройство, обычно <filename
+> &mdash; это имя последовательного порта, обычно <filename
 >ttyS0</filename
 >. </para
 ><para arch="sparc"
