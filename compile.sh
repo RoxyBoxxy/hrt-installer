@@ -11,7 +11,7 @@ DEST="$3/$NAME"
 
 mkdir -p "$DEST"
 cd "$DIR"
-dpkg-buildpackage -S
+fakeroot dpkg-buildpackage -S -us -uc
 cd ..
 mv *.dsc *.tar.gz *.changes "$DEST"
 cd $DEST

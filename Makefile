@@ -8,6 +8,7 @@ clean:
 
 libdebian-installer: .stamp-libdebian-installer
 .stamp-libdebian-installer:
+	cd libdebian-installer; autoreconf -i
 	./compile.sh libdebian-installer . $(DEST)
 	touch .stamp-libdebian-installer
 
@@ -53,6 +54,7 @@ tools_cdrom-detect: .stamp-tools_cdrom-detect
 
 tools_autopartkit: install-libdebconfclient-dev .stamp-tools_autopartkit
 .stamp-tools_autopartkit:
+	cd tools/autopartkit; autoreconf -i
 	./compile.sh autopartkit tools $(DEST)
 	touch .stamp-tools_autopartkit
 
@@ -163,10 +165,10 @@ retriever_net: .stamp-retriever_net
 
 install-libdebconfclient-dev: .stamp-tools_cdebconf .stamp-install-libdebconfclient-dev
 .stamp-install-libdebconfclient-dev:
-	dpkg -i $(DEST)/cdebconf/libdebconfclient0*.deb
+	sudo dpkg -i $(DEST)/cdebconf/libdebconfclient0*.deb
 	touch .stamp-install-libdebconfclient-dev
 
 install-libdebian-installer4-dev: .stamp-libdebian-installer .stamp-install-libdebian-installer4-dev
 .stamp-install-libdebian-installer4-dev:
-	dpkg -i $(DEST)/libdebian-installer/libdebian-installer4*.deb
+	sudo dpkg -i $(DEST)/libdebian-installer/libdebian-installer4*.deb
 	touch .stamp-install-libdebian-installer4-dev
