@@ -1,0 +1,55 @@
+#!/bin/sh -e
+
+# Set these in the environment to override.
+if [ -z "$HOST" ]; then
+	HOST=people.debian.org
+fi
+if [ -z "$BASEDIR" ]; then
+	# Please don't change this. If you need it to be something else,
+	# override the variable.
+	BASEDIR=public_html/d-i/images
+fi
+if [ -z "$DIR" ]; then
+	DIR=`date +%Y-%m-%d`
+fi
+if [ "$HOST" = "local" ]; then
+	SYNC="rsync"
+	SYNC_BASEDIR="$BASEDIR"
+else
+	CALL="ssh $HOST"
+	SYNC="rsync -e ssh"
+	SYNC_BASEDIR="$HOST:$BASEDIR"
+fi
+
+if [ ! -d pkg-lists ]; then
+    echo "You must run this from the build directory"
+    exit 1
+fi
+
+unset LANG LC_ALL LANGUAGE || true
+svn up || true
+
+make reallyclean
+mkdir dest
+for t in $(make all_list |grep '^build'); do
+    (
+    echo
+    echo BUILDING IMAGE FOR $t
+    echo
+    fakeroot make $t
+    ) 2>&1 | tee dest/$t.log # This is allowed to fail
+done
+fakeroot make all_stats | 2>&1 tee dest/stats.txt # This is allowed to fail
+
+echo
+echo UPLOADING FILES
+echo
+
+$CALL mkdir -p $BASEDIR/${DIR}_RSYNC_IN_PROGRESS
+$SYNC --stats -rvl --safe-links -e ssh dest/ $SYNC_BASEDIR/${DIR}_RSYNC_IN_PROGRESS/
+$CALL rm -rf $BASEDIR/$DIR
+$CALL mv $BASEDIR/${DIR}_RSYNC_IN_PROGRESS $BASEDIR/$DIR
+$CALL rm -rf $BASEDIR/daily
+$CALL ln -sf $DIR $BASEDIR/daily
+
+make reallyclean
