@@ -1,4 +1,5 @@
-<!-- original version: 22935 -->
+<!-- retain these comments for translator revision tracking -->
+<!-- original version: 24321 -->
 
  <sect1 id="needed-info">
  <title>Benötigte Informationen</title>
@@ -42,7 +43,9 @@ Beinhaltet oft nützliche Informationen zum Konfigurieren oder Verwenden Ihrer H
 
 </para>
 
- <itemizedlist>
+<!-- We need the arch dependence for the whole list to ensure proper xml
+     as long as not architectures have a paragraph -->
+<itemizedlist arch="i386;m68k;alpha;sparc;mips;mipsel">
 <listitem arch="i386"><para> 
 
 <ulink url="&url-hardware-howto;">Linux-Hardware-Kompatibilitäts-HOWTO</ulink>
@@ -63,7 +66,7 @@ Beinhaltet oft nützliche Informationen zum Konfigurieren oder Verwenden Ihrer H
 
 <listitem arch="sparc"><para>
 
-<ulink url="&url-sparc-linux-faq;">Linux für SPARC Prozessoren - FAQ</ulink>
+<ulink url="&url-sparc-linux-faq;">Linux für SPARC Prozessoren &ndash; FAQ</ulink>
 
 </para></listitem>
 
@@ -78,7 +81,7 @@ Beinhaltet oft nützliche Informationen zum Konfigurieren oder Verwenden Ihrer H
 
 
    <sect3 arch="s390">
-   <title>&arch-title; Hardware-Referenzen</title>
+   <title>&arch-title; &ndash; Hardware-Referenzen</title>
 <para>
 
 Installationsanweisungen und Gerätetreiber (DASD, XPRAM, Console,
@@ -89,7 +92,7 @@ Installationsanweisungen und Gerätetreiber (DASD, XPRAM, Console,
 <itemizedlist>
 <listitem><para>
 
-<ulink url="http://oss.software.ibm.com/developerworks/opensource/linux390/docu/l390dd08.pdf">Gerätetreiber und Installationsbefehle</ulink>
+<ulink url="http://oss.software.ibm.com/developerworks/opensource/linux390/docu/l390dd08.pdf">Device Drivers and Installation Commands</ulink>
 
 </para></listitem>
 </itemizedlist>
@@ -153,7 +156,7 @@ Die Handbücher, die mit jedem Hardwareteil mitgeliefert werden.
 <listitem><para>
 
 Das BIOS-Setup Ihres Computers. Sie gelangen in das BIOS-Setup, indem
-Sie eine Tastenkombination drücken, während der Computer startet. Sehen
+Sie eine Taste/Tastenkombination drücken, während der Computer startet. Sehen
 Sie im Handbuch nach, um diese Kombination herauszufinden. Oftmals ist es die
 <keycap>Entfernen</keycap>-Taste.
 
@@ -225,7 +228,7 @@ E-Mail verraten.
 
 <row arch="not-s390">
   <entry morerows="3">Maus</entry>
-  <entry>Typ: seriell, PS oder USB.</entry>
+  <entry>Typ: seriell, PS, PS/2 oder USB.</entry>
 </row>
 <row arch="not-s390"><entry>Anschluss.</entry></row>
 <row arch="not-s390"><entry>Hersteller.</entry></row>
@@ -278,12 +281,12 @@ E-Mail verraten.
 
 Viele Markenprodukte funktionieren problemlos unter Linux. Zudem verbessert
 sich Hardware für Linux täglich. Linux unterstützt jedoch nicht
-so viele verschiedene Typen von Hardware wie manch andere Betriebssysteme.
+so viele verschiedene Typen von Hardware wie manch anderes Betriebssystem.
 
 </para><para arch="i386"> 
 
-Im besonderen kann Linux normalerweise keine Hardware betreiben, die
-eine laufende Windows-Version benötigen.
+Im Besonderen kann Linux normalerweise keine Hardware betreiben, die
+eine laufende Windows-Version benötigt.
 
 </para><para arch="i386">
 
@@ -310,15 +313,15 @@ Suchen Sie auf der Website des Herstellers nach (neuen) Treibern.
 </para></listitem>
 <listitem><para>
 
-Suchen Sie auf Webseiten oder in Handbüchern nach Informationen über Emulation.
+Suchen Sie auf Webseiten oder in Handbüchern nach Informationen über Emulationen.
 Weniger bekannte Marken können manchmal die Treiber oder Einstellungen
 von besser bekannten verwenden.
 
 </para></listitem>
 <listitem><para>
 
-Durchsuchen Sie Hardware-Kompatibilitätslisten für Linux auf Webseiten,
-die Ihrer Architektur gewidmet sind.
+Durchsuchen Sie Hardware-Kompatibilitätslisten für Linux auf Webseiten für
+Ihre Architektur.
 
 </para></listitem>
 <listitem><para>
@@ -337,19 +340,20 @@ Suchen Sie im Internet nach Erfahrungsberichten anderer Benutzer.
 <para>
 
 Wenn Ihr Computer rund um die Uhr mit einem Netzwerk verbunden ist
-(z.B. Ethernet oder eine gleichwertige Verbindung &mdash; keine PPP
-Verbindung), sollten Sie den Systemadministrator des Netzwerks nach
-den folgenden Informationen fragen:
+(z.B. Ethernet oder eine gleichwertige Verbindung &ndash; keine
+PPP-(Wähl-)Verbindung), sollten Sie beim Systemadministrator des Netzwerks
+die folgenden Informationen erfragen:
 
 <itemizedlist>
 <listitem><para>
 
-Ihr Hostname (möglicherweise können Sie selbst einen auswählen).
+Ihren Hostnamen (den Name Ihres Rechners im Netzwerk; möglicherweise
+können Sie selbst einen auswählen).
 
 </para></listitem>
 <listitem><para>
 
-Ihr Domainname. 
+Ihren Domainnamen.
 
 </para></listitem>
 <listitem><para>
@@ -359,18 +363,18 @@ Die IP-Adresse Ihres Computers.
 </para></listitem>
 <listitem><para>
 
-Die Netzmaske zur Verwendung in Ihrem Netzwerk. 
+Die Netzmaske zur Verwendung in Ihrem Netzwerk.
 
 </para></listitem>
 <listitem><para>
 
-Die IP Adresse eines Standard-Gateway System, zu dem Sie routen sollen,
+Die IP-Adresse eines Standard-Gateway-Systems, zu dem Sie routen sollen,
 <emphasis>falls Ihr Netzwerk einen Gateway hat</emphasis>.
 
 </para></listitem>
 <listitem><para>
 
-Den Rechner in Ihrem Netzwerk, den Sie als DNS(Domain Name Service)-Server
+Den Rechner in Ihrem Netzwerk, den Sie als DNS-(Domain Name Service-)Server
 verwenden sollen.
 
 </para></listitem>
@@ -379,13 +383,13 @@ verwenden sollen.
 </para><para condition="supports-dhcp">
 
 Andererseits, wenn Ihr Administrator Ihnen sagt, dass ein DHCP-Server
-verfügbar und empfohlen ist, benötigen Sie alle diese Informationen
+verfügbar und empfohlen ist, benötigen Sie all diese Informationen
 nicht, da der DHCP-Server diese während des Installationsprozesses
 direkt an Ihren Computer weitergibt.
 
 </para><para>
 
-Wenn Sie ein kabelloses (Funk-)Netzwerk verwenden, sollten Sie auch das folgende
+Wenn Sie ein kabelloses (Funk-)Netzwerk verwenden, sollten Sie auch das Folgende
 erfragen:
 
 <itemizedlist>

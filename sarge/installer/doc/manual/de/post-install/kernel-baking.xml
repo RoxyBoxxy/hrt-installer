@@ -25,8 +25,8 @@ enthalten sind, wie z.B. APM oder SMP
 
 <listitem arch="i386"><para>
 
-Die »compact«- und »idepci«-Varianten haben keine Soundunterstützung.
-Der »vanilla«-Kernel hat Sound, aber er könnte aus anderen Gründen
+Die "compact"- und "idepci"-Varianten haben keine Soundunterstützung.
+Der "vanilla"-Kernel hat Sound, aber er könnte aus anderen Gründen
 trotzdem nicht funktionieren.
 
 </para></listitem>
@@ -56,11 +56,11 @@ seine Freunde beeindrucken, neue Sachen ausprobieren
 
 </para>
 
-  <sect2><title>Kernel-Image-Management</title>
+  <sect2><title>Kernel-Image-Verwaltung</title>
 <para>
 
 Sie brauchen keine Angst davor zu haben, auszuprobieren, einen eigenen Kernel
-zu kompilieren. Es macht Spaß und ist profitabel. 
+zu kompilieren. Es macht Spaß und lohnt sich.
 
 </para><para>
 
@@ -74,8 +74,8 @@ komplette Liste).
 
 </para><para>
 
-Diese Methode erstellt ein .deb-Paket aus den Kernelquellen und falls
-Sie Nicht-Standard-Module verwenden auch ein synchrones .deb für diese
+Diese Methode erstellt ein .deb-Paket aus den Kernelquellen und, falls
+Sie Nicht-Standard-Module verwenden, auch ein synchrones .deb für diese
 Module. Es ist ein besserer Weg, um die Kernel-Images zu verwalten
 (verglichen mit der Nicht-Debian-Methode, einen Kernel zu erzeugen);
 <filename>/boot</filename> enthält den Kernel, die dazugehörige
@@ -119,14 +119,14 @@ Sie können jetzt Ihren Kernel konfigurieren. Führen Sie <userinput>make
 xconfig</userinput> aus, wenn X11 installiert ist, konfiguriert ist und läuft,
 andernfalls nehmen Sie <userinput>make menuconfig</userinput> (hierzu muss
 das <classname>ncurses-dev</classname>-Paket installiert sein). Nehmen Sie sich
-die Zeit, die Onlinehilfe zu lesen und wählen Sie sorgfältig die Optionen aus.
+die Zeit, die Onlinehilfe zu lesen, und wählen Sie sorgfältig die Optionen aus.
 Wenn Sie Zweifel haben, ist es typischerweise besser, den zweifelhaften
 Gerätetreiber mit in den Kernel zu integrieren (ein Gerätetreiber ist ein
 Stück Software, das Hardware-Peripherie verwaltet, wie z.B. Ethernetkarten,
 SCSI-Controller und so weiter). Seien Sie vorsichtig: andere Optionen, die nicht
 zu einer bestimmten Hardwarekomponente gehören, sollten Sie auf dem Standardwert
 belassen, wenn Sie sie nicht verstehen. Vergessen Sie nicht, den
-``Kernel module loader'' unter ``Loadable module support'' zu aktivieren
+"Kernel module loader" unter "Loadable module support" zu aktivieren
 (diese Option ist standardmäßig nicht aktiv). Tun Sie dies nicht, wird
 Ihr Debian-System Probleme machen.
 
@@ -140,9 +140,9 @@ Säubern Sie den Kernelquellen-Baum und setzen Sie die
 
 Kompilieren Sie jetzt den Kernel mit:
 <userinput>fakeroot make-kpkg --revision=custom.1.0 kernel_image</userinput>.
-Die Versionsnummer ``1.0'' können Sie nach Belieben ändern. Sie wird nur
+Die Versionsnummer "1.0" können Sie nach Belieben ändern. Sie wird nur
 von Ihnen selbst verwendet, um Ihre verschiedenen Kernel zu verwalten.
-Ebenso können Sie jedes andere Wort statt ``custom'' verwenden (z.B. den
+Ebenso können Sie jedes andere Wort statt "custom" verwenden (z.B. den
 Namen des Rechners). Die Kernelkompilierung könnte eine Weile dauern,
 abhängig von der Leistungsfähigkeit Ihres Rechners.
 
@@ -161,7 +161,7 @@ Sobald die Kompilierung beendet ist, können Sie Ihren eigenen Kernel wie
 ein Paket installieren. Tippen Sie als root <userinput>dpkg -i
 ../kernel-image-&kernelversion;-<replaceable>subarchitecture</replaceable>_custom.1.0_&architecture;.deb</userinput>
 ein. Der Teil <replaceable>subarchitecture</replaceable> im Dateinamen ist eine
-optionale Unterarchitektur, <phrase arch="i386"> wie z.B. ``i586'', </phrase>
+optionale Unterarchitektur, <phrase arch="i386"> wie z.B. "i586", </phrase>
 abhängig davon, welche Kerneloptionen Sie gesetzt haben.
 <userinput>dpkg -i kernel-image...</userinput> installiert den Kernel
 zusammen mit ein paar anderen dazugehörigen Dateien. Zum Beispiel wird
@@ -179,8 +179,8 @@ installieren.
 </para><para>
 
 Jetzt ist es Zeit, einen Systemneustart zu machen: lesen Sie aufmerksam
-alle Warnungen, die die vorherigen Schritte unter Umständen erzeugt haben
-und tippen dann <userinput>shutdown -r now</userinput> ein.
+alle Warnungen, die die vorherigen Schritte unter Umständen erzeugt haben,
+und tippen Sie dann <userinput>shutdown -r now</userinput> ein.
 
 </para><para>
 
