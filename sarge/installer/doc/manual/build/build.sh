@@ -50,3 +50,7 @@ for lang in $languages; do
     done
 done
 
+PRESEED="../en/appendix/example-preseed.xml"
+if [ -f $PRESEED ] && [ -f preseed.awk ] ; then
+    gawk -f preseed.awk $PRESEED >$destination/example-preseed.txt
+fi
