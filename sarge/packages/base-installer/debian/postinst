@@ -666,7 +666,15 @@ pick_kernel () {
 }
 
 install_kernel () {
-	kernel_major="$(uname -r | cut -d . -f 1,2)"
+	kernel_major="$(echo "$KERNEL" | sed 's/^kernel-image-//' | cut -d . -f 1,2)"
+	case $kernel_major in
+		2.*)	;;
+		*)
+			# something went wrong; use major version of
+			# installation kernel
+			kernel_major="$(uname -r | cut -d . -f 1,2)"
+			;;
+	esac
 	if db_get "debian-installer/kernel/linux/initrd-$kernel_major" ; then
 		if [ "$RET" = true ]; then
 			do_initrd=yes
@@ -747,7 +755,7 @@ EOF
 	update_progress 15 100
 
 	# Installing mkvmlinuz on the powerpc subarches that need it.
-	if [ "$ARCH" = "powerpc" -a "$(uname -r | cut -d . -f 1,2)" = "2.6" ]; then
+	if [ "$ARCH" = "powerpc" ] && [ "$kernel_major" = "2.6" ]; then
 		case "$SUBARCH" in
 			prep | chrp | chrp_pegasos)
 				info "Installing mkvmlinuz."
