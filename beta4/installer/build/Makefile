@@ -523,8 +523,6 @@ sources.list.udeb:
 		|awk '{print $$1 " " $$2}' \
 		|sed "s,/* *$$, $(SUITE) main/debian-installer," \
 		|sed "s,^deb file,deb copy," \
-		|sed "s/ unstable / sarge /" \
-		|sed "s/ sid / sarge /" \
 		|sort |uniq; \
 	fi) > $@
 
