@@ -1,0 +1,104 @@
+Release testing checklist. Successful installs should be reported with the
+release candidate for each of the following before release.
+
+							pass/fail (details)
+languages
+	Spanish						ok
+	Italian						ok
+	Portuguese					ok
+	Brazilian Portuguese				ok
+	Greek						ok
+	Catalan						ok
+	Japanese					ok
+	Turkish						ok
+	German						ok
+	Galego						ok
+	French						ok
+	Russian						ok (not post-base-config)
+	Chinese (Simplified)				
+	Chinese (Traditional)				
+	...
+
+i386
+	netinst cd install taking the defaults		ok
+	businesscard cd install taking the defaults	ok
+	usb keychain					ok
+	floppy + cd install				ok
+	floppy + network install			ok
+	netboot install					ok
+	pcmcia network install (any boot media)		
+	lvm install					ok
+	software raid install				ok
+	lvm + raid					ok
+	32 mb ram install				ok
+	48 mb ram install				
+	2.6 netinst install				
+	2.6 businesscard install			ok
+	2.6 pcmcia install				
+	2.6 lvm install					ok
+	2.6 software raid install			FAIL (os-prober hang)
+	2.6 lvm + raid					FAIL (segfault/hang)
+	2.6 usb keychain				ok
+	windows detection				ok (except mounted OS)
+	other linux detection				ok
+	
+powerpc	
+        basic netinst cd				
+        basic businesscard cd				ok
+        floppy + cd [not newworld]			
+        floppy + network [not newworld]			
+        netboot						
+        using pcmcia network card			
+        32 mb ram					
+        48 mb ram					
+
+sparc
+	sparc32 install from CD				probably broken
+	sparc64 install from CD				probably broken
+	sparc32 netboot					ok			
+	sparc64 netboot
+
+ia64
+	netboot						
+	cd install					
+
+alpha
+	cd install					numerous problems #253032
+
+mips
+	SGI (r4k-ip22) netboot				ok, but needs 36 MB until swap.
+	SGI (r4k-ip22) CD boot
+	SGI (r4k-ip22) via serial			ok (for english locale)
+	SGI (r4k-ip22) via graphics
+	SGI (r5k-ip22) netboot
+	SGI (r5k-ip22) CD boot
+	SGI (r5k-ip22) via serial
+	SGI (r5k-ip22) via graphics
+
+mipsel
+	DECstation (r3k-kn02) netboot
+	DECstation (r3k-kn02) CD boot
+	DECstation (r3k-kn02) via serial
+	DECstation (r3k-kn02) via graphics
+	DECstation (r4k-kn04) netboot
+	DECstation (r4k-kn04) CD boot
+	DECstation (r4k-kn04) via serial
+	DECstation (r4k-kn04) via graphics
+	Cobalt netboot via serial			ok (for english locale)
+	Cobalt lvm install				ok
+	Cobalt software raid install			ok
+
+m68k
+	broken images
+
+hppa
+	cdrom						ok
+	netboot
+
+arm
+	Netwinder netboot via serial			ok
+	Netwinder netboot via graphics			ok
+
+Important problems:
+
+ - some broken m68k images (fix: mke2fs fix needed; UNKNOWN)
