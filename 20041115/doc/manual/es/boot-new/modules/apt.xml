@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!-- original version: 18642 -->
+<!-- revisado por jfs, 28 octubre 2004 -->
+
+ <sect2 id="configure-apt">
+ <title>Configuración de APT</title>
+
+<para>
+
+La forma en la que generalmente uno instala paquetes en sus
+sistemas es a través de un programa llamado <command>apt-get</command>,
+que pertenece al paquete <classname>apt</classname>.<footnote>
+
+<para>
+
+Observe que el programa que realmente instala los paquetes se llama
+<command>dpkg</command>. Sin embargo, este programa es una herramienta
+de más bajo nivel. <command>apt-get</command> llama a 
+<command>dpkg</command> cuando sea necesario. Está en un nivel más alto
+ya que <command>apt</command> sabe que tiene que instalar otros 
+paquetes que necesita el que está intentando instalar. <command>Apt</command> también sabe cómo obtener el paquete de sus CD-ROMs, de su red informática o de cualquier otro lugar.
+
+</para>
+</footnote>
+
+Sin embargo, debe configurar APT para que éste sepa de dónde recuperar los 
+paquetes. La aplicación de ayuda que asiste en esta tarea se llama
+<command>apt-setup</command>.
+
+</para><para>
+
+El siguiente paso en su proceso de configuración es decirle a APT
+donde pueden encontrarse otros paquetes Debian. Tenga en cuenta que puede
+volver a ejecutar esta herramienta en cualquier momento después de la
+instalación, ya sea ejecutando <command>apt-setup</command>, o editando
+manualmente el fichero <filename>/etc/apt/sources.list</filename>.
+
+</para><para>
+
+Si vd. tiene un CD-ROM oficial en su unidad en este punto, entonces
+éste se configurará automáticamente como fuente apt sin preguntarle.
+Notará ésto porque podrá ver que se está leyendo del CD-ROM para
+analizarlo.
+
+
+</para><para>
+
+Si no dispone de un CD-ROM oficial, podrá seleccionar de entre distintas
+opciones el método que desea utilizar para acceder a paquetes Debian, ya
+sea a través de FTP, HTTP, CD-ROM o un sistema de ficheros local. 
+
+</para><para>
+
+Vd. puede tener más de una fuente APT, 
+incluso para el mismo archivo de Debian.
+<command>apt-get</command> elegirá automáticamente el paquete con
+el número de versión más alto de todas las versiones disponibles.
+O, por ejemplo, si tiene ambas fuentes, HTTP y CD-ROM, 
+<command>apt-get</command> utilizará automáticamente el CD-ROM
+local si es posible y solamente utilizará el protocolo HTTP si se dispone
+de una versión más actualizada a través de éste. No es una buena
+idea añadir fuentes de APT inútiles dado que esto tenderá a
+alargar en el tiempo el proceso de verificación de nuevas versiones en los 
+archivos disponibles en red.
+
+</para>
+
+  <sect3 id="configure-apt-net">
+  <title>Configuración de las fuentes de paquetes de red</title>
+
+<para>
+
+Si planea instalar el resto del sistema a través de red, la opción
+más común es elegir como fuente <userinput>http</userinput>. También
+es aceptable la fuente <userinput>ftp</userinput>, pero ésta tiende ser un
+poco más lenta en establecer las conexiones.
+
+</para><para>
+
+El siguiente paso a dar durante la configuración de las fuentes de paquetes
+de red es indicar a <command>apt-setup</command> el país en que se
+encuentra. Esto configura a qué sistema de la red de servidores espejos
+de Debian en Internet se conectará. Se le mostrará una lista de sistemas disponibles dependiendo del país que elija. Lo habitual es elegir el 
+el primero de la lista, pero cualquiera de ellos debería funcionar.
+
+</para><para>
+
+Se le pedirá configurar su servidor proxys si está instalando a través
+de HTTP. Esta configuración es a veces necesaria para usuarios que estén
+ubicados detrás de un cortafuegos, en redes corporativas, etc.
+
+</para><para>
+
+Finalmente, se probará su nueva fuente de paquetes de red. Si todo
+va bien, se le preguntará si desea o no repetir el proceso
+con otra fuente de red.
+
+</para>
+  </sect3>
+ </sect2>
