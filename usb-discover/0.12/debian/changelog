@@ -1,0 +1,109 @@
+usb-discover (0.12) unstable; urgency=low
+
+  * Add another IBM blade PCI id: 11660221 for ServerWorks CSB6 OHCI USB
+    Controller. Closes: #241559
+
+ -- Joey Hess <joeyh@debian.org>  Sun,  4 Apr 2004 00:02:32 -0500
+
+usb-discover (0.11) unstable; urgency=low
+
+  * Joey Hess
+    - Simplified the rules file.
+  * Thiemo Seufer
+    - Build fix.
+
+ -- Joey Hess <joeyh@debian.org>  Sun, 21 Mar 2004 23:04:50 -0500
+
+usb-discover (0.10) unstable; urgency=low
+
+  * Joey Hess
+    - Correct override disparity. Should indeed be optional.
+    - Don't source confmodule, that interacts badly with the rest of
+      libdebian-installer.d.
+
+ -- Joey Hess <joeyh@debian.org>  Sat, 20 Mar 2004 23:04:00 -0500
+
+usb-discover (0.09) unstable; urgency=low
+
+  * Add a new internal debconf question, debian-installer/probe/usb,
+    don't probe if it's false. To be used at boot if probing causes
+    problems. Closes: #233856
+  * Add myself to uploaders.
+  * Update to debhelper v4 and use its new udeb support.
+
+ -- Joey Hess <joeyh@debian.org>  Sat, 20 Mar 2004 22:02:15 -0500
+
+usb-discover (0.08) unstable; urgency=low
+
+  * The debian-installer.d item need not be executable.
+  * Add new pci-ids for USB bridges on a PIV-based abit motherboard:
+    808624de, 808624d7, 808624d4, and 808624d2.
+
+ -- Joey Hess <joeyh@debian.org>  Mon,  8 Mar 2004 14:19:25 -0500
+
+usb-discover (0.07) unstable; urgency=low
+
+  * Move 11660220 from usb-uhci where I wrongly put it, to usb-ohci.
+
+ -- Joey Hess <joeyh@debian.org>  Sat, 31 Jan 2004 19:09:25 -0500
+
+usb-discover (0.06) unstable; urgency=low
+
+  * Add PCI ids (808624c2, 808624c4, 808624c7) of the USB controllers in a
+    Linux Certified LC2000 laptop. (Bug also filed against discover-data,
+    but for now this change is not in that package.)
+
+ -- Joey Hess <joeyh@debian.org>  Sat, 13 Dec 2003 19:48:34 -0500
+
+usb-discover (0.05) unstable; urgency=low
+
+  * Joey Hess
+    - Remove unnecessary hard-coded path to modprobe.
+    - Add PCI id (11660220) of the USB controller in a IBM
+      Bladecenter. Closes: #220230
+      (Bug also filed against discover-data, but for now this change is
+      not in that package.)
+
+ -- Joey Hess <joeyh@debian.org>  Mon, 10 Nov 2003 11:55:41 -0500
+
+usb-discover (0.04) unstable; urgency=low
+
+  * Moved the code to a program in PATH, named usb-discover, and make the S45
+    script just run that program. This is to support the linuxrc.bootfloppy,
+    which does not run init scripts and needs to be able to call usb-discover
+    manually.
+
+ -- Joey Hess <joeyh@debian.org>  Fri, 10 Oct 2003 17:26:47 -0400
+
+usb-discover (0.03) unstable; urgency=low
+
+  * Sebastian Ley
+    - S45usb-linux: Do not die if something goes wrong (in this case, no pci
+      detected) because the file is sourced. This was responsible for the
+      endless loop when testing d-i with bochs. Thanks Steinar H. Gunderson.
+      (Closes: #210818)
+  * Alastair McKinstry
+    - Move to Standards-Versiob 3.6.1.0; no changes required.
+    - Move Build-Depends to Build-Depends-Indep; no arch-dependent pkgs.
+
+ -- Alastair McKinstry <mckinstry@debian.org>  Sun, 14 Sep 2003 16:46:37 +0200
+
+usb-discover (0.02) unstable; urgency=low
+
+  * Add makefile rules to generate ohci-pci.lst and uhci-pci.lst from
+    discover-data.
+  * Add new ohci ID 108e1103.
+  * Change uploader email address to mckinstry@debian.org
+  * Latest Standards-Version is 3.6.0, not 3.6.10
+
+ -- Alastair McKinstry <mckinstry@debian.org>  Mon, 28 Jul 2003 14:34:05 +0100
+
+usb-discover (0.01) unstable; urgency=low
+
+  * Initial Release.
+
+ -- Alastair McKinstry <mckinstry@computer.org>  Thu,  17 Jul 2003 20:28:31 +1100
+
+Local variables:
+mode: debian-changelog
+End:
