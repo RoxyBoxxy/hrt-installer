@@ -131,6 +131,15 @@ load_sr_mod () {
 	fi
 }
 
+blacklist_de4x5 () {
+	cat << EOF >> $prebaseconfig
+if [ -e /target/etc/discover.conf ]; then
+	touch /target/etc/discover-autoskip.conf
+	(echo "# blacklisted since tulip is used instead"; echo skip de4x5 ) >> /target/etc/discover-autoskip.conf
+fi
+EOF
+}
+
 discover_version () {
 	# Ugh, Discover 1.x didn't exit with nonzero status if given an
 	# unrecognized option!
@@ -222,13 +231,20 @@ get_ide_floppy_info() {
 }
 
 get_input_info() {
+	case "$(udpkg --print-architecture)" in
+		i386|ia64|amd64)
+			register-module psmouse
+		;;
+	esac
+	
 	case $SUBARCH in
 		powerpc/chrp*|powerpc/prep)
-		  echo "i8042:i8042 PC Keyboard controller"
-		  register-module i8042
-		  echo "atkbd:AT keyboard support"
-		  register-module atkbd
-		  register-module psmouse
+			register-module psmouse
+			# TODO: below should be removed once rootskel 1.10 is in testing.
+			echo "i8042:i8042 PC Keyboard controller"
+			register-module i8042
+			echo "atkbd:AT keyboard support"
+			register-module atkbd
 		;;
 	esac
 }
@@ -238,6 +254,9 @@ get_input_info() {
 # The order of these modules are important.
 get_manual_hw_info() {
 	get_floppy_info
+	# Load explicitly rather than implicitly to allow the user to
+	# specify parameters when the module is loaded.
+	echo "ide-core:Linux IDE support"
 	# ide-mod and ide-probe-mod are needed for older (2.4.20) kernels
 	echo "ide-mod:Linux IDE driver"
 	echo "ide-probe-mod:Linux IDE probe driver"
@@ -249,6 +268,17 @@ get_manual_hw_info() {
 	echo "ide-cd:Linux ATAPI CD-ROM"
 	echo "isofs:Linux ISO 9660 filesystem"
 	get_input_info
+
+	# on some hppa systems, nic and scsi won't be found because they're
+	# not on a bus that discover understands ... 
+	if [ "`udpkg --print-architecture`" = hppa ]; then
+		echo "lasi_82596:LASI Ethernet"
+		register-module lasi_82596
+		echo "lasi700:LASI SCSI"
+		register-module lasi700
+		echo "zalon7xx:Zalon SCSI"
+		register-module zalon7xx
+	fi
 }
 
 # Detect discover version
@@ -318,6 +348,14 @@ for device in $ALL_HW_INFO; do
 		if [ -z "$cardname" ]; then
 			cardname="[Unknown]"
 		fi
+		
+		if [ "$module" = de4x5 ] && ! in_list "$module" "$AVAIL_MODULES"; then
+			log "Using tulip rather than unavailable de4x5"
+			blacklist_de4x5
+			module=tulip
+			tulip_de4x5_hack=1
+		fi
+		
 		if in_list "$module" "$AVAIL_MODULES"; then
 			if [ -n "$LIST" ]; then
 				LIST="$LIST, "
@@ -381,6 +419,11 @@ for device in $(list_to_lines); do
 		else
 			load_module "$module" "$cardname"
 		fi
+
+		if [ "$module" = tulip ] && [ "$tulip_de4x5_hack" = 1 ]; then
+			log "Forcing use of tulip in installed system (de4x hack)"
+			register-module tulip
+		fi
 	fi
 
 	db_progress STEP $MODULE_STEPSIZE
@@ -388,10 +431,12 @@ for device in $(list_to_lines); do
 done
 IFS="$IFS_SAVE"
 
-# if there is an ide bus, then register the ide CD modules so they'll be
-# available on the target system for base-config
+# If there is an ide bus, then register the ide CD modules so they'll be
+# available on the target system for base-config. Disk too, in case root is
+# not ide but ide is still used.
 if [ -e /proc/ide/ -a "`find /proc/ide/* -type d 2>/dev/null`" != "" ]; then
 	register-module ide-cd
+	register-module ide-disk
 	case "$(uname -r)" in
 	2.4*)
 		register-module ide-detect
@@ -575,6 +620,7 @@ if [ -x /etc/init.d/pcmcia ]; then
     
 		db_progress STEP $OTHER_STEPSIZE
 	fi
+	# TODO: uncomment after fixed cdebconf is available
 	#db_fset hw-detect/start_pcmcia seen true || true
 fi
 
