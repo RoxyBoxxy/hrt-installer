@@ -1,0 +1,172 @@
+#! /bin/sh
+#
+# Build debian-installer packages.
+
+# First, some shell functions.
+
+# build debs and udebs
+build ()
+{
+	local _dir=$1
+	local _pkg=$(grep -sh "^Package: " ${_dir}/debian/control |sed -e 's/^Package: //' |xargs echo -n)
+	[ -n "$ROOTCMD" ] && local _rootcmd="-r$ROOTCMD"
+
+	pushd $_dir >/dev/null
+	for i in ${_pkg}; do
+		rm -f ../${i}*.*
+	done
+	dpkg-buildpackage -b -us -uc $_rootcmd #-nc
+	popd >/dev/null
+	return 0
+}
+
+# install debs
+install_deb ()
+{
+	local _dir=$1
+
+	shift
+	pushd $_dir >/dev/null
+	while [ ${#} -ne 0 ]; do
+		[ -f ${1}_*_${ARCH}.deb ] && $REALROOTCMD dpkg -i ${1}_*_${ARCH}.deb
+		[ -f ${1}_*_all.deb ] && $REALROOTCMD dpkg -i ${1}_*_all.deb
+		shift
+	done
+	popd >/dev/null
+	return 0
+}
+
+# copy sucessfully built udebs into installer/build/localudebs
+supply_udeb ()
+{
+	local _dir=$1
+	local _pkg=$(grep -sh "^Package: " ${_dir}/debian/control |sed -e 's/^Package: //' |xargs echo -n)
+	for i in ${_pkg}; do
+		[ -f ${_dir}/../${i}_*_${ARCH}.udeb ] && {
+			rm -f installer/build/localudebs/${i}_*_${ARCH}.udeb
+			cp -f ${_dir}/../${i}_*_${ARCH}.udeb installer/build/localudebs/
+		}
+		[ -f ${_dir}/../${i}_*_all.udeb ] && {
+			rm -f installer/build/localudebs/${i}_*_all.udeb
+			cp -f ${_dir}/../${i}_*_all.udeb installer/build/localudebs/
+		}
+	done
+	return 0
+}
+
+# Iterate over subdirs.
+do_subdir ()
+{
+	while [ $# -ge 1 ]; do
+		[ -d $1 ] && {
+			build $1
+			supply_udeb $1
+		}
+		shift
+	done
+	return 0
+}
+
+# Guess what.
+usage ()
+{
+	echo "Usage: $0 [-r root_command] [-rr real_root_command]"
+	exit 1
+}
+
+# Here we go.
+#set -x
+set -e
+
+MAKETARGET=all_images
+
+while [ ${#} -ge 1 ]; do
+	case "$1" in
+		-r)
+			ROOTCMD=$2
+			shift
+		;;
+		-rr)
+			REALROOTCMD=$2
+			shift
+		;;
+	esac
+	shift
+done
+
+# directory sanity check
+[ -d installer/build/pkg-lists ] || { echo "Not in source dir"; exit 1; }
+
+[ -z "$REALROOTCMD" ] && REALROOTCMD=$ROOTCMD
+
+ARCH="$(dpkg-architecture -qDEB_BUILD_ARCH)"
+
+# Build and install packages with debs first, others build-depend on it.
+#
+build packages/packages-build
+install_deb packages di-packages-build
+
+# build d-i library
+build packages/libdebian-installer
+install_deb packages libdebian-installer4 libdebian-installer-extra4 libdebian-installer4-dev
+supply_udeb packages/libdebian-installer
+
+# build cdebconf
+build packages/cdebconf
+install_deb packages libdebconfclient0 libdebconfclient0-dev
+supply_udeb packages/cdebconf
+
+# build kernel-wedge
+build packages/kernel/kernel-wedge
+install_deb packages/kernel kernel-wedge
+
+# Build all other udebs.
+do_subdir packages/kernel/linux-kernel-di-$ARCH
+
+do_subdir packages/partman/partman packages/partman/partman-auto \
+	packages/partman/partman-basicfilesystems \
+	packages/partman/partman-basicmethods \
+	packages/partman/partman-ext3 packages/partman/partman-lvm \
+	packages/partman/partman-reiserfs packages/partman/partman-xfs \
+	packages/partman/partman-partitioning \
+	packages/partman/partman-target
+
+[ "$ARCH" = "hppa" ] && do_subdir packages/partman/partman-palo
+[ "$ARCH" = "powerpc" ] && do_subdir packages/partman/partman-newworld
+
+do_subdir packages/retriever/cdrom \
+	packages/retriever/floppy packages/retriever/net
+
+do_subdir packages/anna packages/autopartkit packages/base-installer \
+	packages/baseconfig-udeb packages/bterm-unifont \
+	packages/bugreporter-udeb packages/cdrom-checker \
+	packages/cdrom-detect packages/choose-mirror \
+	packages/countrychooser \
+	packages/ddetect packages/debian-installer-utils \
+	packages/iso-scan packages/kbd-chooser \
+	packages/languagechooser packages/lowmem \
+	packages/lvmcfg packages/main-menu packages/netcfg packages/nobootloader \
+	packages/os-prober packages/partconf packages/partitioner \
+	packages/prebaseconfig packages/rootskel packages/udpkg \
+	packages/usb-discover packages/userdevfs
+
+# Arch dependent udebs, which may not build cleanly elsewhere.
+[ "$ARCH" = "alpha" ] && do_subdir packages/arch/alpha/aboot-installer \
+	packages/arch/alpha/srm-reader
+[ "$ARCH" = "powerpc" ] && do_subdir packages/arch/powerpc/yaboot-installer
+[ "$ARCH" = "hppa" ] && do_subdir packages/arch/hppa/palo-installer
+[ "$ARCH" = "i386" ] && do_subdir packages/arch/i386/grub-installer \
+	packages/arch/i386/lilo-installer
+[ "$ARCH" = "ia64" ] && do_subdir packages/arch/ia64/efi-reader \
+	packages/arch/ia64/elilo-installer
+[ "$ARCH" = "mips" ] && do_subdir packages/arch/mips/arcboot-installer
+[ "$ARCH" = "mipsel" ] && do_subdir packages/arch/mipsel/delo-installer \
+	packages/arch/mipsel/colo-installer
+[ "$ARCH" = "s390" ] && do_subdir packages/arch/s390/dasd \
+	packages/arch/s390/netdevice packages/arch/s390/zipl-installer
+[ "$ARCH" = "sparc" ] && do_subdir packages/arch/sparc/silo-installer
+
+# Build the installer boot image.
+build installer
+
+exit 0

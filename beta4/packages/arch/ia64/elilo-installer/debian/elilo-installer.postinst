@@ -1,0 +1,54 @@
+#!/bin/sh
+set -e
+
+if [ -f /etc/mtab ]; then
+    MTAB=/etc/mtab
+else
+    MTAB=/proc/mounts
+fi
+
+# detect which is the root partition: /target
+rootfs=`/target/bin/sed -ne '/^[^ ]* \/target /s/ .*//p' $MTAB`
+
+# Find all partitions with fat filesystems and the boot flag set.  May be
+# enough just to look for one of those.  OTOH, elilo will convert any
+# partition you give it to FAT...  Also translates /dev/discs paths in to
+# real /dev/scsi (or ide) paths.
+
+p=$(for i in /dev/discs/*/disc; do
+	dev=$(parted $i print | sed -n "s|^Disk geometry for \([^:]*\)/disc:.*$|\1|p")
+	parted $i print | sed -n "s|^\([0-9]\+\) \+[0-9\.]\+ \+[0-9\.]\+ \+fat[0-9]* \+boot$|$dev/part\1|p"
+     done)
+
+if [ "$p" = '' ]; then
+	db_input critical elilo-installer/no-bootpart
+	db_go
+	exit 1
+fi
+
+for i in $p; do
+	if [ $BOOTPARTS ]; then
+		BOOTPARTS="$BOOTPARTS, $i"
+	else
+		BOOTPARTS=$i
+	fi
+done
+
+. /usr/share/debconf/confmodule
+
+db_subst elilo-installer/bootpart BOOTPARTS $BOOTPARTS
+
+db_fset elilo-installer/bootpart seen false
+db_input critical elilo-installer/bootpart
+db_go
+
+db_get elilo-installer/bootpart
+bootpart=$RET
+
+bootpart=`mapdevfs $bootpart`
+rootfs=`mapdevfs $rootfs`
+
+# Write out elilo.conf
+
+chroot /target /usr/sbin/elilo --autoconf --boot $bootpart --root $rootfs --efiboot
+

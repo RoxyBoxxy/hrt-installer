@@ -1,0 +1,134 @@
+#!/bin/sh
+
+. /lib/partman/definitions.sh
+
+dev=$2
+oldid=$3
+
+cd $dev
+
+open_dialog GET_RESIZE_RANGE $oldid
+read_line minsize cursize maxsize
+close_dialog
+
+[ "$maxsize" ] || exit 1
+
+hminsize=$(longint2human $minsize)
+hcursize=$(longint2human $cursize)
+hmaxsize=$(longint2human $maxsize)
+
+open_dialog VIRTUAL $oldid
+read_line virtual
+close_dialog
+
+if [ "$virtual" = no ]; then
+    db_set partman-partitioning/confirm_resize 'false'
+    db_fset partman-partitioning/confirm_resize seen false
+    db_input high partman-partitioning/confirm_resize || true
+    db_go || exit 0
+    db_get partman-partitioning/confirm_resize
+    [ "$RET" = 'true' ] || exit 0
+fi
+
+ask_for_size () {
+    local noninteractive digits minmb
+    noninteractive=true
+    while true; do
+	newsize=''
+	while [ ! "$newsize" ]; do
+	    db_set partman-partitioning/new_size "$hcursize"
+	    db_fset partman-partitioning/new_size seen false
+	    db_subst partman-partitioning/new_size MINSIZE "$hminsize"
+	    db_subst partman-partitioning/new_size MAXSIZE "$hmaxsize"
+	    db_input high partman-partitioning/new_size || $noninteractive
+	    noninteractive="return 1"
+	    db_go || return 1
+	    db_get partman-partitioning/new_size
+	    case "$RET" in
+		max)
+		    newsize=$maxsize
+		    ;;
+		*%)
+		    digits=$(expr "$RET" : '\([1-9][0-9]*\) *%$')
+		    if [ "$digits" ]; then
+			minmb=$(expr 0000000"$minsize" : '0*\(..*\)......$')
+			newsize=$((((1 + $minmb) * (100 + $digits))/100))000000
+		    fi
+		    ;;
+		*)
+		    if valid_human "$RET"; then
+			newsize=$(human2longint "$RET")
+		    fi
+		    ;;
+	    esac
+	    if [ -z "$newsize" ]; then
+		db_fset partman-partitioning/bad_new_size seen false
+		db_input high partman-partitioning/bad_new_size || true
+		db_go || true
+	    elif ! longint_le "$newsize" "$maxsize"; then
+		db_fset partman-partitioning/big_new_size seen false
+		db_input high partman-partitioning/big_new_size || true
+		db_go || true
+		newsize=''
+	    elif ! longint_le "$minsize" "$newsize"; then
+		db_fset partman-partitioning/small_new_size seen false
+		db_input high partman-partitioning/small_new_size || true
+		db_go || true
+		newsize=''
+	    fi
+	done
+	if perform_resizing; then break; fi
+    done
+    return 0
+}
+
+perform_resizing () {
+    if [ "$virtual" = no ]; then
+	for s in /lib/partman/commit.d/*; do
+	    if [ -x $s ]; then
+		$s || {
+		    db_fset partman-partitioning/new_size_commit_failed seen false
+		    db_input high partman-partitioning/new_size_commit_failed || true
+		    db_go || true
+		    for s in /lib/partman/init.d/*; do
+			if [ -x $s ]; then
+			    $s || exit 100
+			fi
+		    done
+		    exit 100
+		}
+	    fi
+	done
+    fi
+
+    name_progress_bar partman-partitioning/progress_resizing
+    open_dialog RESIZE_PARTITION $oldid $newsize
+    read_line newid
+    close_dialog
+
+    if [ -n "$newid" -a "$newid" != "$oldid" ]; then
+	[ ! -e "$newid" ] || rm -rf $newid
+	mkdir $newid
+	cp -r $oldid/* $newid/
+    fi
+    if [ "$virtual" = no ]; then
+	for s in /lib/partman/init.d/*; do
+	    if [ -x $s ]; then
+		$s || exit 100
+	    fi
+	done
+    else 
+	partitions=''
+	open_dialog PARTITIONS
+	while { read_line num part size type fs path name; [ "$part" ]; }; do
+	    partitions="$partitions $part"
+	done
+	close_dialog
+	for part in $partitions; do
+	    update_partition $dev $part
+	done
+    fi
+}
+
+ask_for_size
+exit 100
