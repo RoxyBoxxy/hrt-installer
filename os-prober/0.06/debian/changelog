@@ -1,0 +1,60 @@
+os-prober (0.06) unstable; urgency=low
+
+  * Colin Watson
+    - Add a Linux boot probe for /etc/yaboot.conf.
+    - Make sure hfs is available for the Mac OS 9 check.
+    - Delay hfs until last in mounted checks so that we can tell the
+      difference between that and hfsplus.
+    - Add count to Mac OS X labels; change loader type to macosx.
+    - Add myself to Uploaders.
+
+ -- Colin Watson <cjwatson@debian.org>  Wed, 14 Apr 2004 01:15:53 +0100
+
+os-prober (0.05) unstable; urgency=low
+
+  * Joey Hess
+    - Fix broken mounting of /boot partitions.
+    - Fix grub probe to support systems that have /boot on a separate
+      partition, by looking for kernels in /boot as well.
+    - Same for initrds.
+
+ -- Joey Hess <joeyh@debian.org>  Sat, 10 Apr 2004 16:06:49 -0400
+
+os-prober (0.04) unstable; urgency=low
+
+  * Joey Hess
+    - Return "hurd" as the OS type for hurd, rather than "multiboot".
+      The latter is not enough info to boot the hurd.
+    - Fix broken hurd detection.
+
+ -- Joey Hess <joeyh@debian.org>  Fri,  9 Apr 2004 22:18:54 -0400
+
+os-prober (0.03) unstable; urgency=low
+
+  * Joshua Kwan
+    - Allow for unique short names via functions in new common.sh library.
+    - Revamp all the dh_install stuff.
+    - Use /var/lib/os-prober as our sandbox.
+  * Colin Watson
+    - Add Mac OS X probing support.
+  * Joey Hess
+    - Added linux-boot-prober, with sorta working support for grub.
+    - Reorg the probes, and move to /usr/lib.
+    - Remove broken depends line.
+    - Add a linux boot probe that searches for kernels and initrds with no
+      bootloader config file, as a fallback.
+    - Add a linux boot probe that parses /etc/lilo.conf.
+
+ -- Joey Hess <joeyh@debian.org>  Wed,  7 Apr 2004 21:40:39 -0400
+
+os-prober (0.02) unstable; urgency=low
+
+  * Include init dir in the udeb.
+
+ -- Joey Hess <joeyh@debian.org>  Sun,  4 Apr 2004 00:43:12 -0500
+
+os-prober (0.01) unstable; urgency=low
+
+  * Initial Release.
+
+ -- Joey Hess <joeyh@debian.org>  Sat,  3 Apr 2004 23:45:29 -0500
