@@ -251,7 +251,7 @@ timered_file_system_resize(PedFileSystem *fs, PedGeometry *geom)
 /*    3. Print newline to mark the end of the message. */
 /*    4. Print the options for the user, one per line and end with an
  *       empty line. */
-/*    5. Read from infifo the user responce.  This is either
+/*    5. Read from infifo the user response.  This is either
  *       "unhandled" or one of the options from 4. */
 /* Arguments: `type' is a string such as "information", "warning",
  * "error", etc., `message' is the text to be presented to the user
@@ -281,7 +281,7 @@ pseudo_exception(char *type, char *message, char **options)
         if (1 != iscanf(" %a[^\n]", &str))
                 critical_error("No data in infifo.");
         if (!strcmp(str, "unhandled")) {
-                log("User canceled exeption handler");
+                log("User canceled exception handler");
                 return -1;
         }
         for (i = 0; options[i] != NULL; i++)
@@ -317,7 +317,7 @@ exception_handler(PedException *ex)
             pseudo_exception(ped_exception_get_type_string(ex->type),
                              ex->message, options);
         if (response == -1) {
-                log("User canceled exeption handler");
+                log("User canceled exception handler");
                 return PED_EXCEPTION_UNHANDLED;
         }
         for (bit = 1; bit <= POWER_MAXIMAL_OPTION; bit = bit << 1) {
@@ -395,12 +395,12 @@ index_of_name(char *name)
                 devices = realloc(devices,
                                   sizeof(struct devdisk[allocated_devices]));
                 if (devices == NULL)
-                        critical_error("Can not allocate memory.");
+                        critical_error("Cannot allocate memory.");
         }
         number_devices++;
         devices[i].name = strdup(name);
         if (NULL == devices[i].name)
-                critical_error("Can not allocate memory.");
+                critical_error("Cannot allocate memory.");
         devices[i].dev = NULL;
         devices[i].disk = NULL;
         devices[i].changed = false;
@@ -480,7 +480,7 @@ remember_geometries_named(char *name)
                 }
                 geometries = realloc(geometries, sizeof(PedGeometry[last]));
                 if (last != 0 && geometries == NULL)
-                        critical_error("Can not allocate memory");
+                        critical_error("Cannot allocate memory");
                 devices[index_of_name(name)].geometries = geometries;
                 devices[index_of_name(name)].number_geometries = last;
         }
@@ -625,11 +625,11 @@ add_primary_partition(PedDisk *disk, PedFileSystemType *fs_type,
         }
         part = ped_partition_new(disk, 0, fs_type, start, end);
         if (part == NULL) {
-                log("Can not create new primary partition.");
+                log("Cannot create new primary partition.");
                 return NULL;
         }
         if (!ped_disk_add_partition(disk, part, ped_constraint_any(disk->dev))) {
-                log("Can not add the primary partition to partition table.");
+                log("Cannot add the primary partition to partition table.");
                 ped_partition_destroy(part);
                 return NULL;
         }
@@ -702,7 +702,7 @@ resize_partition(PedDisk *disk, PedPartition *part,
                 ped_file_system_close(fs);
                 return false;
         }
-        log("successfuly checked");
+        log("successfully checked");
         if (part->type & PED_PARTITION_LOGICAL)
                 maximize_extended_partition(disk);
         if (NULL != fs)
@@ -727,7 +727,7 @@ resize_partition(PedDisk *disk, PedPartition *part,
                 minimize_extended_partition(disk);
         return result;
         /* TODO: not sure if constraints here should be
-           ped_constraint_destroy-ed.  Lets be safe. */
+           ped_constraint_destroy-ed.  Let's be safe. */
 }
 
 /**********************************************************************
@@ -927,9 +927,9 @@ dump_info(FILE *dumpfile, PedDevice *dev, PedDisk *disk)
         fprintf(dumpfile, "Path: %s\n", dev->path);
         fprintf(dumpfile, "Sector size: %i\n", dev->sector_size);
         fprintf(dumpfile, "Sectors: %lli\n", dev->length);
-        fprintf(dumpfile, "Sectors/track: %i\n", dev->sectors);
-        fprintf(dumpfile, "Heads: %i\n", dev->heads);
-        fprintf(dumpfile, "Cylinders: %i\n", dev->cylinders);
+        fprintf(dumpfile, "Sectors/track: %i\n", dev->bios_geom.sectors);
+        fprintf(dumpfile, "Heads: %i\n", dev->bios_geom.heads);
+        fprintf(dumpfile, "Cylinders: %i\n", dev->bios_geom.cylinders);
         if (disk == NULL) {
                 fprintf(dumpfile, "Partition table: no\n");
                 activate_exception_handler();
@@ -947,8 +947,8 @@ dump_info(FILE *dumpfile, PedDevice *dev, PedDisk *disk)
                 long long head_start, head_end;
                 long long sec_start, sec_end;
                 char *part_info = partition_info(disk, part);
-                track_size = dev->sectors;
-                cylinder_size = track_size * dev->heads;
+                track_size = dev->bios_geom.sectors;
+                cylinder_size = track_size * dev->bios_geom.heads;
                 start = (part->geom).start;
                 end = (part->geom).end;
                 cyl_start = start / cylinder_size;
@@ -1204,7 +1204,8 @@ command_partitions()
                 if (PED_PARTITION_FREESPACE & part->type
                     && ped_disk_type_check_feature(disk->type,
                                                    PED_DISK_TYPE_EXTENDED)
-                    && (part->geom).length < dev->sectors * dev->heads)
+                    && (part->geom).length
+                       < dev->bios_geom.sectors * dev->bios_geom.heads)
                         continue;
                 /* Another hack :) */
                 if (0 == strcmp(disk->type->name, "dvh")
@@ -1277,8 +1278,8 @@ command_get_chs()
                 long long head_start, head_end;
                 long long sec_start, sec_end;
                 log("command_get_chs: partition found");
-                track_size = dev->sectors;
-                cylinder_size = track_size * dev->heads;
+                track_size = dev->bios_geom.sectors;
+                cylinder_size = track_size * dev->bios_geom.heads;
                 start = (part->geom).start;
                 end = (part->geom).end;
                 cyl_start = start / cylinder_size;
@@ -1332,7 +1333,7 @@ command_valid_flags()
         oprintf("OK\n");
         deactivate_exception_handler();
         if (part == NULL || !ped_partition_is_active(part)) {
-                log("No such an active partition: %s", id);
+                log("No such active partition: %s", id);
         } else {
                 log("Partition found (%s)", id);
                 for (flag = 0; 0 != (flag = ped_partition_flag_next(flag));)
@@ -1360,7 +1361,7 @@ command_get_flags()
                 critical_error("Expected partition id");
         part = partition_with_id(disk, id);
         if (part == NULL || !ped_partition_is_active(part))
-                critical_error("No such an active partition: %s", id);
+                critical_error("No such active partition: %s", id);
         log("Partition found (%s)", id);
         oprintf("OK\n");
         deactivate_exception_handler();
@@ -1390,7 +1391,7 @@ command_set_flags()
                 critical_error("Expected partition id");
         part = partition_with_id(disk, id);
         if (part == NULL || !ped_partition_is_active(part))
-                critical_error("No such an active partition: %s", id);
+                critical_error("No such active partition: %s", id);
         log("Partition found (%s)", id);
         oprintf("OK\n");
         deactivate_exception_handler();
@@ -1459,7 +1460,7 @@ command_set_name()
                 critical_error("Expected partition id");
         part = partition_with_id(disk, id);
         if (part == NULL || !ped_partition_is_active(part))
-                critical_error("No such an active partition: %s", id);
+                critical_error("No such active partition: %s", id);
         log("Partition found (%s)", id);
         if (1 != iscanf(" %a[^\n]", &name))
                 critical_error("No data in infifo!");
@@ -1621,7 +1622,11 @@ command_create_file_system()
                 critical_error("Bad file system type: %s", s_fstype);
         ped_partition_set_system(part, fstype);
         deactivate_exception_handler();
-        fs = timered_file_system_create(&(part->geom), fstype);
+        if ((fs = timered_file_system_create(&(part->geom), fstype)) != NULL)
+        {
+                ped_file_system_close(fs);
+                ped_disk_commit_to_dev(disk);
+        }
         activate_exception_handler();
         oprintf("OK\n");
         if (fs != NULL)
@@ -1656,7 +1661,7 @@ command_new_label()
         dev = ped_device_get(device);
         free(device);
         if (NULL == dev)
-                critical_error("Can not reopen %s", device_name);
+                critical_error("Cannot reopen %s", device_name);
         set_device_named(device_name, dev);
         log("command_new_label: creating");
         disk = ped_disk_new_fresh(dev, type);
@@ -1996,7 +2001,22 @@ command_copy_partition()
         free(srcid);
 }
 
-
+void command_get_disk_type()
+{
+	log("command_get_disk_type()");
+	scan_device_name();
+	open_out();
+	oprintf("OK\n");
+	deactivate_exception_handler();
+	if((disk == NULL) || (disk->type == NULL) 
+			  || (disk->type->name == NULL)) {
+		oprintf("unknown\n");
+	} else {
+		oprintf("%s\n", disk->type->name);
+	}
+	activate_exception_handler();
+}
+	
 /**********************************************************************
    Main
 **********************************************************************/
@@ -2081,6 +2101,8 @@ main_loop()
                         command_get_virtual_resize_range();
                 else if (!strcasecmp(str, "COPY_PARTITION"))
                         command_copy_partition();
+		else if (!strcasecmp(str, "GET_DISK_TYPE"))
+			command_get_disk_type();
                 else
                         critical_error("Unknown command %s", str);
                 free(str);
@@ -2093,7 +2115,7 @@ main(int argc, char *argv[])
 {
         logfile = fopen(logfile_name, "a+");
         if (logfile == NULL) {
-                fprintf(stderr, "Can not append to the log file\n");
+                fprintf(stderr, "Cannot append to the log file\n");
                 exit(255);
         }
         ped_exception_set_handler(exception_handler);
