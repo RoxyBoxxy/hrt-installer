@@ -3,7 +3,7 @@ set -e
 
 . /usr/share/debconf/confmodule
 
-TEMPLATE_ROOT=debian-installer/network-console
+TEMPLATE_ROOT=network-console
 
 KEY_FILE=/etc/ssh/ssh_host_rsa_key
 
@@ -14,8 +14,6 @@ if [ ! -f $KEY_FILE ]; then
 fi
 
 while [ -z "$PASSWORD" ]; do
-  db_set $TEMPLATE_ROOT/password ""
-  db_set $TEMPLATE_ROOT/password-again ""
 
   db_input critical $TEMPLATE_ROOT/password || true
   db_go
@@ -37,6 +35,9 @@ while [ -z "$PASSWORD" ]; do
     continue
   fi
   PASSWORD=$ROOT_PW
+
+  db_set $TEMPLATE_ROOT/password ""
+  db_set $TEMPLATE_ROOT/password-again ""
 done
 
 echo "installer:$(gen-crypt $PASSWORD):1:0:99999:7:::" >> /etc/shadow
@@ -45,7 +46,9 @@ KEY_FINGERPRINT=$(ssh-keygen -l -f $KEY_FILE | cut -f2 -d ' ')
 
 sshd
 
+# Queue installation of network-console-config
+apt-install network-console-config || true
+
 db_subst $TEMPLATE_ROOT/start fingerprint $KEY_FINGERPRINT
 db_input critical $TEMPLATE_ROOT/start
 db_go
-
