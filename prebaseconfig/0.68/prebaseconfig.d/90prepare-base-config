@@ -1,0 +1,65 @@
+#!/bin/sh
+#
+# Prepare to run base-config after reboot
+set -e
+
+# Only here for woody installs (ie, skolelinux)
+. /usr/share/debconf/confmodule
+if db_get mirror/suite && [ "$RET" ] ; then
+    SUITE="$RET"
+fi
+(
+    echo "# inserted by prebaseconfig"
+    echo "SUITE=\"$SUITE\""
+) >> /target/root/dbootstrap_settings
+
+# Since this script is running with debconf, 'tty' does
+# not give reliable answers about what sort of terminal
+# we have.  The stdin of /sbin/debian-installer seems
+# to tell the truth.
+console_=$(readlink /proc/$(pidof debian-installer)/fd/0)
+console=$(mapdevfs "$console_")
+console_=${console_#/dev/}
+console=${console#/dev/}
+
+case "$console" in
+ttyS*)
+    ttyspeed=$(chroot /target stty --file /dev/$console speed)
+    ttyline=${console#ttyS}
+    ttyterm="$TERM"
+
+    if [ -z "$ttyterm" ]; then ttyterm=vt100; fi
+    if [ -z "$ttyspeed" ]; then ttyspeed=9600; fi
+    sed -e "s/^\([1-6]\):/#\1:/" \
+	-e "s/^#T0\(.*ttyS\).*/T$ttyline\1$ttyline $ttyspeed $ttyterm/" \
+            /target/etc/inittab > /target/etc/inittab.real
+    echo "# serial console added by debian-installer" >> /target/etc/securetty
+    echo "$console_" >> /target/etc/securetty
+    if [ -n "$console" ] && [ "$console" != "$console_" ]; then
+	echo "$console" >> /target/etc/securetty
+    fi
+
+    sed -e "s/^\([23]\):/#\1:/" \
+        -e "s#CONSOLEDEV#/dev/$console#g" \
+	/usr/share/prebaseconfig/inittab > /target/etc/inittab
+;;
+*)
+    mv /target/etc/inittab /target/etc/inittab.real
+    sed -e "s#CONSOLEDEV#/dev/$console#g" /usr/share/prebaseconfig/inittab \
+        > /target/etc/inittab
+;;
+esac
+
+# Set up /dev/cdrom link to point to the device used for /media/cdrom0 in
+# /target; various programs including base-config want a /dev/cdrom.
+CDDEV=$(grep "[[:space:]]/media/cdrom0[[:space:]]" /target/etc/fstab | cut -d ' ' -f 1) || true
+if [ -z "$CDDEV" ]; then
+	CDDEV=$(grep "[[:space:]]/media/cdrom[[:space:]]" /target/etc/fstab | cut -d ' ' -f 1) || true
+fi
+if [ -z "$CDDEV" ]; then
+	CDDEV=$(grep "[[:space:]]/cdrom[[:space:]]" /target/etc/fstab | cut -d ' ' -f 1) || true
+fi
+if [ -n "$CDDEV" ] && [ -e "/target/$CDDEV" ]; then
+	chown 0:24 /target$CDDEV || true
+	ln -s "$CDDEV" /target/dev/cdrom
+fi
