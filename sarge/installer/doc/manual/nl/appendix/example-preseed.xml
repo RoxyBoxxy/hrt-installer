@@ -1,5 +1,5 @@
 <!-- retain these comments for translator revision tracking -->
-<!-- original version: 24518 untranslated -->
+<!-- original version: 25005 untranslated -->
 
 <sect1 id="example-preseed">
 <title>Preconfiguration File Example</title>
@@ -15,10 +15,8 @@ In order to be able to properly present this example in the manual, we've had
 to split some lines. This is indicated by the use of the line-continuation-character
 <quote>\</quote> and extra indentation in the next line. In a real preconfiguration
 file, these split lines have to be joined into <emphasis>one single line</emphasis>.
-If you do not, preconfiguration will fail with unpredictible results.
+If you do not, preconfiguration will fail with unpredictable results.
 </para></note>
-
-</para>
 
 <informalexample><screen>
 #### Modifying syslinux.cfg.
@@ -107,7 +105,7 @@ d-i  netcfg/choose_interface            select auto
 #d-i netcfg/confirm_static              boolean true
 
 # Note that any hostname and domain names assigned from dhcp take
-# precidence over values set here. However, setting the values still
+# precedence over values set here. However, setting the values still
 # prevents the questions from being shown even if values come from dhcp.
 d-i  netcfg/get_hostname                string unassigned-hostname
 d-i  netcfg/get_domain                  string unassigned-domain
@@ -155,7 +153,7 @@ d-i  partman-auto/choose_recipe         select \
 #    20 50 100 ext3 $primary{ } $bootable{ } method{ format } format{ } \
 #    use_filesystem{ } filesystem{ ext3 } mountpoint{ /boot } . \
 #    500 10000 1000000000 ext3 method{ format } format{ } \
-#    use_filesystem{ } filesystem{ ext3 } mountpoint{ / } .  \
+#    use_filesystem{ } filesystem{ ext3 } mountpoint{ / } . \
 #    64 512 300% linux-swap method{ swap } format{ } . 
 # For reference, here is that same recipe in a more readable form:
 #    boot-root ::
@@ -197,7 +195,7 @@ d-i  grub-installer/with_other_os       boolean true
 # Alternatively, if you want to install to a location other than the mbr,
 # uncomment and edit these lines:
 #d-i grub-installer/bootdev             string (hd0,0)
-#d-i grub-installer/only-debian	boolean false
+#d-i grub-installer/only_debian         boolean false
 #d-i grub-installer/with_other_os       boolean false
 
 ##### Finishing up the first stage install.
@@ -207,8 +205,6 @@ d-i  prebaseconfig/reboot_in_progress   note
 
 
 ##### Preseeding base-config.
-# XXX: Note that most of this will not work right until base-config 2.40.4
-# is available.
 
 # Avoid the introductory message.
 base-config  base-config/intro          note
@@ -223,7 +219,7 @@ base-config  base-config/login          note
 ###### Time zone setup.
 
 # Controls whether or not the hardware clock is set to GMT.
-base-config  tzconfig/gmt               boolean true
+base-config  tzconfig/gmt                             boolean true
 
 # If you told the installer that you're in the United States, then you
 # can set the time zone using this variable.
@@ -292,7 +288,6 @@ base-config  apt-setup/security-updates boolean true
 # SQL database, manual package selection. The last of those will run
 # aptitude. You can also choose to install no tasks, and force the
 # installation of a set of packages in some other way.
-# XXX: this will not work until tasksel 2.12 is available
 tasksel      tasksel/first   multiselect Desktop environment
 #tasksel     tasksel/first   multiselect Web server, Mail server, DNS server
 
@@ -353,7 +348,7 @@ xserver-xfree86  xserver-xfree86/config/monitor/mode-list \
 # the same directory as the preseed file that includes them.
 #d-i preseed/include                    string x.cfg
 
-# More flexably, this runs a shell command and if it outputs the names of
+# More flexibly, this runs a shell command and if it outputs the names of
 # preseed files, includes those files. For example, to switch configs based
 # on a particular usb storage device (in this case, a built-in card reader):
 #d-i preseed/include_command            string \
@@ -361,4 +356,5 @@ xserver-xfree86  xserver-xfree86/config/monitor/mode-list \
 #    then echo kraken.cfg; else echo otherusb.cfg; fi
 </screen></informalexample>
 
+</para>
 </sect1>

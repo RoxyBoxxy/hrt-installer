@@ -12,7 +12,14 @@
 >Пример файла автоматической установки</title>
 
 <para
->Это полностью работающий пример файла автоматической установки. В <xref linkend="automatic-install"/> описано как его использовать. Вы можете убрать комментарии с нужных вам строк перед использованием этого файла. </para>
+>Это полностью работающий пример файла автоматической установки. В <xref linkend="automatic-install"/> описано как его использовать. Вы можете убрать комментарии с нужных вам строк перед использованием этого файла. <note
+><para
+>Для правильного отображения этого примера в руководстве мы разделили некоторые строки. Это можно определить по символу продолжения строки <quote
+>\</quote
+> и дополнительному отступу в следующей строке. В рабочем конфигурационном файле эти строки должны быть объединены в <emphasis
+>одну строку</emphasis
+>. Если вы этого не сделаете, автоматическая установка завершится неудачно с непредсказуемым результатом. </para
+></note>
 
 <informalexample
 ><screen
@@ -64,16 +71,23 @@
 
 # This first command is run as early as possible, just after
 # preseeding is read.
-#d-i        preseed/early_command                string wget http://url/to/my.udeb -O /tmp/my.udeb ; udpkg -i /tmp/my.udeb
+#d-i preseed/early_command              string \
+#    wget http://url/to/my.udeb -O /tmp/my.udeb; udpkg -i /tmp/my.udeb
+
 # This command is run just before the install finishes, but when there is
 # still a usable /target directory.
-#d-i        preseed/late_command                string for deb in /hd-media/*.deb; do cp $deb /target/tmp; chroot /target dpkg -i /tmp/$(basename $deb); done
+#d-i preseed/late_command               string \
+#    for deb in /hd-media/*.deb; do cp $deb /target/tmp; \
+#    chroot /target dpkg -i /tmp/$(basename $deb); done
+
 # This command is run just as base-config is starting up.
-#base-config        base-config/early_command        string echo hi mom
+#base-config base-config/early_command  string echo hi mom
+
 # This command is run after base-config is done, just before the login:
 # prompt. This is a good way to install a set of packages you want, or to
 # tweak the configuration of the system.
-#base-config        base-config/late_command        string apt-get install zsh; chsh -s /bin/zsh
+#base-config base-config/late_command   string \
+#    apt-get install zsh; chsh -s /bin/zsh
 
 #### Network configuration.
 
@@ -84,179 +98,191 @@
 
 # netcfg will choose an interface that has link if possible. This makes it
 # skip displaying a list if there is more than one interface.
-d-i        netcfg/choose_interface select auto
+d-i  netcfg/choose_interface            select auto
 
 # If you prefer to configure the network manually, here's how:
-#d-i        netcfg/disable_dhcp        boolean true
-#d-i        netcfg/get_nameservers        string 192.168.1.1
-#d-i        netcfg/get_ipaddress        string 192.168.1.42
-#d-i        netcfg/get_netmask        string 255.255.255.0
-#d-i        netcfg/get_gateway        string 192.168.1.1
-#d-i        netcfg/confirm_static        boolean true
+#d-i netcfg/disable_dhcp                boolean true
+#d-i netcfg/get_nameservers             string 192.168.1.1
+#d-i netcfg/get_ipaddress               string 192.168.1.42
+#d-i netcfg/get_netmask                 string 255.255.255.0
+#d-i netcfg/get_gateway                 string 192.168.1.1
+#d-i netcfg/confirm_static              boolean true
 
 # Note that any hostname and domain names assigned from dhcp take
-# precidence over values set here. However, setting the values still
+# precedence over values set here. However, setting the values still
 # prevents the questions from being shown even if values come from dhcp.
-d-i        netcfg/get_hostname        string unassigned-hostname
-d-i        netcfg/get_domain        string unassigned-domain
+d-i  netcfg/get_hostname                string unassigned-hostname
+d-i  netcfg/get_domain                  string unassigned-domain
 
 # Disable that annoying WEP key dialog.
-d-i        netcfg/wireless_wep        string 
+d-i  netcfg/wireless_wep                string
 # The wacky dhcp hostname that some ISPs use as a password of sorts.
-#d-i        netcfg/dhcp_hostname        string radish
+#d-i netcfg/dhcp_hostname               string radish
 
 #### Mirror settings.
 
-d-i        mirror/country                string enter information manually
-d-i        mirror/http/hostname        string http.us.debian.org
-d-i        mirror/http/directory        string /debian
-d-i        mirror/suite                string testing
-d-i        mirror/http/proxy        string 
+d-i  mirror/country                     string enter information manually
+d-i  mirror/http/hostname               string http.us.debian.org
+d-i  mirror/http/directory              string /debian
+d-i  mirror/suite                       string testing
+d-i  mirror/http/proxy                  string 
 
 ### Partitioning.
 
 # If the system has free space you can choose to only partition that space.
-#d-i        partman-auto/init_automatically_partition        select Use the largest continuous free space
+#d-i partman-auto/init_automatically_partition \
+#    select Use the largest continuous free space
+
 # Alternatively, you can specify a disk to partition. The device name can
 # be given in either devfs or traditional non-devfs format.
 # For example, to use the first disk devfs knows of:
-d-i        partman-auto/disk        string /dev/discs/disc0/disc
+d-i  partman-auto/disk                  string /dev/discs/disc0/disc
 
 # You can choose from any of the predefined partitioning recipes:
-d-i        partman-auto/choose_recipe        select All files in one partition (recommended for new users)
-#d-i        partman-auto/choose_recipe        select Desktop machine
-#d-i        partman-auto/choose_recipe        select Multi-user workstation
+d-i  partman-auto/choose_recipe         select \
+     All files in one partition (recommended for new users)
+#d-i partman-auto/choose_recipe         select Desktop machine
+#d-i partman-auto/choose_recipe         select Multi-user workstation
+
 # Or provide a recipe of your own...
 # The recipe format is documented in the file devel/partman-auto-recipe.txt.
 # If you have a way to get a recipe file into the d-i environment, you can
 # just point at it.
-#d-i        partman-auto/expert_recipe_file        string /hd-media/recipe
+#d-i partman-auto/expert_recipe_file    string /hd-media/recipe
+
 # If not, you can put an entire recipe in one line. This example creates
 # a small /boot partition, suitable swap, and uses the rest of the space
 # for the root partition:
-#d-i        partman-auto/expert_recipe        string boot-root :: 20 50 100 ext3 $primary{ } $bootable{ } method{ format } format{ } use_filesystem{ } filesystem{ ext3 } mountpoint{ /boot } .  500 10000 1000000000 ext3 method{ format } format{ } use_filesystem{ } filesystem{ ext3 } mountpoint{ / } .  64 512 300% linux-swap method{ swap } format{ } . 
+#d-i partman-auto/expert_recipe         string boot-root :: \
+#    20 50 100 ext3 $primary{ } $bootable{ } method{ format } format{ } \
+#    use_filesystem{ } filesystem{ ext3 } mountpoint{ /boot } . \
+#    500 10000 1000000000 ext3 method{ format } format{ } \
+#    use_filesystem{ } filesystem{ ext3 } mountpoint{ / } . \
+#    64 512 300% linux-swap method{ swap } format{ } . 
 # For reference, here is that same recipe in a more readable form:
-#         boot-root ::
-#         40 50 100 ext3
-#                $primary{ } $bootable{ }
-#                method{ format } format{ }
-#                use_filesystem{ } filesystem{ ext3 }
-#                mountpoint{ /boot }
-#        .
-#         500 10000 1000000000 ext3
-#                method{ format } format{ }
-#                use_filesystem{ } filesystem{ ext3 }
-#                mountpoint{ / }
-#        .
-#         64 512 300% linux-swap
-#                method{ swap } format{ }
-#        .
+#    boot-root ::
+#       40 50 100 ext3
+#          $primary{ } $bootable{ }
+#          method{ format } format{ }
+#          use_filesystem{ } filesystem{ ext3 }
+#          mountpoint{ /boot }
+#       .
+#       500 10000 1000000000 ext3
+#          method{ format } format{ }
+#          use_filesystem{ } filesystem{ ext3 }
+#          mountpoint{ / }
+#       .
+#       64 512 300% linux-swap
+#          method{ swap } format{ }
+#       .
 
 # This makes partman automatically partition without confirmation.
-d-i        partman/confirm_write_new_label        boolean true
-d-i        partman/choose_partition        select Finish partitioning and write changes to disk
-d-i        partman/confirm                        boolean        true
+d-i partman/confirm_write_new_label     boolean true
+d-i partman/choose_partition            select \
+    Finish partitioning and write changes to disk
+d-i partman/confirm                     boolean true
 
 #### Boot loader installation.
 
 # Grub is the default boot loader (for x86). If you want lilo installed
 # instead, uncomment this:
-#d-i        grub-installer/skip                boolean true
+#d-i grub-installer/skip                boolean true
 
 # This is fairly safe to set, it makes grub install automatically to the MBR
 # if no other operating system is detected on the machine.
-d-i        grub-installer/only_debian        boolean true
+d-i  grub-installer/only_debian         boolean true
+
 # This one makes grub-installer install to the MBR if if finds some other OS
 # too, which is less safe as it might not be able to boot that other OS.
-d-i        grub-installer/with_other_os        boolean true
+d-i  grub-installer/with_other_os       boolean true
+
 # Alternatively, if you want to install to a location other than the mbr,
 # uncomment and edit these lines:
-#d-i        grub-installer/bootdev                string (hd0,0)
-#d-i        grub-installer/only-debian        boolean false
-#d-i        grub-installer/with_other_os        boolean false
+#d-i grub-installer/bootdev             string (hd0,0)
+#d-i grub-installer/only_debian         boolean false
+#d-i grub-installer/with_other_os       boolean false
 
 ##### Finishing up the first stage install.
 
 # Avoid that last message about the install being complete.
-d-i        prebaseconfig/reboot_in_progress        note 
+d-i  prebaseconfig/reboot_in_progress   note 
 
 
 ##### Preseeding base-config.
-# XXX: Note that most of this will not work right until base-config 2.40.4
-# is available.
 
 # Avoid the introductory message.
-base-config        base-config/intro        note 
+base-config  base-config/intro          note
 
 # Avoid the final message.
-base-config        base-config/login        note 
+base-config  base-config/login          note
 
 # If you installed a display manager, but don't want to start it immediately
 # after base-config finishes.
-#base-config        base-config/start-display-manager        boolean false
+#base-config base-config/start-display-manager        boolean false
 
 ###### Time zone setup.
 
 # Controls whether or not the hardware clock is set to GMT.
-base-config        tzconfig/gmt                boolean true
+base-config  tzconfig/gmt                             boolean true
 
 # If you told the installer that you're in the United States, then you
 # can set the time zone using this variable.
 # (Choices are: Eastern, Central, Mountain, Pacific, Alaska, Hawaii,
 # Aleutian, Arizona East-Indiana, Indiana-Starke, Michigan, Samoa, other)
-base-config        tzconfig/choose_country_zone/US        select Eastern
+base-config  tzconfig/choose_country_zone/US          select Eastern
 # If you told it you're in Canada.
 # (Choices are: Newfoundland, Atlantic, Eastern, Central,
 # East-Saskatchewan, Saskatchewan, Mountain, Pacific, Yukon, other)
-base-config        tzconfig/choose_country_zone/CA        select Eastern
+base-config  tzconfig/choose_country_zone/CA          select Eastern
 # If you told it you're in Brazil. (Choices are: East, West, Acre,
 # DeNoronha, other)
-base-config        tzconfig/choose_country_zone/BR        select East
+base-config  tzconfig/choose_country_zone/BR          select East
 # Many countries have only one time zone. If you told the installer you're
 # in one of those countries, you can choose its standard time zone via this
 # question.
-base-config        tzconfig/choose_country_zone_single boolean true
+base-config  tzconfig/choose_country_zone_single      boolean true
 # This question is asked as a fallback for countries other than those
 # listed above, which have more than one time zone. You can preseed one of
 # the time zones, or "other".
-#base-config        tzconfig/choose_country_zone_multiple select 
+#base-config tzconfig/choose_country_zone_multiple    select 
 
 ###### Account setup.
 
 # To preseed the root password, you have to put it in the clear in this
 # file. That is not a very good idea, use caution!
-#passwd                passwd/root-password                password r00tme
-#passwd                passwd/root-password-again        password r00tme
+#passwd passwd/root-password            password r00tme
+#passwd passwd/root-password-again      password r00tme
 
 # If you want to skip creation of a normal user account.
-#passwd                passwd/make-user                boolean false
+#passwd passwd/make-user                boolean false
+
 # Alternatively, you can preseed the user's name and login.
-#passwd                passwd/user-fullname                string Debian User
-#passwd                passwd/username                        string debian
+#passwd passwd/user-fullname            string Debian User
+#passwd passwd/username                 string debian
 # And their password, but use caution!
-#passwd                passwd/user-password                password insecure
-#passwd                passwd/user-password-again        password insecure
+#passwd passwd/user-password            password insecure
+#passwd passwd/user-password-again      password insecure
 
 ###### Apt setup.
 
 # This question controls what source the second stage installation uses
 # for packages. Choices are cdrom, http, ftp, filesystem, edit sources list
 # by hand
-base-config        apt-setup/uri_type        select http
+base-config  apt-setup/uri_type         select http
 
 # If you choose ftp or http, you'll be asked for a country and a mirror.
-base-config        apt-setup/country        select enter information manually
-base-config        apt-setup/hostname        string http.us.debian.org
-base-config        apt-setup/directory        string /debian
+base-config  apt-setup/country          select enter information manually
+base-config  apt-setup/hostname         string http.us.debian.org
+base-config  apt-setup/directory        string /debian
 # Stop after choosing one mirror.
-base-config        apt-setup/another        boolean false
+base-config  apt-setup/another          boolean false
 
 # You can choose to install non-free and contrib software.
-#base-config        apt-setup/non-free        boolean true
-#base-config        apt-setup/contrib        boolean true
+#base-config apt-setup/non-free         boolean true
+#base-config apt-setup/contrib          boolean true
 
 # Do enable security updates.
-base-config        apt-setup/security-updates        boolean true
+base-config  apt-setup/security-updates boolean true
 
 ###### Package selection.
 
@@ -266,19 +292,20 @@ base-config        apt-setup/security-updates        boolean true
 # SQL database, manual package selection. The last of those will run
 # aptitude. You can also choose to install no tasks, and force the
 # installation of a set of packages in some other way.
-# XXX: this will not work until tasksel 2.12 is available
-tasksel                tasksel/first        multiselect Desktop environment
-#tasksel        tasksel/first        multiselect Web server, Mail server, DNS server
+tasksel      tasksel/first   multiselect Desktop environment
+#tasksel     tasksel/first   multiselect Web server, Mail server, DNS server
 
 ###### Mailer configuration.
 
 # During a normal install, exim asks only two questions. Here's how to
 # avoid even those. More complicated preseeding is possible.
-exim4-config        exim4/dc_eximconfig_configtype        select no configuration at this time
+exim4-config exim4/dc_eximconfig_configtype \
+    select no configuration at this time
+
 # It's a good idea to set this to whatever user account you choose to
 # create. Leaving the value blank results in postmaster mail going to
 # /var/mail/mail.
-exim4-config        exim4/dc_postmaster                string 
+exim4-config exim4/dc_postmaster        string 
 
 ###### X Configuration.
 
@@ -288,22 +315,24 @@ exim4-config        exim4/dc_postmaster                string
 
 # X can detect the right driver for some cards, but if you're preseeding,
 # you override whatever it chooses. Still, vesa will work most places.
-#xserver-xfree86        xserver-xfree86/config/device/driver        select vesa
+#xserver-xfree86 xserver-xfree86/config/device/driver select vesa
 
 # A caveat with mouse autodetection is that if it fails, X will retry it
 # over and over. So if it's preseeded to be done, there is a possibility of
 # an infinite loop if the mouse is not autodetected.
-#xserver-xfree86        xserver-xfree86/autodetect_mouse        boolean true
+#xserver-xfree86 xserver-xfree86/autodetect_mouse     boolean true
 
 # Monitor autodetection is recommended.
-xserver-xfree86                xserver-xfree86/autodetect_monitor        boolean true
+xserver-xfree86 xserver-xfree86/autodetect_monitor    boolean true
 # Uncomment if you have a LCD display.
-#xserver-xfree86        xserver-xfree86/config/monitor/lcd        boolean true
+#xserver-xfree86 xserver-xfree86/config/monitor/lcd   boolean true
 # X has three configuration paths for the monitor. Here's how to preseed
 # the "medium" path, which is always available. The "simple" path may not
 # be available, and the "advanced" path asks too many questions.
-xserver-xfree86        xserver-xfree86/config/monitor/selection-method        select medium
-xserver-xfree86        xserver-xfree86/config/monitor/mode-list        select 1024x768 @ 60 Hz
+xserver-xfree86  xserver-xfree86/config/monitor/selection-method \
+    select medium
+xserver-xfree86  xserver-xfree86/config/monitor/mode-list \
+    select 1024x768 @ 60 Hz
 
 ###### Everything else.
 
@@ -312,11 +341,8 @@ xserver-xfree86        xserver-xfree86/config/monitor/mode-list        select 10
 # be asked. You can preseed those too, of course. To get a list of every
 # possible question that could be asked during an install, do an
 # installation, and then run these commands:
-#   debconf-get-selections --installer 
-> file
-#   debconf-get-selections 
->
-> file
+#   debconf-get-selections --installer > file
+#   debconf-get-selections >> file
 
 # If you like, you can include other preseed files into this one.
 # Any settings in those files will override pre-existing settings from this
@@ -324,14 +350,18 @@ xserver-xfree86        xserver-xfree86/config/monitor/mode-list        select 10
 # loaded. The included files can have preseed/include directives of their
 # own as well. Note that if the filenames are relative, they are taken from
 # the same directory as the preseed file that includes them.
-#d-i        preseed/include        string x.cfg
-# More flexably, this runs a shell command and if it outputs the names of
+#d-i preseed/include                    string x.cfg
+
+# More flexibly, this runs a shell command and if it outputs the names of
 # preseed files, includes those files. For example, to switch configs based
 # on a particular usb storage device (in this case, a built-in card reader):
-#d-i        preseed/include_command        string if $(grep -q "GUID: 0aec3050aec305000001a003"  /proc/scsi/usb-storage-*/*); then echo kraken.cfg; else echo otherusb.cfg; fi
+#d-i preseed/include_command            string \
+#    if $(grep -q "GUID: 0aec3050aec305000001a003" /proc/scsi/usb-storage-*/*); \
+#    then echo kraken.cfg; else echo otherusb.cfg; fi
 </screen
 ></informalexample>
 
+</para>
 </sect1>
 <!--   End of file appendix/example-preseed.xml -->
 
@@ -589,27 +619,24 @@ xserver-xfree86        xserver-xfree86/config/monitor/mode-list        select 10
 >Установка мыши</title>
 
 <para
->Мышь можно использовать и в консоли Linux (с gpm), и в среде X window. Два этих режима можно использовать совместно, если повторитель gpm использован для разрешения прохождения сигнала в X сервер, как показано ниже: <informalexample
-><screen
->мышь =&#62; /dev/psaux  =&#62; gpm =&#62; /dev/gpmdata -&#62; /dev/mouse =&#62; X
-         /dev/ttyS0           (повторитель)   (символьная ссылка)
+>Мышь можно использовать одновременно и в консоли Linux (с помощью gpm) и в среде X window. Это возможно, если использовать повторитель gpm, который позволит передачу сигналовX серверу: <informalexample
+><screen>
+mouse =&gt; /dev/psaux  =&gt; gpm =&gt; /dev/gpmdata -&gt; /dev/mouse =&gt; X
+         /dev/ttyS0             (repeater)        (symlink)
          /dev/ttyS1
 </screen
-></informalexample>
-
-</para
-><para
->Установите протокол повторителя в значение raw (в <filename
+></informalexample
+> Установите протокол повторителя в raw (в файле <filename
 >/etc/gpm.conf</filename
->) и настройте X на оригинальный протокол мыши в <filename
+>), а в настройках X изначальный протокол работы мыши(в файле <filename
 >/etc/X11/XF86Config</filename
 > или <filename
 >/etc/X11/XF86Config-4</filename
->. </para
+>). </para
 ><para
 >Такой подход с использованием gpm даже в X имеет преимущество, если мышь отключат по неосторожности. Простой перезапуск gpm командой <informalexample
 ><screen>
-user@debian:# /etc/init.d/gpm restart
+# /etc/init.d/gpm restart
 </screen
 ></informalexample
 > подключит мышь в программе заново без перезапуска X. </para
@@ -644,10 +671,9 @@ user@debian:# /etc/init.d/gpm restart
 # Посылать сингал правой кнопки мышки клавишей F12
 /dev/mac_hid/mouse_button3_keycode = 88
 # Для других клавиш, используйте showkey, который скажет вам нужный код.
-
 </screen
-></informalexample
->  
+></informalexample>
+
 </para>
   </sect2>
  </sect1>
@@ -661,20 +687,92 @@ user@debian:# /etc/init.d/gpm restart
 >В следующей таблице содержатся размеры, полученные из aptitude для задач, описанных в tasksel. Заметим, что некоторые пакеты содержатся в нескольких задачах одновременно, поэтому полный размер установки для двух задач вместе может быть меньше, чем полный размер, полученный сложением размеров. </para
 ><para>
 
-<informalexample
-><screen
->Задача                            После установки   Нужно загрузить   Требует места
-                                  Размер (МБ)       Размер (МБ)       Для установки (МБ)
+<informaltable
+><tgroup cols="4">
+<thead>
+<row>
+  <entry
+>Задача</entry>
+  <entry
+>Размер после установки (МБ)</entry>
+  <entry
+>Размер загрузки (МБ)</entry>
+  <entry
+>Требуемое место для установки (МБ)</entry>
+</row>
+</thead>
 
-Десктоп                           1537              521               2058
-Веб сервер                        71                21                92
-Сервер печати                     240               83                323
-Почтовый сервер                   41                12                53
-Файловый сервер                   85                34                119
-База данных SQL                   108               33                141
+<tbody>
+<row>
+  <entry
+>Рабочий стол</entry>
+  <entry
+>1537</entry>
+  <entry
+>521</entry>
+  <entry
+>2058</entry>
+</row>
 
-</screen
-></informalexample>
+<row>
+  <entry
+>Веб сервер</entry>
+  <entry
+>71</entry>
+  <entry
+>21</entry>
+  <entry
+>92</entry>
+</row>
+
+<row>
+  <entry
+>Сервер печати</entry>
+  <entry
+>240</entry>
+  <entry
+>83</entry>
+  <entry
+>323</entry>
+</row>
+
+<row>
+  <entry
+>Почтовый сервер</entry>
+  <entry
+>41</entry>
+  <entry
+>12</entry>
+  <entry
+>53</entry>
+</row>
+
+<row>
+  <entry
+>Файловый сервер</entry>
+  <entry
+>85</entry>
+  <entry
+>34</entry>
+  <entry
+>119</entry>
+</row>
+
+<row>
+  <entry
+>SQL база данных</entry>
+  <entry
+>108</entry>
+  <entry
+>33</entry>
+  <entry
+>141</entry>
+</row>
+
+</tbody>
+</tgroup
+></informaltable>
+
 </para>
  </sect1>
 <!--   End of file appendix/files.xml -->
@@ -700,39 +798,32 @@ user@debian:# /etc/init.d/gpm restart
 <para
 >С помощью имеющейся утилиты работы с разделами диска, переразметьте диск как нужно, создав как минимум одну файловую систему плюс раздел подкачки (swap). Вам потребуется минимум 150 МБ для консольной версии установки или минимум 300 МБ, если вы планируете установить X. </para
 ><para
->Создайте файловые системы на разделах. Например, чтобы создать файловую систему ext3 на разделе <filename
+>Создание файловых систем на разделах. Например, чтобы создать файловую систему ext3 на разделе <filename
 >/dev/hda6</filename
 > (это корневой раздел в нашем примере): <informalexample
 ><screen>
-
- $ mke2fs -j /dev/hda6
-
+# mke2fs -j /dev/hda6
 </screen
 ></informalexample
-> Чтобы создать файловую систему ext2, пропустите параметр <userinput
+> Чтобы создать файловую систему ext2, не указывайте параметр <userinput
 >-j</userinput
 >. </para
 ><para
->Инициализируйте и активизируйте раздел подкачки (подставьте номер раздела, предназначенного для раздела подкачки Debian): <informalexample
-><screen
->$ mkswap /dev/hda5
- $ sync; sync; sync
- $ swapon /dev/hda5
-
+>Инициальзация и активирование подкачки (замените номер раздела на свой): <informalexample
+><screen>
+# mkswap /dev/hda5
+# sync; sync; sync
+# swapon /dev/hda5
 </screen
-></informalexample>
-
-</para
-><para
->Смонтируйте один раздел как <filename
+></informalexample
+> Смонтируйте один раздел как <filename
 >/mnt/debinst</filename
 > (точка установки, она будет корневой (<filename
 >/</filename
 >) файловой системой в вашей новой системе). Имя точки монтирования абсолютно произвольное, оно описано позже. <informalexample
 ><screen
->$ mkdir /mnt/debinst
- $ mount /dev/hda6 /mnt/debinst
-
+># mkdir /mnt/debinst
+# mount /dev/hda6 /mnt/debinst
 </screen
 ></informalexample>
 
@@ -761,27 +852,23 @@ user@debian:# /etc/init.d/gpm restart
 ></ulink
 > </para
 ><para
->Также вы можете использовать следующую процедуру для установки вручную. Создайте каталог work для распаковки .deb: <informalexample
-><screen
->$ mkdir work
- $ cd work
-
+>Или вы можете использовать следующую процедуру установки вручную. Создайте каталог work для распаковки в него .deb: <informalexample
+><screen>
+# mkdir work
+# cd work
 </screen
-></informalexample>
-</para
-><para
->Бинарный файл <command
+></informalexample
+> Бинарный файл <command
 >debootstrap</command
 > расположен в архиве Debian (убедитесь, что вы выбрали правильный файл, соответствующий вашей архитектуре). Загрузите <command
 >debootstrap</command
 > .deb из <ulink url="http://ftp.debian.org/debian/pool/main/d/debootstrap/"
-> пула</ulink
+>пула</ulink
 >, скопируйте пакет в каталог work и извлеките из него бинарные файлы. Вам потребуются привилегии суперпользователя (root) для установки бинарных файлов. <informalexample
 ><screen
->$ ar -xf debootstrap_0.X.X_arch.deb
- $ cd /
- $ zcat &#60; /full-path-to-work/work/data.tar.gz | tar xv
-
+># tar -xf debootstrap_0.X.X_arch.deb
+# cd /
+# zcat /full-path-to-work/work/data.tar.gz | tar xv
 </screen
 ></informalexample>
 
@@ -836,49 +923,42 @@ user@debian:# /etc/init.d/gpm restart
 >sparc</userinput
 >. <informalexample
 ><screen
->$ /usr/sbin/debootstrap --arch ARCH &releasename; \
+># /usr/sbin/debootstrap --arch ARCH &releasename; \
      /mnt/debinst http://http.us.debian.org/debian
-
 </screen
 ></informalexample>
 
 </para>
-
   </sect2>
 
   <sect2>
   <title
 >Настройка базовой системы</title>
-
 <para
 >Теперь у вас на диске есть настоящая, пусть и слабенькая, система Debian. Выполните <command
 >Chroot</command
 > в неё: <informalexample
 ><screen
->$ chroot /mnt/debinst /bin/bash
-
+># chroot /mnt/debinst /bin/bash
 </screen
 ></informalexample>
+
 </para>
 
    <sect3>
    <title
 >Монтирование разделов</title>
 <para
->Вам надо создать <filename
+>Вам нужно создать файл <filename
 >/etc/fstab</filename
 >. <informalexample
-><screen
-># editor /etc/fstab
-
+><screen>
+# editor /etc/fstab
 </screen
-></informalexample>
-
-</para
-><para
->Вот пример, который можно использовать: <informalexample
-><screen
-># /etc/fstab: информация о статических файловых системах.
+></informalexample
+> Вот пример, измените его под ваши условия: <informalexample
+><screen>
+# /etc/fstab: информация о статических файловых системах.
 #
 # файл. система  точка монтир. тип     параметры                дамп проход
 /dev/XXX         /             ext2    defaults                 0    0
@@ -894,47 +974,35 @@ proc             /proc         proc    defaults                 0    0
 /dev/XXX         /var          ext2    rw,nosuid,nodev          0    2
 /dev/XXX         /usr          ext2    rw,nodev                 0    2
 /dev/XXX         /home         ext2    rw,nosuid,nodev          0    2
-
 </screen
-></informalexample>
-
-</para
-><para
->Используйте <userinput
+></informalexample
+> Выполните <userinput
 >mount -a</userinput
-> для монтирования всех файловых систем, которые вы описали в <filename
+>, чтобы смонтировать все файловые системы, заданные в файле <filename
 >/etc/fstab</filename
->, или смонтируйте файловые системы по отдельности: <informalexample
-><screen
-># mount /путь  # например:  mount /usr
-
+>, или для монтирования определённой файловой системы выполните: <informalexample
+><screen>
+# mount /path   # e.g.: mount /usr
 </screen
-></informalexample>
-
-</para
-><para
->Вы можете смонтировать файловую систему proc много раз и в разные места, хотя принято в /proc . Если вы не использовали <userinput
+></informalexample
+> Вы можете монтировать файловую систему proc несколько раз и в произвольные места, хотя принято в /proc. Если вы не использовали <userinput
 >mount -a</userinput
->, убедитесь, что смонтировали proc: <informalexample
+>, то перед тем как продолжить, убедитесь, что proc смонтирована: <informalexample
 ><screen
 ># mount -t proc proc /proc
-
 </screen
 ></informalexample>
 
 </para>
-
    </sect3>
 
    <sect3>
    <title
 >Настройка клавиатуры</title>
-
 <para
 >Для настройки клавиатуры введите: <informalexample
 ><screen
 ># dpkg-reconfigure console-data
-
 </screen
 ></informalexample>
 
@@ -945,42 +1013,38 @@ proc             /proc         proc    defaults                 0    0
    <title
 >Настройка сети</title>
 <para
->Для настройки сети отредактируйте <filename
+>Для настройки сети, отредактируйте <filename
 >/etc/network/interfaces</filename
 >, <filename
 >/etc/resolv.conf</filename
 > и <filename
 >/etc/hostname</filename
 >. <informalexample
-><screen
-># editor /etc/network/interfaces 
-
+><screen>
+# editor /etc/network/interfaces 
 </screen
-></informalexample>
-
-</para
-><para
->Вот несколько примеров из <filename
+></informalexample
+> Здесь приведены некоторые простые примеры из <filename
 >/usr/share/doc/ifupdown/examples</filename
 >: <informalexample
-><screen
->######################################################################
-# /etc/network/interfaces -- файл настройки для ifup(8), ifdown(8)
-# Смотрите на man странице interfaces(5) описание возможных
-# параметров.
+><screen>
+######################################################################
+# /etc/network/interfaces -- configuration file for ifup(8), ifdown(8)
+# See the interfaces(5) manpage for information on what options are 
+# available.
 ######################################################################
 
-# Нам всегда нужен loopback интерфейс.
+# We always want the loopback interface.
 #
 auto lo
 iface lo inet loopback
 
-# Чтобы использовать dhcp:
+# To use dhcp:
 #
 # auto eth0
 # iface eth0 inet dhcp
 
-# Пример настройки статического IP: (опции broadcast и gateway необязательны)
+# An example static IP setup: (broadcast and gateway are optional)
 #
 # auto eth0
 # iface eth0 inet static
@@ -990,61 +1054,45 @@ iface lo inet loopback
 #     broadcast 192.168.0.255
 #     gateway 192.168.0.1
 </screen
-></informalexample>
-
-</para
-><para
->Введите адрес(а) ваших DNS-серверов и параметры search в <filename
+></informalexample
+> Укажите серверы имён и директивы search в <filename
 >/etc/resolv.conf</filename
 >: <informalexample
-><screen
-># editor /etc/resolv.conf
-
+><screen>
+# editor /etc/resolv.conf
 </screen
-></informalexample>
-
-</para
-><para
->Простой <filename
+></informalexample
+> Простой <filename
 >/etc/resolv.conf</filename
 >: <informalexample
-><screen
-># search hqdom.local\000
-# nameserver 10.1.1.36
-# nameserver 192.168.9.100
-
+><screen>
+search hqdom.local\000
+nameserver 10.1.1.36
+nameserver 192.168.9.100
 </screen
-></informalexample>
-
-</para
-><para
->Введите имя вашей системы (от 2 до 63 символов): <informalexample
-><screen
-># echo DebianHostName &#62; /etc/hostname
-
+></informalexample
+> Укажите имя системы (2 - 63 символа): <informalexample
+><screen>
+# echo DebianHostName &gt; /etc/hostname
 </screen
-></informalexample>
-
-</para
-><para
->Если у вас есть несколько сетевых карт, вы должны упорядочить имена модулей драйверов в файле <filename
+></informalexample
+> Если у вас несколько сетевых карт, то вам нужноразместить имена драйверов в файле <filename
 >/etc/modules</filename
->. Во время следующей загрузки, каждая карта будет ассоциирована с именем интерфейса (eth0, eth1, и т.д.) как вы и ожидаете. </para>
+> в желаемом порядке. Позже при загрузке каждая карта будет связана с именем интерфейса (eth0, eth1, и тд.) как вы и хотели. </para>
    </sect3>
 
    <sect3>
    <title
 >Настройка часового пояса, пользователей и APT</title>
-
 <para
 >Выберите часовой пояс, добавьте обычного пользователя и укажите источники <command
 >apt</command
 >, запустив <informalexample
 ><screen
 ># /usr/sbin/base-config new
-
 </screen
 ></informalexample>
+
 </para>
    </sect3>
 
@@ -1054,10 +1102,8 @@ iface lo inet loopback
 <para
 >Чтобы использовать язык, отличный от английского, нужно настроить локаль. Для этого установите пакет поддержки локалей и настройте его: <informalexample
 ><screen>
-
- # apt-get install locales
- # dpkg-reconfigure locales
-
+# apt-get install locales
+# dpkg-reconfigure locales
 </screen
 ></informalexample
 > ЗАМЕЧАНИЕ: Apt должен быть уже настроен, например, во время фазы base-config. Перед использованием локалей с набором символов, отличным от ASCII или latin1, пожалуйста проконсультируйтесь с нужным HOWTO по локализации. </para>
@@ -1067,21 +1113,17 @@ iface lo inet loopback
   <sect2>
   <title
 >Установка ядра</title>
-
 <para
 >Если вы намерены загружать эту систему, то вам скорее всего понадобится ядро Linux и системный загрузчик. Определите доступные пакеты с ядрами при помощи <informalexample
-><screen
-># apt-cache search kernel-image
-
+><screen>
+# apt-cache search kernel-image
 </screen
-></informalexample>
-
-</para
-><para
->А затем установите нужный, указав имя пакета. <informalexample
+></informalexample
+> Затем установите нужное указав его имя пакета. <informalexample
 ><screen
-># apt-get install kernel-image-2.X.X-арх-и.т.д.
-
+># apt-get install kernel-image-<replaceable
+>2.X.X-arch-etc</replaceable
+>
 </screen
 ></informalexample>
 
@@ -1117,7 +1159,6 @@ delay=20
 lba32
 image=/vmlinuz
 label=Debian
-
 </screen
 ></informalexample>
 
@@ -1131,11 +1172,10 @@ label=Debian
 >yaboot.conf</filename
 >, относящийся к системе, из которой его вызвали). </para
 ><para arch="powerpc"
->Вот простой <filename
+>Вот простой пример <filename
 >/etc/yaboot.conf</filename
-> в качестве примера: <informalexample
+>: <informalexample
 ><screen>
-
 boot=/dev/hda2
 device=hd:
 partition=6
@@ -1144,7 +1184,6 @@ magicboot=/usr/lib/yaboot/ofboot
 timeout=50
 image=/vmlinux
 label=Debian
-
 </screen
 ></informalexample
 > На некоторых машинах вам возможно понадобится использовать <userinput
