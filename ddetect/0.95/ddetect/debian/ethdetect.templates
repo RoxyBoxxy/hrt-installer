@@ -1,0 +1,33 @@
+Template: ethdetect/module_select
+Type: select
+_Choices: ${CHOICES}, none of the above
+Default: none of the above
+_Description: Driver needed by your Ethernet card:
+ No Ethernet card was detected. If you know the name of the driver
+ needed by your Ethernet card, you can select it from the list.
+
+Template: ethdetect/load_floppy
+Type: boolean
+Default: false
+_Description: Load network drivers from a driver floppy?
+ No Ethernet card was detected. For some Ethernet cards you may need
+ to load additional network drivers from a driver floppy. If you have
+ such a floppy available now, put it in the drive before continuing.
+
+Template: ethdetect/cannot_find
+Type: error
+_Description: Ethernet card not found
+ No Ethernet card was found on the system.
+
+Template: ethdetect/modprobe_error
+Type: error
+_Description: Error while running '${CMD_LINE_PARAM}'
+
+Template: ethdetect/detect_progress_title
+Type: text
+_Description: Detecting network hardware
+
+Template: debian-installer/ethdetect/title
+Type: text
+#  Main menu item
+_Description: Detect network hardware
