@@ -666,9 +666,9 @@ pick_kernel () {
 }
 
 install_kernel () {
-	kernel_major="$(echo "$KERNEL" | sed 's/^kernel-image-//' | cut -d . -f 1,2)"
+	kernel_major="$(echo "$KERNEL" | sed 's/^kernel-image-//; s/-.*//' | cut -d . -f 1,2)"
 	case $kernel_major in
-		2.*)	;;
+		2.?)	;;
 		*)
 			# something went wrong; use major version of
 			# installation kernel
