@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <!-- original version: 19074 -->
-<!-- revisado jfs, 31 octubre 2004 -->
+<!-- revisado jfs, 23 febrero 2005 -->
+<!-- revisado Rudy Godoy, 22 feb. 2005 -->
 
  <chapter id="d-i-intro"><title>Usando el instalador de Debian</title>
 
@@ -8,7 +9,7 @@
 <para>
 
 El instalador de Debian está compuesto por un conjunto de componentes de
-propósito específico para realizar cada tarea de instalación. Cada
+propósito específico para realizar cada tarea de la instalación. Cada
 componente realiza una tarea, formulando al usuario las preguntas que 
 sean necesarias para realizar su trabajo. Se asignan prioridades a cada
 una de las preguntas, fijando su prioridad al arrancar el instalador.
@@ -29,9 +30,9 @@ Cuando exista un problema, el usuario verá el error en pantalla, y
 es posible que se muestre el menú del instalador para que elija de éste alguna 
 acción alternativa. El usuario no verá el menú del instalador
 si no se produce ningún problema, simplemente tendrá que responder las 
-preguntas solicitadas por cada componente en cada paso.
+preguntas formuladas por cada componente en cada paso.
 Se fija prioridad crítica («critical») para cualquier notificación de un error
-serio, por lo que el usuario siempre será avisado de estos errores.
+serio, por lo que el usuario siempre será notificado de estos errores.
 
 </para><para>
 
@@ -46,7 +47,7 @@ Puede consultar todas las opciones disponibles en
 
 </para><para>
 
-Es posible que los usuarios avanzados estén más comodos si utilizan
+Es posible que los usuarios avanzados estén más cómodos si utilizan
 la interfaz basada en menú, donde el control de cada paso lo tiene el usuario
 en lugar de que éstos se ejecuten de forma automática en una secuencia
 predeterminada por el instalador.
@@ -68,7 +69,7 @@ El modo experto le da control total del &d-i;.
 
 Las pantallas del instalador están basadas en caracteres (distinto de la,
 cada vez más familiar, interfaz gráfica). El ratón no está operativo en este
-entorno. A continuación se indican algunas teclas que usted puede usar para moverse en
+entorno. A continuación se indican algunas teclas que puede usar para moverse en
 los diversos diálogos. El <keycap>Tabulador</keycap> o la tecla con la
 flecha <keycap>derecha</keycap> realizan desplazamientos «hacia adelante», 
 la combinación tecla <keycombo> <keycap>Shift</keycap>
@@ -77,7 +78,7 @@ la combinación tecla <keycombo> <keycap>Shift</keycap>
 opciones mostradas.
 Las teclas con la flecha <keycap>arriba</keycap> y <keycap>abajo</keycap> 
 mueven entre los distintos elementos disponibles en una lista desplazable, 
-y también desplazan a la lista en sí (cuando se llega al final de la pantalla, N. del T.). Además, en listas largas, usted puede
+y también desplazan a la lista en sí (cuando se llega al final de la pantalla, N. del t.). Además, en listas largas, usted puede
 escribir una letra para hacer que la lista se desplace directamente
 a la sección con elementos que se inicien con la letra que ha escrito y
 usar las teclas <keycap>Re-Pág</keycap> (Retroceso de página) y <keycap>Av-Pág</keycap> (Avance de página) para 
@@ -87,7 +88,7 @@ activar las opciones elegidas.
 
 </para><para arch="s390">
 
-S/390 no soporta consolas virtuales. Usted puede abrir una segunda y
+S/390 no soporta consolas virtuales. Puede abrir una segunda y
 tercera sesión de telnet para poder ver los mensajes de registro descritos
 a continuación.
 
@@ -104,7 +105,7 @@ principal pulse
 </para><para>
 
 También puede encontrar los mensajes de error en 
-<filename>/var/log/messages</filename>. Se copia este registro
+<filename>/var/log/messages</filename>. Este registro se copia
 a <filename>/var/log/debian-installer/messages</filename>
 en su nuevo sistema una vez finalizada la instalación. 
 Durante el proceso de instalación puede encontrar otros mensajes 
@@ -121,7 +122,7 @@ de que el ordenador haya sido iniciado con el sistema instalado.
 
 A continuación se muestra una lista de los componentes del instalador con una breve
 descripción del propósito de cada uno. Puede encontrar los detalles que 
-necesite conocer de un determinado componente en
+necesite conocer de un determinado componente en la
 <xref linkend="module-details"/>.
 
 </para>
@@ -133,7 +134,7 @@ necesite conocer de un determinado componente en
 
 Muestra al usuario la lista de componentes durante el trabajo del
 instalador, e inicia el componente elegido cuando se selecciona.
-Las preguntas de main-menu tienen prioridad media («medium»), de modo no verá
+Las preguntas de «main-menu» tienen prioridad media («medium»), de modo que no verá
 el menú si define su prioridad a valores alto («high») ó crítico («critical»).
 El valor predeterminado es alto.
 Por otro lado, se reducirá temporalmente la prioridad de alguna pregunta
@@ -215,7 +216,7 @@ el disco duro.
 
 <term>choose-mirror</term><listitem><para>
 
-Presenta una lista de los servidores espejos del archivo de Debian. El usuario
+Presenta una lista de los servidores de réplica del archivo de Debian. El usuario
 puede elegir la fuente que se utilizará para sus paquetes de instalación.
 
 </para></listitem>
@@ -244,8 +245,8 @@ varios trucos para eliminar partes innecesarias del &d-i; en la memoria
 
 <term>anna</term><listitem><para>
 
-«Anna's Not Nearly APT» (Anna casi no es APT, N. del T.). 
-Instala paquetes que han sido obtenidos del servidor espejo escojido
+«Anna's Not Nearly APT» (Anna casi no es APT, N. del t.). 
+Instala paquetes que han sido obtenidos del servidor espejo escogido
 o del CD-ROM.
 
 </para></listitem>
@@ -268,7 +269,7 @@ particionado recomendada para Debian.
 <term>autopartkit</term><listitem><para>
 
 Particiona automáticamente todo el disco de acuerdo a unas preferencias
-de usuario pre-definidas.
+de usuario predefinidas.
 
 </para></listitem>
 </varlistentry>
@@ -295,8 +296,8 @@ particiones seleccionadas de acuerdo a las instrucciones del usuario.
 
 <term>lvmcfg</term><listitem><para>
 
-Ayuda al usuario con la configuración del gestor de vólumenes lógicos (
-Logical Volume Manager ó <firstterm>LVM</firstterm>, N. del T.).
+Ayuda al usuario con la configuración del gestor de volúmenes lógicos (
+Logical Volume Manager ó <firstterm>LVM</firstterm>, N. del t.).
 
 </para></listitem>
 </varlistentry>
@@ -306,7 +307,7 @@ Logical Volume Manager ó <firstterm>LVM</firstterm>, N. del T.).
 
 Permite al usuario configurar sistemas <firstterm>RAID</firstterm> 
 («Redundant Array of Inexpensive Disks») por software. Este RAID por
-software habitualamente es mejor que los controladores baratos RAID IDE  
+software habitualmente es mejor que los controladores baratos RAID IDE  
 (pseudo hardware) que puede encontrar en placas base nuevas.
 
 </para></listitem>
@@ -315,8 +316,8 @@ software habitualamente es mejor que los controladores baratos RAID IDE
 
 <term>base-installer</term><listitem><para>
 
-Instala el conjunto de paquetes mas básico que permitirán que el
-ordenador opere con Linux cuando sea reiniciado.
+Instala el conjunto de paquetes más básico que permitirá que el
+ordenador opere con Linux cuando se reinicie.
 
 </para></listitem>
 </varlistentry>
@@ -325,11 +326,11 @@ ordenador opere con Linux cuando sea reiniciado.
 <term>os-prober</term><listitem><para>
 
 Detecta los sistemas operativos instalados actualmente en el
-ordenador y entrega esta información a bootloader-installer. Que le 
-ofrecerá la posibildiad de añadir estos sistemas
+ordenador y entrega esta información a «bootloader-installer». Éste le 
+ofrecerá la posibilidad de añadir estos sistemas
 operativos al menú de inicio del gestor de arranque.
 De esta manera el usuario podría fácilmente elegir qué sistema
-operativo cargar en el momento de arrancar su sistema.
+operativo iniciar en el momento de arrancar su sistema.
 
 
 </para></listitem>
@@ -341,7 +342,7 @@ operativo cargar en el momento de arrancar su sistema.
 Instala un gestor de arranque en el disco duro. Éste es necesario
 para que el ordenador arranque usando Linux sin usar un disco flexible
 ó CD-ROM. Muchos gestores de arranque permiten al usuario elegir un
-sistema operativo alternativo cada vez que el computador se reinicia.
+sistema operativo alternativo cada vez que el ordenador se reinicia.
 
 </para></listitem>
 </varlistentry>
@@ -350,9 +351,9 @@ sistema operativo alternativo cada vez que el computador se reinicia.
 <term>base-config</term><listitem><para>
 
 Incluye preguntas para configurar los paquetes del sistema base de
-acuerdo a las preferencias del usuario. Esto se hace normalmente 
+acuerdo a las preferencias del usuario. Esto se hace usualmente 
 después de reiniciar el ordenador, tratándose por tanto de la
-'primera ejecución' en el nuevo sistema Debian.
+«primera ejecución» en el nuevo sistema Debian.
 
 </para></listitem>
 </varlistentry>
@@ -371,7 +372,7 @@ desde la segunda consola.
 
 Ofrece una forma para que el usuario pueda guardar información en un
 disco flexible cuando se encuentre ante un problema. De esta forma 
-puede informar después adecuadamente de los problemas que ha tenido
+puede informar después, adecuadamente, sobre los problemas que ha tenido
 con el programa del instalador a los desarrolladores de Debian.
 
 </para></listitem>

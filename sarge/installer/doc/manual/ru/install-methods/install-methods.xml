@@ -1007,7 +1007,20 @@ image=/vmlinux
 ><para arch="hppa"
 >Некоторые старые HPPA машины (например 715/75) используют RBOOTD, а не BOOTP. ПакетRBOOTD доступен на веб сайте parisc-linux. </para
 ><para
->Trivial File Transfer Protocol (TFTP) используется для загрузки загрузочного образа на клиентскую машину. Теоретически, можно использовать любой сервер на любой платформе, которая реализует эти протоколы. В примерах этого раздела мы используем команды из SunOS 4.x, SunOS 5.x (так называемый Solaris) и GNU/Linux. </para>
+>Trivial File Transfer Protocol (TFTP) используется для загрузки загрузочного образа на клиентскую машину. Теоретически, можно использовать любой сервер на любой платформе, которая реализует эти протоколы. В примерах этого раздела мы используем команды из SunOS 4.x, SunOS 5.x (так называемый Solaris) и GNU/Linux. <note arch="i386"
+><para
+>Для использования загрузки по TFTP в методе Pre-boot Execution Environment (PXE) , вам нужен TFTP сервер с поддержкой <userinput
+>tsize</userinput
+>. На сервере &debian; этому условию удовлетворяют пакеты <classname
+>atftpd</classname
+> и <classname
+>tftpd-hpa</classname
+>; мы рекомендуем <classname
+>tftpd-hpa</classname
+>. </para
+></note>
+
+</para>
 
 
 <!-- Start of file install-methods/tftp/rarp.xml -->
@@ -1283,18 +1296,6 @@ tftp dgram udp wait nobody /usr/sbin/tcpd in.tftpd /tftpboot
 >inetd-pid</replaceable
 ></userinput
 >. </para
-><note arch="i386"
-><para
->Для использования загрузки по TFTP в методе Pre-boot Execution Environment (PXE) , вам нужен TFTP сервер с поддержкой <userinput
->tsize</userinput
->. На сервере &debian; этому условию удовлетворяют пакеты <classname
->atftpd</classname
-> и <classname
->tftpd-hpa</classname
->; мы рекомендуем <classname
->tftpd-hpa</classname
->. </para
-></note
 ><para arch="mips"
 >Если вы хотите установить Debian на машину SGI, а ваш TFTP сервер работает на GNU/Linux с ядром Linux 2.4, то на сервере вам нужно выполнить: <informalexample
 ><screen>

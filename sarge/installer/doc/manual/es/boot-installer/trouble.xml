@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <!-- original version: 24663 -->
 <!-- revisado jfs, 21 noviembre 2004 -->
+<!-- revisado Rudy Godoy, 22 feb. 2005 -->
 
  <sect1 id="boot-troubleshooting">
  <title>Resolución de problemas en el proceso de instalación</title>
@@ -18,9 +19,9 @@ vez suele ser la fiabilidad de los disquetes.
 </para><para>
 
 El disquete de arranque es el que puede dar mayores problemas, debido 
-a que se lee directamente por el hardware, antes de que arranque 
+a que es leído directamente por el hardware, antes de que arranque 
 Linux. A menudo, el hardware no lee tan confiablemente como lo hace el
-controlador de disquetes de Linux, y podría parar sin mostrar ningún
+controlador de disquetes de Linux, y podría detenerse sin mostrar ningún
 mensaje de error si lee datos incorrectos. También pueden
 producirse problemas en los disquetes de controladores, fácilmente
 observables porque se producen 
@@ -57,7 +58,7 @@ hardware o controladores firmware defectuosos.
 
 <para>
 
-En el caso de que tenga problemas, el núcleo se bloquee durante el proceso de
+En caso de que tenga problemas, el núcleo se bloquee durante el proceso de
 arranque, no reconozca los dispositivos que tiene o no se reconozcan
 correctamente las unidades, lo primero que debe
 verificar son los parámetros de arranque, como se explica en
@@ -65,9 +66,9 @@ verificar son los parámetros de arranque, como se explica en
 
 </para><para>
 
-Si está arrancando con su propio núcleo en lugar de que provee
-el instalador, asegúrese de que la opción <userinput>CONFIG_DEVFS</userinput>
-está definida en éste. <userinput>CONFIG_DEVFS</userinput> es necesario
+Si está arrancando con su propio núcleo en lugar del que se provee
+con el instalador, asegúrese de que la opción <userinput>CONFIG_DEVFS</userinput>
+esté definida en éste. <userinput>CONFIG_DEVFS</userinput> es necesario
 para el instalador.
 
 </para><para>
@@ -83,7 +84,7 @@ dispositivos «Plug-n-Play» pueden ser especialmente problemáticos.
 
 Puede que tenga que incluir un argumento de arranque para limitar la
 cantidad de memoria que reconocerá el núcleo si tiene una gran
-cantidad de memoria en su máquina, más de 512MB, y el instalador se
+cantidad de memoria en su máquina, más de 512 MB, y el instalador se
 bloquea cuando arranca el núcleo, utilice, por ejemplo,
 <userinput>mem=512m</userinput>.
 
@@ -103,17 +104,17 @@ de la forma
 <computeroutput>can't initialize <replaceable>algo</replaceable>
 </computeroutput>, o incluso <computeroutput>this driver release depends
 on <replaceable>algo</replaceable> </computeroutput>.
-Muchos de estos mensajes so inócuos. Los ve porque
+Muchos de estos mensajes son inocuos. Los ve porque
 el sistema de instalación está programado para ejecutarse en ordenadores
 con diversos dispositivos. Obviamente, ningún ordenador tendrá todos y cada uno
 de los posibles dispositivos, de modo que el sistema operativo 
 emite algunos mensajes de advertencia mientras intenta buscar dispositivos
-que usted no tiene. Puede también observar que el sistema se detiene durante
+que usted no tiene. También podría observar que el sistema se detiene durante
 algunos momentos. Esto ocurre cuando se está esperando que un dispositivo
 responda y éste no está presente en su sistema. 
 Podrá crear más adelante un núcleo a medida (lea <xref
-linkend="kernel-baking"/>) si usted piensa que el tiempo que tarda en
-arrancar el sistema es muy elevado
+linkend="kernel-baking"/>) si piensa que el tiempo que tarda en
+arrancar el sistema es muy largo.
 
 </para>
   </sect2>
@@ -127,7 +128,7 @@ Podría serle útil la opción de informe de fallos
 si ha pasado la fase inicial de arranque pero no puede completar
 la instalación.
 Esta opción copia los registros de fallos de sistema y la información de 
-configuración al disquete que vd. proporcione.
+configuración al disquete que usted proporcione.
 Esta información puede darle pistas sobre lo que ha fallado y cómo
 solucionarlo. Podría también querer adjuntar esta información si va a
 enviar un informe de fallos.
@@ -161,18 +162,18 @@ uname -a &lt;El resultado de ejecutar uname -a en el indicador del intérprete de
 Date: &lt;Fecha y hora de la instalación&gt;
 Method: &lt;¿Cómo lo instaló? ¿Qué arrancó? Si fue una instalación a través 
         de red, ¿desde dónde? ¿utilizó un servidor proxy?&gt;
-Machine: &lt;Descripción de la máquina (p.e., IBM Thinkpad R32)&gt;
+Machine: &lt;Descripción de la máquina (p. ej., IBM Thinkpad R32)&gt;
 Processor: &lt;Tipo de procesador&gt;
 Memory: &lt;Cantidad de memoria RAM&gt;
 Root Device: &lt;¿IDE o SCSI? Tipo del dispositivo raíz&gt;
 Root Size/partition table: &lt;Puede incluir aquí su tabla de particiones,
      incluyendo algunas notas que indiquen que particiones se montan y donde.&gt;
-Output of lspci and lspci -n: &lt;Salida de la ordenes «lspci» y «lspci -n»&gt;
+Output of lspci and lspci -n: &lt;Salida de la órdenes «lspci» y «lspci -n»&gt;
 
 Base System Installation Checklist: &lt;Marque según sea su caso: Escriba «O»
-     si dicha fase funcionó, «E» si presentó algún fallo y dejela en blanco si
+     si dicha fase funcionó, «E» si presentó algún fallo y déjela en blanco si
      no intentó o no usó esta opción.&gt;
-[O] = OK, [E] = Error (describalo a continuación), [ ] = didn't try it
+[O] = OK, [E] = Error (descríbalo a continuación), [ ] = didn't try it
 
 Initial boot worked:    [ ] &lt;¿Funcionó el arranque inicial?&gt;
 Configure network HW:   [ ] &lt;¿Se configuró el hardware de red?&gt;
@@ -200,7 +201,7 @@ opciones especificadas.
 
 </para><para>
 
-En el informe de fallo describa cual es el problema, incluya los
+En el informe de fallo describa cuál es el problema, incluya los
 últimos mensajes visibles del núcleo en el caso de que éste
 se bloquee. Describa los pasos que llevó a cabo y que le condujeron a
 la situación del fallo.
