@@ -1,0 +1,99 @@
+#!/bin/sh
+
+. /lib/partman/definitions.sh
+
+# Compute the changes we are going to do
+items=''
+for dev in $DEVICES/*; do
+    [ -d "$dev" ] || continue
+    cd $dev
+    partitions=
+    open_dialog PARTITIONS
+    while { read_line num id size type fs path name; [ "$id" ]; }; do
+       [ "$fs" != free ] || continue
+       partitions="$partitions $id,$num"
+    done
+    close_dialog
+
+    for part in $partitions; do
+       id=${part%,*}
+       num=${part#*,}
+       [ -f $id/method -a -f $id/format \
+           -a -f $id/visual_filesystem ] || continue
+       [ -f $id/filesystem -o ! -f $id/formatted \
+           -o $id/formatted -ot $id/method ] || continue
+       [ ! -f $id/filesystem -o ! -f $id/formatted \
+           -o $id/formatted -ot $id/method \
+           -o $id/formatted -ot $id/filesystem ] || continue
+       filesystem=$(cat $id/visual_filesystem)
+       db_subst partman/text/confirm_item TYPE "$filesystem"
+       db_subst partman/text/confirm_item PARTITION "$num"
+       db_subst partman/text/confirm_item DEVICE $(humandev $(cat device))
+       db_metaget partman/text/confirm_item description
+
+       items="${items}   ${RET}
+"
+    done
+done
+
+if [ "$items" ]; then
+    db_metaget partman/text/confirm_item_header description
+    items="$RET
+$items"
+
+    # Confirm
+    db_reset partman-md/confirm
+    db_subst partman-md/confirm ITEMS "$items"
+
+    db_input critical partman-md/confirm
+    db_go || true
+    db_get partman-md/confirm
+    if [ "$RET" = false ]; then
+        exit 0
+    fi
+fi
+
+# Commit the changes
+
+for s in /lib/partman/commit.d/*; do
+    if [ -x $s ]; then
+	$s || {
+	    db_fset partman-md/commit_failed seen false
+	    db_input high partman-md/commit_failed || true
+	    db_go || true
+	    for s in /lib/partman/init.d/*; do
+		if [ -x $s ]; then
+		    $s || exit 255
+		fi
+	    done
+	    exit 0
+	}
+    fi
+done
+
+# Restart partman.
+
+open_infifo
+write_line "QUIT"
+close_infifo
+
+rm /var/run/parted_server.pid
+
+mdcfg
+
+initcount=`ls /lib/partman/init.d/* | wc -l`
+db_progress START 0 $initcount partman/progress/init/title
+for s in /lib/partman/init.d/*; do
+    if [ -x $s ]; then
+	base=$(basename $s | sed 's/[0-9]*//')
+	if ! db_progress INFO partman/progress/init/$base; then
+	    db_progress INFO partman/progress/init/fallback
+	fi
+	if ! $s; then
+	    db_progress STOP
+	    exit 255
+	fi
+    fi
+    db_progress STEP 1
+done
+db_progress STOP

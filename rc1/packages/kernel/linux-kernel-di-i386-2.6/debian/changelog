@@ -1,0 +1,61 @@
+linux-kernel-di-i386-2.6 (0.62) unstable; urgency=low
+
+  * Move eth1394 to the nic-modules from firewire-core-modules, so we can
+    avoid putting it on initrds that lack other nic drivers, which caused
+    the firewire interface to be brought up too early and in the wrong order.
+    nic-modules now depends on firewire-core-modules. This is a quick fix,
+    so it wasn't changed in kernel-wedge. Closes: #260600
+
+ -- Joey Hess <joeyh@debian.org>  Sun, 25 Jul 2004 13:27:58 -0400
+
+linux-kernel-di-i386-2.6 (0.61) unstable; urgency=low
+
+  * Joey Hess
+    - Move dpt_i2o to scsi-extra-modules to mirror the 2.4 udebs.
+    - Use common firewire-core-modules, note that this adds eth1394 to it.
+    - Build-Depend on latest kernel-wedge.
+    - Drop Herbert Xu from Uploaders field.
+
+ -- Joey Hess <joeyh@debian.org>  Sun,  4 Jul 2004 13:19:18 -0400
+
+linux-kernel-di-i386-2.6 (0.60) unstable; urgency=low
+
+  * Alastair McKinstry
+    - Add ufs-modules, needed for *BSD detection in os-probe.
+  * Joey Hess
+    - Update to the 2.6.7 kernel.
+    - Built with new kernel-wedge to add sata module.
+    - tg3 is back
+    - added some new modules: dpt_i2o, ipr, qlogicfas408, de600,
+      de620, defxx, s2io
+    - sis190 is gone, mark it optional
+    - hid is renamed to usbhid
+    - firmware_class is needed by both tg3 and ipr, so both nic-modules and
+      scsi-modules need it. Broke it out into a new firmware-modules package
+      and added dependencies.
+    - Build-Depend on kernel-wedge 1.18 for firmware-modules support.
+
+ -- Joey Hess <joeyh@debian.org>  Fri,  2 Jul 2004 13:36:54 -0400
+
+linux-kernel-di-i386-2.6 (0.59) unstable; urgency=low
+
+  * Andres Salomon
+    - Add nic-usb-modules, with various usb net drivers.
+    - Various other driver additions, mostly stuff added/renamed in 2.6.
+      Closes: #247240 (sata_sil).
+  * Colin Watson
+    - Kernel images provide ext2-modules.
+  * Joey Hess
+    - sata-modules split out into its own udeb.
+    - kernel-wedge is taking over nic-udb-modules and sata-modules
+      package info, and sata-modules list.
+    - Build-Depend on the newest kernel-wedge.
+
+ -- Joey Hess <joeyh@debian.org>  Tue,  4 May 2004 16:05:13 -0400
+
+linux-kernel-di-i386-2.6 (0.58) unstable; urgency=low
+
+  * First release. Putting 2.6 stuff in a separate package to
+    simplify packaging and allow independant releases.
+
+ -- Joey Hess <joeyh@debian.org>  Thu,  8 Apr 2004 20:46:52 -0400

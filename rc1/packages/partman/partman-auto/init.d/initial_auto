@@ -1,0 +1,16 @@
+#!/bin/sh
+
+. /usr/share/debconf/confmodule
+
+# Only run the first time.
+if [ -f /var/lib/partman/initial_auto ]; then
+	exit 0
+fi
+[ -d /var/lib/partman ] || mkdir /var/lib/partman
+touch /var/lib/partman/initial_auto
+
+echo "partman-auto/init_automatically_partition" > /lib/partman/automatically_partition/question
+. /lib/partman/definitions.sh
+ask_user /lib/partman/automatically_partition 
+code=$?
+echo "partman-auto/automatically_partition" > /lib/partman/automatically_partition/question

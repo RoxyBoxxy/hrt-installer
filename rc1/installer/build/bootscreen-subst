@@ -1,0 +1,28 @@
+#!/usr/bin/perl
+# Usage: bootscreen-subst "${MEDIA_TYPE}" "${DEBIAN_VERSION}" "${BUILD_DATE}"
+#                          < file > outfile
+my $type=shift;
+my $version=shift;
+my $date=shift;
+
+# These are optional.
+my $sysdir=shift;
+my $kernel=shift;
+my $initrd=shift;
+my $kernel_26=shift;
+my $initrd_26=shift;
+
+while (<>) {
+	s/\${MEDIA_TYPE}/$type/g;
+	s/\${DEBIAN_VERSION}/$version/g;
+	s/\${BUILD_DATE}/$date/g;
+	s/\${BOOTPROMPT}\n?$//g;
+	
+	s/\${SYSDIR}/$sysdir/g;
+	s/\${KERNEL}/$kernel/g;
+	s/\${KERNEL_26}/$kernel_26/g;
+	s/\${INITRD}/$initrd/g;
+	s/\${INITRD_26}/$initrd_26/g;
+
+	print;
+}

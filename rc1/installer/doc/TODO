@@ -1,0 +1,184 @@
+This TODO list can only touch on some larger issues, but there are a great
+many open bugs on various components of the installer. See all bugs tagged
+d-i in the BTS. Also, there are many unprocessed installation-reports bugs.
+
+
+Status for different parts of debian-installer.  The numbers are
+approximate (as in +/- 50%) and may change in any direction, at any
+time.
+
+[0%] Not begun
+---------------------------------------------------------------------
+	- some architectures
+		hurd-i386 (we will ship w/o this)
+		sh (we will ship w/o this)
+
+[30%] Might need large rewrites. Current implementation might
+      work by accident
+---------------------------------------------------------------------
+        - GUI frontend to cdebconf.
+		There are some basic implementations. The trick is to make
+		it a GUI that does not suck, while still using debconf
+		underneath.
+	- ppp support
+		  Not as important for analog dialup, as for ISDN, pppoe.
+
+	
+[60%] Needs some work, but does its grunt work
+---------------------------------------------------------------------
+	- I18N
+		Mostly done, still filling in minor holes.
+	- translations
+		Varying languages translated to varying degrees.
+		http://people.debian.org/~seppy/d-i/translation-status.html
+        - boot loader installers (lilo, grub, etc)
+		Work, except for when they don't. See BTS.
+	- anna
+		Works, mostly.  Needs support for Release files.
+		Support for signed Release files would be cool, but
+		needs gpgv-udeb.
+		Needs to have load-installer properly split out of the anna
+		binary to save space on root floppy. Or removed, not used
+		anymore.
+        - disk selector, partitioner
+		We have switched to partman everything except a couple of
+		subarches and s390.
+	- bugreporter-udeb
+		only supports saving to floppy, which many lack
+		should offer a way to save via network or to usb stick
+	- post-reboot configuration
+		base-cofig is stable, though it could use more polish
+		i18n is needed.
+		Some questions repeat questions from d-i.
+	- web site
+		http://www.debian.org/devel/debian-installer/
+		Could be better laid out, lacking some sections, other
+		parts are quite good.
+	- archive integration
+		No automatic propagation to testing.
+		No source propigation for udeb sources!
+	- pcmcia support
+		Much improved, generally works now.
+		Automatic PCI resource range exclusion based on probing
+		still needed, work in progress.
+	- low memory support
+		Where "low" is 32-46 mb!
+		Works, but user must be careful to set up swap ASAP.
+		There is no sanity checking, and some bad failure modes.
+		Zboob's patch for ultra-lowmem needs work and is not yet
+		integrated.
+        - user documentation
+		Installation manual is up-to-date for i386.
+		Needs sanity checking for other architectures.
+		Trnalsations need updates.
+	- developer documentation
+		We understand it, but casual hackers have a high barrier to
+		doing simple things like using a custom kernel.
+	- 2.6 support
+		Works on i386, with minor bugs.
+		Works on powerpc, at least newworld. Testing on
+		other subarches needed, especially G5 and oldworld (with
+		mkvmlinuz).
+	- some architectures
+		i386
+		ia64
+		powerpc
+		mips
+			SGI (mips/r4k-ip22 and mips/r5k-ip22)
+				- fix parted's DVH disk labels support (#239371)
+				- install dvhtool
+			Broadcom SWARM (mips/sb1-swarm-bn)
+				- Needs a working boot loader in the archive
+			Documentation, manual
+			XXX the above may be somewhat out of date
+		mipsel
+			DECstation (mipsel/r3k-kn02 and mipsel/r4k-kn04)
+				- cannot boot from CD (see end of #241231)
+			Cobalt (mipsel/cobalt)
+				- figure out whether to set link_in_boot=yes
+				  (see trunk/packages/rootskel/debian/templates-arch)
+				- boot has to be ext2 -r 0
+				- support installs via SSH, w/o serial console
+				- boot: use: execute rd_start=0x{initrd-start} rd_size=0x{initrd-size} console=ttyS0,{console-speed}
+				- debconf should output progess on the LCD
+			Documentation, manual
+			XXX the above may be somewhat out of date
+		m68k (some subarches)
+		alpha
+		sparc
+		arm (some subarches)
+		hppa
+		amd64 (unofficial)
+		s/390
+			lowmem issues
+			On its first release, probably still some problems.
+
+[90%] Single missing important feature or bug.
+---------------------------------------------------------------------
+	- hw-detect
+		Working but needs to be switched over to discover2
+	- iso-scan
+		Works, but does not flag the disk the iso is mounted from
+		as unusable by the rest of the installer.
+        - netcfg
+		Working, pending rewrite for IPv6.
+	- bts
+		Still need a non-manual way to tag our bugs.
+	- language-chooser
+		The perennial problem is how to order/present the list of
+		languages. Many complaints, but it works.
+        - base system installer
+		It can break due to testing package churn. cdebootstrap
+		would fix this; also debootstrap/apt/archive changes in
+		progress to add Base: overrides to Packages files.
+
+[100%] Those shouldn't need to be touched any more 
+       (famous last words)
+---------------------------------------------------------------------
+        - udpkg
+	- cd installs
+ 	- net retriever
+	- cdrom retriever
+        - ethdetect
+        - cdebconf
+	- floppy retriever
+        - main-menu
+        - choose-mirror
+        - busybox integration
+        - install media build system
+	- kernel-package integration
+        - library reduction
+	- wireless support
+
+Common problems and transitions
+===============================
+
+This is a list of common mistakes that need to be corrected throughout the
+code base:
+
+  * All debconf commands that INPUT, GO, GET or SET questions should check
+    their return value. This is pure evil:
+
+    debconf->command(debconf, "GET", "mirror/suite", NULL); /* unchecked return code ! */
+    asprintf(&command, "foo %s", debconf->value);
+    system(command);
+
+  * cdebconf's debconfclient.h has a set of macros for calling debconf
+    (debconf_get() and so on)
+    These should perhaps be used consistently throughout the code for
+    clarity.
+
+  * There needs to be a centralised logging method. Syslog will do, but
+    we currently have a lot of nasty code that appends messages to
+    /var/log/messages directly. All of that would be converted to pipe it
+    to logger. However, this is a problem, because piping a command to
+    logger loses the exit status of the command. Need some way to run a
+    command, logging the ouput to syslog, w/o losing exit status.
+
+  * udebs should not include md5sums files, or postrm, prerm, preinst
+    scripts. This includes ones generated by debhelper. Linda will find
+    these pretty well.
+
+  * There is no need to set the seen flag anymore. All code that does so
+    should be removed, unless that code is expected to also possibly run on
+    a normal debian system (choose-mirror).
