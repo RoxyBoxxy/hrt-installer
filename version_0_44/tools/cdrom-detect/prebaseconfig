@@ -1,0 +1,11 @@
+#! /bin/sh -e
+if test -x /target/usr/bin/eject ; then
+	# Cannot just tell eject to eject /cdrom as it is not compatable
+	# with busybox umount. Instead, unmount the cdrom first, and then
+	# eject the device.
+	CDDEV=$(mount | grep "on /cdrom" | cut -d ' ' -f 1)
+	if [ -n "$CDDEV" ]; then
+		umount /cdrom || true
+		/target/usr/bin/eject $CDDEV || true
+	fi
+fi

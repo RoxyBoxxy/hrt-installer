@@ -1,0 +1,99 @@
+#! /bin/sh -xe
+
+KERNEL_IMAGE=kernel-image-2.4.19-386,initrd-tools,ash,cramfsprogs,zlib1g
+
+LOGDIR=/target/var/log
+
+PROTOCOL=
+MIRROR=
+DIRECTORY=
+COMPONENTS="main,local"
+DISTRIBUTION=sarge
+
+if [ "$1" = "configure" ]; then
+    . /usr/share/debconf/confmodule
+
+    if [ -f /cdrom/.disk/base_installable ]; then
+
+        PROTOCOL=file
+        MIRROR=""
+        DIRECTORY="cdrom/"
+        if [ -s /cdrom/.disk/base_components ]; then
+            COMPONENTS=`grep -v '^#' /cdrom/.disk/base_components | tr '\n' , | sed 's/,$//'`
+        else
+            COMPONENTS="*"
+        fi
+
+        if [ -s /cdrom/.disk/base_include ]; then
+            INCLUDES=`grep -v '^#' /cdrom/.disk/base_include | tr '\n' , | sed 's/,$//'`
+        fi
+
+        if [ -s /cdrom/.disk/base_exclude ]; then
+            EXCLUDES=`grep -v '^#' /cdrom/.disk/base_exclude | tr '\n' , | sed 's/,$//'`
+        fi
+    else
+
+        db_get mirror/protocol
+        PROTOCOL="$RET"
+
+        db_get mirror/$PROTOCOL/hostname
+        MIRROR="$RET"
+
+        db_get mirror/$PROTOCOL/directory
+        DIRECTORY="$RET"
+
+    fi
+
+    INCLUDE=`echo "--include=${KERNEL_IMAGE},${INCLUDES}" | sed 's/,$//'`
+    EXCLUDE="--exclude=${EXCLUDES}"
+
+    # Default hostname is 'localhost'
+    HOSTNAME=localhost
+    NAMES=localhost
+    db_get netcfg/get_hostname
+    if [ "$RET" ]; then
+        NAMES="$RET $NAMES"
+        HOSTNAME=$RET
+    fi
+ 
+    db_get netcfg/get_domain
+    if [ "$RET" -a "$HOSTNAME" ] ; then
+    	NAMES="${HOSTNAME}.$RET $NAMES"
+    fi
+
+    db_get mirror/distribution
+    DISTRIBUTION=$RET
+
+    test -d /target/etc || mkdir -p /target/etc
+
+    echo "$HOSTNAME" > /target/etc/hostname
+    echo "$HOSTNAME" > /proc/sys/kernel/hostname 
+    echo "127.0.0.1 $NAMES" > /target/etc/hosts
+
+    unset DEBIAN_HAS_FRONTEND
+    unset DEBIAN_FRONTEND
+    unset DEBCONF_FRONTEND
+    unset DEBCONF_REDIR
+
+    cat > /target/etc/kernel-img.conf <<EOF
+# Do not create symbolic links in /
+do_symlinks = yes
+
+# postinst_hook =
+# postrm_hook = 
+do_bootloader = no
+do_bootfloppy = no
+do_initrd = yes
+EOF
+
+    test -d $LOGDIR || mkdir -p $LOGDIR
+
+    debootstrap \
+	--components="${COMPONENTS}" \
+	--boot-floppies ${INCLUDE} \
+	${EXCLUDE} ${DISTRIBUTION} /target \
+	${PROTOCOL}://${MIRROR}/${DIRECTORY} \
+	3>&1 > $LOGDIR/debootstrap.log \
+	2> $LOGDIR/debootstrap.err.log </dev/null
+fi
+exit 0

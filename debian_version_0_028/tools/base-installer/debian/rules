@@ -1,0 +1,72 @@
+#! /usr/bin/make -f
+# Sample debian/rules that uses debhelper.
+# GNU copyright 1997 to 1999 by Joey Hess.
+
+# Uncomment this to turn on verbose mode.
+#export DH_VERBOSE=1
+
+# This is the debhelper compatability version to use.
+export DH_COMPAT=3
+
+PACKAGES=$(shell dh_listpackages)
+BI_PACKAGE=base-installer
+KI_PACKAGE=kernel-installer
+VERSION=$(shell dpkg-parsechangelog | grep ^Version: | cut -d ' ' -f 2)
+BI_ARCH=$(shell dpkg --print-architecture)
+KI_ARCH=all
+
+build: build-stamp
+build-stamp:
+	dh_testdir
+#	dh_testroot
+ifeq (,$(findstring debug,$(DEB_BUILD_OPTIONS)))
+	$(MAKE) small
+else
+	$(MAKE) DEBUG=1
+endif
+	touch build-stamp
+
+clean:
+	dh_testdir
+	rm -f build-stamp
+	$(MAKE) clean
+	dh_clean
+
+install: build
+	dh_testdir
+	dh_testroot
+	mkdir -p debian/base-installer/usr/sbin
+	install run-debootstrap debian/base-installer/usr/sbin
+
+# Build architecture-independent files here.
+binary-indep: $(KI_PACKAGE)
+$(KI_PACKAGE): install
+	dh_testdir
+	dh_testroot
+	dh_installdebconf -p$@
+	dh_strip -p$@
+	dh_compress -p$@
+	dh_fixperms -p$@
+	dh_installdeb  -p$@
+	dh_shlibdeps -p$@
+	dh_gencontrol -p$@ -- -fdebian/files~
+	dpkg-distaddfile $(KI_PACKAGE)_$(VERSION)_$(KI_ARCH).udeb debian-installer required
+	dh_builddeb -p$(KI_PACKAGE) --filename=$(KI_PACKAGE)_$(VERSION)_$(KI_ARCH).udeb
+
+# Build architecture-dependent files here.
+binary-arch: $(BI_PACKAGE)
+$(BI_PACKAGE): install
+	dh_testdir
+	dh_testroot
+	dh_installdebconf -p$@
+	dh_strip -p$@
+	dh_compress -p$@
+	dh_fixperms -p$@
+	dh_installdeb  -p$@
+	dh_shlibdeps -p$@
+	dh_gencontrol -p$@ -- -fdebian/files~
+	dpkg-distaddfile $(BI_PACKAGE)_$(VERSION)_$(BI_ARCH).udeb debian-installer required
+	dh_builddeb -p$(BI_PACKAGE) --filename=$(BI_PACKAGE)_$(VERSION)_$(BI_ARCH).udeb
+
+binary: binary-indep binary-arch
+.PHONY: clean binary-indep binary-arch binary install

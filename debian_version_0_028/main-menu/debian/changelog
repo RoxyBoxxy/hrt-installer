@@ -1,0 +1,251 @@
+main-menu (0.028) unstable; urgency=low
+
+  * Petter Reinholdtsen
+    - Log the menu entry selected, to be able to track what happened
+      during automatic installation.
+
+ -- Petter Reinholdtsen <pere@debian.org>  Thu, 17 Apr 2003 00:05:33 +0200
+
+main-menu (0.027) unstable; urgency=low
+
+  * Petter Reinholdtsen
+    - Log the old and new priority when lowering priority.
+    - Log the name of failing menu items.
+    - Log the package name and return value when unable to configure it.
+
+ -- Petter Reinholdtsen <pere@debian.org>  Sat, 12 Apr 2003 11:08:26 +0200
+
+main-menu (0.026) unstable; urgency=low
+
+  * Sebastian Ley
+    - Unset the backup capability by calling debconfs "CAPB" in every loop.
+      This way only udebs that request backing up explicity will have the
+      capability set.
+  * Martin Sjögren
+    - Briefly turn backup on for the missing-provide question.
+  * Petter Reinholdtsen
+    - Rewrite how failing menu entries are handled.  Instead of increasing
+      the main menu priority, lower the debconf priority limit when
+      something fails.
+
+ -- Petter Reinholdtsen <pere@debian.org>  Sun,  6 Apr 2003 09:42:15 +0200
+
+main-menu (0.025) unstable; urgency=low
+
+  * Make sure language will be updated even when a language chooser is
+    configured indirectly (Closes: #184346).
+
+ -- Martin Sjogren <sjogren@debian.org>  Wed, 26 Mar 2003 10:08:03 +0100
+
+main-menu (0.024) unstable; urgency=low
+
+  * Petter Reinholdtsen
+    - Added Norwegian Bokmål and Nynorsk translations recieved from Bjørn
+      Steensrud and Gaute Hvoslef Kvalnes.
+
+ -- Petter Reinholdtsen <pere@debian.org>  Tue,  4 Mar 2003 17:00:34 +0100
+
+main-menu (0.023) unstable; urgency=low
+
+  * Martin Sjögren
+    - When a menu item fails, set the menu question's priority to critical so
+      it will always be displayed. Based on a patch from pere. (Closes: #177723)
+    - Make sure that the missing provide question has priority critical if
+      there is no default value to the question.
+  * Petter Reinholdtsen
+    - Avoid memory leak in satisfy_virtual().
+
+ -- Martin Sjogren <sjogren@debian.org>  Sun, 26 Jan 2003 20:29:11 +0100
+
+main-menu (0.022) unstable; urgency=low
+
+  * Denis Barbier
+    - Add support for language selection.  Item 10 is by convention
+      language selection, and when it is called, the LANGUAGE environment
+      variable is updated as well as debconf backend by sending SIGUSR1
+      signal to debconf.
+  * Martin Sjögren
+    - Use a virtual package (language-selected) instead of i-m-i 10 to
+      indicate a language has been selected.
+    - Use di_list_free and di_pkg_free to free package lists.
+
+ -- Martin Sjogren <sjogren@debian.org>  Mon, 16 Dec 2002 19:49:55 +0100
+
+main-menu (0.021) unstable; urgency=low
+
+  * Martin Sjögren
+    - Make sure the default choice for resolving uninstalled menu items is at
+      the top
+    - Fix build-deps (Closes: #172805)
+  * André Luís Lopes :
+    - Sync pt_BR template translation with the original english.
+
+ -- Martin Sjogren <sjogren@debian.org>  Tue, 10 Dec 2002 11:56:55 +0100
+
+main-menu (0.020) unstable; urgency=low
+
+  * Martin Sjögren
+    - Move the toposort stuff to libdebian-installer
+
+ -- Martin Sjogren <sjogren@debian.org>  Sat,  7 Dec 2002 13:32:07 +0100
+
+main-menu (0.019) unstable; urgency=low
+
+  * Martin Sjögren
+    - Use new linked list stuff and package functions from libdebian-installer3
+    - Reimplement toposort with new linked list stuff
+    - Use toposort for the purpose of determining the default choice in the
+      menu
+    - Change maintainer to debian-boot and set dwhedon, tfheen and sjogren as
+      uploaders
+
+ -- Tollef Fog Heen <tfheen@debian.org>  Thu,  5 Dec 2002 00:55:01 +0100
+
+main-menu (0.018) unstable; urgency=low
+
+  * Martin Sjögren
+    - Updates to debian/po/sv.po
+    - Don't run udpkg --configure on virtual packages
+  * Denis Barbier
+    - Replace "SUBST foo DEFAULT value" by "SET foo value"
+  * Tollef Fog Heen
+    - Don't use dpkg-reconfigure, use dpkg --force-configure --configure
+      instead.
+
+ -- Tollef Fog Heen <tfheen@debian.org>  Tue, 26 Nov 2002 04:02:00 +0100
+
+main-menu (0.017) unstable; urgency=low
+
+  * Martin Sjögren
+    - Be more intelligent about the default choice when choosing between
+      several functionality-providing packages.
+  * Tollef Fog Heen
+    - Set correct default choice depending on both whether the item wants to
+      be default and the installer-menu-item number
+
+ -- Tollef Fog Heen <tfheen@debian.org>  Thu, 14 Nov 2002 01:58:13 +0100
+
+main-menu (0.016) unstable; urgency=low
+
+  * Martin Sjögren
+    - Use libd-i2 with multiple provides
+    - Update the package_t structures when configuring packages so packages
+      won't be configured multiple times
+  * Convert to po-debconf, set Build-Depends: debhelper (>= 4.1.13)
+    to ensure that generated templates are right, and set output encoding
+    to UTF-8.
+  * André Luís Lopes
+    - Sync pt_BR translation with the original english.
+    - Set pt_BR.po's fields with right values instead
+      of the defaults provided.
+
+ -- Tollef Fog Heen <tfheen@debian.org>  Wed,  6 Nov 2002 02:14:11 +0100
+
+main-menu (0.015) unstable; urgency=low
+
+  * Redirect menutests' standard output to /dev/null.
+  * Martin Sjögren
+    - When configuring virtual packages, only require one providing package,
+      and let the user choose which. Note that this will only happen if at
+      least one of the providing packages is a menu item.
+
+ -- Tollef Fog Heen <tfheen@debian.org>  Thu, 24 Oct 2002 12:09:45 +0200
+
+main-menu (0.014) unstable; urgency=low
+
+  * Add french debconf template (closes: #138522)
+  * Apply patch from Martin Sjögren to use asprintf.
+  * Add Swedish debconf template.
+  * Add Brazilian Portuguese debconf template.
+  Martin Sjögren
+    - Use di_pkg_parse from libd-i
+
+ -- Tollef Fog Heen <tfheen@debian.org>  Fri, 30 Aug 2002 17:09:38 +0200
+
+main-menu (0.013) unstable; urgency=low
+
+  * Don't use setlocale any more, this causes problems when strcmping
+    against a NULL value.
+
+ -- Tollef Fog Heen <tfheen@debian.org>  Sun, 25 Aug 2002 21:36:45 +0200
+
+main-menu (0.012) unstable; urgency=low
+
+  * Build-depend on libcdebconf-dev instead of cdebconf-dev.
+  * Get rid of emacs changelog variables.
+
+ -- Tollef Fog Heen <tfheen@debian.org>  Sun, 18 Aug 2002 14:40:28 +0200
+
+main-menu (0.011) unstable; urgency=low
+
+  * CFLAGS fix, Closes: #141428
+
+ -- Joey Hess <joeyh@debian.org>  Sat,  6 Apr 2002 11:40:34 -0500
+
+main-menu (0.010) unstable; urgency=low
+
+  * Select a default choice each time. 
+
+ -- Raphael Hertzog <hertzog@debian.org>  Sat,  4 Aug 2001 00:55:04 +0200
+
+main-menu (0.009) unstable; urgency=low
+
+  * Use seen flag rather than old isdefault flag. (The isdefault() function
+    just has an unfortunate name, it is really unconnected with these
+    flags..)
+
+ -- Joey Hess <joeyh@debian.org>  Fri,  4 May 2001 18:43:55 -0400
+
+main-menu (0.008) unstable; urgency=low
+
+  * Patch from Romain BEAUGRAND <rbeaugrand@easter-eggs.com> to order()
+    to fix the case of a package with no deps, which is added to the head 
+    of the list. Closes: #95315
+
+ -- Joey Hess <joeyh@debian.org>  Thu,  3 May 2001 21:12:57 -0400
+
+main-menu (0.007) unstable; urgency=low
+
+  * Really allow retrying of failed menu entries.
+
+ -- Joey Hess <joeyh@debian.org>  Thu,  8 Feb 2001 09:02:57 -0800
+
+main-menu (0.006) unstable; urgency=low
+
+  * Allow retrying of failed menu entries, patch from David Whedon.
+
+ -- Joey Hess <joeyh@debian.org>  Wed, 31 Jan 2001 10:36:53 -0800
+
+main-menu (0.005) unstable; urgency=low
+
+  * Now build-depends on debconf-dev, and removed the hack.
+  * Some other minor changes by others.
+
+ -- Joey Hess <joeyh@debian.org>  Sun, 21 Jan 2001 19:19:21 -0800
+
+main-menu (0.004) unstable; urgency=low
+
+  * Deal with half-configured packages.
+
+ -- Joey Hess <joeyh@debian.org>  Sun, 31 Dec 2000 15:40:48 -0800
+
+main-menu (0.003) unstable; urgency=low
+
+  * Whoops, I missed one.
+
+ -- Joey Hess <joey@kitenet.net>  Thu, 21 Dec 2000 14:57:11 -0800
+
+main-menu (0.002) unstable; urgency=low
+
+  * Derelavatized paths for chroot.
+
+ -- Joey Hess <joey@kitenet.net>  Thu, 21 Dec 2000 14:23:04 -0800
+
+main-menu (0.001) unstable; urgency=low
+
+  * First release. Who knows if this will work, it depends on pools
+    getting rolled out and working by next dinstall run..
+
+ -- Joey Hess <joeyh@debian.org>  Thu, 26 Oct 2000 12:02:04 -0700
+
+

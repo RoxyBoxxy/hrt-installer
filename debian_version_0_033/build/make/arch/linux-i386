@@ -1,0 +1,37 @@
+arch-image: $(IMAGE)
+
+# Create a bootable floppy image.
+# 1. make a dos filesystem image
+# 2. copy over kernel, initrd
+# 3. install syslinux
+$(IMAGE): $(INITRD) tmp_mount
+	-if [ "$(UPX)" ] ; then \
+		$(foreach NAME,$(KERNELNAME), \
+			$(UPX) -9 $(TEMP)/$(NAME); ) \
+	fi
+
+	dd if=/dev/zero of=$@.new bs=1k count=$(FLOPPY_SIZE)
+	mkfs.msdos -i deb00001 -n 'Debian Installer' -C $@.new $(FLOPPY_SIZE)
+
+	# syslinux is used to make the floppy bootable
+	$(foreach NAME,$(KERNELNAME), \
+	   mcopy -i$@.new $(TEMP)/$(NAME) ::\linux \
+	&& mcopy -i$@.new $(INITRD) ::\initrd.gz \
+	&& todos < boot/i386/syslinux.cfg |  \
+	   mcopy -i$@.new - ::\syslinux.cfg)
+	syslinux $(SYSLINUX_OPTS) $@.new
+
+	# Finalize the image.
+	mv $@.new $@
+
+# Copy files somewhere the CD build scripts can find them
+# XXX Will only use the last kernel if there are several
+cd_content: $(IMAGE)
+	$(foreach NAME,$(KERNELNAME), \
+		cp -f $(TEMP)/$(NAME) $(DEST)/$(TYPE)-linux; )
+	cp  boot/i386/syslinux.cfg $(DEST)/$(TYPE)-syslinux.cfg
+
+cd_image: cd_content
+	mkisofs -r -J -b `basename $(IMAGE)` -o $(TYPE).iso $(DEST)
+	mv $(TYPE).iso $(DEST)
+

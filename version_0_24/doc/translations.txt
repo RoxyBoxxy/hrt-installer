@@ -1,0 +1,237 @@
+Some clues for translators
+==========================
+
+
+Translation order
+-----------------
+
+When starting to translate debian-installer, you should first make
+sure to get your language choice included, then translate the core
+udebs, next translate the common udebs, and finally complete the rest
+of the udebs.  The second stage installer should also be translated,
+but it consists of normal deb-packages, and not udebs.
+
+Suggested translation order:
+
+-languagechooser
+  (read debian-installer/tools/languagechooser/README.trans for details)
+-common udebs
+-supported architectures udebs
+-second stage
+-future architectures udebs
+-prospective packages (not yet included in d-i)
+
+See the complete packages list at the end of this document.
+
+How to get files to be translated
+---------------------------------
+
+-Go to http://people.debian.org/~barbier/d-i/l10n/xx where xx is your
+ language ISO code (or xx_YY for languages which have country-dependent
+ flavours such as pt_BR or zh_CN).
+
+-Look at the STATUS.utf8.txt file
+
+-For files reported as missing, go pick up the templates.pot file
+ in the debian-installer CVS:
+ http://cvs.alioth.debian.org/cgi-bin/cvsweb.cgi/debian-installer/?cvsroot=d-i.
+ 
+ Example: 
+ "Missing file: debian-installer/retriever/choose-mirror/debian/po/xx.po"
+ --> pick up http://cvs.alioth.debian.org/cgi-bin/cvsweb.cgi/debian-installer/retriever/choose-mirror/debian/po/templates.pot?cvsroot=d-i
+
+ Rename this file to xx.po and start working on it
+
+-For files reported as incomplete, get the file in
+ http://people.debian.org/~barbier/d-i/l10n/xx and complete it. Don't
+ forget to contact the original translator (see PO file header)
+
+ Rename this file to xx.po and start working on it
+
+How to translate
+----------------
+This document is not intended to be a tutorial for gettext-related
+stuff. Please look for documentation of PO editing software such as
+KBabel, gtranslator, PoEdit, EMacs PO-mode, etc.
+
+Please use a dedicated PO-editing tool unless you become very familiar
+with translation work.
+
+Don't forget to properly fill up the PO files header, especially the
+Last-Translator field.
+
+If a translation team exists for your language, WORK WITH THEM. First
+check the debian-l10n-xxxxx mailing list where xxxxx is your language
+name in english (e.g. debian-l10n-polish, debian-l10n-portuguese...).
+
+For general translation issues or for finding other translators for
+your language, you may also use the debian-i18n mailing list (don't
+post translations there, however).
+
+How to update existing translations
+-----------------------------------
+
+If you want to update a translation, please always contact the previous
+translator in order to prevent duplication of work.  His mail address can
+be found in the PO file.
+
+How to test your work
+---------------------
+
+When you have finished your translation, always re-read your file at
+least once to correct all meaning-, spelling-, grammar-, typo-, etc-
+mistakes (maybe your po-editor does include a spellchecker or a
+translation helper like acheck).  Running
+  msgfmt --check --statistics <YOUR LANGUAGE CODE>.po
+(from the gettext package) before committing is also a good idea to
+check that your file is valid and will be integrated without trouble.
+
+You could also run podebconf-display-po (from po-debconf >= 0.8.3)
+on your file:
+  podebconf-display-po -fdialog debian/po/<YOUR LANGUAGE CODE>.po
+to have a rough idea on how your translation will look like.  But
+as cdebconf and debconf displays slightly differ, and as some scripts
+do heavy use of text substitution, do not fully rely on this program.
+Running debian-installer is the only solution to test translations.
+
+How to get help
+---------------
+
+If you need further assistance, do not hesitate to ask for help on
+debian-boot (for debian-installer related stuff) or debian-i18n (for
+l10n related questions) Debian mailing lists.
+
+How to get your work included in debian-installer
+-------------------------------------------------
+
+Choose either of the methods below. CVS commits are encouraged. Create
+an alioth account and ask in -boot for getting write access.
+
+ CVS commit
+ ----------
+If you have CVS write access, don't forget to update changelogs and
+remember: changelog files use UTF-8!! The debian-installer CVS is hosted on
+alioth.debian.org ("debian-installer" and "base-config" projects).
+
+If the distribution in the first line of debian/changelog is
+UNRELEASED, this means that it has been patched since the last upload.
+In this case all you have to do is to add an entry at the end of this
+revision.  Otherwise distribution is unstable, and you have then to
+bump version number.  You can do it by hand, or by running dch -i but
+in any case remember to replace unstable by UNRELEASED in the
+distribution field.  Then add a comment about your contribution.
+
+ File a bug
+ ----------
+You may send your translations as bug reports against the given
+packages.  The packages names are the last part of the lines below
+(for instance, "languagechooser" for tools/languagechooser).
+Some packages have different names which are mentioned when needed.
+
+For bug reports, please use the "d-i" tag.
+
+ Send to debian-boot
+ -------------------
+You may also send the translations to the debian-boot mailing list.
+Please use [INTL:xx] in Subjects where xx is your language code
+(or xx_YY)
+
+PACKAGES LIST
+-------------
+
+ Language choice 
+ ---------------
+
+ tools/languagechooser
+
+ Core udebs
+ ----------
+
+ tools/cdebconf
+ anna
+ main-menu
+ tools/kbd-chooser
+ tools/base-installer
+ tools/prebaseconfig
+ utils (package: di-utils)
+
+ Common udebs
+ ------------
+
+ tools/ddetect
+ tools/cdrom-detect
+ retriever/cdrom (cdrom-retriever)
+ retriever/floppy (floppy-retriever)
+ tools/netcfg
+ retriever/net (net-retriever)
+ retriever/choose-mirror
+ tools/cdrom-checker
+ tools/iso-scan
+ tools/bugreporter-udeb
+ tools/partitioner
+ tools/partconf
+ tools/baseconfig-udeb
+ tools/lvmcfg
+ tools/autopartkit
+
+ Architecture-dependent udebs
+ ----------------------------
+
+ 1) Already supported architectures specific tools
+ -------------------------------------------------
+
+  tools/grub-installer
+  tools/lilo-installer
+  tools/mips/arcboot-installer
+  tools/yaboot-installer
+
+ 2) Will be supported soon/in the future
+ ---------------------------------------
+
+  tools/aboot-installer
+  tools/ia64/elilo-installer
+  tools/hppa/palo-installer
+  tools/sparc/silo-installer
+  tools/s390/netdevice
+  tools/s390/dasd
+  tools/mipsel/delo-installer
+
+ Prospective packages
+ --------------------
+ 
+  partman/*
+  
+ Post-reboot installation stage
+ ------------------------------
+
+ (some of these packages do not only need debconf-type translation, but
+ also program translation)
+
+ Translations must be reported as wishlist bugs against these
+ packages.  
+
+ Base-config is an exception because it is maintained by the debian-boot
+ team, so other methods (CVS commits and -boot filing) may apply for it.
+ Note that it is a separate project on alioth.
+  
+ base-config (debconf)
+ shadow (debconf+programs)
+ console-data (debconf)
+ discover (debconf)
+ tasksel (debconf)
+ aptitude (programs)
+ dselect (programs)
+ apt (programs)
+ dpkg (programs)
+ exim4-config (debconf)
+
+ As 2nd stage install uses debconf, you also need to translate the
+ interface widgets used by debconf. On mosts systems, the "dialog" interface
+ is used, which require to translate widgets from the "newt" package.
+
+This guide is supposed to be be a first start for translators.  There
+are probably errors, and some packages we forgot.  Please add them if
+you discover such packages, and fix it if you find errors.
+
+  Petter Reinholdtsen, 2003-11-08
+  Christian Perrier, 2003-12-20 (updated packages list and more information)

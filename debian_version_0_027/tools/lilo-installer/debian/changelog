@@ -1,0 +1,180 @@
+lilo-installer (0.0.17) UNRELEASED; urgency=low
+
+  * Carlos Valdivia Yagüe
+   - Update Spanish translation.
+  * Alastair McKinstry
+   - Convert changelog to UTF-8, for Standards-Version 3.6.0
+
+ -- Matt Kraai <kraai@debian.org>  Sun, 13 Jul 2003 07:03:28 +0200
+
+lilo-installer (0.0.16) unstable; urgency=low
+
+  * Pierre Machard:
+   - Update French po-debconf template
+  * Petter Reinholdtsen
+   - Change template name from lilo-installer/activate_part to
+     lilo-installer/activate-part to match the script.  Patch from Joe
+     Nahmias.  (Closes: #199955)
+
+ -- Petter Reinholdtsen <pere@debian.org>  Mon,  7 Jul 2003 00:29:06 +0200
+
+lilo-installer (0.0.15) unstable; urgency=low
+
+  *  André Luís Lopes :
+    - Improve original english template so it doesn't refer to
+      debconf frontend interface (it used to ask one to say "yes"
+      to make a partition active).
+    - Mark lilo-installer/active_part template as translatable.
+    - Run debconf-updatepo to feed more translatable strings to
+      translators.
+    - Update pt_BR debconf template translations.
+  * Petter Reinholdtsen
+    - Only ignore error code 30 from db_input, not all of them.  This take
+      care of the non-interactive mode without ignoring real errors.
+    - Update nb.po.
+  * Thorsten Sauter:
+    - Change kernel path from /target/boot/vmlinuz to /target/vmlinuz
+    - Change ramdisk path from /target/boot/initrd.img to /target/initrd.img
+
+ -- Petter Reinholdtsen <pere@debian.org>  Tue, 24 Jun 2003 21:14:16 +0200
+
+lilo-installer (0.0.14) unstable; urgency=low
+
+  * Thorsten Sauter
+    - Include German translation (de.po)
+  * Pierre Machard
+    - Update French translation (fr.po)
+  * Petter Reinholdtsen
+    - Offer to make install partition active if it isn't already.
+      Depend on fdisk-udeb to make sure sfdisk (used to set the active
+      flag) is available.
+      Based on patch from Joe Nahmias.  (Closes: #191594)
+
+ -- Petter Reinholdtsen <pere@debian.org>  Sun,  1 Jun 2003 13:28:03 +0200
+
+lilo-installer (0.0.13) unstable; urgency=low
+
+  * Make it possible to build this package using binary-arch target.
+    (Closes: 184287)
+  * Correct call do db_input, it should only ignore return value 30
+    meaning the question was not displayed.  All other return values
+    are errors.
+  * Add myself as uploader for this package.
+  * Make sure to use the same default console as the linux kernel, and
+    let the user know when a serial console is enabled.  Based on patch
+    from Joe Nahmias.  (Closes: #191588)
+  * André Luís Lopes :
+    - Update pt_BR debconf template translation.
+  * Thorsten Sauter
+    - Include german translation (de.po)
+
+ -- Petter Reinholdtsen <pere@debian.org>  Sat, 10 May 2003 22:06:31 +0200
+
+lilo-installer (0.0.12) unstable; urgency=low
+
+  * Petter Reinholdtsen
+    - Update nn.po, thanks to Gaute Hvoslef Kvalnes.
+  * Teófilo Ruiz Suárez <teo@debian.org>
+    - Update es.po
+
+ -- Petter Reinholdtsen <pere@debian.org>  Sun,  4 May 2003 14:45:13 +0200
+
+lilo-installer (0.0.11) unstable; urgency=low
+
+  * Petter Reinholdtsen
+    - The boot loader installers now depend on kernel-installer, not
+      base-installer.
+    - Added Norwegian Bokmål (nb.po) translations recieved from
+      Bjørn Steensrud.
+    - Added Norwegian Nynorsk (nn.po) translations recieved from
+      Gaute Hvoslef Kvalnes.
+
+ -- Petter Reinholdtsen <pere@debian.org>  Tue,  4 Mar 2003 16:52:47 +0100
+
+lilo-installer (0.0.10) unstable; urgency=low
+
+  * Use initrd.img and vmlinuz from /boot.
+  * Change Build-Depends-Indep to Build-Depends.
+
+ -- Matt Kraai <kraai@debian.org>  Wed, 12 Feb 2003 21:55:08 -0800
+
+lilo-installer (0.0.9) unstable; urgency=low
+
+  * Depend on di-utils-mapdevfs (closes: #179919).
+
+ -- Matt Kraai <kraai@debian.org>  Sat, 08 Feb 2003 12:12:57 -0800
+
+lilo-installer (0.0.8) unstable; urgency=low
+
+  * Tollef Fog Heen
+    - Add proper serial port support
+    - Fix defaultbootdev so it points to the MBR, not the partition.
+
+ -- Tollef Fog Heen <tfheen@debian.org>  Fri,  6 Dec 2002 22:32:06 +0100
+
+lilo-installer (0.0.7) unstable; urgency=low
+
+  * Tollef Fog Heen
+    - Fix installer-menu-item
+    - Add missing \ in regex in postinst.  Thanks rgh.
+
+ -- Tollef Fog Heen <tfheen@debian.org>  Thu,  5 Dec 2002 01:24:13 +0100
+
+lilo-installer (0.0.6) unstable; urgency=low
+
+  * Tollef Fog Heen
+    - Change priority to standard
+  * André Luís Lopes
+    - Unfuzzy pt_BR.po lilo-installer's template translation.
+  * Denis Barbier
+    - Remove "Default: ${bootdev}" in templates file, and replace
+      db_subst in postinst by db_fget/db_set.
+
+ -- Tollef Fog Heen <tfheen@debian.org>  Tue, 26 Nov 2002 04:09:33 +0100
+
+lilo-installer (0.0.5) unstable; urgency=low
+
+  * Martin Sjögren
+    - Replace XBC with XB so our special control fields don't confuse the
+      changes files.
+    - Set default value for l-i/bootdev question.
+  * André Luís Lopes
+    - Set pt_BR.po control fields.
+  * Tollef Fog Heen
+    - Fix installer-menu-item
+
+ -- Tollef Fog Heen <tfheen@debian.org>  Thu, 14 Nov 2002 02:18:37 +0100
+
+lilo-installer (0.0.4) unstable; urgency=low
+
+  * Insert path to initrd if initrd.img is available
+
+ -- Tollef Fog Heen <tfheen@debian.org>  Fri,  8 Nov 2002 05:44:23 +0100
+
+lilo-installer (0.0.3) unstable; urgency=low
+
+  * Don't set LD_LIBRARY_PATH.
+
+ -- Tollef Fog Heen <tfheen@debian.org>  Wed,  6 Nov 2002 02:07:35 +0100
+
+lilo-installer (0.0.2) unstable; urgency=low
+
+  * Add Brazilian Portuguese debconf template.
+  * Add Danish debconf template.
+  * Drop depend on chroot.  There is no such package.
+  * Fall back to using /proc/mounts if /etc/mtab doesn't exist
+  * Translate from devfs names to old-style names.
+  * Put -boot as maintainer, put moshez and me in Uploaders.
+  * Convert to po-debconf, set Build-Depends: debhelper (>= 4.1.13)
+    to ensure that generated templates are right, and set output encoding
+    to UTF-8.
+
+ -- Tollef Fog Heen <tfheen@debian.org>  Mon, 14 Oct 2002 16:16:20 +0200
+
+lilo-installer (0.0.1) unstable; urgency=low
+
+  * First release
+  * THIS IS PRETTY MUCH UNTESTED!!!!!!
+    DON'T use this unless you're interested in helping me debug. 
+
+ -- Moshe Zadka <moshez@debian.org>  Fri,  9 Aug 2002 09:19:13 +0300

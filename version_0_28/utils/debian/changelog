@@ -1,0 +1,409 @@
+debian-installer-utils (0.28) unstable; urgency=low
+
+  * Claus Hindsgaul
+    - Update da (Danish) translation.
+  * Alastair McKinstry
+    - Move to new debconf macros.
+    - Added versioned depends on libdebconfclient-dev to ensure we get
+      working debonf_* macros
+  * Denis Barbier
+    - Add a comment in templates file to flag the main menu item.
+  * Kęstutis Biliūnas
+    - Add Lithuanian (lt.po) translation.
+  * Joey Hess
+    - Add a postinst for di-utils-shell. Closes: #215158
+    - Set DH_OPTIONS=-n to remove eg, debconf-generated postrm files.
+    - Fix build-dependency on libdebconfclient-dev (add 0).
+    - Clarified the wording of di-utils-shell/do-shell.
+    - Add myself to uploaders.
+    - Remove udpkg.c. Put it back when it works and is ready to be used, for
+      now it is just confusing.
+    - Remove exec binary. It doesn't work, and the name is wrong (exec is a
+      shell builtin!)
+    - Add usage message to di-utils if it's run directly.
+    - Remove di-utils-fake-*. There are better approaches.
+    - Remove standard-version, udebs are not standards-compliant.
+    - Removed various unreferenced files in debian/.
+    - Update to debhelper v4.
+    - Trim cruft from .cvsignore.
+    - Bump the priority of the di-utils-shell/do-shell to high.
+      It is an informational message, and those running at high priority
+      levels are the ones who need to read it most, probably.
+    - Simplified rules file; use dh_builddeb, dh_gencontrol.
+    - Break shell back out of the multicall binary (which is now a single-call
+      binary, whee!), and make di-utils-shell use a compiled postinst.
+    - Fix debhelper command invocations for split arch/indep package.
+      Although it's all arch dep right now, there will be an indep package
+      soon.
+  * Christian Perrier
+    - Update French translation.
+
+ -- Joey Hess <joeyh@debian.org>  Thu, 16 Oct 2003 15:09:06 -0400
+
+debian-installer-utils (0.27) unstable; urgency=low
+
+  * Alastair McKinstry
+    - Convert changelog to UTF-8 as per policy.
+    - Moved to Standards-Version: 3.6.1; no changes required.
+  * Thorsten Sauter
+    - Update German translation. (Closes: #179638)
+  * Bastian Blank
+    - Remove async, unused.
+    - Move shell and mapdevfs to a multicall binary.
+    - Add exec to the binary.
+    - Make exec exit with read return code.
+  * Petter Reinholdtsen
+    - Make menu entry translatable.
+    - Update nb.po.
+    - Make sure new multicall binary is installed into an
+      existing directory.  Based on patch from Goswin von Brederlow.
+  * Kenshi Muto
+    - Update Japanese po (ja.po)
+  * André Luís Lopes
+    - Update pt_BR (Brazilian Portuguese) translation.
+  * Pierre Machard
+    - Update French po-debconf translation.
+  * Miroslav Kure
+    - Added Czech translation.
+  * Bart Cornelis
+    - updated dutch translation (nl.po)
+
+ -- Bastian Blank <waldi@debian.org>  Thu, 09 Oct 2003 16:18:08 +0200
+
+debian-installer-utils (0.26) unstable; urgency=low
+
+  * Petter Reinholdtsen
+    - Update and complete the nb.po debconf translation.
+    - Update ru.po, patch from Serge Winitzki. (Closes: #180893)
+  * Chris Tillman
+    - Update English usage in message templates
+  * Kenshi Muto
+    - Update ja.po
+  * Christian Perrier
+    - Update fr.po
+  * André Luís Lopes
+    - Update pt_BR (Brazilian Portuguese) translation.
+  * Bart Cornelis
+    - updated dutch translation
+
+ -- Petter Reinholdtsen <pere@debian.org>  Sat, 27 Sep 2003 17:57:40 +0200
+
+debian-installer-utils (0.25) unstable; urgency=low
+
+  * André Luís Lopes
+    - Update Brazilian Portuguese (pt_BR) debconf template translation.
+  * Alastair McKinstry
+    - Update to Standards-Version 3.6.0, converting changelog to UTF-8
+  * Pierre Machard
+    - Update French debconf template translation.
+  * Javier Fernandez-Sanguino
+    - Fixed to use proper spanish quotes
+  * Petter Reinholdtsen
+    - Updated fr.po, patch from Christian Perrier and Lucien Coste.
+      (Closes: #206966)
+  * Kenshi Muto
+    - Added Japanese translation (ja.po)
+
+ -- Petter Reinholdtsen <pere@debian.org>  Tue,  9 Sep 2003 20:50:02 +0200
+
+debian-installer-utils (0.24) unstable; urgency=low
+
+  * Alastair McKinstry
+    - Disable di-utils-choosesystem for now
+    - Remove unwanted menutest files
+  * Joey Hess
+    - shell.c dups the old fd to stderr too, since main-menu eats stderr
+      otherwise
+
+ -- Alastair McKinstry <mckinstry@computer.org>  Wed, 16 Jul 2003 13:40:03 +0100
+
+debian-installer-utils (0.23) unstable; urgency=low
+
+  * Alastair McKinstry
+   - Removed old packages di-utils-mkfs, di-utils-mkswap,
+     di-utils-mount-partitons.
+   - Added di-utils-choosesystem to select which OS
+   - Add di-utils for async utility
+  * Thomas Sauter
+   - Remove di-utils-generic package
+
+ -- Alastair McKinstry <alastair@computer.org>  Tue, 15 Jul 2003 09:52:57 +0100
+
+debian-installer-utils (0.22) unstable; urgency=low
+
+  * Petter Reinholdtsen
+    - Change priority of di-utils-partitioner from standard to
+      optional to match the archive override file.
+  * Bastian Blank
+    - s/dash/ash/, dash is also an ash
+    - remove di-utils-partitioner
+    - install mapdevfs into di-utils-mapdevfs
+    - di-utils-generic depends against di-utils-mapdevfs
+
+ -- Thorsten Sauter <tsauter@debian.org>  Tue, 24 Jun 2003 22:57:22 +0200
+
+debian-installer-utils (0.21) unstable; urgency=low
+
+  * André Luís Lopes
+    - Spellchecking and some minor cosmetic fixes for pt_BR
+      debconf template translation.
+  * Alastair McKinstry:
+    - Change from -ldebconf to -ldebconfclient. (Closes: #195110)
+    - Use cfdisk when using the newt frontend, too.
+  * Bastian Blank
+    - use mapdevfs from libd-i
+    - use new fds
+  * Petter Reinholdtsen
+    - Fix obvious typo in handling of partapps/archmaps.txt.
+    - Updated nb.po.
+
+ -- Petter Reinholdtsen <pere@debian.org>  Thu, 29 May 2003 18:14:20 +0200
+
+debian-installer-utils (0.20) unstable; urgency=low
+
+  * Carlos Valdivia Yague
+    - Translate to Spanish.
+  * Martin Sjögren
+    - Back out the busybox-cvs-udeb dependency, it breaks the netinst CDs.
+      The di-utils-mkswap package and friends are on their way out anyway.
+
+ -- Martin Sjogren <sjogren@debian.org>  Mon, 21 Apr 2003 13:58:59 +0200
+
+debian-installer-utils (0.19) unstable; urgency=low
+
+  * Denis Barbier
+    - Update French template translation, by Lucien Coste
+  * Chris Tillman
+    - Minor English corrections
+  * Petter Reinholdtsen
+    - Correct fstype in generated /etc/fstab. (Closes: #184992)
+    - Pass unknown device types unchanged through mapdevfs, to keep
+      LVM device names.  (Closes: #185261)
+  * Martin Sjögren
+    - Add fd0 and fd1 to the list in mapdevfs. (Closes: #184994)
+  * André Luís Lopes
+    - Update Brazilian Portuguese (pt_BR) template translations.
+  * Alastair McKinstry
+    - Add dependency for di-utils-mkswap on busybox-udeb, which provides
+     mkswap.
+
+ -- Petter Reinholdtsen <pere@debian.org>  Sat, 29 Mar 2003 15:01:13 +0200
+
+debian-installer-utils (0.18) unstable; urgency=low
+
+  * Thorsten Sauter
+    - include external scripts for archs which call the available partitioner
+      programs
+    - prevent double mounting to mountpoints through the "manual"
+      option. (Closes: #183720)
+    - don't allow mounting to silly mount points
+    - notice the user, if no partitions for mounting are available
+      (Closes: #180694)
+    - add unmounting functionality. (Closes: #180029)
+  * Alastair McKinstry
+    - change ash to dash in template. (Closes: #183722)
+  * André Luís Lopes
+    - Update Brazilian Portuguese (pt_BR) template translations.
+  * Martin Sjögren
+    - Add Swedish translation.
+  * Petter Reinholdtsen
+    - Correct prebaseconfig/40fstab.  It should now insert the file system
+      mount points as well.  Device paths are rewritten using mapdevfs.
+      Add mount points /floppy and /cdrom.
+
+ -- Petter Reinholdtsen <pere@debian.org>  Wed, 12 Mar 2003 22:03:16 +0100
+
+debian-installer-utils (0.17) unstable; urgency=low
+
+  * Mario Lang
+    - mapdevfs.c: Add mapping for serial devices, and fix segfault on
+      faulty input.
+  * Max Kosmach <max@tcen.ru>: updated ru.po
+  * Petter Reinholdtsen
+    - Added Norwegian Bokmål (nb.po) translations recieved from
+      Bjørn Steensrud.
+    - Added Norwegian Nynorsk (nn.po) translations recieved from
+      Gaute Hvoslef Kvalnes.
+  * Thorsten Sauter:
+    - all packages use generic functions from new di-utils-generic pkg
+    - partitioner/mkfs/mkswap use /proc/partitions to get
+      also lvm/raid/... devices
+    - generic package for common used functions
+    - package for creating swapspace
+    - di-utils-mount-partitions generates final fstab file
+    - warning/error messages if something get wrong
+
+ -- Martin Sjogren <sjogren@debian.org>  Tue, 25 Feb 2003 22:59:27 +0100
+
+debian-installer-utils (0.16) unstable; urgency=low
+
+  * Create a di-utils-mapdevfs package.
+
+ -- Matt Kraai <kraai@debian.org>  Sat, 08 Feb 2003 12:11:57 -0800
+
+debian-installer-utils (0.15) unstable; urgency=low
+
+  * Make di-utils-mount-partitions architecture dependent (closes:
+    #180016).
+
+ -- Matt Kraai <kraai@debian.org>  Thu, 06 Feb 2003 17:24:50 -0800
+
+debian-installer-utils (0.14) unstable; urgency=low
+
+  * Jordi Mallach
+    - Add Catalan translation.
+  * Richard Hirst
+    - add ia64 support, using parted
+  * Matt Kraai
+    - Add proc entry to empty fstab.
+  * Martin Sjögren
+    - Set ext2 as default filesystem for di-utils-mkfs.
+    - Change the type of di-utils-mount-partitions/manual-mountpoint to
+      string.
+
+ -- Matt Kraai <kraai@debian.org>  Mon, 03 Feb 2003 20:37:32 -0800
+
+debian-installer-utils (0.13) unstable; urgency=low
+
+  * Tollef Fog Heen
+    - Fail if no discs are detected.
+    - Make mkfs and mount defaults a lot smarter (they will now not reselect
+      an item which they have operated on.)
+    - Add di-utils-fake-{partitioner,mkfs,mount-partitions} packages, if you
+      already done the needed work by hand
+    - Make di-utils-partitioner fail gracefully when no discs are detected
+    - Make di-utils-mount-partitions smart with regards to default choice
+  * Martin Sjögren
+    - The fake packages shouldn't be menu items.
+    - Tidy up the descriptions
+  * André Luís Lopes
+    - Sync pt_BR templates translation with original english.
+
+ -- Tollef Fog Heen <tfheen@debian.org>  Sat,  7 Dec 2002 17:13:40 +0100
+
+debian-installer-utils (0.12) unstable; urgency=low
+
+  * Martin Sjögren
+    - di-utils-mount-partitions now depends on made-filesystems, which
+      di-utils-mkfs provides.
+  * Tollef Fog Heen
+    - fix installr-menu-item
+  * Richard Hirst
+    - add hppa support, uses *fdisk, like i386
+
+ -- Tollef Fog Heen <tfheen@debian.org>  Thu,  5 Dec 2002 01:39:01 +0100
+
+debian-installer-utils (0.11) unstable; urgency=low
+
+  * Tollef Fog Heen
+    - Add menutest script for shell as well
+
+ -- Tollef Fog Heen <tfheen@debian.org>  Tue, 26 Nov 2002 03:57:09 +0100
+
+debian-installer-utils (0.10) unstable; urgency=low
+
+  * Bastian Blank
+    - add s390 support (uses fdasd)
+    - remove depency to fdisk-udeb
+
+ -- Tollef Fog Heen <tfheen@debian.org>  Tue, 19 Nov 2002 02:35:38 +0100
+
+debian-installer-utils (0.09) unstable; urgency=low
+
+  * Fix filenames for arch-independent udebs.
+
+ -- Tollef Fog Heen <tfheen@debian.org>  Sun, 17 Nov 2002 11:32:17 +0100
+
+debian-installer-utils (0.08) unstable; urgency=low
+
+  * Martin Sjögren
+    - Replace XBC with XB so our special control fields don't confuse the
+      changes files.
+  * André Luís Lopes
+    - Include di-utils-mkfs.templates into debian/po/POTFILES.in.
+    - Run debconf2po-update to update all translation.
+    - Update Brazilian Portuguese (pt_BR) translation.
+  * Tollef Fog Heen
+    - Fix installer-menu-item values.  (Multiply by ten)
+
+ -- Tollef Fog Heen <tfheen@debian.org>  Fri,  8 Nov 2002 14:40:33 +0100
+
+debian-installer-utils (0.07) unstable; urgency=low
+
+  * Tollef Fog Heen:
+    - Add di-utils-mkfs
+
+ -- Tollef Fog Heen <tfheen@debian.org>  Fri,  8 Nov 2002 04:42:18 +0100
+
+debian-installer-utils (0.06) unstable; urgency=low
+
+  * Added french translation from Pierre Machard (Closes: 165857).
+  * André Luís Lopes
+    - Sync pt_BR.po with original english.
+    - Unfuzzy old translations.
+    - Define pt_BR.po fields (last translator, etc).
+  * Tollef Fog Heen
+    - use /dev/console for accessing the terminal, this works on all
+      systems, both those with and those without VCs
+    - fix this for the partitioner as well.
+
+ -- Tollef Fog Heen <tfheen@debian.org>  Wed,  6 Nov 2002 02:15:24 +0100
+
+debian-installer-utils (0.05) unstable; urgency=low
+
+  * use /dev/vc/0 to access the terminal
+  * Reduce menu item order from 2 to 9 to place it at the bottom of the
+    menu list.
+  * Convert to po-debconf, set Build-Depends: debhelper (>= 4.1.13) and
+    po-debconf (>= 0.5.0) to ensure that generated templates are right,
+    and set output encoding to UTF-8.
+  * Add mapdevfs tool for mapping devfs to old-style names
+  * Use udpkg-print-architecture for deciding whether to run fdisk to/from
+    vc or not.
+  * Use mapdevfs for writing fstab. 
+
+ -- Tollef Fog Heen <tfheen@debian.org>  Mon, 14 Oct 2002 17:25:14 +0200
+
+debian-installer-utils (0.04) unstable; urgency=low
+
+  * German templateupdate thanks to
+    Sebastian Feltel <sebastian@feltel.de>.
+  * Add Brazilian Portuguese debconf templates for
+    partitioner and choose-medium and update the template
+    for shell.
+  * Add partitioner and mounter
+
+ -- Tollef Fog Heen <tfheen@debian.org>  Mon, 16 Sep 2002 17:56:10 +0200
+
+debian-installer-utils (0.03) unstable; urgency=low
+
+  * get rid of silly, unused configure target
+  * split out translated templates in separate files
+  * add partition-wrapper to the utils list.
+  * use new dpkg features so build isn't too cludgy
+  * add Spanish translation for shell thanks to 
+    Carlos Valdivia Yagüe <valyag@teleline.es> (closes: #106725)
+  * add German template for shell thanks to 
+    "Sebastian Feltel" <sebastian@feltel.de> (Closes: #99331)
+  * add Brazilian portuguese template for shell thanks to 
+    Andre Luis Lopes <andrelop@ig.com.br> (closes: #108516)
+  * Russian template for shell thanks to 
+    Ilgiz Kalmetev <ilgiz@bashtelecom.ru> (closes: #137635)
+  * Get rid of emacs variables in changelog.
+  * Put debian-boot as maintainer, put David Kimdon and Tollef Fog Heen
+    into uploaders
+  * Build-depend on libcdebconf-dev instead of cdebconf-dev
+
+ -- David Kimdon <dwhedon@debian.org>  Tue, 23 Jul 2002 22:37:50 +0200
+
+debian-installer-utils (0.02) unstable; urgency=low
+
+  * must build depend on cdebconf-dev (closes: #87537)
+
+ -- David Whedon <dwhedon@debian.org>  Tue,  8 May 2001 00:04:27 -0700
+
+debian-installer-utils (0.01) unstable; urgency=low
+
+  * Initial Release.
+
+ -- David Whedon <dwhedon@debian.org>  Mon, 12 Feb 2001 21:16:51 -0800

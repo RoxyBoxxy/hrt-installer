@@ -1,0 +1,98 @@
+#!/usr/bin/make -f
+# Sample debian/rules that uses debhelper.
+# GNU copyright 1997 to 1999 by Joey Hess.
+
+# Uncomment this to turn on verbose mode.
+#export DH_VERBOSE=1
+
+
+PACKAGES=$(shell dh_listpackages)
+VERSION=$(shell dpkg-parsechangelog | grep ^Version: | cut -d ' ' -f 2)
+ARCH=$(shell dpkg --print-architecture)
+
+
+# This is the debhelper compatability version to use.
+export DH_COMPAT=2
+
+configure: configure-stamp
+configure-stamp:
+	dh_testdir
+	# Add here commands to configure the package.
+
+	touch configure-stamp
+
+build: configure-stamp build-stamp
+build-stamp:
+	dh_testdir
+
+	# Add here commands to compile the package.
+	$(MAKE)
+
+	touch build-stamp
+
+clean:
+	dh_testdir
+	dh_testroot
+	rm -f build-stamp configure-stamp
+	rm -f debian/netcfg-dhcp.postinst debian/netcfg-static.postinst
+	for TYPE in common dhcp static ; do \
+	  rm -f debian/netcfg-$$TYPE.templates; \
+	done;
+
+	# Add here commands to clean up after the build process.
+	-$(MAKE) clean
+
+	dh_clean
+
+install: build
+	dh_testdir
+	dh_testroot
+	dh_clean -k
+	cp netcfg-dhcp debian/netcfg-dhcp.postinst
+	cp netcfg-static debian/netcfg-static.postinst
+	mkdir -p debian/netcfg-dhcp/etc/dhcp debian/netcfg-dhcp/var/dhcp
+	mkdir -p debian/netcfg-static/etc/network
+
+# Build architecture-independent files here.
+binary-indep: build install
+# We have nothing to do by default.
+
+# Build architecture-dependent files here.
+binary-arch: build install
+	dh_testdir
+	dh_testroot
+
+	for TYPE in common dhcp static ; do \
+	  TEMPLATES=""; \
+	  for LINGUA in en de ru fr ; do \
+		TEMPLATES="$$TEMPLATES debian/template/netcfg-$$TYPE.templates.$$LINGUA" ; \
+	  done ; \
+	  echo "Creating netcfg-$$TYPE.templates -- $$TEMPLATES "; \
+	  debconf-mergetemplate $$TEMPLATES > debian/netcfg-$$TYPE.templates; \
+	done ;
+
+	dh_installdebconf
+
+	(echo ; cat debian/netcfg-common.templates ) \
+	   >> debian/netcfg-static/DEBIAN/templates	
+	(echo ; cat debian/netcfg-common.templates )\
+	   >> debian/netcfg-dhcp/DEBIAN/templates	
+	cp debian/menutest-common debian/netcfg-dhcp/DEBIAN/menutest	
+	cp debian/menutest-common debian/netcfg-static/DEBIAN/menutest	
+	dh_strip
+	dh_compress
+	dh_fixperms
+	dh_installdeb
+	dh_shlibdeps
+	$(foreach PACKAGE, $(PACKAGES), \
+	( dpkg-gencontrol -Pdebian/$(PACKAGE) -p$(PACKAGE) \
+	-Tdebian/$(PACKAGE).substvars \
+	-n$(PACKAGE)_$(VERSION)_$(ARCH).udeb ) ; )
+	$(foreach PACKAGE, $(PACKAGES), \
+	(cd debian ; \
+	dpkg-deb -b $(PACKAGE) ../../$(PACKAGE)_$(VERSION)_$(ARCH).udeb \
+	); )
+
+
+binary: binary-indep binary-arch
+.PHONY: build clean binary-indep binary-arch binary install configure

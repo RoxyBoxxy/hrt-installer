@@ -1,0 +1,143 @@
+#! /bin/sh
+
+set -e
+. /usr/share/debconf/confmodule
+#set -x
+
+log () {
+    log=/var/log/messages
+    echo "$0: $@" >> $log
+}
+
+# Is a cdrom already mounted?  If so, assume it's the right one..
+mount | grep -q ^/dev/cdroms/ && exit 0
+
+# Load kernel modules
+hwdetect || true
+
+log "Searching for Debian installation media..."
+
+mkdir /cdrom 2>/dev/null || true
+
+while true
+do
+    mounted=0
+
+    # What about ISA cdroms ?
+    # discover doesn't do devfs, :/
+
+    # devices=`/sbin/discover --disable-all --enable=pci,ide,scsi --device cdrom`
+    devices="`echo /dev/cdroms/*`"
+    for device in $devices
+    do
+        if mount -t iso9660 -o ro,exec $device /cdrom 2>/dev/null
+        then
+            mounted=1
+            break
+        fi
+    done
+
+    if [ "$mounted" = "1" ]
+    then
+        break
+    fi
+
+    # If device was detect but mount failed, ask for inserting the CD
+    if [ -n "$devices" ]
+    then
+	db_fset cdrom-detect/is_cd_inserted seen false
+	db_input critical cdrom-detect/is_cd_inserted || [ $? -eq 30 ]
+	db_go
+	db_get cdrom-detect/is_cd_inserted
+	if [ "$RET" = "false" ]
+	then
+	    continue
+	fi
+    fi
+    
+    # Otherwise manual configuration may be needed
+    db_fset cdrom-detect/manual_config seen false
+    db_input critical cdrom-detect/manual_config || [ $? -eq 30 ]
+    db_go
+    db_get cdrom-detect/manual_config
+
+    modules=none
+    for i in `ls -1 /lib/modules/*/kernel/drivers/cdrom/ | sed -e 's/.o$//'`
+    do
+	modules="$modules, $i"
+    done
+    
+    # Here's the list of device
+    # UPDATE IT HERE if you want to add some devices
+    
+    if [ "$RET" = "true" ]
+    then
+	db_fset cdrom-detect/cdrom_module seen false
+	db_subst cdrom-detect/cdrom_module choices "$modules"
+	db_input critical cdrom-detect/cdrom_module || [ $? -eq 30 ]
+	db_go
+
+	db_get cdrom-detect/cdrom_module
+	module="$RET"
+
+	db_fset cdrom-detect/cdrom_device seen false
+	db_input critical cdrom-detect/cdrom_device || [ $? -eq 30 ]
+	db_go
+
+	db_get cdrom-detect/cdrom_device
+	device="$RET"
+
+	if [ "$module" != "none" ]
+	then
+	    modprobe $module
+	fi
+	if mount -t iso9660 -o ro,exec $device /cdrom
+	then
+	    mounted=1
+	    break
+	fi
+    else
+	log "CDROM-detect failed."
+	db_input critical cdrom-detect/no-cd || [ $? -eq 30 ]
+	db_go
+	exit 1
+    fi
+done
+
+if [ -e /cdrom/.disk/info ] ; then
+   CDNAME=`cat /cdrom/.disk/info`
+   log "Detected CD '$CDNAME'"
+else
+   log "The available CD is not a Debian CD!"
+   umount /cdrom
+   db_input critical cdrom-detect/wrong-cd || [ $? -eq 30 ]
+   db_go
+   exit 1 
+fi
+
+# Set the distribution used by base-installer, test in priority order
+for dist in stable testing unstable ; do
+    if [ -e /cdrom/dists/$dist ] ; then
+	CODENAME=`sed -n 's/^Codename: *//p' /cdrom/dists/$dist/Release`
+	db_set mirror/distribution $CODENAME
+	log "Detected CD with '$CODENAME' distribution"
+	break
+    fi
+done
+
+# Ask for eject to be installed into /target/, to be able to use it in
+# the prebaseconfig script.
+apt-install eject || true
+
+# Ask for discover to be installed into /target/, to make sure the
+# required drivers are loaded when base-config is looking for the
+# install CD
+apt-install discover || true
+
+# Hey, we're done
+db_fset cdrom-detect/success seen false
+db_subst cdrom-detect/success cdname "CDNAME"
+db_input low cdrom-detect/success || [ $? -eq 30 ]
+db_go
+
+exit 0

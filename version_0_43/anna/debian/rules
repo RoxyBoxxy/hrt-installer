@@ -1,0 +1,55 @@
+#!/usr/bin/make -f
+
+# This is the debhelper compatability version to use.
+export DH_COMPAT=2
+
+# Make debhelper not generate any maint scripts.
+export DH_OPTIONS=-n
+
+build: build-stamp
+build-stamp:
+	dh_testdir
+# Make small unless we are building a debug package.
+ifeq (,$(findstring debug,$(DEB_BUILD_OPTIONS)))
+	$(MAKE) small
+else
+	$(MAKE) DEBUG=1
+endif
+	touch build-stamp
+
+clean:
+	dh_testdir
+	dh_testroot
+	rm -f build-stamp
+	$(MAKE) clean
+	dh_clean
+
+binary-indep: build
+	dh_testdir
+	dh_testroot
+	dh_clean -k
+	dh_installdebconf -i
+	dh_compress -i
+	dh_fixperms -i
+	dh_installdeb -i
+	dh_di_gencontrol -i
+	dh_di_builddeb -i
+
+binary-arch: build
+	dh_testdir
+	dh_testroot
+	dh_clean -k
+	dh_installdirs -p anna var/cache/anna
+	dh_install -p anna anna usr/bin
+	dh_installdebconf -a
+	dh_compress -a
+	dh_fixperms -a
+	dh_installdeb -a
+ifeq (,$(findstring debug,$(DEB_BUILD_OPTIONS)))
+	dh_strip -a
+endif
+	dh_di_gencontrol -a
+	dh_di_builddeb -a
+
+binary: binary-indep binary-arch
+.PHONY: build clean binary-indep binary-arch binary

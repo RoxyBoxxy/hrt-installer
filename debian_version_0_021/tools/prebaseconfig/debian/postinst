@@ -1,0 +1,16 @@
+#! /bin/sh -e
+
+# Use this instead of /target/bin/run-parts because one of the
+# parts will unmount /target/
+run_parts() {
+    partsdir="$1"
+    for script in "$partsdir"/*; do
+        if [ -x "$script" ] ; then
+            "$script" || true
+        else
+            echo "error: Unable to execute $script" 1>&2
+        fi
+    done
+}
+
+run_parts /usr/lib/prebaseconfig.d

@@ -1,0 +1,299 @@
+languagechooser (0.030) unstable; urgency=low
+
+  * Change Russian locale from ru_RU to ru_RU.KOI8-R.  Based
+    on information from Serge Winitzki.
+  * Drop the language-selected provides.  It is no longer used by main-
+    menu, as cdebconf is able to switch language on the fly now.
+  * Add Swiss Italian and Swiss German translations, patch by
+    Simon Hurliman.
+
+ -- Petter Reinholdtsen <pere@debian.org>  Mon, 22 Sep 2003 22:28:57 +0200
+
+languagechooser (0.029) unstable; urgency=low
+
+  * Add Greek option.  Patch from  George Papamichelakis.
+  * The greek option did not use valid UTF-8 characters.  Assuming
+    it is ISO-8859-7, and converted it to UTF-8.  No idea if this is
+    correct.
+  * Corrected Russian entry, patch from Serge Winitzki.
+
+ -- Petter Reinholdtsen <pere@debian.org>  Sun, 14 Sep 2003 18:26:25 +0200
+
+languagechooser (0.028) unstable; urgency=low
+
+  * Add new target check-data, comparing the locale list with
+    /usr/share/i18n/SUPPORTED.
+  * Made sure the Japanese and the Korean locale are listed in the
+    SUPPORTED file.  The selected charset was picked at random, assuming
+    that almost no-one uses UTF-8 at the moment.
+
+ -- Petter Reinholdtsen <pere@debian.org>  Tue,  9 Sep 2003 20:42:31 +0200
+
+languagechooser (0.027) unstable; urgency=low
+
+  * Use locale es_ES@euro for Spanish in Spain.
+  * Updated question text for Portuguese (Brazil), thanks to
+    Frederico Goncalves Guimaraes.
+  * Use it_IT@euro locale for Italian, thanks to Marco Ghirlanda.
+  * Tomohiro KUBOTA
+    - Updated question text for Japanese.
+
+ -- Petter Reinholdtsen <pere@debian.org>  Thu, 28 Aug 2003 23:00:08 +0200
+
+languagechooser (0.026) unstable; urgency=low
+
+  * Send log messages to syslog instead of /var/log/messages.
+
+ -- Petter Reinholdtsen <pere@debian.org>  Mon, 28 Jul 2003 15:52:15 +0200
+
+languagechooser (0.025) unstable; urgency=low
+
+  * Alastair McKinstry
+    - Convert changelog to UTF-8 for Standards-Version 3.6.0
+  * Petter Reinholdtsen
+    - Correct the german menu entry.  Patch from Max Vozeler.
+    - Add missing menutest script to CVS.  Copied the one from the archive.
+
+ -- Petter Reinholdtsen <pere@debian.org>  Sun, 27 Jul 2003 00:16:15 +0200
+
+languagechooser (0.024) unstable; urgency=low
+
+  * Petter Reinholdtsen
+   - Get 'make demo' working.
+   - Make it easier to switch language list.
+  * Alastair McKinstry
+   - menutest now tries to set up the framebuffer if necessary;
+     required for floppy use
+  
+ -- Alastair McKinstry <mckinstry@computer.org>  Tue, 10 Jun 2003 11:16:40 +0200
+
+languagechooser (0.023) unstable; urgency=low
+
+  * Rename templates.in to templates-in to avoid confusing
+    dh_installdebconf.
+
+ -- Petter Reinholdtsen <pere@debian.org>  Sat, 17 May 2003 20:08:12 +0200
+
+languagechooser (0.022) unstable; urgency=low
+
+  * Stop using po-debconf, as only the option text should be translated.
+    Patch from Denis Barbier.  Add the translated text in
+    languagelist.l10n instead.
+
+ -- Petter Reinholdtsen <pere@debian.org>  Fri, 16 May 2003 21:15:19 +0200
+
+languagechooser (0.021) unstable; urgency=low
+
+  * Fix typo using LANG instead of $LANG to test the locale.
+  * Correct depend listing from Build-Depends to Build-Depends-Indep.
+  * Add dephelper token in postinst to make lintian happy.
+
+ -- Petter Reinholdtsen <pere@debian.org>  Mon,  5 May 2003 17:06:54 +0200
+
+languagechooser (0.020) unstable; urgency=low
+
+  * Only display the translated choices when using UTF-8 locale.
+  * Update nb.po and nn.po.
+  * Use the complete list of languages now that bug #188043 is fixed.
+  * Javier Fernández-Sanguino
+     - Translated to Spanish the template
+
+ -- Petter Reinholdtsen <pere@debian.org>  Sun,  4 May 2003 22:44:49 +0200
+
+languagechooser (0.019) unstable; urgency=low
+
+  * Updated Danish (me), Dutch (Bart Cornelis),
+    Finnish (Dagfinn Ilmari Mannsåker), French (Bart Cornelis),
+    German (Frank Matthiess, Bart Cornelis), Latvian (Aigars Mahinovs) and
+    Nothern Saami (Regnor Jernsletten) choices.
+  * Cut the list short while we wait for bug #188043 to be fixed.
+
+ -- Petter Reinholdtsen <pere@debian.org>  Wed, 16 Apr 2003 22:54:04 +0200
+
+languagechooser (0.018) unstable; urgency=low
+
+  * Add nn.po thanks to Gaute Hvoslef Kvalnes and updated nb.po
+    thanks to Bjørn Steensrud.
+  * Update fallback langauges for lv_LV, se_NO, no_NO and nn_NO.
+  * Add en.po which should contain translated text for all the
+    language options, to make it easier for people without knowledge
+    in English to choose the correct language.
+  * Use dash or ash to check the scripts for parse errors at build time.
+  * Try to set the language to 'en' before showing the list of
+    available languages.
+  * André Luís Lopes :
+    - Update Brazilian Portuguese (pt_BR) debconf template translation.
+  * Denis Barbier
+    - Remove obsolete entries from debian/templates.in
+
+ -- Petter Reinholdtsen <pere@debian.org>  Tue,  8 Apr 2003 23:52:14 +0200
+
+languagechooser (0.017) unstable; urgency=low
+
+  * Denis Barbier:
+    - Fixed Portuguese locales.
+    - Update French locales: 'French (Belgium);fr_BE@euro;fr;BE;',
+      'French (Canada);fr_CA;fr;CA;', 'French (France);fr_FR@euro;fr;FR;',
+      'French (Luxembourg);fr_LU@euro;fr;LU;',
+      'French (Switzerland);fr_CH;fr;CH;
+  * Petter Reinholdtsen
+    - Change German locale to de_DE@euro on request from Martin Herweg.
+
+ -- Petter Reinholdtsen <pere@debian.org>  Fri, 14 Mar 2003 20:55:11 +0100
+
+languagechooser (0.016) unstable; urgency=low
+
+  * Add a few language options.
+  * Remove unused debconf templates.
+  * Move language information into separate file and generate template
+    based on this list.
+
+ -- Petter Reinholdtsen <pere@debian.org>  Thu, 13 Mar 2003 00:23:32 +0100
+
+languagechooser (0.015) unstable; urgency=low
+
+  * Alastair McKinstry:
+   - Add to languagemap all the languages previously supported by
+     boot-floppies.
+  * Denis Barbier:
+    - Update debian/po/fr.po
+  * Petter Reinholdtsen
+    - Remove LANGUAGELIST when it is the same as LANGAUGE.
+    - Fix typos in templates: Japanesse -> Japanese, Portuigese -> Portuguese.
+    - Remove MIRROR info, as it is not used for anything, and might
+      belong to a different package.
+
+ -- Petter Reinholdtsen <pere@debian.org>  Mon, 10 Mar 2003 13:36:35 +0100
+
+languagechooser (0.014) unstable; urgency=low
+
+  * André Luís Lopes :
+    - Run debconf2po-update in order to reflect latest changes in the
+      original english templates into the translated ones.
+    - Update pt_BR (Brazilian Portuguese) template translations.
+  * Petter Reinholdtsen
+    - Pass language list to base-config as LANGUAGE_INST.
+
+ -- Petter Reinholdtsen <pere@debian.org>  Tue,  4 Mar 2003 16:56:04 +0100
+
+languagechooser (0.013) unstable; urgency=low
+
+  * Denis Barbier:
+    - Add debian/po/output file to convert templates into UTF-8
+    - Add backup capabilities to languagechooser
+    - Managing country list seems not obvious, only countries which
+      provide Debian mirrors are printed.  This criterion may change
+      later.
+    - Replace parens by brackets in language list, because parens are
+      displayed with some country names.  The iso-codes package contains
+      translations of many language and country names.
+    - Add support for multiple languages.
+    - Make debconf/language question an alias to debian-installer/language
+    - French debconf templates, by Pierre Machard and Christian Perrier.
+  * Alastair McKinstry
+    - Irish translation
+  * Martin Sjögren
+    - Provide language-selected
+  * Petter Reinholdtsen
+    - Rename prebaseconfig.d script to 65languagechooser to make sure it
+      is executed before /target is umounted.
+    - Use 'apt-install locales' to give base-config a chance to generate
+      the locale it needs to display translations.
+    - Package languagechooser should depend on cdebconf-udeb.
+    - Rewrite to ask only once for language name.
+  * Serge Winitzki
+    - Translate to Russian (closes: #180003).
+
+ -- Petter Reinholdtsen <pere@debian.org>  Mon,  3 Mar 2003 15:40:48 +0100
+
+languagechooser (0.012) unstable; urgency=low
+
+  * Changed to use Architecture: all.
+  * Corrected build-dep.  No need to depend on libcdebconf-dev any more.
+  * Change menu item from 25 to 10.
+  * Remove translated description from debian/control.  lintian
+    complains, so this must be the wrong place for it.
+  * Use language part from locale if language-name question fails.
+  * Denis Barbier:
+    - Converted to use po-debconf.  A dependency against po-debconf >= 0.6.0
+      is needed because language list choice has 2 leading underscores.
+    - Language selection is performed by the debian-installer/language-name
+      question, debian-installer/language only contains language code.
+  * André Luís Lopes :
+    - Add pt_BR template translation.
+
+ -- Petter Reinholdtsen <pere@debian.org>  Mon, 16 Dec 2002 10:23:00 +0100
+
+languagechooser (0.011) unstable; urgency=low
+
+  * Moved source from Skolelinux CVS to Debian CVS.
+  * Change package arch to all.  The source is a shell script now, not
+    C code.
+
+ -- Petter Reinholdtsen <pere@debian.org>  Mon, 16 Dec 2002 00:29:15 +0100
+
+language (0.010) unstable; urgency=low
+
+  * Make sure the locale code is reported to the log file.
+  * Code cleanup.
+
+ -- Petter Reinholdtsen <pere@hungry.com>  Sun, 15 Dec 2002 18:54:48 +0100
+
+language (0.009) unstable; urgency=low
+
+  * Use shell script implementation from Per Harald Westby instead of a
+    C implementation.  This makes the package library and platform
+    independant.
+
+ -- Petter Reinholdtsen <pere@hungry.com>  Sun, 15 Dec 2002 17:03:11 +0100
+
+language (0.008) unstable; urgency=low
+
+  * Change menu number from 1 to 25 to match to allocation schema.
+
+ -- Petter Reinholdtsen <pere@hungry.com>  Sun,  8 Dec 2002 23:06:05 +0100
+
+language (0.007) unstable; urgency=low
+
+  * Cleanup.
+
+ -- Petter Reinholdtsen <pere@hungry.com>  Sat,  7 Dec 2002 00:21:39 +0100
+
+language (0.006) unstable; urgency=low
+
+  * Add code to pass the locale information into base-config.
+
+ -- Petter Reinholdtsen <pere@hungry.com>  Mon, 11 Nov 2002 17:31:39 +0100
+
+language (0.005) unstable; urgency=low
+
+  * Ask for locale, and set language and country debconf values based on
+    this.
+
+ -- Petter Reinholdtsen <pere@hungry.com>  Fri, 30 Aug 2002 20:44:21 +0200
+
+language (0.004) unstable; urgency=low
+
+  * Change build-deb from cdebconf-dev to libcdebconf-dev.
+
+ -- Petter Reinholdtsen <pere@hungry.com>  Wed, 21 Aug 2002 14:09:02 +0200
+
+language (0.003) unstable; urgency=low
+
+  * Code cleanup.
+  * Reduce the number of options from "nb, nn, se, sv, dk" to "nb, nn,
+    se", to avoid having to handle different countries.
+
+ -- Petter Reinholdtsen <pere@hungry.com>  Fri, 26 Apr 2002 19:54:08 +0200
+
+language (0.002) unstable; urgency=low
+
+  * Skolelinux packages 2002-04-21T13:17+0200
+
+ -- Petter Reinholdtsen <pere@hungry.com>  Sun, 21 Apr 2002 13:17:18 +0200
+
+language (0.001) unstable; urgency=low
+
+  * First release.
+
+ -- Tollef Fog Heen <tfheen@debian.org>  Wed, 21 Nov 2001 13:56:25 +0100

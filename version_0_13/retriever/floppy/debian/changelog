@@ -1,0 +1,210 @@
+floppy-retriever (0.13) unstable; urgency=low
+
+  * André Luís Lopes
+    - Added load-floppy.templates into debian/po/POTFILES.in and ran
+      debconf-update in order to feed an additional main-maneu entry to
+      translators. Thanks Matt Kraai for adding the entry.
+    - Update pt_BR (Brazilian Portuguese) translation.
+  * Kenshi Muto
+    - Update Japanese translation (ja.po)
+  * Miroslav Kure
+    - Update Czech translation.
+  * Pierre Machard, Christian Perrier
+    - Update French translation.
+  * Bart Cornelis
+    - Updated Dutch translations (nl.po)
+  * Claus Hindsgaul
+    - Update Danish translation (da.po).
+  * Tommi Vainikainen
+    - Update Finnish translation.
+  * Ilgiz Kalmetev
+    - Update Russian translation. (ru.po).
+  * Matt Kraai
+    - Add a main-menu entry.
+  * Konstantinos Margaritis
+    - Initial Greek translation (el.po)
+  * Dennis Stampfer
+    - Updated German translation (de.po)
+  *  Safir Šećerović
+    - Updated Bosnian translation (bs.po).
+
+ -- Joey Hess <joeyh@debian.org>  Tue,  9 Dec 2003 15:34:10 -0500
+
+floppy-retriever (0.12) unstable; urgency=low
+
+  * Peter Mann
+    - Initial Slovak translation (sk.po).
+  * Joey Hess
+    - If no floppy device can be found, prompt the user with a list of
+      possible floppy devices.
+    - Stop using INSTALL_MEDIA_DEV, that could be a USB keychain and
+      not a floppy. Since there is no way to know, manually asking is
+      the best option.
+
+ -- Joey Hess <joeyh@debian.org>  Mon,  3 Nov 2003 11:50:32 -0500
+
+floppy-retriever (0.11) unstable; urgency=low
+
+  * Joey Hess
+    - clean up the rules file
+  * Ilgiz Kalmetev
+    - Updated Russian translation. Closes: #219091.
+
+ -- Joey Hess <joeyh@debian.org>  Mon,  3 Nov 2003 11:40:32 -0500
+
+floppy-retriever (0.10) unstable; urgency=low
+
+  * Safir Secerovic, Amila Akagic
+    - Add Bosnian translation (bs.po).
+  * Claus Hindsgaul
+    - Update Danish translation (da.po).
+  * Added a load-floppy udeb that provides a menu item to use the 
+    floppy retreiver, now that anna is off the menu. (Requires quite a lot
+    of reorganisation elsewhere.)
+  * Make it come just after languagechooser in the menu.
+  * Make it priority extra, because it will only be useful on the floppy.
+  * Remove Standards-Version field.
+  * Add a question asking whether to load a floppy now, displayed only at
+    > medium priority, when floppy-load might be autoselected.
+  * Don't die if modprobe vfat fails. It might be in the kernel.
+
+ -- Joey Hess <joeyh@debian.org>  Sat,  1 Nov 2003 20:56:00 -0500
+
+floppy-retriever (0.09) unstable; urgency=low
+
+  * André Luís Lopes
+    - Updated pt_BR (Brazilian Portuguese) translation.
+  * Kenshi Muto
+    - Update Japanese translation (ja.po).
+  * Christian Perrier
+    - Update French translation.
+  * Bart Cornelis
+    - updated dutch translation (nl.po)
+  * Tommi Vainikainen
+    - Add Finnish (fi.po) translation
+  * Miroslav Kure
+    - Update Czech translation (cs.po).
+  * Kęstutis Biliūnas
+    - Update Lithuanian translation (lt.po).
+
+ -- Petter Reinholdtsen <pere@debian.org>  Fri, 24 Oct 2003 17:23:10 +0200
+
+floppy-retriever (0.08) unstable; urgency=low
+
+  * Jure Cuhalev
+    - Add Slovenian translation (sl.po). Closes: #215420.
+  * Kęstutis Biliūnas
+    - Add Lithuanian translation (lt.po).
+  * Claus Hindsgaul
+    - Add Danish translation (da.po).
+  * Joey Hess
+    - Add a progress bar to the packages scan as even this can take some time
+      to complete.
+    - Support USB floppies: If INSTALL_MEDIA_DEV is set, it was passed
+      from the linuxrc on the boot floppy, and points to the device the
+      initrd was loaded from. Or the user can set it at boot.
+    - This also allows something saner than "first floppy drive" in the
+      prompt.
+    - When scanning for packages, exit 1 if no files were found. Must not be a
+      driver floppy then.
+
+ -- Alastair McKinstry <mckinstry@debian.org>  Sun, 12 Oct 2003 22:27:31 +0100
+
+floppy-retriever (0.07) unstable; urgency=low
+
+  * Kenshi Muto
+    - Added Japanese translation (ja.po)
+    - Update ja.po
+  * Teófilo Ruiz Suárez
+    - Revised Spanish traslation (es.po)
+  * Jordi Mallach
+    - Added Catalan (ca) translation.
+  * Alastair McKinstry
+    - Convert changelog to UTF-8 as per policy
+  * Ilgiz Kalmetev
+    - Initial Russian translation. Closes: #214348.
+  * Miroslav Kure
+    - Initial Czech translation.
+
+ -- Petter Reinholdtsen <pere@debian.org>  Sun, 12 Oct 2003 19:34:11 +0200
+
+floppy-retriever (0.06) unstable; urgency=low
+
+  * Petter Reinholdtsen
+    - Updated nb.po.
+  * Thorsten Sauter
+    - Include German translation (de.po)
+  * Pierre Machard
+    - Update French translation (fr.po)
+  * Bart Cornelis
+    - Include Dutch translation (nl.po)
+  * Martin Sjögren
+    - Implement the "packages" command which downloads and parses the
+      Release file.
+    - Get rid of the "file system type" question.
+  * Giuseppe Sacco
+    - Added italian translation (it.po)
+
+ -- Alastair McKinstry <mckinstry@computer.org>  Sat, 19 Jul 2003 14:33:14 +0100
+
+floppy-retriever (0.05) unstable; urgency=low
+
+  * Pierre Machard
+    - Update fr (French) template translation.
+  * Carlos Valdivia Yague
+    - Translate to Spanish.
+  * Petter Reinholdtsen
+    - Stop using lsmod, read from /proc/modules instead. (Closes: #190644)
+  * Martin Sjögren
+    - Restructure the questions for file system on the floppy.
+    - Search for *.ude files in addition to *.deb and *.udeb.
+  * André Luís Lopes :
+    - Run debconf-updatepo in order to feed newer translatable
+      strings to translation files.
+    - Update pt_BR debconf template translation.
+  * Petter Reinholdtsen
+    - Add Norwegian Bokmål (nb.po) and Nynorsk translation (nn.po).
+
+ -- Martin Sjogren <sjogren@debian.org>  Sun,  4 May 2003 16:14:17 +0200
+
+floppy-retriever (0.04) unstable; urgency=low
+
+  * André Luís Lopes :
+    - Added pt_BR (Brazilian Portuguese) template translation.
+    - Updated pt_BR template translation.
+  * Christian Perrier
+    - Added French template translation.
+  * Martin Sjögren
+    - Always use /dev/floppy/0. /dev/floppy/1 will be present even if
+      there is only one floppy drive. Change the floppy/device question
+      to a note about inserting the floppy.
+    - Update Swedish translation
+
+ -- Martin Sjogren <sjogren@debian.org>  Fri,  4 Apr 2003 09:36:09 +0200
+
+floppy-retriever (0.03) unstable; urgency=low
+
+  * Martin Sjögren
+    - Ask both debconf questions in the same "go".
+    - Use po-debconf
+    - Add Swedish translation
+  * Petter Reinholdtsen
+    - Add debian/po/output to make sure the templates are in UTF-8.
+    - I believe UTF-8 templates using po-debconf need debhelper >= 4.1.16
+      and po-debconf >= 0.5.0.  Adjust build-depend.
+
+ -- Martin Sjogren <sjogren@debian.org>  Thu, 13 Feb 2003 10:12:06 +0100
+
+floppy-retriever (0.02) unstable; urgency=low
+
+  * Martin Sjögren
+    - Improve the description
+    - Set priority to optional
+
+ -- Martin Sjogren <sjogren@debian.org>  Thu, 12 Dec 2002 10:58:36 +0100
+
+floppy-retriever (0.01) unstable; urgency=low
+
+  * Initial version.
+
+ -- Martin Sjogren <sjogren@debian.org>  Tue, 31 Jul 2001 17:46:30 +0200

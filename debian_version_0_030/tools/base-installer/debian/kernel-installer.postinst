@@ -1,0 +1,223 @@
+#! /bin/sh -e
+
+. /usr/share/debconf/confmodule
+
+logfile=/var/log/messages
+
+log() {
+    logger -t kernel-installer "$@"
+}
+error() {
+    log "error: $*"
+}
+warning() {
+    log "warning: $*"
+}
+info() {
+    log "info: $*"
+}
+
+# =================== Pick the kernel package =========================
+
+# find all packages implementing 'kernel-image'.  Is there a better
+# way? [pere 2003-02-16]
+
+chroot="chroot /target"
+
+db_progress START 0 4 kernel-installer/progress/title
+
+db_progress INFO kernel-installer/progress/step_locate
+
+# Fetch the current default
+if db_get debian-installer/kernel/image && [ "$RET" ] ; then
+    kernel="$RET"
+fi
+
+# the busybox  do not support 'uniq' and 'sort -r' at
+# the moment [pere 2003-02-06]
+
+# Using 'sort -r' to get the newest kernel version at the start of the
+# list (ie 2.4.20 above 2.2.20).  This is in conflict with getting the
+# most generic architecture first (386 above 686).
+
+# Using 'uniq' to avoid listing the same kernel more then once.
+kernels=`$chroot apt-cache search kernel-image | grep ^kernel-image | \
+  /target/usr/bin/sort -r | cut -d" " -f1 | /target/usr/bin/uniq | \
+  tr '\n' ',' | sed -e 's/,$//'`
+
+info "Found kernels '$kernels'"
+
+if [ "$kernels" ] ; then
+    db_subst kernel-installer/which-kernel KERNELS "$kernels"
+else
+    db_subst kernel-installer/no-kernels-found KERNEL "$kernel"
+    db_input critical kernel-installer/no-kernels-found || [ $? -eq 30 ]
+    db_go
+    db_progress STOP
+    exit 1
+fi
+
+db_progress STEP 1
+db_progress INFO kernel-installer/progress/step_select
+
+# Try to make current rootskel setting the default, make sure it is
+# available first.
+if echo "$kernels" | grep -q "$kernel" ; then
+    # Current selection is available, nothing to do
+    :
+else
+    # Pick the first in the list
+    kernel=`echo "$kernels" | cut -d, -f1`
+fi
+
+# Pick a good default choice, based on the available kernels and
+# perhaps /proc/cpuinfo.
+ARCH=`udpkg --print-architecture`
+
+# Should this instead be located in small script fragments, named
+# after their architecture?  Something like this:
+#  [ -f /usr/lib/kernel-installer/$ARCH ] && . /usr/lib/kernel-installer/$ARCH
+case "$ARCH" in
+    i386*)
+        version=2.4.20-1
+        MODEL=`grep 'model name' /proc/cpuinfo | cut -d: -f2`
+	case "$MODEL" in 
+	    "Intel(R) Pentium(R) 4"*)
+	    kernel=kernel-image-$version-686
+	    ;;
+	esac
+        ;;
+    sparc)
+        version=2.4.21
+	MODEL=`uname -m`
+	CPUS=`grep 'ncpus probed' /proc/cpuinfo | cut -d: -f2`
+	case "$MODEL" in
+	    sparc)
+		if [ "$CPUS" -eq 1 ]; then
+			kernel=kernel-image-$version-sun4cdm
+		else
+			kernel=kernel-image-$version-sun4dm-smp
+		fi
+		;;
+	    sparc64)
+		if [ "$CPUS" -eq 1 ]; then
+			kernel=kernel-image-$version-sun4u
+		else
+			kernel=kernel-image-$version-sun4u-smp
+		fi
+		;;
+	esac
+	;;
+    *)
+        log "warning: Unknown arcitecture '$ARCH'."
+	;;
+esac
+if [ "$kernel" ] ; then
+    db_set kernel-installer/which-kernel "$kernel"
+fi
+
+db_input medium kernel-installer/which-kernel || [ $? -eq 30 ]
+db_go || true
+
+db_get kernel-installer/which-kernel
+kernel=$RET
+
+info "Using kernel '$kernel'"
+
+# Pass the kernel name on to kernel-installer
+db_set debian-installer/kernel/image "$kernel"
+
+db_progress STEP 1
+db_progress INFO kernel-installer/progress/step_config
+
+# =================== Install the kernel =========================
+
+if db_get debian-installer/kernel/linux/initrd ; then
+    if [ "$RET" = "true" ]; then
+	do_initrd=yes
+    else
+	do_initrd=no
+    fi
+else
+    warning "Failed to get debconf answer 'debian-installer/kernel/linux/initrd'."
+    warning "Setting default do_initrd='yes'."
+    do_initrd=yes
+fi
+
+if db_get debian-installer/kernel/linux/link_in_boot ; then
+    if [ "$RET" = "true" ]; then
+	link_in_boot=yes
+    else
+	link_in_boot=no
+    fi
+else
+    warning "Failed to get debconf answer 'debian-installer/kernel/linux/link_in_boot'."
+    warning "Setting default link_in_boot='no'."
+    link_in_boot=no
+fi
+
+info "Setting do_initrd='$do_initrd'."
+info "Setting link_in_boot='$link_in_boot'."
+
+cat > /target/etc/kernel-img.conf <<EOF
+# Do not create symbolic links in /
+do_symlinks = yes
+relative_links = yes
+image_in_boot = yes
+do_bootloader = no
+do_bootfloppy = no
+do_initrd = $do_initrd
+link_in_boot = $link_in_boot
+EOF
+
+if [ yes = "$do_initrd" ] ; then
+    # Make sure initrd-tools is installed before we change its configuration
+    apt-install initrd-tools 2>> $logfile
+
+    # Avoid possible root shell without giving passord while booting
+    # the 2.4 kernel
+    mkinitrdconf=/target/etc/mkinitrd/mkinitrd.conf
+    if [ -f $mkinitrdconf ] ; then
+	sed 's/^DELAY=.*/DELAY=0/' < $mkinitrdconf > $mkinitrdconf.new &&
+            mv $mkinitrdconf.new  $mkinitrdconf
+    else
+	echo 'DELAY=0' >> $mkinitrdconf
+    fi
+fi
+
+if db_get debian-installer/kernel/image ; then
+    if [ -z "$RET" ] ; then
+	error "Empty value in 'debian-installer/kernel/image'!"
+	error "Unable to install kernel."
+
+	db_input critical kernel-installer/no-kernel || [ $? -eq 30 ]
+	db_go
+	db_progress STOP
+	exit 1
+    fi
+    kernel="$RET"
+else
+    warning "Unable to get debconf answer debian-installer/kernel/image."
+    kernel=kernel-image
+    warning "Setting default kernel='$kernel'"
+fi
+
+db_progress STEP 1
+db_progress INFO kernel-installer/progress/step_install
+
+info "Installing kernel '$kernel'."
+
+if apt-install "$kernel" 2>> $logfile ; then
+    :
+else
+    db_subst kernel-installer/failed-install KERNEL "$kernel"
+    db_input critical kernel-installer/failed-install || [ $? -eq 30 ]
+    db_go
+    db_progress STOP
+    exit 1
+fi
+
+db_progress STEP 1
+db_progress STOP
+
+exit 0

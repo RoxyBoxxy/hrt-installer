@@ -1,0 +1,453 @@
+base-installer (0.037) UNRELEASED; urgency=low
+
+  * Petter Reinholdtsen
+    - Corrected template text for error dialog used when kernel
+      installation fail.
+
+ -- Petter Reinholdtsen <pere@debian.org>  Sun, 19 Oct 2003 10:26:32 +0200
+
+base-installer (0.036) unstable; urgency=low
+
+  * Claus Hindsgaul
+    - Update da (Danish) translation.
+  * Javier Fernandez-Sanguino
+    - Updated spanish translation.
+  * Alastair McKinstry
+    - Update ru.po, with patch from Ilgiz Kalmetev. (Closes: #214384)
+    - Add versioned depends on libdebconfclient-dev, to get working debconf_
+      macros.
+  * Steinar H. Gunderson
+    - Make base-installer handle warnings from debconf better, although still
+      not very good.
+  * Chris Tillman
+    - Change ppcdetect to archdetect and corresponding CASEs
+  * Christian Perrier
+    - Improve French translation.
+  * Kęstutis Biliūnas
+    - Add Lithuanian translation (lt.po).
+
+ -- Petter Reinholdtsen <pere@debian.org>  Sat, 18 Oct 2003 19:14:36 +0200
+
+base-installer (0.035) unstable; urgency=low
+
+  * Build-Depend on libd-i4
+
+ -- Sebastian Ley <ley@debian.org>  Thu,  9 Oct 2003 18:50:20 +0200
+
+base-installer (0.034) unstable; urgency=low
+
+  * Bastian Blank
+    - remove dash-udeb dependency
+    - fix for libdi4
+  * Kenshi Muto
+    - Update Japanese po (ja.po)
+  * Denis Barbier
+    - Add comments in templates files, which are copied into PO files,
+      to tell translators which strings are main menu items.
+  * Andre Luis Lopes
+    - Update pt_BR (Brazilian Portuguese) translation.
+  * Petter Reinholdtsen
+    - Make source build using both version 3 and 4 of libd-i.
+  * Ilgiz Kalmetev
+    - Updated Russian translation.
+  * Matt Kraai
+    - Default to kernel-image-2.4-386 on i386.
+  * Miroslav Kure
+    - Initial Czech translation.
+  * Bart Cornelis
+    - Updated dutch translation (nl.po)
+  * Build this version against libdebian-installer4 
+
+ -- Sebastian Ley <ley@debian.org>  Thu,  9 Oct 2003 16:45:37 +0200
+
+base-installer (0.033) unstable; urgency=low
+
+  * Petter Reinholdtsen
+    - Made the menu entry text translatable.
+    - Ran debconf2po-update.
+    - Start using debconf_* macro in run-debootstrap.c.
+    - Use 'error' debconf template type to report errors.
+    - Correct kernel-install progress template to show kernel package
+      name.
+  * Alastair McKinstry
+    - Convert changelog to UTF-8 as per policy
+  * Pierre Machard
+    - Update French po-debconf translation.
+  * Sebastian Ley
+    - Changed the hardcoded default kernel version to 2.4 for i386, this
+      will select the latest 2.4 kernel
+    - Added Athlon Model for i386
+  * Matt Kraai
+    - Add missing ;; and fix misspelling in the kernel-installer postinst.
+
+ -- Sebastian Ley <ley@debian.org>  Thu,  2 Oct 2003 19:24:08 +0200
+
+base-installer (0.032) unstable; urgency=low
+
+  * Andre Luís Lopes
+    - Update pt_BR (Brazilian Portuguese) translation.
+  * Bart Cornelis
+    - updated dutch translation
+
+ -- Petter Reinholdtsen <pere@debian.org>  Sun, 28 Sep 2003 15:03:05 +0200
+
+base-installer (0.031) unstable; urgency=low
+
+  * Richard Hirst
+    - Remove "image_in_boot = yes", as "link_in_boot" superceeds it.
+    - Fix warnings on ia64, getline arg2 is size_t, not int.
+  * Chris Tillman
+    - Update English usage in message templates
+  * Steinar H. Gunderson
+    - Fix error in fallback error message display.
+  * Jordi Mallach
+    - Added Catalan (ca) translation.
+  * Kenshi Muto
+    - Update ja.po
+  * Pierre Machard
+    - Update French po-debconf translation [Michel Grentzinger].
+  * Petter Reinholdtsen
+    - Update nb.po
+
+ -- Petter Reinholdtsen <pere@debian.org>  Mon, 22 Sep 2003 22:22:41 +0200
+
+base-installer (0.030) unstable; urgency=low
+
+  * Petter Reinholdtsen
+    - Keep installing packages into /target/ even if one package fail.
+      Based on patch from Steinar H. Gunderson. (Closes: #210915)
+    - Log to syslog, not /var/log/messages in kernel-installer.
+
+ -- Petter Reinholdtsen <pere@debian.org>  Mon, 15 Sep 2003 21:31:32 +0200
+
+base-installer (0.029) unstable; urgency=low
+
+  * Petter Reinholdtsen
+    - Added Russian debconf template translation (ru.po), patch
+      from Serge Winitzki.
+  * Claus Hindsgaul
+    - Removed illegal spaces in message no-kernels-found in
+      kernel-installer.templates
+  * Matt Kraai
+    - Update French translation, thanks to Michel Grentzinger (closes:
+      #208588).
+  * Teófilo Ruiz Suárez
+    - Revised Spanish translation
+
+ -- Petter Reinholdtsen <pere@debian.org>  Sat, 13 Sep 2003 17:45:00 +0200
+
+base-installer (0.028) unstable; urgency=low
+
+  * Kenshi Muto
+    - Added Japanese translation (ja.po)
+
+ -- Petter Reinholdtsen <pere@debian.org>  Thu, 28 Aug 2003 23:10:27 +0200
+
+base-installer (0.027) unstable; urgency=low
+
+  * Add translation for Northern Saami (se.po), thanks to Børre Gaup.
+  * Stop the progress bar when kernel installation go wrong.
+  * Javier Fernandez-Sanguino:
+    - Updated Spanish translation and use proper quotes
+
+ -- Petter Reinholdtsen <pere@debian.org>  Sat, 23 Aug 2003 13:49:00 +0200
+
+base-installer (0.026) unstable; urgency=low
+
+  * Petter Reinholdtsen
+    - Updated de.po.  Patch from Maximilian Wilhelm.
+    - Updated nb.po.
+    - Added danish translation (da.po), thanks to Finn G. Larsen.
+  * André Luís Lopes
+    - Update pt_BR.po.
+  * Bart Cornelis
+    - Updated duth translation
+
+ -- Petter Reinholdtsen <pere@debian.org>  Sat,  9 Aug 2003 16:27:03 +0200
+
+base-installer (0.025) unstable; urgency=low
+
+  * Matt Kraai
+    - Add nl.po, thanks to Bart Cornelis.
+  * Alastair McKinstry
+    - Add lv.po, thanks to Aigars Mahinovs
+  * Martin Sjögren
+    - Implement progress bar thingy. (Closes: #180753)
+      This requires version >= 0.2.1 of debootstrap.
+    - Bump standards version to 3.6.0
+  * André Luís Lopes
+    - Update Brazilian Portuguese (pt_BR) debconf template translation.
+    - Run debconf-updatepo to feed more translatable strings to
+      translators.
+  * Petter Reinholdtsen
+    - Update nb.po.
+    - Convert changelog to UTF-8.
+    - Stop kernel-installer from printing to stderr.
+    - Add initial progress bar to kernel-installer.
+    - Correct template names from old 'kernel-chooser' to new
+      'kernel-installer'.
+    - Add progress bar at the end of base-installer, when the APT
+      database is updated and extra the packages are installed.
+    - Updated nb.po.
+  * Florian Lohoff
+    - Updated de.po.  Thanks to from Maximilian Wilhelm.
+
+ -- Petter Reinholdtsen <pere@debian.org>  Wed, 30 Jul 2003 15:43:44 +0200
+
+base-installer (0.024) unstable; urgency=low
+
+  * Petter Reinholdtsen
+    - Add dash-udeb as a dependency for base-installer, while we wait for
+      busybox-udeb being able to run debootstrap.
+  * Tollef Fog Heen
+    - update fr.po file, from Michel Grentzinger.
+
+ -- Tollef Fog Heen <tfheen@debian.org>  Sun, 13 Jul 2003 16:50:48 +0200
+
+base-installer (0.023) unstable; urgency=low
+
+  * Add french translation by Michel Grentzinger. (Closes: #197312)
+  * Make sure /target/etc/apt/ exists before trying to create
+    sources.list.  Patch from Thorsten Sauter.  (Closes: #197818)
+  * Copy the postinst from kernel-chooser into the kernel-installer
+    postinst, to make it easier to select which kernel to install.
+  * Ben Collins
+    - Add link_in_boot=yes prior to sparc kernel install. Allows sparc to
+      transparently support /boot being on a seperate partition.
+  * Thorsten Sauter:
+    - kernel-installer depends now on created-fstab
+
+ -- Petter Reinholdtsen <pere@debian.org>  Tue, 24 Jun 2003 21:09:38 +0200
+
+base-installer (0.022) unstable; urgency=low
+
+  * Updated nb.po.
+  * Remove problematic spaces included by mistake. (Closes: #193160)
+  * Thorsten Sauter
+    - Insert german translation (de.po)
+
+ -- Petter Reinholdtsen <pere@debian.org>  Sun,  1 Jun 2003 01:48:21 +0200
+
+base-installer (0.021) unstable; urgency=low
+
+  * Keep going even if /target/etc/fstab is missing. (Closes: #186443)
+  * Display a debconf-note when debootstrap return an error
+    code.  (Closes: #178418)
+  * Make myself the uploader for this package.
+  * Upgrade standards-version from 3.5.2 to 3.5.9.
+  * Cleanup in kernel-installer postinst.
+  * Added translation framework, and Norwegian Bokmål translation (nb.po).
+  * André Luís Lopes :
+    - Added pt_BR debconf template translation.
+
+ -- Petter Reinholdtsen <pere@debian.org>  Thu,  8 May 2003 09:21:06 +0200
+
+base-installer (0.020) unstable; urgency=low
+
+  * Petter Reinholdtsen
+    - Use debconf to report an error if kernel install fails.
+      (Closes: #188209)
+
+ -- Petter Reinholdtsen <pere@debian.org>  Fri, 11 Apr 2003 11:23:21 +0200
+
+base-installer (0.019) unstable; urgency=low
+
+  * Bastian Blank
+    - Add linux prefix to linux only templates.
+
+ -- Petter Reinholdtsen <pere@debian.org>  Sun,  6 Apr 2003 10:23:15 +0200
+
+base-installer (0.018) unstable; urgency=low
+
+  * Mario Lang
+    - Remove brltty specific code from base-installer postinst.  We now
+      have apt-install.
+  * Petter Reinholdtsen
+    - Process the apt-install queue in one call to apt-install, instead
+      of several.  This should speed up the install.
+
+ -- Petter Reinholdtsen <pere@debian.org>  Tue,  4 Mar 2003 16:42:44 +0100
+
+base-installer (0.017) unstable; urgency=low
+
+  * Petter Reinholdtsen
+    - Moved apt-update and apt-install to rootskel.
+  * Matt Kraai
+    - Unset Debconf variables before calling apt-install (closes:
+      #180249).
+    - Remove local component for network installs.
+
+ -- Matt Kraai <kraai@debian.org>  Wed, 12 Feb 2003 21:46:13 -0800
+
+base-installer (0.016) unstable; urgency=low
+
+  * Use the same components in debootstrap and APT.
+  * Two new helper programs, apt-update and apt-install.
+  * Try to fix CDROM installs; Make sure 'apt-get update' is executed
+    when installing from CD, change the APT source protocol from file:
+    to copy:, and split 'apt-get install' into two parts, one
+    downloading outside /target/, and one installing within /target/.
+  * Install all pachages with DEBIAN_FRONTEND=noninteractive, and make
+    sure /target/proc/ is available during install.
+  * Make sure initrd-tools is installed before we modify its
+    configuration.
+  * Add package queue for extra packages to install into /target/.
+    Should apt-install move into rootskel or another package?
+  * Redirect stderr to /var/log/messages when installing packages.
+  * Make debug output easier to read.
+
+ -- Petter Reinholdtsen <pere@debian.org>  Fri,  7 Feb 2003 15:22:36 +0100
+
+base-installer (0.015) unstable; urgency=low
+
+  * Mario Lang
+    - in base-installer postinst, if /sbin/brltty exists, brltty=... was
+      passed in kernel cmdline, and brltty is running, add it to debootstrap
+      --include list.
+  * Petter Reinholdtsen
+    - In kernel-installer, set DELAY=0 in
+      /target/etc/mkinitrd/mkinitrd.conf to disable the possibility of
+      interrupting the boot in the initrd.
+    - Add more error handling in kernel-installer.
+  * Matt Kraai
+    - Add /usr/lib and /lib to LD_LIBRARY_PATH when invoking apt-get
+      (closes: 179994).
+
+ -- Matt Kraai <kraai@debian.org>  Thu, 06 Feb 2003 17:28:17 -0800
+
+base-installer (0.014) unstable; urgency=low
+
+  * Bastian Blank
+    - remove kernel installation from base-installer
+    - add apt-get update to base-installer
+    - add kernel-installer
+  * Richard Hirst
+    - fix apt-get args for gzip and dpkg binaries
+    - get apt-get to tell dpkg to run in /target
+    - add target bin/sbin dirs to PATH for aptget/dpkg
+    - actually use rootskel initrd template for /etc/kernel-img.conf
+    - add relative_links=yes, image_in_boot=yes to kernel-img.conf
+    - unset DEBCONF_HAS_FRONTEND, etc in kernel-installer postinst,
+      as per base-installer postinst (undocumented hacks)
+  * Petter Reinholdtsen
+    - Detect missing 'debian-installer/kernel/image' and report this
+      as an error.
+
+ -- Matt Kraai <kraai@debian.org>  Mon, 03 Feb 2003 20:34:29 -0800
+
+base-installer (0.013) unstable; urgency=low
+
+  * Richard Hirst
+   - create appropriate /target/etc/kernel-img.conf for hppa
+  * Tollef Fog Heen
+    - remove -x from postinst, to remove clutter.
+  * Petter Reinholdtsen
+    - Remove obsolete skolelinux debootstrap symlinks.
+
+ -- Tollef Fog Heen <tfheen@debian.org>  Sat,  7 Dec 2002 16:53:30 +0100
+
+base-installer (0.012) unstable; urgency=low
+
+  * Tollef Fog Heen
+    - Fix installer-menu-item
+  * Richard Hirst
+    - Add hppa support
+
+ -- Tollef Fog Heen <tfheen@debian.org>  Wed,  4 Dec 2002 03:36:08 +0100
+
+base-installer (0.011) unstable; urgency=low
+
+  * Tollef Fog Heen
+    - Set priority to required
+
+ -- Tollef Fog Heen <tfheen@debian.org>  Thu, 14 Nov 2002 02:42:06 +0100
+
+base-installer (0.010) unstable; urgency=low
+
+  * Martin Sjögren
+    - Replace XBC with XB so our special control fields don't confuse the
+      changes files.
+
+ -- Tollef Fog Heen <tfheen@debian.org>  Thu, 14 Nov 2002 02:09:39 +0100
+
+base-installer (0.009) unstable; urgency=low
+
+  * support http_proxy
+
+ -- Tollef Fog Heen <tfheen@debian.org>  Wed,  6 Nov 2002 01:54:01 +0100
+
+base-installer (0.008) unstable; urgency=low
+
+  * Do not crash if the questions netcfg/get_hostname or
+    netcfg/get_domain are unknown to debconf.
+  * Use default distribution if no debconf answer is available.
+  * Document how to avoid the 5 second 'get root without giving
+    password' window.
+  * Add hack to avoid messages like 'Note /etc/modules.conf is more recent
+    than /lib/modules/*/modules.dep'
+  * Choose kernel version based on the distribution name.
+  * Use dash instead of ash
+  * Fix paths to avoid double slashes.
+  * Only exclude if we have anything to exclude
+  * Make lilo not try to install itself, by echoing magic string
+  * Make -boot the maintainer but add me to Uploaders.
+
+ -- Tollef Fog Heen <tfheen@debian.org>  Mon, 14 Oct 2002 17:08:13 +0200
+
+base-installer (0.007) unstable; urgency=low
+
+  * Log to /target/var/log/, not /tmp/.
+  * Use distribution selected in choose-mirror.
+  * Avoid adding bogus entry in /target/etc/hosts if debconf values for
+    netcfg/get_{hostname,domain} is empty.
+  * Correct translation language code from 'no' to 'nb'.
+  * Get rid of PROFILE stuff inside postinst, since it's not used.
+  * Make sure /target/etc exists before writing files into it.
+
+ -- Tollef Fog Heen <tfheen@debian.org>  Mon, 16 Sep 2002 17:57:19 +0200
+
+base-installer (0.006) unstable; urgency=low
+
+  * Support comments in /cdrom/.disk/* files.  Thanks to Petter
+    Reinholdtsen for pointing this out.
+  * The support for /cdrom/.disk/* files was quite broken -- a delimiter
+    was added to the end.  This caused lots of grief, which should now be
+    fixed.
+  * Fix path to base_{include,exclude} files.
+  
+ -- Tollef Fog Heen <tfheen@debian.org>  Wed,  3 Jul 2002 22:57:23 +0200
+
+base-installer (0.005) unstable; urgency=low
+
+  * Fix syntax error in postinst.
+  * Add support for base_{include,exclude} and fix the support for
+    --components when installing from CD.
+
+ -- Tollef Fog Heen <tfheen@debian.org>  Fri, 28 Jun 2002 10:18:19 +0200
+
+base-installer (0.004) unstable; urgency=low
+
+  * twiddle with kernel-img.conf
+  * pass --components with somewhat sane values to debootstrap.
+  * don't pass script to debootstrap.
+
+ -- Tollef Fog Heen <tfheen@debian.org>  Sun, 23 Jun 2002 10:11:20 +0200
+
+base-installer (0.003) unstable; urgency=low
+
+  * Up version to actually get this installed
+  * Change architecture to all everywhere.
+
+ -- Tollef Fog Heen <tfheen@debian.org>  Wed, 19 Jun 2002 20:43:58 +0200
+
+base-installer (0.002) unstable; urgency=low
+
+  * Fix cdrom installation.
+
+ -- Tollef Fog Heen <tfheen@debian.org>  Wed, 19 Jun 2002 20:20:27 +0200
+
+base-installer (0.001) unstable; urgency=low
+
+  * Initial release
+
+ -- Tollef Fog Heen <tfheen@debian.org>  Sun, 10 Mar 2002 20:06:30 +0100

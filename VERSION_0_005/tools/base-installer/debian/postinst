@@ -1,0 +1,79 @@
+#! /bin/sh -e
+
+KERNEL_IMAGE=kernel-image-2.4.18-386,initrd-tools,ash,cramfsprogs,zlib1g
+
+PROTOCOL=
+MIRROR=
+DIRECTORY=
+PROFILE=
+COMPONENTS="main,local"
+
+if [ "$1" = "configure" ]; then
+    . /usr/share/debconf/confmodule
+
+    db_get debian-installer/profile
+    PROFILE="$RET"
+
+    if [ -f /cdrom/.disk/base_installable ]; then
+
+        PROTOCOL=file
+        MIRROR=""
+        DIRECTORY="cdrom/"
+        if [ -s /cdrom/.disk/base_components ]; then
+            COMPONENTS=`cat /cdrom/.disk/base_components | tr '\n' ,`
+        else
+            COMPONENTS="*"
+        fi
+
+        if [ -s /cdrom/.disk/base_include ]; then
+            INCLUDES=`cat base_include | tr '\n' ,`
+        fi
+
+        if [ -s /cdrom/.disk/base_exclude ]; then
+            EXCLUDES=`cat base_exclude | tr '\n' ,`
+        fi
+    else
+
+        db_get mirror/protocol
+        PROTOCOL="$RET"
+
+        db_get mirror/$PROTOCOL/hostname
+        MIRROR="$RET"
+
+        db_get mirror/$PROTOCOL/directory
+        DIRECTORY="$RET"
+
+    fi
+
+    INCLUDE="--include=${KERNEL_IMAGE},${INCLUDES}"
+    EXCLUDE="--exclude=${EXCLUDES}"
+
+    db_get netcfg/get_hostname
+    HOSTNAME=$RET
+
+    db_get netcfg/get_domain
+    FQDN=${HOSTNAME}.$RET
+
+    echo "$HOSTNAME" > /target/etc/hostname
+    echo "$HOSTNAME" > /proc/sys/kernel/hostname 
+    echo "127.0.0.1 $FQDN $HOSTNAME localhost" > /target/etc/hosts
+
+    unset DEBIAN_HAS_FRONTEND
+    unset DEBIAN_FRONTEND
+    unset DEBCONF_FRONTEND
+    unset DEBCONF_REDIR
+
+    cat > /target/etc/kernel-img.conf <<EOF
+# Do not create symbolic links in /
+do_symlinks = yes
+
+# postinst_hook =
+# postrm_hook = 
+do_bootloader = no
+do_bootfloppy = no
+do_initrd = yes
+EOF
+
+debootstrap --components="${COMPONENTS}" --boot-floppies ${INCLUDE} ${EXCLUDE} woody /target ${PROTOCOL}://${MIRROR}/${DIRECTORY} 3>&1 >/tmp/debootstrap.log 2>/tmp/debootstrap.err.log </dev/null
+fi
+exit 0

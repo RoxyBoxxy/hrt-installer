@@ -1,0 +1,137 @@
+#! /bin/sh -e
+
+. /usr/share/debconf/confmodule
+
+ETCDIR=/target/etc
+LOGDIR=/target/var/log
+
+ARCH=`udpkg --print-architecture`
+PROTOCOL=
+MIRROR=
+DIRECTORY=
+COMPONENTS=
+DISTRIBUTION=sarge
+
+if [ -f /cdrom/.disk/base_installable ]; then
+    PROTOCOL=file
+    MIRROR=""
+    DIRECTORY="/cdrom/"
+    if [ -s /cdrom/.disk/base_components ]; then
+        COMPONENTS=`grep -v '^#' /cdrom/.disk/base_components | tr '\n' , | sed 's/,$//'`
+    else
+        COMPONENTS="*"
+    fi
+
+    if [ -s /cdrom/.disk/base_include ]; then
+        INCLUDES=`grep -v '^#' /cdrom/.disk/base_include | tr '\n' , | sed 's/,$//'`
+    fi
+
+    if [ -s /cdrom/.disk/base_exclude ]; then
+        EXCLUDES=`grep -v '^#' /cdrom/.disk/base_exclude | tr '\n' , | sed 's/,$//'`
+    fi
+else
+    db_get mirror/protocol
+    PROTOCOL="$RET"
+
+    db_get mirror/$PROTOCOL/hostname
+    MIRROR="$RET"
+
+    db_get mirror/$PROTOCOL/directory
+    DIRECTORY="$RET"
+
+    if [ "$PROTOCOL" = "http" ]; then
+        # try to find http proxy
+        db_get mirror/http/proxy
+        http_proxy="$RET" || true
+        if [ "$http_proxy" ]; then
+            export http_proxy
+        fi
+    fi
+
+    COMPONENTS="main"
+fi
+
+if db_get mirror/distribution && [ "$RET" ] ; then
+    DISTRIBUTION=$RET
+fi
+
+if [ "${INCLUDES}" ]; then
+    INCLUDE="--include=${INCLUDES}"
+fi
+if [ "${EXCLUDES}" ]; then
+    EXCLUDE="--exclude=${EXCLUDES}"
+fi
+
+test -d $ETCDIR || mkdir -p $ETCDIR
+test -d $LOGDIR || mkdir -p $LOGDIR
+
+if [ -f /target/etc/fstab ] ; then
+    # I believe this is a workaround for lilo editing fstab when installed.
+    # [pere 2003-05-07]
+    COPIED_FSTAB=true
+    cp /target/etc/fstab /target/etc/fstab.orig
+    echo "# UNCONFIGURED FSTAB FOR BASE SYSTEM" >> /target/etc/fstab
+fi
+
+(
+    # Disable debconf while calling debootstrap
+    unset DEBIAN_HAS_FRONTEND
+    unset DEBIAN_FRONTEND
+    unset DEBCONF_FRONTEND
+    unset DEBCONF_REDIR
+
+    debootstrap \
+        --components="${COMPONENTS}" \
+        --boot-floppies \
+        ${INCLUDE} ${EXCLUDE} \
+        ${DISTRIBUTION} /target \
+        "$PROTOCOL://$MIRROR$DIRECTORY" \
+        3>&1 > $LOGDIR/debootstrap.log \
+        2> $LOGDIR/debootstrap.err.log </dev/null
+) || debootstrap_failed=$?
+
+if [ true = "$COPIED_FSTAB" ] ; then
+    mv /target/etc/fstab.orig /target/etc/fstab
+fi
+
+if [ "$debootstrap_failed" ] ; then
+    db_input critical base-installer/debootstrap-failed || [ $? -eq 30 ]
+    db_go
+    exit $debootstrap_failed
+fi
+
+
+# Why is this here?  Why are the files moved into /target/? [pere 2003-02-07]
+APTLISTDIR=/target/var/lib/apt/lists
+if [ -f /cdrom/.disk/base_installable ]; then
+    DEBOOTSTRAPLIST="$APTLISTDIR/debootstrap.invalid_dists_${DISTRIBUTION}"
+else
+    APTDIR=`echo $DIRECTORY | tr "/" "_"`
+    DEBOOTSTRAPLIST="$APTLISTDIR/debootstrap.invalid_dists_${DISTRIBUTION}"
+    APTLIST="$APTLISTDIR/${MIRROR}${APTDIR}_dists_${DISTRIBUTION}"
+
+    mv ${DEBOOTSTRAPLIST}_Release ${APTLIST}_Release
+    mv ${DEBOOTSTRAPLIST}_main_binary-${ARCH}_Packages ${APTLIST}_main_binary-${ARCH}_Packages
+fi
+
+# Copy the files from the CD, to avoid access problems in chroot
+# environment.  This has to happen here, as debootstrap do not
+# understand copy:, while apt-get do.
+if [ file = "$PROTOCOL" ] ; then
+    PROTOCOL=copy
+fi
+
+# sources.list use space to separate the components, not comma
+COMPONENTS=`echo $COMPONENTS | tr , " "`
+APTSOURCE="$PROTOCOL://$MIRROR$DIRECTORY"
+
+[ ! -d /target/etc/apt ] && mkdir -p /target/etc/apt
+echo "deb $APTSOURCE $DISTRIBUTION $COMPONENTS" > /target/etc/apt/sources.list
+
+apt-update
+
+if [ -f /var/lib/apt-install/queue ] ; then
+    apt-install `cat /var/lib/apt-install/queue` || true
+fi
+
+exit 0

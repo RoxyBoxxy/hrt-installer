@@ -1,0 +1,80 @@
+Template: cdrom-detect/manual_config
+Type: boolean
+Default: true
+_Description: Do you want to manually select the CDROM module and device ?
+ No common CDROM reader was detected. But you may have an old Mitsumi or
+ another non-IDE, non-SCSI CDROM reader. In that case you can indicate
+ which module to load and which device to use. If you don't know what
+ module and device are needed, look for some documentation or try a net
+ install instead of a CDROM install.
+
+Template: cdrom-detect/is_cd_inserted
+Type: boolean
+Default: false
+_Description: Perform manual CD configuration ?
+ Your installation CD couldn't be mounted. That probably means that the CD
+ is not yet inserted. If that's the case, just insert it and don't perform
+ the manual configuration; the CD mount will be re-tried. If your CD was
+ already in the drive, there was another problem; try the manual CD
+ configuration.
+
+Template: cdrom-detect/cdrom_module
+Type: select
+Choices: ${choices}
+Default: none
+_Description: Select a module to load for the CDROM support
+ Apparently the autodetection didn't find any CDROM reader. You can try to
+ load one of the modules if you have a specific CDROM reader (that is
+ neither IDE nor SCSI).
+
+Template: cdrom-detect/cdrom_device
+Type: string
+Default: /dev/cdrom
+_Description: Give the corresponding device file
+ In order to get access to your CDROM reader, I must know which device file
+ should be used since non-standard CDROM readers use non-standard device
+ files (like /dev/mcdx for example).
+ .
+ You may switch to the shell on the second terminal (ALT+F2) to check the
+ available devices in /dev with "ls /dev". You can come back here with
+ ALT+F1.
+
+Template: cdrom-detect/success
+Type: note
+_Description: A CDROM has been detected.
+ CD autodetection worked. A CDROM reader has been found with the following
+ CD inserted : ${cdname} You can continue the install.
+
+Template: cdrom-detect/no-cd
+Type: error
+_Description: No CD was detected
+ Please make sure that there is a CD in the CDROM reader.
+
+Template: cdrom-detect/wrong-cd
+Type: error
+_Description: A CDROM has been detected, but it isn't a Debian CD
+ Please make sure that the correct CD is inserted.
+
+Template: cdrom-detect/skip_autodetection
+Type: boolean
+Default: false
+_Description: Do you want to skip CDROM autodetection ?
+ You may want to try this if autodetection is causing trouble. Otherwise
+ you really shouldn't; manual intervention will be required to mount the
+ CDROM on /cdrom before you can proceed.
+
+Template: mirror/distribution
+Type: select
+_Choices: woody, sarge, sid
+Default: sarge
+_Description: Select distribution to install
+ Please select which of the distributions you want to install.
+ .
+  woody is the current stable release of Debian
+  sarge is the "testing" unreleased version of Debian
+  sid is "unstable" and will never be released.
+
+Template: debian-installer/cdrom-detect/title
+Type: text
+#  Item in the main menu to select this package
+_Description: Detect CDROM devices and mount the CD

@@ -1,0 +1,59 @@
+#! /bin/sh -e
+
+. /usr/share/debconf/confmodule
+
+MOUNTPOINT="/target"
+
+TMP=`sfdisk -d /dev/discs/*/disc | grep Id=83 | cut -d\  -f 1`
+
+for P in $TMP; do
+    if [ "$PARTS" ]; then
+        PARTS="$PARTS, $P"
+    else
+        PARTS="$P"
+    fi
+done
+PARTS=`echo "$PARTS" | sed 's/, $//'`
+
+db_subst di-utils-mount-partitions/which-partition PARTITIONS $PARTS
+
+db_input critical di-utils-mount-partitions/which-partition
+db_go
+
+db_get di-utils-mount-partitions/which-partition
+PARTITION="$RET"
+db_subst di-utils-mount-partitions/mountpoint PARTITION $PARTITION
+db_input critical di-utils-mount-partitions/mountpoint
+db_go
+
+db_get di-utils-mount-partitions/mountpoint
+MOUNTPOINT="$RET"
+
+if [ "$MOUNTPOINT" = "manual" ]; then
+    db_subst di-utils-mount-partitions/manual-mountpoint PARTITION $PARTITION
+    db_input critical di-utils-mount-partitions/manual-mountpoint
+    db_go
+
+    db_get di-utils-mount-partitions/manual-mountpoint
+    MOUNTPOINT="$RET"
+fi
+
+if [ "$MOUNTPOINT" = "/" ]; then
+    pass=1
+else
+    pass=2
+fi
+
+MOUNTPOINT="$MOUNTPOINT"
+mkdir -p "/target$MOUNTPOINT"
+
+mount "$PARTITION" "/target$MOUNTPOINT"
+
+# This goes after the mount, since else /target/etc might not have
+# been mounted yet
+
+mkdir -p "/target/etc/"
+device=`mapdevfs $PARTITION`
+echo "$device $MOUNTPOINT auto defaults,errors=remount-ro 0 $pass" >> /target/etc/fstab
+
+exit 0

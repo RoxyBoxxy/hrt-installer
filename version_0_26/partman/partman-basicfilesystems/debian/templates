@@ -1,0 +1,122 @@
+Template: partman-basicfilesystems/progress_checking
+Type: text
+_Description: Checking the ${TYPE} file system in partition #${PARTITION} of ${DEVICE}...
+
+Template: partman-basicfilesystems/progress_formatting
+Type: text
+_Description: Creating ${TYPE} file system in partition #${PARTITION} of ${DEVICE}...
+
+Template: partman-basicfilesystems/check_failed
+Type: select
+__Choices: Go back to the partitioning menu, Continue anyway
+_Description: Uncorrected errors in a file system
+ The test of the file system with type ${TYPE} in partition #${PARTITION}
+ of ${DEVICE} found uncorrected errors.
+ .
+ Please choose whether you want to go back to the partitioning menu or
+ ignore these errors and continue the process.
+
+Template: partman-basicfilesystems/create_failed
+Type: error
+_Description: Failed to create a file system
+ The ${TYPE} file system creation in partition
+ #${PARTITION} of ${DEVICE} failed.
+
+Template: partman-basicfilesystems/no_mount_point
+Type: select
+__Choices: Resume partitioning, Do not use the partition
+_Description: Use partition with no file system.  Resume the partitioning?
+ No mount point is assigned for ${FILESYSTEM} filesystem in partition
+ #${PARTITION} of ${DEVICE}.  Do you want to return to the partitioning
+ menu?
+
+Template: partman-basicfilesystems/mountpoint
+Type: select
+_Choices: /, /boot, /home, /tmp, /usr, /usr/local, /var, Enter manually, Do not mount it
+_Description: Mount point for this partition:
+
+Template: partman-basicfilesystems/fat_mountpoint
+Type: select
+__Choices: /dos, /windows, Enter manually, Do not mount it
+_Description: Mount point for this partition:
+
+Template: partman-basicfilesystems/mountpoint_manual
+Type: string
+_Description: Mount point for this partition:
+
+Template: partman-basicfilesystems/bad_mountpoint
+Type: error
+_Description: Invalid mount point
+ The mount point you entered is invalid.
+ .
+ Mount points must start with /.  They cannot contain spaces.
+
+Template: partman-basicfilesystems/text/specify_mountpoint
+Type: text
+_Description: Mount point for this partition:
+
+Template: partman-basicfilesystems/text/ext2
+Type: text
+# File system name (untranslatable in many languages)
+_Description: Extended 2
+
+Template: partman-basicfilesystems/text/fat16
+Type: text
+# File system name (untranslatable in many languages)
+_Description: FAT16
+
+Template: partman-basicfilesystems/text/fat32
+Type: text
+# File system name (untranslatable in many languages)
+_Description: FAT32
+
+Template: partman-basicfilesystems/text/swap
+Type: text
+_Description: Swap space
+
+Template: partman-basicfilesystems/text/options
+Type: text
+_Description: Specify mount options
+
+Template: partman-basicfilesystems/options
+Type: multiselect
+Choices: noatime, nodev, nosuid, noexec, ro, sync, usrquota, grpquota
+_Descriptions: Mount options:
+ You may choose one or more mounting options among the following:
+ .
+ noatime -- do not update inode access times for each access.  This
+ option is e.g. useful for fast access to news spools.  It is
+ recommended for file systems on Compact Flash cards, USB Flash Drive
+ and similar devices as they break down after too many writes.
+ .
+ nodev -- do not interpret character or block special devices.  On
+ hardened secure hosts this option should be used for all file systems
+ that contain directories where regular users have write access
+ (/home, /tmp, /var/tmp, etc.).  Do not use this option for the
+ root file system.
+ .
+ nosuid -- ignore set-user-identifier or set-group-identifier
+ bits (this is not safe if you have suidperl installed).
+ .
+ noexec -- do not allow execution of any binaries.
+ .
+ ro -- mount the file system read-only.
+ .
+ sync -- all input/output activities occur synchronously on the file system;
+ .
+ usrquota / grpquota -- user/group disk quota accounting enabled, and
+ limits (optionally) enforced.
+
+Template: partman-basicfilesystems/fatoptions
+Type: multiselect
+Choices: ro, sync, quiet
+_Descriptions: Mount options:
+ You may choose one or more mounting options among the following:
+ .
+ ro -- mount the file system read-only.
+ .
+ sync -- all input/output activities occur synchronously on the file system;
+ .
+ quiet -- attempts to change owner and permissions on files will not return errors,
+ although they fail.  This option may be useful but should be used with caution.
+

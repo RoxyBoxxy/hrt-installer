@@ -1,0 +1,56 @@
+#!/usr/bin/make -f
+
+ARCH_PACKAGES=$(shell dh_listpackages -a)
+INDEP_PACKAGES=$(shell dh_listpackages -i)
+VERSION=$(shell dpkg-parsechangelog | grep ^Version: | cut -d ' ' -f 2)
+ARCH=$(shell dpkg --print-architecture)
+
+# Make debhelper not generate any maint scripts.
+export DH_OPTIONS=-n
+
+build: build-stamp
+build-stamp:
+	dh_testdir
+	$(MAKE)
+	touch build-stamp
+
+clean:
+	dh_testdir
+	dh_testroot
+	rm -f build-stamp
+	-$(MAKE) clean
+
+	dh_clean
+
+binary-indep: build
+	dh_testdir
+	dh_testroot
+	dh_clean -k
+	dh_installdebconf -i
+	dh_compress -i
+	dh_fixperms -i
+	dh_installdeb -i
+	$(foreach PACKAGE, $(INDEP_PACKAGES), \
+	  dh_gencontrol -p $(PACKAGE) -- -n$(PACKAGE)_$(VERSION)_all.udeb; \
+	  dh_builddeb -p $(PACKAGE) --filename=$(PACKAGE)_$(VERSION)_all.udeb; \
+	)
+
+binary-arch: build
+	dh_testdir
+	dh_testroot
+	dh_clean -k
+	dh_install -pdi-utils di-utils bin
+	dh_link -pdi-utils bin/di-utils bin/mapdevfs
+	dh_installdebconf -a
+	dh_compress -a
+	dh_fixperms -a
+	dh_installdeb -a
+	dh_strip -a # should come after dh_installdeb; binary postinst
+	dh_shlibdeps -a
+	$(foreach PACKAGE, $(ARCH_PACKAGES), \
+	  dh_gencontrol -p $(PACKAGE) -- -n$(PACKAGE)_$(VERSION)_$(ARCH).udeb; \
+	  dh_builddeb -p $(PACKAGE) --filename=$(PACKAGE)_$(VERSION)_$(ARCH).udeb; \
+	)
+
+binary: binary-arch
+.PHONY: build clean binary-indep binary-arch binary

@@ -1,0 +1,29 @@
+// This is a sample debconf configuration file
+// Comments can be in C or C++ style, blank lines are ignored
+// This file is in a bind-8 like format.
+
+frontend {
+  default {
+    driver "slang"; 
+  };
+
+  driver "text" {
+    module "/usr/lib/cdebconf/frontend/text.so";
+  };
+
+  driver "slang" {
+    module "/usr/lib/cdebconf/frontend/slang.so";
+  };
+};
+
+database {
+  default {
+    driver "textdb"; // use the textdb database backend by default
+  };
+
+  driver "textdb" {
+    module "/usr/lib/cdebconf/db/textdb.so";
+    templatepath "/var/lib/cdebconf/templates";
+    questionpath "/var/lib/cdebconf/questions";
+  };
+};

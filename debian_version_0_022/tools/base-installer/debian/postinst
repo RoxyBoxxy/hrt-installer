@@ -1,0 +1,120 @@
+#! /bin/sh -e
+
+. /usr/share/debconf/confmodule
+
+ETCDIR=/target/etc
+LOGDIR=/target/var/log
+
+ARCH=`udpkg --print-architecture`
+PROTOCOL=
+MIRROR=
+DIRECTORY=
+COMPONENTS="main,local"
+DISTRIBUTION=sarge
+
+if [ -f /cdrom/.disk/base_installable ]; then
+    PROTOCOL=file
+    MIRROR=""
+    DIRECTORY="/cdrom/"
+    if [ -s /cdrom/.disk/base_components ]; then
+        COMPONENTS=`grep -v '^#' /cdrom/.disk/base_components | tr '\n' , | sed 's/,$//'`
+    else
+        COMPONENTS="*"
+    fi
+
+    if [ -s /cdrom/.disk/base_include ]; then
+        INCLUDES=`grep -v '^#' /cdrom/.disk/base_include | tr '\n' , | sed 's/,$//'`
+    fi
+
+    if [ -s /cdrom/.disk/base_exclude ]; then
+        EXCLUDES=`grep -v '^#' /cdrom/.disk/base_exclude | tr '\n' , | sed 's/,$//'`
+    fi
+else
+    db_get mirror/protocol
+    PROTOCOL="$RET"
+
+    db_get mirror/$PROTOCOL/hostname
+    MIRROR="$RET"
+
+    db_get mirror/$PROTOCOL/directory
+    DIRECTORY="$RET"
+
+    if [ "$PROTOCOL" = "http" ]; then
+        # try to find http proxy
+        db_get mirror/http/proxy
+        http_proxy="$RET" || true
+        if [ "$http_proxy" ]; then
+            export http_proxy
+        fi
+    fi
+fi
+
+if db_get mirror/distribution && [ "$RET" ] ; then
+    DISTRIBUTION=$RET
+fi
+
+if [ -x /sbin/brltty -a -f /proc/cmdline ]; then
+    if grep brltty= /proc/cmdline >/dev/null && \
+       ps aux | grep -v grep | grep brltty >/dev/null; then
+	if [ "${INCLUDES}" ]; then
+	    INCLUDES="brltty,${INCLUDES}"
+	else
+	    INCLUDES="brltty"
+	fi
+    fi
+fi
+
+if [ "${INCLUDES}" ]; then
+    INCLUDE="--include=${INCLUDES}"
+fi
+if [ "${EXCLUDES}" ]; then
+    EXCLUDE="--exclude=${EXCLUDES}"
+fi
+
+unset DEBIAN_HAS_FRONTEND
+unset DEBIAN_FRONTEND
+unset DEBCONF_FRONTEND
+unset DEBCONF_REDIR
+
+test -d $ETCDIR || mkdir -p $ETCDIR
+test -d $LOGDIR || mkdir -p $LOGDIR
+
+cp /target/etc/fstab /target/etc/fstab.orig
+echo "# UNCONFIGURED FSTAB FOR BASE SYSTEM" >> /target/etc/fstab
+
+debootstrap \
+    --components="${COMPONENTS}" \
+    --boot-floppies ${INCLUDE} \
+    ${EXCLUDE} ${DISTRIBUTION} /target \
+    ${PROTOCOL}://${MIRROR}${DIRECTORY} \
+    3>&1 > $LOGDIR/debootstrap.log \
+    2> $LOGDIR/debootstrap.err.log </dev/null
+
+mv /target/etc/fstab.orig /target/etc/fstab
+
+if [ -f /cdrom/.disk/base_installable ]; then
+    DEBOOTSTRAPLIST="/target/var/lib/apt/lists/debootstrap.invalid_dists_${DISTRIBUTION}"
+else
+    APTDIR=`echo $DIRECTORY | tr "/" "_"`
+    DEBOOTSTRAPLIST="/target/var/lib/apt/lists/debootstrap.invalid_dists_${DISTRIBUTION}"
+    APTLIST="/target/var/lib/apt/lists/${MIRROR}${APTDIR}_dists_${DISTRIBUTION}"
+
+    mv ${DEBOOTSTRAPLIST}_Release ${APTLIST}_Release
+    mv ${DEBOOTSTRAPLIST}_main_binary-${ARCH}_Packages ${APTLIST}_main_binary-${ARCH}_Packages
+
+    echo "deb ${PROTOCOL}://${MIRROR}${DIRECTORY} ${DISTRIBUTION} main" > /target/etc/apt/sources.list
+
+    PATH=$PATH:/target/usr/bin:/target/bin:/target/usr/sbin:/target/sbin \
+    LD_LIBRARY_PATH=/target/lib:/target/usr/lib \
+    /target/usr/bin/apt-get \
+        -o Dir::State=/target/var/lib/apt \
+        -o Dir::State::status=/target/var/lib/dpkg/status \
+        -o Dir::Cache=/target/var/cache/apt \
+        -o Dir::Etc=/target/etc/apt \
+        -o Dir::Bin::methods=/target/usr/lib/apt/methods \
+        -o Dir::Bin::gzip=/target/bin/gzip \
+        -o Dir::Bin::dpkg=/target/usr/bin/dpkg \
+        -o Dpkg::Options::=--root=/target \
+        update
+fi
+exit 0

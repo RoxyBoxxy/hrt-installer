@@ -1,0 +1,56 @@
+#! /bin/sh -e
+
+. /usr/share/debconf/confmodule
+
+db_get debian-installer/kernel/initrd
+if [ "$RET" = "true" ]; then do_initrd=yes; else do_initrd=no; fi
+
+cat > /target/etc/kernel-img.conf <<EOF
+# Do not create symbolic links in /
+do_symlinks = yes
+relative_links = yes
+image_in_boot = yes
+do_bootloader = no
+do_bootfloppy = no
+do_initrd = $do_initrd
+EOF
+
+# Avoid possible root shell without giving passord while booting the
+# 2.4 kernel
+mkinitrdconf=/target/etc/mkinitrd/mkinitrd.conf
+if [ -f $mkinitrdconf ] ; then
+    sed 's/^DELAY=.*/DELAY=0/' < $mkinitrdconf > $mkinitrdconf.new &&
+        mv $mkinitrdconf.new  $mkinitrdconf
+else
+    echo 'DELAY=0' >> $mkinitrdconf
+fi
+
+# undocumented hacks, copied from base-installer/debian/postinst, to
+# prevent dash postinst prompting with "GET dash/sh"
+unset DEBIAN_HAS_FRONTEND
+unset DEBIAN_FRONTEND
+unset DEBCONF_FRONTEND
+unset DEBCONF_REDIR
+
+db_get debian-installer/kernel/image
+
+if [ -z "$RET" ] ; then
+    echo "error: Empty value in 'debian-installer/kernel/image'!" 1>&2
+    echo "error: Unable to install kernel." 1>&2
+    exit 1
+fi
+
+PATH=$PATH:/target/usr/bin:/target/bin:/target/usr/sbin:/target/sbin \
+LD_LIBRARY_PATH=/target/lib:/target/usr/lib \
+/target/usr/bin/apt-get \
+    -o Dir::State=/target/var/lib/apt \
+    -o Dir::State::status=/target/var/lib/dpkg/status \
+    -o Dir::Cache=/target/var/cache/apt \
+    -o Dir::Etc=/target/etc/apt \
+    -o Dir::Bin::methods=/target/usr/lib/apt/methods \
+    -o Dir::Bin::gzip=/target/bin/gzip \
+    -o Dir::Bin::dpkg=/target/usr/bin/dpkg \
+    -o Dpkg::Options::=--root=/target \
+    -y install $RET
+
+exit 0

@@ -1,0 +1,36 @@
+#! /bin/sh -ex
+
+. /usr/share/debconf/confmodule
+
+DIRS=
+
+for d in /dev/ide /dev/scsi; do
+    [ -d "$d" ] && DIRS="$DIRS $d"
+done
+
+TMP=`find $DIRS -name disc`
+for D in $TMP; do
+    if [ "$DISCS" ]; then
+        DISCS="$DISCS, $D"
+    else
+        DISCS="$D"
+    fi
+done
+DISCS=`echo "$DISCS" | sed 's/, $//'`
+
+db_subst di-utils-partitioner/disc DISCS $DISCS
+
+db_input critical di-utils-partitioner/disc
+db_go
+
+FDISK=fdisk
+
+if [ "$DEBIAN_FRONTEND" = "slang" ]; then
+    type -p cfdisk > /dev/null && FDISK=cfdisk
+elif [ "$DEBIAN_FRONTEND" = "text" ]; then
+    type -p fdisk > /dev/null && FDISK=fdisk
+fi
+
+db_get di-utils-partitioner/disc
+
+$FDISK $RET < /dev/tty >/dev/tty 2>/dev/tty

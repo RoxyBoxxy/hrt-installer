@@ -1,0 +1,116 @@
+#! /usr/bin/make -f
+
+TYPES=cdrom cdrom144 net netboot
+ARCHS=alpha arm hppa i386 ia64 m68k mips mipsel powerpc s390 sparc
+# Where to place the files in the pkg
+INSTALL_ROOT=var\/www\/debian
+# Where to fetch old files from the woody ftp tree
+DEBIAN_ARCHIVE=http://localhost/debian
+# The URL with the http:// stripped and backslashes quoted
+DEBIAN_ARCHIVE_Q=localhost\/debian
+#
+# Iterate over each kernel 
+#
+KERNELS_alpha    := 2.4.20-generic
+KERNELS_arm      :=
+KERNELS_hppa     := 
+# FIXME hppa kernel not uploaded yet
+# KERNELS_hppa     := 2.4.19-32
+KERNELS_i386     := 2.4.20-1-386
+KERNELS_ia64	 := 2.4.20-ia64
+KERNELS_m68k     := 2.2.20-mac
+KERNELS_mips     := 
+KERNELS_mipsel   :=
+# FIXME uncomment when the infinite loop bug #172828 is fixed
+# KERNELS_mips   := 2.4.19-r4k-ip22
+# KERNELS_mipsel := 2.4.19-r3k-kn02 2.4.19-r4k-kn04
+KERNELS_powerpc  := 2.4.19-powerpc
+KERNELS_s390     := 2.4.17-s390-tape 2.4.19-s390
+KERNELS_sparc    := 2.2.20-sun4cdm
+
+
+ARCH=$(shell dpkg-architecture -qDEB_BUILD_ARCH)
+VERSION=$(shell LC_ALL=C dpkg-parsechangelog | grep ^Version: | sed 's/^Version: *//')
+DIST=$(shell LC_ALL=C dpkg-parsechangelog | grep ^Distribution: | sed 's/^Distribution: *//')
+PACKAGE=debian-installer-$(ARCH)
+DISKS_ROOT=$(INSTALL_ROOT)\/dists\/$(DIST)\/main\/disks-$(ARCH)\/$(VERSION)
+WOODY_DISKS_ROOT=$(DEBIAN_ARCHIVE_Q)\/dists\/woody\/main\/disks-$(ARCH)\/current
+
+clean:
+	dh_testdir
+	dh_testroot
+	for TYPE in $(TYPES) ; do \
+		$(MAKE) TYPE=$$TYPE clean ; \
+	done
+	rm -rf  debian/build debian/$(PACKAGE)  
+	rm -rf debian/*.install debian/*.dirs
+	rm -rf localudebs/*
+	dh_clean
+
+# We want some stamps to survice the cleanup process
+# They are only removed by 'make reallyclean'
+# so they are in subdirs that are cleaned by 'reallyclean'
+CONFIGURE_STAMP:=wget-cache/configure-stamp
+
+# Prepare a source tarball ready for the archive.
+# Should be clean, and contains all necessary sources;
+# debian/control should contain the appropriate Build-Depends
+#
+configure:   debian/control
+$(CONFIGURE_STAMP): 
+	# Fetch some files from woody, that are not built but useful.
+	mkdir -p wget-cache
+	(cd wget-cache ; wget --base=$(DEBIAN_ARCHIVE) -x -i ../debian/wget-files )
+	$(MAKE) TYPES="$(TYPES)"  fetch-sources
+	( cd .. ; tar zcpf build-installer_$(VERSION).orig.tar.gz build )
+	touch $(CONFIGURE_STAMP)
+
+
+build: build-stamp
+build-stamp: $(CONFIGURE_STAMP)
+	$(MAKE) TYPES="$(TYPES)" compile-udebs
+	mkdir -p debian/build
+	for KERNEL in $(KERNELS_$(ARCH)) ; do \
+		for TYPE in $(TYPES) ; do \
+			( $(MAKE) KERNELVERSION=$$KERNEL APT_GET=true TYPE=$$TYPE stats cd_content || true ) ; \
+			mkdir -p debian/build/$$KERNEL ; \
+			( cp -R dest/* debian/build/$$KERNEL || true) ; \
+		done ; \
+	done
+	touch build-stamp
+
+binary-indep:
+
+binary-arch: install
+
+install: configure  build debian/$(PACKAGE).dirs debian/$(PACKAGE).install
+	dh_testdir
+	dh_testroot
+	dh_clean -k
+	dh_installdirs       --package $(PACKAGE)
+	dh_installchangelogs --package $(PACKAGE)
+	./debian/fixup-missing touch
+	dh_installdocs       --package $(PACKAGE)
+	dh_install           --package $(PACKAGE)
+	./debian/fixup-missing remove
+	dh_compress          --package $(PACKAGE)
+	dh_installdocs       --package $(PACKAGE) missing.txt
+	( cd debian/$(PACKAGE)/$(DISKS_ROOT) ; md5sum `find . -type f` > md5sum.txt )
+	dh_gencontrol --package $(PACKAGE)  -- -n$(PACKAGE)_$(VERSION)_${ARCH}.deb 
+	dh_builddeb   --package $(PACKAGE)  --filename=$(PACKAGE)_$(VERSION)_${ARCH}.deb
+
+binary: binary-indep binary-arch 
+.PHONY: build clean binary-indep binary-arch binary install 
+
+debian/$(PACKAGE).dirs: debian/$(PACKAGE).dirs.in
+	sed  's/@DISKS_ROOT@/$(DISKS_ROOT)/' < $< > $@
+
+debian/$(PACKAGE).install: debian/$(PACKAGE).install.in
+	sed  's/@DISKS_ROOT@/$(DISKS_ROOT)/' < $< | sed 's/@WOODY_DISKS_ROOT@/$(WOODY_DISKS_ROOT)/'  > $@
+
+debian/control: debian/control.in $(CONFIGURE_STAMP)
+	for d in  `ls sourceudebs | grep -v stamp` ; do 	\
+		grep Build-Depends sourceudebs/$$d/debian/control >> sourceudebs/depends ; \
+	done
+	deps=`cut -d: -f2 <  sourceudebs/depends | sed 's/$$/,/' | xargs`  ; sed "s/@UDEB_DEPENDS@/$$deps/" < $< > $@
+	rm -f sourceudebs/depends

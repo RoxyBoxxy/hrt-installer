@@ -1,0 +1,66 @@
+#! /usr/bin/make -f
+# Sample debian/rules that uses debhelper.
+# GNU copyright 1997 to 1999 by Joey Hess.
+
+# Uncomment this to turn on verbose mode.
+#export DH_VERBOSE=1
+
+PACKAGE=prebaseconfig
+VERSION=$(shell dpkg-parsechangelog | grep ^Version: | cut -d ' ' -f 2)
+ARCH=$(shell dpkg --print-architecture)
+FILENAME=$(PACKAGE)_$(VERSION)_all.udeb
+PRIORITY=$(shell grep ^Priority: debian/control | cut -d ' ' -f 2)
+
+# This is the debhelper compatability version to use.
+export DH_COMPAT=3
+
+DESTDIR = debian/prebaseconfig
+
+build: 
+
+clean:
+	dh_testdir
+	dh_testroot
+	rm -f build-stamp
+	dh_clean
+
+install: build
+	dh_testdir
+	dh_testroot
+	dh_installdirs
+	install -m0644 inittab.install $(DESTDIR)/usr/share/prebaseconfig/inittab
+	install -m0644 install-report.template $(DESTDIR)/usr/share/prebaseconfig/install-report.template
+
+	for file in \
+		50config-target-network \
+		60reportbug-template \
+		80save-install-log \
+		90prepare-base-config \
+		95umount \
+		99reboot ; \
+	do \
+	    install -m0755 prebaseconfig.d/$$file $(DESTDIR)/usr/lib/prebaseconfig.d/$$file; \
+	done
+
+# Build architecture-independent files here.
+binary-indep: build install
+# We have nothing to do by default.
+
+# Build architecture-dependent files here.
+binary-arch: build install base-install
+base-install:
+	dh_testdir
+	dh_testroot
+	dh_installdebconf
+#	cp debian/menutest debian/partkit/DEBIAN/menutest	
+	dh_strip
+	dh_compress
+	dh_fixperms
+	dh_installdeb 
+	dh_shlibdeps
+	dh_gencontrol -- -fdebian/files~
+	dpkg-distaddfile $(FILENAME) debian-installer $(PRIORITY)
+	dh_builddeb --filename=$(FILENAME)
+
+binary: binary-indep binary-arch
+.PHONY: build clean binary-indep binary-arch binary install base-install

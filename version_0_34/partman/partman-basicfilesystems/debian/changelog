@@ -1,0 +1,223 @@
+partman-basicfilesystems (11) UNRELEASED; urgency=low
+
+  * Anton Zinoviev
+    - new release
+  * Translations :
+    - André Luís Lopes
+      - Updated Brazilian Portuguese translation (pt_BR.po)
+    - Kęstutis Biliūnas
+      - Updated Lithuanian translation (lt.po)
+    - H�vard Korsvoll: Added Norwegian, nynorsk translation (nn.po).
+
+ -- Anton Zinoviev <zinoviev@debian.org>  Tue, 24 Feb 2004 19:28:56 +0200
+
+partman-basicfilesystems (10) unstable; urgency=low
+
+  * Anton Zinoviev
+    - apt-install e2fsprogs when ext2 is used
+    - apt-install dosfsprogs when fat16 or fat32 is used
+    - new script init.d/autouse_swap: automatically detect and use the
+      existing swap partitions
+    - new look of the items in the active_partition menu
+    - provides templates with names of the file systems as said in the new
+      version of the documentation.  The scripts in valid_filesystems also
+      changed
+    - change then number of update.d/swap_nomountpoint (30->60) as it must
+      be after 50filesystems
+
+  * Translations:
+    - Eugeniy Meshcheryakov
+      - Updated Ukrainian translation (uk.po)
+    - Kęstutis Biliūnas
+      - Updated Lithuanian translation (lt.po)
+
+ -- Anton Zinoviev <zinoviev@debian.org>  Fri, 20 Feb 2004 18:59:50 +0200
+
+partman-basicfilesystems (9) unstable; urgency=low
+
+  * Anton Zinoviev
+    - Check if `vfat' kernel module is already loaded before `modprobe vfat'.
+
+ -- Anton Zinoviev <zinoviev@debian.org>  Sat, 14 Feb 2004 20:24:04 +0200
+
+partman-basicfilesystems (8) unstable; urgency=low
+
+  * Christian Perrier
+    - corrected the partman-basicfilesystems/options template for
+      consistency with partman-ext3 and DTSG, regarding short and
+      long description. Run debconf-updatepo.
+  * Denis Barbier
+    - Because of a bug in po2debconf, generated templates file is
+      corrupted if a comment appears before the Template line, as
+      before the partman-basicfilesystems/text/specify_mountpoint
+      template.  Closes: #232495
+
+  * Translations:
+    - Bartosz Fenski
+      - Updated Polish (pl) translation.
+    - Bart Cornelis
+      - Updated Dutch (nl.po) translation
+    - Nikolai Prokoschenko
+      - Updated Russian translation (ru.po)
+    - Konstantinos Margaritis
+      - Updated Greek translation (el.po)
+    - Claus Hindsgaul
+      - Updated Danish translation (da.po)
+    - Nuno Sénica
+      - Added Portuguese translation (pt.po)
+    - Christian Perrier
+      - Update french translation (fr.po)
+    - Dennis Stampfer
+      - Update German translation (de.po)
+    - Carlos Z.F. Liu
+      - update Simplified Chinese translation (zh_CN.po)
+    - Kenshi Muto
+      - Updated Japanese translation (ja.po)
+    - Miroslav Kure
+      - Update Czech translation (cs.po)
+    - Miguel Figueiredo
+      - Update Portuguese translation (pt.po)
+    - André Luís Lopes
+      - Updated Brazilian Portuguese (pt_BR) translation.
+    - h3li0s
+      - added albanian translation (sq.po)
+    - Jordi Mallach
+      - Add Catalan translation (ca.po).
+    - Kęstutis Biliūnas
+      - Updated Lithuanian translation (lt.po).
+    - Safir Šećerović
+      - Update Bosnian translation (bs.po).
+    - Eugen Meshcheryakov
+      - Added Ukrainian translation (uk.po)
+
+ -- Anton Zinoviev <zinoviev@debian.org>  Fri, 13 Feb 2004 09:55:39 +0200
+
+partman-basicfilesystems (7) unstable; urgency=low
+
+  * Bartosz Fenski
+    - Updated Polish (pl) translation. Removed some inconsistencies. 
+  * Christian Perrier
+    - changelog corrections
+    - added missing dot in danish translation for one string
+    - fixed minor inconsistencies in danish translation
+  * Carlos Z.F. Liu
+    - fix some small Simplified Chinese translation errors
+  * Miroslav Kure
+    - fix Czech translation
+  * Peter Mann
+    - Update Slovak translation
+  * Anton Zinoviev
+    - changelog: new release 7.  Move some of the stuff from already
+      released and uploaded 6 to 7. 
+    - templates: s/_Descriptions:/_Description:/
+    - new templates: partman-basicfilesystems/options_help and
+      partman-basicfilesystems/fatoptions_help.  We show the help only
+      once as otherwise it can be boring.
+    - templates: correct some punctuation signs.
+  
+ -- Anton Zinoviev <zinoviev@debian.org>  Thu, 29 Jan 2004 11:22:23 +0200
+
+partman-basicfilesystems (6) unstable; urgency=low
+
+  * Stefano Canepa
+    - added Italian translation (it.po)
+  * Bart Cornelis
+    - small update to Dutch translation as a result of [DICO] discussion on
+      debian-l10n-dutch@l.d.o
+  * Anton Zinoviev
+    - format ext2 and linux-swap using parted when possible and fallback
+      on mkfs.ext2 and mkswap only when parted fails.  This is in order to
+      support the progress bar.
+
+ -- Anton Zinoviev <zinoviev@debian.org>  Fri, 23 Jan 2004 13:06:24 +0200
+
+partman-basicfilesystems (5) unstable; urgency=low
+
+  * Bartosz Fenski
+    - Add Polish (pl) translation.
+  * Kenshi Muto
+    - Add Japanese translation (ja.po)
+    - Update Japanese translation
+  * Christian Perrier
+    - First debconf templates polishing
+    - Run debconf-updatepo
+  * André Luís Lopes
+    - Run debconf-updatepo
+    - Added Brazilian Portuguese (pt_BR) translation.
+  * Christian Perrier
+    - changed partman-basicfilesystems/no_mount_point template
+      to boolean
+  * Konstantinos Margaritis
+    - Updated Greek translation (el.po)
+  * Nikolai Prokoschenko
+    - added russian translation (ru.po)
+  * Peter Mann
+    - Initial Slovak translation
+  * Anton Zinoviev
+    - the install target in debian/rules removes all files CVS from the
+      generated package.
+    - added local variable for Emacs `coding: utf-8' at the end of the
+      changelog.
+  * Christian Perrier
+    - changed the check_failed template to boolean
+    - Initial French translation
+  * Konstantinos Margaritis
+    - Updated Greek translation (el.po)
+  * Dennis Stampfer
+    - Initial German translation (de.po)
+  * Anmar Oueja
+    - Initial Arabic Translation (ar.po)
+  * Claus Hindsgaul
+    - Initial Danish translation (da.po)
+  * Christian Perrier
+    - run debconf-updatepo on Slovak translation
+  * Miroslav Kure
+    - Initial Czech translation
+  * Ming Hua
+    - Initial Simplified Chinese translation (zh_CN.po)
+  * Bart Cornelis
+    - Initial Dutch (nl.po) translation
+  * Kęstutis Biliūnas
+    - Initial Lithuanian (lt.po) translation.
+  * Safir Secerovic
+    - Add Bosnian translation (bs.po).
+  * Joey Hess
+    - Change udeb filename to use "all".
+
+ -- Bart Cornelis <cobaco@linux.be>  Thu, 22 Jan 2004 09:26:14 +0100
+
+partman-basicfilesystems (4) unstable; urgency=low
+
+  * Uses po-debconf.
+  * Use db_metaget to translate messages.
+  * Added support to set mount options.
+  * Removed "-o $options" for the mount-command in mount.d/basic.
+    Otherwise the ro flag would mount read-only...
+  * Konstantinos Margaritis
+    - Initial Greek translation (el.po)
+
+ -- Anton Zinoviev <zinoviev@debian.org>  Mon,  5 Jan 2004 22:56:41 +0200
+
+partman-basicfilesystems (3) unstable; urgency=low
+
+  * commit.d/format_basic: invoke `name_progress_bar' before open_dialog
+    CREATE_FILE_SYSTEM.
+  * New script commit.d/check_basicfilesystems.
+  * Rename commit.d/format_basic to commit.d/format_basicfilesystems.
+  * format_basicfilesystems: checks the existence of $id/format rather
+    than the contents of $id/method.
+  * New template partman-basicfilesystems/fat_mountpoint: the default
+    mount points for fat filesystems are different...
+  * Uses `exit 0' and `return 0' instead of just `exit' and `return'.
+
+ -- Anton Zinoviev <zinoviev@debian.org>  Fri, 12 Dec 2003 09:01:15 +0200
+
+partman-basicfilesystems (2) unstable; urgency=low
+
+  * First version.
+
+ -- Anton Zinoviev <zinoviev@debian.org>  Wed, 12 Nov 2003 16:55:08 +0200
+
+Local Variables:
+coding: utf-8
+End:

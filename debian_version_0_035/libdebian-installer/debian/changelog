@@ -1,0 +1,156 @@
+libdebian-installer (0.16) UNRELEASED; urgency=low
+
+  * DO NOT UPLOAD
+  * Bastian Blank
+    - rework lib
+      - add rfc822 parser
+      - add logging
+      - add packages and release file parsing
+    - dump major to 4
+
+ -- Bastian Blank <waldi@debian.org>  Thu, 28 Aug 2003 17:46:27 +0200
+
+libdebian-installer (0.15) unstable; urgency=low
+
+  * Bastian Blank
+    - Don't log to stderr and close stdin.
+    - Never cast malloc return values.
+  * Joey Hess
+    - added di_status_read and di_config_package
+
+ -- Petter Reinholdtsen <pere@debian.org>  Tue, 22 Jul 2003 13:19:17 +0200
+
+libdebian-installer (0.14) unstable; urgency=low
+
+  * Bastian Blank
+    - Add Enhances parsing.
+  * Petter Reinholdtsen
+    - Add support in di_mapdevfs for SW RAID devices, /dev/md#.
+      (Closes: #185574)
+
+ -- Bastian Blank <waldi@debian.org>  Sun, 01 Jun 2003 20:54:45 +0200
+
+libdebian-installer (0.13) unstable; urgency=low
+
+  * Martin Sjögren
+    - Add di_mapdevfs function.
+    - Change section of libdebian-installer3-dev to libdevel.
+    - Add Recommends parsing.
+    - Don't log to stderr, it will interfere with frontends.
+    - Revert to major/minor/micro. current/revision/age is something
+      else.
+  * Bastian Blank
+    - cleanup di_mapdevfs.
+  * Petter Reinholdtsen
+    - Add new functin di_logf(), a vararg version of di_log().
+
+ -- Martin Sjogren <sjogren@debian.org>  Sun,  4 May 2003 16:20:20 +0200
+
+libdebian-installer (0.12) unstable; urgency=low
+
+  * Martin Sjögren
+    - Build-dep on d-shlib >= 0.10 (Closes: #178073).
+
+ -- Martin Sjogren <sjogren@debian.org>  Fri, 24 Jan 2003 20:24:00 +0100
+
+libdebian-installer (0.11) unstable; urgency=low
+
+  * Martin Sjögren
+    - Fix depends/provides parser (Closes: #177061).
+
+ -- Martin Sjogren <sjogren@debian.org>  Fri, 17 Jan 2003 10:49:23 +0100
+
+libdebian-installer (0.10) unstable; urgency=low
+
+  * Martin Sjögren
+    - Add di_pkg_alloc and di_pkg_free for memory management of package
+      structs.
+    - Add di_list_free for freeing an entire linked list.
+
+ -- Martin Sjogren <sjogren@debian.org>  Sun, 29 Dec 2002 17:11:57 +0100
+
+libdebian-installer (0.09) unstable; urgency=low
+
+  * Martin Sjögren
+    - Add di_pkg_toposort_{list,arr} to be used by anna and main-menu.
+
+ -- Martin Sjogren <sjogren@debian.org>  Sat,  7 Dec 2002 12:14:08 +0100
+
+libdebian-installer (0.08) unstable; urgency=low
+
+  * Martin Sjögren
+    - Fix di_pkg_is_installed, now it even works!
+
+ -- Tollef Fog Heen <tfheen@debian.org>  Thu,  5 Dec 2002 00:45:28 +0100
+
+libdebian-installer (0.07) unstable; urgency=low
+
+  * Martin Sjögren
+    - Add a linked list data structure, decoupling next pointers from the
+      node data
+    - Add a package_dependency struct that has package name and a pointer
+      to a package_t struct
+    - Add functions di_pkg_find, di_pkg_provides, di_pkg_is_virtual,
+      di_pkg_is_installed and di_pkg_resolve_deps
+    - Change maintainer to debian-boot and set dwhedon, tfheen and sjogren as
+      uploaders
+    - Bump standards-version and fix copyright file so lintian shuts up
+
+ -- Martin Sjogren <sjogren@debian.org>  Fri, 29 Nov 2002 16:36:45 +0100
+
+libdebian-installer (0.06) unstable; urgency=low
+
+  * Martin Sjögren
+    - Multiple provides
+    - Remove libd-i-pic
+    - Priority parsing
+    - Version number parsing and comparison
+
+ -- Tollef Fog Heen <tfheen@debian.org>  Wed,  6 Nov 2002 01:46:42 +0100
+
+libdebian-installer (0.05) unstable; urgency=low
+
+  * change an fprintf to vfprintf.
+
+ -- Tollef Fog Heen <tfheen@debian.org>  Thu, 24 Oct 2002 12:34:26 +0200
+
+libdebian-installer (0.04) unstable; urgency=low
+
+  * Fix up section according to override file.
+  * Build "proper" library packages.
+  David Kimdon
+    - add di_prebaseconfig_append()
+    - change my name (s/Whedon/Kimdon/g)
+  Junichi Uekawa
+    - require d-shlibs 0.3 or greater for build
+    - -dev: add devlibs:Depends, require libdebian-installer ${Source-Version}
+    - -pic: depend on exact version of -dev to avoid nasty surprises
+  Martin Sjögren
+    - Add 'Packages' file parsing functionality (di_pkg_parse).
+    - Case insensitive strstr (di_stristr).
+  Michael Cardenas
+    - fix install target so it can be ran more than once
+
+ -- Tollef Fog Heen <tfheen@debian.org>  Tue,  6 Aug 2002 16:03:45 +0200
+
+libdebian-installer (0.03) unstable; urgency=low
+
+  * Fix up postinst name.
+
+ -- Tollef Fog Heen <tfheen@debian.org>  Tue,  6 Aug 2002 15:13:39 +0200
+
+libdebian-installer (0.02) unstable; urgency=low
+
+  * New name, which will hopefully be accepted by ftp-master.
+  * Removed emacs cruft from changelog.
+  * Add di_snprintfcat, courtesy of thomas poindessous
+
+ -- Tollef Fog Heen <tfheen@debian.org>  Mon, 20 May 2002 23:21:24 +0200
+
+libd-i (0.01) unstable; urgency=low
+
+  * Initial Release.
+
+ -- David Whedon <dwhedon@debian.org>  Thu,  8 Feb 2001 21:54:45 -0800
+
+

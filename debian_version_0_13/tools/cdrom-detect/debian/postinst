@@ -1,0 +1,254 @@
+#! /bin/sh
+
+set -e
+. /usr/share/debconf/confmodule
+#set -x
+
+# Is a cdrom already mounted?  If so, assume it's the right one..
+mount | grep -q ^/dev/cdroms/ && exit 0
+
+# This is a gross and stupid hack, but needed because of Xu's
+# unwillingness to run depmod in kernel-image's postinst.  See Debian
+# bug #136743
+
+depmod -a || true
+
+log () {
+    echo "$0: $@" >>/var/log/messages
+}
+
+load_modules()
+{
+    old=`cat /proc/sys/kernel/printk`
+    echo 0 > /proc/sys/kernel/printk
+    for module in $* ; do
+	modprobe $module >> /var/log/messages 2>&1
+    done
+    echo $old > /proc/sys/kernel/printk
+}
+
+load_floppy_driver() {
+    if [ ! -d /dev/floppy ] ; then
+        load_modules floppy
+    fi
+    if [ ! -d /dev/floppy ] ; then
+        log "error: Unable to load floppy device driver"
+    fi
+    floppydev=/dev/floppy/0
+}
+
+log "Detecting hardware..."
+
+# Manually load modules to enable things we can't detect.
+# XXX: This isn't the best way to do this; we should autodetect.
+manual_load="ide-mod ide-probe-mod ide-disk ide-cd isofs"
+#manual_load=i82365 usb-storage
+#manual_load=i82365 sr_mod usb-storage
+
+get_hw_info() {
+    /sbin/discover --format="%m\t%V\t%M\n" \
+	--disable-all --enable=pci,ide,scsi,pcmcia scsi cdrom
+}
+set -- `get_hw_info | wc -l`
+count="$1"
+db_progress START 0 $count cdrom-detect/progress_title
+
+IFS_SAVE="$IFS"
+IFS="
+"
+for device in `get_hw_info`
+do
+    module="`echo $device | cut -f1`"
+    vendor="`echo $device | cut -f2`"
+    model="`echo $device | cut -f3`"
+    IFS="$IFS_SAVE"
+
+    if [ "$vendor" != "Unknown" ]
+    then
+        name="$vendor $model"
+    else
+        name="$model"
+    fi
+
+    log "Detected load module '$module' for '$name'"
+
+    db_subst cdrom-detect/progress_step MODULE "$module"
+    db_subst cdrom-detect/progress_step CARDNAME "$name"
+    db_progress STEP 1 cdrom-detect/progress_step
+
+    if [ -n "$module" -a "$module" != "ignore" ]
+    then
+        log "Trying to load module '$module'"
+
+        if modprobe -l ${module}.o | grep ${module}.o > /dev/null
+        then
+                :
+        else
+            while true
+            do
+	        template=cdrom-detect/not_included
+		db_fset "$template" seen false || true
+		db_subst "$template" vendor "$name" || true
+		db_subst "$template" module $module || true
+		db_input low "$template" || true
+		db_go || true
+		db_get "$template" || true
+                mounted=0
+                if [ "$RET" != "true" ]
+                then
+                    break
+                fi
+                load_floppy_driver
+                mount -t ext2 $floppydev /mnt
+                if [ "$?" = "0" ]
+                then
+                    if [ -f /mnt/modules.tgz ]
+                    then
+                        mounted=1
+                        break
+                    fi
+                    umount /mnt
+                fi
+            done
+
+            if [ "$mounted" = "1" ]
+            then
+                log "Copying modules.tgz from ext2 modules disk... "
+                gunzip -c /mnt/modules.tgz | tar xf - $module.o
+                umount /mnt
+                # Make sure 'depmod -a' accepts the new module
+                chown -R root /lib/modules
+                depmod -a
+            fi
+        fi
+
+        if modprobe -l ${module}.o | grep ${module}.o > /dev/null
+        then
+            load_modules $module
+            if [ "$?" != "0" ]
+            then
+                log "Error loading driver '$module' for $vendor $model!"
+	    fi
+        else
+            log "Could not locate driver '$module' for $vendor $model."
+        fi
+    fi
+    IFS="
+"
+done
+IFS="$IFS_SAVE"
+
+db_progress STOP
+
+load_modules $manual_load
+
+log "Searching for Debian installation media..."
+
+mkdir /cdrom 2>/dev/null || true
+
+while true
+do
+    mounted=0
+
+    # What about ISA cdroms ?
+    # discover doesn't do devfs, :/
+
+    # devices=`/sbin/discover --disable-all --enable=pci,ide,scsi --device cdrom`
+    devices="`echo /dev/cdroms/*`"
+    for device in $devices
+    do
+        mount -t iso9660 -o ro,exec $device /cdrom 2>/dev/null
+        if [ "$?" = "0" ]
+        then
+            mounted=1
+        fi
+    done
+
+    if [ "$mounted" = "1" ]
+    then
+        break
+    fi
+
+    # If device was detect but mount failed, ask for inserting the CD
+    if [ -n "$devices" ]
+    then
+	db_fset cdrom-detect/is_cd_inserted seen false
+	db_input critical cdrom-detect/is_cd_inserted
+	db_go
+	db_get cdrom-detect/is_cd_inserted
+	if [ "$RET" = "false" ]
+	then
+	    continue
+	fi
+    fi
+    
+    # Otherwise manual configuration may be needed
+    db_fset cdrom-detect/manual_config seen false
+    db_input critical cdrom-detect/manual_config
+    db_go
+    db_get cdrom-detect/manual_config
+
+    modules=none
+    for i in `ls -1 /lib/modules/*/kernel/drivers/cdrom/ | sed -e 's/.o$//'`
+    do
+	modules="$modules, $i"
+    done
+    
+    # Here's the list of device
+    # UPDATE IT HERE if you want to add some devices
+    
+    if [ "$RET" = "true" ]
+    then
+	db_fset cdrom-detect/cdrom_module seen false
+	db_subst cdrom-detect/cdrom_module choices "$modules"
+	db_input critical cdrom-detect/cdrom_module
+	db_go
+
+	db_get cdrom-detect/cdrom_module
+	module="$RET"
+
+	db_fset cdrom-detect/cdrom_device seen false
+	db_input critical cdrom-detect/cdrom_device
+	db_go
+
+	db_get cdrom-detect/cdrom_device
+	device="$RET"
+
+	if [ "$module" != "none" ]
+	then
+	    modprobe $module
+	fi
+	mount -t iso9660 -o ro,exec $device /cdrom
+	if [ "$?" = "0" ]
+	then
+	    mounted=1
+	    break
+	fi
+    else
+	log "CDROM-detect failed."
+	exit 1
+    fi
+done
+
+# Set the distribution used by base-installer, test in priority order
+for dist in stable testing unstable ; do
+    if [ -e /cdrom/dists/$dist ] ; then
+	CODENAME=`sed -n 's/^Codename: *//p' /cdrom/dists/$dist/Release`
+	db_set mirror/distribution $CODENAME
+	log "Detected CD with '$CODENAME' distribution"
+	break
+    fi
+done
+
+# Ask for eject to be installed into /target/, to be able to use it in
+# the prebaseconfig script.
+apt-install eject || true
+
+# Hey, we're done
+db_fset cdrom-detect/success seen false
+db_subst cdrom-detect/success cdname "`cat /cdrom/.disk/info`"
+db_input low cdrom-detect/success || true
+db_go
+
+exit 0
+

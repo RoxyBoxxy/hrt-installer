@@ -1,0 +1,709 @@
+cdebconf (0.49) UNRELEASED; urgency=low
+
+  * Christian Perrier 
+    - Update French translation.
+  * Safir Secerovic, Amila Akagic
+    - Add Bosnian translation (bs.po).
+  * Alastair McKinstry
+    - Change CMDSTATUS_BADPARAM code to 15, to disabiguate.
+    - Add enum for command status codes to debconfclient.h
+  * Ilgiz Kalmetev
+    - Updated Russian translation. Closes: #219095.
+  * Denis Barbier
+    - Empty extended descriptions did produce extra vertical space, it is
+      now fixed for all supported frontends.  Closes: #219072.
+    - With the newt frontend, display of notes was corrupted when the
+      extended description was shorter than the description.
+      Closes: #218869.
+    - Look for translated Listorder fields so that translators may decide
+      not to sort Choices fields, e.g.
+        Listorder-ja.UTF-8: none
+      will prevent sorting in Japanese.
+
+ -- Pierre Machard <pmachard@debian.org>  Sat,  1 Nov 2003 11:54:54 +0100
+
+cdebconf (0.48) unstable; urgency=low
+
+  * Denis Barbier
+    - Sort translated choices when a select/multiselect template contains
+      a line Listorder: lexicographic
+      If some Choices items must not be sorted, they can be prepended with
+      an exclamation mark.  Adding a comment is a good idea to let
+      translators know why this sign has been put here:
+        _Choices: ${FOO}, !Other[ You only have to translate Other, remove the exclamation mark and this comment between brackets]
+      Currently text, newt, slang and gtk frontends support this feature.
+    - Fix a crash with the newt frontend when a boolean question has no
+      default value. Closes: #215583.
+    - Let cdebconf newt frontend looks like debconf dialog: short description
+      is moved just before input field, except for note and error template
+      types.  Closes: #215582.
+    - Make strlongest aware of wide chars.
+    - Windows now adjust to text size with the newt frontend,
+  * Steinar H. Gunderson
+    - Makes cdebconf assume "show only unseen questions" by default,
+      which makes it behave a lot more like debconf. This also makes
+      unattended installs (ie. installs with pre-seeded debconf databases)
+      possible without a non-interactive frontend.
+    - Updated dpkg-reconfigure to make cdebconf show unseen questions,
+      to keep it updated with the change above.
+  * Kęstutis Biliūnas
+    - Add Lithuanian translation (lt.po).
+  * Claus Hindsgaul
+    - Add Danish translation (da.po).
+  * Petter Reinholdtsen
+    - Add menu item for cdebconf-priority to list of translatable
+      terms.
+  * André Luís Lopes
+    - Updated pt_BR (Brazilian Portuguese) translation.
+  * Kenshi Muto
+    - Update Japanese translation (ja.po)
+  * Bart Cornelis
+    - update dutch translation (nl.po)
+  * Tommi Vainikainen
+    - Add Finnish (fi.po) translation
+  * Christian Perrier
+    - Update French translation (fr.po).
+  * Miroslav Kure
+    - Update Czech translation (cs.po).
+  * Morten Brix Pedersen
+    - Update Danish translation (da.po).  Closes: #217164.
+  * Alastair McKinstry
+    - newt.c: on ESCAPE being pressed, return GOBACK rather than OK.
+
+ -- Petter Reinholdtsen <pere@debian.org>  Fri, 31 Oct 2003 19:00:23 +0100
+
+cdebconf (0.47) unstable; urgency=low
+
+  * Steinar H. Gunderson
+    - Remove the duplicate instance of d-shlibs from build-deps.
+  * Alastair McKinstry
+    - Add internationalization of the remaining (non-newt) frontends.
+      Closes: #184774.
+    - Finish off list in debconf_capb() macro with NULL.  This bug
+      require a rebuild of all programs using it.  Closes: #215403.
+  * Kenshi Muto
+    - Update Japanese po (ja.po)
+  * Miroslav Kure
+    - Initial Czech translation.
+  * Denis Barbier
+    - Leading and trailing spaces are no more removed when reading
+      templates files.
+    - Update cdebconf-text-udeb.templates with latest text.c
+    - Move UI strings from cdebconf-udeb.templates to new
+      cdebconf-gtk-udeb.templates and cdebconf-slang-udeb.templates
+    - Add a 'templates' target in src/modules/frontend/Makefile to
+      generate cdebconf-*-udeb.templates files from translatable
+      strings.  It is not run by default.
+  * Bart Cornelis
+    - Update dutch translation (nl.po)
+  * AndréLuís Lopes
+    - Update pt_BR (Brazilian Portuguese) translations.
+  * Petter Reinholdtsen
+    - Correct d-i menu entry template name.
+    - Update ru.po, thanks to patch from Ilgiz Kalmetev (Closes: #214385)
+    - Make sure the newt frontend find translations for its buttons, after
+      the templates was moved from cdebconf-udeb.templates.
+
+ -- Petter Reinholdtsen <pere@debian.org>  Mon, 13 Oct 2003 08:02:31 +0200
+
+cdebconf (0.46) unstable; urgency=low
+
+  * Joey Hess
+    - Fix priority of libdebconfclient0(-dev).
+  * Sebastian Ley
+    - Set standard install priority to high
+  * Petter Reinholdtsen
+    - Add support for translated menu entry for cdebconf-priority
+    - Simplify settitle implementation.
+
+ -- Sebastian Ley <ley@debian.org>  Thu,  2 Oct 2003 19:12:16 +0200
+
+cdebconf (0.45) unstable; urgency=low
+
+  * André Luís Lopes
+    - Update pt_BR (Brazilian Portuguese) translation.
+  * Kenshi Muto
+    - Update ja.po.
+  * Matt Kraai
+    - Wrap long progress bar information.
+  * Joey Hess
+    - Set priority to extra, it conflicts with debconf.
+
+ -- Petter Reinholdtsen <pere@debian.org>  Sun, 28 Sep 2003 14:43:27 +0200
+
+cdebconf (0.44) unstable; urgency=low
+
+  * Martin Sjögren
+    - Add internationalization of the buttons in the newt frontend.
+    - Hide the Go Back button instead of disabling it if backup is
+      disabled. A proper fix for colour sets would be better, but
+      this is less confusing for now.
+    - Set the background color to red when displaying an error message.
+  * Petter Reinholdtsern
+    - Ran debconf2po-update.
+    - Updated nb.po.
+    - Updated de.po, translated by Maximilian Wilhelm.
+  * Bart Cornelis
+    - updated Dutch translation
+  * Pierre Machard
+    - Update French po-debconf translation.
+  * Matt Kraai
+    - Build-depend on d-shlibs.
+
+ -- Petter Reinholdtsen <pere@debian.org>  Sat, 27 Sep 2003 17:43:24 +0200
+
+cdebconf (0.43) unstable; urgency=low
+
+  * Steinar H. Gunderson
+    - Add progress bars to slang frontend.
+    - Don't wrap text in newt frontend if it already has been wrapped by
+      libtextwrap. (Closes: #212389)
+    - Slovenian translation (sl.po), from Jure Cuhalev.
+  * Martin Sjögren
+    - Add binary dependencies for frontend udebs.
+  * Sebastian Ley
+    - Apply a workaround to get frontend switching working
+  * Petter Reinholdtsen
+    - Revert cdebconf-priority packages menu item change done by
+      Martin Sjögren.  I do not think it is needed to ask about this
+      in a normal installation, as uain-menu will adjust the debconf
+      priority dynamically.
+    - Add new command SETTITLE to make it possible to use translated
+      titles. (Closes: #212923)
+
+ -- Petter Reinholdtsen <pere@debian.org>  Sat, 27 Sep 2003 12:59:16 +0200
+ 
+cdebconf (0.42) unstable; urgency=low
+
+  * Sebastian Ley
+    - Add code to be able to change frontends on the fly. It is done by
+      setting the value of a question debconf/frontend to whatever frontend
+      you want to change to. This value is checked before each GO command.
+  * Petter Reinholdtsen
+    - Update ru.po, patch from Serge Winitzki.
+  * Steinar H. Gunderson
+    - Make question_get_field always return a valid string, even when it
+      gets a NULL pointer from the templates (which happens when a frontend
+      tries to look up a non-existing field). (Closes: #211315)
+  * Kenshi Muto
+    - Update ja.po
+
+ -- Petter Reinholdtsen <pere@debian.org>  Mon, 22 Sep 2003 23:04:11 +0200
+
+cdebconf (0.41) unstable; urgency=low
+
+  * Kenshi Muto
+    - Added Japanese translation (ja.po)
+  * Teófilo Ruiz Suárez
+    - Revised Spanish translation (es.po)
+  * Denis Barbier
+    - Update debian/po/POTFILES.in to reflect the renaming of
+      cdebconf-priority.templates to cdebconf-udeb.templates.
+  * Tomohiro KUBOTA
+    - Added --with-textwrap option for ./configure to use libtextwrap
+      if available.
+  * Petter Reinholdtsen
+    - Add new tool debconf-dumpdb, code from Tollef Fog Heen.
+    - Add libtextwrap-dev to build-dependencies, after testing that the
+      resulting cdebconf work just fine.
+
+ -- Petter Reinholdtsen <pere@debian.org>  Fri,  5 Sep 2003 23:32:41 +0200
+
+cdebconf (0.40) unstable; urgency=low
+
+  * Petter Reinholdtsen
+    - Add assert() to the newt frontend to try to pinpoint where it
+      crashes.
+    - Log when the langauge and priority changes.
+  * Martin Sjögren
+    - Remove the 'libnewt-utf8-dev' alternate dependency, it should be just
+      libnewt-dev now. (Closes: #203449)
+    - Move the debconf/priority template back to cdebconf-udeb.
+      (Closes: #203334)
+    - Memory cleanups in newt frontend.
+    - Rebuild with newer libnewt.
+    - This is known as the "stuff it" release, since I have no way
+      to actually *test* this thoroughly.
+  * Bastian Blank
+    - fix macros in debconfclient.h.
+  * Sebastian Ley
+    - Memory cleanup. Dropped some const qualifiers which are obsolete due to
+      Martins cleanup of const buffers.
+
+ -- Martin Sjogren <sjogren@debian.org>  Thu, 21 Aug 2003 14:59:14 +0200
+
+cdebconf (0.39) unstable; urgency=low
+
+  * Thorsten Sauter
+    - fix German translation
+  * Pierre Machard
+    - Update French translation
+  * Martin Sjögren
+    - Change the "Cannot open template file.." message to INFO_VERBOSE. It's
+      more of a warning than an error, really.
+    - Add cdebconf-priority udeb.
+    - Add "error" template type.
+  * Matt Kraai
+    - Add nl.po, thanks to Bart Cornelis.
+  * Joey Hess
+    - Split out the text frontend into its own module too.
+    - Make newt frontend default for udeb.
+    - Added --with-syslog-logging configure option (should really be in the
+      config file, but too hard) and turn it on for d-i. Closes: #201791
+  * Aigars Mahinovs
+    - Add latvian translation (lv.po).
+  * Alastair McKinstry
+    - Convert changelog to UTF-8, in accordance with Standards-Version 3.6.0
+    - Swap "Go back" and "Continue" buttons in the newt frontend to be
+      more conventional
+
+ -- Petter Reinholdtsen <pere@debian.org>  Sun, 27 Jul 2003 15:59:44 +0200
+
+cdebconf (0.38) unstable; urgency=low
+
+  * Martin Sjögren
+    - Remove libdebconf in favour of libdebconfclient which is slimmer.
+    - libdebconf.so is put in /usr/lib/cdebconf and found via rpath info.
+    - Make me the current uploader of this package.
+    - frontends/newt: When splitting up description and choices in two
+      windows, make sure the user can back up to the description.
+      (Closes: #188710)
+    - Redesign the command functions to get rid of the space mangling.
+      (Closes: #185014)
+    - Add DEBCONF_OLD_{STDIN,STDOUT}_FD that point to the original stdin
+      and stdout, to be used by console programs like starting a shell.
+    - frontends/newt: Fix crash bug on double invocation of PROGRESS STOP.
+    - frontends/newt: Change OK/Cancel to Continue/Go Back, and lay some
+      ground work for i18n.
+    - Redesign the progress API, see the docs. (Closes: #188243)
+    - When asked the same question twice, ignore one of the questions to
+      prevent looping. This is what perl-debconf does too.
+    - Add a 'priority' member to the question struct that can be used by
+      frontends.
+    - frontend/newt: Show a "sigil" in the title that indicates the
+      priority of the question. (Closes: #184816)
+  * Thorsten Sauter
+    - Insert german translation
+  * André Luís Lopes :
+    - Update pt_BR debconf template translation.
+
+ -- Martin Sjogren <sjogren@debian.org>  Wed, 14 May 2003 11:41:41 +0200
+
+cdebconf (0.37) unstable; urgency=low
+
+  * Sebastian Ley
+    - Allocate memory to load templates dynamically. (Closes: #188043)
+  * Petter Reinholdtsen
+    - Remove code to reconfigure the language when SIGUSR1 is recieved.
+      This is now done when 'SET debconf/language' is used instead.
+      SIGUSR1 still saves the database to disk.
+
+ -- Martin Sjogren <sjogren@debian.org>  Sun,  4 May 2003 17:38:00 +0200
+
+cdebconf (0.36) unstable; urgency=low
+
+  * Petter Reinholdtsen
+    - Correct section of libdebconf1-dev from devel to libdevel to
+      make sure it matches the override file in the debian archive.
+    - Update /usr/share/debconf/confmodule to match the version in
+      debconf 1.2.34.  This might solve the problem on disappearing
+      whitespace.  The only difference left is the progress support.
+    - Try to change the language imediately when debconf/language is
+      set.
+    - Add asserts() in question_get_field() trying to find out why
+      cdebconf crashes.
+    - Double the buffer used when loading templates.  This is a
+      workaround for bug #188043, but the code should be rewritten
+      to remove the limit.
+  * Martin Sjögren
+    - templates.c: Fix segfault bug in the getlanguage for loop.
+
+ -- Petter Reinholdtsen <pere@debian.org>  Thu, 24 Apr 2003 17:58:48 +0200
+
+cdebconf (0.35) unstable; urgency=low
+
+  * Martin Sjögren
+    - frontend/newt: Don't clear the screen unless questions will be
+      asked. (Closes: #184582)
+    - Change priority of frontend udebs (slang,newt,gtk) to optional.
+    - When frontend is cleared, set prev and next of all questions to NULL.
+      (Closes: #182357,#186413)
+  * Sebastian Ley
+    - The CAPB command now sets exactly the capabilities that were given as
+      arguments. This makes it possible to turn of backup.
+  * Denis Barbier
+    - src/debconfclient.c: remove dependencies against common.h and
+      strutl.h so that debconfclient.[ch] can be moved to a separate
+      libdebconfclient package.
+  * Petter Reinholdtsen
+    - Reduce the priority from critical to medium when setting the
+      current debconf priority.
+
+ -- Petter Reinholdtsen <pere@debian.org>  Sat, 12 Apr 2003 00:12:39 +0200
+
+cdebconf (0.34) unstable; urgency=low
+
+  * Add build-dependency on gtk to fix build problems.
+
+ -- Martin Sjogren <sjogren@debian.org>  Tue, 18 Mar 2003 11:38:35 +0100
+
+cdebconf (0.33) unstable; urgency=low
+
+  * Alastair McKinstry:
+    - Enable gtk builds; wanted for testing gtk-installer
+  * Martin Sjögren
+    - debian/rules: Use $(UDEB_FRONTENDS) for udeb building, so e.g. the
+      bogl frontend won't get in there by mistake.
+
+ -- Martin Sjogren <sjogren@debian.org>  Tue, 11 Mar 2003 20:48:21 +0100
+
+cdebconf (0.32) unstable; urgency=low
+
+  * Mario Lang
+    - text.c: Implement simple paging support for select and multiselect
+  * Martin Sjögren
+    - Add a newt frontend and a cdebconf-newt-udeb package.
+    - Make the C debconfclient perform the same file descriptor
+      redirections that the sh confmodule does.
+    - Add strwidth function for wide character strings.
+  * Petter Reinholdtsen
+    - Updated nb.po received from Bjørn Steensrud.
+    - Added Norwegian Nynorsk (nn.po) translations recieved from
+      Gaute Hvoslef Kvalnes.
+
+ -- Martin Sjogren <sjogren@debian.org>  Wed,  5 Mar 2003 22:35:07 +0100
+
+cdebconf (0.31) unstable; urgency=low
+
+  * Petter Reinholdtsen
+    - Added Norwegian Bokmål translations received from Bjørn Steensrud.
+  * Max Kosmach <max@tcen.ru>: initial russian translation
+  * Denis Barbier
+    - With the slang frontend, cursor must skip <Cancel> button even
+      when it is not displayed.  (Closes: #180299) 
+  * Thorsten Sauter
+    - Added basic progress bar support fo shellscripts (Closes: #181083).
+  * Martin Sjögren
+    - Text frontend: Blank until end of line when updating progress bar
+      (Closes: #181081).
+    - Text frontend: Increase the progress step *after* printing, so it
+      won't say 100% until it's done (Closes: #181088).
+
+ -- Martin Sjogren <sjogren@debian.org>  Fri, 21 Feb 2003 23:53:53 +0100
+
+cdebconf (0.30) unstable; urgency=low
+
+  * Randolph Chung
+    - added support for progress bars; bump the minor so version
+    - add a printf style api for debconfclient; add helper macros
+      for debconf commands (not yet completely verified)
+    - add debconf-communicate utility program
+    - fix text frontend so it never thinks the screen width is 0
+  * Denis Barbier:
+    - in databases encode strings as debconf does
+    - when reading templates files, newlines at the end of lines which
+      are not reformatted were gobbled
+    - finish support for backing up; names of seen questions are
+      stored in a new member of confmodule, these questions are
+      only marked as seen when session is over.
+    - when SIGUSR1 is received, reads debian-installer/language value
+      and sets LANGUAGE environment variable accordingly.
+    - change progress bars interface: displayed strings are extracted
+      from a template in order to help their l10n.
+    - with text frontend, do not display title when question is
+      skipped.  (closes: #177720)
+  * Tollef Fog Heen:
+    - Move rfc822 functions into libcdebconf from rfc822db module
+    - Fix getwidth to work properly on serial consoles.  Hopefully.
+  * Martin Sjögren:
+    - Make the slang frontend slightly friendlier to programs that produce
+      output themselves.
+  * Petter Reinholdtsen
+    - Add configure option --with-default-frontend to make it easier to
+      change frontend at compile time.
+    - In cdebconf-udeb, do not change the debconf priority setting if
+      environment DEBCONF_PRIORITY is set.
+    - The slang frontend is no longer part of cdebconf-udeb, but is
+      a separate package (Closes: #84230).
+  * Matt Kraai
+    - Add a cdebconf-slang-udeb package.
+    - NULL-terminate strvacat argument lists (Closes: #178402).
+
+ -- Randolph Chung <tausq@debian.org>  Tue, 28 Jan 2003 21:14:43 -0800
+
+cdebconf (0.29) unstable; urgency=low
+
+  * Denis Barbier:
+    - improve slang frontend, in order to make it more dialog-like.
+      When it is not ambiguous, pressing Enter key validate current
+      input and go to the next step.  Rename <Previous>/<Next> into
+      <Next>/<Cancel>.
+    - add support for backing up; it is only activated when script
+      invoke the "backup" debconf command.
+  * Tollef Fog Heen
+    - remove textdb from udeb build
+
+ -- Tollef Fog Heen <tfheen@debian.org>  Thu,  5 Dec 2002 00:33:36 +0100
+
+cdebconf (0.28) unstable; urgency=low
+
+  * Bastian Blank:
+    - split cleanup() into save() and cleanup().
+    - add a sighandler for SIGUSR1 which only saves the data.
+  * Denis Barbier:
+    - when a select has a single choice, let it be the default.
+    - cdebconf did gobble everything in extended descriptions
+      after a paragraph or a line beginning with a leading space.
+
+ -- Tollef Fog Heen <tfheen@debian.org>  Tue, 26 Nov 2002 04:21:29 +0100
+
+cdebconf (0.27) unstable; urgency=low
+
+  * Bastian Blank:
+    - fix multiselect question within the text frontend.
+    - add sighandler for SIGTERM
+    - add exit(1) to the end of the sighandler.
+    - modify the macros STRDUP and FREE to handle null pointers correctly.
+    - use question_getvalue(...) not q->value.
+    - check for value == NULL within command_get and command_metaget.
+    - use default language for metaget.
+    - add STRDUP_NOTNULL with the old behaviour of STRDUP. the client 
+      doesn't expect a value of NULL.
+    - add myself to Uploaders.
+  * Denis Barbier:
+    - Clean up function interface with l10n'ed fields: 'get' and 'set'
+      functions in the template structure are no more used.
+    - The getlanguage function is moved to template.c so that i18n is
+      fully handled by template.c
+    - Remove a superfluous trailing space in extended descriptions
+    - Use LANGUAGE environment variable instead of DEBCONF_LANG.
+      This variable is a colon separated list of languages.
+    - Fix the textdb driver wrt localized fields
+    - Support localized Default fields
+    - There are now 2 ways to retrieve question values, question_getvalue(q,l)
+      return either NULL or question value if it exists, and
+      question_get_field(q,l,"value") always return a valid string.  With the
+      latter, variable substitutions are also performed.
+    - Add support for the DEBCONF_SHOWOLD environment variable.  Its default
+      is currently "true".
+    - Improve support of the 'seen' flag; dixit joeyh, flags should be
+      set when closing session to help backing up, but it needs some
+      extra work.
+
+ -- Bastian Blank <waldi@debian.org>  Sun, 24 Nov 2002 00:17:31 +0100
+
+cdebconf (0.26) unstable; urgency=low
+
+  * Tollef Fog Heen:
+    - Add stack module.
+    - Add possibility to specify modname when doing template_db_new and
+      question_db_new, this breaks compatibility, so bump soname as well.
+      Integer sonames are good for your health and stomach, so make
+      libdebconf.so.1 the soname
+    - have make clean remove the static library as well.
+    - make -o in debconf work.
+    - fix harmless compile warning in rfc822db.c's get method.
+  * Denis Barbier:
+    - Fix select/multiselect with slang frontend
+    - remove defaultval member in question structure
+    - partially handle localized fields, only UTF-8 templates files
+      are considered
+    - change internal template structure in src/template.h in order
+      to help managing localized fields, and fix doc/modules.txt
+      accordingly
+    - define accessors to get and set template values, should be used
+      everywhere instead of direct access to structure members
+    - modify question API when dealing with templates values
+    - fix frontends and db to work with these changes
+
+ -- Tollef Fog Heen <tfheen@debian.org>  Tue, 19 Nov 2002 02:30:53 +0100
+
+cdebconf (0.25) unstable; urgency=low
+
+  * Tollef Fog Heen:
+    - Fix warnings about missing ${shlibs:Depends} for libdebconf0.3-dev.
+    - Make debian-boot maintainer, add tausq and self to Uploaders
+  * Martin SjÃ¶gren:
+    - Expand variables in the default value
+  * André Luís Lopes
+    - Add Brazilian Portuguese (pt_BR)
+      cdebconf template translation.
+  * Bastian Blank
+    - text frontend:
+    - recognize ".\n" for reaching the default value (only s390 for now)
+
+ -- Tollef Fog Heen <tfheen@debian.org>  Thu, 14 Nov 2002 01:50:26 +0100
+
+cdebconf (0.24) unstable; urgency=low
+
+  * Junichi Uekawa:
+    - debconf, debconf-copydb, debconf-loadtemplate, dpkg-reconfigure: call setlocale
+    - link slang frontend against slang-utf8 (closes: #148448)
+    - Build-Depend on slang-utf8-dev
+    - debconf.c: fix typo in getopt
+  * Matt Kraai:
+    - fix debconf argument handling
+  * Tollef Fog Heen:
+    - ask about priority, default being medium.
+    - cdebconf-udeb now only provides libdebconf0.3 since main-menu doesn't
+      know about multiple provides, yet.
+    - don't try to be smart in the text frontend about finding templates
+      for broken questions, since it breaks if the question is
+      registered.
+    - add support for the "REGISTER" command
+    - fix text frontend to not crash on text input if the user only types
+      a dot to end.
+    - fix confmodule.c and commands.c to not use fixed-size
+      buffers. (closes: #167312)
+  * Denis Barbier:
+    - convert to po-debconf, set Build-Depends: debhelper (>= 4.1.13)
+      to ensure that generated templates are right, and set output encoding
+      to UTF-8.
+
+ -- Tollef Fog Heen <tfheen@debian.org>  Wed,  6 Nov 2002 02:00:32 +0100
+
+cdebconf (0.23) unstable; urgency=low
+
+  * Change the database names to match the names currently used in
+    debconf (config_db/template_db to configdb/templatedb).
+  * Add gtk frontend from Michael Cardenas
+  * Junichi Uekawa: require d-shlibs 0.3 or greater
+  * fix dpkg-reconfigure so it reconfigures even when no .config script is
+    present.
+  * Only pull the frontend name from the config file if not given on the
+    command line or in the environment.
+
+ -- Tollef Fog Heen <tfheen@debian.org>  Tue, 17 Sep 2002 01:38:56 +0200
+
+cdebconf (0.22) unstable; urgency=low
+
+  * Add conflicts for cdebconf-dev
+  * Change to use text frontend by default, as well as rfc822db, since
+    this bites quite a few people.
+  * Fix typo in shlibs.local
+
+ -- Tollef Fog Heen <tfheen@debian.org>  Wed, 21 Aug 2002 17:40:32 +0200
+
+cdebconf (0.21) unstable; urgency=low
+
+  * walters: Make DEB_BUILD_OPTIONS=debug,nostrip work.
+  * walters & tausq: Fix reference counting in textdb.
+  * tfheen: 
+      - fix various possible segfaults and off-by-one errors.
+      - rewrite rfc822db.  again.  this time using tsearch and
+        friends.
+      - break binary compatibility because of the tsearch stuff.  Bump
+        shlibs and stuff
+      - add conflicts with libcdebconf-dev to libdebconf0.3-dev
+  * Junichi Uekawa: use d-shlibs for shlibs moving.
+    change package names to match d-shlibs desires from libcdebconf-dev to
+    libdebconf0.2-dev, and libdebconf0.2.
+    Add shlibs:Depends to library package
+    Add devlibs:Depends to dev package
+    src/Makefile.in: Build static library as per policy requirement.
+    debian/rules: add rule to remove static library in udeb
+    debian/control: retail provides: libcdebconf-dev for other packages to
+    depend on for the time being.
+
+ -- Tollef Fog Heen <tfheen@debian.org>  Sat, 17 Aug 2002 14:17:50 +0200
+
+cdebconf (0.20) unstable; urgency=low
+
+  * Not sure what's the deal with the quad-dotted version
+    numbers; one is quite enough
+  * provides debconf-2.0, conflicts debconf
+  * make /usr/bin/debconf cmd-line compatible with debconf
+  * install dpkg-[p]reconfigure in standard places
+  * rewrote database interfaces to be more consistent
+    with debconf; changed configuration file format to 
+    support multiple database instances; fixed some bugs
+    and introduced some new ones :-)
+  * rename debconf-convertdb to debconf-copydb to be 
+    consistent with debconf
+  * fixed up the silly symlink build hack that we had
+    before
+  * rbeaugrand@easter-eggs.com: fixes to commands.c and
+    text.c (Closes: #96297)
+  * Use medium as default priority if no priority is specified.
+
+ -- Randolph Chung <tausq@debian.org>  Fri, 28 Jun 2002 16:44:09 -0400
+
+cdebconf (0.10.7.3) unstable; urgency=low
+
+  * tfheen: Fix up rfc822db
+  * tfheen: fix configure, configure.in so that they can find bogl
+  * tfheen: add libperl-dev to build-deps.
+  * joeyh: cdebconf-udeb needs to provide cdebconf as that is the dep some
+    udebs use.
+  * joeyh: fix version number; this is a native package and my build scripts
+    cannot handle a native package with a screwed up version number with
+    debian revision.
+  * joeyh: fixed dpkg-distaddfile invocation to use right Priority line.
+
+ -- Joey Hess <joeyh@debian.org>  Thu, 17 Jul 2003 09:37:23 +0200
+
+cdebconf (0.10-7.2) unstable; urgency=low
+
+  * NMU to get a new package into the archive which actually supports
+    rfc822db and i18n.  (closes: #115827, #120365)
+  * get rid of obsolete emacs variables from changelog.
+
+ -- Tollef Fog Heen <tfheen@debian.org>  Thu, 30 May 2002 13:15:53 +0200
+
+cdebconf (0.10-7.1) unstable; urgency=low
+
+  * Non-maintainer upload
+  * Mark /etc/cdebconf.conf as a conffile, per policy (closes: #132798)
+
+ -- Steve Langasek <vorlon@debian.org>  Sun, 17 Feb 2002 11:16:19 -0600
+
+cdebconf (0.10-7) unstable; urgency=medium
+
+  * Maintainer upload to fix binNMU brokenness for hppa
+    (Closes: #126578)
+  * Hurd fixes (Closes: #92091)
+  * Other previously closed bug (Closes: #92091)
+
+ -- Randolph Chung <tausq@debian.org>  Mon, 31 Dec 2001 10:40:53 -0800
+
+cdebconf (0.10-6) unstable; urgency=low
+
+  * Don't ship convertdb binary in the udeb (closes: #116206) 
+
+ -- Randolph Chung <tausq@debian.org>  Sun, 21 Oct 2001 22:07:21 -0700
+
+cdebconf (0.10-5) unstable; urgency=low
+
+  * provide shlibs (closes: #83096) 
+  * rename conffile to cdebconf.conf
+  * remove need for user-interaction in postinst
+
+ -- Randolph Chung <tausq@debian.org>  Wed, 21 Feb 2001 20:57:09 -0700
+
+cdebconf (0.10-4) unstable; urgency=low
+
+  * Added warning to cdebconf postinst about cdebconf breaking debconf
+  * Added build-depends (closes: #83219)
+  * Added in a hack to make cdebconf not really break debconf (closes: #83318)
+
+ -- Randolph Chung <tausq@debian.org>  Wed, 24 Jan 2001 00:01:05 -0700
+
+cdebconf (0.10-3) unstable; urgency=low
+
+  * Make cdebconf Priority: optional instead of standard
+  * Minor packaging fixes
+
+ -- Randolph Chung <tausq@debian.org>  Sun, 21 Jan 2001 10:40:38 -0700
+
+cdebconf (0.10-2) unstable; urgency=low
+
+  * Fixes a number of packaging bugs, moved to main tree
+  * Lots of new features, see CVS logs...
+
+ -- Randolph Chung <tausq@debian.org>  Fri, 19 Jan 2001 19:37:51 -0700
+
+cdebconf (0.10-1) experimental; urgency=low
+
+  * Initial Release.
+
+ -- Randolph Chung <tausq@debian.org>  Sun,  1 Oct 2000 15:54:15 -0700

@@ -1,0 +1,53 @@
+#!/bin/sh -e
+
+. /usr/share/debconf/confmodule
+
+localecode="debian-installer/locale"
+languagecode="debian-installer/language"
+countrycode="debian-installer/country"
+
+log() {
+    logger -t languagechooser "info: $@"
+}
+
+db_settitle languagechooser/title
+
+#   debconf/language is an alias for debian-installer/language
+db_register "$languagecode" "debconf/language"
+
+# Only display the translated texts when in UTF-8 mode.
+if [ C.UTF-8 = "$LANG" ] ; then
+  # If we are lucky, this might change the language imediately
+  db_set debconf/language en
+else
+  db_set debconf/language "C"
+fi
+
+db_fset "languagechooser/language-name" seen false
+db_fset "$languagecode" seen false
+db_input critical "languagechooser/language-name" || [ $? -eq 30 ]
+if db_go; then
+    db_get "languagechooser/language-name"
+    if test "$RET" ; then
+	LANGNAME="$RET"
+	. languagemap
+	db_set "$languagecode" "$LANGUAGELIST"
+	db_set "$localecode"   "$LOCALE"
+	db_set "$countrycode"  "$COUNTRY"
+    else
+	# Error, not sure how to handle it
+	:
+    fi
+else
+    # Error, not sure how to handle it
+    :
+fi
+
+db_get "$languagecode"
+db_set "debconf/language" "$LANGUAGELIST"
+
+log "$localecode   = '$LOCALE'"
+log "$languagecode = '$LANGUAGELIST'"
+log "$countrycode  = '$COUNTRY'"
+
+exit 0

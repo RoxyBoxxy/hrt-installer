@@ -1,0 +1,36 @@
+Source: debian-installer-utils
+Section: debian-installer
+Priority: standard
+Maintainer: Debian Install System Team <debian-boot@lists.debian.org>
+Uploaders: David Kimdon <dwhedon@debian.org>, Tollef Fog Heen <tfheen@debian.org>
+Build-Depends: debhelper (>= 4.1.13), dpkg-dev (>= 1.9.0), libcdebconf-dev, po-debconf (>= 0.5.0)
+Standards-Version: 3.2.1
+
+Package: di-utils-shell
+Architecture: any
+Depends: ${shlibs:Depends}
+XB-installer-menu-item: 99
+Description: Execute a shell
+ Use this module to execute an interactive shell within debian-installer.
+
+Package: di-utils-partitioner
+Architecture: all
+Provides: partitioned-harddrives
+XB-installer-menu-item: 20
+Description: Partition a hard drive
+ Use this module to partition a hard drive from within debian-installer.
+
+Package: di-utils-mount-partitions
+Architecture: all
+Depends: partitioned-harddrives
+Provides: mounted-partitions
+XB-installer-menu-item: 20
+Description: Mount partitions
+ Use this module to mount the target partitions within debian-installer.
+
+Package: di-utils-mkfs
+Architecture: all
+Depends: partitioned-harddrives, e2fsprogs-udeb
+XB-installer-menu-item: 20
+Description: Make filesystems
+ Use this module to mkfs the target partitions within debian-installer.

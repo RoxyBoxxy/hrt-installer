@@ -1,0 +1,79 @@
+disk-detect (0.08) unstable; urgency=low
+
+  * Mario Lang
+    - Added german translation
+  * Added Norwegian Bokm√•l (nb.po) and Nynorsk translations recieved
+    from Bj√∏rn Steensrud and Gaute Hvoslef Kvalnes.
+  * Package disk-detect no longer need discover-data at build time.
+
+ -- Petter Reinholdtsen <pere@debian.org>  Sun, 23 Feb 2003 17:23:18 +0100
+
+disk-detect (0.07) unstable; urgency=low
+
+  * Remove dependency on package discover-basic-udeb. It doesn't exist
+    in Debian.
+  * Use new package discover-data-udeb instead of including the lists
+    ourself.  A better fix might be to add discover-data-udeb as a
+    dependency for discover-udeb.
+
+ -- Petter Reinholdtsen <pere@debian.org>  Tue,  4 Feb 2003 00:12:01 +0100
+
+disk-detect (0.06) unstable; urgency=low
+
+  * Petter Reinholdtsen
+    - Change maintainer to debian-boot@lists.debian.org, and make the old
+      maintainer an uploader.
+
+ -- Petter Reinholdtsen <pere@debian.org>  Thu, 16 Jan 2003 10:58:55 +0100
+
+disk-detect (0.05) unstable; urgency=low
+
+  * Petter Reinholdtsen
+    - Add depend on modutils-full to make sure the depmod program is
+      available.
+
+ -- Tollef Fog Heen <tfheen@debian.org>  Sat,  7 Dec 2002 16:12:36 +0100
+
+disk-detect (0.04) unstable; urgency=low
+
+  * Tollef Fog Heen
+    - Fix installer-menu-item
+
+ -- Tollef Fog Heen <tfheen@debian.org>  Thu,  5 Dec 2002 01:52:23 +0100
+
+disk-detect (0.03) unstable; urgency=low
+
+  * Martin Sj√∂gren
+    - Replace XBC with XB so our special control fields don't confuse the
+      changes files.
+  * AndrÈ LuÌs Lopes
+    - Add Brazilian Portuguese disk-detect
+      template translation.
+  * Tollef Fog Heen
+    - fix rules file to not try to remove non-existent file.
+
+ -- Tollef Fog Heen <tfheen@debian.org>  Fri,  8 Nov 2002 14:29:07 +0100
+
+disk-detect (0.02) unstable; urgency=low
+
+  * Fix typo in postinst script.
+  * Correct floppy device, and try to load the floppy driver module
+    before mounting floppies.
+  * Make sure driver modules fetched from floppy are owned by root, to
+    avoid rejections from depmod -a.
+  * Use the same way as discover to find out if a module is available.
+  * Always load sd_mod if a scsi controller module was loaded
+  * Include simple description of a driver floppy.  Some cleanup.
+  * Make it easier to inspect the generated HW detection lists.
+  * Convert to po-debconf, set Build-Depends: debhelper (>= 4.1.13)
+    to ensure that generated templates are right, and set output encoding
+    to UTF-8.
+
+ -- Tollef Fog Heen <tfheen@debian.org>  Wed,  6 Nov 2002 02:10:41 +0100
+
+disk-detect (0.01) unstable; urgency=low
+
+  * Initial Release, grabbed from cdrom-detect.
+
+ -- Tollef Fog Heen <tfheen@debian.org>  Sun, 15 Sep 2002 17:22:32 +0200
+

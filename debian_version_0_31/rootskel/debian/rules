@@ -1,0 +1,66 @@
+#!/usr/bin/make -f
+# Sample debian/rules that uses debhelper.
+# GNU copyright 1997 to 1999 by Joey Hess.
+
+# Uncomment this to turn on verbose mode.
+#export DH_VERBOSE=1
+
+PACKAGES=$(shell dh_listpackages)
+VERSION=$(shell dpkg-parsechangelog | grep ^Version: | cut -d ' ' -f 2)
+ARCH=$(shell dpkg --print-architecture)
+PRIORITY=$(shell grep ^Priority: debian/control | cut -d ' ' -f 2)
+
+# This is the debhelper compatability version to use.
+export DH_COMPAT=2
+
+build: build-stamp
+build-stamp: debian/rootskel-locale/usr/lib/locale/C.UTF-8
+	touch build-stamp
+
+debian/rootskel-locale/usr/lib/locale/C.UTF-8: debian/C.UTF-8
+	mkdir -p debian/rootskel-locale/usr/lib/locale
+	localedef -i "debian/C.UTF-8" -f "UTF-8" \
+	  "debian/rootskel-locale/usr/lib/locale/C.UTF-8" 
+
+clean:
+	dh_testdir
+	dh_testroot
+	rm -f build-stamp
+	rm -f debian/files~
+	dh_clean
+
+install: build
+	dh_testdir
+	dh_testroot
+	$(MAKE) -C src DESTDIR=$(CURDIR)/debian/rootskel/
+	dh_installdirs
+
+# Build architecture-independent files here.
+binary-indep: build install
+# We have nothing to do by default.
+
+# Build architecture-dependent files here.
+binary-arch: build install
+	dh_testdir
+	dh_testroot
+	install -d -o 0 -g 0 -m755 debian/rootskel/DEBIAN
+	debian/templates-build.pl $(ARCH) < debian/templates > debian/rootskel/DEBIAN/templates
+	chown 0:0 debian/rootskel/DEBIAN/templates
+	chmod 644 debian/rootskel/DEBIAN/templates
+	dh_strip
+	dh_compress
+	dh_fixperms
+	dh_installdeb
+	dh_shlibdeps
+	dh_link /proc/mounts /etc/mtab 
+	$(foreach PACKAGE, $(PACKAGES), \
+	  (dpkg-gencontrol -p$(PACKAGE) -Pdebian/$(PACKAGE) -isp \
+	  -Tdebian/$(PACKAGE).substvars \
+	  -n$(PACKAGE)_$(VERSION)_$(ARCH).udeb ) ; )
+	$(foreach PACKAGE, $(PACKAGES), \
+	  (dh_builddeb -p$(PACKAGE) --filename=$(PACKAGE)_$(VERSION)_$(ARCH).udeb \
+		); )
+	dh_gencontrol -- -fdebian/files~ 
+
+binary: binary-indep binary-arch
+.PHONY: build clean binary-indep binary-arch binary install

@@ -1,0 +1,15 @@
+#!/bin/sh -e
+
+case "x$1" in
+    xretrieve)
+        if [ -e /cdrom/$2 ]; then
+            ln -sf /cdrom/$2 "$3"
+            exit $?
+        else
+            exit 1
+        fi
+        ;;
+    *)
+        # unknown command
+        exit 1
+esac

@@ -1,0 +1,18 @@
+#!/bin/sh -e
+
+. /usr/share/debconf/confmodule
+
+db_get debian-installer/kernel/commandline
+echo $RET > /target/boot/parmfile
+
+cat > /target/etc/zipl.conf << EOF
+[defaultboot]
+default=debian
+
+[debian]
+target=/boot
+image=/boot/vmlinuz
+parmfile=/boot/parmfile
+EOF
+
+chroot /target /sbin/zipl

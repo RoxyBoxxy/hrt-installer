@@ -1,0 +1,237 @@
+partman (11) UNRELEASED; urgency=low
+
+  * Translations
+    - Elian Myftiu
+      - Updated Albanian (sq) translation
+    - Kęstutis Biliūnas
+      - Updated Lithuanian translation (lt.po)
+    - Changwoo Ryu
+      - Added Korean translation (ko.po)
+
+ -- Anton Zinoviev <zinoviev@debian.org>  Mon, 16 Feb 2004 11:40:21 +0200
+
+partman (10) unstable; urgency=low
+
+  * Anton Zinoviev
+    - Partman doesn't rely any more on partconf-mkfstab to convert devfs
+      devices to normal devices.  A new command map_devfs does this using
+      directly libdebian-installer.  
+    - Add dependency on libdebian-installer4-udeb and build-dependency on
+      libdebian-installer4-dev.
+    - Use 32 instead of 40 as number for update-dev in commit.d to make
+      the room between update-dev and the next script larger.
+    - Use 20 instead of 90 as number for remove_backup in commit.d.
+      Otherwise `undo' can restore invalid partition scheme.
+    - Removed probably unnecessary loop in the abort function of /bin/partman.
+  
+ -- Anton Zinoviev <zinoviev@debian.org>  Mon, 16 Feb 2004 11:13:08 +0200
+
+partman (9) unstable; urgency=low
+
+  * Stephen R. Marenka
+    - Add userdevfs (kernel 2.2.x) support.
+  * Denis Barbier
+    - Because of a bug in po-debconf, generated templates file is
+      corrupted if a comment appears before the Template line, as
+      before the partman/active_partition template.  Closes: #232489
+
+  * Translations:
+    
+    - Bartosz Fenski
+      - Updated Polish (pl) translation.
+    - Bart Cornelis
+      - Updated Dutch (nl.po) translation
+    - Nikolai Prokoschenko
+      - Updated Russian (ru.po) translation
+    - Konstantinos Margaritis
+      - Updated Greek translation (el.po)
+    - Christian Perrier
+      - Update french translation (fr.po)
+    - Dennis Stampfer
+      - Update German translation (de.po)
+    - Carlos Z.F. Liu
+      - update Simplified Chinese translation (zh_CN.po)
+    - Kenshi Muto
+      - Updated Japanese translation (ja.po)
+    - Miguel Figueiredo
+      - Update Portuguese translation (pt.po)
+    - Claus Hindsgaul
+      - Updated Danish translation (da.po)
+    - André Luís Lopes
+      - Updated Brazilian Portuguese (pt_BR) translation.
+    - Jordi Mallach
+      - Add Catalan translation (ca.po).
+    - h3li0s
+      - added Albanian translation (sq.po)
+    - Kęstutis Biliūnas
+      - Updated Lithuanian translation (lt.po).
+    - Safir Secerovic
+      - Update Bosnian translation (bs.po).
+    - Eugen Meshcheryakov
+      - added Ukrainian translation (uk.po)
+    - Anders Lundgren
+      - Initial Swedish translation (sv.po)
+
+ -- Anton Zinoviev <zinoviev@debian.org>  Fri, 13 Feb 2004 09:53:16 +0200
+
+partman (8) unstable; urgency=low
+
+  * Updated translations:
+    - Peter Mann
+      - Update Slovak translation
+    - Miguel Figueiredo
+      - Add Portuguese translation (pt.po)
+    - Safir Secerovic
+      - Update Bosnian translation (bs.po).
+  * Anton Zinoviev
+    - Swap binary-arch and binary-indep in debian/rules.  Thanks to
+      Stephen R. Marenka (closes: #229236).
+    - parted_server.c (command_set_flags): initialise explicitly `last' to
+      avoid unnecessary warning. 
+    - templates: remove `chosen' from `Action on the chosen partition'.
+  
+ -- Anton Zinoviev <zinoviev@debian.org>  Thu, 29 Jan 2004 11:52:22 +0200
+
+partman (7) unstable; urgency=low
+
+  * Bartosz Fenski
+    - Updated Polish (pl) translation.
+  * Stefano Canepa
+    - Add Italian (it) translation
+  * Christian Perrier
+    - unmess changelog
+    - Added menu entry in templates
+    - run debconf-updatepo
+    - Updated French translation
+  * André Luís Lopes
+    - Updated Brazilin Portuguese (pt_BR) translation.
+  * Kenshi Muto
+    - Updated Japanese translation (ja.po)
+  * Claus Hindsgaul
+    - Updated Danish translation (da.po)
+  * Dennis Stampfer
+    - Update German translation (de.po)
+  * Konstantinos Margaritis
+    - Update Greek translation (el.po)
+  * Bart Cornelis
+    - Updated Dutch (nl.po) translation
+  * Carlos Z.F. Liu
+    - Update Simplified Chinese translation (zh_CN.po)
+  * Peter Mann
+    - Update Slovak translation
+  * Miroslav Kure
+    - Update Czech translation
+  * Kęstutis Biliūnas
+    - Updated Lithuanian translation (lt.po).
+  * Anton Zinoviev
+    - Tag the unreleased versions in changelog as being UNRELEASED.
+    - parted_server.c: remove unnecessary debugging block with log-commands
+    - parted_server.c: eliminate the use of PED_PARTITION_{FIRST,LAST}_FLAG.
+      Thanks to Richard Hirst (closes: #229465).
+    - definitions.sh (error_handler): fix the progress bars, the proper 
+      template is partman/text/please_wait, not partman/please_wait.
+  
+ -- Anton Zinoviev <zinoviev@debian.org>  Tue, 27 Jan 2004 10:43:02 +0200
+
+partman (6) unstable; urgency=low
+
+  * Bartosz Fenski
+    - Add Polish (pl) translation.
+  * Christian Perrier
+    - First debconf templates "polishing"
+    - run debconf-updatepo (and fuzzy translations, sorry)
+  * Kenshi Muto
+    - Add Japanese translation (ja.po)
+    - Update Japanese translation.
+  * Christian Perrier
+    - First debconf templates "polishing"
+    - run debconf-updatepo (and fuzzy translations, sorry)
+  * André Luís Lopes
+    - Added Brazilian Portuguese (pt_BR) translation.
+  * Dennis Stampfer
+    - Initial German translation (de.po).
+  * Christian Perrier
+    - Initial French translation (fr.po).
+  * Nikolai Prokocshenko
+    - Added russian translation (ru.po)
+  * Peter Mann
+    - Initian Slovak translation
+  * Anton Zinoviev
+    - the install target in debian/rules removes all files CVS from the
+      generated package.
+    - added local variable for Emacs `coding: utf-8' at the end of the
+      changelog.
+  * Anmar Oueja
+    - created and translated to Arabic (ar.po)
+  * Claus Hindsgaul
+    - Initial Danish translation (da.po)
+  * Miroslav Kure
+    - Initial Czech translation (cs.po)
+  * Ming Hua
+    - Initial Simplified Chinese translation (zh_CN.po)
+  * Bart Cornelis
+    - Initial Dutch (nl.po) translation
+  * Kęstutis Biliūnas
+    - Initial Lithuanian (lt.po) translation.
+  * Safir Secerovic
+    - Add Bosnian translation (bs.po).
+  * Joey Hess
+    - Fix changelog, jump a revision to get proper tagging.
+
+ -- Joey Hess <joeyh@debian.org>  Wed, 21 Jan 2004 13:59:32 -0500
+
+partman (4) UNRELEASED; urgency=low
+
+  * parted_server.c: initialise devices, number_devices and
+    allocated_devices.
+  * Uses po-debconf.
+  * Use db_metaget to translate messages.
+  * Correct the wrong word `choosed'.
+  * Konstantinos Margaritis
+    - Initial Greek translation (el.po)
+
+ -- Anton Zinoviev <zinoviev@debian.org>  Mon,  5 Jan 2004 13:28:22 +0200
+
+partman (3) UNRELEASED; urgency=low
+
+  * parted_server: new functions start_timer, stop_timer, timer_handler,
+    timered_file_system_create, timered_file_system_check,
+    timered_file_system_copy and timered_file_system_resize.  Used
+    timered_...(...) instead of ped_...(..., NULL).
+  * definitions: support for timers in exception_handler.  New function
+    name_progress_bar
+  * New scripts: backup in init.d, unbackup in undo.d, remove_backup in
+    commit.d.
+  * update.d/detected_filesystem exits if there is a file
+    /var/lib/partman/filesystems_detected.  New scripts:
+    init.d/filesystems_detected and commit.d/filesystems_changed.
+  * Uses `exit 0' and `return 0' instead of just `exit' and `return'.
+  
+ -- Anton Zinoviev <zinoviev@debian.org>  Fri, 12 Dec 2003 09:00:05 +0200
+
+partman (2) UNRELEASED; urgency=low
+
+  * Merged with partman-parted.
+  * Uses init.d, undo.d and commit.d.
+  * The device directory is /var/lib/partman/devices rather than somewhere
+    in /tmp.
+  * Each device has it own partition directory which contains only
+    information from name.d.
+  * parted_devices is in /bin.  Returns bytes rather than human size.
+    server is renamed to parted_server and is also in /bin.
+  * Renamings of the files in the device-directories: parted_name->device,
+    device_name->model, size contains blocks rather than human size.  name
+    is removed.
+  * The creation of new label is moved in partman-partitioning.
+
+ -- Anton Zinoviev <zinoviev@debian.org>  Mon, 17 Nov 2003 23:30:28 +0200
+
+partman (1) UNRELEASED; urgency=low
+
+  * First version.
+
+ -- Anton Zinoviev <zinoviev@debian.org>  Wed, 27 Aug 2003 07:03:28 +0200
+
+Local Variables:
+coding: utf-8
+End:

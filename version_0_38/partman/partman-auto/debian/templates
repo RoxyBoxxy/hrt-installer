@@ -1,0 +1,57 @@
+Template: partman-auto/autopartitioning_failed
+Type: error
+_Description: Automatic partitioning failed
+ This probably happened because there are too many (primary) partitions in
+ the partition table.
+
+Template: partman-auto/automatically_partition
+Type: select
+Choices: ${CHOICES}
+_Description: Method for partitioning the storage devices:
+
+Template: partman-auto/choose_recipe
+Type: select
+Choices: ${CHOICES}
+_Description: Partitioning scheme:
+ Please choose a partitioning scheme among those currently available.
+
+Template: partman-auto/unusable_space
+Type: error
+_Description: Unusable free space
+ Automatic partitioning failed because the chosen free space may not
+ be used.  There are probably too many (primary) partitions in the
+ partition table.
+
+Template: partman-auto/expert_recipe
+Type: string
+_Description: Partitioning scheme:
+
+Template: partman-auto/text/automatically_partition
+Type: text
+_Description: Automatically partition the storage devices
+
+Template: partman-auto/text/use_biggest_free
+Type: text
+_Description: Use the largest continuous free space
+
+Template: partman-auto/text/use_device
+Type: text
+# for example "Use IDE0 master - Maxtor 46L489 entirely"
+_Description: Use ${DEVICE} entirely
+
+Template: partman-auto/text/custom_partitioning
+Type: text
+_Description: Partition with custom settings
+
+Template: partman-auto/text/expert_recipe
+Type: text
+_Description: Manually enter the partitioning scheme (experts only)
+
+Template: partman-auto/text/simple_scheme
+Type: text
+_Description: /, /home and swap
+
+Template: partman-auto/text/full_scheme
+Type: text
+_Description: /, /usr, /usr/local, /var, /var/mail, /tmp, /home and swap
+

@@ -1,0 +1,270 @@
+cdrom-detect (0.25) unstable; urgency=low
+
+  * Petter Reinholdtsen
+    - Updated de.po.  Thanks to from Maximilian Wilhelm.
+  * Alastair McKinstry
+    - Converted changelog to UTF-8, in accordance with Standards-Version 3.6.0
+
+ -- Petter Reinholdtsen <pere@debian.org>  Sat, 26 Jul 2003 23:59:46 +0200
+
+cdrom-detect (0.24) unstable; urgency=low
+
+  * Thorsten Sauter
+    - update german translation (de.po)
+  * Denis Barbier
+    - update debian/po/POTFILES.in to take file renaming into account
+  * Matt Kraai
+    - Update nl.po, thanks to Bart Cornelis.
+  * Alastair McKinstry
+    - Remove cdrom-detect.menutest, as it isn't needed and will break things
+
+ -- Alastair McKinstry <mckinstry@computer.org>  Mon, 19 May 2003 22:08:57 +0200
+
+cdrom-detect (0.23) unstable; urgency=low
+
+  * Petter Reinholdtsen
+    - Updated nb.po.
+  * Thorsten Sauter
+    - Insert german translation (de.po)
+
+ -- Petter Reinholdtsen <pere@debian.org>  Fri, 16 May 2003 21:13:22 +0200
+
+cdrom-detect (0.22) unstable; urgency=low
+
+  * Martin Sjögren
+    - Fix the looping on the is_cd_inserted question.
+
+ -- Petter Reinholdtsen <pere@debian.org>  Sun,  4 May 2003 23:20:01 +0200
+
+cdrom-detect (0.21) unstable; urgency=low
+
+  * Update nb.po.
+
+ -- Petter Reinholdtsen <pere@debian.org>  Sun,  4 May 2003 15:29:22 +0200
+
+cdrom-detect (0.20) unstable; urgency=low
+
+  * Fix typo in nb.po.
+  * Adjust postinst to call the correct script (hw-detect instead of
+    hwdetect) now that we are using the new hw-detect package.
+
+ -- Petter Reinholdtsen <pere@debian.org>  Wed, 23 Apr 2003 17:55:30 +0200
+
+cdrom-detect (0.19) unstable; urgency=low
+
+  * Depend on and use the new hw-detect package instead of
+    calling discover directly.
+  * Give package control files 'cdrom-detect.' prefixes.
+  * Depend on modutils-basic or modutils-full instead of only modutils-full.
+  * Pierre Machard:
+    - Update fr debconf template translation.
+
+ -- Petter Reinholdtsen <pere@debian.org>  Mon, 21 Apr 2003 09:52:18 +0200
+
+cdrom-detect (0.18) unstable; urgency=low
+
+  * Move the active part of postinst into separate script hwdetect.
+  * Describe the structure of a driver floppy when asking if one
+    should be used.
+  * Only try to load missing modules from floppy if the device is
+    available.
+  * Always try to load the floppy driver.
+  * Check if module already is loaded before trying to load it again.
+  * Improve description of the modules that is always loaded.
+  * Improve the text when asking for driver floppy.
+  * Add debconf title.
+  * Ask for kernel module parameters as a low priority question.
+  * Ran 'debconf2po-update' to update the translator files.
+  * André Luís Lopes :
+    - Update pt_BR debconf template translation.
+
+ -- Petter Reinholdtsen <pere@debian.org>  Sat, 19 Apr 2003 01:04:21 +0200
+
+cdrom-detect (0.17) unstable; urgency=low
+
+  * Pierre Machard
+    - Update debian/po/fr.po
+  * Petter Reinholdtsen
+    - Unmount the CD if it isn't a Debian install CD.
+    - Report the error using debconf if the CD is missing, or not a Debian
+      install CD.
+
+ -- Petter Reinholdtsen <pere@debian.org>  Sat, 12 Apr 2003 11:04:29 +0200
+
+cdrom-detect (0.16) unstable; urgency=low
+
+  * Martin Sjogren
+    - Silence the depmod -a run.
+  * Petter Reinholdtsen
+    - Updated nn.po, thanks to Gaute Hvoslef Kvalnes.
+    - Load sd_mod if SCSI device was detected. (Closes: #183716).
+    - Correct code to quiet down 'depmod -a'.
+
+ -- Petter Reinholdtsen <pere@debian.org>  Fri, 21 Mar 2003 15:13:56 +0100
+
+cdrom-detect (0.15) unstable; urgency=low
+
+  * Correct typo in progress bar handling.  Calling db_progress STOP after
+    db_progress STOP crashes cdebconfig.
+
+ -- Petter Reinholdtsen <pere@debian.org>  Sun, 16 Mar 2003 10:29:58 +0100
+
+cdrom-detect (0.14) unstable; urgency=low
+
+  * André Luís Lopes :
+    - Update pt_BR template translations.
+  * Petter Reinholdtsen
+    - Add usr/lib/prebaseconfig.d to debian/dirs.
+    - Avoid progress bar from 0 to 0 (it crashes cdebconf/newt).
+    - Rewrite some part of the script to handle 'set -e'.
+    - Avoid crashing when the module name or HW name is empty.
+    - Stop trying to mount on /cdrom after first successfull try.
+
+ -- Petter Reinholdtsen <pere@debian.org>  Sat, 15 Mar 2003 23:39:05 +0100
+
+cdrom-detect (0.13) unstable; urgency=low
+
+  * Upgraded Standards-Version from 3.5.2 to 3.5.8.
+  * Add depend on modutils-full to have the programs depmod and
+    modprobe available (Closes: #183542).
+  * Output progress to /var/log/messages instead of stdout.
+  * Add progress bar support, let the user know which HW was detected.
+  * Depend on cdebconf-udeb 0.31 or newer to get progress bar support.
+  * General code cleanup.
+  * Ran debconf2po-update to update the .po files.
+
+ -- Petter Reinholdtsen <pere@debian.org>  Sat, 15 Mar 2003 19:43:30 +0100
+
+cdrom-detect (0.12) unstable; urgency=low
+
+  * Sync hw detection code with the code in disk-detect.
+  * Remove out-commented code from postinst.
+  * Report module name when trying to load a module.
+
+ -- Petter Reinholdtsen <pere@debian.org>  Tue,  4 Mar 2003 16:36:39 +0100
+
+cdrom-detect (0.11) unstable; urgency=low
+
+  * Added Norwegian Nynorsk translations (nn.po) recieved from
+    Gaute Hvoslef Kvalnes.
+  * Updated nb.po recieved from Bjørn Steensrud.
+  * Fetch the distribution code name from the Release file, instead of
+    guessing based on the symlinks in cdrom/dists/.
+  * Use 'apt-install eject' to get the tool used in the prebaseconfig script
+    to eject the CD (Closes: #175187).
+  * Package cdrom-detect no longer need discover-data at build time.
+  * Martin Sjögren
+    - Change installer-menu-item to 15, as per doc/menu-item-numbers.txt
+
+ -- Petter Reinholdtsen <pere@debian.org>  Sun, 23 Feb 2003 15:05:49 +0100
+
+cdrom-detect (0.10) unstable; urgency=low
+
+  * Added Norwegian Bokmål (nb.po) translations recieved from
+    Bjørn Steensrud.
+  * Use new package discover-data-udeb instead of including the lists
+    ourself.  A better fix might be to add discover-data-udeb as a
+    dependency for discover-udeb.
+
+ -- Petter Reinholdtsen <pere@debian.org>  Tue,  4 Feb 2003 00:24:23 +0100
+
+cdrom-detect (0.09) unstable; urgency=low
+
+  * In the prebaseconfig script, get rid of then error message when
+    failing to find eject in PATH.  Use only /target/usr/bin/eject,
+    and only if it exists.
+
+ -- Petter Reinholdtsen <pere@debian.org>  Mon, 20 Jan 2003 19:36:15 +0100
+
+cdrom-detect (0.08) unstable; urgency=low
+
+  * Try harder to eject CDROM (Closes: #166952).
+
+ -- Petter Reinholdtsen <pere@debian.org>  Thu, 16 Jan 2003 20:54:18 +0100
+
+cdrom-detect (0.07) unstable; urgency=low
+
+  * Copy prebaseconfig.d script from prebaseconfig.  Ejecting CDs belong
+    here, not in prebaseconfig.
+  * Remove discover/detect workaround.  Tollef Fog Heen told me it is
+    no longer needed (Closes: #157735).
+
+ -- Petter Reinholdtsen <pere@debian.org>  Sat, 11 Jan 2003 00:23:44 +0100
+
+cdrom-detect (0.06) unstable; urgency=low
+
+  * Log the detected distribution.
+  * Set priority to low for debconf questions asking if missing kernel
+    module should be loaded from floppy, and question letting the user
+    know that a working CD was found.
+  * Add myself to uploaders.
+
+ -- Petter Reinholdtsen <pere@debian.org>  Sun, 15 Dec 2002 18:22:51 +0100
+
+cdrom-detect (0.05) unstable; urgency=low
+
+  * Petter Reinholdtsen
+    -  Move content of /etc/modules.conf to the rootskel udeb, and remove
+       the file to avoid package conflict.
+  * Tollef Fog Heen
+    -  Remove rm of conffile in debian/rules, since it made the package not
+       build.
+
+ -- Tollef Fog Heen <tfheen@debian.org>  Sat,  7 Dec 2002 17:39:56 +0100
+
+cdrom-detect (0.04) unstable; urgency=low
+
+  * Martin Sjögren
+    - Replace XBC with XB so our special control fields don't confuse the
+      changes files.
+  * André Luís Lopes
+    - Update pt_BR.po template translation.
+
+ -- Tollef Fog Heen <tfheen@debian.org>  Thu, 14 Nov 2002 02:24:20 +0100
+
+cdrom-detect (0.03) unstable; urgency=low
+
+  * exit 0 if the cd is already mounted.
+  * Set debconf answer mirror/distribution using info from the
+    detected CD.
+  * Convert to po-debconf, set Build-Depends-Indep: debhelper (>= 4.1.13)
+    to ensure that generated templates are right, and set output encoding
+    to UTF-8.
+  * Drop depend on non-existant package discover-basic-udeb.
+  * Correct floppy device, and try to load the floppy driver module
+    before mounting floppies.
+  * Make sure driver modules fetched from floppy are owned by root, to
+    avoid rejections from depmod -a.
+  * Use the same way as discover to find out if a module is available.
+  * Avoid error message if /usr/share/discover is missing (Closes: #157735).
+
+ -- Petter Reinholdtsen <pere@hungry.com>  Mon, 28 Oct 2002 14:04:03 +0100
+
+cdrom-detect (0.02) unstable; urgency=low
+
+  * Fix up using discover somewhat
+  * Remove emacs changelog variables
+  * Make _all udeb, not _$(ARCH)
+  * Strip off the Package header in the templates file, since it could
+    confuse cdebconf.
+  * Get rid of the build-dep on cdebconf-dev, we don't build-dep on it at
+    all.
+  * Use discover's database instead of detect, build-dep accordingly.
+  * Add Brazilian Portuguese and Danish debconf templates.
+  * Make debian-boot maintainer with hertzog and tfheen in uploaders.
+
+ -- Tollef Fog Heen <tfheen@debian.org>  Tue, 24 Sep 2002 00:13:28 +0200
+
+  * Fix up language on templates.
+
+ -- Chris Tillman <tillman@voicetrak.com> Sun, 1 Sep 2002
+
+cdrom-detect (0.01) unstable; urgency=low
+
+  * Initial Release.
+  * Create all the cdrom devices when launched.
+  * Include a modules.conf to stop complaints about net-pf-1 (unix)
+    missing.
+
+ -- Raphael Hertzog <hertzog@debian.org>  Thu,  2 Aug 2001 21:54:56 +0200
+

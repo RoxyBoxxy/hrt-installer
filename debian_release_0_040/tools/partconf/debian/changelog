@@ -1,0 +1,194 @@
+partconf (0.14) UNRELEASED; urgency=low
+
+  * Thorsten Sauter
+    - update standards-version.
+  * Safir Secerovic, Amila Akagic
+    - Add Bosnian translation (bs.po)
+  * Christian Perrier
+    - Update French translation.
+
+ -- Thorsten Sauter <tsauter@debian.org>  Sat,  1 Nov 2003 18:29:52 +0100
+
+partconf (0.13) unstable; urgency=low
+
+  * Gaudenz Steinlin
+    - mkfstab.c: use remount-ro only for ext[2,3]
+
+ -- Thorsten Sauter <tsauter@debian.org>  Sat,  1 Nov 2003 18:24:43 +0100
+
+partconf (0.12) unstable; urgency=low
+
+  * Gaudenz Steinlin
+    - mkfstab.c: do not subsitute a "random" value if 
+      di_system_devfs_map_from returns nothing 
+  * Petter Reinholdtsen
+    - mkfstab.c: Do not write /target/etc/fstab in the header
+      of /etc/fstab.  Write /etc/fstab instead.
+  * Matt Kraai
+    - Allow the file system after the partition name (closes: #218190).
+
+ -- Matt Kraai <kraai@debian.org>  Wed, 29 Oct 2003 17:42:52 -0800
+
+partconf (0.11) unstable; urgency=low
+
+  * Matt Kraai
+    - Match the entire partition name (Closes: #214232).
+  * Pierre Machard
+    - Update French po-debconf translation [Christian Perrier].
+  * Claus Hindsgaul
+    - Add Danish translation (da.po)
+  * Miroslav Kure
+    - Update Czech translation (cs.po).
+  * Tommi Vainikainen
+    - Fixed typo in templates (missing dot) and update PO files accordingly
+    - Add Finnish (fi.po) translation
+  * Finn-Arne Johansen
+    - Fix a choices list in nb.po  (Closes: #199918)
+  * Kęstutis Biliūnas
+    - New Lithuanian translation (lt.po).
+
+ -- Petter Reinholdtsen <pere@debian.org>  Tue, 28 Oct 2003 18:24:56 +0100
+
+partconf (0.10) unstable; urgency=low
+
+  * Depend on libdebconfclient-dev >= 0.47 for fixed debconf_capb() macro.
+  * André Luís Lopes
+    - Update pt_BR (Brazilian Portuguese) translation.
+  * Christian Perrier
+    - Update French translation
+  * Denis Barbier
+    - Add a comment in templates file to flag the main menu item.
+  * Matt Kraai
+    - Set the pass for tmpfs file systems to 0 (Closes: #215386).
+
+ -- Sebastian Ley <ley@debian.org>  Tue, 14 Oct 2003 11:51:21 +0200
+
+partconf (0.09) unstable; urgency=low
+
+  * Alastair McKinstry
+    - Move to new cdebconf macros.
+  * Petter Reinholdtsen
+    - Make menu entries translatable.
+  * Kenshi Muto
+    - Update Japanese po (ja.po)
+  * Bart Cornelis
+    - update dutch translation (nl.po)
+
+ -- Sebastian Ley <ley@debian.org>  Sun, 12 Oct 2003 19:30:00 +0200
+
+partconf (0.08) unstable; urgency=low
+
+  * Petter Reinholdtsen
+    - Update dependency from libdebian-installer3-dev to
+      libdebian-installer4-dev, patch from Goswin von Brederlow.
+  * Miroslav Kure
+    - Added Czech translation
+
+ -- Sebastian Ley <ley@debian.org>  Thu,  9 Oct 2003 17:13:06 +0200
+
+partconf (0.07) unstable; urgency=low
+
+  * Pierre Machard:
+    - Update French translation [Pierre Machard & Christian Perrier].
+  * Matt Kraai
+    - Call modprobe with only one argument at a time. This actually tries to
+      load also other modules than ext3. (Closes: #213265)
+    - Use proc as the device for the proc filesystem and fix the pass
+      values. (Closes: #213291)
+
+ -- Sebastian Ley <ley@debian.org>  Thu,  2 Oct 2003 19:23:10 +0200
+
+partconf (0.06) unstable; urgency=low
+
+  * Pierre Machard:
+    - Add French po-debconf template [Christian Perrier] (closes: #207277)
+  * Martin Sjögren:
+    - Add nicer names for device names. Since they are shorter than
+      the full paths, this also fixes the bug with too long lines.
+      (Closes: #201032)
+    - Only display warning message if any file systems will actually be
+      created. (Closes: #210967)
+    - Fix alignment in the table caused by quoted commas.
+    - Check if swaps are already activated before activating.
+    - If /target is already mounted, refuse to do anything until it's
+      unmounted (and offer to do it, of course).
+  * Thorsten Sauter
+    - yes, we need /proc in the generated fstab also (Closes: #201701)
+  * Alastair McKinstry
+    - Move to Standards-Version 3.6.0, converting changelog to UTF-8
+  * Javier Fenrnandez-Sanguino
+    - Minor fix in spanish translation
+  * Kenshi Muto
+    - Added Japanese translation (ja.po)
+    - Update ja.po
+  * Jordi Mallach
+    - Added Catalan (ca) translation.
+  * Matt Kraai
+    - Fix misspelling in partconf-mkfstab description.
+    - Fix modprobe output redirection.
+  * Andre Luís Lopes
+    - Update pt_BR (Brazilian Portuguese) translation.
+  * Bart Cornelis
+    - update dutch translatiom
+
+ -- Martin Sjogren <sjogren@debian.org>  Sun, 28 Sep 2003 13:29:59 +0200
+
+partconf (0.05) unstable; urgency=low
+
+  * Thorsten Sauter:
+    - mkfstab is now used as postinst script
+    - mkfstab provides: created-fstab
+    - change my email address in debian/control
+
+ -- Thorsten Sauter <tsauter@debian.org>  Thu, 19 Jun 2003 13:42:33 +0200
+
+partconf (0.04) unstable; urgency=low
+
+  * André Luís Lopes :
+    - Update pt_BR translation to reflect the recent droping of
+      partition hinting code.
+  * Thorsten Sauter
+    - use the debian-installer di_mapdevfs function
+    - remove dependency on di-utils-mapdevfs
+    - add the block function to partconf
+    - link against libdebconfclient
+    - fix problem with swapspaces and mountpoints. (Closes: #193807)
+  * Martin Sjögren
+    - Recommend partitioned-harddrives, don't depend on it.
+
+ -- Martin Sjogren <sjogren@debian.org>  Sun,  1 Jun 2003 21:04:55 +0200
+
+partconf (0.03) unstable; urgency=low
+
+  * Thorsten Sauter:
+    - insert new package: partconf-mkfstab
+  * Martin Sjögren
+    - Only modprobe for filesystem modules, other modules must be loaded
+      earlier than this anyway.
+    - Silence the modprobe call.
+    - Make sure fstype is NULL if we don't know anything about it.
+    - Work on the default values.
+    - Clean up the file system detection.
+    - Ensure partitions with existing file systems can be mounted too.
+    - More logging.
+  * Javier Fernández-Sanguino
+    - Translated to Spanish the template
+  * André Luís Lopes :
+    - Updated pt_BR debconf template translation.
+  * Petter Reinholdtsen
+    - Add Norwegian Bokmål (nb.po) and Nynorsk translation (nn.po).
+
+ -- Martin Sjogren <sjogren@debian.org>  Wed,  7 May 2003 16:01:48 +0200
+
+partconf (0.02) unstable; urgency=low
+
+  * Add extended descriptions too.
+
+ -- Martin Sjogren <sjogren@debian.org>  Wed, 19 Mar 2003 11:18:11 +0100
+
+partconf (0.01) unstable; urgency=low
+
+  * Initial Release.
+
+ -- Martin Sjogren <sjogren@debian.org>  Sat, 15 Mar 2003 21:38:23 +0100
+

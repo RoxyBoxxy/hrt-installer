@@ -1,0 +1,35 @@
+#! /bin/sh -e
+
+log=/var/log/messages
+template=autopartkit/partition_table
+
+run_parts() {
+    partsdir="$1"
+
+    for script in "$partsdir"/*; do
+	if [ -x "$script" ] ; then
+	    "$script" "$template" || true
+	else
+	    echo "error: Unable to execute $script" 1>&2
+	fi
+    done
+}
+# Try to load LVM support
+depmod -a >> $log 2>&1 || true
+modprobe lvm-mod >> $log 2>&1 || true
+
+# Make sure it is installed into /target/ as well
+apt-install lvm10 || true
+
+# Run all scripts to choose table file
+run_parts /usr/lib/autopartkit.d
+
+if autopartkit "$template" ; then
+    :
+else
+    # This should use debconf to report the error.
+    echo "error: autopartkit failed." >> $log
+    exit 1
+fi
+
+##DEBHELPER##

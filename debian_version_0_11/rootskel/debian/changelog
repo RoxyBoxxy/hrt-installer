@@ -1,0 +1,82 @@
+rootskel (0.11) unstable; urgency=low
+
+  * Run the scripts in /etc/rcS.d on bootup, if available.
+  * Petter Reinholdtsen:
+    - Add simple group and passwd files with root entries to avoid
+      some warnings from debootstrap.
+  * waldi: remove virtual console hack
+
+ -- Tollef Fog Heen <tfheen@debian.org>  Thu, 14 Nov 2002 02:06:05 +0100
+
+rootskel (0.10) unstable; urgency=low
+
+  * Make the inittab use the default console instead of /dev/vc/1 and
+    such.
+
+ -- Tollef Fog Heen <tfheen@debian.org>  Wed,  6 Nov 2002 01:40:39 +0100
+
+rootskel (0.09) unstable; urgency=low
+
+  * Create /usr/lib/prebaseconfig.d.
+  * waldi: add support for archs without virtual consoles.
+  * fix fstab to point to the real floppy device
+
+ -- Tollef Fog Heen <tfheen@debian.org>  Thu, 24 Oct 2002 02:12:47 +0200
+
+rootskel (0.08) unstable; urgency=low
+
+  * Turn off console blanking, since it seems like it confuses users.
+  * Get rid of emacs cruft at the end of the changelog.
+  * Get rid of silly references to configure target.
+  * Don't mknod -- we use devfs
+
+ -- Tollef Fog Heen <tfheen@debian.org>  Sun, 18 Aug 2002 15:42:04 +0200
+
+rootskel (0.07) unstable; urgency=low
+
+  * Use shm, not tmpfs (filesystem was renamed). Closes: #124008
+
+ -- Joey Hess <joeyh@debian.org>  Fri, 14 Dec 2001 14:19:22 -0500
+
+rootskel (0.06) unstable; urgency=low
+
+  * Switched from ramfs to tmpfs since it's in the standard
+    Debian kernel.
+  * Added /dev/console and /dev/tty1 to the package.
+  * Don't use DEBCONF_FRONTEND to override the choice of cdebconf.conf
+
+ -- Raphael Hertzog <hertzog@debian.org>  Wed,  1 Aug 2001 16:06:35 +0200
+
+rootskel (0.05) unstable; urgency=low
+
+  * Added a new linuxrc, which sets up a ramfs filesystem, copys the
+    installer into it, pivot_roots so its the new root, ensures proc and
+    dev are mounted, and runs busybox init.
+  * Made rcS clean up by unmounting the initrd, and freeramdisking it
+    (the latter doesn't currently work, may be kernel bug).
+
+ -- Joey Hess <joeyh@debian.org>  Sun, 25 Mar 2001 18:27:56 -0800
+
+rootskel (0.04) unstable; urgency=low
+
+  * use devfs
+
+ -- David Whedon <dwhedon@debian.org>  Mon, 12 Feb 2001 19:24:49 -0800
+
+rootskel (0.03) unstable; urgency=low
+
+  * remove dev stuff form here 
+
+ -- David Whedon <dwhedon@debian.org>  Thu,  8 Feb 2001 21:27:10 -0800
+
+rootskel (0.02) unstable; urgency=low
+
+  * run syslogd 
+
+ -- David Whedon <dwhedon@debian.org>  Sun,  4 Feb 2001 20:49:42 -0800
+
+rootskel (0.01) unstable; urgency=low
+
+  * Initial Release.
+
+ -- David Whedon <dwhedon@debian.org>  Tue, 30 Jan 2001 00:52:08 -0800

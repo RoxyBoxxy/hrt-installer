@@ -1,0 +1,134 @@
+Modules
+-------
+
+The new debian installer is highly modular. Modules are loaded at several
+points in the install process to add capabilities to the installer. Modules
+are essentially sets of files that get unpacked onto the installation
+system, plus some metadata.
+
+Because there is already so much infrastructure to build and manage debian
+packages, and because it allows metadata to accompany the files in a module,
+we have decided to use debian packages as the modules for the installer. To 
+differentiate them from normal Debian packages, modules have filenames
+ending in ".udeb". However, modules must not have the same package name as
+any regular Debian package.
+
+Unlike regular debian packages, modules for the installer will not be
+policy compliant. They will not contain documentation in /usr/share/doc.
+They need not comply with the FHS. They may be statically linked. They may
+conflict with essential "real" debian packages, and thus be non-installable
+on a real debian system, although it is recommended that if possible, this
+be avoided.
+
+Here is a short rundown on differences between deb packages and udebs:
+
+All udeb packages should be able to build debug versions if
+DEB_BUILD_OPTIONS="debug".
+
+Misc.Differences
+================
+
+* Udebs should not include .md5sum files.
+* Udebs should declare dependencies on everything they
+  depend on (this includes depending on ash, busybox, etc).
+
+New Control Scripts
+===================
+
+menutest
+--------
+Menutest scripts should return a true value (0) if they think it would be a
+good idea if their menu item was default, and a false value if it seems making
+their menu item the default would not be a smart decision. For example in case
+of a udeb providing an ethernet driver, the menutest script would run a
+hardware detection routine and return 0 if the particular ethernet card was
+installed.
+
+Menutest scripts are optional. If a module does not have one, a simpler
+default test is used.
+
+isinstallable (not supported yet in main-menu)
+-------------
+
+If this script exists, and when run returns a non-zero value, then
+its menu item is not displayed.
+
+New Headers
+===========
+
+installer-menu-item
+-------------------
+
+A priority (a number). The priority number influences the ordering of
+items in the menu; higher numbered items are closer to the end of the
+menu.  See the file menu-item-number.txt for the currently used
+numbers.  If this field does not appear, or has a value of 0, a module
+will not appear on the main menu.
+
+Modules will not be installed by a full-fledged dpkg implementation, so the
+following features of regular debs will not be supported:
+
+Disallowed Control Files
+========================
+
+preinst, postrm and prerm
+
+Disallowed Headers
+==================
+
+* pre-dependencies
+* conflicts
+* essential or required packages
+* suggests
+* recommends
+
+Disallowed Header Options
+=========================
+
+* versioned dependencies
+* `|' in dependencies.
+
+Supported Headers
+=================
+
+* simple dependencies
+* postinst
+* debconf
+* provides
+
+
+
+A 5 minute primer on building udebs.
+====================================
+FIXME: Is this up-to-date?
+
+I build udebs by asking debhelper to build a normal .deb, except at the
+very last step, I force it to use the ".udeb' extension. The problems
+that show up are:
+
+1. dpkg-gencontrol has an annoying habit of guessing what .deb you are
+   going to build, and listing it in debian/files. This later propigates to
+   your .changes file, and things blow up since you didn't really build
+   a .deb. The fix is to tell dpkg-gencontrol to write to some other
+   file than debian/files, which you then delete/ignore. With debhelper,
+   I do it like this:
+         dh_gencontrol -- -fdebian/files~
+2. Since dpkg-gencontrol doesn't register the file, you have to do that
+   manually:
+         dpkg-distaddfile $(FILENAME) debian-installer $(PRIORITY)
+3. And finally you have to generate the package with a .udeb extention,
+   which looks like this in debhelper (with dpkg-deb -b, you just
+   specify a full filename, rather than the .. directory).
+         dh_builddeb --filename=$(FILENAME)
+   (This --filename switch requires debhelper (>= 2.1.18))
+4. The above commands use several handy variables, which I set like so:
+    PACKAGE=$(shell dh_listpackages)
+    VERSION=$(shell dpkg-parsechangelog | grep ^Version: | cut -d ' ' -f 2)
+    ARCH=$(shell dpkg --print-architecture)
+    FILENAME=$(PACKAGE)_$(VERSION)_$(ARCH).udeb
+    PRIORITY=$(shell grep ^Priority: debian/control | cut -d ' ' -f 2)
+5. Even if you do all this, your dpkg-buildpackage run will fail, unless
+   you are using the (unreleased) dpkg-dev 1.7.0. The patch is trivial
+   though.
+
+

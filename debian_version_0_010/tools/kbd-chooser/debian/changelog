@@ -1,0 +1,94 @@
+kbd-chooser (0.010) unstable; urgency=low
+
+  * Handle DEBCONF_PRIORITY=high, and no strings being returned from debconf;
+    Closes: #182839.
+
+ -- Alastair McKinstry <mckinstry@computer.org>  Fri, 28 Feb 2003 23:33:27 +0000
+
+kbd-chooser (0.009) unstable; urgency=low
+
+  * André Luís:
+    - Add pt_BR translation
+    - po/output, po/POTFILES.in : add.
+  * Added fr.po.
+  * prebaseconfig now sets up vars for baseconfig.
+  * Can handle subdirs in /usr/share/console/lists.
+
+ -- Alastair McKinstry <mckinstry@computer.org>  Wed, 26 Feb 2003 14:31:47 +0000
+
+kbd-chooser (0.008) unstable; urgency=low
+
+  * Install keymap from command-line: added for easy debugging.
+  * Don't try to load a directory with same name as keymap. (Closes: #180013).
+  * Initial Irish translation. 
+
+ -- Alastair McKinstry <mckinstry@computer.org>  Tue, 11 Feb 2003 10:43:20 +0000
+
+kbd-chooser (0.007) unstable; urgency=low
+
+  * Add missing call to closedir.
+  * Handle bad keymap lists gracefully.  (Closes: #178991).
+  * André Luís Lopes :
+    - debian/templates converted to (po-debconf/gettext)-like
+      template style (debian/po/templates.po generated).
+    - Added debian/po/output file so the templates will be using utf8.
+    - Added pt_BR (brazilian portuguese) template translation.
+    - Bumped Build-Depends on debhelper from version (>= 4.1.13) to
+      to (>= 4.1.16) to ensure UTF-8 templates. Build-Depends on
+      po-debconf (>= 0.5.0) was already set.
+  * Christian Perrier: Add French templates file
+
+ -- Matt Kraai <kraai@debian.org>  Mon, 03 Feb 2003 20:44:22 -0800
+
+kbd-chooser (0.006) unstable; urgency=low
+
+  * Ensure PREFERRED_KBD is always set. (Closes: #179211).
+  * Build with debugging on; trying to catch a segfault error reported
+    by others (Matt Kraai).
+
+ -- Alastair McKinstry <mckinstry@computer.org>  Fri, 31 Jan 2003 21:05:21 +0000
+
+kbd-chooser (0.005) unstable; urgency=low
+
+  * Fix segfault when priority != medium.  (Closes: #178991).
+
+ -- Alastair McKinstry <mckinstry@computer.org>  Thu, 30 Jan 2003 10:54:44 +0000
+
+kbd-chooser (0.004) unstable; urgency=low
+
+  * Ensure USB support when compiling sparc, powerpc
+  * Some initial 2.5 support for keyboard detection
+
+ -- Alastair McKinstry <mckinstry@computer.org>  Wed, 29 Jan 2003 09:49:22 +0000
+
+kbd-chooser (0.003) unstable; urgency=low
+
+  * Maintainer now the Debian Install System Team
+  * set console-data/keymap to the choice, for later use
+  * Add support for Acorn, Amiga. 
+  * Cleanup unused prototypes from loadkeys.y
+
+ -- Alastair McKinstry <mckinstry@computer.org>  Tue, 28 Jan 2003 10:53:09 +0000
+
+kbd-chooser (0.002) unstable; urgency=low
+
+  * Add backup capability
+  * Remove redundant decompression code from findfile.c, ksyms.c
+  * kbd modules can now set a default keymap for a keyboard (so eg a
+    USB keyboard may be configured completely automatically, if
+    priority == low)
+  * Initial support for sparc, powerpc.
+  * Allow choice of "no keymap"; console-setup will then not install console-*
+    packages in baseconfig.
+
+ -- Alastair McKinstry <mckinstry@computer.org>  Sun, 26 Jan 2003 11:45:29 +0000
+
+kbd-chooser (0.1) unstable; urgency=low
+
+  * Initial Release.
+
+ -- Alastair McKinstry <mckinstry@computer.org>  Wed, 18 Dec 2002 20:28:31 +1100
+
+Local variables:
+mode: debian-changelog
+End:

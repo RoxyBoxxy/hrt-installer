@@ -1,0 +1,6 @@
+# The version of the kernel to use.
+
+KERNELIMAGEVERSION=2.2.20-sun4cdm 2.4.20-sun4u
+KERNELVERSION=$(foreach VERSION,${KERNELIMAGEVERSION},$(VERSION)-udeb)
+KERNELNAME=$(foreach VERSION,${KERNELVERSION},vmlinux-$(VERSION))
+

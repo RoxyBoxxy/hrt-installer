@@ -1,0 +1,39 @@
+#! /bin/sh -e
+
+. /usr/share/debconf/confmodule
+
+ARCH=`udpkg --print-architecture`
+MOUNTPOINT="/target"
+
+if [ "$ARCH" = "i386" -o "$ARCH" = "hppa" ]; then
+    TMP=`sfdisk -d /dev/discs/*/disc | grep Id=83 | cut -d\  -f 1`
+elif [ "$ARCH" = "s390" -o "$ARCH" = "s390x" ]; then
+    TMP=`for i in /dev/dasd/*/disc; do fdasd -p $i | grep "Linux native" | cut -d\  -f 2; done`
+fi
+
+for P in $TMP; do
+    if [ "$PARTS" ]; then
+        PARTS="$PARTS, $P"
+    else
+        PARTS="$P"
+    fi
+done
+PARTS=`echo "$PARTS" | sed 's/, $//'`
+
+db_subst di-utils-mkfs/which-partition PARTITIONS $PARTS
+db_input critical di-utils-mkfs/which-partition
+db_go
+
+db_get di-utils-mkfs/which-partition
+PARTITION="$RET"
+
+db_subst di-utils-mkfs/filesystem PARTITION $PARTITION
+db_input medium di-utils-mkfs/filesystem
+db_go
+
+db_get di-utils-mkfs/filesystem
+FSTYPE="$RET"
+
+mkfs.$FSTYPE "$PARTITION"
+
+exit 0

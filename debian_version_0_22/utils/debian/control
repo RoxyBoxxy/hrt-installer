@@ -1,0 +1,78 @@
+Source: debian-installer-utils
+Section: debian-installer
+Priority: standard
+Maintainer: Debian Install System Team <debian-boot@lists.debian.org>
+Uploaders: David Kimdon <dwhedon@debian.org>, Tollef Fog Heen <tfheen@debian.org>, Matt Kraai <kraai@debian.org>, Thorsten Sauter <tsauter@debian.org>
+Build-Depends: debhelper (>= 4.1.13), dpkg-dev (>= 1.9.0), libdebconfclient-dev, po-debconf (>= 0.5.0), libdebian-installer-dev
+Standards-Version: 3.5.8
+
+Package: di-utils-generic
+Architecture: all
+Depends: di-utils-mapdevfs
+Description: Generic scripts for di-utils
+ This package contains generic scripts used be the di-utilities.
+
+Package: di-utils-shell
+Architecture: any
+Depends: ${shlibs:Depends}
+XB-installer-menu-item: 950
+Description: Execute a shell
+ Use this module to execute an interactive shell within debian-installer.
+
+Package: di-utils-fake-partitioner
+Architecture: all
+Provides: partitioned-harddrives
+Description: I have already partitioned the hard drive
+ Use this module if you have already partitioned your hard drive.
+
+Package: di-utils-mkfs
+Architecture: all
+Depends: di-utils-generic, partitioned-harddrives, e2fsprogs-udeb
+Provides: made-filesystems
+XB-installer-menu-item: 45
+Description: Create filesystems (OLD)
+ Use this module to mkfs the target partitions within debian-installer.
+
+Package: di-utils-fake-mkfs
+Architecture: all
+Depends: partitioned-harddrives
+Provides: made-filesystems
+Description: I have already created file systems
+ Use this module if you have already made file systems on your 
+ partitions.
+
+Package: di-utils-mkswap
+Architecture: all
+Depends: di-utils-generic, partitioned-harddrives, e2fsprogs-udeb
+Provides: made-swapspace
+XB-installer-menu-item: 46
+Description: Make swapspace (OLD)
+ Use this module to mkswap the target partitions within debian-installer.
+ 
+Package: di-utils-fake-mkswap
+Architecture: all
+Depends: partitioned-harddrives
+Provides: made-swapspace
+Description: Already made swapspace
+ Use this module if you have already made swapspace on your
+ partitions.
+
+Package: di-utils-mount-partitions
+Architecture: all
+Depends: di-utils-generic, made-filesystems
+Provides: mounted-partitions
+XB-installer-menu-item: 55
+Description: Mount/Unmount a partition (OLD)
+ Use this module to mount the target partitions within debian-installer.
+
+Package: di-utils-fake-mount-partitions
+Architecture: all
+Depends: made-filesystems
+Provides: mounted-partitions
+Description: I have already mounted the partitions
+ Use this module if you have already mounted the partitions yourself.
+
+Package: di-utils-mapdevfs
+Architecture: any
+Description: Translate a devfs device name to its non-devfs equivalent.
+

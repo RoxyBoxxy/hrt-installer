@@ -1,0 +1,340 @@
+rootskel (0.34) unstable; urgency=low
+
+  * Joey Hess
+    - Ensure files in lib/debian-installer.d are shell scripts. :-P (Closes: #201740)
+    - Remove myself to uploader.
+  * Alastair McKinstry
+    - true != yes in bash! fix /lib/debian-installer.d scripts to
+      understand this.
+
+ -- Petter Reinholdtsen <pere@debian.org>  Mon, 21 Jul 2003 08:38:40 +0200
+
+rootskel (0.33) unstable; urgency=low
+
+  * Alastair McKinstry
+    - Ensure files in lib/debian-installer.d are executable.
+  * Joey Hess
+    - Install /var/log/messages so tail has something to tail.
+    - Add me to uploaders.
+
+ -- Joey Hess <joeyh@debian.org>  Wed, 16 Jul 2003 10:26:51 +0200
+
+rootskel (0.32) unstable; urgency=low
+
+  * New kernel related arch variable debian-
+    installer/kernel/linux/link_in_boot used on sparc.
+
+ -- Petter Reinholdtsen <pere@debian.org>  Sun, 22 Jun 2003 14:00:50 +0200
+
+rootskel (0.31) unstable; urgency=low
+
+  * Petter Reinholdtsen
+    - Insert the pid of linuxrc (init) into /proc/sys/kernel/cad_pid to
+      make sure the kernel signal the correct process on
+      Alt-Ctrl-Del. (Closes: #181271)
+  * Bastian Blank
+    - add -c 2 to klogd, makes it incompatible to stable busybox
+    - fix the alt-ctrl-del pid
+
+ -- Petter Reinholdtsen <pere@debian.org>  Tue,  3 Jun 2003 23:39:41 +0200
+
+rootskel (0.30) unstable; urgency=low
+
+  * Bastian Blank
+    - revert /linuxrc. (Closes: #193951)
+    - export variables
+    - make modprobe quiet
+
+ -- Bastian Blank <waldi@debian.org>  Sat, 24 May 2003 13:54:03 +0200
+
+rootskel (0.29) unstable; urgency=low
+
+  * Bastian Blank
+    - execute /sbin/init instead of /linuxrc.
+    - use etc/rcS.d
+    - use lib/debian-installer.d
+    - we want escapes, use echo -ne
+    - reorganize utf8 and framebuffer for linux
+  * Petter Reinholdtsen
+    - Remove workaround for broken cdebconf in debconf-{set,get}.  The
+      latest cdebconf will start the frontend from
+      /usr/share/debconf/confmodule.
+  * Alastair McKinstry
+    - Ensure main-menu loops if bterm killed by a HUP signal.
+
+ -- Petter Reinholdtsen <pere@debian.org>  Sun, 18 May 2003 18:33:45 +0200
+
+rootskel (0.28) unstable; urgency=low
+
+  * Alastair McKinstry
+    - Insert code to use framebuffer if available.
+    - Use bterm if it is available.
+    - Remove TERM=xterm hack, as the new slang version should work
+      in UTF-8 mode (bug #187704).
+  * Petter Reinholdtsen
+    - Rewrite the code to enable framebuffer and bterm, to make sure it
+      is enabled only if all required parts are available.
+    - Only disable UTF-8 mode in the console if it was enabled by us.
+    - Only turn off console blanking if TERM=linux.
+    - Drop useless depend lines in the control file.
+    - Split out the C.UTF-8 locale into separate package
+      rootskel-locale.
+
+ -- Petter Reinholdtsen <pere@debian.org>  Wed, 23 Apr 2003 10:59:08 +0200
+
+rootskel (0.27) unstable; urgency=low
+
+  * Petter Reinholdtsen
+    - Upgrade default kernel on i386 from 2.4.20-386 to 2.4.20-1-386.
+    - Disable UTF-8 mode in the console when main-menu exits.
+
+ -- Petter Reinholdtsen <pere@debian.org>  Fri, 11 Apr 2003 11:20:55 +0200
+
+rootskel (0.26) unstable; urgency=low
+
+  * Petter Reinholdtsen
+    - Stop including empty /var/lib/apt-install/queue in the package.  It
+      will replace the existing queue if rootskel is upgraded by anna.
+    - Fix broken 'clean' target, now it is able to remove the build-tree.
+    - Make sure the locale is only built once. (Closes: #187960)
+
+ -- Petter Reinholdtsen <pere@debian.org>  Tue,  8 Apr 2003 22:14:31 +0200
+
+rootskel (0.25) unstable; urgency=low
+
+  * Petter Reinholdtsen
+    - Reorganize build rules to work around bug in fakeroot
+      on arm and m68k. (Closes: #187960)
+
+ -- Petter Reinholdtsen <pere@debian.org>  Mon,  7 Apr 2003 22:49:25 +0200
+
+rootskel (0.24) unstable; urgency=low
+
+  * Petter Reinholdtsen
+    - New helper scripts debconf-set and debconf-get, for use by
+      scripts which can't include /usr/share/debconf/confmodule.
+    - Use DEBCONF_PRIORITY to set debconf template instead of passing
+      it to debconf directly.  This makes it possible for main-menu to
+      change it at run time.
+    - Use new helper scripts to add support for HTTP proxy in apt-update
+      and apt-install.  (Closes: #185114).
+    - Make sure /var/lib/apt-install/queue is a complete list of all
+      packages installed by apt-install.
+
+ -- Petter Reinholdtsen <pere@debian.org>  Sun,  6 Apr 2003 21:15:18 +0200
+
+rootskel (0.23) unstable; urgency=low
+
+  * Petter Reinholdtsen
+    - Set TERM=xterm in UTF-8 mode to get lines as borders in the
+      newt frontend.
+    - Rename locale used from C@utf-8 to C.UTF-8.  The name should follow
+      the form of the other UTF-8 locales.
+    - Print /var/log/syslog on tty4, instead of /proc/kmsg.
+  * Bastian Blank
+    - Add devfs templates.
+    - Add linux prefix to linux only templates.
+
+ -- Petter Reinholdtsen <pere@debian.org>  Sun,  6 Apr 2003 09:38:49 +0200
+
+rootskel (0.22) unstable; urgency=low
+
+  * Split the starting of main-menu into separate script, to make it
+    easier to start it in a separate terminal.
+  * Add code in /sbin/debian-installer to turn on UTF-8 mode when the
+    terminal is the linux console.
+
+ -- Petter Reinholdtsen <pere@debian.org>  Sun, 16 Mar 2003 21:17:02 +0100
+
+rootskel (0.21) unstable; urgency=low
+
+  * Matt Kraai
+    - Load unix.o as early as possible.
+  * Petter Reinholdtsen
+    - Upgraded Standards-Version from 3.5.6.0 to 3.5.8.
+    - Tried to add support for http proxy in apt-update and apt-install.
+      The code failed when called from base-installer and
+      kernel-installer, so it is currently commented out.
+    - Copied debian/C-at-utf-8.in from
+      boot-floppies/utilities/bogl/C-at-utf-8.in, and use it to
+      generate C@utf-8 locale and set LANG=C@utf-8 if it exists.
+      Added locales to build-depend as it is needed to generate the
+      locale.
+    - Unset LANG=C@utf-8 when doing chroot /target in apt-update and
+      apt-install.  The locale is not available in /target/.
+
+ -- Petter Reinholdtsen <pere@debian.org>  Sat, 15 Mar 2003 19:54:35 +0100
+
+rootskel (0.20) unstable; urgency=low
+
+  * Martin Sjögren
+    - Add the newt frontend to the list, before slang.
+
+ -- Petter Reinholdtsen <pere@debian.org>  Tue,  4 Mar 2003 16:50:37 +0100
+
+rootskel (0.19) unstable; urgency=low
+
+  * Petter Reinholdtsen:
+    - Change $* to $@ in apt-install.
+  * Tollef Fog Heen
+    - Make /etc/mtab a symlink to /proc/mounts
+
+ -- Tollef Fog Heen <tfheen@debian.org>  Fri, 21 Feb 2003 16:44:52 +0100
+
+rootskel (0.18) unstable; urgency=low
+
+  * Correct DEBCONF_FRONTEND to DEBIAN_FRONTEND in comment in
+    sbin/debian-installer.
+  * Try to get Alt-Ctrl-Del working by moving the code to execute from
+    /etc/inittab to /sbin/shutdown, and adding 'reboot' at the end of
+    this new script.
+  * Move apt-install and apt-update from base-installer into this
+    package.
+
+ -- Petter Reinholdtsen <pere@debian.org>  Sun,  9 Feb 2003 20:26:40 +0100
+
+rootskel (0.17) unstable; urgency=low
+
+  * Correct template-build.pl, to always include the last template.
+    It was skipping the last entry unless there was an empty line at
+    the end of the templates file.
+
+ -- Petter Reinholdtsen <pere@debian.org>  Sat,  8 Feb 2003 09:11:52 +0100
+
+rootskel (0.16) unstable; urgency=low
+
+  * Petter Reinholdtsen
+    - Add code to choose frontend dynamically on startup and when main-menu
+      exits based on the available frontends.  They are choosen in priority
+      order gtk, slang, text.
+    - Add myself as uploader.
+
+ -- Petter Reinholdtsen <pere@debian.org>  Sun, 26 Jan 2003 14:46:24 +0100
+
+rootskel (0.15) unstable; urgency=low
+
+  * Bastian Blank
+    - rewrite template building, supports defaults values.
+    - add initrd option.
+  * Richard Hirst
+    - add kernel image and initrd settings for hppa
+  * Petter Reinholdtsen
+    - Change maintainer to debian-boot@lists.debian.org, and make the old
+      maintainer an uploader.  Added Tollef Fog Heen as uploader.
+    - Set default for debian-installer/kernel/image to 'kernel-image'.
+    - Change default kernel for i386 from 2.4.19 to 2.4.20.
+
+ -- Petter Reinholdtsen <pere@debian.org>  Thu, 16 Jan 2003 12:02:17 +0100
+
+rootskel (0.14) unstable; urgency=low
+
+  * Ignore module load request for net-pf-1, nls_iso8859-1 and
+    nls_cp437.  The config was moved from cdrom-detect.
+
+ -- Tollef Fog Heen <tfheen@debian.org>  Sat,  7 Dec 2002 16:10:06 +0100
+
+rootskel (0.13) unstable; urgency=low
+
+  * Denis Barbier
+    - replace Default-arch by Default[arch] in template in order to
+      prevent confusion with localized fields.
+
+ -- Tollef Fog Heen <tfheen@debian.org>  Thu,  5 Dec 2002 00:58:48 +0100
+
+rootskel (0.12) unstable; urgency=low
+
+  * Bastian Blank
+    - add template with arch specific default values.
+    - src/etc/init.d/rc.S
+      - syslogd logs to /var/log/syslog
+      - start klogd
+    - add src/etc/modules.conf
+  * Bdale Garbee
+    - add ia64 lines to templates
+  * Tollef Fog Heen
+    - load unix.o if it is available.
+
+ -- Tollef Fog Heen <tfheen@debian.org>  Tue, 26 Nov 2002 04:07:59 +0100
+
+rootskel (0.11) unstable; urgency=low
+
+  * Run the scripts in /etc/rcS.d on bootup, if available.
+  * Petter Reinholdtsen:
+    - Add simple group and passwd files with root entries to avoid
+      some warnings from debootstrap.
+  * waldi: remove virtual console hack
+
+ -- Tollef Fog Heen <tfheen@debian.org>  Thu, 14 Nov 2002 02:06:05 +0100
+
+rootskel (0.10) unstable; urgency=low
+
+  * Make the inittab use the default console instead of /dev/vc/1 and
+    such.
+
+ -- Tollef Fog Heen <tfheen@debian.org>  Wed,  6 Nov 2002 01:40:39 +0100
+
+rootskel (0.09) unstable; urgency=low
+
+  * Create /usr/lib/prebaseconfig.d.
+  * waldi: add support for archs without virtual consoles.
+  * fix fstab to point to the real floppy device
+
+ -- Tollef Fog Heen <tfheen@debian.org>  Thu, 24 Oct 2002 02:12:47 +0200
+
+rootskel (0.08) unstable; urgency=low
+
+  * Turn off console blanking, since it seems like it confuses users.
+  * Get rid of emacs cruft at the end of the changelog.
+  * Get rid of silly references to configure target.
+  * Don't mknod -- we use devfs
+
+ -- Tollef Fog Heen <tfheen@debian.org>  Sun, 18 Aug 2002 15:42:04 +0200
+
+rootskel (0.07) unstable; urgency=low
+
+  * Use shm, not tmpfs (filesystem was renamed). Closes: #124008
+
+ -- Joey Hess <joeyh@debian.org>  Fri, 14 Dec 2001 14:19:22 -0500
+
+rootskel (0.06) unstable; urgency=low
+
+  * Switched from ramfs to tmpfs since it's in the standard
+    Debian kernel.
+  * Added /dev/console and /dev/tty1 to the package.
+  * Don't use DEBCONF_FRONTEND to override the choice of cdebconf.conf
+
+ -- Raphael Hertzog <hertzog@debian.org>  Wed,  1 Aug 2001 16:06:35 +0200
+
+rootskel (0.05) unstable; urgency=low
+
+  * Added a new linuxrc, which sets up a ramfs filesystem, copys the
+    installer into it, pivot_roots so its the new root, ensures proc and
+    dev are mounted, and runs busybox init.
+  * Made rcS clean up by unmounting the initrd, and freeramdisking it
+    (the latter doesn't currently work, may be kernel bug).
+
+ -- Joey Hess <joeyh@debian.org>  Sun, 25 Mar 2001 18:27:56 -0800
+
+rootskel (0.04) unstable; urgency=low
+
+  * use devfs
+
+ -- David Whedon <dwhedon@debian.org>  Mon, 12 Feb 2001 19:24:49 -0800
+
+rootskel (0.03) unstable; urgency=low
+
+  * remove dev stuff form here 
+
+ -- David Whedon <dwhedon@debian.org>  Thu,  8 Feb 2001 21:27:10 -0800
+
+rootskel (0.02) unstable; urgency=low
+
+  * run syslogd 
+
+ -- David Whedon <dwhedon@debian.org>  Sun,  4 Feb 2001 20:49:42 -0800
+
+rootskel (0.01) unstable; urgency=low
+
+  * Initial Release.
+
+ -- David Whedon <dwhedon@debian.org>  Tue, 30 Jan 2001 00:52:08 -0800

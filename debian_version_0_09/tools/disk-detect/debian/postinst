@@ -1,0 +1,184 @@
+#! /bin/sh
+
+#set -e
+. /usr/share/debconf/confmodule
+#set -x
+
+# This is a gross and stupid hack, but needed because of Xu's
+# unwillingness to run depmod in kernel-image's postinst.  See Debian
+# bug #136743
+
+depmod -a || true
+
+log () {
+    echo "$0: $@" >>/var/log/messages
+}
+
+load_modules()
+{
+    old=`cat /proc/sys/kernel/printk`
+    echo 0 > /proc/sys/kernel/printk
+    for module in $* ; do
+	modprobe $module >> /var/log/messages 2>&1
+    done
+    echo $old > /proc/sys/kernel/printk
+}
+
+load_floppy_driver() {
+    if [ ! -d /dev/floppy ] ; then
+        load_modules floppy
+    fi
+    if [ ! -d /dev/floppy ] ; then
+        log "error: Unable to load floppy device driver"
+    fi
+    floppydev=/dev/floppy/0
+}
+
+log "Detecting disks..."
+
+# Manually load modules to enable things we can't detect.
+manual_load="ide-mod ide-probe-mod ide-disk"
+#manual_load=i82365 usb-storage
+#manual_load=i82365 sr_mod usb-storage
+
+IFS_SAVE="$IFS"
+IFS="
+"
+found_scsi=
+for device in `/sbin/discover --disable-all --enable=pci,ide,scsi,pcmcia \
+                --format="%m\t%V\t%M\n" scsi`
+do
+    vendor="`echo $device | cut -f2`"
+    model="`echo $device | cut -f3`"
+    module="`echo $device | cut -f1`"
+    IFS="$IFS_SAVE"
+
+    if [ "$vendor" != "Unknown" ]
+    then
+        name="$vendor $model"
+    else
+        name="$model"
+    fi
+
+    if [ -n "$module" -a "$module" != "ignore" ]
+    then
+        echo "Trying to load module '$module' for '$name'"
+
+        if modprobe -l ${module}.o | grep ${module}.o > /dev/null
+        then
+                :
+        else
+            while true
+            do
+	        template=disk-detect/not_included
+		db_fset "$template" seen false || true
+		db_subst "$template" vendor "$name" || true
+		db_subst "$template" module $module || true
+		db_input critical "$template" || true
+		db_go || true
+		db_get "$template" || true
+                mounted=0
+                if [ "$RET" != "true" ]
+                then
+                    break
+                fi
+                load_floppy_driver
+                mount -t ext2 $floppydev /mnt
+                if [ "$?" = "0" ]
+                then
+                    if [ -f /mnt/modules.tgz ]
+                    then
+                        mounted=1
+                        break
+                    fi
+                    umount /mnt
+                fi
+            done
+
+            if [ "$mounted" = "1" ]
+            then
+                log "Copying modules.tgz from ext2 modules disk... "
+                gunzip -c /mnt/modules.tgz | tar xf - $module.o
+                umount /mnt
+                # Make sure 'depmod -a' accepts the new module
+                chown -R root /lib/modules
+                depmod -a
+            fi
+        fi
+
+        if modprobe -l ${module}.o | grep ${module}.o > /dev/null
+        then
+            found_scsi=true
+            load_modules $module
+            if [ "$?" != "0" ]
+            then
+                log "Error loading driver '$module' for $vendor $model!"
+	    fi
+        else
+            log "Could not locate driver '$module' for $vendor $model."
+        fi
+    fi
+    IFS="
+"
+done
+IFS="$IFS_SAVE"
+
+# always load sd_mod if a scsi controller module was loaded
+if [ "$found_scsi" ] ; then
+    manual_load="$manual_load sd_mod"
+fi
+load_modules $manual_load
+
+
+# If PCMCIA was detected, load the PCMCIA drivers and load cardmgr
+if [ -e /proc/bus/pccard ]
+then
+    pcmcia=0
+    if [ -e /lib/modules/*/pcmcia ]
+    then
+	echo "PCMCIA was detected on this system."
+	while true
+        do
+	    echo "Please insert the modules disk and press Enter to continue, or type"
+            echo -n "\`q' to skip loading PCMCIA drivers: "
+            read input
+            mounted=0
+            if [ "$input" = "q" ]
+            then
+                break
+            fi
+            load_floppy_driver
+            mount -t ext2 $floppydev /mnt
+            if [ "$?" = "0" ]
+            then
+                if [ -f /mnt/pcmcia.tgz ]
+                then
+                    mounted=1
+                    break
+                fi
+                umount /mnt
+            fi
+        done
+        if [ "$mounted" = "1" ]
+        then
+            echo -n "Copying drivers from modules disk... "
+            gunzip -c /mnt/pcmcia.tgz | tar xf -
+            echo "done."
+            umount /mnt
+	    pcmcia=1
+        fi
+    else
+	pcmcia=1
+    fi
+
+    if [ "$pcmcia" = "1" ]
+    then
+	gunzip /etc/pcmcia/config.gz
+	/sbin/cardmgr
+    fi
+fi
+
+# Hey, we're done
+
+exit 0
+

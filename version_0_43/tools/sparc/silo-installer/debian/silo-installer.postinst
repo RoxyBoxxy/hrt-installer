@@ -1,0 +1,33 @@
+#!/bin/sh
+set -e
+
+if [ -f /etc/mtab ]; then
+    MTAB=/etc/mtab
+else
+    MTAB=/proc/mounts
+fi
+
+# detect which is the root partition: /target
+rootfs=`/target/bin/sed -ne '/^[^ ]* \/target /s/ .*//p' $MTAB`
+
+. /usr/share/debconf/confmodule
+
+rootfs=`mapdevfs $rootfs`
+
+# Write out silo.conf
+cat > /target/boot/silo.conf << EOF
+root=$rootfs
+timeout=100
+image=/boot/vmlinuz
+	label=Linux
+	read-only
+EOF
+
+chmod 644 /target/boot/silo.conf
+
+# Compat links
+ln -s ../boot/silo.conf /target/etc/silo.conf
+ln -s . /target/boot/boot
+ln -s . /target/boot/etc
+
+chroot /target /sbin/silo -f

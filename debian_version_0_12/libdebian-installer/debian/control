@@ -1,0 +1,31 @@
+Source: libdebian-installer
+Section: libs
+Priority: optional
+Maintainer: Debian Install System Team <debian-boot@lists.debian.org>
+Uploaders: David Kimdon <dwhedon@debian.org>, Tollef Fog Heen <tfheen@debian.org>, Martin Sjogren <sjogren@debian.org>
+Build-Depends: debhelper (>= 3), d-shlibs (>= 0.10)
+Standards-Version: 3.5.8
+
+Package: libdebian-installer3
+Section: libs
+Architecture: any
+Depends: ${shlibs:Depends}
+Description: Library of common debian-installer functions
+ This library is used by debian-installer to perform common functions
+ such as logging messages and executing commands.  If you aren't
+ working on debian-installer or building your own install system based
+ on debian-installer, then you probably don't need this library.
+
+Package: libdebian-installer3-dev
+Section: devel
+Architecture: any
+Depends: libdebian-installer3 (= ${Source-Version}), ${devlibs:Depends}
+Conflicts: libdebian-installer-dev
+Provides: libdebian-installer-dev
+Description: Library of common debian-installer functions
+ This library is used by debian-installer to perform common functions
+ such as logging messages and executing commands. If you aren't
+ working on debian-installer or building your own install system based
+ on debian-installer, then you probably don't need this library.
+ .
+ This package contains files needed to do libdebian-installer development.

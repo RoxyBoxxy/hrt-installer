@@ -1,0 +1,41 @@
+#!/usr/bin/make -f
+
+# Udebs have no postrm file, don't make one
+export DH_OPTIONS=-n
+
+SHELL := sh -e
+
+khsed := s/^Package: kernel-image-\(.*\)-386.*/\1/
+export version := $(shell sed -n '$(khsed); t e; b; :e; p; q' debian/control)
+fullversion := $(shell \
+	dpkg-parsechangelog | sed -n 's/^Version: //p; t e; b; :e; q' \
+)
+
+kdst := debian/kernel-image-$(version)-386-di
+
+build:
+	dh_testdir
+
+clean:
+	dh_testdir
+	dh_clean
+
+binary-indep:
+
+binary-arch:
+	dh_testdir
+	dh_clean -k
+	dh_installdirs
+
+	./copy-modules 386
+	install -D -m 644 /boot/vmlinuz-$(version)-386 $(kdst)/boot/vmlinuz
+	install -D -m 644 /lib/modules/$(version)-386/modules.dep \
+		$(kdst)/lib/modules/$(version)-386/modules.dep
+	dh_fixperms
+	for i in $$(dh_listpackages); do \
+		dh_gencontrol -p $$i -- -n$${i}_$(fullversion)_i386.udeb; \
+		dh_builddeb -p $$i --filename=$${i}_$(fullversion)_i386.udeb; \
+	done
+
+binary: binary-indep binary-arch
+.PHONY: build clean binary-indep binary-arch binary

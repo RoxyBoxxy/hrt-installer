@@ -1,0 +1,109 @@
+#!/usr/bin/make -f
+# Sample debian/rules that uses debhelper.
+# GNU copyright 1997 to 1999 by Joey Hess.
+
+# Uncomment this to turn on verbose mode.
+#export DH_VERBOSE=1
+
+ARCH_PACKAGES=$(shell dh_listpackages -a)
+INDEP_PACKAGES=$(shell dh_listpackages -i)
+VERSION=$(shell dpkg-parsechangelog | grep ^Version: | cut -d ' ' -f 2)
+ARCH=$(shell dpkg --print-architecture)
+
+# This is the debhelper compatability version to use.
+export DH_COMPAT=2
+
+build: build-stamp
+build-stamp:
+	dh_testdir
+	$(MAKE)
+	$(MAKE) strip
+	touch build-stamp
+
+clean:
+	dh_testdir
+	dh_testroot
+	rm -f build-stamp
+	rm -f debian/di-utils-shell.postinst
+	-$(MAKE) clean
+
+	dh_clean
+
+install: build
+	dh_testdir
+	dh_testroot
+	dh_clean -k
+	install -m755 shell debian/di-utils-shell.postinst
+	install -m755 mkswap.sh debian/di-utils-mkswap.postinst
+	install -m755 mkfs.sh debian/di-utils-mkfs.postinst
+	install -m755 mount.sh debian/di-utils-mount-partitions.postinst
+	install -m755 partitioner.sh debian/di-utils-partitioner.postinst
+	mkdir -p debian/di-utils-mount-partitions/usr/bin
+	cp mapdevfs debian/di-utils-mount-partitions/usr/bin
+	# di-utils-partitioner
+	install -d \
+		debian/di-utils-partitioner/usr/share/debian-installer/partapps
+	for f in `find partapps/* -type f -a ! -name "archmaps.txt" -maxdepth 0 -print`; do \
+		cp -v $$f \
+		debian/di-utils-partitioner/usr/share/debian-installer/partapps; \
+	done
+	cd debian/di-utils-partitioner/usr/share/debian-installer/partapps && \
+	cat partapps/archmaps.txt | while read $LINE; do \
+		set -- $$LINE; \
+		ln -s $$2 $$1; \
+	done
+	# di-utils-generic
+	install -d debian/di-utils-generic/usr/share/debian-installer/overrides
+	install -m644 functions.sh \
+		debian/di-utils-generic/usr/share/debian-installer
+	install -d debian/di-utils-generic/usr/lib/prebaseconfig.d
+	install -m755 fstab.sh \
+		debian/di-utils-generic/usr/lib/prebaseconfig.d/40fstab
+	# di-utils-mount-partitions
+	install -d debian/di-utils-mount-partitions/usr/share/debian-installer/mount
+	install -m644 mount-mount.sh \
+		debian/di-utils-mount-partitions/usr/share/debian-installer/mount/mount.sh
+	install -m644 mount-umount.sh \
+		debian/di-utils-mount-partitions/usr/share/debian-installer/mount/umount.sh
+
+# Build architecture-independent files here.
+binary-indep: build install
+	dh_testdir
+	dh_testroot
+	dh_installdirs
+	dh_installdebconf
+	dh_strip
+	dh_compress
+	dh_fixperms
+	dh_installdeb
+	dh_shlibdeps
+	$(foreach PACKAGE, $(INDEP_PACKAGES), \
+	( if [ -f debian/$(PACKAGE).menutest ]; then \
+	  install debian/$(PACKAGE).menutest debian/$(PACKAGE)/DEBIAN/menutest ; fi; \
+	 dpkg-gencontrol -Pdebian/$(PACKAGE) -isp -p$(PACKAGE) \
+	-n$(PACKAGE)_$(VERSION)_all.udeb ) ; )
+	@$(foreach PACKAGE, $(INDEP_PACKAGES), \
+	(cd debian ; \
+		dpkg-deb -b $(PACKAGE) ../../$(PACKAGE)_$(VERSION)_all.udeb \
+		); )
+
+# Build architecture-dependent files here.
+binary-arch: build install
+	dh_testdir
+	dh_testroot
+	dh_installdebconf
+	dh_strip
+	dh_compress
+	dh_fixperms
+	dh_installdeb
+	dh_shlibdeps
+	$(foreach PACKAGE, $(ARCH_PACKAGES), \
+	( dpkg-gencontrol -Pdebian/$(PACKAGE) -isp -p$(PACKAGE) \
+	-n$(PACKAGE)_$(VERSION)_$(ARCH).udeb ) ; )
+	@$(foreach PACKAGE, $(ARCH_PACKAGES), \
+	(cd debian ; \
+		dpkg-deb -b $(PACKAGE) ../../$(PACKAGE)_$(VERSION)_$(ARCH).udeb \
+		); )
+
+binary: binary-indep binary-arch
+.PHONY: build clean binary-indep binary-arch binary install

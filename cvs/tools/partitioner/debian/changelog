@@ -1,0 +1,353 @@
+partitioner (0.22) UNRELEASED; urgency=low
+
+  * Martin Michlmayr
+    - Handle mips sub-architectures: use fdisk for SGI machines, cfdisk for
+      the Broadcom MIPS development board "SWARM" (BCM91250A), and fdisk
+      as fallback option.
+    - Add a script to handle mipsel sub-architectures: use fdisk for
+      DECstations, cfdisk for the SWARM board, and fdisk as fallback.
+  * Translators: do not modify this changelog to record changes you make to
+    po files. A record of your contributions will be added to the changelog
+    at package release time by the output-l10n-changes program.
+
+ -- Steinar H. Gunderson <sesse@debian.org>  Tue, 16 Mar 2004 19:40:29 +0100
+
+partitioner (0.21) unstable; urgency=low
+
+  * Bastian Blanl
+    - Use stdin/-out copies from debconf.
+    - Use new debhelper and strip binary.
+  * Updated translations
+    - Russian by Nikolai Prokoschenko
+
+ -- Steinar H. Gunderson <sesse@debian.org>  Sun, 14 Mar 2004 19:40:29 +0100
+
+partitioner (0.20) unstable; urgency=low
+
+  * Bastian Blank
+    - Use sector size for size calculation.
+    - Ignore ignorable exceptions.
+  * Kenshi Muto
+    - util-linux maintainer didn't response anything...
+      It is time to run cfdisk as LANG=C. I hope this change would be
+      reverted before Sarge release.
+  * Translations:
+    - Dafydd Harries : Added Welsh translation (cy.po)
+    - Kęstutis Biliūnas: Updated Lithuanian translation (lt.po) 
+    - Jordi Mallach: Updated Catalan translation (ca.po)
+
+ -- Joey Hess <joeyh@debian.org>  Sat, 13 Mar 2004 00:07:48 -0500
+
+partitioner (0.19) unstable; urgency=low
+
+  * Jeff Bailey:
+    - Apply patch from Thomas Poindessous <thomas@poindessous.com>
+      for sparc partitioning (Closes: #228518)
+    - Actually, use parted instead.
+  * Translations:
+    - Håvard Korsvoll
+      - Updated Norwegian (Nynorsk) translation.
+    - Changwoo Ryu
+      - Added Korean translation (ko.po)
+    - Ming Hua
+      - Initial Traditional Chinese translation (zh_TW.po), by Tetralet
+      - Updated Traditional Chinese translation (zh_TW.po), by Tetralet
+    - Håvard Korsvoll
+      - Updated Norwegian, bokmål translation, (nb.po). From Axel Bojer
+
+ -- Joey Hess <joeyh@debian.org>  Tue,  2 Mar 2004 13:42:00 -0500
+
+partitioner (0.18) unstable; urgency=low
+
+  * Translations:
+    - Jordi Mallach: Updated Catalan translation.
+    - Carlos Z.F. Liu
+      - fix some serious errors in Simplified Chinese translation.
+    - Giuseppe Sacco
+      - Applied patch for normalizing menus and some italian translation (it.po)
+    - h3li0s
+      - added albanian translation (sq.po)
+    - Eugen Meshcheryakov 
+      - added Ukrainian translation (uk.po)
+
+ -- Joey Hess <joeyh@debian.org>  Sun, 22 Feb 2004 22:21:37 -0500
+
+partitioner (0.17) unstable; urgency=low
+
+  * Safir Secerovic
+    - Update Bosnian translation (bs.po).
+  * Stephen R. Marenka
+    - Initial m68k support.
+
+ -- Joey Hess <joeyh@debian.org>  Thu, 22 Jan 2004 20:17:38 -0500
+
+partitioner (0.16) unstable; urgency=low
+
+  * Miguel Figueiredo
+    - Added Portuguese translation (pt.po)
+  * Ming Hua
+    - Initial Simplified Chinese translation (zh_CN.po)
+  * Bart Cornelis
+    - Merged Norwegian Nynorsk (nn.po) translation from skolelinux-cvs
+  * André Dahlqvist
+    - Update Swedish translation (sv.po)
+  * Anmar Oueja
+    - created and translated to Arabic (ar.po)
+  * Christian Perrier
+    - main.c: set LANGUAGE variable before calling fdisk programs
+              this may cause problems with terminals
+
+ -- Joey Hess <joeyh@debian.org>  Thu,  1 Jan 2004 15:01:11 -0500
+
+partitioner (0.15) unstable; urgency=low
+
+  * Bart Cornelis
+    - Merged Norwegian Bokmael (nb.po) from skolelinux-cvs
+  * Teófilo Ruiz Suárez
+    - Updated Spanish translations (po/es.po)
+  * Peter Mann
+    - Updated Slovak translation
+  * Giuseppe Sacco
+    - Added italian translation (it.po)
+  * Thiemo Seufer
+    - Fix memory leaks.
+
+ -- Joey Hess <joeyh@debian.org>  Thu, 25 Dec 2003 19:58:59 -0500
+
+partitioner (0.14) unstable; urgency=low
+
+  * Bartosz Fenski
+    - Updated Polish (pl) translation.
+  * Verok Istvan
+    - Initial Hungarian translation
+  * André Dahlqvist
+    - Update Swedish translation. (sv.po)
+  * David Martínez Moreno
+    - Updated Spanish translation (es.po) and converted to UTF-8.
+  * Konstantinos Margaritis
+    - Updated Greek translation (el.po)
+  * Thiemo Seufer
+    - Change CFLAGS to -W -Wall -Os.
+  * Alwin Meschede
+    - Updated German translation (de.po)
+  * Bart Cornelis
+    - Updated Dutch translation (nl.po)
+    - incorporated debian-l10n-dutch review comments into nl.po
+  * Steinar H. Gunderson
+    - Updated Norwegian Bokmål translation (nb.po).
+  * Otavio Salvador
+    - Change priority of question about disc to 'critical'.
+      Closes: #220258
+    - Fix a trivial spell error in pt_BR translation.
+    - Fixed to not call the partitioner tool without a disk select.
+  * Thiemo Seufer
+    - Use always fdisk for mips.
+    - Remove main.h, fix broken function prototypes and static variable
+      definition in the header file by that.
+    - Simplify extract_choice().
+    - Respect MAX_DISKS.
+  * Christian Perrier
+    - Commented the hardcoded "Finish" string in main.c.
+    - Changed templates for adding "Finish" to the possible choices. It
+      then becomes translatable
+  * Ognyan Kulev
+    - Added/updated bulgarian translation (bg.po).
+  * Miroslav Kure
+    - Added/updated czech translation (bg.po).
+  * André Luís Lopes
+    - Updated pt_BR (Brazilian Portuguese) translation as per Christian's last
+       change (Finish string availability).
+  * Petter Reinholdtsen
+    - Updated Norwegian Bokmål translation (nb.po).
+  * Kęstutis Biliūnas
+    - Updated Lithuanian translation (lt.po).
+  * Kenshi Muto
+    - Update Japanese translation (ja.po)
+  * Claus Hindsgaul
+    - Update Danish translation (da.po).
+  * Joey Hess
+    - Add myself to uploaders.
+
+ -- Bart Cornelis <cobaco@linux.be>  Tue, 23 Dec 2003 16:03:26 +0100
+
+partitioner (0.13) unstable; urgency=low
+
+  * Peter Mann
+    - Initial Slovak translation (sk.po).
+  * Ilgiz Kalmetev
+    - Initial Russian translation.
+  * Konstantinos Margaritis
+    - Initial Greek translation (el.po).
+  * Christian Perrier
+    - Refined and standardized templates. Closes: #220026
+    - Update French translation.
+  * Claus Hindsgaul
+    - Add Danish translation (da.po).
+  * Safir Šećerović
+    - Update Bosnian translation (bs.po)
+  * Tommi Vainikainen
+    - Update Finnish translation.
+  * Miroslav Kure
+    - Update Czech translation.
+  * Jordi Mallach
+    - Update Catalan translation.
+  * Kenshi Muto
+    - Update Japaense po (ja.po)
+  * André Luís Lopes
+    - Update pt_BR (Brazilian Portuguese) translation.
+  * Kęstutis Biliūnas 
+    - Update Lithuanian translation.
+ 	
+ -- Joey Hess <joeyh@debian.org>  Tue,  9 Dec 2003 16:06:20 -0500
+
+partitioner (0.12) unstable; urgency=low
+
+  * Safir Secerovic, Amila Akagic
+    - Add Bosnian translation (bs.po)
+
+ -- Joey Hess <joeyh@debian.org>  Fri,  7 Nov 2003 13:31:46 -0500
+
+partitioner (0.11) unstable; urgency=low
+
+  * Gaudenz Steinlin
+    - scripts/powerpc: replace /usr/bin/archdetect with /bin/archdetect
+
+ -- Petter Reinholdtsen <pere@debian.org>  Sat,  1 Nov 2003 12:38:53 +0100
+
+partitioner (0.10) unstable; urgency=low
+
+  * Alastair McKinstry
+    - Added versioned depends on libdebconfclient-dev to ensure we get
+      working debonf_* macros.
+  * André Luís Lopes
+    - Update pt_BR (Brazilian Portuguese) translation.
+  * Denis Barbier
+    - Add a comment in templates file to flag the main menu item.
+  * Chris Tillman
+    - change ppcdetect to archdetect and corresponding CASEs
+  * Christian Perrier
+    - Update French translation.
+  * Kęstutis Biliūnas
+    - Add Lithuanian translation (lt.po).
+  * Claus Hindsgaul
+    - Add Danish translation (da.po).
+  * Miroslav Kure
+    - Update Czech translation (cs.po).
+  * Tommi Vainikainen
+    - Add Finnish (fi.po) translation
+  * Matt Kraai
+    - Remove the leading space from the menu entry (closes: #216109).
+    - Build-depend on libdebconfclient0-dev instead of
+      libdebconfclient-dev.
+    - Add self to uploaders.
+
+ -- Matt Kraai <kraai@debian.org>  Fri, 24 Oct 2003 01:24:14 -0700
+
+partitioner (0.09) unstable; urgency=low
+
+  * Alastair McKinstry
+    - Set title via debian-installer template for i18n.
+    - Move to new cdebconf macros.
+  * Bart Cornelis
+    - Updated dutch translation
+  * Petter Reinholdtsen
+    - Update nb.po.
+  * Kenshi Muto
+    - Update Japaense po (ja.po)
+
+ -- Sebastian Ley <ley@debian.org>  Sun, 12 Oct 2003 19:25:59 +0200
+
+partitioner (0.08) unstable; urgency=low
+
+  * Search via ppcdetect for ppc subarchs
+  * fix script/powerpc.sh
+  * Richard Hirst
+    - Don't count disks for which ped_device_get() fails.  IDE floppy with no
+      disk inserted crashed partitioner.
+  * Bastian Blank
+    - Port to new libdebian-installer API.
+  * Petter Reinholdtsen
+    - Update dependency from libdebian-installer3-dev to
+      libdebian-installer4-dev, patch from Goswin von Brederlow.
+  * Miroslav Kure
+    - Added Czech translation.
+
+ -- Sebastian Ley <ley@debian.org>  Thu,  9 Oct 2003 17:19:30 +0200
+
+partitioner (0.07) unstable; urgency=low
+
+  * Aigars Mahinovs
+    - Add latvian translation (lv.po).
+  * Kenshi Muto
+    - Added Japanese translation (ja.po)
+    - Update ja.po
+  * Jordi Mallach
+    - Added Catalan (ca) translation.
+  * Thorsten Sauter
+    - Include patch for alpha architecture. (Closes: #211623)
+    - Fix cfdisk "blank-screen" problem. (Closes: #209286)
+    - debian/rules: don't install files under CVS/ directories
+
+ -- Thorsten Sauter <tsauter@debian.org>  Sat, 20 Sep 2003 13:49:07 +0200
+
+partitioner (0.06) unstable; urgency=low
+
+  * Thorsten Sauter
+    - change my email address
+  * Alastair McKinstry
+    - Remove unwanted menutest
+
+ -- Alastair McKinstry <mckinstry@computer.org>  Tue, 17 Jun 2003 21:00:53 +0200
+
+partitioner (0.05) unstable; urgency=low
+
+  * Thorsten Sauter
+    - Insert script for powerpc fdisk. (Closes: #194590)
+  * Bastian Blank
+    - Add german translation
+  * Martin Sjögren
+    - Run cfdisk also when the newt frontend is running.
+
+ -- Thorsten Sauter <tsauter@debian.org>  Tue, 17 Jun 2003 20:50:56 +0200
+
+partitioner (0.04) unstable; urgency=low
+
+  * Petter Reinholdtsen
+    - Change depend from disk-detect to new hw-detect-full.
+    - Add Norwegian Bokmål (nb.po) and Nynorsk translation (nn.po).
+  * Thorsten Sauter
+    - pump priority from optional to standard
+  * Teófilo Ruiz Suárez
+    - Added es.po
+  * André Luís Lopes :
+    - Fixed some mistakes and improved translation in general.
+  * Martin Sjögren
+    - Recompile with libdebconfclient.
+
+ -- Martin Sjogren <sjogren@debian.org>  Sat, 24 May 2003 22:24:23 +0200
+
+partitioner (0.03) unstable; urgency=low
+
+  * Thorsten Sauter
+    - debian/control: fix build-depends. (Closes: #188323)
+  * Pierre Machard
+    - Add French po-debconf translation
+
+ -- Petter Reinholdtsen <pere@debian.org>  Thu, 10 Apr 2003 01:37:34 +0200
+
+partitioner (0.02) unstable; urgency=low
+
+  * Thorsten Sauter
+    - Closes: #188010. Change binary-indep depends to binary.
+  * Petter Reinholdtsen
+    - Add myself to uploaders.
+
+ -- Petter Reinholdtsen <pere@debian.org>  Wed,  9 Apr 2003 10:22:02 +0200
+
+partitioner (0.01) unstable; urgency=low
+
+  * Thorsten Sauter
+     - Initial Release.
+
+ -- Petter Reinholdtsen <pere@debian.org>  Sat, 29 Mar 2003 15:02:19 +0200
+

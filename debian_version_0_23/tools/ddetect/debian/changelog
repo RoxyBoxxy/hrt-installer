@@ -1,0 +1,133 @@
+ddetect (0.17) unstable; urgency=low
+
+  * NOT YET RELEASED
+  * canonicalize description capitalization
+  * fix template problems noted by Denis Barbier
+  * waldi: don't build ethdetect for s390
+  * Convert to po-debconf, set Build-Depends: debhelper (>= 4.1.13)
+    to ensure that generated templates are right, and set output encoding
+    to UTF-8.
+
+ -- Bastian Blank <waldi@debian.org>  Thu, 17 Oct 2002 17:06:22 +0000
+
+ddetect (0.16) unstable; urgency=low
+
+  * add python to build-deps
+  * when a module is successfully loaded, add it to /etc/modules
+  * Get rid of silly configure target
+  * decrease priority to force ddetect before netcfg-*
+
+ -- Tollef Fog Heen <tfheen@debian.org>  Mon, 16 Sep 2002 16:34:31 +0200
+
+ddetect (0.15) unstable; urgency=low
+
+  * Add Brazilian Portuguese debconf template.
+  * Add Danish debconf template.
+  * Generate minimized discover data file at build time.
+  * Remove unused detection programs.
+  * Keep each language template in a separate file.
+  * remove broken ISA detection code.
+
+ -- David Kimdon <dwhedon@debian.org>  Fri, 30 Aug 2002 16:41:55 -0700
+
+ddetect (0.14) unstable; urgency=low
+
+  * Rebuild for new cdebconf
+
+ -- Tollef Fog Heen <tfheen@debian.org>  Wed, 21 Aug 2002 19:02:16 +0200
+
+ddetect (0.13) unstable; urgency=low
+
+  * patch from Thomas Poindessous <thomas@poindessous.com>
+    - corrects TEST compiling in ethdetect.c
+    - corrects path for -L
+    - cosmetic change for lst2header help
+  * build depend on cdebconf-dev
+  * switch to discover from libdetect
+  * cleanup
+  * Switch maintainer name in control file to debian-boot, put David
+    Kimdon and Tollef Fog Heen into Uploaders field.
+  * Change build-deps from cdebconf-dev to libcdebconf-dev
+  * Colin Watson:
+    - Correct dpkg-gencontrol call so it picks up ${shlibs:Depends}.
+    - Name menutest as such in the control area rather than as
+      ethdetect.menutest.
+
+ -- Tollef Fog Heen <tfheen@debian.org>  Sat, 17 Aug 2002 15:04:48 +0200
+
+ddetect (0.12) unstable; urgency=low
+
+  * Switch to discover instead of detect.
+  * Remove obsolete emacs variables block at end of changelog.
+
+ -- Tollef Fog Heen <tfheen@debian.org>  Sun,  5 May 2002 15:28:56 +0200
+
+ddetect (0.11) unstable; urgency=low
+
+  * German translations contributed by 
+    Sebastian Feltel <sebastian@feltel.de>
+  * German translation update thanks to
+    Joerg.Rieger@informatik.med.uni-giessen.de
+    (closes: #84986)
+  * Dutch template thanks to "Thomas J. Zeeman" <tjzeeman@cs.vu.nl> 
+    (closes: #95727)
+  * Spanish template thanks to Carlos Valdivia <valyag@teleline.es>
+    (closes: #103216)
+  * Brazilian portuguese template thanks to Andre Luis Lopes 
+    <andrelop@ig.com.br> (closes: #108539)
+  * Danish translations contributed by 
+    Claus Hindsgaul <claus_h@image.dk>
+
+ -- David Whedon <dwhedon@debian.org>  Tue,  8 May 2001 17:41:45 -0700
+
+ddetect (0.10) unstable; urgency=low
+
+  * use new dpkg features so build is less cludgy
+  * don't depend on libdetect0-udeb, not needed (closes: #96258)
+
+ -- David Whedon <dwhedon@debian.org>  Mon,  7 May 2001 23:49:43 -0700
+
+ddetect (0.09) unstable; urgency=low
+
+  * turn on ISA detection. 
+
+ -- David Whedon <dwhedon@debian.org>  Wed, 31 Jan 2001 21:20:23 -0800
+
+ddetect (0.08) unstable; urgency=low
+
+  * use modprobe instead of insmod 
+
+ -- David Whedon <dwhedon@debian.org>  Tue, 30 Jan 2001 01:17:16 -0800
+
+ddetect (0.07) unstable; urgency=low
+
+  * debconf support added, isa detection still not working  
+
+ -- David Whedon <dwhedon@gordian.com>  Tue,  2 Jan 2001 22:50:32 -0800
+
+ddetect (0.06) unstable; urgency=low
+
+  * remove vendor and model information, still using libdetect
+    structure, resulting size reductions:
+    ethdetect 32k -> 26k,  mdmdetect 30k -> 27k, 
+    snddetect 28k -> 25k
+   
+ -- David Whedon <dwhedon@gordian.com>  Wed, 29 Nov 2000 19:53:54 -0800
+
+ddetect (0.05) unstable; urgency=low
+
+  * now we build separate .udeb's and they have a 'Provides' field 
+
+ -- David Whedon <dwhedon@gordian.com>  Tue, 14 Nov 2000 20:37:41 -0800
+
+ddetect (0.04) unstable; urgency=low
+
+  * added snddetect, cleanup
+
+ -- David Whedon <dwhedon@gordian.com>  Tue, 14 Nov 2000 20:37:11 -0800
+
+ddetect (0.03) unstable; urgency=low
+
+  * Initial Release.
+
+ -- David Whedon <dwhedon@gordian.com>  Mon, 13 Nov 2000 23:46:39 -0800

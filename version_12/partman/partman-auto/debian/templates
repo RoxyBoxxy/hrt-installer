@@ -1,0 +1,85 @@
+Template: partman-auto/progress/title
+Type: text
+_Description: Please wait ...
+
+Template: partman-auto/progress/info
+Type: text
+_Description: Computing the new partitions ...
+
+Template: partman-auto/no_recipe
+Type: error
+_Description: Automatic partitioning failed
+ This probably happened because the selected drive or free space is too
+ small to be automatically partitioned.
+
+Template: partman-auto/autopartitioning_failed
+Type: error
+_Description: Automatic partitioning failed
+ This probably happened because there are too many (primary) partitions in
+ the partition table.
+
+Template: partman-auto/init_automatically_partition
+Type: select
+Choices: ${CHOICES}
+_Description: Choose how to partition:
+ This installer can automatically partition a drive for use by Debian, or
+ if you prefer, you can do it manually. If you do choose to automatically
+ partition a drive, you will still have a chance later to see the results,
+ customise it, and even undo the partitioning if you do not like it.
+
+Template: partman-auto/automatically_partition
+Type: select
+Choices: ${CHOICES}
+_Description: Choose what to automatically partition:
+ If you select a whole drive, the automatic partitioning will remove or
+ resize existing partitions on the selected drive, which can cause data
+ loss.
+
+Template: partman-auto/choose_recipe
+Type: select
+Choices: ${CHOICES}
+_Description: Partitioning scheme:
+ The drive can be partitioned using one of several different schemes.
+ If you are unsure, choose the first one.
+
+Template: partman-auto/unusable_space
+Type: error
+_Description: Unusable free space
+ Automatic partitioning failed because the chosen free space may not
+ be used.  There are probably too many (primary) partitions in the
+ partition table.
+
+Template: partman-auto/expert_recipe
+Type: string
+# Not translatable, this is for use by custom distributions that want
+# for force the use of their own recipe.
+Description: expert recipe
+
+Template: partman-auto/text/automatically_partition
+Type: text
+_Description: Automatically partition a drive
+
+Template: partman-auto/text/use_biggest_free
+Type: text
+_Description: Use the largest continuous free space
+
+Template: partman-auto/text/use_device
+Type: text
+# for example "Use entire drive: IDE0 master - Maxtor 46L489"
+_Description: Use entire drive: ${DEVICE}
+
+Template: partman-auto/text/custom_partitioning
+Type: text
+_Description: Manually edit partition table
+
+Template: partman-auto/text/auto_free_space
+Type: text
+_Description: Automatically partition the free space
+
+Template: partman-auto/text/atomic_scheme
+Type: text
+_Description: All files in one partition (recommended for new users)
+
+Template: partman-auto/text/home_scheme
+Type: text
+_Description: Separate partition for the home directories

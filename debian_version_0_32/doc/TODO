@@ -1,0 +1,193 @@
+Important things to do before preview release
+=============================================
+Following up on Anthony Town's mail "Chaos and Damnation!"
+http://lists.debian.org/debian-boot/2003/debian-boot-200304/msg00067.html
+Here's a list of urgent things we need to do before issuing a preview
+release.
+
+ * Unbreak netinst CDs
+   - Implement support in anna for installing different udebs for different
+     installation scenarios. [Martin Sjögren, done]
+   - File bugs on ftp.debian.org to clean up udeb priorities.
+   - Decent order of menu items. It sucks to have the netcfg stuff appear
+     above anna in the menu.
+   - Split the rootskel udeb in two, to make it possible to skip the
+     UTF-8 locale on full floppies. [Petter Reinholdtsen, done]
+
+ * Finish partitioning/mkfs/mkswap/mount migration
+   - Call mkfstab somewhere. base-installer?
+
+ * cdebconf [Martin Sjögren]
+   - Too long selection lists are cut short in the text frontend, and never
+     show up in the newt frontend. This has to be fixed. Probably a buffer
+     overflow somewhere. (#188043) [Sebastian Ley, done]
+   - Fix the progress bars to play nicer with debootstrap. (#188243)
+   - Fix the space mangling. (#185014)
+   The last two items are backwards incompatible and will be done at the
+   same time as libdebconf is dropped in favour of libdebconfclient. This
+   needs a fixed mklibs that deals correctly with rpath information.
+
+ * Localization [Alastair McKinstry]
+   - We need a proper fix for the newt frontend borders. TERM=xterm is too
+     much of a hack! Yes this is a UTF-8 problem. (#187704, #189330)
+   - We need a way to discover all/most of the glyphs needed by d-i.
+   - We need find a way to load the missing glyphs into the linux
+     kernel console. (#188147)
+
+ * HW detection [Petter Reinholdtsen]
+   - We need to start using module names from kernel 2.4 instead of 2.2.
+     The fix is probably to migrate all scripts and programs to discover2.
+
+ * Editor
+   - We need a working editor to be able to debug the installer. How do we
+     fit it on the floppy image(s)?
+   - Nano needs a slang udeb to work (bugs #177405, #186292).
+     [Martin Sjögren, done]
+
+ * Give base-installer a progress bar. Needs fixed progress bars.
+
+ * Split off hostname configuration from netcfg.
+
+ * Error handling.  We need to make sure the user is told so when
+   something goes wrong.
+
+
+
+The old TODO list, out of date (FIXME!)
+=======================================
+
+Where we are:
+
+	We have a small chrooted system that is being autobuilt daily.
+	A few installations have been accomplished using floppy+net and
+	CD on i386.
+
+General things to keep an eye on:
+
+	- All udeb packages should be able to build debug versions if
+	  DEB_BUILD_OPTIONS="debug".
+	- Udebs should not include .md5sum files.
+	- Make sure all udebs declare dependencies on everything they
+	  depend on (this includes depending on ash, busybox, etc). The
+	  dependency web is pretty spotty right now.
+        - Remember to run debconf-updatepo in package's debian/ dir after
+          changing original text in English templates so the translations
+          get updated and translators can do their work easier.
+	- Keep this progress file up-to-date as you complete various parts 
+	  of it.
+
+Status for different parts of debian-installer.  The numbers are
+approximate (as in +/- 50%) and may change in any direction, at any
+time.
+
+[0%]     - Not begun
+---------------------------------------------------------------------
+	- Some kind of a machanism for udebs to declare what parts of
+	  busybox they need, so we can ensure that all deps are met while
+	  keeping the busybox footprint small.
+          Packages depending on base-installer should use the
+	  utilities in /target so we can keep busybox's size down.          
+	- polish everything so it is actually usable
+	- translations
+		(Waiting until there is i18n and final text to translate,
+		and until we have figured out where the translations go.)
+        - user documentation
+		(Waiting until we have something to document..)
+        - GUI frontend to cdebconf.  There has been talk about using
+          gtk-fb as a frontend to cdebconf, but so far nobody has
+          actually gotten anything working well.  [Michael Cardenas?]
+          some people have talked about using Qtopia as well, but
+          AFAIK, no work has been done there.
+
+[30%]   - Might need large rewrites.  Current implementation might
+          work by accident
+---------------------------------------------------------------------
+        - netcfg [David Whedon]
+		Working, pending rewrite for IPv6 and multiple devices
+                support.
+        - busybox integration [Erik Andersen]
+		TODO: seems we need touch, head, sort, and wc back on for
+		debootstrap.
+	- i18n [Denis Barbier, Tollef Fog Heen]
+                Works in cdebconf, we need to make sure all templates
+                are in UTF8 and make the frontends handle UTF8 in a
+                sane way.
+        - disk selector, partitioner [Raphael Hertzog, Raphael Hertzog]
+		There are two of them, autopartkit and partkit.
+		Autopartkit is a bit more advanced ATM.
+
+[60%]   - Needs some work, but does its grunt work
+---------------------------------------------------------------------
+        - {lilo,grub} installer [Moshe Zadka, Tollef Fog Heen]
+                moshez has a preliminary lilo-installer package in
+                tools/lilo-installer, and a pre-preliminary grub-installer
+                package in grub-installer.  lilo-installer seems to
+                work.  grub-installer seems to work.
+        - disk formatter
+                Formats disks, turns on swap, etc.  mkfs is in udeb
+                format, but nothing calls it.  swap is not begun.
+        - base system installer [Anthony Towns, Tollef Fog Heen]
+		debootstrap is stable, and has quite good support in
+                base-installer
+	- archive setup
+                Mostly done, we probably want to separate testing and
+                unstable at some point.
+        - cdebconf [Randolph Chung]
+                In progress, has multiple working database backends
+                and one working text-based frontend, with progress on
+                a slang frontend. Quite usable by now.
+	- design [Joey Hess, debian-boot]
+                80% done. Enough to know what the big pieces are 
+                and how they fit together.
+        - install media build system [David Whedon]
+		We can build chrootable, library-reduced trees. It 
+		boots too.  CD-ROM build system might some work.
+	- dhcp [Matt Kraai]
+		We're using dhclient, but should keep an eye on udhcpc,
+		which is smaller.  We need to decide on one dhcp
+                client.
+         - floppy retriever [Martin Sjögren]
+                Seems to work, at least for the time being.
+
+[90%]  - Single missing important feature or bug.
+---------------------------------------------------------------------
+	- anna (retriever control program) [Martin Sjögren]
+		Works, mostly.  Needs support for Releases files.
+		Support for signed Release files would be cool, but
+		needs gpgv-udeb.
+        - main-menu (main menu generator) [Martin Sjögren, Joey Hess]
+                - support for multiple provides are missing.
+                - what happens when one step fails?
+        - choose-mirror [Joey Hess]
+		works, needs some polish and merging of ftp/http
+                questions.
+
+[100%] - Those shouldn't need to be touched any more 
+         (except for wishlist features)
+---------------------------------------------------------------------
+        - udpkg (tiny dpkg clone) [Randolph Chung, Joey Hess]
+		May be replaced with busybox dpkg.
+	- cd installs
+                Works mostly.
+	- kernel-package integration [Herbert Xu]
+		Udebs are built automatically; this is well in hand.
+ 	- net retriever [Joey Hess]
+		Seems to work.  FTP support missing.
+	- cdrom retriever [Raphael Hertzog]
+   		Working
+        - ethdetect [David Whedon]
+		Working
+        - library reduction
+		mklibs.py works, and is packaged, and used by the
+                build process.
+	- generate treecompare data for each daily build and put or mail it
+	  somewhere [Joey Hess]
+	  	http://people.debian.org/~joeyh/debian-installer/
+	- post-reboot configuration [Joey Hess]
+		base-cofig is stable, though stuff may need to be added to
+		it to handle things d-i doesn't bother with.  i18n is
+                needed.
+
+
+Maybe, if somebody picks it up:
+	- skinnable/themeable installer
