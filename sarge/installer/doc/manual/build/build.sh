@@ -5,7 +5,7 @@ if [ -z "$languages" ]; then
 	# languages="en cs es fr ja nl pt_BR" # ca da de el eu it ru
 
 	# Buildlist of languages to be included on RC2 CD's
-	languages="en cs es fr ja pt_BR"
+	languages="en cs de es fr ja pt_BR ru"
 fi
 
 if [ -z "$architectures" ]; then
@@ -18,7 +18,7 @@ fi
 
 if [ -z "$formats" ]; then
         #formats="html pdf ps txt"
-        formats="html"
+        formats="html pdf txt"
 fi
 
 [ -e "$destination" ] || mkdir -p "$destination"
