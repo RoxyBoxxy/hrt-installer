@@ -1,5 +1,7 @@
 #!/bin/sh
 
+set -e
+
 if [ -z "$languages" ]; then
     # Buildlist of languages to be included on the official website
     languages="en cs de es fr ja pt_BR ru"
@@ -10,11 +12,11 @@ if [ -z "$architectures" ]; then
 fi
 
 if [ -z "$destination" ]; then
-	destination="/tmp/manual"
+    destination="/tmp/manual"
 fi
 
 if [ -z "$formats" ]; then
-        formats="html pdf txt"
+    formats="html pdf txt"
 fi
 
 [ -e "$destination" ] || mkdir -p "$destination"
@@ -37,9 +39,11 @@ for lang in $languages; do
             if [ "$format" = html ]; then
                 mv ./build.out/html/* "$destination/$destsuffix"
             else
-                mv ./build.out/install.$lang.$format "$destination/$destsuffix/install.$format.$lang"
+                # Do not fail because of missing PDF support for some languages
+                mv ./build.out/install.$lang.$format "$destination/$destsuffix/install.$format.$lang" || true
             fi
         done
+
         ./clear.sh
     done
 done
