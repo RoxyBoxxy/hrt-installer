@@ -24,6 +24,7 @@ SORT_ORDER="main-menu \
             cdebconf \
             languagechooser \
 	    countrychooser \
+	    localechooser \
 	    kbd-chooser \
 	    ddetect \
 	    netcfg \
@@ -162,7 +163,7 @@ if [ ! -d $DI_COPY/.svn ] ; then
   exit 1
 fi
 
-if ! grep "svn/d-i/trunk" $DI_COPY/.svn/entries >/dev/null 2>&1 ; then
+if ! grep "/d-i/" $DI_COPY/.svn/entries >/dev/null 2>&1 ; then
   echo $DI_COPY does not seem to be a complete Debian Installer SVN copy
   echo Please check it before...
   exit 1
@@ -172,6 +173,21 @@ fi
 if $(svn st $DI_COPY/packages | grep -q "^C") ; then
   echo $DI_COPY seems to contain some SVN conflict files
   echo Please fix this before lauching the script again...
+  exit 1
+fi
+
+# Check the packages/po/run-l10n-sync file
+markerfile=${DI_COPY}/packages/po/run-l10n-sync
+if [ -f ${markerfile} ] ; then
+  . ${markerfile}
+  if [ -n "${run}" ] ; then
+    if [ ${run} = 0 ] ; then
+      echo Explicit request to no run the script in ${markerfile}...
+      exit 0
+    fi
+  fi
+else
+  echo No ${markerfile} file: aborting...
   exit 1
 fi
 
