@@ -1,10 +1,33 @@
 DEST=$(PWD)/dest
 
-all: libdebian-installer tools_cdebconf main-menu tools_udpkg anna utils tools_languagechooser tools_ddetect tools_cdrom-detect tools_autopartkit tools_base-installer tools_baseconfig-udeb tools_bterm-unifont tools_bugreporter-udeb tools_cdrom-checker tools_grub-installer tools_kbd-chooser tools_lilo-installer tools_lvmcfg tools_netcfg tools_partconf tools_partitioner tools_pcmcia-udeb tools_prebaseconfig tools_usb-discover tools_userdevfs retriever_cdrom retriever_choose-mirror retriever_file retriever_floppy retriever_net rootskel
+all: build-depends libdebian-installer tools_cdebconf main-menu tools_udpkg anna utils tools_languagechooser tools_ddetect tools_cdrom-detect tools_autopartkit tools_base-installer tools_baseconfig-udeb tools_bterm-unifont tools_bugreporter-udeb tools_cdrom-checker tools_kbd-chooser tools_lvmcfg tools_netcfg tools_partconf tools_partitioner tools_pcmcia-udeb tools_prebaseconfig tools_usb-discover tools_userdevfs retriever_cdrom retriever_choose-mirror retriever_file retriever_floppy retriever_net rootskel
+
+i386: tools_grub-installer tools_lilo-installer
 
 clean:
 	rm .stamp-*
 	rm -rf $(DEST)
+
+build-depends:
+	# all
+	sudo apt-get </dev/tty install automake autoconf libtool fakeroot devscripts apt autotools-dev bc bf-utf-source bison d-shlibs dash debhelper dpkg-dev flex genext2fs glibc-pic iso-codes libgtk2.0-dev libnewt-dev libnewt-pic  libparted1.6-dev libperl-dev libtextwrap-dev libtextwrap1 locales mklibs modutils ncurses-base po-debconf sed slang1-utf8-dev slang1-utf8-pic wget
+
+	# !hurd-i386
+	sudo apt-get </dev/tty install libbogl-dev
+
+	#i386
+	#sudo apt-get </dev/tty install syslinux sysutils dosfstools mtools upx-ucl-beta kernel-image-2.4.22-1-386  kernel-pcmcia-modules-2.4.22-1-386
+
+	# [!s390 !s390x !mips !mipsel]
+	sudo apt-get </dev/tty install libdiscover1-pic libdiscover1
+
+	# mips
+	#sudo apt-get </dev/tty install tip22
+
+rootskel: .stamp-rootskel
+.stamp-rootskel: 
+	./compile.sh rootskel . $(DEST)
+	touch .stamp-rootskel
 
 libdebian-installer: .stamp-libdebian-installer
 .stamp-libdebian-installer:
@@ -21,11 +44,6 @@ main-menu: install-libdebconfclient-dev install-libdebian-installer4-dev .stamp-
 .stamp-main-menu: 
 	./compile.sh main-menu . $(DEST)
 	touch .stamp-main-menu
-
-rootskel: .stamp-rootskel
-.stamp-rootskel: 
-	./compile.sh rootskel . $(DEST)
-	touch .stamp-rootskel
 
 tools_udpkg: .stamp-tools_udpkg
 .stamp-tools_udpkg:
