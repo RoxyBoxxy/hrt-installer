@@ -1,5 +1,7 @@
 #!/bin/sh
 
+set -e
+
 if [ -z "$languages" ]; then
 	# Please add languages only if they build properly.
 	# languages="en cs es fr ja nl pt_BR" # ca da de el eu it ru
@@ -43,7 +45,8 @@ for lang in $languages; do
 	    if [ "$format" = html ]; then
 		mv ./build.out/html/*.html "$destination/$destsuffix"
 	    else
-		mv ./build.out/install.$lang.$format "$destination/$destsuffix"
+		# Do not fail because of missing PDF support for Japanese
+		mv ./build.out/install.$lang.$format "$destination/$destsuffix" || true
 	    fi
 	done
 	./clear.sh
