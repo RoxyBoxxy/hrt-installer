@@ -1,0 +1,90 @@
+lowmem (0.12) unstable; urgency=low
+
+  * Move the stuff in S31lowmem to S10lowmem, so it runs before the code that
+    decides whether to enable framebuffer. I think this code moved during
+    recent rootskel changes.
+
+ -- Joey Hess <joeyh@debian.org>  Tue, 20 Jul 2004 18:19:50 -0400
+
+lowmem (0.11) unstable; urgency=low
+
+  * Rebuild without .svn directory in deb. Closes: #256953
+
+ -- Joey Hess <joeyh@debian.org>  Wed, 30 Jun 2004 11:19:05 -0400
+
+lowmem (0.10) unstable; urgency=low
+
+  * Put back the code coping with recent languagechooser changes
+    Closes: #254631
+
+ -- Christian Perrier <bubulle@debian.org>  Wed, 16 Jun 2004 07:17:25 +0200
+
+lowmem (0.9) unstable; urgency=low
+
+  * Re-upload, 0.8 release was botched.
+
+ -- Joey Hess <joeyh@debian.org>  Fri, 11 Jun 2004 13:11:38 -0400
+
+lowmem (0.8) unstable; urgency=low
+
+  * Joey Hess
+    - Languagechooser has been reverted back to old behavior, follow suite.
+  * Stephen R. Marenka
+    - Add m68k minimum ram.
+  * Joey Hess
+    - Typo fix. Closes: #247934
+  * Sylvain Ferriol
+    - To be compliant with new languagechooser/language-name template
+
+ -- Joey Hess <joeyh@debian.org>  Fri, 11 Jun 2004 12:32:02 -0400
+
+lowmem (0.6) unstable; urgency=low
+
+  * Print a message before running expensive trimtemplates operation at boot
+    time.
+
+ -- Joey Hess <joeyh@debian.org>  Thu, 29 Apr 2004 22:25:31 -0400
+
+lowmem (0.5) unstable; urgency=HIGH
+
+  * Don't always nuke all translations; test for flag file when operating
+    on single files too. Closes: #245418
+
+ -- Joey Hess <joeyh@debian.org>  Fri, 23 Apr 2004 00:00:18 -0400
+
+lowmem (0.4) unstable; urgency=low
+
+  * Sylvain Ferriol
+    - To be compliant with the previous trimtemplates in shell,
+      trimtemplates can have directory or file as argument.
+  * Joey Hess
+    - Converted to use MemTotal, which will work with thre 2.4 and 2.6
+      kernels.
+    - Don't crash the boot process if the free memory cannot be detected.
+
+ -- Joey Hess <joeyh@debian.org>  Sat, 27 Mar 2004 01:11:03 -0500
+
+lowmem (0.3) unstable; urgency=low
+
+  * Sylvain Ferriol
+    - Re-code trimtemplates in C.
+  * Joey Hess
+    - Clean the binary.
+    - lowmemcheck is binary any, not all.
+    - Build it in in binary-arch.
+    - Buils -Os.
+
+ -- Joey Hess <joeyh@debian.org>  Tue, 23 Mar 2004 20:46:09 -0500
+
+lowmem (0.2) unstable; urgency=low
+
+  * Thiemo Seufer
+    - Make amount of memory for lowmem installs arch-dependent.
+
+ -- Joey Hess <joeyh@debian.org>  Mon, 22 Mar 2004 15:14:42 -0500
+
+lowmem (0.1) unstable; urgency=low
+
+  * First release. 32 mb installs work again on i386 with this package.
+
+ -- Joey Hess <joeyh@debian.org>  Mon,  8 Mar 2004 13:31:36 -0500
