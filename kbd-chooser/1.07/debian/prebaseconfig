@@ -1,0 +1,55 @@
+#!/bin/sh 
+
+. /usr/share/debconf/confmodule
+
+db_get debian-installer/keymap
+KEYMAP=$RET
+if [ -z "$KEYMAP" ]; 
+then
+	# keymap not set; probably didn't call kbd-chooser
+	exit 0
+fi
+
+# Install non-Unicode variants of Turkish keymaps
+if [ "$KEYMAP" = "trqu" ]; then
+	KEYMAP="trq"
+	db_set debian-installer/keymap $KEYMAP
+fi
+if [ "$KEYMAP" = "trfu" ]; then
+	KEYMAP="trf"
+	db_set debian-installer/keymap $KEYMAP
+fi
+
+db_get debian-installer/serial-console
+if [ "$RET" = "false" ] ; then
+	apt-install console-tools console-data console-common 
+	
+	# FIXME Workaround to install some keymaps properly
+	case "$KEYMAP" in
+		trq|trf|hebrew|lt|lv-latin4)
+			kbd_mode_temp="ascii" ;;
+		*)
+			kbd_mode_temp=""      ;;
+	esac
+
+	[ -n "$kbd_mode_temp" ] && kbd-mode --$kbd_mode_temp
+	chroot /target install-keymap $KEYMAP
+	[ -n "$kbd_mode_temp" ] && kbd-mode --unicode
+fi
+
+
+# Pass kbd information needed by old versions of base-config into
+# /target/root/dboostrap-settings. Here only for skolelinux.
+if [ ! -d /target/root ] ; then
+	if mkdir /target/root ; then
+		:
+	else
+		echo "error: unable to create /target/root"
+	fi
+fi
+# Map no-latin1 to i386/qwerty/no-latin1
+KEYBD=`find /usr/share/keymaps/ -name "$KEYMAP.kmap*" | sed -e 's%/usr/share/keymaps/%%' -e 's/.kmap.gz$//' -e 's/.kmap$//' `
+(
+	echo "# Inserted by kbd-chooser."
+	echo "KEYBD=\"$KEYBD\""
+) >> /target/root/dbootstrap_settings
