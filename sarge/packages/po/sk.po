@@ -4409,6 +4409,79 @@ msgstr "${DEVICES}"
 
 #. Type: text
 #. Description
+#: ../rescue-mode.templates:3
+msgid "Enter rescue mode"
+msgstr ""
+
+#. Type: string
+#. Description
+#: ../rescue-mode.templates:7
+#, fuzzy
+msgid "Device to mount as root filesystem:"
+msgstr "Totožné prípojné body pre dva súborové systémy"
+
+#. Type: string
+#. Description
+#: ../rescue-mode.templates:7
+msgid "Enter a device you wish to mount as your root filesystem."
+msgstr ""
+
+#. Type: string
+#. Description
+#: ../rescue-mode.templates:7
+msgid ""
+"After this message, if the filesystem was mounted successfully, you will be "
+"given a shell with that filesystem on \"/\". If you need any other "
+"filesystems (such as a separate \"/usr\"), you will have to mount those "
+"yourself."
+msgstr ""
+
+#. Type: string
+#. Description
+#: ../rescue-mode.templates:7
+msgid "When you exit this shell, the system will reboot."
+msgstr ""
+
+#. Type: error
+#. Description
+#: ../rescue-mode.templates:19
+msgid "No such device"
+msgstr ""
+
+#. Type: error
+#. Description
+#: ../rescue-mode.templates:19
+msgid ""
+"The device you entered for your root filesystem (${DEVICE}) does not exist. "
+"Please try again."
+msgstr ""
+
+#. Type: error
+#. Description
+#: ../rescue-mode.templates:25
+msgid "Mount failed"
+msgstr ""
+
+#. Type: error
+#. Description
+#: ../rescue-mode.templates:25
+msgid ""
+"An error occurred while mounting the device you entered for your root "
+"filesystem (${DEVICE}) on /target."
+msgstr ""
+
+#. Type: error
+#. Description
+#: ../partconf.templates:123 ../rescue-mode.templates:25
+msgid ""
+"Please check the error log on the third console or /var/log/messages for "
+"more information."
+msgstr ""
+"Viac informácií nájdete v chybovom logu na tretej konzole alebo v súbore /"
+"var/log/messages."
+
+#. Type: text
+#. Description
 #: ../network-console.templates:5
 msgid "Continue installation remotely using SSH"
 msgstr "Pokračovať v inštalácii vzdialene cez SSH"
@@ -8393,6 +8466,18 @@ msgstr "EFIboot"
 msgid "EFI-fat16"
 msgstr "EFI-fat16"
 
+#. Type: text
+#. Description
+#: ../partman-auto-lvm.templates:3
+msgid "Use free space for the Logical Volume Manager"
+msgstr "Použiť voľné miesto pre správcu logických zväzkov (LVM)"
+
+#. Type: string
+#. Description
+#: ../partman-auto-lvm.templates:8
+msgid "Name of the volume group for the new Debian system:"
+msgstr "Názov skupiny zväzkov pre nový systém Debian:"
+
 #. Type: boolean
 #. Description
 #: ../templates:3
@@ -8780,103 +8865,6 @@ msgstr "Vytvoriť novú oblasť"
 msgid "Create a new empty partition table on this device"
 msgstr "Vytvoriť novú prázdnu tabuľku oblastí na tomto zariadení"
 
-#. Type: text
-#. Description
-#: ../partman-auto-lvm.templates:3
-msgid "Use free space for the Logical Volume Manager"
-msgstr "Použiť voľné miesto pre správcu logických zväzkov (LVM)"
-
-#. Type: string
-#. Description
-#: ../partman-auto-lvm.templates:8
-msgid "Name of the volume group for the new Debian system:"
-msgstr "Názov skupiny zväzkov pre nový systém Debian:"
-
-#. Type: text
-#. Description
-#: ../templates:3
-msgid "Scanning the floppy"
-msgstr "Prehľadáva sa disketa"
-
-#. Type: select
-#. Choices
-#: ../templates:7
-msgid "Cancel, ${DEVS}"
-msgstr "Zrušiť, ${DEVS}"
-
-#. Type: select
-#. Description
-#: ../templates:8
-msgid "Select your floppy device:"
-msgstr "Zvoľte disketovú mechaniku:"
-
-#. Type: select
-#. Description
-#: ../templates:8
-msgid ""
-"No standard floppy drive was found. If you have a USB floppy drive or some "
-"other unusual type of floppy drive, select it from the list. Note that the "
-"list may also include drives that are not floppy drives. The installer will "
-"only try to read from the selected device."
-msgstr ""
-"Nebolo nájdená žiadna štandartná disketová mechanika. Ak máte USB disketovú "
-"mechaniku alebo iný nezvyčajný typ disketovej mechaniky, vyberte si ho zo "
-"zoznamu. Zoznam môže obsahovať aj ovládače, ktoré nie sú disketovými mecha- "
-"nikami. Inštalačný program sa pokúsi čítať iba zo zvoleného zariadenia. "
-
-#. Type: boolean
-#. Description
-#: ../templates:17
-msgid "Cannot read floppy, or not a driver floppy. Retry?"
-msgstr "Nemôžem načítať disketu alebo ovládač na diskete. Skúsiť znovu?"
-
-#. Type: boolean
-#. Description
-#: ../templates:17
-msgid ""
-"There was a problem reading data from the floppy disk. Please make sure that "
-"the right floppy is in the drive. If you continue to have trouble, you may "
-"have a bad floppy disk."
-msgstr ""
-"Vyskytol sa problém pri načítavaní údajov z diskety. Uistite sa, že máte v "
-"disketovej mechanike správnu disketu. Ak budú problémy pokračovať, asi máte "
-"zlú disketu."
-
-#. Type: boolean
-#. Description
-#: ../load-floppy.templates:4
-msgid "Load drivers from floppy now?"
-msgstr "Môžem teraz načítať ovládače z diskety?"
-
-#. Type: boolean
-#. Description
-#: ../load-floppy.templates:4
-msgid ""
-"You probably need to load drivers from a floppy before continuing with the "
-"installation. If you know that the install will work without extra drivers, "
-"you can skip this step."
-msgstr ""
-"Pred pokračovaním inštalácie možno budete potrebovať načítať ovládače z "
-"diskety. Ak viete, že inštalácia bude úspešne pokračovať bez potreby extra "
-"ovládačov, môžete preskočiť tento krok."
-
-#. Type: boolean
-#. Description
-#: ../load-floppy.templates:4
-msgid ""
-"If you do need to load drivers, insert the appropriate driver floppy before "
-"continuing."
-msgstr ""
-"Ak potrebujete načítať ovládače, pred ďalším pokračovaním vložte príslušnú "
-"disketu s ovládačmi."
-
-#. Type: text
-#. Description
-#. main-menu
-#: ../load-floppy.templates:15
-msgid "Load drivers from a floppy"
-msgstr "Načítať ovládače z diskety"
-
 #. Type: select
 #. Description
 #: ../templates:4
@@ -9106,6 +9094,91 @@ msgstr "Predpokladaný zostávajúci čas: ${MINUTES} min."
 #: ../templates:106
 msgid "Estimated time left: less than 1 minute"
 msgstr "Predpokladaný zostávajúci čas: menej ako 1 minúta"
+
+#. Type: text
+#. Description
+#: ../templates:3
+msgid "Scanning the floppy"
+msgstr "Prehľadáva sa disketa"
+
+#. Type: select
+#. Choices
+#: ../templates:7
+msgid "Cancel, ${DEVS}"
+msgstr "Zrušiť, ${DEVS}"
+
+#. Type: select
+#. Description
+#: ../templates:8
+msgid "Select your floppy device:"
+msgstr "Zvoľte disketovú mechaniku:"
+
+#. Type: select
+#. Description
+#: ../templates:8
+msgid ""
+"No standard floppy drive was found. If you have a USB floppy drive or some "
+"other unusual type of floppy drive, select it from the list. Note that the "
+"list may also include drives that are not floppy drives. The installer will "
+"only try to read from the selected device."
+msgstr ""
+"Nebolo nájdená žiadna štandartná disketová mechanika. Ak máte USB disketovú "
+"mechaniku alebo iný nezvyčajný typ disketovej mechaniky, vyberte si ho zo "
+"zoznamu. Zoznam môže obsahovať aj ovládače, ktoré nie sú disketovými mecha- "
+"nikami. Inštalačný program sa pokúsi čítať iba zo zvoleného zariadenia. "
+
+#. Type: boolean
+#. Description
+#: ../templates:17
+msgid "Cannot read floppy, or not a driver floppy. Retry?"
+msgstr "Nemôžem načítať disketu alebo ovládač na diskete. Skúsiť znovu?"
+
+#. Type: boolean
+#. Description
+#: ../templates:17
+msgid ""
+"There was a problem reading data from the floppy disk. Please make sure that "
+"the right floppy is in the drive. If you continue to have trouble, you may "
+"have a bad floppy disk."
+msgstr ""
+"Vyskytol sa problém pri načítavaní údajov z diskety. Uistite sa, že máte v "
+"disketovej mechanike správnu disketu. Ak budú problémy pokračovať, asi máte "
+"zlú disketu."
+
+#. Type: boolean
+#. Description
+#: ../load-floppy.templates:4
+msgid "Load drivers from floppy now?"
+msgstr "Môžem teraz načítať ovládače z diskety?"
+
+#. Type: boolean
+#. Description
+#: ../load-floppy.templates:4
+msgid ""
+"You probably need to load drivers from a floppy before continuing with the "
+"installation. If you know that the install will work without extra drivers, "
+"you can skip this step."
+msgstr ""
+"Pred pokračovaním inštalácie možno budete potrebovať načítať ovládače z "
+"diskety. Ak viete, že inštalácia bude úspešne pokračovať bez potreby extra "
+"ovládačov, môžete preskočiť tento krok."
+
+#. Type: boolean
+#. Description
+#: ../load-floppy.templates:4
+msgid ""
+"If you do need to load drivers, insert the appropriate driver floppy before "
+"continuing."
+msgstr ""
+"Ak potrebujete načítať ovládače, pred ďalším pokračovaním vložte príslušnú "
+"disketu s ovládačmi."
+
+#. Type: text
+#. Description
+#. main-menu
+#: ../load-floppy.templates:15
+msgid "Load drivers from a floppy"
+msgstr "Načítať ovládače z diskety"
 
 #. Type: note
 #. Description
@@ -9472,16 +9545,6 @@ msgstr "Chyba pri pripojení ${PARTITION} na ${MOUNT}"
 #: ../partconf.templates:123
 msgid "An error occurred when ${PARTITION} was mounted on ${MOUNT}."
 msgstr "Pri pripájaní ${PARTITION} na ${MOUNT} sa vyskytla chyba."
-
-#. Type: error
-#. Description
-#: ../partconf.templates:123
-msgid ""
-"Please check the error log on the third console or /var/log/messages for "
-"more information."
-msgstr ""
-"Viac informácií nájdete v chybovom logu na tretej konzole alebo v súbore /"
-"var/log/messages."
 
 #. Type: text
 #. Description

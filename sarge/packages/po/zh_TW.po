@@ -4302,6 +4302,77 @@ msgstr "${DEVICES}"
 
 #. Type: text
 #. Description
+#: ../rescue-mode.templates:3
+msgid "Enter rescue mode"
+msgstr ""
+
+#. Type: string
+#. Description
+#: ../rescue-mode.templates:7
+#, fuzzy
+msgid "Device to mount as root filesystem:"
+msgstr "兩個檔案系統指向同一個掛載點"
+
+#. Type: string
+#. Description
+#: ../rescue-mode.templates:7
+msgid "Enter a device you wish to mount as your root filesystem."
+msgstr ""
+
+#. Type: string
+#. Description
+#: ../rescue-mode.templates:7
+msgid ""
+"After this message, if the filesystem was mounted successfully, you will be "
+"given a shell with that filesystem on \"/\". If you need any other "
+"filesystems (such as a separate \"/usr\"), you will have to mount those "
+"yourself."
+msgstr ""
+
+#. Type: string
+#. Description
+#: ../rescue-mode.templates:7
+msgid "When you exit this shell, the system will reboot."
+msgstr ""
+
+#. Type: error
+#. Description
+#: ../rescue-mode.templates:19
+msgid "No such device"
+msgstr ""
+
+#. Type: error
+#. Description
+#: ../rescue-mode.templates:19
+msgid ""
+"The device you entered for your root filesystem (${DEVICE}) does not exist. "
+"Please try again."
+msgstr ""
+
+#. Type: error
+#. Description
+#: ../rescue-mode.templates:25
+msgid "Mount failed"
+msgstr ""
+
+#. Type: error
+#. Description
+#: ../rescue-mode.templates:25
+msgid ""
+"An error occurred while mounting the device you entered for your root "
+"filesystem (${DEVICE}) on /target."
+msgstr ""
+
+#. Type: error
+#. Description
+#: ../partconf.templates:123 ../rescue-mode.templates:25
+msgid ""
+"Please check the error log on the third console or /var/log/messages for "
+"more information."
+msgstr "請查看第三個主控台中的錯誤 Log 或是 /var/log/messages 來獲得更多訊息。"
+
+#. Type: text
+#. Description
 #: ../network-console.templates:5
 msgid "Continue installation remotely using SSH"
 msgstr "使用 SSH 來遠端繼續進行安裝作業"
@@ -8170,6 +8241,18 @@ msgstr "EFI/啟動"
 msgid "EFI-fat16"
 msgstr "EFI-fat16"
 
+#. Type: text
+#. Description
+#: ../partman-auto-lvm.templates:3
+msgid "Use free space for the Logical Volume Manager"
+msgstr "在未使用空間上使用 Logical Volume Manager"
+
+#. Type: string
+#. Description
+#: ../partman-auto-lvm.templates:8
+msgid "Name of the volume group for the new Debian system:"
+msgstr "新 Debian 系統的 Volume Group 名稱："
+
 #. Type: boolean
 #. Description
 #: ../templates:3
@@ -8552,98 +8635,6 @@ msgstr "建立新分割區"
 msgid "Create a new empty partition table on this device"
 msgstr "在此裝置上建立全新的空白磁碟分割表"
 
-#. Type: text
-#. Description
-#: ../partman-auto-lvm.templates:3
-msgid "Use free space for the Logical Volume Manager"
-msgstr "在未使用空間上使用 Logical Volume Manager"
-
-#. Type: string
-#. Description
-#: ../partman-auto-lvm.templates:8
-msgid "Name of the volume group for the new Debian system:"
-msgstr "新 Debian 系統的 Volume Group 名稱："
-
-#. Type: text
-#. Description
-#: ../templates:3
-msgid "Scanning the floppy"
-msgstr "正在掃描軟碟"
-
-#. Type: select
-#. Choices
-#: ../templates:7
-msgid "Cancel, ${DEVS}"
-msgstr "取消, ${DEVS}"
-
-#. Type: select
-#. Description
-#: ../templates:8
-msgid "Select your floppy device:"
-msgstr "選擇軟碟機："
-
-#. Type: select
-#. Description
-#: ../templates:8
-msgid ""
-"No standard floppy drive was found. If you have a USB floppy drive or some "
-"other unusual type of floppy drive, select it from the list. Note that the "
-"list may also include drives that are not floppy drives. The installer will "
-"only try to read from the selected device."
-msgstr ""
-"找不到標準的軟碟機。如果您的軟碟機是 USB 介面或者其他罕見的類型，請於列表中選"
-"擇。注意，列表中可能還包括了一些非軟碟機的裝置。安裝程式只會試著從所指定的裝"
-"置中讀取資料。"
-
-#. Type: boolean
-#. Description
-#: ../templates:17
-msgid "Cannot read floppy, or not a driver floppy. Retry?"
-msgstr "無法讀取軟碟機，或者它並不是驅動程式軟碟片。是否重新嘗試？"
-
-#. Type: boolean
-#. Description
-#: ../templates:17
-msgid ""
-"There was a problem reading data from the floppy disk. Please make sure that "
-"the right floppy is in the drive. If you continue to have trouble, you may "
-"have a bad floppy disk."
-msgstr ""
-"在從軟碟片讀取資料時發生了問題，請確認軟碟機中是否已放入了正確的軟碟片。如果"
-"您還是不斷遇到困難，您的軟碟片可能已經損壞了。"
-
-#. Type: boolean
-#. Description
-#: ../load-floppy.templates:4
-msgid "Load drivers from floppy now?"
-msgstr "是否要立即從軟碟中載入驅動程式？"
-
-#. Type: boolean
-#. Description
-#: ../load-floppy.templates:4
-msgid ""
-"You probably need to load drivers from a floppy before continuing with the "
-"installation. If you know that the install will work without extra drivers, "
-"you can skip this step."
-msgstr ""
-"在繼續安裝之前，您可能需要從軟碟片中載入一些驅動程式。如果您確知在安裝過程中"
-"不需要其他額外的驅動程式，可以跳過這個步驟。"
-
-#. Type: boolean
-#. Description
-#: ../load-floppy.templates:4
-msgid ""
-"If you do need to load drivers, insert the appropriate driver floppy before "
-"continuing."
-msgstr "如果您真的必須載入一些驅動程式，在繼續之前請插入適當的驅動程式軟碟片。"
-
-#. Type: text
-#. Description
-#. main-menu
-#: ../load-floppy.templates:15
-msgid "Load drivers from a floppy"
-msgstr "從軟碟片中載入驅動程式"
-
 #. Type: select
 #. Description
 #: ../templates:4
@@ -8864,6 +8855,86 @@ msgstr "剩餘時間： ${MINUTES} 分鐘"
 #: ../templates:106
 msgid "Estimated time left: less than 1 minute"
 msgstr "剩餘時間：不到一分鐘"
+
+#. Type: text
+#. Description
+#: ../templates:3
+msgid "Scanning the floppy"
+msgstr "正在掃描軟碟"
+
+#. Type: select
+#. Choices
+#: ../templates:7
+msgid "Cancel, ${DEVS}"
+msgstr "取消, ${DEVS}"
+
+#. Type: select
+#. Description
+#: ../templates:8
+msgid "Select your floppy device:"
+msgstr "選擇軟碟機："
+
+#. Type: select
+#. Description
+#: ../templates:8
+msgid ""
+"No standard floppy drive was found. If you have a USB floppy drive or some "
+"other unusual type of floppy drive, select it from the list. Note that the "
+"list may also include drives that are not floppy drives. The installer will "
+"only try to read from the selected device."
+msgstr ""
+"找不到標準的軟碟機。如果您的軟碟機是 USB 介面或者其他罕見的類型，請於列表中選"
+"擇。注意，列表中可能還包括了一些非軟碟機的裝置。安裝程式只會試著從所指定的裝"
+"置中讀取資料。"
+
+#. Type: boolean
+#. Description
+#: ../templates:17
+msgid "Cannot read floppy, or not a driver floppy. Retry?"
+msgstr "無法讀取軟碟機，或者它並不是驅動程式軟碟片。是否重新嘗試？"
+
+#. Type: boolean
+#. Description
+#: ../templates:17
+msgid ""
+"There was a problem reading data from the floppy disk. Please make sure that "
+"the right floppy is in the drive. If you continue to have trouble, you may "
+"have a bad floppy disk."
+msgstr ""
+"在從軟碟片讀取資料時發生了問題，請確認軟碟機中是否已放入了正確的軟碟片。如果"
+"您還是不斷遇到困難，您的軟碟片可能已經損壞了。"
+
+#. Type: boolean
+#. Description
+#: ../load-floppy.templates:4
+msgid "Load drivers from floppy now?"
+msgstr "是否要立即從軟碟中載入驅動程式？"
+
+#. Type: boolean
+#. Description
+#: ../load-floppy.templates:4
+msgid ""
+"You probably need to load drivers from a floppy before continuing with the "
+"installation. If you know that the install will work without extra drivers, "
+"you can skip this step."
+msgstr ""
+"在繼續安裝之前，您可能需要從軟碟片中載入一些驅動程式。如果您確知在安裝過程中"
+"不需要其他額外的驅動程式，可以跳過這個步驟。"
+
+#. Type: boolean
+#. Description
+#: ../load-floppy.templates:4
+msgid ""
+"If you do need to load drivers, insert the appropriate driver floppy before "
+"continuing."
+msgstr "如果您真的必須載入一些驅動程式，在繼續之前請插入適當的驅動程式軟碟片。"
+
+#. Type: text
+#. Description
+#. main-menu
+#: ../load-floppy.templates:15
+msgid "Load drivers from a floppy"
+msgstr "從軟碟片中載入驅動程式"
 
 #. Type: note
 #. Description
@@ -9210,14 +9281,6 @@ msgstr "無法將 ${PARTITION} 掛載至 ${MOUNT}"
 #: ../partconf.templates:123
 msgid "An error occurred when ${PARTITION} was mounted on ${MOUNT}."
 msgstr "在將 ${PARTITION} 掛載至 ${MOUNT} 時發生錯誤。"
-
-#. Type: error
-#. Description
-#: ../partconf.templates:123
-msgid ""
-"Please check the error log on the third console or /var/log/messages for "
-"more information."
-msgstr "請查看第三個主控台中的錯誤 Log 或是 /var/log/messages 來獲得更多訊息。"
 
 #. Type: text
 #. Description

@@ -4437,6 +4437,79 @@ msgstr "${DEVICES}"
 
 #. Type: text
 #. Description
+#: ../rescue-mode.templates:3
+msgid "Enter rescue mode"
+msgstr ""
+
+#. Type: string
+#. Description
+#: ../rescue-mode.templates:7
+#, fuzzy
+msgid "Device to mount as root filesystem:"
+msgstr "Идентични точки за монтирање за два датотечни система"
+
+#. Type: string
+#. Description
+#: ../rescue-mode.templates:7
+msgid "Enter a device you wish to mount as your root filesystem."
+msgstr ""
+
+#. Type: string
+#. Description
+#: ../rescue-mode.templates:7
+msgid ""
+"After this message, if the filesystem was mounted successfully, you will be "
+"given a shell with that filesystem on \"/\". If you need any other "
+"filesystems (such as a separate \"/usr\"), you will have to mount those "
+"yourself."
+msgstr ""
+
+#. Type: string
+#. Description
+#: ../rescue-mode.templates:7
+msgid "When you exit this shell, the system will reboot."
+msgstr ""
+
+#. Type: error
+#. Description
+#: ../rescue-mode.templates:19
+msgid "No such device"
+msgstr ""
+
+#. Type: error
+#. Description
+#: ../rescue-mode.templates:19
+msgid ""
+"The device you entered for your root filesystem (${DEVICE}) does not exist. "
+"Please try again."
+msgstr ""
+
+#. Type: error
+#. Description
+#: ../rescue-mode.templates:25
+msgid "Mount failed"
+msgstr ""
+
+#. Type: error
+#. Description
+#: ../rescue-mode.templates:25
+msgid ""
+"An error occurred while mounting the device you entered for your root "
+"filesystem (${DEVICE}) on /target."
+msgstr ""
+
+#. Type: error
+#. Description
+#: ../partconf.templates:123 ../rescue-mode.templates:25
+msgid ""
+"Please check the error log on the third console or /var/log/messages for "
+"more information."
+msgstr ""
+"Те молам провери го логот за грешки на третата конзола или /var/log/messages "
+"за повеќе информации."
+
+#. Type: text
+#. Description
 #: ../network-console.templates:5
 msgid "Continue installation remotely using SSH"
 msgstr "Продолжи со инстлацијата оддалечено користејќи SSH"
@@ -8463,6 +8536,18 @@ msgstr "EFIboot"
 msgid "EFI-fat16"
 msgstr "EFI-fat16"
 
+#. Type: text
+#. Description
+#: ../partman-auto-lvm.templates:3
+msgid "Use free space for the Logical Volume Manager"
+msgstr "Користи го празниот простор за Управувачот со логички простори"
+
+#. Type: string
+#. Description
+#: ../partman-auto-lvm.templates:8
+msgid "Name of the volume group for the new Debian system:"
+msgstr "Те молам внеси го името на логичката група за новиот Дебиан систем:"
+
 #. Type: boolean
 #. Description
 #: ../templates:3
@@ -8858,110 +8943,6 @@ msgstr "Креирај нова партиција"
 msgid "Create a new empty partition table on this device"
 msgstr "Создади нова празна партициона табела на овој уред"
 
-#. Type: text
-#. Description
-#: ../partman-auto-lvm.templates:3
-msgid "Use free space for the Logical Volume Manager"
-msgstr "Користи го празниот простор за Управувачот со логички простори"
-
-#. Type: string
-#. Description
-#: ../partman-auto-lvm.templates:8
-msgid "Name of the volume group for the new Debian system:"
-msgstr "Те молам внеси го името на логичката група за новиот Дебиан систем:"
-
-#. Type: text
-#. Description
-#: ../templates:3
-msgid "Scanning the floppy"
-msgstr "Скенирање за дискета"
-
-#. Type: select
-#. Choices
-#: ../templates:7
-msgid "Cancel, ${DEVS}"
-msgstr "Откажи, ${DEVS}"
-
-#. Type: select
-#. Description
-#: ../templates:8
-msgid "Select your floppy device:"
-msgstr "Одбери го твојот уред за дискета:"
-
-#. Type: select
-#. Description
-#: ../templates:8
-msgid ""
-"No standard floppy drive was found. If you have a USB floppy drive or some "
-"other unusual type of floppy drive, select it from the list. Note that the "
-"list may also include drives that are not floppy drives. The installer will "
-"only try to read from the selected device."
-msgstr ""
-"За да се стартува твојот нов Дебиан систем, фирмверот на твојот Itanium "
-"систем го вчитува подигнувачот од неговата приватна EFI партиција на тврдиот "
-"диск. Бут вчитувачот потоа го вчитува оперативниот систем од таа иста "
-"партиција. EFI партиција има FAT16 датотечен систем и е означена како "
-"бутабилна. Повеќете инсталации ќе ја постават EFI партицијата на првата "
-"примарна партиција на истиот тврд диск кој ја содржи и рут структурата.Не "
-"беше најдена стандардна дискетна единица. Ако имаш USB дискетна единица или "
-"некој друг невообичаен уред, одбери го од листата. Имај на ум дека листата "
-"може да содржи и уреди кои не се дискетни единици. Инсталерот ќе проба да "
-"чита само од одбраниот уред."
-
-#. Type: boolean
-#. Description
-#: ../templates:17
-msgid "Cannot read floppy, or not a driver floppy. Retry?"
-msgstr ""
-"Неможам да прочитам дискета, или не е драјвер за дискета. Да пробам пак?"
-
-#. Type: boolean
-#. Description
-#: ../templates:17
-msgid ""
-"There was a problem reading data from the floppy disk. Please make sure that "
-"the right floppy is in the drive. If you continue to have trouble, you may "
-"have a bad floppy disk."
-msgstr ""
-"Имаше проблем при читање на дискетата. Те молам осигурај се дека вистинската "
-"дискета е во уредот. Ако продолжиш да имаш проблеми можно е да имаш расипана "
-"дискета."
-
-#. Type: boolean
-#. Description
-#: ../load-floppy.templates:4
-msgid "Load drivers from floppy now?"
-msgstr "Вчитај ги драјверите од дискета сега?"
-
-#. Type: boolean
-#. Description
-#: ../load-floppy.templates:4
-msgid ""
-"You probably need to load drivers from a floppy before continuing with the "
-"installation. If you know that the install will work without extra drivers, "
-"you can skip this step."
-msgstr ""
-"Најверојатно треба да се вчитаат драјвери од дискета пред да се продолжи со "
-"инсталацијата. Ако знаеш дека инсталацијата ќе работи без дополнителни "
-"драјвери може да го скокнеш овој чекор."
-
-#. Type: boolean
-#. Description
-#: ../load-floppy.templates:4
-msgid ""
-"If you do need to load drivers, insert the appropriate driver floppy before "
-"continuing."
-msgstr ""
-"Ако е потребно да се вчитаат драјвери, внеси ја соодветната дискета пред да "
-"продолжиш."
-
-#. Type: text
-#. Description
-#. main-menu
-#: ../load-floppy.templates:15
-msgid "Load drivers from a floppy"
-msgstr "Вчитај драјвери од дискета"
-
 #. Type: select
 #. Description
 #: ../templates:4
@@ -9197,6 +9178,98 @@ msgstr "Проценето останато време: ${MINUTES} минути"
 #: ../templates:106
 msgid "Estimated time left: less than 1 minute"
 msgstr "Проценето останато време: помалку од 1 минута"
+
+#. Type: text
+#. Description
+#: ../templates:3
+msgid "Scanning the floppy"
+msgstr "Скенирање за дискета"
+
+#. Type: select
+#. Choices
+#: ../templates:7
+msgid "Cancel, ${DEVS}"
+msgstr "Откажи, ${DEVS}"
+
+#. Type: select
+#. Description
+#: ../templates:8
+msgid "Select your floppy device:"
+msgstr "Одбери го твојот уред за дискета:"
+
+#. Type: select
+#. Description
+#: ../templates:8
+msgid ""
+"No standard floppy drive was found. If you have a USB floppy drive or some "
+"other unusual type of floppy drive, select it from the list. Note that the "
+"list may also include drives that are not floppy drives. The installer will "
+"only try to read from the selected device."
+msgstr ""
+"За да се стартува твојот нов Дебиан систем, фирмверот на твојот Itanium "
+"систем го вчитува подигнувачот од неговата приватна EFI партиција на тврдиот "
+"диск. Бут вчитувачот потоа го вчитува оперативниот систем од таа иста "
+"партиција. EFI партиција има FAT16 датотечен систем и е означена како "
+"бутабилна. Повеќете инсталации ќе ја постават EFI партицијата на првата "
+"примарна партиција на истиот тврд диск кој ја содржи и рут структурата.Не "
+"беше најдена стандардна дискетна единица. Ако имаш USB дискетна единица или "
+"некој друг невообичаен уред, одбери го од листата. Имај на ум дека листата "
+"може да содржи и уреди кои не се дискетни единици. Инсталерот ќе проба да "
+"чита само од одбраниот уред."
+
+#. Type: boolean
+#. Description
+#: ../templates:17
+msgid "Cannot read floppy, or not a driver floppy. Retry?"
+msgstr ""
+"Неможам да прочитам дискета, или не е драјвер за дискета. Да пробам пак?"
+
+#. Type: boolean
+#. Description
+#: ../templates:17
+msgid ""
+"There was a problem reading data from the floppy disk. Please make sure that "
+"the right floppy is in the drive. If you continue to have trouble, you may "
+"have a bad floppy disk."
+msgstr ""
+"Имаше проблем при читање на дискетата. Те молам осигурај се дека вистинската "
+"дискета е во уредот. Ако продолжиш да имаш проблеми можно е да имаш расипана "
+"дискета."
+
+#. Type: boolean
+#. Description
+#: ../load-floppy.templates:4
+msgid "Load drivers from floppy now?"
+msgstr "Вчитај ги драјверите од дискета сега?"
+
+#. Type: boolean
+#. Description
+#: ../load-floppy.templates:4
+msgid ""
+"You probably need to load drivers from a floppy before continuing with the "
+"installation. If you know that the install will work without extra drivers, "
+"you can skip this step."
+msgstr ""
+"Најверојатно треба да се вчитаат драјвери од дискета пред да се продолжи со "
+"инсталацијата. Ако знаеш дека инсталацијата ќе работи без дополнителни "
+"драјвери може да го скокнеш овој чекор."
+
+#. Type: boolean
+#. Description
+#: ../load-floppy.templates:4
+msgid ""
+"If you do need to load drivers, insert the appropriate driver floppy before "
+"continuing."
+msgstr ""
+"Ако е потребно да се вчитаат драјвери, внеси ја соодветната дискета пред да "
+"продолжиш."
+
+#. Type: text
+#. Description
+#. main-menu
+#: ../load-floppy.templates:15
+msgid "Load drivers from a floppy"
+msgstr "Вчитај драјвери од дискета"
 
 #. Type: note
 #. Description
@@ -9567,16 +9640,6 @@ msgstr "Неуспеав да ја монтирам ${PARTITION} на ${MOUNT}"
 #: ../partconf.templates:123
 msgid "An error occurred when ${PARTITION} was mounted on ${MOUNT}."
 msgstr "Се случи грешка кога ${PARTITION} беше монтирана на ${MOUNT}."
-
-#. Type: error
-#. Description
-#: ../partconf.templates:123
-msgid ""
-"Please check the error log on the third console or /var/log/messages for "
-"more information."
-msgstr ""
-"Те молам провери го логот за грешки на третата конзола или /var/log/messages "
-"за повеќе информации."
 
 #. Type: text
 #. Description

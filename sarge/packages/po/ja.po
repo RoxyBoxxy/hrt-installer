@@ -4444,6 +4444,79 @@ msgstr "${DEVICES}"
 
 #. Type: text
 #. Description
+#: ../rescue-mode.templates:3
+msgid "Enter rescue mode"
+msgstr ""
+
+#. Type: string
+#. Description
+#: ../rescue-mode.templates:7
+#, fuzzy
+msgid "Device to mount as root filesystem:"
+msgstr "2つのファイルシステムが同一のマウントポイントにあります"
+
+#. Type: string
+#. Description
+#: ../rescue-mode.templates:7
+msgid "Enter a device you wish to mount as your root filesystem."
+msgstr ""
+
+#. Type: string
+#. Description
+#: ../rescue-mode.templates:7
+msgid ""
+"After this message, if the filesystem was mounted successfully, you will be "
+"given a shell with that filesystem on \"/\". If you need any other "
+"filesystems (such as a separate \"/usr\"), you will have to mount those "
+"yourself."
+msgstr ""
+
+#. Type: string
+#. Description
+#: ../rescue-mode.templates:7
+msgid "When you exit this shell, the system will reboot."
+msgstr ""
+
+#. Type: error
+#. Description
+#: ../rescue-mode.templates:19
+msgid "No such device"
+msgstr ""
+
+#. Type: error
+#. Description
+#: ../rescue-mode.templates:19
+msgid ""
+"The device you entered for your root filesystem (${DEVICE}) does not exist. "
+"Please try again."
+msgstr ""
+
+#. Type: error
+#. Description
+#: ../rescue-mode.templates:25
+msgid "Mount failed"
+msgstr ""
+
+#. Type: error
+#. Description
+#: ../rescue-mode.templates:25
+msgid ""
+"An error occurred while mounting the device you entered for your root "
+"filesystem (${DEVICE}) on /target."
+msgstr ""
+
+#. Type: error
+#. Description
+#: ../partconf.templates:123 ../rescue-mode.templates:25
+msgid ""
+"Please check the error log on the third console or /var/log/messages for "
+"more information."
+msgstr ""
+"詳細については 3 番目のコンソールのエラーログまたは /var/log/messages を参照"
+"してください。"
+
+#. Type: text
+#. Description
 #: ../network-console.templates:5
 msgid "Continue installation remotely using SSH"
 msgstr "SSH を使ってリモートでインストールを続ける"
@@ -8471,6 +8544,18 @@ msgstr "EFIboot"
 msgid "EFI-fat16"
 msgstr "EFI-fat16"
 
+#. Type: text
+#. Description
+#: ../partman-auto-lvm.templates:3
+msgid "Use free space for the Logical Volume Manager"
+msgstr "論理ボリュームマネージャのために空き領域を使う"
+
+#. Type: string
+#. Description
+#: ../partman-auto-lvm.templates:8
+msgid "Name of the volume group for the new Debian system:"
+msgstr "新しい Debian システムのボリュームグループ名:"
+
 #. Type: boolean
 #. Description
 #: ../templates:3
@@ -8862,105 +8947,6 @@ msgstr "新しいパーティションの作成"
 msgid "Create a new empty partition table on this device"
 msgstr "このデバイスに新しい空のパーティションテーブルを作成"
 
-#. Type: text
-#. Description
-#: ../partman-auto-lvm.templates:3
-msgid "Use free space for the Logical Volume Manager"
-msgstr "論理ボリュームマネージャのために空き領域を使う"
-
-#. Type: string
-#. Description
-#: ../partman-auto-lvm.templates:8
-msgid "Name of the volume group for the new Debian system:"
-msgstr "新しい Debian システムのボリュームグループ名:"
-
-#. Type: text
-#. Description
-#: ../templates:3
-msgid "Scanning the floppy"
-msgstr "フロッピーを検査しています"
-
-#. Type: select
-#. Choices
-#: ../templates:7
-msgid "Cancel, ${DEVS}"
-msgstr "キャンセル, ${DEVS}"
-
-#. Type: select
-#. Description
-#: ../templates:8
-msgid "Select your floppy device:"
-msgstr "フロッピーデバイスを選択してください:"
-
-#. Type: select
-#. Description
-#: ../templates:8
-msgid ""
-"No standard floppy drive was found. If you have a USB floppy drive or some "
-"other unusual type of floppy drive, select it from the list. Note that the "
-"list may also include drives that are not floppy drives. The installer will "
-"only try to read from the selected device."
-msgstr ""
-"標準的なフロッピードライブが見つかりませんでした。USB フロッピードライブまた"
-"はその他の特別な形式のフロッピードライブを持っている場合には、リストからそれ"
-"を選んでください。このリストはフロッピードライブではないドライブも含んでいる"
-"可能性があることに注意してください。インストーラは選択されたデバイスから読み"
-"込みを試行するだけです。"
-
-#. Type: boolean
-#. Description
-#: ../templates:17
-msgid "Cannot read floppy, or not a driver floppy. Retry?"
-msgstr ""
-"フロッピーを読み込めないか、ドライバフロッピーではありません。再試行しますか?"
-
-#. Type: boolean
-#. Description
-#: ../templates:17
-msgid ""
-"There was a problem reading data from the floppy disk. Please make sure that "
-"the right floppy is in the drive. If you continue to have trouble, you may "
-"have a bad floppy disk."
-msgstr ""
-"フロッピーディスクからデータの読み込み中に問題が発生しました。ドライブに正し"
-"いフロッピーがあることを確認してください。問題がまだ続くようなら、フロッピー"
-"ディスクがおかしいのでしょう。"
-
-#. Type: boolean
-#. Description
-#: ../load-floppy.templates:4
-msgid "Load drivers from floppy now?"
-msgstr "フロッピーからドライバを今ロードしますか?"
-
-#. Type: boolean
-#. Description
-#: ../load-floppy.templates:4
-msgid ""
-"You probably need to load drivers from a floppy before continuing with the "
-"installation. If you know that the install will work without extra drivers, "
-"you can skip this step."
-msgstr ""
-"インストールを続ける前に、おそらくフロッピーからドライバをロードする必要があ"
-"ります。追加ドライバなしにインストールが動作するとわかっているときには、この"
-"ステップは省略できます。"
-
-#. Type: boolean
-#. Description
-#: ../load-floppy.templates:4
-msgid ""
-"If you do need to load drivers, insert the appropriate driver floppy before "
-"continuing."
-msgstr ""
-"ドライバのロードを選ぶと、続ける前に適切なドライバフロッピーを挿入することに"
-"なります。"
-
-#. Type: text
-#. Description
-#. main-menu
-#: ../load-floppy.templates:15
-msgid "Load drivers from a floppy"
-msgstr "フロッピーからドライバをロード"
-
 #. Type: select
 #. Description
 #: ../templates:4
@@ -9196,6 +9182,93 @@ msgstr "予想残り時間: ${MINUTES}分"
 #: ../templates:106
 msgid "Estimated time left: less than 1 minute"
 msgstr "予想残り時間: 1分以内"
+
+#. Type: text
+#. Description
+#: ../templates:3
+msgid "Scanning the floppy"
+msgstr "フロッピーを検査しています"
+
+#. Type: select
+#. Choices
+#: ../templates:7
+msgid "Cancel, ${DEVS}"
+msgstr "キャンセル, ${DEVS}"
+
+#. Type: select
+#. Description
+#: ../templates:8
+msgid "Select your floppy device:"
+msgstr "フロッピーデバイスを選択してください:"
+
+#. Type: select
+#. Description
+#: ../templates:8
+msgid ""
+"No standard floppy drive was found. If you have a USB floppy drive or some "
+"other unusual type of floppy drive, select it from the list. Note that the "
+"list may also include drives that are not floppy drives. The installer will "
+"only try to read from the selected device."
+msgstr ""
+"標準的なフロッピードライブが見つかりませんでした。USB フロッピードライブまた"
+"はその他の特別な形式のフロッピードライブを持っている場合には、リストからそれ"
+"を選んでください。このリストはフロッピードライブではないドライブも含んでいる"
+"可能性があることに注意してください。インストーラは選択されたデバイスから読み"
+"込みを試行するだけです。"
+
+#. Type: boolean
+#. Description
+#: ../templates:17
+msgid "Cannot read floppy, or not a driver floppy. Retry?"
+msgstr ""
+"フロッピーを読み込めないか、ドライバフロッピーではありません。再試行しますか?"
+
+#. Type: boolean
+#. Description
+#: ../templates:17
+msgid ""
+"There was a problem reading data from the floppy disk. Please make sure that "
+"the right floppy is in the drive. If you continue to have trouble, you may "
+"have a bad floppy disk."
+msgstr ""
+"フロッピーディスクからデータの読み込み中に問題が発生しました。ドライブに正し"
+"いフロッピーがあることを確認してください。問題がまだ続くようなら、フロッピー"
+"ディスクがおかしいのでしょう。"
+
+#. Type: boolean
+#. Description
+#: ../load-floppy.templates:4
+msgid "Load drivers from floppy now?"
+msgstr "フロッピーからドライバを今ロードしますか?"
+
+#. Type: boolean
+#. Description
+#: ../load-floppy.templates:4
+msgid ""
+"You probably need to load drivers from a floppy before continuing with the "
+"installation. If you know that the install will work without extra drivers, "
+"you can skip this step."
+msgstr ""
+"インストールを続ける前に、おそらくフロッピーからドライバをロードする必要があ"
+"ります。追加ドライバなしにインストールが動作するとわかっているときには、この"
+"ステップは省略できます。"
+
+#. Type: boolean
+#. Description
+#: ../load-floppy.templates:4
+msgid ""
+"If you do need to load drivers, insert the appropriate driver floppy before "
+"continuing."
+msgstr ""
+"ドライバのロードを選ぶと、続ける前に適切なドライバフロッピーを挿入することに"
+"なります。"
+
+#. Type: text
+#. Description
+#. main-menu
+#: ../load-floppy.templates:15
+msgid "Load drivers from a floppy"
+msgstr "フロッピーからドライバをロード"
 
 #. Type: note
 #. Description
@@ -9563,16 +9636,6 @@ msgstr "${PARTITION} を ${MOUNT} にマウントするのに失敗しました"
 #: ../partconf.templates:123
 msgid "An error occurred when ${PARTITION} was mounted on ${MOUNT}."
 msgstr "${PARTITION} の ${MOUNT} へのマウント中にエラーが発生しました。"
-
-#. Type: error
-#. Description
-#: ../partconf.templates:123
-msgid ""
-"Please check the error log on the third console or /var/log/messages for "
-"more information."
-msgstr ""
-"詳細については 3 番目のコンソールのエラーログまたは /var/log/messages を参照"
-"してください。"
 
 #. Type: text
 #. Description

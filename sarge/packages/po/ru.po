@@ -4449,6 +4449,77 @@ msgstr "${DEVICES}"
 
 #. Type: text
 #. Description
+#: ../rescue-mode.templates:3
+msgid "Enter rescue mode"
+msgstr ""
+
+#. Type: string
+#. Description
+#: ../rescue-mode.templates:7
+#, fuzzy
+msgid "Device to mount as root filesystem:"
+msgstr "Одинаковые точки монтирования для двух файловых систем"
+
+#. Type: string
+#. Description
+#: ../rescue-mode.templates:7
+msgid "Enter a device you wish to mount as your root filesystem."
+msgstr ""
+
+#. Type: string
+#. Description
+#: ../rescue-mode.templates:7
+msgid ""
+"After this message, if the filesystem was mounted successfully, you will be "
+"given a shell with that filesystem on \"/\". If you need any other "
+"filesystems (such as a separate \"/usr\"), you will have to mount those "
+"yourself."
+msgstr ""
+
+#. Type: string
+#. Description
+#: ../rescue-mode.templates:7
+msgid "When you exit this shell, the system will reboot."
+msgstr ""
+
+#. Type: error
+#. Description
+#: ../rescue-mode.templates:19
+msgid "No such device"
+msgstr ""
+
+#. Type: error
+#. Description
+#: ../rescue-mode.templates:19
+msgid ""
+"The device you entered for your root filesystem (${DEVICE}) does not exist. "
+"Please try again."
+msgstr ""
+
+#. Type: error
+#. Description
+#: ../rescue-mode.templates:25
+msgid "Mount failed"
+msgstr ""
+
+#. Type: error
+#. Description
+#: ../rescue-mode.templates:25
+msgid ""
+"An error occurred while mounting the device you entered for your root "
+"filesystem (${DEVICE}) on /target."
+msgstr ""
+
+#. Type: error
+#. Description
+#: ../partconf.templates:123 ../rescue-mode.templates:25
+msgid ""
+"Please check the error log on the third console or /var/log/messages for "
+"more information."
+msgstr "Подробности можно посмотреть на tty3 или в /var/log/messages."
+
+#. Type: text
+#. Description
 #: ../network-console.templates:5
 msgid "Continue installation remotely using SSH"
 msgstr "Продолжить установку удаленно с иcпользованием протокола SSH"
@@ -8459,6 +8530,18 @@ msgstr "EFIboot"
 msgid "EFI-fat16"
 msgstr "EFI-fat16"
 
+#. Type: text
+#. Description
+#: ../partman-auto-lvm.templates:3
+msgid "Use free space for the Logical Volume Manager"
+msgstr "Использовать свободное место в менеджере логических томов (LVM)"
+
+#. Type: string
+#. Description
+#: ../partman-auto-lvm.templates:8
+msgid "Name of the volume group for the new Debian system:"
+msgstr "Введите имя группы томов для устанавливаемой системы Debian:"
+
 #. Type: boolean
 #. Description
 #: ../templates:3
@@ -8849,104 +8932,6 @@ msgstr "Создать новый раздел"
 msgid "Create a new empty partition table on this device"
 msgstr "Создать новую пустую таблицу разделов на этом устройстве"
 
-#. Type: text
-#. Description
-#: ../partman-auto-lvm.templates:3
-msgid "Use free space for the Logical Volume Manager"
-msgstr "Использовать свободное место в менеджере логических томов (LVM)"
-
-#. Type: string
-#. Description
-#: ../partman-auto-lvm.templates:8
-msgid "Name of the volume group for the new Debian system:"
-msgstr "Введите имя группы томов для устанавливаемой системы Debian:"
-
-#. Type: text
-#. Description
-#: ../templates:3
-msgid "Scanning the floppy"
-msgstr "Анализ дискеты"
-
-#. Type: select
-#. Choices
-#: ../templates:7
-msgid "Cancel, ${DEVS}"
-msgstr "Отменить, ${DEVS}"
-
-#. Type: select
-#. Description
-#: ../templates:8
-msgid "Select your floppy device:"
-msgstr "Выберите ваш дисковод:"
-
-#. Type: select
-#. Description
-#: ../templates:8
-msgid ""
-"No standard floppy drive was found. If you have a USB floppy drive or some "
-"other unusual type of floppy drive, select it from the list. Note that the "
-"list may also include drives that are not floppy drives. The installer will "
-"only try to read from the selected device."
-msgstr ""
-"Стандартный дисковод не обнаружен. Если у вас \"необычный\" дисковод "
-"(например внешний на шине USB), то выберите его из списка. Обратите внимание "
-"на то, что в списке могут быть устройства, которые не являются дисководами "
-"как таковыми. С указанного устройства будут лишь считаны данные, запись "
-"производиться не будет!"
-
-#. Type: boolean
-#. Description
-#: ../templates:17
-msgid "Cannot read floppy, or not a driver floppy. Retry?"
-msgstr "Невозможно прочесть дискету, либо на ней нет драйверов. Повторить?"
-
-#. Type: boolean
-#. Description
-#: ../templates:17
-msgid ""
-"There was a problem reading data from the floppy disk. Please make sure that "
-"the right floppy is in the drive. If you continue to have trouble, you may "
-"have a bad floppy disk."
-msgstr ""
-"При чтении данных с дискеты возникла ошибка. Убедитесь, что в дисководе "
-"находится правильная дискета. Если ошибка повторится, то возможно дискета "
-"неисправна."
-
-#. Type: boolean
-#. Description
-#: ../load-floppy.templates:4
-msgid "Load drivers from floppy now?"
-msgstr "Загрузить драйверы с дискеты?"
-
-#. Type: boolean
-#. Description
-#: ../load-floppy.templates:4
-msgid ""
-"You probably need to load drivers from a floppy before continuing with the "
-"installation. If you know that the install will work without extra drivers, "
-"you can skip this step."
-msgstr ""
-"Вам вероятно придется подгрузить драйверы с дискеты для нормального хода "
-"установки. Если вы уверены, что получится и без них, смело пропускайте этот "
-"шаг."
-
-#. Type: boolean
-#. Description
-#: ../load-floppy.templates:4
-msgid ""
-"If you do need to load drivers, insert the appropriate driver floppy before "
-"continuing."
-msgstr ""
-"Если вам всё же надо подгрузить драйверы, вставьте дискету с необходимым "
-"драйвером."
-
-#. Type: text
-#. Description
-#. main-menu
-#: ../load-floppy.templates:15
-msgid "Load drivers from a floppy"
-msgstr "Загрузить драйверы с дискеты"
-
 #. Type: select
 #. Description
 #: ../templates:4
@@ -9184,6 +9169,92 @@ msgstr "Время до завершения: ${MINUTES} мин. "
 #: ../templates:106
 msgid "Estimated time left: less than 1 minute"
 msgstr "Время до завершения: меньше минуты"
+
+#. Type: text
+#. Description
+#: ../templates:3
+msgid "Scanning the floppy"
+msgstr "Анализ дискеты"
+
+#. Type: select
+#. Choices
+#: ../templates:7
+msgid "Cancel, ${DEVS}"
+msgstr "Отменить, ${DEVS}"
+
+#. Type: select
+#. Description
+#: ../templates:8
+msgid "Select your floppy device:"
+msgstr "Выберите ваш дисковод:"
+
+#. Type: select
+#. Description
+#: ../templates:8
+msgid ""
+"No standard floppy drive was found. If you have a USB floppy drive or some "
+"other unusual type of floppy drive, select it from the list. Note that the "
+"list may also include drives that are not floppy drives. The installer will "
+"only try to read from the selected device."
+msgstr ""
+"Стандартный дисковод не обнаружен. Если у вас \"необычный\" дисковод "
+"(например внешний на шине USB), то выберите его из списка. Обратите внимание "
+"на то, что в списке могут быть устройства, которые не являются дисководами "
+"как таковыми. С указанного устройства будут лишь считаны данные, запись "
+"производиться не будет!"
+
+#. Type: boolean
+#. Description
+#: ../templates:17
+msgid "Cannot read floppy, or not a driver floppy. Retry?"
+msgstr "Невозможно прочесть дискету, либо на ней нет драйверов. Повторить?"
+
+#. Type: boolean
+#. Description
+#: ../templates:17
+msgid ""
+"There was a problem reading data from the floppy disk. Please make sure that "
+"the right floppy is in the drive. If you continue to have trouble, you may "
+"have a bad floppy disk."
+msgstr ""
+"При чтении данных с дискеты возникла ошибка. Убедитесь, что в дисководе "
+"находится правильная дискета. Если ошибка повторится, то возможно дискета "
+"неисправна."
+
+#. Type: boolean
+#. Description
+#: ../load-floppy.templates:4
+msgid "Load drivers from floppy now?"
+msgstr "Загрузить драйверы с дискеты?"
+
+#. Type: boolean
+#. Description
+#: ../load-floppy.templates:4
+msgid ""
+"You probably need to load drivers from a floppy before continuing with the "
+"installation. If you know that the install will work without extra drivers, "
+"you can skip this step."
+msgstr ""
+"Вам вероятно придется подгрузить драйверы с дискеты для нормального хода "
+"установки. Если вы уверены, что получится и без них, смело пропускайте этот "
+"шаг."
+
+#. Type: boolean
+#. Description
+#: ../load-floppy.templates:4
+msgid ""
+"If you do need to load drivers, insert the appropriate driver floppy before "
+"continuing."
+msgstr ""
+"Если вам всё же надо подгрузить драйверы, вставьте дискету с необходимым "
+"драйвером."
+
+#. Type: text
+#. Description
+#. main-menu
+#: ../load-floppy.templates:15
+msgid "Load drivers from a floppy"
+msgstr "Загрузить драйверы с дискеты"
 
 #. Type: note
 #. Description
@@ -9547,14 +9618,6 @@ msgstr "Не удалось смонтировать ${PARTITION} в ${MOUNT}"
 #: ../partconf.templates:123
 msgid "An error occurred when ${PARTITION} was mounted on ${MOUNT}."
 msgstr "При монтировании ${PARTITION} в ${MOUNT} произошла ошибка. "
-
-#. Type: error
-#. Description
-#: ../partconf.templates:123
-msgid ""
-"Please check the error log on the third console or /var/log/messages for "
-"more information."
-msgstr "Подробности можно посмотреть на tty3 или в /var/log/messages."
 
 #. Type: text
 #. Description

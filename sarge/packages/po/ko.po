@@ -4382,6 +4382,79 @@ msgstr "${DEVICES}"
 
 #. Type: text
 #. Description
+#: ../rescue-mode.templates:3
+msgid "Enter rescue mode"
+msgstr ""
+
+#. Type: string
+#. Description
+#: ../rescue-mode.templates:7
+#, fuzzy
+msgid "Device to mount as root filesystem:"
+msgstr "두 개의 파일시스템의 마운트 위치가 같습니다"
+
+#. Type: string
+#. Description
+#: ../rescue-mode.templates:7
+msgid "Enter a device you wish to mount as your root filesystem."
+msgstr ""
+
+#. Type: string
+#. Description
+#: ../rescue-mode.templates:7
+msgid ""
+"After this message, if the filesystem was mounted successfully, you will be "
+"given a shell with that filesystem on \"/\". If you need any other "
+"filesystems (such as a separate \"/usr\"), you will have to mount those "
+"yourself."
+msgstr ""
+
+#. Type: string
+#. Description
+#: ../rescue-mode.templates:7
+msgid "When you exit this shell, the system will reboot."
+msgstr ""
+
+#. Type: error
+#. Description
+#: ../rescue-mode.templates:19
+msgid "No such device"
+msgstr ""
+
+#. Type: error
+#. Description
+#: ../rescue-mode.templates:19
+msgid ""
+"The device you entered for your root filesystem (${DEVICE}) does not exist. "
+"Please try again."
+msgstr ""
+
+#. Type: error
+#. Description
+#: ../rescue-mode.templates:25
+msgid "Mount failed"
+msgstr ""
+
+#. Type: error
+#. Description
+#: ../rescue-mode.templates:25
+msgid ""
+"An error occurred while mounting the device you entered for your root "
+"filesystem (${DEVICE}) on /target."
+msgstr ""
+
+#. Type: error
+#. Description
+#: ../partconf.templates:123 ../rescue-mode.templates:25
+msgid ""
+"Please check the error log on the third console or /var/log/messages for "
+"more information."
+msgstr ""
+"자세한 정보는 세 번째 콘솔에서 오류 로그를 살펴 보시거나 /var/log/messages를 "
+"살펴보십시오."
+
+#. Type: text
+#. Description
 #: ../network-console.templates:5
 msgid "Continue installation remotely using SSH"
 msgstr "SSH을 사용해 원격에서 설치하기"
@@ -8324,6 +8397,18 @@ msgstr "EFIboot"
 msgid "EFI-fat16"
 msgstr "EFI-fat16"
 
+#. Type: text
+#. Description
+#: ../partman-auto-lvm.templates:3
+msgid "Use free space for the Logical Volume Manager"
+msgstr "빈 공간을 논리 볼륨 관리자가 사용"
+
+#. Type: string
+#. Description
+#: ../partman-auto-lvm.templates:8
+msgid "Name of the volume group for the new Debian system:"
+msgstr "새 데비안 시스템의 볼륨 그룹 이름:"
+
 #. Type: boolean
 #. Description
 #: ../templates:3
@@ -8710,103 +8795,6 @@ msgstr "새 파티션 만들기"
 msgid "Create a new empty partition table on this device"
 msgstr "이 장치에 새 빈 파티션 테이블을 만들기"
 
-#. Type: text
-#. Description
-#: ../partman-auto-lvm.templates:3
-msgid "Use free space for the Logical Volume Manager"
-msgstr "빈 공간을 논리 볼륨 관리자가 사용"
-
-#. Type: string
-#. Description
-#: ../partman-auto-lvm.templates:8
-msgid "Name of the volume group for the new Debian system:"
-msgstr "새 데비안 시스템의 볼륨 그룹 이름:"
-
-#. Type: text
-#. Description
-#: ../templates:3
-msgid "Scanning the floppy"
-msgstr "플로피를 찾는 중입니다"
-
-#. Type: select
-#. Choices
-#: ../templates:7
-msgid "Cancel, ${DEVS}"
-msgstr "취소, ${DEVS}"
-
-#. Type: select
-#. Description
-#: ../templates:8
-msgid "Select your floppy device:"
-msgstr "플로피 장치를 선택하십시오:"
-
-#. Type: select
-#. Description
-#: ../templates:8
-msgid ""
-"No standard floppy drive was found. If you have a USB floppy drive or some "
-"other unusual type of floppy drive, select it from the list. Note that the "
-"list may also include drives that are not floppy drives. The installer will "
-"only try to read from the selected device."
-msgstr ""
-"표준 플로피 드라이브를 찾을 수 없습니다. USB 플로피 장치나 그 외 일반적이지 "
-"않은 플로피 장치의 경우에는, 목록에서 선택하십시오. 이 목록에는 플로피 장치"
-"가 아닌 드라이버도 있는 것에 주의하십시오. 설치 프로그램은 오직 선택한 장치에"
-"서만 읽기를 시도합니다."
-
-#. Type: boolean
-#. Description
-#: ../templates:17
-msgid "Cannot read floppy, or not a driver floppy. Retry?"
-msgstr ""
-"플로피를 읽을 수 없습니다. 혹은 드라이버 플로피가 아닙니다. 다시 시도할까요?"
-
-#. Type: boolean
-#. Description
-#: ../templates:17
-msgid ""
-"There was a problem reading data from the floppy disk. Please make sure that "
-"the right floppy is in the drive. If you continue to have trouble, you may "
-"have a bad floppy disk."
-msgstr ""
-"플로피에서 데이터를 읽는 데 문제가 발생했습니다. 올바른 플로피가 드라이브에 "
-"들어 있는 지 확인하십시오. 계속 문제가 발생하면, 이 플로피 디스크가 잘못되었"
-"을 것입니다."
-
-#. Type: boolean
-#. Description
-#: ../load-floppy.templates:4
-msgid "Load drivers from floppy now?"
-msgstr "지금 플로피에서 드라이버를 읽어들이시겠습니까?"
-
-#. Type: boolean
-#. Description
-#: ../load-floppy.templates:4
-msgid ""
-"You probably need to load drivers from a floppy before continuing with the "
-"installation. If you know that the install will work without extra drivers, "
-"you can skip this step."
-msgstr ""
-"설치를 계속하기 전에 플로피에서 드라이버를 읽어들여야 할 것입니다. 추가 드라"
-"이버 없이도 설치를 할 수 있다면, 이 단계를 건너 뛸 수 있습니다."
-
-#. Type: boolean
-#. Description
-#: ../load-floppy.templates:4
-msgid ""
-"If you do need to load drivers, insert the appropriate driver floppy before "
-"continuing."
-msgstr ""
-"드라이브를 읽어들여야 한다면, 계속 하시기 전에 적절한 드라이버 플로피를 드라"
-"이브에 넣으십시오."
-
-#. Type: text
-#. Description
-#. main-menu
-#: ../load-floppy.templates:15
-msgid "Load drivers from a floppy"
-msgstr "플로피에서 드라이버 읽어들이기"
-
 #. Type: select
 #. Description
 #: ../templates:4
@@ -9036,6 +9024,91 @@ msgstr "남은 예상 시간: ${MINUTES}분"
 #: ../templates:106
 msgid "Estimated time left: less than 1 minute"
 msgstr "남은 예상 시간: 1분 내"
+
+#. Type: text
+#. Description
+#: ../templates:3
+msgid "Scanning the floppy"
+msgstr "플로피를 찾는 중입니다"
+
+#. Type: select
+#. Choices
+#: ../templates:7
+msgid "Cancel, ${DEVS}"
+msgstr "취소, ${DEVS}"
+
+#. Type: select
+#. Description
+#: ../templates:8
+msgid "Select your floppy device:"
+msgstr "플로피 장치를 선택하십시오:"
+
+#. Type: select
+#. Description
+#: ../templates:8
+msgid ""
+"No standard floppy drive was found. If you have a USB floppy drive or some "
+"other unusual type of floppy drive, select it from the list. Note that the "
+"list may also include drives that are not floppy drives. The installer will "
+"only try to read from the selected device."
+msgstr ""
+"표준 플로피 드라이브를 찾을 수 없습니다. USB 플로피 장치나 그 외 일반적이지 "
+"않은 플로피 장치의 경우에는, 목록에서 선택하십시오. 이 목록에는 플로피 장치"
+"가 아닌 드라이버도 있는 것에 주의하십시오. 설치 프로그램은 오직 선택한 장치에"
+"서만 읽기를 시도합니다."
+
+#. Type: boolean
+#. Description
+#: ../templates:17
+msgid "Cannot read floppy, or not a driver floppy. Retry?"
+msgstr ""
+"플로피를 읽을 수 없습니다. 혹은 드라이버 플로피가 아닙니다. 다시 시도할까요?"
+
+#. Type: boolean
+#. Description
+#: ../templates:17
+msgid ""
+"There was a problem reading data from the floppy disk. Please make sure that "
+"the right floppy is in the drive. If you continue to have trouble, you may "
+"have a bad floppy disk."
+msgstr ""
+"플로피에서 데이터를 읽는 데 문제가 발생했습니다. 올바른 플로피가 드라이브에 "
+"들어 있는 지 확인하십시오. 계속 문제가 발생하면, 이 플로피 디스크가 잘못되었"
+"을 것입니다."
+
+#. Type: boolean
+#. Description
+#: ../load-floppy.templates:4
+msgid "Load drivers from floppy now?"
+msgstr "지금 플로피에서 드라이버를 읽어들이시겠습니까?"
+
+#. Type: boolean
+#. Description
+#: ../load-floppy.templates:4
+msgid ""
+"You probably need to load drivers from a floppy before continuing with the "
+"installation. If you know that the install will work without extra drivers, "
+"you can skip this step."
+msgstr ""
+"설치를 계속하기 전에 플로피에서 드라이버를 읽어들여야 할 것입니다. 추가 드라"
+"이버 없이도 설치를 할 수 있다면, 이 단계를 건너 뛸 수 있습니다."
+
+#. Type: boolean
+#. Description
+#: ../load-floppy.templates:4
+msgid ""
+"If you do need to load drivers, insert the appropriate driver floppy before "
+"continuing."
+msgstr ""
+"드라이브를 읽어들여야 한다면, 계속 하시기 전에 적절한 드라이버 플로피를 드라"
+"이브에 넣으십시오."
+
+#. Type: text
+#. Description
+#. main-menu
+#: ../load-floppy.templates:15
+msgid "Load drivers from a floppy"
+msgstr "플로피에서 드라이버 읽어들이기"
 
 #. Type: note
 #. Description
@@ -9396,16 +9469,6 @@ msgstr "${MOUNT}에 ${PARTITION} 파티션을 마운트하는 데 실패했습�
 #: ../partconf.templates:123
 msgid "An error occurred when ${PARTITION} was mounted on ${MOUNT}."
 msgstr "${MOUNT}에 ${PARTITION} 파티션을 마운트하는 데 오류가 발생했습니다."
-
-#. Type: error
-#. Description
-#: ../partconf.templates:123
-msgid ""
-"Please check the error log on the third console or /var/log/messages for "
-"more information."
-msgstr ""
-"자세한 정보는 세 번째 콘솔에서 오류 로그를 살펴 보시거나 /var/log/messages를 "
-"살펴보십시오."
 
 #. Type: text
 #. Description
