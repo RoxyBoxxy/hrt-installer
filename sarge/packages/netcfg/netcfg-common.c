@@ -42,11 +42,15 @@
 /* Set if there is currently a progress bar displayed. */
 int netcfg_progress_displayed = 0;
 
+/* IP address vars */
+struct in_addr ipaddress = { 0 };
+struct in_addr gateway = { 0 };
+struct in_addr nameserver_array[4] = { { 0 }, };
+
 /* network config */
 char *interface = NULL;
 char *hostname = NULL;
 char *domain = NULL;
-struct in_addr ipaddress = { 0 };
 int have_domain = 0;
 
 /* File descriptors for ioctls and such */
@@ -358,10 +362,11 @@ int netcfg_get_interface(struct debconfclient *client, char **interface,
 {
     char *inter = NULL, **ifs;
     size_t len;
-    int ret, i;
+    int ret, i, asked;
     int num_interfaces = 0;
     char *ptr = NULL;
     char *ifdsc = NULL;
+    char *old_selection = NULL;
 
     if (*interface) {
         free(*interface);
@@ -376,6 +381,15 @@ int netcfg_get_interface(struct debconfclient *client, char **interface,
 
     num_interfaces = get_all_ifs(1, &ifs);
 
+    /* If no default was provided, use the first in the list of interfaces. */
+    if (! defif && num_interfaces > 0) {
+        defif=ifs[0];
+    }
+
+    /* Remember old interface selection, in case it's preseeded. */
+    debconf_get(client, "netcfg/choose_interface");
+    old_selection = strdup(client->value);
+    
     for (i = 0; i < num_interfaces; i++)
     {
 	size_t newchars;
@@ -396,7 +410,7 @@ int netcfg_get_interface(struct debconfclient *client, char **interface,
 	
         snprintf(temp, newchars, "%s: %s", inter, ifdsc);
 
-	if (num_interfaces > 1 && defif != NULL && !strcmp(defif, inter))
+	if (num_interfaces > 1 && strcmp(defif, inter) == 0)
 		debconf_set(client, "netcfg/choose_interface", temp);
 
 	di_snprintfcat(ptr, len, "%s, ", temp);
@@ -410,6 +424,7 @@ int netcfg_get_interface(struct debconfclient *client, char **interface,
         debconf_input(client, "high", "netcfg/no_interfaces");
         debconf_go(client);
         free(ptr);
+	free(old_selection);
         *numif = 0;
         return 0;
     }
@@ -427,17 +442,24 @@ int netcfg_get_interface(struct debconfclient *client, char **interface,
         debconf_subst(client, "netcfg/choose_interface", "ifchoices", ptr);
         free(ptr);
 
-        debconf_input(client, "critical", "netcfg/choose_interface");
+ 	asked = (debconf_input(client, "critical", "netcfg/choose_interface") == 0);
         ret = debconf_go(client);
 
-        if (ret)
+        /* If the question is not asked, honor preseeded interface name.
+	 * However, if it was preseeded to "auto", or there was no old value,
+	 * leave it set to defif. */
+        if (!asked && strlen(old_selection) && strcmp(old_selection, "auto") != 0) {
+	    debconf_set(client, "netcfg/choose_interface", old_selection);
+	}
+        
+	free(old_selection);
+	
+	if (ret)
           return ret;
-
+	
         debconf_get(client, "netcfg/choose_interface");
         inter = client->value;
 
-        if (ret)
-            return ret;
         if (!inter)
             netcfg_die(client);
     }
@@ -768,4 +790,60 @@ void reap_old_files (void)
 
   while (*ptr)
     unlink(*ptr++);
+}
+
+void netcfg_nameservers_to_array(char *nameservers, struct in_addr array[])
+{
+    char *save, *ptr, *ns;
+    int i;
+
+    if (nameservers) {
+        save = ptr = strdup(nameservers);
+
+        for (i = 0; i < 3; i++)
+        {
+          ns = strtok_r(ptr, " \n\t", &ptr);
+          if (ns)
+            inet_pton (AF_INET, ns, &array[i]);
+          else
+            array[i].s_addr = 0;
+        }
+
+        array[3].s_addr = 0;
+        free(save);
+    } else
+        array[0].s_addr = 0;
+}
+
+int netcfg_get_nameservers (struct debconfclient *client, char **nameservers)
+{
+    char *ptr, ptr1[INET_ADDRSTRLEN];
+    int ret;
+       
+    if (*nameservers)
+        ptr = *nameservers;
+    else if (gateway.s_addr)
+    {
+        inet_ntop (AF_INET, &gateway, ptr1, sizeof (ptr1));
+	ptr = ptr1;
+    }
+    else
+	ptr = "";
+    debconf_set(client, "netcfg/get_nameservers", ptr);
+    
+    debconf_input(client, "critical", "netcfg/get_nameservers");
+    ret = debconf_go(client);
+
+    if (ret)
+      return ret;
+
+    debconf_get(client, "netcfg/get_nameservers");
+    ptr = client->value;
+
+    if (*nameservers)
+        free(*nameservers);
+    *nameservers = NULL;
+    if (ptr)
+        *nameservers = strdup(ptr);
+    return ret;
 }

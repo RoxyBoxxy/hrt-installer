@@ -417,6 +417,20 @@ int netcfg_activate_dhcp (struct debconfclient *client)
             have_domain = 1;
           }
 
+          /* Make sure we have NS going if the DHCP server didn't serve it up */
+          if (resolv_conf_entries() <= 0)
+          {
+            char *nameservers = NULL;
+            
+            if (netcfg_get_nameservers (client, &nameservers) == GO_BACK)
+            {
+              state = ASK_OPTIONS;
+              break;
+            }
+
+            netcfg_nameservers_to_array (nameservers, nameserver_array);
+          }
+          
           state = HOSTNAME;
         }
         break;
@@ -543,3 +557,32 @@ int netcfg_activate_dhcp (struct debconfclient *client)
   }
 } 
 
+/* returns number of 'nameserver' entries in resolv.conf */
+int resolv_conf_entries (void)
+{
+	FILE *f;
+	int count = 0;
+
+	if ((f = fopen("/etc/resolv.conf", "r")) != NULL)
+	{
+		char buf[256];
+
+		while (fgets(buf, 256, f) != NULL)
+		{
+			char *ptr;
+			
+			if ((ptr = strchr(buf, ' ')) != NULL)
+			{
+				*ptr = '\0';
+				if (strcmp(buf, "nameserver") == 0)
+					count++;
+			}
+		}
+
+		fclose(f);
+	}
+	else
+		count = -1;
+
+	return count;
+}

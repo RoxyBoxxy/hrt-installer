@@ -1,3 +1,23 @@
+netcfg (1.08) unstable; urgency=low
+
+  * Joshua Kwan
+    - Ask for nameserver information if the DHCP server did not provide
+      any. closes: #281924
+    - Pass broadcast parameter to ip because it doesn't actually set it.
+      Generally harmless, but we crash DSL modems now. closes: #295482
+    - Fix some translation issues with Choices.
+  * Joey Hess
+    - If heuristics fail to determine a default interface, use the first
+      interface as the default.
+    - Back up netcfg/choose_interface preseeded value, and if the question
+      is not displayed to the user, restore that value, overriding the
+      selected default interface. Unless it was preseeded to "auto", then we
+      use the selected default interface anyway.
+    - That should make interface preseeding work in all situations.
+      Closes: #293682
+
+ -- Joshua Kwan <joshk@triplehelix.org>  Wed, 16 Feb 2005 21:44:33 -0800
+
 netcfg (1.07.1) unstable; urgency=low
 
   * Joshua Kwan
