@@ -1,0 +1,23 @@
+#!/bin/sh
+set -e
+
+partitions () {
+	find /dev/discs/ -follow -type b | grep /part
+}
+
+for prog in /usr/lib/os-probes/init/*; do
+	if [ -x $prog ] && [ -f $prog ]; then
+		$prog || true
+	fi
+done
+
+for partition in $(partitions); do
+	if ! grep -q "^$partition " /proc/mounts; then
+		for test in /usr/lib/os-probes/*; do
+			if [ -x $test ] && [ -f $test ] && \
+			   $test $partition; then
+			   	break
+			fi
+		done
+	fi
+done
