@@ -1,6 +1,6 @@
 DEST=$(PWD)/dest
 
-all: libdebian-installer tools_cdebconf main-menu tools_udpkg anna utils tools_languagechooser tools_ddetect tools_cdrom-detect tools_autopartkit tools_base-installer tools_baseconfig-udeb tools_bterm-unifont tools_bugreporter-udeb tools_cdrom-checker tools_grub-installer tools_kbd-chooser tools_lilo-installer tools_lvmcfg tools_netcfg tools_partconf tools_partitioner tools_pcmcia-udeb tools_prebaseconfig tools_usb-discover tools_userdevfs retriever_cdrom retriever_choose-mirror retriever_file retriever_floppy retriever_net
+all: libdebian-installer tools_cdebconf main-menu tools_udpkg anna utils tools_languagechooser tools_ddetect tools_cdrom-detect tools_autopartkit tools_base-installer tools_baseconfig-udeb tools_bterm-unifont tools_bugreporter-udeb tools_cdrom-checker tools_grub-installer tools_kbd-chooser tools_lilo-installer tools_lvmcfg tools_netcfg tools_partconf tools_partitioner tools_pcmcia-udeb tools_prebaseconfig tools_usb-discover tools_userdevfs retriever_cdrom retriever_choose-mirror retriever_file retriever_floppy retriever_net rootskel
 
 clean:
 	rm .stamp-*
@@ -21,6 +21,11 @@ main-menu: install-libdebconfclient-dev install-libdebian-installer4-dev .stamp-
 .stamp-main-menu: 
 	./compile.sh main-menu . $(DEST)
 	touch .stamp-main-menu
+
+rootskel: .stamp-rootskel
+.stamp-rootskel: 
+	./compile.sh rootskel . $(DEST)
+	touch .stamp-rootskel
 
 tools_udpkg: .stamp-tools_udpkg
 .stamp-tools_udpkg:
