@@ -1,6 +1,6 @@
 DEST=$(PWD)/dest
 
-all: build-depends libdebian-installer tools_cdebconf main-menu tools_udpkg anna utils tools_languagechooser tools_ddetect tools_cdrom-detect tools_autopartkit tools_base-installer tools_baseconfig-udeb tools_bterm-unifont tools_bugreporter-udeb tools_cdrom-checker tools_kbd-chooser tools_lvmcfg tools_netcfg tools_partconf tools_partitioner tools_pcmcia-udeb tools_prebaseconfig tools_usb-discover tools_userdevfs retriever_cdrom retriever_choose-mirror retriever_file retriever_floppy retriever_net rootskel
+all: build-depends libdebian-installer tools_cdebconf main-menu tools_udpkg anna utils tools_languagechooser tools_ddetect tools_cdrom-detect tools_autopartkit tools_base-installer tools_baseconfig-udeb tools_bterm-unifont tools_bugreporter-udeb tools_cdrom-checker tools_kbd-chooser tools_lvmcfg tools_netcfg tools_partconf tools_partitioner tools_pcmcia-udeb tools_prebaseconfig tools_usb-discover tools_userdevfs retriever_cdrom retriever_choose-mirror retriever_file retriever_floppy retriever_net rootskel debian-installer
 
 i386: tools_grub-installer tools_lilo-installer
 
@@ -10,7 +10,7 @@ clean:
 
 build-depends:
 	# all
-	sudo apt-get </dev/tty install automake autoconf libtool fakeroot devscripts apt autotools-dev bc bf-utf-source bison d-shlibs dash debhelper dpkg-dev flex genext2fs glibc-pic iso-codes libgtk2.0-dev libnewt-dev libnewt-pic  libparted1.6-dev libperl-dev libtextwrap-dev libtextwrap1 locales mklibs modutils ncurses-base po-debconf sed slang1-utf8-dev slang1-utf8-pic wget
+	sudo apt-get </dev/tty install automake autoconf libtool fakeroot devscripts apt autotools-dev bc bf-utf-source bison d-shlibs dash debhelper dpkg-dev flex genext2fs glibc-pic iso-codes libgtk2.0-dev libnewt-dev libnewt-pic  libparted1.6-dev libperl-dev libtextwrap-dev libtextwrap1 locales mklibs modutils ncurses-base po-debconf sed slang1-utf8-dev slang1-utf8-pic wget rsync debmirror grep-dctrl
 
 	# !hurd-i386
 	sudo apt-get </dev/tty install libbogl-dev
@@ -23,6 +23,11 @@ build-depends:
 
 	# mips
 	#sudo apt-get </dev/tty install tip22
+
+debian-installer: .stamp-debian-installer
+.stamp-debian-installer:
+	./compile.sh build . $(DEST)
+	touch .stamp-debian-installer
 
 rootskel: .stamp-rootskel
 .stamp-rootskel: 
