@@ -1,0 +1,74 @@
+#!/usr/bin/make -f
+# Sample debian/rules that uses debhelper.
+# GNU copyright 1997 to 1999 by Joey Hess.
+
+PACKAGES=$(shell dh_listpackages)
+DHCP_PACKAGES=netcfg netcfg-dhcp
+
+build: build-stamp
+build-stamp:
+	dh_testdir
+
+	# Add here commands to compile the package.
+	$(MAKE)
+
+	touch build-stamp
+
+clean:
+	dh_testdir
+	dh_testroot
+	rm -f build-stamp
+	rm -f debian/netcfg-dhcp.postinst debian/netcfg-static.postinst \
+	   debian/netcfg.postinst
+
+	# Add here commands to clean up after the build process.
+	-$(MAKE) clean
+
+	dh_clean
+
+install: build
+	dh_testdir
+	dh_testroot
+	dh_clean -k
+	dh_installdirs -A usr/lib/prebaseconfig.d etc/network
+	# Install files that are the same in all packages
+	$(foreach PACKAGE, $(PACKAGES), \
+	  cp $(PACKAGE) debian/$(PACKAGE).postinst; \
+	  install -m 755 prebaseconfig debian/$(PACKAGE)/usr/lib/prebaseconfig.d/40netcfg ;)
+	# Install files that are in all DHCP packages
+	$(foreach PACKAGE, $(DHCP_PACKAGES), \
+		mkdir -p debian/$(PACKAGE)/etc/dhcp ; \
+		mkdir -p debian/$(PACKAGE)/var/dhcp ; )
+
+
+# Build architecture-independent files here.
+binary-indep: build install
+# We have nothing to do by default.
+
+# Build architecture-dependent files here.
+binary-arch: build install
+	dh_testdir
+	dh_testroot
+
+	dh_installdebconf
+
+	(echo ; po2debconf debian/netcfg-common.templates ) \
+	   >> debian/netcfg-static/DEBIAN/templates	
+	(echo ; po2debconf debian/netcfg-common.templates )\
+	   >> debian/netcfg-dhcp/DEBIAN/templates	
+	(echo ; po2debconf debian/netcfg-common.templates )\
+	   >> debian/netcfg/DEBIAN/templates	
+	(echo ; po2debconf debian/netcfg-dhcp.templates )\
+	   >> debian/netcfg/DEBIAN/templates	
+	(echo ; po2debconf debian/netcfg-static.templates )\
+	   >> debian/netcfg/DEBIAN/templates	
+	dh_strip
+	dh_compress
+	dh_fixperms
+	dh_installdeb
+	dh_shlibdeps
+	dh_gencontrol
+	dh_builddeb
+
+binary: binary-indep binary-arch
+.PHONY: build clean binary-indep binary-arch binary install
