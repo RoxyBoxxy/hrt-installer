@@ -1,0 +1,57 @@
+Template: silo-installer/apt-install-failed
+Type: boolean
+Default: false
+_Description: SILO installation failed.  Continue anyway?
+ The 'silo' package failed to install into /target/.  Installing SILO
+ as a boot loader is a required step.  The install problem might however be
+ unrelated to SILO, so continuing the installation may be possible.
+
+Template: silo-installer/failed
+Type: error
+_Description: SILO installation failed
+ Running "/sbin/silo" failed with error code "${ERRCODE}".
+
+Template: silo-installer/success
+Type: note
+_Description: SILO installation successful
+ The SILO bootloader has been successfully installed on your new Debian
+ boot partition, and your system should now be able to boot itself.
+
+Template: debian-installer/silo-installer/title
+Type: text
+# Main menu text
+_Description: Install the SILO boot loader on a hard disk
+
+Template: silo-installer/non-sun-partitions
+Type: boolean
+Default: false
+_Description: Install /boot on a disk with an unsupported partition table?
+ To be bootable from the PROM, silo and the kernel it loads must be
+ installed on a disk which uses Sun disklabels for its partition
+ table.  Your /boot directory is not located on such a disk.  If you
+ proceed, you will not be able to boot your system using SILO, and will
+ need to boot it some other way.
+
+Template: silo-installer/non-ext2-boot
+Type: boolean
+Default: false
+_Description: Use unsupported filesystem type for /boot?
+ SILO requires /boot to be located on an ext2 or ext3 partition on
+ a bootable device.  This means that either the root partition must be
+ an ext2 filesystem, or you must have a separate ext2 partition mounted at
+ /boot.
+ .
+ Currently, /boot is located on a partition of type ${PARTTYPE}.  If you
+ keep this setting, you will not be able to boot your Debian system
+ using SILO.
+
+Template: silo-installer/boot-after-1024cyl
+Type: boolean
+Default: false
+_Description: Install /boot on a disk with an unsupported partition table?
+ You are using a 32-bit SPARC machine. On many of these, it is unlikely that
+ Debian will boot if /boot resides in a partition that extends past the
+ first 1024 cylinders of the hard disk. /boot currently resides in a
+ partition that extends to cylinder ${CYL}. You should change this by reducing
+ the size of the partition or creating a separate, smaller partition just for
+ /boot.
