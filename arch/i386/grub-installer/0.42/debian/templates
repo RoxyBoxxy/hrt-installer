@@ -1,0 +1,87 @@
+Template: grub-installer/with_other_os
+Type: boolean
+Default: true
+_Description: Install the GRUB boot loader to the master boot record?
+ The following other operating systems have been detected on this
+ computer: ${OS_LIST}
+ .
+ If all of your operating systems are listed above, then it should be safe to
+ install the boot loader to the master boot record of your first hard
+ drive. When your computer boots, you will be able to choose to load one of
+ these operating systems or your new Debian system.
+
+Template: grub-installer/only_debian
+Type: boolean
+Default: true
+_Description: Install the GRUB boot loader to the master boot record?
+ It seems that this installation of Debian is the only operating system
+ on this computer. If so, it should be safe to install the boot loader
+ to the master boot record of your first hard drive.
+
+Template: grub-installer/bootdev
+Type: string
+Default: (hd0)
+_Description: Device for boot loader installation:
+ You need to make the newly installed Debian system bootable, by installing
+ the GRUB bootloader on a bootable device. The usual way to do this is to
+ install GRUB on the master boot record of your first hard drive. If you
+ prefer, you can install GRUB elsewhere on the drive, or to another drive,
+ or even to a floppy.
+ .
+ The device can be specified using GRUB's "(hdn)" notation, or as a device
+ in /dev.
+
+Template: grub-installer/apt-install-failed
+Type: boolean
+Default: yes
+_Description: GRUB installation failed.  Continue anyway?
+ The grub package failed to install into /target/.  Installing GRUB
+ as a boot loader is a required step.  The install problem might however be
+ unrelated to GRUB, so continuing the installation may be possible.
+
+Template: grub-installer/grub-install-failed
+Type: error
+_Description: Unable to install GRUB in ${BOOTDEV}
+ Executing 'grub-install ${BOOTDEV}' failed.
+ .
+ This is a fatal error.
+
+Template: grub-installer/update-grub-failed
+Type: error
+_Description: Unable to configure GRUB
+ Executing 'update-grub' failed.
+ .
+ This is a fatal error.
+
+Template: grub-installer/progress/title
+Type: text
+_Description: Installing GRUB boot loader
+
+Template: grub-installer/progress/step_os-probe
+Type: text
+_Description: Looking for other operating systems...
+
+Template: grub-installer/progress/step_install
+Type: text
+_Description: Installing the 'grub' package...
+
+Template: grub-installer/progress/step_bootdev
+Type: text
+_Description: Determining GRUB boot device...
+
+Template: grub-installer/progress/step_install_loader
+Type: text
+_Description: Running "grub-install ${BOOTDEV}"...
+
+Template: grub-installer/progress/step_config_loader
+Type: text
+_Description: Running "update-grub"...
+
+Template: grub-installer/progress/step_update_etc
+Type: text
+_Description: Updating /etc/kernel-img.conf...
+
+Template: debian-installer/grub-installer/title
+Type: text
+#  Main menu item
+_Description: Install the GRUB boot loader on a hard disk
