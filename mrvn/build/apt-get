@@ -1,0 +1,103 @@
+#!/bin/sh
+
+set -e
+
+TYPE=$1
+shift
+PACKAGES=$*
+
+if [ ! $APTDIR ]; then
+  APTDIR=apt
+fi
+
+echo ./apt-get
+echo I: APTDIR=$APTDIR
+echo I: TYPE=$TYPE
+echo I: PACKAGES=$PACKAGES
+
+if [ -f sources.list.local ]; then
+  LIST=sources.list.local
+else
+  LIST=sources.list.$TYPE
+  make sources.list.$TYPE
+fi
+
+# Move debs to another apt cache. Otherwise autoclean will delete !$TYPE.
+if [ $TYPE = deb ]; then
+  APTDIR=$APTDIR.$TYPE
+fi
+
+# All these options make apt read the right sources list, and use APTDIR for
+# everything so it need not run as root.
+APT_GET="apt-get --assume-yes \
+        -o Dir::Etc::sourcelist=`pwd`/$LIST \
+	-o Dir::State=`pwd`/$APTDIR/state \
+	-o Dir::State::Status=`pwd`/$APTDIR/state/status \
+	-o Debug::NoLocking=true \
+	-o Dir::Cache=`pwd`/$APTDIR/cache \
+	--reinstall "
+
+mkdir -p $APTDIR/state/lists/partial
+mkdir -p $APTDIR/cache/archives/partial
+# Prime status file with system libraries
+echo -n > $APTDIR/state/status
+for i in $LIBC_NAME libnewt0.51 libdebconfclient0 libdebian-installer4 \
+	 libdb1-compat libpopt0 slang1a-utf8 libuuid1 libparted1.6-0; do
+  dpkg -s $i >> $APTDIR/state/status
+done
+$APT_GET update || /bin/true
+$APT_GET autoclean
+
+# If there are local (u)debs, remove them from the list of things to
+# get. Then get all the (u)debs that are left to get. Note that the
+# trailing blank on the next line is significant. It makes the sed
+# below always work.
+
+needed="$PACKAGES "
+for file in `find $LOCALUDEBDIR -name "*_*" -printf "%f\n" 2>/dev/null`; do
+  package=`echo $file | cut -d _ -f 1`
+  needed=`echo " $needed " | sed "s/ $package / /g"`
+done
+if [ "$DEBUG" = y ]; then
+  mkdir -p $DEBUGUDEBDIR
+  cd $DEBUGUDEBDIR
+  export DEB_BUILD_OPTIONS="debug"
+  $APT_GET source --build --yes $needed
+  cd ..
+else
+  echo Need to download : $needed
+  if [ -n "$needed" ]; then
+    $APT_GET -dy install $needed
+  fi
+fi
+
+# Now the (u)debs are in APTDIR/cache/archives/ and maybe LOCALUDEBDIR
+# or DEBUGUDEBDIR, but there may be other (u)debs there too besides
+# those we asked for. So link those we asked for to UDEBDIR, renaming
+# them to more useful names. Watch out for duplicates and missing
+# files while doing that.
+rm -rf $UDEBDIR
+mkdir -p $UDEBDIR
+
+lnpkg() {
+  local pkg=$1; local dir=$2 debdir=$3;
+  local L1="`echo $dir/$pkg\_*`"
+  local L2="`echo $L1 | sed -e 's, ,,g'`"
+  if [ "$L1" != "$L2" ]; then
+    echo "Duplicate package $pkg in $dir/";
+    exit 1
+  fi
+  if [ -e $L1 ]; then
+    ln -f $dir/${pkg}_* $debdir/$pkg.$TYPE
+  fi
+}
+
+for package in $PACKAGES; do
+  lnpkg $package $APTDIR/cache/archives $UDEBDIR
+  lnpkg $package $LOCALUDEBDIR $UDEBDIR
+  lnpkg $package $DEBUGUDEBDIR $UDEBDIR
+  if [ ! -e $UDEBDIR/$package.$TYPE ]; then
+    echo "Needed $package not found (looked in $APTDIR/cache/archives/, $LOCALUDEBDIR/, $DEBUGUDEBDIR/)";
+    exit 1
+  fi
+done

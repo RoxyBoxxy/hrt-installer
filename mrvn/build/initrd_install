@@ -1,0 +1,211 @@
+#!/bin/sh -e
+# Install udebs and extra udebs into a tree and run mklibs
+# initrd_install <tree> <initrd> [extras]
+
+set -e
+
+TREE="$1"
+INITRD="$2"
+EXTRAS="$3"
+
+echo I: Installing udebs into tree
+echo I: TREE=$TREE
+echo I: INITRD=$INITRD
+echo I: EXTRAS=$EXTRAS
+
+if [ "$INITRD" = none ]; then
+  # Nothing to install on this tree
+  exit 0;
+fi
+
+if [ ! -d "pkg-lists/initrd-$INITRD" ]; then
+  echo E: pkg-lists/initrd-$INITRD missing
+  exit 1;
+fi
+if [ ! -e "pkg-lists/initrd-$INITRD/common" ]; then
+  echo E: pkg-lists/initrd-$INITRD/common missing
+  exit 1;
+fi
+if [ ! -e "pkg-lists/initrd-$INITRD/$DEB_HOST_ARCH" ]; then
+  echo E: pkg-lists/initrd-$INITRD/$DEB_HOST_ARCH missing
+  exit 1;
+fi
+
+DPKGDIR=$TREE/var/lib/dpkg
+EXTRASDIR=$TREE/driver-tmp
+EXTRASDPKGDIR=$EXTRASDIR/var/lib/dpkg
+
+INITRD_LIST=`./pkg-list initrd-$INITRD $KERNEL_FLAVOUR $KERNELIMAGEVERSION`
+if [ -d pkg-lists/extras-$EXTRA ]; then
+  EXTRAS_LIST=`./pkg-list extras-$INITRD $KERNEL_FLAVOUR $KERNELIMAGEVERSION`
+fi
+
+./apt-get udeb $INITRD_LIST $EXTRAS_LIST
+
+# Set up the basic files [u]dpkg needs.
+mkdir -p $DPKGDIR/info
+touch $DPKGDIR/status
+mkdir -p $TREE/tmp
+
+# Only dpkg needs this stuff, so it can be removed later.
+mkdir -p $DPKGDIR/updates/
+touch $DPKGDIR/available
+
+# Unpack the udebs with dpkg. This command must run as root or fakeroot.
+echo -n > $TREE/diskusage.txt
+oldsize=0; oldblocks=0; oldcount=0;
+for package in $INITRD_LIST; do
+  udeb="$UDEBDIR/$package.udeb"
+  pkg=`basename $udeb`
+  dpkg $DPKG_UNPACK_OPTIONS --root=$TREE --unpack $udeb
+  newsize=`du -bs $TREE | awk '{print $1}'`
+  newblocks=`du -s $TREE | awk '{print $1}'`
+  newcount=`find $TREE -type f | wc -l | awk '{print $1}'`
+  usedsize=`echo $newsize - $oldsize | bc`
+  usedblocks=`echo $newblocks - $oldblocks | bc`
+  usedcount=`echo $newcount - $oldcount | bc`
+  version=`dpkg-deb --info $udeb | grep Version: | awk '{print $2}'`
+  echo " $usedsize B - $usedblocks blocks - $usedcount files used by pkg $pkg (version $version)" >>$TREE/diskusage.txt
+  oldsize=$newsize
+  oldblocks=$newblocks
+  oldcount=$newcount
+done
+sort -n < $TREE/diskusage.txt > $TREE/diskusage.txt.new \
+&& mv $TREE/diskusage.txt.new $TREE/diskusage.txt
+
+# Clean up after dpkg.
+rm -rf $DPKGDIR/updates
+rm -f $DPKGDIR/available $DPKGDIR/*-old $DPKGDIR/lock
+
+# Set up modules.dep, ensure there is at least one standard dir
+# (kernel in this case), so depmod will use its prune list for archs
+# with no modules.
+for VERSION in $KERNELVERSION; do
+  mkdir -p $TREE/lib/modules/$VERSION/kernel
+  depmod -q -a -b $TREE/ $VERSION
+done
+
+# These files depmod makes are used by hotplug, and we shouldn't need
+# them, yet anyway.
+find $TREE/lib/modules/ -name 'modules*' \
+  -not -name modules.dep -not -type d | xargs rm -f
+
+# Create a dev initrd_tree
+mkdir -p $TREE/dev
+if [ $USERDEVFS ]; then
+  # Create initial /dev entries -- only those that are absolutely
+  # required to boot sensibly, though.
+  mknod $TREE/dev/console c 5 1
+  mkdir -p $TREE/dev/vc
+  mknod $TREE/dev/vc/0 c 4 0
+  mknod $TREE/dev/vc/1 c 4 1
+  mknod $TREE/dev/vc/2 c 4 2
+  mknod $TREE/dev/vc/3 c 4 3
+  mknod $TREE/dev/vc/4 c 4 4
+  mknod $TREE/dev/vc/5 c 4 5
+  mkdir -p $TREE/dev/rd
+  mknod $TREE/dev/rd/0 b 1 0
+fi
+
+# Copy terminfo files for slang frontend
+# TODO: terminfo.udeb?
+for file in /etc/terminfo/a/ansi \
+            /etc/terminfo/l/linux \
+            /etc/terminfo/v/vt102; do
+  mkdir -p $TREE/`dirname $file`
+  cp -a $file $TREE/$file
+done
+
+if [ -d pkg-lists/extras-$EXTRA ]; then
+  # Unpack additional driver disks, so mklibs runs on them too.
+  mkdir -p $EXTRASDIR
+  mkdir -p $EXTRASDPKGDIR/info $EXTRASDPKGDIR/updates
+  touch $EXTRASDPKGDIR/status $EXTRASDPKGDIR/available
+  for package in $EXTRAS_LIST; do
+    dpkg --force-overwrite --root=$EXTRASDIR --unpack $UDEBDIR/$package.udeb
+  done
+fi
+
+# Library reduction.
+mkdir -p $TREE/lib
+mklibs -v -d $TREE/lib --root=$TREE `find $TREE -type f -perm +0111 -o -name '*.so'`
+
+# Add missing symlinks for libraries
+# (Needed for mklibs.py)
+/sbin/ldconfig -n $TREE/lib $TREE/usr/lib
+
+# Remove any libraries that are present in both usr/lib and lib, from
+# lib. These were unnecessarily copied in by mklibs, and we want to
+# use the ones in usr/lib instead since they came from udebs. Only
+# libdebconf has this problem so far.
+for lib in `find $TREE/usr/lib/ -name "lib*" -type f -printf "%f\n" | cut -d . -f 1 | sort | uniq`; do
+  rm -f $TREE/lib/$lib.*
+done
+
+# Now we have reduced libraries installed .. but they are not listed
+# in the status file. This nasty thing puts them in, and alters their
+# names to end in -reduced to indicate that they have been modified.
+for package in `dpkg -S \`find $TREE/lib -type f -not -name '*.o' -not -name '*.dep' | sed s:$TREE::\` | cut -d : -f 1 | sort | uniq`; do
+  dpkg -s $package | sed "s/$package/$package-reduced/g" >> $DPKGDIR/status;
+done
+
+# Reduce status file to contain only the elements we care about.
+egrep -i '^((Status|Provides|Depends|Package|Version|Description|installer-menu-item|Description-..):|$$)' $DPKGDIR/status > $DPKGDIR/status.udeb
+rm -f $DPKGDIR/status
+ln -sf status.udeb $DPKGDIR/status
+
+if [ $NO_I18N ]; then
+  # Remove all internationalization from the templates.
+  # Not ideal, but useful if you're very tight on space.
+  for FILE in `find $TREE -name "*.templates"`; do
+    perl -e 'my $status = 0; while (<>) { if (/^[A-Z]/ || /^$$/) { if (/^(Choices|Description)-/) { $status = 0; } else { $status = 1; } } print if ($status); }' < $FILE > temp
+    mv temp $FILE
+  done
+fi
+
+# If the image has pcmcia, reduce the config file to list only entries
+# that there are modules on the image. This saves ~30k.
+if [ -e $TREE/etc/pcmcia/config ]; then
+  ./pcmcia-config-reduce.pl $TREE/etc/pcmcia/config \
+    `if [ -d $EXTRASDIR ]; then find $EXTRASDIR/lib/modules -name \*.o; fi` \
+    `find $TREE/lib/modules/ -name \*.o` \
+   > $TREE/etc/pcmcia/config.reduced
+  mv -f $TREE/etc/pcmcia/config.reduced $TREE/etc/pcmcia/config
+fi
+
+# Strip all kernel modules, just in case they haven't already been
+for module in `find $TREE/lib/modules/ -name '*.o'`; do \
+  strip -R .comment -R .note -g $module; \
+done
+
+# Remove some unnecessary dpkg files.
+for file in `find $TREE/var/lib/dpkg/info -name '*.md5sums' -o \
+	    -name '*.postrm' -o -name '*.prerm' -o -name '*.preinst' -o \
+	    -name '*.list'`; do
+  if echo $file | grep -qv '\.list'; then
+    echo "** Removing unnecessary control file $file"
+  fi
+  rm $file
+done
+
+# Collect the used UTF-8 strings, to know which glyphs to include in
+# the font.  Using strings is not the best way, but no better
+# suggestion has been made yet.
+cp graphic.utf $TREE/all.utf
+if [ -d $EXTRASDPKGDIR ]; then
+  if [ -n "`find $EXTRASDPKGDIR/info/ -name "*.templates"`" ]; then
+    cat $EXTRASDPKGDIR/info/*.templates >> $TREE/all.utf
+  fi
+fi
+
+if [ -n "`find $DPKGDIR/info/ -name "*.templates"`" ]; then
+  cat $DPKGDIR/info/*.templates >> $TREE/all.utf
+fi
+find $TREE -type f -not -name all.utf | xargs strings >> $TREE/all.utf
+
+# Remove additional driver disk contents now that we're done with them.
+rm -rf $EXTRASDIR
+
+# FIXME: busybox should not have an linuxrc
+rm $TREE/linuxrc || /bin/true
+

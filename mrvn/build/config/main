@@ -1,0 +1,48 @@
+# set DEBUG to y if you want to get the source for and compile 
+# debug versions of the needed udebs
+#DEBUG = y
+
+# List here any libraries that need to be put on the system. Generally
+# this is not needed except for libnss_* libraries, which will not be
+# automatically pulled in by the library reduction code. Wildcards are
+# allowed.
+#EXTRALIBS =
+
+# List here any extra udebs that are not in the list file but that
+# should still be included on the system.
+#EXTRAS =
+
+# This variable can be used to copy in additional files from the system
+# that is doing the build. Useful if you need to include strace, or gdb,
+# or just something extra on a floppy.
+#EXTRAFILES = /usr/bin/strace
+
+# The library reducer to use. Can be mklibs.sh or mklibs.py.
+MKLIBS = mklibs 
+
+# Debian-installer needs a local repository with partial content to
+# create cdrom images. You can run "make mirror" whenever you wish to
+# update it or delete the stamp/mirror-update file. The variables
+# below are passed to debmirror, see there for more.
+
+# rsync mirror:
+METHOD=rsync
+HOST=ftp.debian.org
+ROOT=:debian
+
+## ftp mirror
+#METHOD=ftp
+#HOST=ftp.debian.org
+#ROOT=debian
+
+# Define here if debian-installer should be built with modules from
+# stable, testing or unstable. Note that currently only unstable
+# contains installer modules. SUITE must be an alias and CODENAME must
+# be a real release name or the mirror creation will fail with rsync.
+SUITE = unstable
+CODENAME = sid
+
+# Options to pass to dpkg when it is unpacking the udebs to create the
+# image. None should be needed, but --force-overwrite might need to be
+# enabled from time to time if udebs have conflicting files.
+DPKG_UNPACK_OPTIONS = --force-overwrite

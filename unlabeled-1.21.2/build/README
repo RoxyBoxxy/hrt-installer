@@ -1,0 +1,48 @@
+The files in this directory are used to build the Debian installer.
+Basically it consists of downloading udebs, unpacking them, applying some
+magic (library reduction etc.) and building an image.
+
+Recipe:
+ - Install the build-dependencies on the host system
+   (run dpkg-checkbuilddeps).
+ - Read config/main and add changes to that in config/local (set HOST
+   to a mirror near you)
+ - Run "debuild -us -uc -B" to create images in dest/
+
+A more detailed overview of how the installer is built:
+
+* config/main contains the HOST and METHOD used for creating a partial
+  mirror of needed udebs and debs. Only the rsync method is tested and
+  I believe ftp method will currently not work. This mirror is only
+  created once unless you run "make mrproper" or "make mirror".
+* The Makefile is configured via the make fragements in the config
+  directory. There are per-arch and per-image fragments that are included
+  by the main Makefile. There is also a make subdirectory, with
+  architecture-specific fragements that are included into the makefile for
+  non-configuration items.
+* config/local can be added to override anything set in other fragments,
+  that is local to your system, and that you want to avoid accidentially
+  committing. This won't yet work for config/targets yet.
+* pkg-lists and media-lists have subdirectories for the different
+  image types that list udebs and debs that are put on each image.
+  Pkg-lists list the udebs installed onto the initrd while media-lists
+  list files that are copied as (u)debs onto the media. The common
+  files list udebs common to all architectures, and the files named by
+  architecture list files specific to an architecture. Pkg-lists files
+  can have #include lines to include files from pkg-lists. Also,
+  ${kernel:Version} in these files (pkg-lists and media-lists) is
+  replaced with the kernel version, as set in the KERNELIMAGEVERSION
+  variable (plus the KERNEL_FLAVOUR variable).
+* If you have some udebs that are not available on your mirror yet,
+  you can drop them in localudebs/ and they will be used. This
+  currently only works for the initrd and not for files copied onto a
+  medium.
+* dpkg is used to unpack the udebs for an initrd into the build directory.
+* A customized set of reduced libraries is generated to correspond to the
+  udebs that were installed.
+* FIXME: (this isn't done yet) Some boot images have associated
+  "driver" disks. These disks just get udebs put on them. They are
+  also unpacked and library reduction is run against them when doing
+  library reduction for their parent image. 
+* FIXME: (not ported over yet) "make demo" (run as root) will chroot
+  into the system.

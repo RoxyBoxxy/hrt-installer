@@ -1,0 +1,34 @@
+Template: lilo-installer/bootdev
+Type: string
+_Description: Device for boot loader installation:
+ LILO should install the boot block on a bootable device. This is usually
+ the first hard drive, but could be in a partition if you want to use
+ another boot manager as the primary boot manager.
+
+Template: lilo-installer/serial-console
+Type: note
+_Description: LILO configured to use a serial console
+ LILO is configured to use serial port ${PORT} as the console.
+ The serial port speed is set to ${SPEED}.
+
+Template: lilo-installer/activate-part
+Type: boolean
+Default: true
+_Description: Would you like to make this partition active?
+ You have chosen to install LILO on a partition that is not the active one.
+ If this partition is not marked active, then LILO will not be loaded by the
+ bootloader.  This may cause you to be unable to boot into the system
+ that is being installed.
+ .
+ You should make this partition active unless you have another bootloader
+ that will allow you to access your new Linux installation.
+
+Template: lilo-installer/failed
+Text: error
+_Description: LILO installation failed
+ Running "/sbin/lilo" failed with error code "${ERRCODE}".
+
+Template: debian-installer/lilo-installer/title
+Type: text
+#  Main menu item
+_Description: Install LILO boot loader on a hard disk

@@ -1,0 +1,86 @@
+#!/usr/bin/make -f
+# Sample debian/rules that uses debhelper.
+# GNU copyright 1997 to 1999 by Joey Hess.
+
+# Uncomment this to turn on verbose mode.
+#export DH_VERBOSE=1
+
+# This is the debhelper compatability version to use.
+export DH_COMPAT=2
+
+PACKAGES=$(shell dh_listpackages)
+VERSION=$(shell dpkg-parsechangelog | grep ^Version: | cut -d ' ' -f 2)
+ARCH=$(shell dpkg --print-architecture)
+
+configure: configure-stamp
+configure-stamp:
+	dh_testdir
+	# Add here commands to configure the package.
+
+	touch configure-stamp
+
+build: configure-stamp build-stamp
+build-stamp:
+	dh_testdir
+
+	# Add here commands to compile the package.
+	$(MAKE)
+
+	touch build-stamp
+
+clean:
+	dh_testdir
+	dh_testroot
+	rm -f build-stamp configure-stamp
+	rm -f debian/netcfg-dynamic.postinst debian/netcfg-static.postinst
+
+	# Add here commands to clean up after the build process.
+	-$(MAKE) clean
+
+	dh_clean
+
+install: build
+	dh_testdir
+	dh_testroot
+	dh_clean -k
+	cp netcfg-dynamic debian/netcfg-dynamic.postinst
+	cp netcfg-static debian/netcfg-static.postinst
+	mkdir -p debian/netcfg-dynamic/etc/dhcp debian/netcfg-dynamic/var/dhcp
+	mkdir -p debian/netcfg-static/etc/network
+	mkdir -p debian/netcfg-dynamic/usr/share/udhcpc
+	install -m755 udhcpc.default.script debian/netcfg-dynamic/usr/share/udhcpc/default.script
+
+# Build architecture-independent files here.
+binary-indep: build install
+# We have nothing to do by default.
+
+# Build architecture-dependent files here.
+binary-arch: build install
+	dh_testdir
+	dh_testroot
+
+	dh_installdebconf
+
+	(echo ; po2debconf debian/netcfg-common.templates ) \
+	   >> debian/netcfg-static/DEBIAN/templates	
+	(echo ; po2debconf debian/netcfg-common.templates )\
+	   >> debian/netcfg-dynamic/DEBIAN/templates	
+	cp debian/menutest-common debian/netcfg-dynamic/DEBIAN/menutest	
+	cp debian/menutest-common debian/netcfg-static/DEBIAN/menutest	
+	dh_strip
+	dh_compress
+	dh_fixperms
+	dh_installdeb
+	dh_shlibdeps
+	$(foreach PACKAGE, $(PACKAGES), \
+	( dpkg-gencontrol -Pdebian/$(PACKAGE) -p$(PACKAGE) \
+	-Tdebian/$(PACKAGE).substvars \
+	-n$(PACKAGE)_$(VERSION)_$(ARCH).udeb ) ; )
+	$(foreach PACKAGE, $(PACKAGES), \
+	(cd debian ; \
+	dpkg-deb -b $(PACKAGE) ../../$(PACKAGE)_$(VERSION)_$(ARCH).udeb \
+	); )
+
+
+binary: binary-indep binary-arch
+.PHONY: build clean binary-indep binary-arch binary install configure

@@ -1,0 +1,42 @@
+# Make cdrom bootable pre and post image creation
+
+arch-cdrom-pre_image:
+	$(MAKE) $(DEST)/floppy-boot-$(CDROM_INITRD).img FLOPPY_SIZE=2880
+	mkdir -p $(TREE_DIR)/boot
+	cp $(DEST)/floppy-boot-$(CDROM_INITRD).img $(TREE_DIR)/boot/boot.img
+#	$(foreach NAME,$(KERNELNAME), \
+#		cp -f $(TEMP)/$(NAME) $(DEST)/$(BOOT)-linux; )
+#	cp  boot/i386/syslinux.cfg $(DEST)/$(BOOT)-syslinux.cfg
+
+arch-cdrom-post_image:
+
+arch-cdrom-image:
+	mkisofs -r -J -b boot/boot.img -o $(TEMP_IMAGE) $(TREE_DIR)
+
+
+# Floppies
+
+# Make floppy bootable, install kernel+initrd into tree_dir
+arch-floppy-pre_image:
+	-if [ "$(UPX)" ] ; then \
+		$(UPX) -9 $(TEMP)/$(KERNELNAME); \
+	fi
+
+	cp $(TEMP)/$(KERNELNAME) $(TREE_DIR)/linux
+
+	# syslinux is used to make the floppy bootable
+	cp boot/i386/syslinux.cfg $(TREE_DIR)/
+
+# Make floppy bootable, install syslinux
+arch-floppy-post_image:
+	# syslinux is used to make the floppy bootable
+	syslinux $(SYSLINUX_OPTS) $(TEMP_IMAGE)
+
+# Create a floppy image.
+# 1. make a dos filesystem image
+# 2. copy over the floppy_tree
+arch-floppy-image:
+	mkfs.msdos -i $(DOS_VOLUME_ID) -n $(DOS_VOLUME_LABEL) -C $(TEMP_IMAGE) $(FLOPPY_SIZE)
+	# mkfs.msdos gets the mode wrong (bug filed)
+	chmod 644 $(TEMP_IMAGE)
+	mcopy -sQ -i$(TEMP_IMAGE) $(TREE_DIR)/* ::

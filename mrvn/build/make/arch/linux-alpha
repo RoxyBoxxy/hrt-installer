@@ -1,0 +1,16 @@
+# Make cdrom bootable pre and post image creation
+
+arch-cdrom-pre_image:
+	# copy ramdisk and kernel
+	mkdir -p $(TREE_DIR)/boot $(TREE_DIR)/etc
+	cp $(DEST)/initrd-$(CDROM_INITRD).img $(TREE_DIR)/boot/root.bin
+	cp $(TEMP)/vmlinuz $(TREE_DIR)/boot/linux
+	cp boot/alpha/aboot.conf $(TREE_DIR)/etc/
+	cp /boot/bootlx $(TREE_DIR)/boot
+
+arch-cdrom-post_image:
+	# make bootable for SRM
+	isomarkboot $(TEMP_IMAGE) /boot/bootlx
+
+arch-cdrom-image:
+	mkisofs -r -J -o $(TEMP_IMAGE) $(TREE_DIR)/

@@ -1,0 +1,19 @@
+ifeq ($(TYPE), floppy)
+image:
+	$(MAKE) dest/floppy-boot-bootfloppy.img
+	$(MAKE) dest/floppy-root-root.img
+	$(MAKE) dest/floppy-data-drivers_cd.img
+	$(MAKE) dest/floppy-data-drivers_net.img
+endif
+
+ifeq ($(TYPE), net)
+image:
+	$(MAKE) dest/initrd-netboot.img
+endif
+
+ifeq ($(TYPE), cdrom)
+image:
+	$(MAKE) dest/cdrom-boot-none-none.img
+	$(MAKE) dest/cdrom-udeb-all-none.img
+	$(MAKE) dest/cdrom-base-all-base.img
+endif

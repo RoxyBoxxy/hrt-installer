@@ -1,0 +1,86 @@
+#!/bin/sh
+# Copy a bunch of (u)debs into $TREE and create mirror metadata
+# mirror_install <tree> <type> <list>
+
+set -e
+
+TREE=$1
+TYPE=$2
+LIST=$3
+
+if [ "$LIST" = none ]; then
+  # Nothing to install on this tree
+  exit 0;
+fi
+
+if [ ! -d "pkg-lists/${TYPE}-$LIST" ]; then
+    echo E: pkg-lists/${TYPE}-$LIST missing
+    exit 1
+fi
+if [ ! -e "pkg-lists/${TYPE}-$LIST/common" ]; then
+  echo E: pkg-lists/${TYPE}-$LIST/common missing
+  exit 1;
+fi
+if [ ! -e "pkg-lists/${TYPE}-$LIST/$DEB_HOST_ARCH" ]; then
+  echo E: pkg-lists/${TYPE}-$LIST/$DEB_HOST_ARCH missing
+  exit 1;
+fi
+
+# Create meta data
+mkdir -p $TREE/.disk
+echo -n "Debian GNU/Linux 3.1 \"Unstable\" - Unofficial $DEB_HOST_ARCH D-I (20031017)" >$TREE/.disk/info
+
+PACKAGES=`./pkg-list ${TYPE}-$LIST $KERNEL_FLAVOUR $KERNELIMAGEVERSION`
+./apt-get $TYPE $PACKAGES
+
+if [ $TYPE = deb ]; then
+  DIR=$TREE/dists/$SUITE/main/binary-$DEB_HOST_ARCH/
+  touch $TREE/.disk/base_installable
+  echo "main" > $TREE/.disk/base_components
+else
+  DIR=$TREE/dists/$SUITE/main/debian-installer/binary-$DEB_HOST_ARCH/
+  cp template/cdrom-udebs/udeb_include $TREE/.disk/
+fi
+
+mkdir -p $DIR
+mkdir -p $TREE/pool
+touch $DIR/Packages
+
+echo I: copying packages into tree
+for package in $PACKAGES; do
+  cp $UDEBDIR/$package.$TYPE $TREE/pool/
+  dpkg -f $UDEBDIR/$package.$TYPE >> $DIR/Packages
+  echo $TREE/pool/$package.$TYPE
+  echo "Filename: pool/$package.$TYPE" >> $DIR/Packages
+  echo "Size: `wc -c < $TREE/pool/$package.$TYPE`" >> $DIR/Packages
+  echo "MD5sum: `md5sum $TREE/pool/$package.$TYPE | cut -b1-32`" >> $DIR/Packages
+  echo >> $DIR/Packages
+done
+
+# add signatures and finish mirror
+echo I: signing Packages
+echo "Origin: Debian" > $TREE/dists/$SUITE/Release
+echo "Label: Debian" >> $TREE/dists/$SUITE/Release
+echo "Suite: $SUITE" >> $TREE/dists/$SUITE/Release
+echo "Codename: $CODENAME" >> $TREE/dists/$SUITE/Release
+echo "Date: `date`" >> $TREE/dists/$SUITE/Release
+echo "Architectures: $DEB_HOST_ARCH" >> $TREE/dists/$SUITE/Release
+echo "Components: main" >> $TREE/dists/$SUITE/Release
+echo "Description: Debian Installer partial mirror" >> $TREE/dists/$SUITE/Release
+echo "MD5Sum:" >> $TREE/dists/$SUITE/Release
+for NAME in main/binary-$DEB_HOST_ARCH/Packages \
+	    main/debian-installer/binary-$DEB_HOST_ARCH/Packages; do
+  if [ -f $TREE/dists/$SUITE/$NAME ]; then
+    gzip -9 < $TREE/dists/$SUITE/$NAME > $TREE/dists/$SUITE/$NAME.gz
+    echo " `md5sum $TREE/dists/$SUITE/$NAME | cut -b0-32` `wc -c $TREE/dists/$SUITE/$NAME | cut -d" " -f1` $NAME" >> $TREE/dists/$SUITE/Release
+    echo " `md5sum $TREE/dists/$SUITE/$NAME.gz | cut -b0-32` `wc -c $TREE/dists/$SUITE/$NAME.gz | cut -d" " -f1` $NAME.gz" >> $TREE/dists/$SUITE/Release
+  fi
+done
+echo "Done: yes" >> $TREE/dists/$SUITE/Release
+
+# Add some links so the mirror will allways be found
+for name in woody sarge sid stable testing unstable; do
+  if [ ! -e $TREE/dists/$name ]; then
+    ln -s $SUITE $TREE/dists/$name
+  fi
+done

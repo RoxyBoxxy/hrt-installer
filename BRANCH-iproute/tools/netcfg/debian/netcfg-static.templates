@@ -1,0 +1,90 @@
+Template: debian-installer/netcfg/static/common/confirm_pointopoint
+Type: boolean
+Default: true
+_Description: Is this configuration correct?
+  interface     = ${interface}
+  gateway       = ${gateway}
+
+Template: debian-installer/netcfg/static/common/pointopoint
+Type: boolean
+Default: false
+Description: internal: pointopoint
+
+Template: debian-installer/netcfg/static/common/pointopoint_gateway
+Type: boolean
+Default: true
+_Description: Gateway?
+ Is this interface the connection to your default gateway?
+
+Template: debian-installer/netcfg/static/inet/address
+Type: string
+_Description: IP address?
+ The IP address is unique to your computer and consists of four numbers
+ separated by periods.  If you don't know what to use here, consult your
+ network administrator.
+
+Template: debian-installer/netcfg/static/inet/netmask
+Type: string
+Default: 255.255.255.0
+_Description: Netmask?
+ The netmask is used to determine which machines are local to your
+ network.  Consult your network administrator if you do not know the
+ value.  The netmask should be entered as four numbers separated by
+ periods.
+
+Template: debian-installer/netcfg/static/inet/gateway
+Type: string
+_Description: Gateway?
+ This is an IP address (four numbers separated by periods) that indicates
+ the gateway router, also known as the default router.  All traffic that
+ goes outside your LAN (for instance, to the Internet) is sent through this
+ router.  In rare circumstances, you may have no router; in that case, you
+ can leave this blank.  If you don't know the proper answer to this
+ question, consult your network administrator.
+
+Template: debian-installer/netcfg/static/inet6/address
+Type: string
+_Description: IP address?
+ The IP address is unique to your computer and consists of 8 hexadecimal
+ numbers separated by colons.  If you don't know what to use here, consult your
+ network administrator.
+
+Template: debian-installer/netcfg/static/inet6/netmask
+Type: string
+_Description: Netmask?
+ The netmask is used to determine which machines are local to your
+ network.  Consult your network administrator if you do not know the
+ value.  The netmask should be entered as a single number.
+
+Template: debian-installer/netcfg/static/inet6/gateway
+Type: string
+_Description: Gateway?
+ This is an IP address that indicates the gateway router, also known as the
+ default router.  All traffic that goes outside your LAN (for instance, to the
+ Internet) is sent through this router.  In rare circumstances, you may have no
+ router; in that case, you can leave this blank.  If you don't know the proper
+ answer to this question, consult your network administrator.
+
+Template: debian-installer/netcfg/static/confirm
+Type: boolean
+Default: true
+_Description: Is this configuration correct?
+  interface     = ${interface}
+  address       = ${address}
+  netmask       = ${netmask}
+  gateway       = ${gateway}
+
+Template: debian-installer/netcfg/static/confirm_pointopoint
+Type: boolean
+Default: true
+_Description: Is this configuration correct?
+  interface     = ${interface}
+  address       = ${address}
+
+Template: debian-installer/netcfg/static/gateway_unreachable
+Type: note
+_Description: The gateway you entered is unreachable.
+ You may have made an error entering your ipaddress, netmask and/or
+ gateway.
+
+

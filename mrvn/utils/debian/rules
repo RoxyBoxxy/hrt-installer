@@ -1,0 +1,79 @@
+#!/usr/bin/make -f
+# Sample debian/rules that uses debhelper.
+# GNU copyright 1997 to 1999 by Joey Hess.
+
+# Uncomment this to turn on verbose mode.
+#export DH_VERBOSE=1
+
+ARCH_PACKAGES=$(shell dh_listpackages -a)
+INDEP_PACKAGES=$(shell dh_listpackages -i)
+VERSION=$(shell dpkg-parsechangelog | grep ^Version: | cut -d ' ' -f 2)
+ARCH=$(shell dpkg --print-architecture)
+
+# This is the debhelper compatability version to use.
+export DH_COMPAT=2
+
+build: build-stamp
+build-stamp:
+	dh_testdir
+	$(MAKE)
+	touch build-stamp
+
+clean:
+	dh_testdir
+	dh_testroot
+	rm -f build-stamp
+	-$(MAKE) clean
+
+	dh_clean
+
+install: build
+	dh_testdir
+	dh_testroot
+	dh_clean -k
+	dh_installdirs
+	install utils debian/di-utils/bin/utils
+	ln -s utils debian/di-utils/bin/exec
+	ln -s utils debian/di-utils/bin/mapdevfs
+	ln -s utils debian/di-utils/bin/shell
+
+# Build architecture-independent files here.
+binary-indep: build install
+	dh_testdir
+	dh_testroot
+	dh_installdebconf
+	dh_strip
+	dh_compress
+	dh_fixperms
+	dh_installdeb
+	dh_shlibdeps
+	$(foreach PACKAGE, $(INDEP_PACKAGES), \
+	( if [ -f debian/$(PACKAGE).menutest ]; then \
+	  install debian/$(PACKAGE).menutest debian/$(PACKAGE)/DEBIAN/menutest ; fi; \
+	 dpkg-gencontrol -Pdebian/$(PACKAGE) -isp -p$(PACKAGE) \
+	-n$(PACKAGE)_$(VERSION)_all.udeb ) ; )
+	@$(foreach PACKAGE, $(INDEP_PACKAGES), \
+	(cd debian ; \
+		dpkg-deb -b $(PACKAGE) ../../$(PACKAGE)_$(VERSION)_all.udeb \
+		); )
+
+# Build architecture-dependent files here.
+binary-arch: build install
+	dh_testdir
+	dh_testroot
+	dh_installdebconf
+	dh_strip
+	dh_compress
+	dh_fixperms
+	dh_installdeb
+	dh_shlibdeps
+	$(foreach PACKAGE, $(ARCH_PACKAGES), \
+	( dpkg-gencontrol -Pdebian/$(PACKAGE) -isp -p$(PACKAGE) \
+	-n$(PACKAGE)_$(VERSION)_$(ARCH).udeb ) ; )
+	@$(foreach PACKAGE, $(ARCH_PACKAGES), \
+	(cd debian ; \
+		dpkg-deb -b $(PACKAGE) ../../$(PACKAGE)_$(VERSION)_$(ARCH).udeb \
+		); )
+
+binary: binary-indep binary-arch
+.PHONY: build clean binary-indep binary-arch binary install

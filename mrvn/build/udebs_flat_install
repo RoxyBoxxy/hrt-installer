@@ -1,0 +1,36 @@
+#!/bin/sh
+# Copy a bunch of udebs into $TREE and create udeb_include
+# udebs_flat_install <tree> <list>
+
+set -e
+
+TREE=$1
+LIST=$2
+
+if [ "$LIST" = none ]; then
+  # Nothing to install on this tree
+  exit 0;
+fi
+
+if [ ! -d "pkg-lists/udeb-$LIST" ]; then
+    echo E: pkg-lists/udeb-$LIST missing
+    exit 1
+fi
+if [ ! -e "pkg-lists/udeb-$LIST/common" ]; then
+  echo E: pkg-lists/udeb-$LIST/common missing
+  exit 1;
+fi
+if [ ! -e "pkg-lists/udeb-$LIST/$DEB_HOST_ARCH" ]; then
+  echo E: pkg-lists/udeb-$LIST/$DEB_HOST_ARCH missing
+  exit 1;
+fi
+
+UDEBS_LIST=`./pkg-list udeb-$LIST $KERNEL_FLAVOUR $KERNELIMAGEVERSION`
+./apt-get udeb $UDEBS_LIST
+
+echo I: copying packages into tree
+mkdir -p $TREE
+echo $UDEBS_LIST | tr " " "\n" > $TREE/udeb_include
+for package in $UDEBS_LIST; do
+  cp $UDEBDIR/$package.udeb $TREE
+done
