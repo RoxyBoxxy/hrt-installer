@@ -1,0 +1,100 @@
+#!/bin/sh
+
+. /lib/partman/definitions.sh
+
+abort () {
+    if [ -f /var/run/parted_server.pid ]; then
+	open_infifo
+	write_line "QUIT"
+	close_infifo
+	rm /var/run/parted_server.pid
+    fi
+    exit $1
+}
+
+db_capb backup
+
+# Measure the width of partman/text/number here to make things faster.
+# number_width is used only in visual.d/number
+db_metaget partman/text/number description
+RET=$(printf "$RET" '')
+RET=$(stralign 50 "$RET" | sed 's/[^ ]//g')
+number_width=$((2 + 50 - ${#RET}))
+export number_width
+
+
+# Here is maybe not a good place to set deci (TODO)
+#db_metaget partman/text/deci description
+#deci="$RET"
+#export deci
+
+# The comma has special meaning for debconf.  Lets force dot untill we
+# discover where the comma has to be escaped..
+deci='.'
+
+if [ -e /var/lib/partman ]; then 
+    rm -rf /var/lib/partman 
+fi
+
+mkdir /var/lib/partman
+
+while true; do
+    
+    initcount=`ls /lib/partman/init.d/* | wc -l`
+    db_progress START 0 $initcount partman/progress/init/title
+    for s in /lib/partman/init.d/*; do
+	if [ -x $s ]; then
+	    base=$(basename $s | sed 's/[0-9]*//')
+	    # Not every init script has, or needs, its own progress
+	    # template. Add them to slow init scripts only.
+	    if ! db_progress INFO partman/progress/init/$base; then
+		    db_progress INFO partman/progress/init/fallback
+            fi
+	    if ! $s; then
+	        db_progress STOP
+                abort 10
+            fi
+	fi
+	db_progress STEP 1
+    done
+    db_progress STOP
+    
+    while true; do
+	ask_user /lib/partman/choose_partition
+	exitcode=$?
+	[ $exitcode -ge 100 ] && break
+    done
+    
+    if [ $exitcode -eq 255 ]; then
+	abort 1
+    fi
+    
+    db_reset partman/confirm
+    db_input critical partman/confirm
+    db_go || true
+    db_get partman/confirm
+    if [ "$RET" = false ]; then
+	    abort 10 # back up to main menu
+    fi
+    
+    for s in /lib/partman/commit.d/*; do
+	if [ -x $s ]; then
+	    $s || continue 2
+	fi
+    done
+    
+    for s in /lib/partman/finish.d/*; do
+	if [ -x $s ]; then
+	    $s || {
+		status=$?
+		if [ "$status" = 1 ]; then
+		    continue 2
+		else
+		    abort $status
+		fi
+	    }
+	fi
+    done
+
+    break
+done    
