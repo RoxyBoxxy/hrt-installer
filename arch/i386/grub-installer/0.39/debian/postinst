@@ -1,0 +1,335 @@
+#! /bin/sh
+
+set -e
+. /usr/share/debconf/confmodule
+#set -x
+
+newline="
+"
+
+db_capb backup
+
+log=/var/log/messages
+
+log() {
+    logger -t grub-installer "$@"
+}
+
+error() {
+    log "error: $@"
+}
+
+info() {
+    log "info: $@"
+}
+
+# This is copied from update-grub. We've requested that it be moved
+# to a utility or shell library.
+device_map=/target/boot/grub/device.map
+# Usage: convert os_device
+# Convert an OS device to the corresponding GRUB drive.
+# This part is OS-specific.
+convert () {
+#    # First, check if the device file exists.
+#    if test -e "$1"; then
+#		:
+#    else
+#		echo "$1: Not found or not a block device." 1>&2
+#		exit 1
+#    fi
+
+	host_os=`uname -s | tr '[A-Z]' '[a-z]'`
+
+    # Break the device name into the disk part and the partition part.
+    case "$host_os" in
+    linux*)
+		tmp_disk=`echo "$1" | sed -e 's%\([sh]d[a-z]\)[0-9]*$%\1%' \
+				  -e 's%\(fd[0-9]*\)$%\1%' \
+				  -e 's%/part[0-9]*$%/disc%' \
+				  -e 's%\(c[0-7]d[0-9]*\).*$%\1%'`
+		tmp_part=`echo "$1" | sed -e 's%.*/[sh]d[a-z]\([0-9]*\)$%\1%' \
+				  -e 's%.*/fd[0-9]*$%%' \
+				  -e 's%.*/floppy/[0-9]*$%%' \
+				  -e 's%.*/\(disc\|part\([0-9]*\)\)$%\2%' \
+				  -e 's%.*c[0-7]d[0-9]*p*%%'`
+	;;
+    gnu*)
+		tmp_disk=`echo "$1" | sed 's%\([sh]d[0-9]*\).*%\1%'`
+		tmp_part=`echo "$1" | sed "s%$tmp_disk%%"` ;;
+    freebsd*)
+		tmp_disk=`echo "$1" | sed 's%r\{0,1\}\([saw]d[0-9]*\).*$%r\1%' \
+			    | sed 's%r\{0,1\}\(da[0-9]*\).*$%r\1%'`
+		tmp_part=`echo "$1" \
+	    		| sed "s%.*/r\{0,1\}[saw]d[0-9]\(s[0-9]*[a-h]\)%\1%" \
+       	    	| sed "s%.*/r\{0,1\}da[0-9]\(s[0-9]*[a-h]\)%\1%"`
+	;;
+    netbsd*)
+		tmp_disk=`echo "$1" | sed 's%r\{0,1\}\([sw]d[0-9]*\).*$%r\1d%' \
+	    		| sed 's%r\{0,1\}\(fd[0-9]*\).*$%r\1a%'`
+		tmp_part=`echo "$1" \
+	    		| sed "s%.*/r\{0,1\}[sw]d[0-9]\([abe-p]\)%\1%"`
+	;;
+    *)
+		echo "update-grub does not support your OS yet." 1>&2
+		exit 1 ;;
+    esac
+
+    # Get the drive name.
+    tmp_drive=`grep -v '^#' $device_map | grep "$tmp_disk *$" \
+			| sed 's%.*\(([hf]d[0-9][a-g0-9,]*)\).*%\1%'`
+
+    # If not found, print an error message and exit.
+    if test "x$tmp_drive" = x; then
+		echo "$1 does not have any corresponding BIOS drive." 1>&2
+		exit 1
+    fi
+
+    if test "x$tmp_part" != x; then
+		# If a partition is specified, we need to translate it into the
+		# GRUB's syntax.
+		case "$host_os" in
+		linux*)
+	    	echo "$tmp_drive" | sed "s%)$%,`expr $tmp_part - 1`)%" ;;
+		gnu*)
+	    	if echo $tmp_part | grep "^s" >/dev/null; then
+				tmp_pc_slice=`echo $tmp_part \
+		    		| sed "s%s\([0-9]*\)[a-g]*$%\1%"`
+				tmp_drive=`echo "$tmp_drive" \
+		    		| sed "s%)%,\`expr "$tmp_pc_slice" - 1\`)%"`
+	    	fi
+	    	if echo $tmp_part | grep "[a-g]$" >/dev/null; then
+				tmp_bsd_partition=`echo "$tmp_part" \
+		    		| sed "s%[^a-g]*\([a-g]\)$%\1%"`
+				tmp_drive=`echo "$tmp_drive" \
+		    		| sed "s%)%,$tmp_bsd_partition)%"`
+	    	fi
+	    	echo "$tmp_drive" ;;
+		freebsd*)
+	    	if echo $tmp_part | grep "^s" >/dev/null; then
+				tmp_pc_slice=`echo $tmp_part \
+		    		| sed "s%s\([0-9]*\)[a-h]*$%\1%"`
+				tmp_drive=`echo "$tmp_drive" \
+		    		| sed "s%)%,\`expr "$tmp_pc_slice" - 1\`)%"`
+	    	fi
+	    	if echo $tmp_part | grep "[a-h]$" >/dev/null; then
+				tmp_bsd_partition=`echo "$tmp_part" \
+		    		| sed "s%s\{0,1\}[0-9]*\([a-h]\)$%\1%"`
+				tmp_drive=`echo "$tmp_drive" \
+		    		| sed "s%)%,$tmp_bsd_partition)%"`
+	    	fi
+	    	echo "$tmp_drive" ;;
+		netbsd*)
+	    	if echo $tmp_part | grep "^[abe-p]$" >/dev/null; then
+				tmp_bsd_partition=`echo "$tmp_part" \
+		    		| sed "s%\([a-p]\)$%\1%"`
+				tmp_drive=`echo "$tmp_drive" \
+		    		| sed "s%)%,$tmp_bsd_partition)%"`
+	    	fi
+	    	echo "$tmp_drive" ;;
+		esac
+    else
+		# If no partition is specified, just print the drive name.
+		echo "$tmp_drive"
+    fi
+}
+
+# Make sure mtab in the chroot reflects the currently mounted partitions.
+update_mtab() {
+    mtab=/target/etc/mtab
+    grep /target /proc/mounts | (
+	while read devpath mountpoint fstype options n1 n2 ; do
+	    devpath=`mapdevfs $devpath || echo $devpath`
+	    mountpoint=`echo $mountpoint | sed s%^/target%%`
+	    # The sed line remove the mount point for root.
+	    if [ -z "$mountpoint" ] ; then
+		mountpoint="/"
+	    fi
+	    echo $devpath $mountpoint $fstype $options $n1 $n2
+	done ) > $mtab
+}
+
+is_floppy () {
+	# FIXME: this is lame, and does not yet support /dev devices.
+	echo "$1" | grep -q "\\(fd"
+}
+
+db_progress START 0 6 grub-installer/progress/title
+
+db_progress INFO grub-installer/progress/step_os-probe
+os-prober > /tmp/os-probed || true
+
+db_progress STEP 1
+db_progress INFO grub-installer/progress/step_install
+
+if ! apt-install grub ; then
+	info "Calling 'apt-install grub' failed"
+	# Hm, unable to install grub into /target/, what should we do?
+	db_input critical grub-installer/apt-install-failed || [ $? -eq 30 ]
+	if ! db_go; then
+		db_progress STOP
+		exit 10 # back up to menu
+	fi
+	db_get grub-installer/apt-install-failed
+	if [ true != "$RET" ] ; then
+		db_progress STOP
+		exit 1
+	fi
+fi
+
+db_progress STEP 1
+db_progress INFO grub-installer/progress/step_bootdev
+
+db_input high grub-installer/bootdev || [ $? -eq 30 ]
+if ! db_go; then
+	# back up to menu
+	db_progress STOP
+	exit 10
+fi
+
+db_get grub-installer/bootdev
+bootdev=$RET
+
+db_progress STEP 1
+db_subst grub-installer/progress/step_install_loader BOOTDEV "$bootdev"
+db_progress INFO grub-installer/progress/step_install_loader
+
+info "Installing grub on '$bootdev'"
+
+update_mtab
+
+if ! is_floppy "$bootdev"; then
+	if chroot /target /sbin/grub-install -h 2>&1 | grep -q no-floppy; then
+		info "grub-install support --no-floppy"
+		floppyparam="--no-floppy"
+	else
+		info "grub-install do not support --no-floppy"
+	fi
+fi
+
+info "Running chroot /target /sbin/grub-install $floppyparam \"$bootdev\""
+if chroot /target /sbin/grub-install $floppyparam "$bootdev" >> $log 2>&1 ; then
+    info "grub-install ran successfully"
+else
+    error "Running 'grub-install $floppyparam \"$bootdev\"' failed."
+    db_subst grub-installer/grub-install-failed BOOTDEV "$bootdev"
+    db_input critical grub-installer/grub-install-failed || [ $? -eq 30 ]
+    db_go || true
+    db_progress STOP
+    exit 1
+fi
+
+db_progress STEP 1
+db_progress INFO grub-installer/progress/step_config_loader
+
+# Pipe from 'yes' to tell grub to create menu.lst when it is missing A
+# better correct fix is to get update-grub to be able to run in
+# noninteractive mode.  Newer versions of the grub package support
+# '-y' for noninteractive installs.  But we'll keep it as-is for
+# Skolelinux.
+if ! chroot /target /usr/bin/yes | chroot /target /sbin/update-grub >> $log 2>&1 ; then
+    error "Running 'update-grub' failed." 1>&2
+    db_input critical grub-installer/update-grub-failed || [ $? -eq 30 ]
+    db_go || true
+    db_progress STOP
+    exit 1
+fi
+
+# Now add any other OSes to the end of menu.lst.
+OLDIFS="$IFS"
+IFS="$newline"
+tmpfile=/tmp/menu.lst.extras
+for os in $(cat /tmp/os-probed); do
+	IFS="$OLDIFS"
+	title=$(echo "$os" | cut -d: -f2)
+	type=$(echo "$os" | cut -d: -f4)
+	case "$type" in
+		chain)
+			partition=$(mapdevfs $(echo "$os" | cut -d: -f1))
+			grubdrive=$(convert "$partition") || true
+			if [ -n "$grubdrive" ]; then
+				cat >> $tmpfile <<EOF
+
+# This entry automatically added by the Debian installer for a non-linux OS
+# on $partition
+title		$title
+root		$grubdrive
+savedefault
+makeactive
+chainloader	+1
+
+EOF
+			fi
+		;;
+		linux)
+			partition=$(echo "$os" | cut -d: -f1)
+			mappedpartition=$(mapdevfs "$partition")
+			IFS="$newline"
+			for entry in $(linux-boot-prober "$partition"); do
+				IFS="$OLDIFS"
+				bootpart=$(mapdevfs $(echo "$entry" | cut -d: -f2))
+				label=$(echo "$entry" | cut -d : -f3)
+				if [ -z "$label" ]; then
+					label="$title"
+				fi
+				kernel=$(echo "$entry" | cut -d : -f4)
+				initrd=$(echo "$entry" | cut -d : -f5)
+				params=$(echo "$entry" | cut -d : -f6-)
+				grubdrive=$(convert "$bootpart") || true
+				cat >> $tmpfile <<EOF
+
+# This entry automatically added by the Debian installer for an existing
+# linux installation on $mappedpartition.
+# This is experimental, and may not work.
+title		$label (on $mappedpartition)
+root		$grubdrive
+kernel		$kernel $params
+EOF
+				if [ -n "$initrd" ]; then
+					cat >> $tmpfile <<EOF
+initrd		$initrd
+EOF
+				fi
+				cat >> $tmpfile <<EOF
+savedefault
+boot
+
+EOF
+				IFS="$newline"
+			done
+			IFS="$OLDIFS"
+		;;
+		*)
+			info "unhandled: $os"
+		;;
+	esac
+	IFS="$newline"
+done
+IFS="$OLDIFS"
+rm -f /tmp/os-probed
+if [ -s $tmpfile ]; then
+	cat >> /target/boot/grub/menu.lst << EOF
+
+# This is a divider, added to separate the menu items below from the Debian
+# ones.
+title		Other operating systems:
+root
+
+EOF
+	cat $tmpfile >> /target/boot/grub/menu.lst
+	rm -f $tmpfile
+fi
+
+db_progress STEP 1
+db_progress INFO grub-installer/progress/step_update_etc
+
+sed -e 's/do_bootloader = yes/do_bootloader = no/' < /target/etc/kernel-img.conf > /target/etc/kernel-img.conf.$$
+if [ -z "`grep update-grub /target/etc/kernel-img.conf.$$`" ]; then
+    (
+      echo "postinst_hook = /sbin/update-grub"
+      echo "postrm_hook   = /sbin/update-grub"
+    ) >> /target/etc/kernel-img.conf.$$
+fi
+mv /target/etc/kernel-img.conf.$$ /target/etc/kernel-img.conf
+
+db_progress STEP 1
+db_progress STOP
