@@ -4,7 +4,7 @@ if [ -z "$languages" ]; then
 	# Please add languages only if they build properly.
 	# languages="en cs es fr ja nl pt_BR" # ca da de el eu it ru
 
-	# Buildlist of languages to be included on RC2 CD's
+	# Buildlist of languages to be included on RC3 CD's
 	languages="en cs de es fr ja pt_BR ru"
 fi
 
