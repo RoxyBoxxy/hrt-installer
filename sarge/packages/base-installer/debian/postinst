@@ -454,21 +454,8 @@ get_arch_kernel () {
 			;;
 		esac
 		case "$SUBARCH" in
-		powermac_newworld)	flavour="$family-pmac" ;;
-		powermac_oldworld)	flavour="$family-pmac" ;;
-		prep)			flavour="$family-prep" ;;
-		chrp*)			flavour="$family-chrp" ;;
-		amiga)			flavour=apus ;;
-		*) warning "Unknown $ARCH subarchitecture '$SUBARCH'." ;;
-		esac
-		case "$flavour" in
-		apus) trykernel=kernel-image-$apusversion-apus ;;
-		*)
-			case "$kernel_major" in
-			2.6) trykernel=kernel-image-$version-$family ;;
-			*)   trykernel=kernel-image-$version-$flavour ;;
-			esac
-			;;
+		amiga)	trykernel=kernel-image-$apusversion-apus ;;
+		*)	trykernel=kernel-image-$version-$family ;;
 		esac
 	;;
 	mips)
