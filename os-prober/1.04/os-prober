@@ -1,0 +1,64 @@
+#!/bin/sh
+set -e
+
+. /usr/share/os-prober/common.sh
+
+partitions () {
+	find /dev/discs/ -follow -type b | grep /part
+}
+
+test_raid () {
+	[ -f /proc/mdstat ] || return 1
+
+	disk=$(echo $1 | cut -d"/" -f1-4)
+	[ -z "$disk" ] && return 1
+	part=$(echo $1 | sed "s:$disk::")
+
+	realdev=$(readlink $disk | sed "s:^\.\./::")
+	[ -z "$realdev" ] && return 1
+
+	if grep -q "^md.*$realdev$part" /proc/mdstat ; then
+		debug "$1: part of software raid array"
+		return 0
+	else
+		return 1
+	fi
+}
+
+for prog in /usr/lib/os-probes/init/*; do
+	if [ -x $prog ] && [ -f $prog ]; then
+		debug "running init $prog"
+		$prog || true
+	fi
+done
+
+for partition in $(partitions); do
+	# Skip partitions used in software RAID arrays
+	test_raid $partition && continue
+
+	if ! grep -q "^$partition " /proc/mounts; then
+		for test in /usr/lib/os-probes/*; do
+			if [ -x $test ] && [ -f $test ]; then
+				debug "running $test on $partition"
+				if $test $partition; then
+					debug "os detected by $test"
+			   		break
+				fi
+			fi
+		done
+	else
+		mpoint=$(grep "^$partition " /proc/mounts | cut -d " " -f 2)
+		if [ "$mpoint" != "/target" ] && [ "$mpoint" != "/" ]; then
+			type=$(grep "^$partition " /proc/mounts | cut -d " " -f 3)
+			for test in /usr/lib/os-probes/mounted/*; do
+				if [ -f $test ] && [ -x $test ]; then
+					debug "running $test on mounted $partition"
+					if $test $partition $mpoint $type; then
+						debug "os detected by $test"
+						break
+					fi
+				fi
+			done
+		fi
+	fi
+done
