@@ -1,0 +1,53 @@
+#!/bin/sh
+set -e
+partition="$1"
+bootpart="$2"
+mpoint="$3"
+type="$4"
+
+found_item=0
+
+parse_grub_menu () {
+	mpoint="$1"
+	rootpart="$2"
+	bootpart="$3"
+	while read line; do
+		set -- $line
+		case "$1" in
+			title)
+				shift 1
+				title="$(echo $@ | sed 's/://g')"
+			;;
+			kernel)
+				kernel="$2"
+				shift 2
+				parameters="$@"
+			;;
+			initrd)
+				initrd="$2"
+			;;
+			boot)
+				if [ -n "$kernel" ] && \
+				   [ -e "$mpoint/$kernel" ] && \
+				   [ -e "$mpoint/$initrd" ]; then
+					echo "$rootpart:$bootpart:$title:$kernel:$initrd:$parameters"
+					found_item=1
+				fi
+				kernel=""
+				parameters=""
+				initrd=""
+				title=""
+			;;
+		esac
+	done
+}
+
+if [ -e "$mpoint/boot/grub/menu.lst" ]; then
+	parse_grub_menu "$mpoint" "$partition" "$bootpart" < "$mpoint/boot/grub/menu.lst"
+fi
+
+if [ "$found_item" = 0 ]; then
+	exit 1
+else
+	exit 0
+fi
