@@ -1,0 +1,310 @@
+<!-- original version: 22935 -->
+
+ <sect1 id="boot-parms"><title>Parámetros de arranque</title>
+<para>
+
+Los parámetros de arranque son parámetros del núcleo Linux que generalmente
+son usados para asegurarse que los dispositivos son tratados adecuadamente.
+Para la mayor parte, el núcleo puede auto-detectar información sobre
+sus dispositivos. Sin embargo en algunos casos tendrá que ayudar
+un poco al núcleo.
+
+</para><para>
+
+Si es la primera vez que esta arrancando el sistema, intente los
+parámetros de arranque predeterminados (es decir, no intente definir
+parámetros) y observe si funciona correctamente. Probablemente lo
+hará. Si no lo hace, puede reiniciar después y buscar cualquier
+parámetro especial que informe al sistema sobre su hardware.
+
+</para><para>
+
+Puede encontrar información sobre parámetros de arranque en el
+<ulink url="http://www.tldp.org/HOWTO/BootPrompt-HOWTO.html">COMO
+de BootPrompt</ulink>, incluye consejos para hardware poco común.
+Esta sección solamente contiene un resumen de los parámetros más
+importantes. Algunas trucos se incluyen en
+<xref linkend="boot-troubleshooting"/>.
+
+</para><para>
+
+Cuando el núcleo arranca, deberá emitir un mensaje
+
+<informalexample><screen>
+
+Memory:<replaceable>avail</replaceable>k/<replaceable>total</replaceable>k
+available
+
+</screen></informalexample>
+
+en una etapa inicial del proceso.
+<replaceable>total</replaceable> debe corresponder a la cantidad de RAM, en
+kilobytes. Si no corresponde al tamaño real de la RAM que tiene instalada,
+necesita usar el parámetro
+<userinput>mem=<replaceable>ram</replaceable></userinput>,
+donde <replaceable>ram</replaceable> define la cantidad de memoria,
+con un sufijo de 'k' para kilobytes, o 'm' para megabytes. Por
+ejemplo, tanto <userinput>mem=65536k</userinput> como
+<userinput>mem=64m</userinput> significan 64MB de RAM.
+
+</para><para condition="supports-serial-console">
+
+Si esta arrancando con una consola serie, usualmente el núcleo
+auto-detectará
+<phrase arch="mipsel">(aunque no en DECstations)</phrase>
+Si tiene una tarjeta de vídeo (framebuffer) y un teclado también
+conectado al ordenador en el cual desea arrancar a través de la
+consola serie, podría tener que pasar el argumento
+<userinput>console=<replaceable>dispositivo</replaceable></userinput>
+al núcleo, donde <replaceable>dispositivo</replaceable> es
+su dispositivo serie, que generalmente es algo como
+<filename>ttyS0</filename>.
+
+</para><para arch="sparc">
+
+Para &arch-title; los dispositivos serie son <filename>ttya</filename> o
+<filename>ttyb</filename>.
+Alternativamente, defina las variables <envar>input-device</envar> y
+<envar>output-device</envar> de OpenPROM <filename>ttya</filename>.
+
+</para>
+
+
+  <sect2 id="installer-args"><title>Parámetros del instalador de Debian</title>
+<para>
+
+El sistema de instalación reconoce algunos parámetros adicionales que 
+pueden ser útiles.
+
+</para>
+
+<variablelist>
+<varlistentry>
+<term>debconf/priority</term>
+<listitem><para>
+
+Los valores de este parámetro definirán prioridad más alta de
+los mensajes a ser mostrados.
+
+</para><para>
+
+La instalación predeterminada usa <userinput>debconf/priority=high</userinput>.
+Esto significa que tanto los mensajes con prioridad high y critical serán
+mostrados, pero los mensajes con prioridad medium y low no lo serán.
+Si se encuentran problemas, el instalador ajusta la prioridad como
+se necesite.
+
+</para><para>
+
+Si añade <userinput>debconf/priority=medium</userinput> como parámetro de 
+arranque, se le mostrará el menú y tendrá mayor control sobre la instalación.
+Cuando se usa <userinput>debconf/priority=low</userinput>, todos los mensajes
+son mostrados (esto es equivalente al método de arranque
+<emphasis>expert</emphasis>). Con
+<userinput>debconf/priority=critical</userinput>, el sistema de
+instalación mostrará solamente los mensajes críticos e intentará
+hacer lo correcto sin mayor trámite.
+
+</para></listitem>
+</varlistentry>
+
+
+<varlistentry>
+<term>DEBIAN_FRONTEND</term>
+<listitem><para>
+
+Este parámetro controla el tipo de interfaz de usuario usado por
+el instalador. Los posibles valores del parámetro son:
+
+<itemizedlist>
+<listitem>
+<para><userinput>DEBIAN_FRONTEND=noninteractive</userinput></para>
+</listitem><listitem>
+<para><userinput>DEBIAN_FRONTEND=text</userinput></para>
+</listitem><listitem>
+<para><userinput>DEBIAN_FRONTEND=newt</userinput></para>
+</listitem><listitem>
+<para><userinput>DEBIAN_FRONTEND=slang</userinput></para>
+</listitem><listitem>
+<para><userinput>DEBIAN_FRONTEND=ncurses</userinput></para>
+</listitem><listitem>
+<para><userinput>DEBIAN_FRONTEND=bogl</userinput></para>
+</listitem><listitem>
+<para><userinput>DEBIAN_FRONTEND=gtk</userinput></para>
+</listitem><listitem>
+<para><userinput>DEBIAN_FRONTEND=corba</userinput></para>
+</listitem>
+</itemizedlist>
+
+La interfaz predeterminada es <userinput>DEBIAN_FRONTEND=newt</userinput>.
+<userinput>DEBIAN_FRONTEND=text</userinput> podría ser preferible para
+instalaciones a través de una consola serie. Generalmente solo la interfaz
+<userinput>newt</userinput> esta disponible en el medio de instalación
+predeterminado, de modo que todavía no es muy útil por ahora.
+
+</para></listitem>
+</varlistentry>
+
+
+<varlistentry>
+<term>BOOT_DEBUG</term>
+<listitem><para>
+
+El pasar este parámetro de arranque causará que el arranque sea registrado
+con mas detalle.
+
+<variablelist>
+<varlistentry>
+<term><userinput>BOOT_DEBUG=0</userinput></term>
+<listitem><para>Este es el predeterminado.</para></listitem>
+</varlistentry>
+
+<varlistentry>
+<term><userinput>BOOT_DEBUG=1</userinput></term>
+<listitem><para>Mas detallado que lo habitual.</para></listitem>
+</varlistentry>
+
+<varlistentry>
+<term><userinput>BOOT_DEBUG=2</userinput></term>
+<listitem><para>Mucha información de depuración.</para></listitem>
+</varlistentry>
+
+<varlistentry>
+<term><userinput>BOOT_DEBUG=3</userinput></term>
+<listitem><para>
+
+Se ejecutan shells en diversos puntos en el proceso de arranque para
+permitir depuración detallada. Salga del shell para continuar el
+arranque.
+
+</para></listitem>
+</varlistentry>
+</variablelist>
+
+</para></listitem>
+</varlistentry>
+
+
+<varlistentry>
+<term>INSTALL_MEDIA_DEV</term>
+<listitem><para>
+
+El valor del parámetro es la ruta al dispositivo desde donde cargar
+el instalador. Por ejemplo,
+<userinput>INSTALL_MEDIA_DEV=/dev/floppy/0</userinput>
+
+</para><para>
+
+El disquete de arranque, que normalmente escanea todos las unidades
+de disquete y dispositivos de almacenamiento USB en busca de el
+disquete raíz, puede ser modificado con este parámetro para
+que solamente busque en un dispositivo específico.
+
+</para></listitem>
+</varlistentry>
+
+<varlistentry>
+<term>debian-installer/framebuffer</term>
+<listitem><para>
+
+Algunas arquitecturas usan el framebuffer del núcleo para ofrecer
+instalación en un número diverso de idiomas. Si framebuffer causa un
+problema en su sistema puede deshabilitar esta característica con
+el parámetro
+<userinput>debian-installer/framebuffer=false</userinput>. Los
+síntomas de problemas son mensajes de error sobre bterm o bogl, una
+pantalla en blanco o un congelamiento después de algunos minutos
+de iniciada la instalación.
+
+</para><para arch="i386">
+
+El argumento <userinput>video=vga16:off</userinput> también puede ser
+usado para deshabilitar framebuffer. Este tipo de problemas ha sido
+reportado en una Dell Inspiron con tarjeta Mobile Radeon.
+
+</para><para arch="m68k">
+
+Este tipo de problemas ha sido reportado en la Amiga 1200 y SE/30.
+
+</para><para arch="hppa">
+
+Este tipo de problemas han sido reportados en hppa.
+
+</para></listitem>
+</varlistentry>
+
+<varlistentry>
+<term>debian-installer/probe/usb</term>
+<listitem><para>
+
+Defina a <userinput>false</userinput> para evitar la comprobación
+de USB en el arranque, si esto causa problemas.
+
+</para></listitem>
+</varlistentry>
+
+<varlistentry>
+<term>netcfg/disable_dhcp</term>
+<listitem><para>
+
+Por omisión, el &d-i; automáticamente prueba la conexión de red a través de
+DHCP. Si la prueba es exitosa, no tendrá oportunidad de revisar y cambiar
+los valores obtenidos. Puede efectuar la configuración de red manual
+solo en caso de que falle la comprobación DHCP.
+
+</para><para>
+
+Si tiene un servidor DHCP en su red local, pero desea evitar usarlo,
+debido a que por ejemplo da valores incorrectos, puede usar el
+parámetro 
+<userinput>netcfg/disable_dhcp=true</userinput> para evitar la
+configuración de red con DHCP e ingresar la información manualmente.
+
+</para></listitem>
+</varlistentry>
+
+<varlistentry>
+<term>hw-detect/start_pcmcia</term>
+<listitem><para>
+
+Defina a <userinput>false</userinput> para evitar que se ejecuten los
+servicios PCMCIA, si esto causa problemas. Algunos ordenadores 
+portátiles son conocidos por este comportamiento errado.
+
+</para></listitem>
+</varlistentry>
+
+<varlistentry>
+<term>preseed/url</term>
+<listitem><para>
+
+Especifíca el url de un fichero de pre-configuración para ser
+descargado y usado para la automatización de la instalación.
+Vea <xref linkend="automatic-install"/>.
+
+</para></listitem>
+</varlistentry>
+
+<varlistentry>
+<term>preseed/file</term>
+<listitem><para>
+
+Especifíca el url de un fichero de pre-configuración para cargar
+la automatización de la instalación. Vea <xref linkend="automatic-install"/>.
+
+</para></listitem>
+</varlistentry>
+
+<varlistentry>
+<term>ramdisk_size</term>
+<listitem><para>
+
+Si esta usando un núcleo 2.2.x, podría necesitar definir &ramdisksize;.
+
+</para></listitem>
+</varlistentry>
+
+</variablelist>
+  </sect2>
+ </sect1>
+

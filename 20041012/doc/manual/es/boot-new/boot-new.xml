@@ -1,0 +1,296 @@
+<!-- original version: 21672 -->
+
+<chapter id="boot-new">
+ <title>Arrancar su nuevo sistema Debian</title>
+
+ <sect1 id="base-boot"><title>El momento de la verdad</title>
+<para>
+
+El primer arranque autónomo de su sistema es lo que los ingenieros
+eléctricos llaman <quote>la prueba de humo</quote>.
+
+</para><para>
+
+Si esta arrancando directamente en Debian, y el sistema no inicia,
+use ya sea el medio original de instalación o inserte el disquete
+de arranque adaptado, si tiene uno, y reinicie su sistema. En este
+caso, probablemente necesite añadir algunos argumentos de arranque
+como <userinput>root=<replaceable>root</replaceable></userinput>, donde
+<replaceable>root</replaceable> es su partición raíz, como
+<filename>/dev/sda1</filename>.
+
+</para>
+
+  <sect2 arch="m68k"><title>Arranque de BVME 6000</title>
+<para>
+
+Si ha efectuado una instalación si disco en una máquina BMV o Motorola
+VMEbus: una vez que el sistema ha cargado el programa
+<command>tftplilo</command> desde el servidor TFTP, en el cursor
+<prompt>LILO Boot:</prompt> ingrese alguna de las siguietnes ordenes:
+
+<itemizedlist>
+<listitem><para>
+
+<userinput>b6000</userinput> seguido de &enterkey;
+para arrancar un BVME 4000/6000
+
+</para></listitem><listitem><para>
+
+<userinput>b162</userinput> seguido de &enterkey;
+para arrancar un MVME162
+
+</para></listitem><listitem><para>
+
+<userinput>b167</userinput> seguido de &enterkey;
+para arrancar un MVME166/167
+
+</para></listitem>
+</itemizedlist>
+
+</para>
+
+   </sect2>
+
+  <sect2 arch="m68k"><title>Arranque de Macintosh</title>
+
+<para>
+
+Ingrese al directorio donde se localizan los ficheros de instalación e
+inicie el arrancador <command>Penguin</command> manteniendo presionada
+la tecla <keycap>command</keycap> key. Ingrese al diálogo
+<userinput>Settings</userinput> (<keycombo>
+<keycap>command</keycap> <keycap>T</keycap> </keycombo>), y localice
+la línea de opciones de núcleo que debe ser como
+<userinput>root=/dev/ram video=font:VGA8x16</userinput> o similar.
+
+</para><para>
+
+Necesitará cambiar la entrada a
+<userinput>root=/dev/<replaceable>yyyy</replaceable></userinput>.
+Reemplace <replaceable>yyyy</replaceable> con el nombre Linux de
+la partición en la que ha instalado el sistema.
+(ejm. <filename>/dev/sda1</filename>); debió haber anotado esto antes.
+Se recomienda la entrada <userinput>video=font:VGA8x8</userinput> 
+especialmente para usuarios con pantallas pequeñas. El núcleo podría
+elegir un tipo de letra mas conveniente (6x11) pero el controlador de
+consola para este tipo de letra podría hacer colapsar la máquina, 
+por lo que es más seguro usar 8x16 o 8x8 en esta etapa. Puede cambiar
+esto en cualquier momento.
+
+</para><para>
+
+Si no desea iniciar GNU/Linux inmediatamente cada vez que encienda,
+desmarque la opción <userinput>Auto Boot</userinput>. Guarde su
+configuración en el fichero <filename>Prefs</filename> usando la
+opción <userinput>Save Settings As Default</userinput>.
+
+</para><para>
+
+Ahora elija <userinput>Boot Now</userinput> (<keycombo>
+<keycap>command</keycap> <keycap>B</keycap> </keycombo>) para iniciar
+su nueva instalación de GNU/Linux en lugar del sistema de instalador
+en RAMdisk.
+
+</para><para>
+
+Debian deberá arrancar y usted deberá ver los mismos mensajes que
+cuando arranco anteriormente el sistema de instalación, seguidos de 
+algunos mensajes nuevos.
+
+</para>
+   </sect2>
+
+
+  <sect2 arch="powerpc"><title>PowerMacs OldWorld</title>
+<para>
+
+Si la máquina falla al arrancar después de finalizar la instalación
+y se detiene mostrando el cursor <prompt>boot:</prompt>, intente escribir
+<userinput>Linux</userinput> seguido de &enterkey;. (La configuración
+de arranque predeterminada en <filename>quik.conf</filename> está
+etiquetada como Linux). Las etiquetas definidas en 
+<filename>quik.conf</filename> serán mostradas si presiona la tecla
+<keycap>Tab</keycap> en el cursor <prompt>boot:</prompt>.
+También puede intentar regresar al instalador y editar el fichero
+<filename>/target/etc/quik.conf</filename> que ha sido colocado allí
+por el paso <guimenuitem>Install <command>Quik</command> on a Hard
+Disk</guimenuitem>. Puede encontrar algunas pistas para adaptar 
+<command>quik</command> a su caso en <ulink
+url="&url-powerpc-quik-faq;"></ulink>.
+
+</para><para>
+
+Para regresar a MacOS sin reiniciar la nvram, escriba
+<userinput>bye</userinput> en el cursor de «OpenFirmware» (asumiendo que
+MacOS no ha sido borrado de la máquina). Para obtener el cursor,
+mantenga presionadas las teclas <keycombo> <keycap>command</keycap>
+<keycap>option</keycap> <keycap>o</keycap> <keycap>f</keycap>
+</keycombo> mientras la máquina reinicia en frío. Si necesita restaurar
+los cambios hechos a la nvram de OpenFirmware al modo predeterminado
+de MacOS a modo de arrancar nuevamente en MacOS, mantenga presionadas la
+teclas <keycombo> <keycap>command</keycap>
+<keycap>option</keycap> <keycap>p</keycap> <keycap>r</keycap>
+</keycombo> mientras se arranca la máquina en frío.
+
+</para><para>
+
+Si usa <command>BootX</command> para arrancar el sistema instalado,
+solamente elija el núcleo que desea en el directorio 
+<filename>Linux Kernels</filename>, desmarque la opción ramdisk y
+añada el dispositivo raíz correspondiente a su instalación;
+ejm. <userinput>/dev/hda8</userinput>.
+
+</para>
+   </sect2>
+
+
+  <sect2 arch="powerpc"><title>PowerMacs NewWorld</title>
+<para>
+
+En máquinas G4 e iBooks, puede mantener presionada la tecla 
+<keycap>option</keycap> y obtener una pantalla gráfica con un
+botón para cada sistema operativo arrancable, &debian; será un
+botón con un icono de un pingüino pequeño.
+
+</para><para>
+
+Si mantiene MacOS y en algún momento cambia la variable  
+<envar>boot-device</envar> de OpenFirmware deberá reiniciar éste a su
+configuración predeterminada. Para hacer esto mantenga presionadas
+las teclas <keycombo>
+<keycap>command</keycap> <keycap>option</keycap> <keycap>p</keycap>
+<keycap>r</keycap> </keycombo> mientras la máquina arranca en frío.
+
+</para><para>
+
+Las etiquetas definidas en <filename>yaboot.conf</filename> serán
+mostradas si presiona la tecla <keycap>Tab</keycap> en el cursor
+<prompt>boot:</prompt>.
+
+</para><para>
+
+El reinicio de OpenFirmware en hardware G3 o G4 causará que se
+arranque &debian; en forma predeterminada (si ha particionado
+correctamente y localizado la partición «Apple_Bootstrap» primero. 
+Si tiene &debian; en un disco SCSI y MacOS en un disco IDE esto
+podría no funcionar y tendrá que ingresar al «OpenFirmware» para
+configurar la variable <envar>boot-device</envar>,
+usualmente <command>ybin</command> hace esto automáticamente.
+
+</para><para>
+
+Después que &debian; arranque por primera vez puede añadir las opciones
+adicionales que desee (como opciones de arranque dual) a
+<filename>/etc/yaboot.conf</filename> y ejecutar <command>ybin</command>
+para actualizar la partición de arranque con la nueva configuración. 
+Para más información, por favor lea el 
+<ulink url="&url-powerpc-yaboot-faq;">CÓMO de yaboot</ulink>.
+
+</para>
+   </sect2>
+ </sect1>
+
+ <sect1 id="base-config">
+ <title>Configuración básica de Debian después del arranque</title>
+
+<para>
+
+Después de arrancar, se le pedirá completar la configuración de su
+sistema base, y luego elegir los paquetes adicionales que desea
+instalar. La aplicación que le guía en este proceso se llama
+<classname>base-config</classname>. Su concepto es bastante similar 
+al &d-i; desde la primera etapa. De hecho, 
+<classname>base-config</classname> esta constituido por un número de 
+componentes especializados, donde cada componente gestiona una tarea
+de configuración, contiene un <quote>menú oculto en el segundo plano</quote>
+y también usa el mismo sistema de navegación.
+
+</para><para>
+
+Si desea volver a ejecutar <classname>base-config</classname> en cualquier
+momento después de finalizada la instalación, ejecute como superusuario la
+orden <userinput>base-config</userinput>.
+
+</para>
+
+&module-bc-timezone.xml;
+&module-bc-shadow.xml;
+&module-bc-ppp.xml;
+&module-bc-apt.xml;
+&module-bc-packages.xml;
+&module-bc-install.xml;
+&module-bc-mta.xml;
+
+ </sect1>
+
+ <sect1 id="login">
+ <title>Ingreso</title>
+
+<para>
+
+Después de que ha instalado paquetes, se le presentará el cursor de
+ingreso. Ingrese usando la cuenta personal y clave que eligió. Ahora
+su sistema esta listo para ser usado.
+
+</para><para>
+
+Si es un usuario novato, tal vez quiera explorar la documentación que
+ya esta instalada en su sistema, tan pronto como empiece a usarlo.
+Existen diversos sistemas de documentación, se esta trabajando en
+integrar los diferentes tipos de documentación. Aquí algunos 
+puntos sobre donde empezar a buscar.
+
+</para><para>
+
+La documentación que acompaña a los programas que ha instalado
+se encuentra en <filename>/usr/share/doc/</filename>, bajo un
+directorio nombrado como el programa. Por ejemplo, la «Guía de
+usuario de APT», por usar <command>apt</command> para instalar 
+otros programas en su sistema, se localiza en
+<filename>/usr/share/doc/apt/guide.html/index.html</filename>.
+
+</para><para>
+
+
+Adicionalmente, existen algunos directorios especiales dentro de
+la jerarquía de <filename>/usr/share/doc/</filename>. Los CÓMOs
+de Linux están instalados en formato <emphasis>.gz</emphasis>,
+dentro de <filename>/usr/share/doc/HOWTO/en-txt/</filename> y
+<filename>/usr/share/doc/HOWTO/en-txt/mini/</filename>. El fichero
+<filename>/usr/share/doc/HTML/index.html</filename> contiene
+índices navegables de la documentación instalada por 
+<command>dhelp</command>.
+
+</para><para>
+
+Una forma fácil de visualizar estos documentos es efectuar
+<userinput>cd /usr/share/doc/</userinput>, y escribir 
+<userinput>lynx</userinput> seguido de un espacio y un punto (el
+punto se refiere al directorio actual).
+
+</para><para>
+
+También puede escribir <userinput>info 
+<replaceable>orden</replaceable></userinput> o <userinput>man
+<replaceable>orden</replaceable></userinput> para ver la 
+documentación de la mayoría de ordenes disponibles en la línea
+de ordenes. El escribir <userinput>help</userinput> mostrará ayuda
+sobre ordenes de shell. Y el escribir una orden seguida de
+<userinput>--help</userinput> usualmente mostrará un breve resumen
+del uso de esta orden. Si los resultados de una orden son mayores
+al tamaño de la pantalla, escriba<userinput>| more</userinput> después
+de la orden para hacer que los resultados se pausen antes de pasar
+el tamaño de la pantalla. Para ver una lista de todas las ordenes
+disponibles que empiezan con cierta letra, escriba la letra y
+luego presione dos veces la tecla «tab».
+
+</para><para>
+
+Para una introducción mas completa a Debian y GNU/Linux, vea
+<filename>/usr/share/doc/debian-guide/html/noframes/index.html</filename>.
+
+</para>
+
+ </sect1>
+</chapter>
