@@ -1,0 +1,24 @@
+#!/usr/bin/make -f
+
+build:
+
+clean:
+	dh_testdir
+	dh_testroot
+	dh_clean
+
+binary-indep: build
+	dh_testdir
+	dh_testroot
+	dh_clean
+	dh_install S45usb-linux lib/debian-installer.d
+	dh_install ohci-pci.lst uhci-pci.lst ehci-pci.lst usr/lib/usb-discover
+	dh_install usb-discover usr/sbin
+	dh_installdebconf
+	dh_fixperms
+	dh_installdeb
+	dh_gencontrol
+	dh_builddeb
+
+binary-arch:
+binary: build binary-indep
