@@ -1,0 +1,102 @@
+This directory contains digress, the d-i automatic regression tester.
+
+To set it up locally, you can edit the files here (but don't commit them!),
+or create a directory elsewhere containing config and schemes/ and point
+DI_TESTDIR at it. Once it's all working, the daily-tests script can be used
+to log everything in a format that will let it be put on the test log page.
+
+Warning about passwords: No real effort is made to keep root or user
+passwords from leaking into the output or log files. Don't use important
+passwords, and don't put test machines on a insecure network!
+
+The automatic testing is accomplished by the test-harness script. This
+script reads global configs from the file config, and takes the name of a
+test scheme. Schemes are defined by files in the schemes/ directory, which
+has subdirs for each machine, that contain a common file with common
+settings for the machines, and other files defining each scheme. These
+files can set config options or use other schemes. These config options
+should always be set:
+
+DESCRIPTION		Short description of what's being tested.
+ARCH			Architecture of the test machine.
+TFTP_DIR		Path to your tftpboot directory. You need write access.
+PRESEED_URL		URL to the directory containing preseed files to use.
+INSTALL_LANGUAGE	Language to run the install in.
+PREBOOT			Commands to run before booting.
+BOOT			Command to run to boot the installer.
+TEST_1			Commands to use to test the first stage of the install.
+TEST_2			Commands to use to test the second stage of the install.
+SHUTDOWN		Commands to run to shutdown the system.
+
+Some others that can be set:
+
+BOOT_OPTS		Options to pass to the kernel.
+NETBOOT_IMAGE		Path to netboot.tar.gz to boot.
+NETBOOT_IMAGE_ALT	Alternate netboot.tar.gz to boot (if it's newer).
+NETBOOT_IMAGE_DIR	Directory to set $TFTP_DIR/$ARCH-boot to (netboot-links)
+BOOT_SELECTION		Boot option to select in boot loader (bootloader-setup)
+GRAPHICS_DISABLE	Disable graphical boot screen in boot loader (bootloader-setup)
+EFI_MENUENTRY		Option to choose in the efi boot menu (ia64-boot)
+CONSOLECOMMAND		Command to run to get access to the console (ia64-boot)
+BOOTCOMMAND		Command to enter at boot prompt. (cdrom-boot)
+CONSERVER_CONSOLE	Conserver console to connect to if using that.
+STAGE_1_MAX_TIME	Maximum number of seconds before failure.
+STAGE_2_MAX_TIME	Maximum number of seconds before failure.
+ROOT_PASSWORD_FILE	A file containing a root password for the installed
+			machine.
+ROOT_PASSWORD		A root password for the installed machine.
+ISO			Path to an iso image.
+ISO_ALT			Alternate iso image to use (if it's newer).
+SCREEN_COMMAND		Command to run inside the screen session (inscreen)
+TASK			Task to install. (preseed-setup)
+SUITE			Suite to install. (preseed-setup)
+USER			Non-root user to create on host.
+USER_PASSWORD		Password of user.
+USER_PASSWORD_FILE	File containing password of user.
+RETRY			If set, daily-tests will retry a test once.
+			Useful if the test setup occasionally breaks,
+			though it may also mask other intermittent
+			problems.
+LOGDIR			Direcotry to save logs to. Default is
+			$DI_TESTDIR/logs
+BOCHSRC			Bochs config file to use, if running bochs.
+			Read from the bochsrc directory.
+BOCHS_DISK_SIZE		Size in megabytes of a bochs disk to create.
+HERCULESCFG		Hercules config file to use, if running hercules.
+			Read from the hercules directory. Note that dasd,
+			card deck, and network devices should not be
+			included.
+DASDINIT		Parameters to pass to dasdinit to create dasd image.
+			Do not include filename. Example: 3390-1 root 1114
+S390_IMAGE_DIR		Directory containing s390 installer files.
+S390_IP			IP address for the s390 machine.
+S390_PTP_IP		IP address of the local end of the PTP link.
+S390_PTP_MASK		Netmask of the PTP link.
+S390_NAMESERVER_IP	IP address of the name server.
+S390_HOSTNAME		Hostname for the s390 system.
+
+
+If your test system supports Integrated Lights Out, you can set the
+following options. To use it, you'll need to get the tarball from
+http://h18004.www1.hp.com/support/files/server/us/download/21456.html and
+extract locfg.pl from it and place it in your path or in the utils/
+directory. Note that locfg is not free software; someone want to write a
+free version?
+
+HP_ILO_HOST		Hostname of HP Integrated Lights Out server.
+HP_ILO_USER		Username for the ILO.
+HP_ILO_PASSWORD		Password to use to log into the ILO.
+HP_ILO_PASSWORD_FILE	A file containing the password to use to log into
+			the ILO.
+HP_ILO_ISO_PATH		Where to put the iso image to boot using ILO.
+			The iso specified in the ISO option is hard linked
+			to this location, which should be somewhere in your
+			web site.
+HP_ILO_ISO_URL		Url to iso image made available at the HP_ILO_ISO_PATH.
+HP_ILO_STAGE2_CD	Make CD available to base-config in stage2 also.
+HP_ILO_STAGE2_CD_HACK	Make CD availale by downloading and loop mounting
+			it, in case your network or iLO sucks and the
+			virtual CD provided by iLO is not sufficiently
+			reliable.
+
+-- Joey Hess <joeyh@debian.org>

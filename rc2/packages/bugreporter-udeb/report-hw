@@ -1,0 +1,64 @@
+#!/bin/sh -e
+#
+# Report the detected HW
+
+if [ -x /sbin/discover ] ; then
+	/sbin/discover -f "info: $0: discover: %m;%S;%D;%V;%M;%d\n" all || true
+else
+	echo "error: $0: Unable to find /sbin/discover"
+fi
+
+LSPCI=/sbin/lspci
+if [ -x /target/bin/lspci ] ; then
+	LSPCI=/target/bin/lspci
+fi
+
+if [ -x $LSPCI ] ; then
+	(
+		$LSPCI -v -t || true
+		$LSPCI -n || true
+		$LSPCI -v || true
+		echo "For use with 'lspci -F':"
+		$LSPCI -x || true
+	)| sed "s%^%info: $0: lspci: %"
+else
+	echo "error: $0: Unable to find lspci."
+	cat /proc/pci | sed "s%^%info: $0: /proc/pci: %"
+	cat /proc/bus/pci/devices | sed "s%^%info: $0: /proc/bus/pci/devices: %"
+fi
+
+if [ -x /sbin/lsmod ] ; then
+	/sbin/lsmod | sed "s%^%info: $0: lsmod: %"
+else
+	echo "error: $0: Unable to find /sbin/lsmod"
+fi
+
+for file in cpuinfo ioports iomem interrupts meminfo ; do
+	if [ -e /proc/$file ] ; then
+		cat /proc/$file | sed "s%^%info: $0: $file: %"
+	else
+		echo "error: $0: Unable to find /proc/$file"
+	fi
+done
+
+HDPARM=/sbin/hdparm
+if [ -x /target/sbin/hdparm ] ; then
+	HDPARM=/target/sbin/hdparm
+fi
+if [ -x $HDPARM ] ; then
+	for disk in `sed -ne '/\(ide\|scsi\).*\/disc/s%[^/]* \([^ ]*\).*%/dev/\1%p' /proc/partitions` ; do 
+		/sbin/hdparm -i $disk 2>&1 |  sed "s%^%info: $0: hdparm: %"
+	done
+else
+	echo "error: $0: Unable to find hdparm."
+fi
+
+#grep /disc < /proc/partitions | while read line; do
+#    part=`echo $line | cut -f4 -d' '`
+#    disk="/dev/$part"
+#    /sbin/hdparm -i $disk 2>&1 |  sed "s%^%info: $0: hdparm: %"
+#done
+
+df | sed "s%^%info: $0: df: %"
+
+dmidecode | sed "s%^%info: $0: dmidecode: %"

@@ -1,0 +1,29 @@
+#!/bin/sh
+
+. /lib/partman/definitions.sh
+
+dev=$1
+id=$2
+
+cd $dev
+
+lvm=no
+if grep -q "/dev/md" $dev/device; then
+	lvm=yes
+fi
+open_dialog VALID_FLAGS $id
+while { read_line flag; [ "$flag" ]; }; do
+    if [ "$flag" = lvm ]; then
+	lvm=yes
+    fi
+done
+close_dialog
+
+if [ $lvm = no ]; then
+    exit 0
+fi
+
+db_metaget partman/method_long/lvm description
+
+printf "lvm\t${RET}\n"
+

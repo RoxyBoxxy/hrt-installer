@@ -1,0 +1,36 @@
+#!/usr/bin/perl
+# Expect script to set up for install on s390 in hercules. Once this stops,
+# network-console is ready for ssh connections.
+use Expect;
+
+my $exp = Expect->spawn($ENV{CONSOLECOMMAND}) or die "failed to start: $!";
+#$exp->debug(2);
+##$exp->exp_internal(1);
+
+sub question {
+	my $question=shift;
+	my $response=shift;
+
+	if (! length $response) {
+		$response="."; # take default
+	}
+	
+	$exp->expect($ENV{STAGE_1_MAX_TIME}, $question) or die "failed to find $question";
+	$exp->expect(3, "Prompt: '?' for help>");
+	$exp->send(".".$response."\r");
+}
+
+question("Network device type:", 1);
+question("CTC device:", 1);
+question("Protocol for this connection:", 1);
+question("Primary network interface:", 2); # ctc0
+question("IP address:", $ENV{S390_IP});
+question("Point-to-point address:", $ENV{S390_PTP_IP});
+question("Name server addresses:", $env{S390_NAMESERVER_IP});
+question("Hostname:", "debian");
+question("Domain name:", $ENV{S390_HOSTNAME});
+question("Remote installation password:", $ENV{ROOT_PASSWORD}); # root will do
+question("Password confirmation:", $ENV{ROOT_PASSWORD});
+question("To continue the installation, please use an SSH client to log in");
+
+exit
