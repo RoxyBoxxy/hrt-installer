@@ -11,6 +11,7 @@
 # Rudy Godoy <rudy@kernel-panik.org>, 2003
 # Javier Fernández-Sanguino <jfs@debian.org>, 2004-2005
 # Steve Langasek <vorlon@debian.org>, 2004
+# Enrique Matias Sanchez (aka Quique) <cronopios@gmail.com>, 2005.
 #
 # Equipo de traducción al español, por favor lean antes de traducir
 # los siguientes documentos:
@@ -31,14 +32,13 @@ msgid ""
 msgstr ""
 "Project-Id-Version: debian-installer\n"
 "POT-Creation-Date: 2004-07-19 11:39+0200\n"
-"PO-Revision-Date: 2005-04-11 23:02+0200\n"
+"PO-Revision-Date: 2005-04-14 23:56+0200\n"
 "Last-Translator:  Javier Fernandez-Sanguino Peña <jfs@debian.org>\n"
 "Language-Team:  Debian Spanish <debian-l10n-spanish@lists.debian.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Report-Msgid-Bugs-To: \n"
-"X-Generator: KBabel 1.9.1\n"
 
 #. Type: text
 #. Description
@@ -62,7 +62,7 @@ msgstr "Éste es el menú principal del instalador de Debian."
 #. Description
 #: ../main-menu.templates:14
 msgid "Installation step failed"
-msgstr "Falló un paso de la instalación:"
+msgstr "Falló un paso de la instalación"
 
 #. Type: error
 #. Description
@@ -79,7 +79,7 @@ msgstr ""
 #. Description
 #: ../main-menu.templates:23
 msgid "Choose an installation step:"
-msgstr "Elija un paso de configuración:"
+msgstr "Elija un paso de instalación:"
 
 #. Type: select
 #. Description
@@ -88,8 +88,8 @@ msgid ""
 "This installation step depends on one or more other steps that have not yet "
 "been performed."
 msgstr ""
-"Esta etapa de configuración depende de una o varias etapas de configuración "
-"que aún no se han realizado."
+"Esta paso de la configuración depende de uno o varios pasos que aún no se "
+"han realizado."
 
 #. Type: select
 #. Choices
@@ -112,9 +112,8 @@ msgid ""
 "shown to you; all less important questions are skipped."
 msgstr ""
 "Los paquetes que usan debconf para la configuración priorizan las preguntas "
-"que deben preguntarle. Sólo preguntas con un cierto grado de prioridad, o "
-"mayor, le serán mostradas, todas las preguntas menos importantes son "
-"obviadas."
+"que le vayan a preguntar. Sólo se le mostrarán preguntas con un cierto grado "
+"de prioridad, o mayor, se obviarán todas las preguntas menos importantes."
 
 #. Type: select
 #. Description
@@ -152,7 +151,7 @@ msgstr ""
 #. Description
 #: ../cdebconf-priority.templates:3
 msgid "Change debconf priority"
-msgstr "Cambio de la prioridad de debconf"
+msgstr "Cambiar la prioridad de debconf"
 
 #. Type: text
 #. Description
@@ -216,7 +215,7 @@ msgstr "Elegir una cadena vacía"
 #: ../cdebconf-text-udeb.templates:31
 #, no-c-format
 msgid "Prompt: '%c' for help, default=%d> "
-msgstr "Indicador: '%c' para obtener ayuda, por defecto=%d> "
+msgstr "Indicador: '%c' para obtener ayuda, por omisión=%d> "
 
 #. Type: text
 #. Description
@@ -230,13 +229,13 @@ msgstr "Indicador: '%c' para obtener ayuda> "
 #: ../cdebconf-text-udeb.templates:39
 #, no-c-format
 msgid "Prompt: '%c' for help, default=%s> "
-msgstr "Indicador: '%c' para obtener ayuda, por defecto=%s> "
+msgstr "Indicador: '%c' para obtener ayuda, por omisión=%s> "
 
 #. Type: text
 #. Description
 #: ../cdebconf-text-udeb.templates:43
 msgid "[Press enter to continue]"
-msgstr "[Pulse enter para continuar]"
+msgstr "[Pulse Intro para continuar]"
 
 #. Type: text
 #. Description
@@ -280,7 +279,7 @@ msgid ""
 "Based on your language, you are probably located in one of these countries "
 "or regions."
 msgstr ""
-"Basándose en el idioma elegido, es probable que esté en alguno de los "
+"Basándose en el idioma que ha elegido, es probable que esté en alguno de los "
 "siguientes países o regiones."
 
 #. Type: text
@@ -514,27 +513,27 @@ msgstr "Ocurrió un error mientras se ejecutaba '${CMD_LINE_PARAM}'"
 #. Description
 #: ../ethdetect.templates:40
 msgid "Detecting network hardware"
-msgstr "Detección de hardware de red"
+msgstr "Detección del hardware de red"
 
 #. Type: text
 #. Description
 #. Main menu item
 #: ../ethdetect.templates:45
 msgid "Detect network hardware"
-msgstr "Detección de hardware de red"
+msgstr "Detección del hardware de red"
 
 #. Type: text
 #. Description
 #. Main menu item
 #: ../hw-detect-full.templates:4
 msgid "Detect hardware"
-msgstr "Detección de hardware"
+msgstr "Detectar hardware"
 
 #. Type: text
 #. Description
 #: ../hw-detect-full.templates:8
 msgid "Detecting disks and all other hardware"
-msgstr "Detección de hardware y todo el demás hardware"
+msgstr "Detección de los discos y todo el demás hardware"
 
 #. Type: note
 #. Description
@@ -723,7 +722,7 @@ msgid ""
 "sure you use the same domain name on all your computers."
 msgstr ""
 "El nombre de dominio es la parte de su dirección de Internet a la derecha "
-"del nombre de sistema. Es habitualmente algo que termina por .com, .net, ."
+"del nombre de sistema. Habitualmente es algo que termina por .com, .net, ."
 "edu, o .org. Si está seleccionando una red doméstica, puede inventárselo, "
 "pero asegúrese de que utiliza el mismo nombre de dominio en todos sus "
 "ordenadores."
@@ -745,9 +744,9 @@ msgid ""
 "this field blank."
 msgstr ""
 "Los servidores nombre se utilizan para buscar los nombres de servidores en "
-"la red. Por favor, introduzca la dirección IP (no nombre de sistema) de "
+"la red. Por favor, introduzca la dirección IP (no el nombre de sistema) de "
 "hasta tres servidores de nombres, separados por espacios. No utilice comas. "
-"Los servidores serán consultados en el orden en que se introduzcan. Si no "
+"Se consultarán los servidores en el orden en que se introduzcan. Si no "
 "quiere utilizar ningún servidor de nombres deje este campo en blanco."
 
 #. Type: select
@@ -892,7 +891,7 @@ msgid ""
 msgstr ""
 "El nombre del sistema es una sóla palabra que identifica el sistema en la "
 "red. Si no sabe qué nombre debería tener, consulte al administrador de red. "
-"Si está configurando una red doméstica, puede inventarse el valor del nombre."
+"Puede inventarse este nombre si está configurando una red doméstica."
 
 #. Type: error
 #. Description
@@ -931,14 +930,14 @@ msgid ""
 "An error occurred and the network configuration process has been aborted. "
 "You may retry it from the installation main menu."
 msgstr ""
-"Ocurrió un error y el proceso de configuración de la red ha sido abortado. "
+"Ocurrió un error y se ha interrumpido el proceso de configuración de la red. "
 "Puede intentarlo de nuevo desde el menú principal de la instalación."
 
 #. Type: error
 #. Description
 #: ../netcfg-common.templates:100
 msgid "No network interfaces detected"
-msgstr "No se detectó ninguna interfaz"
+msgstr "No se detectó ninguna interfaz de red"
 
 #. Type: error
 #. Description
@@ -1038,7 +1037,7 @@ msgstr "Arcnet"
 #. Description
 #: ../netcfg-common.templates:158
 msgid "Serial-line IP"
-msgstr "IP en linea serie"
+msgstr "IP en línea serie"
 
 #. Type: text
 #. Description
@@ -1112,7 +1111,7 @@ msgstr "Configurar la red"
 #. Description
 #: ../netcfg-dhcp.templates:3
 msgid "DHCP hostname:"
-msgstr "Nombre de sistema DHCP:"
+msgstr "Nombre del servidor DHCP:"
 
 #. Type: string
 #. Description
@@ -1122,8 +1121,8 @@ msgid ""
 "might need to specify an account number here."
 msgstr ""
 "En algunas circunstancias será necesario que indique el nombre de su "
-"servidor DHCP. Si usted es un usuario de cable módem, puede necesitar "
-"indicar un número de cuenta aquí."
+"servidor DHCP. Quizás deba indicar un número de cuenta si usted es un "
+"usuario de cable módem."
 
 #. Type: string
 #. Description
@@ -1167,7 +1166,7 @@ msgstr ""
 #. Description
 #: ../netcfg-dhcp.templates:23
 msgid "The DHCP configuration process will be aborted."
-msgstr "La configuración con DHCP se abortará."
+msgstr "Se interrumpirá la configuración con DHCP."
 
 #. Type: select
 #. Choices
@@ -1199,7 +1198,7 @@ msgstr "${wifireconf}"
 #. Choices
 #: ../netcfg-dhcp.templates:32
 msgid "Do not configure the network at this time"
-msgstr "No configurar la red en este momento."
+msgstr "No configurar la red en este momento"
 
 #. Type: select
 #. Description
@@ -1269,7 +1268,7 @@ msgid ""
 "If you are unsure, you should not continue without a default route: contact "
 "your local network administrator about this problem."
 msgstr ""
-"No debería continuar sin una ruta por defecto si no está seguro: contacte "
+"No debería continuar sin una ruta por omisión si no está seguro: contacte "
 "con el administrador de red local e infórmele de este problema."
 
 #. Type: text
@@ -1299,9 +1298,9 @@ msgid ""
 "separated by periods.  If you don't know what to use here, consult your "
 "network administrator."
 msgstr ""
-"La dirección IP es única para su ordenador y consiste de cuatro números "
-"separados por puntos. Si no sabe qué usar aquí, consulte al administrador de "
-"red."
+"La dirección IP es única para su ordenador y está formada por cuatro números "
+"separados por puntos. Consulte al administrador de red si no sabe qué usar "
+"aquí."
 
 #. Type: error
 #. Description
@@ -1337,8 +1336,8 @@ msgid ""
 msgstr ""
 "La dirección punto a punto se utiliza para determinar el otro extremo de una "
 "red punto a punto. Consulte al administrador de red si no conoce el valor. "
-"La dirección punto a punto debe ser introducida como cuatro números "
-"separados por puntos."
+"La dirección punto a punto debe introducirse como cuatro números separados "
+"por puntos."
 
 #. Type: string
 #. Description
@@ -1376,11 +1375,11 @@ msgid ""
 "question, consult your network administrator."
 msgstr ""
 "La pasarela es una dirección IP (cuatro números separados por puntos) que "
-"indica el router de pasarela, también conocido como router por defecto. Todo "
-"el tráfico que se envía fuera de su LAN (por ejemplo, hacia Internet) se "
-"envía a este router.  En algunas circunstancias anormales, puede no tener un "
-"router; si es así lo puede dejar en blanco. Si no sabe la respuesta correcta "
-"a esta pregunta, consulte al administrador de red."
+"indica el encaminador de pasarela, también conocido como encaminador por "
+"omisión. Todo el tráfico que se envía fuera de su LAN (por ejemplo, hacia "
+"Internet) se envía a este encaminador.  En algunas circunstancias anormales, "
+"puede no tener un encaminador; si es así lo puede dejar en blanco. Si no "
+"sabe la respuesta correcta a esta pregunta, consulte al administrador de red."
 
 #. Type: error
 #. Description
@@ -1491,7 +1490,7 @@ msgid ""
 "[[user][:pass]@]host[:port]/\""
 msgstr ""
 "Al introducir la información sobre el proxy, hágalo de la forma «http://"
-"[[usuario][:contraseña@]servidor[:puerto]/»."
+"[[usuario][:contraseña@]servidor[:puerto]/»"
 
 #. Type: select
 #. Description
@@ -1625,8 +1624,8 @@ msgid ""
 "The specified Debian archive mirror is either not available, or does not "
 "have a valid Release file on it. Please try a different mirror."
 msgstr ""
-"El espejo de Debian no está disponible o no tiene un fichero de distribución "
-"válido. Por favor, inténtelo con otro servidor espejo."
+"La réplica de Debian no está disponible o no tiene un fichero de "
+"distribución válido. Por favor, inténtelo con otra réplica distinta."
 
 #. Type: text
 #. Description
@@ -2027,7 +2026,7 @@ msgstr "Descargar componentes del instalador"
 #. Choices
 #: ../templates:3
 msgid "Retry, Change mirror, Cancel"
-msgstr "Reintentar, Cambiar servidor espejo, Cancelar"
+msgstr "Reintentar, Cambiar de réplica, Cancelar"
 
 #. Type: select
 #. Description
@@ -2044,10 +2043,10 @@ msgid ""
 "download, select a different mirror, or cancel and choose another "
 "installation method."
 msgstr ""
-"Se produjo un fallo al descargar un fichero del servidor espejo. Esto puede "
-"deberse a un problema en la red o con el servidor espejo. Puede elegir "
-"reintentar la descarga, seleccionar otro servidor espejo o cancelar y elegir "
-"otro método de instalación."
+"Se produjo un fallo al descargar un fichero de la réplica. Esto puede "
+"deberse a un problema en la red o con la réplica. Puede elegir reintentar la "
+"descarga, seleccionar otra réplica o cancelar y elegir otro método de "
+"instalación."
 
 #. Type: text
 #. Description
@@ -2213,7 +2212,7 @@ msgid ""
 "tables in libparted, the newly created partition table has to be written to "
 "the disk immediately."
 msgstr ""
-"La tabla de particiones recién creada debe ser escrita inmediatamente. Esto "
+"La tabla de particiones recién creada debe escribirse inmediatamente. Esto "
 "es necesario por las limitaciones actuales en la implementación de la tabla "
 "de particiones de Sun en libparted."
 
@@ -2555,13 +2554,13 @@ msgid ""
 "to be automatically partitioned."
 msgstr ""
 "Esto sucedió posiblemente porque o bien el disco escogido o bien el espacio "
-"libre es demasiado pequeño para ser particionado de forma automática."
+"libre es demasiado pequeño para particionarse de forma automática."
 
 #. Type: error
 #. Description
 #: ../partman-auto.templates:17
 msgid "Failed to partition the selected disk"
-msgstr "Falló el particionado en el disco seleccionado:"
+msgstr "Falló el particionado en el disco seleccionado"
 
 #. Type: error
 #. Description
@@ -2612,7 +2611,7 @@ msgid ""
 "The disk can be partitioned using one of several different schemes. If you "
 "are unsure, choose the first one."
 msgstr ""
-"Esta disco puede ser particionado siguiendo uno o varios de los diferentes "
+"Esta disco puede particionarse siguiendo uno o varios de los diferentes "
 "esquemas disponibles. Si no está seguro, escoja el primero de ellos."
 
 #. Type: error
@@ -2628,9 +2627,9 @@ msgid ""
 "Partitioning failed because the chosen free space may not be used. There are "
 "probably too many (primary) partitions in the partition table."
 msgstr ""
-"Falló el particionado porque el espacio libre escogido no puede ser "
-"utilizado. Probablemente haya demasiadas particiones (primarias) en la tabla "
-"de particiones."
+"Falló el particionado porque el espacio libre escogido no pudo utilizarse. "
+"Probablemente haya demasiadas particiones (primarias) en la tabla de "
+"particiones."
 
 #. Type: text
 #. Description
@@ -2737,8 +2736,9 @@ msgid ""
 "The test of the file system with type ${TYPE} in partition #${PARTITION} of "
 "${DEVICE} found uncorrected errors."
 msgstr ""
-"Las pruebas del sistema de ficheros con el tipo ${TYPE} en la partición "
-"${PARTITION} de ${DEVICE} encontró errores no corregidos."
+"Se encontraron errores no corregidos durante las pruebas realizadas en el "
+"sistema de ficheros con tipo ${TYPE} en la partición ${PARTITION} de "
+"${DEVICE}."
 
 # ../partman-basicfile systems.templates:32 ../partman-ext2r0.templates:7
 #. Type: boolean
@@ -3385,7 +3385,8 @@ msgstr "Se produjo un fallo al cargar un componente del instalador"
 #: ../anna.templates:46
 msgid "Loading ${PACKAGE} failed for unknown reasons. Aborting."
 msgstr ""
-"La carga del componente ${PACKAGE} falló por razones desconocidas. Abortando."
+"La carga del componente ${PACKAGE} falló por razones desconocidas. "
+"Interrumpiendo."
 
 #. Type: boolean
 #. Description
@@ -3414,8 +3415,8 @@ msgid ""
 "fail to work if you continue without kernel modules."
 msgstr ""
 "Puede resolver este problema seleccionando una versión de Debian distinta "
-"para instalar si está instalando de un espejo. La instalación probablemente "
-"fallará si continúa sin módulos del núcleo."
+"para instalar si está instalando de una réplica. La instalación "
+"probablemente fallará si continúa sin módulos del núcleo."
 
 #. Type: text
 #. Description
@@ -3428,7 +3429,7 @@ msgstr "Cargar los componentes del instalador"
 #. Description
 #: ../base-installer.templates:4
 msgid "Proceed with installation to unclean target?"
-msgstr "¿Continuar con la instalación al destino inválido?"
+msgstr "¿Continuar con la instalación al destino no limpio?"
 
 #. Type: boolean
 #. Description
@@ -3456,8 +3457,7 @@ msgid ""
 "was found and no valid mirror was configured."
 msgstr ""
 "El instalador no puede determinar cómo instalar Debian. No se ha encontrado "
-"ninguna unidad de CD-ROM válida y no se ha configurado un servidor espejo "
-"válido."
+"ninguna unidad de CD-ROM válida y no se ha configurado una réplica válida."
 
 #. Type: error
 #. Description
@@ -3474,13 +3474,13 @@ msgid ""
 msgstr ""
 "Debe montar el sistema de ficheros raíz en «/target» antes de proceder con "
 "la instalación. El particionador y formateador debería haber hecho ésto por "
-"vd."
+"Vd."
 
 #. Type: error
 #. Description
 #: ../base-installer.templates:23
 msgid "Not installing to unclean target"
-msgstr "No se instalará en un destino inválido"
+msgstr "No se instalará en un destino no limpio"
 
 #. Type: error
 #. Description
@@ -3492,7 +3492,7 @@ msgid ""
 "back and erase or format the target file system before proceeding with the "
 "install."
 msgstr ""
-"Se ha abortado la instalación en el sistema de ficheros destino ya que "
+"Se ha interrumpido la instalación en el sistema de ficheros destino ya que "
 "contiene ficheros de una instalación anterior. Estos ficheros podrían romper "
 "el proceso de instalación o dar lugar a la instalación de un sistema no "
 "funcional. Debería volver atrás y borrar o formatear el sistema de ficheros "
@@ -3516,7 +3516,7 @@ msgstr "La instalación del sistema base en /target/ ha fallado."
 msgid ""
 "The debootstrap program exited with an error (return value ${EXITCODE})."
 msgstr ""
-"El programa debootstrap terminó con errores (valor de retorno ${EXITCODE})."
+"El programa debootstrap terminó con un error (valor de retorno ${EXITCODE})."
 
 #. Type: error
 #. Description
@@ -3546,7 +3546,7 @@ msgstr "${ERROR}"
 #. Description
 #: ../base-installer.templates:62
 msgid "Unable to install a kernel"
-msgstr "Incapaz de instalar un núcleo."
+msgstr "No se pudo instalar un núcleo"
 
 #. Type: error
 #. Description
@@ -3596,7 +3596,7 @@ msgstr ""
 #. Description
 #: ../base-installer.templates:84
 msgid "No installable kernel found"
-msgstr "No se encontró un núcleo instalable."
+msgstr "No se encontró un núcleo instalable"
 
 #. Type: error
 #. Description
@@ -3725,25 +3725,25 @@ msgstr "Descargando el fichero Release"
 #. Description
 #: ../base-installer.templates:156
 msgid "Finding package sizes"
-msgstr "Buscando tamaño de paquetes"
+msgstr "Determinando los tamaños de los paquetes"
 
 #. Type: text
 #. Description
 #: ../base-installer.templates:160
 msgid "Retrieving Packages files"
-msgstr "Descargando el fichero Packages"
+msgstr "Descargando el fichero «Packages»"
 
 #. Type: text
 #. Description
 #: ../base-installer.templates:164
 msgid "Retrieving packages"
-msgstr "Descargando paquetes"
+msgstr "Descargando los paquetes"
 
 #. Type: text
 #. Description
 #: ../base-installer.templates:168
 msgid "Extracting packages"
-msgstr "Extrayendo paquetes"
+msgstr "Extrayendo los paquetes"
 
 #. Type: text
 #. Description
@@ -3791,19 +3791,19 @@ msgstr "Instalando paquetes principales..."
 #. Description
 #: ../base-installer.templates:200
 msgid "Unpacking required packages..."
-msgstr "Desempaquetando paquetes necesarios.."
+msgstr "Desempaquetando los paquetes necesarios..."
 
 #. Type: text
 #. Description
 #: ../base-installer.templates:204
 msgid "Configuring required packages..."
-msgstr "Configurando paquetes necesarios..."
+msgstr "Configurando los paquetes necesarios..."
 
 #. Type: text
 #. Description
 #: ../base-installer.templates:208
 msgid "Installing base packages..."
-msgstr "Instalando paquetes básicos..."
+msgstr "Instalando los paquetes básicos..."
 
 #. Type: text
 #. Description
@@ -3815,7 +3815,7 @@ msgstr "El sistema base se instaló con éxito."
 #. Description
 #: ../base-installer.templates:216
 msgid "Configuring APT sources..."
-msgstr "Configurando fuentes APT..."
+msgstr "Configurando las fuentes APT..."
 
 #. Type: text
 #. Description
@@ -3827,7 +3827,7 @@ msgstr "Actualizando la lista de paquetes disponibles..."
 #. Description
 #: ../base-installer.templates:224
 msgid "Installing extra packages..."
-msgstr "Instalando paquetes extra"
+msgstr "Instalando los paquetes extra..."
 
 #. Type: text
 #. Description
@@ -3839,7 +3839,7 @@ msgstr "Instalando los paquetes extra - descargando e instalando ${SUBST0}..."
 #. Description
 #: ../base-installer.templates:232
 msgid "Creating device files..."
-msgstr "Creando ficheros de dispositivo..."
+msgstr "Creando los ficheros de dispositivo..."
 
 #. Type: text
 #. Description
@@ -3877,7 +3877,8 @@ msgstr "Instalar el sistema base"
 #: ../baseconfig-udeb.templates:4
 msgid "Run second stage installer from within first stage installer?"
 msgstr ""
-"¿Ejecutar la segunda fase del instalador desde dentro de la primera etapa?"
+"¿Desea ejecutar la segunda fase del instalador desde dentro de la primera "
+"etapa?"
 
 #. Type: boolean
 #. Description
@@ -3953,7 +3954,7 @@ msgid ""
 msgstr ""
 "Aviso: Si el instalador no pudo detectar otro sistema operativo instalado en "
 "el sistema, la modificación del registro principal de arranque hará que ese "
-"sistema operativo no pueda ser arrancado. Sin embargo, podrá configurar GRUB "
+"sistema operativo no puede arrancarse. Sin embargo, podrá configurar GRUB "
 "manualmente más adelante para arrancarlo."
 
 #. Type: boolean
@@ -4094,7 +4095,7 @@ msgstr "Instalando el cargador de arranque GRUB"
 #. Description
 #: ../grub-installer.templates:80
 msgid "Looking for other operating systems..."
-msgstr "Buscando otros sistemas operativos...."
+msgstr "Buscando otros sistemas operativos..."
 
 #. Type: text
 #. Description
@@ -4160,7 +4161,7 @@ msgstr "Configurando la red..."
 #. Description
 #: ../templates:20
 msgid "Setting up frame buffer..."
-msgstr "Preparando el «frame buffer»..."
+msgstr "Configurando el «frame buffer»..."
 
 #. Type: text
 #. Description
@@ -4225,7 +4226,7 @@ msgid ""
 "solved by loading the needed modules."
 msgstr ""
 "El núcleo actual no soporta el dispositivos multi-disco. Quizás pueda "
-"arreglar este problema cargando los módulos necesarios"
+"arreglar este problema cargando los módulos necesarios."
 
 #. Type: select
 #. Choices
@@ -4249,7 +4250,7 @@ msgstr "Terminar"
 #. Description
 #: ../mdcfg-utils.templates:15
 msgid "Multidisk configuration actions"
-msgstr "Acciones de configuración de multi-discos:"
+msgstr "Acciones de configuración de multi-discos"
 
 #. Type: select
 #. Description
@@ -4293,7 +4294,7 @@ msgid ""
 "therefore not available for use by this configuration utility."
 msgstr ""
 "Si tiene este tipo de particiones, puede que contengan sistemas de ficheros "
-"y no podrán ser utilizadas por esta utilidad de configuración."
+"y esta utilidad de configuración no podrá utilizarlos."
 
 #. Type: error
 #. Description
@@ -4434,9 +4435,9 @@ msgid ""
 "able to add them later to the array."
 msgstr ""
 "Por favor, escoja las particiones que se utilizarán como particiones libres. "
-"Puede elegir hasta ${COUNT} partitions. Si escoge menos de ${COUNT} "
+"Puede elegir hasta ${COUNT} particiones. Si escoge menos de ${COUNT} "
 "dispositivos, las demás particiones se añadirán al array como «no "
-"disponibles» y podrán ser añadidos más adelante."
+"disponibles» y podrán añadirse más adelante."
 
 #. Type: multiselect
 #. Description
@@ -4639,8 +4640,8 @@ msgstr ""
 "Debian. El acceso de un usuario malicioso o no cualificado al instalador "
 "puede tener consecuencias desastrosas, por esto debería asegurarse de elegir "
 "una contraseña difícil de adivinar. No debería ser una palabra de un "
-"diccionario ni una palabra que pueda asociarse con vd. fácilmente (como su "
-"nombre o apellidos)"
+"diccionario ni una palabra que pueda asociarse con Vd. fácilmente (como su "
+"nombre o apellidos)."
 
 #. Type: password
 #. Description
@@ -4842,8 +4843,8 @@ msgid ""
 "The CD-ROM ${CDROM} could not be mounted correctly. Please check the media "
 "and cables, and try it again."
 msgstr ""
-"El CD-ROM ${CDROM} no pudo ser montado correctamente. Por favor, compruebe "
-"el disco y los cables y pruebe de nuevo."
+"El CD-ROM ${CDROM} no pudo montarse correctamente. Por favor, compruebe el "
+"disco y los cables y pruebe de nuevo."
 
 #. Type: error
 #. Description
@@ -4888,7 +4889,8 @@ msgstr "Comprobación de integridad correcta"
 #: ../templates:33
 msgid "The CD-ROM integrity test was successful. The CD-ROM is valid."
 msgstr ""
-"La comprobación de integridad del CD-ROM fue correcta. El CD-ROM es válido."
+"La prueba de comprobación de integridad del CD-ROM tuvo éxito. El CD-ROM es "
+"válido."
 
 #. Type: error
 #. Description
@@ -4970,7 +4972,7 @@ msgstr ""
 #. Description
 #: ../cdrom-detect.templates:14
 msgid "Detecting hardware to find CD-ROM drives"
-msgstr "Detectando el hardware para buscar unidades de CD-ROM"
+msgstr "Detectando el hardware para encontrar las unidades de CD-ROM"
 
 #. Type: boolean
 #. Description
@@ -5135,13 +5137,13 @@ msgstr "Buscar en los discos duros una imagen ISO de instalación"
 #. Description
 #: ../templates:17
 msgid "Detecting hardware to find hard drives"
-msgstr "Detectando hardware para buscar unidades de disco duro"
+msgstr "Detectando hardware para encontrar las unidades de disco duro"
 
 #. Type: text
 #. Description
 #: ../templates:21
 msgid "Searching drives for an installer ISO image"
-msgstr "Buscar en los dispositivos una imagen ISO de instalación"
+msgstr "Buscando una imagen ISO de instalación en las unidades"
 
 #. Type: text
 #. Description
@@ -5210,7 +5212,7 @@ msgstr ""
 #. Description
 #: ../templates:58
 msgid "No installer ISO image found"
-msgstr "Ninguna imagen ISO del instalador encontrada"
+msgstr "No se encontró ninguna imagen ISO del instalador"
 
 #. Type: error
 #. Description
@@ -5220,7 +5222,7 @@ msgid ""
 "valid installer ISO images."
 msgstr ""
 "Aunque se encontraron una o más imágenes ISO posibles, no parecían imágenes "
-"ISO del instalador válida."
+"ISO del instalador válidas."
 
 #. Type: error
 #. Description
@@ -5421,7 +5423,7 @@ msgstr ""
 #. Description
 #: ../quik-installer.templates:82
 msgid "Failed to resolve kernel symlink"
-msgstr "Se produjo un fallo al resolver un enlace simbólico del núcleo."
+msgstr "Se produjo un fallo al resolver un enlace simbólico del núcleo"
 
 #. Type: error
 #. Description
@@ -5430,8 +5432,9 @@ msgid ""
 "/vmlinux or /boot/vmlinux in the installed system appears not to be a "
 "symlink to a kernel image. This is probably a bug."
 msgstr ""
-"En el sistema instalador /vmlinux o /boot/vmxlinux parecen no ser enlaces "
-"simbólicos a un núcleo instalado. Esto se trata posiblemente de un error."
+"En el sistema instalador ni «/vmlinux» ni «/boot/vmxlinux» parecen ser "
+"enlaces simbólicos a un núcleo instalado. Esto se trata posiblemente de un "
+"error."
 
 #. Type: text
 #. Description
@@ -5477,7 +5480,7 @@ msgid ""
 "configure OpenFirmware yourself to boot."
 msgstr ""
 "Se produjo un fallo al definir la variable «boot-device» (dispositivo de "
-"arranque) en «OpenFirmware». Tendrá que configurar «OpenFirmware» vd. mismo "
+"arranque) en «OpenFirmware». Tendrá que configurar «OpenFirmware» Vd. mismo "
 "para arrancar."
 
 #. Type: error
@@ -5628,7 +5631,7 @@ msgid ""
 "destination partition from among these partitions that have the bootable "
 "flag set."
 msgstr ""
-"«Yaboot» (el gestor de arranque de Linux) necesita ser instalado en la "
+"«Yaboot» (el gestor de arranque de Linux) necesita instalarse en la "
 "partición de un disco duro para poder hacer arrancable el sistema. Elija, "
 "por favor, una partición de destino entre las particiones que tienen la "
 "marca de arranque habilitada."
@@ -6001,8 +6004,8 @@ msgid ""
 msgstr ""
 "Falló la instalación del paquete «vmelilo» en /target/. La instalación de "
 "vmelilo como cargador de arranque es un paso necesario. El problema de "
-"instalación puede no estar relacionado con SILO así que es posible que pueda "
-"continuar con la instalación.\""
+"instalación puede no estar relacionado con vmelilo así que es posible que "
+"pueda continuar con la instalación.\""
 
 #. Type: text
 #. Description
@@ -6694,7 +6697,7 @@ msgstr ""
 #. Description
 #: ../s390-netdevice.templates:27
 msgid "No CTC or ESCON connections"
-msgstr "No se detectaron conexiones CTC o ESCON."
+msgstr "No se detectaron conexiones CTC o ESCON"
 
 #. Type: error
 #. Description
@@ -6814,9 +6817,9 @@ msgid ""
 "Please enter the portname of your OSA-Express card. This name must be 1 to 8 "
 "characters long and must be equal on all systems accessing the same card."
 msgstr ""
-"Indique el nombre del puerto de la tarjeta OSA-Express. Este nombre debe ser "
-"de entre 1 y 8 caracteres de larga y debe ser igual en todos los sistemas "
-"accediendo a la misma tarjeta."
+"Indique el nombre del puerto de la tarjeta OSA-Express. Este nombre debe "
+"tener  entre 1 y 8 caracteres y debe ser la misma para todos los sistemas "
+"que accedan a la misma tarjeta."
 
 #. Type: string
 #. Description
@@ -6983,8 +6986,7 @@ msgid ""
 "Such disk should be formatted before you can create partitions."
 msgstr ""
 "El dispositivo ${device} parece un disco limpio que no ha sido preparado aún "
-"para Linux. Un disco así debe ser formateado antes de poder crear "
-"particiones."
+"para Linux. Un disco así debe formatearse antes de poder crear particiones."
 
 #. Type: text
 #. Description
@@ -7030,7 +7032,7 @@ msgstr ""
 #. Main menu item
 #: ../bugreporter-udeb.templates:4
 msgid "Save debug logs"
-msgstr "Grabar logs de depuración"
+msgstr "Guardar los registros de depuración"
 
 #. Type: note
 #. Description
@@ -7042,7 +7044,7 @@ msgstr "Inserte un disquete formateado en la unidad"
 #. Description
 #: ../bugreporter-udeb.templates:8
 msgid "Log files and configuration info will be copied into this floppy."
-msgstr "Los ficheros de registro y configuración serán copiados al disquete."
+msgstr "Los ficheros de registro y configuración se copiarán al disquete."
 
 #. Type: note
 #. Description
@@ -7058,7 +7060,7 @@ msgstr ""
 #. Description
 #: ../bugreporter-udeb.templates:16
 msgid "Unable to find any floppy device"
-msgstr "No se pudo encontrar una unidad de disquetes."
+msgstr "No se pudo encontrar una unidad de disquetes"
 
 #. Type: note
 #. Description
@@ -7068,8 +7070,8 @@ msgid ""
 "probably a bug in the bugreporter-udeb package that got you here."
 msgstr ""
 "No se ha encontrado una unidad de disquetes. Si este equipo tiene una unidad "
-"de disquetes probablemente de un error en el paquete bugreporter-udb le "
-"llevó hasta aquí."
+"de disquetes probablemente se trate de un error en el paquete bugreporter-"
+"udeb."
 
 #. Type: note
 #. Description
@@ -7093,13 +7095,13 @@ msgstr "Recogiendo los datos necesarios para el informe de instalación ..."
 #. Description
 #: ../partman-lvm.templates:3 ../templates:4
 msgid "Configure the Logical Volume Manager"
-msgstr "Configurar el Gestor Lógico de Volúmenes (LVM)"
+msgstr "Configurar el Gestor de Volúmenes Lógicos (LVM)"
 
 #. Type: boolean
 #. Description
 #: ../lvmcfg-utils.templates:4
 msgid "Activate existing volume groups?"
-msgstr "¿Activar Grupos de Volúmenes existentes?"
+msgstr "¿Activar grupos de volúmenes existentes?"
 
 #. Type: boolean
 #. Description
@@ -7108,7 +7110,7 @@ msgid ""
 "${COUNT} existing volume groups have been found. Please indicate whether you "
 "want to activate them."
 msgstr ""
-"Se han encontrado ${COUNT} Grupos de Volúmenes. Por favor, indique si quiere "
+"Se han encontrado ${COUNT} grupos de volúmenes. Por favor, indique si quiere "
 "activarlos."
 
 #. Type: select
@@ -7118,7 +7120,7 @@ msgstr ""
 #. in your language
 #: ../lvmcfg-utils.templates:13
 msgid "Modify volume groups (VG)"
-msgstr "Modificar los grupos de volumen (VG)"
+msgstr "Modificar los grupos de volúmenes (VG)"
 
 #. Type: select
 #. Choices
@@ -7146,31 +7148,31 @@ msgstr ""
 #. in your language
 #: ../lvmcfg-utils.templates:22
 msgid "Create volume groups"
-msgstr "Crear grupos de volumen"
+msgstr "Crear los grupos de volúmenes"
 
 #. Type: select
 #. Choices
 #: ../lvmcfg-utils.templates:22
 msgid "Delete volume groups"
-msgstr "Borrar grupo de volúmenes"
+msgstr "Borrar el grupo de volúmenes"
 
 #. Type: select
 #. Choices
 #: ../lvmcfg-utils.templates:22
 msgid "Extend volume groups"
-msgstr "Extender grupo de volúmenes"
+msgstr "Extender los grupos de volúmenes"
 
 #. Type: select
 #. Choices
 #: ../lvmcfg-utils.templates:22
 msgid "Reduce volume groups"
-msgstr "Reducir grupos de volúmenes"
+msgstr "Reducir los grupos de volúmenes"
 
 #. Type: select
 #. Description
 #: ../lvmcfg-utils.templates:23
 msgid "Volume groups configuration action:"
-msgstr "Acción para configuración de Grupos de Volúmenes:"
+msgstr "Acción para configuración de grupos de volúmenes:"
 
 #. Type: select
 #. Choices
@@ -7197,7 +7199,7 @@ msgstr "Salir"
 #. Description
 #: ../lvmcfg-utils.templates:31
 msgid "Logical volumes configuration action:"
-msgstr "Acción para configuración de Volúmenes Lógicos:"
+msgstr "Acción para configuración de volúmenes lógicos:"
 
 #. Type: multiselect
 #. Description
@@ -7378,8 +7380,8 @@ msgstr "No se ha seleccionado un volumen físico"
 msgid ""
 "No physical volumes were selected. Extension of the volume group was aborted."
 msgstr ""
-"No se ha seleccionado ningún volumen físico. Se ha abortado la extensión del "
-"grupo de volúmenes."
+"No se ha seleccionado ningún volumen físico. Se ha interrumpido la extensión "
+"del grupo de volúmenes."
 
 #. Type: error
 #. Description
@@ -7457,7 +7459,7 @@ msgid ""
 "The physical volume ${PARTITION} could not be removed from the selected  "
 "volume group."
 msgstr ""
-"El volumen físico ${PARTITION} no pudo ser borrado del grupo de volúmenes "
+"El volumen físico ${PARTITION} no pudo borrarse del grupo de volúmenes "
 "seleccionado."
 
 #. Type: error
@@ -7467,8 +7469,8 @@ msgid ""
 "No volume groups were found for creating a new logical volume.  Please "
 "create more physical volumes and volume groups."
 msgstr ""
-"No se han encontrado grupos de volumen para crear un nuevo volumen lógico. "
-"Por favor, cree más volúmenes físiciso y grupos de volúmenes."
+"No se han encontrado grupos de volúmenes para crear un nuevo volumen lógico. "
+"Por favor, cree más volúmenes físicos y más grupos de volúmenes."
 
 #. Type: error
 #. Description
@@ -7478,8 +7480,8 @@ msgid ""
 "create more physical volumes and volume groups, or reduce an existing volume "
 "group."
 msgstr ""
-"No se han encontrado grupos de volumen para crear un nuevo volumen lógico. "
-"Por favor, cree más volúmenes físiciso y grupos de volúmenes."
+"No se han encontrado grupos de volúmenes para crear un nuevo volumen lógico. "
+"Por favor, cree más volúmenes físicos y más grupos de volúmenes."
 
 #. Type: string
 #. Description
@@ -7515,7 +7517,7 @@ msgstr "No se introdujo el nombre de un volumen lógico"
 #: ../lvmcfg-utils.templates:190
 msgid "No name for the logical volume has been entered.  Please enter a name."
 msgstr ""
-"No se ha introducido ningún nombre para el volúmen lógico. Por favor, "
+"No se ha introducido ningún nombre para el volumen lógico. Por favor, "
 "introduzca un nombre."
 
 #. Type: error
@@ -7544,7 +7546,7 @@ msgid ""
 msgstr ""
 "Introduzca el tamaño del nuevo volumen lógico. El tamaño puede ser "
 "introducido en los siguientes formatos: 10K (Kilobytes, 10M (Megabytes), 10G "
-"(Gigabytes), 10T (Terabytes). La unidad por defecto es Megabytes."
+"(Gigabytes), 10T (Terabytes). La unidad por omisión es Megabytes."
 
 #. Type: error
 #. Description
@@ -8018,7 +8020,7 @@ msgid ""
 "might experience problems installing or booting GRUB."
 msgstr ""
 "Vd. ha montado /boot con el sistema de ficheros JFS. Esto causará "
-"posiblemente problemas con el cargador de arraque GRUB que este instalador "
+"posiblemente problemas con el cargador de arranque GRUB que este instalador "
 "utiliza por omisión, puede experimentar problemas al instalar o cargar GRUB."
 
 #. Type: boolean
@@ -8452,7 +8454,7 @@ msgstr "Se produjo un error mientras se guardaban los cambios de los discos."
 #. Description
 #: ../partman-lvm.templates:31
 msgid "The configuration of the Logical Volume Manager is aborted."
-msgstr "Se abortará la configuración del Gestor de Volúmenes Lógicos."
+msgstr "Se interrumpirá la configuración del Gestor de Volúmenes Lógicos."
 
 #. Type: text
 #. Description
@@ -8803,8 +8805,8 @@ msgid ""
 "Before the copy operation takes place, the changes have to be written to "
 "disk."
 msgstr ""
-"Los cambios tienen que ser guardados en los discos antes de que tenga lugar "
-"la operación de copiado."
+"Los cambios tienen que guardarse en los discos antes de que tenga lugar la "
+"operación de copiado."
 
 #. Type: boolean
 #. Description
@@ -8837,13 +8839,13 @@ msgstr "La operación de copia falló"
 #. Description
 #: ../partman-partitioning.templates:31
 msgid "The copy operation is aborted."
-msgstr "Se abortó la operación de copia."
+msgstr "Se interrumpió la operación de copia."
 
 #. Type: error
 #. Description
 #: ../partman-partitioning.templates:38
 msgid "The resize operation is impossible"
-msgstr "La operación de ajuste de tamaño es imposible."
+msgstr "La operación de ajuste de tamaño es imposible"
 
 #. Type: error
 #. Description
@@ -8915,7 +8917,7 @@ msgstr "Se produjo un error en la operación de ajuste de tamaño"
 #. Description
 #: ../partman-partitioning.templates:76
 msgid "The resize operation is aborted."
-msgstr "Se abortó la operación de ajuste de tamaño."
+msgstr "Se interrumpió la operación de ajuste de tamaño."
 
 #. Type: string
 #. Description
@@ -9199,7 +9201,7 @@ msgstr ""
 "Si quiere continuar con el proceso de instalación, cambie a la segunda "
 "consola (con ALT+F2), particione el disco como desee utilizando 'parted' y "
 "las demás herramientas disponibles, y después monte todas sus particiones "
-"en /target. /target es el directorio raíz de la nuevo sistema, así que la "
+"en /target. /target es el directorio raíz del nuevo sistema, así que la "
 "partición raíz quedará montada en /target y la partición /usr debe estar "
 "montada en /target/usr."
 
@@ -9464,7 +9466,7 @@ msgstr "Salir del instalador de muestra"
 #. Description
 #: ../di-utils-reboot.templates:4
 msgid "Are you sure you want to exit now?"
-msgstr "¿Está seguro/a de que quiere salir ahora?"
+msgstr "¿Seguro que quiere salir ahora?"
 
 #. Type: boolean
 #. Description
@@ -9481,7 +9483,7 @@ msgstr ""
 #. Main menu item
 #: ../di-utils-reboot.templates:11
 msgid "Abort the installation"
-msgstr "Abortar la instalación"
+msgstr "Interrumpir la instalación"
 
 #. Type: text
 #. Description
@@ -9526,7 +9528,7 @@ msgstr ""
 #. Choices
 #: ../partconf.templates:15
 msgid "${PARTITIONS}, Finish, Abort"
-msgstr "${PARTITIONS}, Terminar, Abortar"
+msgstr "${PARTITIONS}, Terminar, Interrumpir"
 
 #. Type: select
 #. Description
@@ -9544,8 +9546,8 @@ msgid ""
 msgstr ""
 "Estas son las particiones que se detectaron en el sistema. Por favor, "
 "seleccione una partición para configurarla. No se hará ningún cambio hasta "
-"que seleccione «Terminar». Si selecciona «Abortar», no se realizará cambio "
-"alguno."
+"que seleccione «Terminar». No se realizará cambio alguno si selecciona "
+"«Interrumpir»."
 
 #. Type: select
 #. Description
@@ -9641,7 +9643,7 @@ msgstr "¿Quiere desmontar las particiones para poder hacer cambios?"
 msgid ""
 "Since the partitions have already been mounted, you cannot do any changes."
 msgstr ""
-"Dado que las particiones ya han sido montadas, no puede hacer ningun cambio."
+"No puede hacer ningun cambio puesto que ya se han montado las particiones."
 
 #. Type: error
 #. Description
@@ -9656,8 +9658,8 @@ msgid ""
 "An error occurred while unmounting the partitions. The partition "
 "configuration process is aborted."
 msgstr ""
-"Hubo un error mientras se desmontaban las particiones. Se ha abortado el "
-"proceso de configuración de particiones."
+"Se produjo un error mientras se desmontaban las particiones. Se ha "
+"interrumpido el proceso de configuración de particiones."
 
 #. Type: text
 #. Description
@@ -9849,6 +9851,9 @@ msgstr "Configurar y montar particiones"
 #~ "como una su interfaz Ethernet primaria si el hardware Firewire correcto "
 #~ "está conectado a éste."
 
+#~ msgid "user_xattr - support user extended attributes"
+#~ msgstr "user_xattr - soporte para atributos extendidos de usuario"
+
 #~ msgid "Enter rescue mode"
 #~ msgstr "Acceder al modo rescate"
 
@@ -9867,7 +9872,7 @@ msgstr "Configurar y montar particiones"
 #~ msgstr ""
 #~ "Tras este mensaje, si se monta el sistema de ficheros correctamente, se "
 #~ "le ofrecerá un intérprete de órdenes con dicho sistema en «/». Deberá "
-#~ "montar otros sistemas de ficheros vd. mismo si los necesita (como, por "
+#~ "montar otros sistemas de ficheros Vd. mismo si los necesita (como, por "
 #~ "ejemplo, si tiene un «/usr» separado)"
 
 #~ msgid "No such device"
@@ -9891,11 +9896,11 @@ msgstr "Configurar y montar particiones"
 #~ "sistema de ficheros raíz (${DEVICE}) en /target."
 
 #~ msgid "No shell found in /target"
-#~ msgstr "No se ha encontrado un intérprete de órdenes en «/target»"
+#~ msgstr "No se ha encontrado ningún intérprete de órdenes en «/target»"
 
 #~ msgid "No usable shell was found on your root file system (${DEVICE})."
 #~ msgstr ""
-#~ "No se encontró un intérprete de órdenes que pudiera utilizarse en el "
+#~ "No se encontró ningún intérprete de órdenes que pudiera utilizarse en el "
 #~ "sistema de ficheros raíz (${DEVICE})."
 
 #~ msgid ""
@@ -9998,7 +10003,7 @@ msgstr "Configurar y montar particiones"
 #~ "lcs: qeth: OSA-2 Token Ring/Ethernet or OSA-Express Fast Ethernet (non-"
 #~ "QDIO)"
 #~ msgstr ""
-#~ "lcs: geth: Token Ring/Ethernet OSA-2 u OSA-Express Fast Ethernet (no-QDIO)"
+#~ "lcs: qeth: Token Ring/Ethernet OSA-2 u OSA-Express Fast Ethernet (no-QDIO)"
 
 #~ msgid "qeth: OSA-Express in QDIO mode / HiperSockets"
 #~ msgstr "qeth: OSA-Express en modo QDIO / HiperSockets"
@@ -10027,7 +10032,7 @@ msgstr "Configurar y montar particiones"
 #~ "ficheros raíz."
 
 #~ msgid "Use free space for the Logical Volume Manager"
-#~ msgstr "Utilizar el espacio libre para Gestor Lógico de Volúmenes"
+#~ msgstr "Utilizar el espacio libre para el Gestor Lógico de Volúmenes"
 
 #~ msgid "Name of the volume group for the new Debian system:"
 #~ msgstr ""
