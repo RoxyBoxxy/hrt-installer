@@ -332,7 +332,7 @@ exim4-config exim4/dc_postmaster        string
 
 # Monitor autodetection is recommended.
 xserver-xfree86 xserver-xfree86/autodetect_monitor    boolean true
-# Uncomment if you have a LCD display.
+# Uncomment if you have an LCD display.
 #xserver-xfree86 xserver-xfree86/config/monitor/lcd   boolean true
 # X has three configuration paths for the monitor. Here's how to preseed
 # the "medium" path, which is always available. The "simple" path may not
@@ -692,10 +692,31 @@ mouse =&gt; /dev/psaux  =&gt; gpm =&gt; /dev/gpmdata -&gt; /dev/mouse =&gt; X
  <sect1 id="tasksel-size-list">
  <title
 >Дисковое пространство, необходимое для задач</title>
+
+<!-- Note for d-i and manual maintainers
+ Sizes of tasks should be determined by running "tasksel new" on a system
+ that been fully installed without selecting any tasks. By selecting a
+ task together with the "manual selection" option, aptitude will be started
+ and show the sizes for the task. After deselecting the packages to be
+ installed, quit aptitude and repeat for other tasks.
+ Space requirements need to be determined from tasksel as tasksel will not
+ install recommended packages while selecting a task from aptitude will.
+-->       
+
 <para
->Для базовой установки на i386 со всеми стандартными пакетами требуется 178 МБ дискового пространства. </para
+>Для базовой установки на i386 с ядром версии 2.4 со всеми стандартными пакетами требуется 573 МБ дискового пространства. </para
 ><para
 >В таблице ниже приведено количество используемого места при установке задач, описанных в tasksel. Данные величины получены с помощью aptitude. Заметим, что некоторые пакеты входят в несколько задач одновременно, поэтому полный размер установки для двух задач вместе может быть меньше, чем полный размер, полученный сложением размеров. </para
+><para
+>Заметьте, что при подчёте размера разделов к размеру базовой установки, нужно добавить размеры из таблицы. Большинство размеров из колонки <quote
+>Размер после установки</quote
+> нужно приплюсовывать к <filename
+>/usr</filename
+>; а размеры из колонки <quote
+>Размер загрузки</quote
+> (временно) занимает место в <filename
+>/var</filename
+>. </para
 ><para>
 
 <informaltable
@@ -718,66 +739,77 @@ mouse =&gt; /dev/psaux  =&gt; gpm =&gt; /dev/gpmdata -&gt; /dev/mouse =&gt; X
   <entry
 >рабочий стол</entry>
   <entry
->1537</entry>
+>1392</entry>
   <entry
->521</entry>
+>460</entry>
   <entry
->2058</entry>
+>1852</entry>
 </row>
 
 <row>
   <entry
 >веб сервер</entry>
   <entry
->71</entry>
+>36</entry>
   <entry
->21</entry>
+>12</entry>
   <entry
->92</entry>
+>48</entry>
 </row>
 
 <row>
   <entry
 >сервер печати</entry>
   <entry
->240</entry>
+>168</entry>
   <entry
->83</entry>
+>58</entry>
   <entry
->323</entry>
+>226</entry>
 </row>
 
 <row>
   <entry
->почтовый сервер</entry>
+>DNS сервер</entry>
   <entry
->41</entry>
+>2</entry>
   <entry
->12</entry>
+>1</entry>
   <entry
->53</entry>
+>3</entry>
 </row>
 
 <row>
   <entry
 >файловый сервер</entry>
   <entry
->85</entry>
+>47</entry>
   <entry
->34</entry>
+>24</entry>
   <entry
->119</entry>
+>71</entry>
+</row>
+
+<row>
+  <entry
+>почтовый сервер</entry>
+  <entry
+>10</entry>
+  <entry
+>3</entry>
+  <entry
+>13</entry>
 </row>
 
 <row>
   <entry
 >база данных SQL</entry>
   <entry
->108</entry>
+>66</entry>
   <entry
->33</entry>
+>21</entry>
   <entry
->141</entry>
+>87</entry>
 </row>
 
 </tbody>
@@ -791,7 +823,13 @@ mouse =&gt; /dev/psaux  =&gt; gpm =&gt; /dev/gpmdata -&gt; /dev/mouse =&gt; X
 > входит установка среды рабочего стола и Gnome и KDE одновременно. </para
 ></note>
 
-</para>
+</para
+><para
+>Если вы выбрали установку не на английском языке, <command
+>tasksel</command
+> может автоматически установить <firstterm
+>задание по локализации</firstterm
+>, если оно имеет для вашего языка. Необходимое пространство зависит от языка; добавьте около 200 МБ на загрузку и установку. </para>
  </sect1>
 <!--   End of file appendix/files.xml -->
 

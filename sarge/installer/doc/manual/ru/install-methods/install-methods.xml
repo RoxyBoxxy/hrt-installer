@@ -1220,8 +1220,8 @@ host clientname {
 ><screen>
 option domain-name "example.com";
 
-default-lease-time 6048;
-max-lease-time 604800;
+default-lease-time 600;
+max-lease-time 7200;
 
 allow booting;
 allow bootp;
@@ -1229,20 +1229,12 @@ allow bootp;
 # The next paragraph needs to be modified to fit your case
 subnet 192.168.1.0 netmask 255.255.255.0 {
   range 192.168.1.200 192.168.1.253;
-  option subnet-mask 255.255.255.0;
   option broadcast-address 192.168.1.255;
 # the gateway address which can be different 
 # (access to the internet for instance)
   option routers 192.168.1.1;
 # indicate the dns you want to use
   option domain-name-servers 192.168.1.3;
-}
-
-host tftpserver {
-# tftp server ip address
-  fixed-address 192.168.1.90;
-# tftp server hardware address
-  hardware ethernet 01:23:45:67:89:AB;
 }
 
 group {
@@ -1255,7 +1247,7 @@ group {
 }
 </screen
 ></informalexample
->Заметим, что для PXE загрузки в filename клиента <filename
+> Заметим, что для PXE загрузки в filename клиента <filename
 >pxelinux.0</filename
 > записано имя системного загрузчика, а не образа ядра (смотрите ниже <xref linkend="tftp-images"/>). </para>
    </sect3>

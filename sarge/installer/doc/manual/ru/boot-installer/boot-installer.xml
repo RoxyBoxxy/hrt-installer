@@ -234,7 +234,7 @@
   <entry
 >xlt</entry>
   <entry
->ARC или SRM</entry>
+>Только ARC</entry>
 </row>
 
 </tbody>
@@ -541,36 +541,43 @@ MILO
 </para
 ></note
 ><para
->После перезагрузки и прерывании процесса загрузки во время обратного отсчёта, вы должны сначала настроить сеть или статически: <informalexample
+>После перезагрузки и прерывании процесса загрузки во время обратного отсчёта, сначала нужно задать адрес в сети или статически: <informalexample
 ><screen>
     NeTTrom command-&gt; setenv eth0_ip 192.168.0.10/24
 </screen
 ></informalexample
-> где 24 &mdash; это число битов в маске сети, или динамически: <informalexample
+>, где 24 &mdash; это число бит в маске сети, или динамически: <informalexample
 ><screen>
     NeTTrom command-&gt; boot diskless
 </screen
 ></informalexample
-> Также, вам може потребоваться настроить переменную <userinput
+> Также, может потребоваться настроить переменную <userinput
 >route1</userinput
 >, если TFTP сервер находится не в локальной подсети. Оставшаяся настройка стандартна (шаг save-all необязателен): <informalexample
 ><screen>
     NeTTrom command-&gt; setenv kerntftpserver 192.168.0.1
-    NeTTrom command-&gt; setenv kerntftpfile tftpboot.img
+    NeTTrom command-&gt; setenv kerntftpfile boot.img
     NeTTrom command-&gt; save-all
     NeTTrom command-&gt; setenv netconfig_eth0 flash
     NeTTrom command-&gt; setenv kernconfig tftp
+    NeTTrom command-&gt; setenv rootdev /dev/ram
+    NeTTrom command-&gt; setenv cmdappend root=/dev/ram
 </screen
 ></informalexample
-> Только две последнии строки мешают обычной загрузке с диска, поэтому безопасней выполнять <command
+> Только две последние строки отделяют от обычной загрузке с диска, поэтому безопасней выполнять <command
 >save-all</command
-> прямо перед ними (это сохранит настройки сети в случае, если потребуется загрузка из сети ещё раз). Используйте команду <command
+> прямо перед ними (это сохранит настройки сети в случае, если потребуется загрузка из сети ещё раз). Если для установки на NetWinder вы хотите использовать консоль на последовательном порту, то также нужно ввести дополнительную настройку: <informalexample
+><screen>
+    NeTTrom command-&gt; setenv cmdappend root=/dev/ram console=ttyS0,115200
+</screen
+></informalexample
+> Используйте команду <command
 >printenv</command
 >, чтобы проверить настройки среды. Наконец, если переменная NeTTrom <envar
 >cmdappend</envar
 > содержит параметр <option
 >noinitrd</option
-> (который нужен для загрузки ядер версии 2.4), то вы должны удалить его, чтобы загружаемое ядро загрузило прикреплённый ramdisk. </para>
+>, то вы должны удалить его, чтобы загружаемое ядро загрузило прикреплённый ramdisk. </para>
   </sect3>
 
   <sect3 arch="arm"
@@ -2540,6 +2547,14 @@ Memory:<replaceable
 >Подобные проблемы замечены на Amiga 1200 и SE/30. </para
 ><para arch="hppa"
 >Подобные проблемы замечены на hppa. </para
+><note arch="sparc"
+><para
+>Для &arch-title; поддержка framebuffer <emphasis
+>по умолчанию выключена</emphasis
+> из-за проблем с отображением на некоторых системах. В свою очередь это может привести к неправильному отображению на системах с нормально поддерживаемым framebuffer, типа графических карт ATI. Если у вас возникли проблемы с отображением в программе установки, можно попробовать загрузиться с параметром <userinput
+>debian-installer/framebuffer=true</userinput
+>. </para
+></note
 ></listitem>
 </varlistentry>
 
@@ -2618,7 +2633,7 @@ Memory:<replaceable
 >Диагностика проблем процесса установки</title>
  
 
-  <sect2 id="unreliable-floppies">
+  <sect2 condition="supports-floppy-boot" id="unreliable-floppies">
   <title
 >Надёжность дискет</title>
 
