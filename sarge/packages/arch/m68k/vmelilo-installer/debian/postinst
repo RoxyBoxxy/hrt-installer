@@ -53,8 +53,7 @@ image     = /vmlinuz
 root      = $ROOTDEV
 read-only
 EOF
-      sed -e 's/do_bootloader[[:space:]]*=[[:space:]]no/do_bootloader = yes/i' /target/etc/kernel-img.conf > /target/etc/kerenl-img.conf.tmp
-      mv /target/etc/kernel-img.conf.tmp /target/etc/kernel-img.conf
+    sed -i -e 's/do_bootloader[ ]*=[ ]*no/do_bootloader = yes/' /target/etc/kernel-img.conf
 }
 
 write_bootblock () {
