@@ -53,6 +53,8 @@ image     = /vmlinuz
 root      = $ROOTDEV
 read-only
 EOF
+      sed -e 's/do_bootloader[[:space:]]*=[[:space:]]no/do_bootloader = yes/i' /target/etc/kernel-img.conf > /target/etc/kerenl-img.conf.tmp
+      mv /target/etc/kernel-img.conf.tmp /target/etc/kernel-img.conf
 }
 
 write_bootblock () {
@@ -100,7 +102,7 @@ db_progress INFO vmelilo-installer/root
 ROOTDEV="$(findfs /)"
 [ "$ROOTDEV" ] || die vmelilo-installer/noroot 'No root partition found'
 
-BOOTDEV="`echo $ROOTDEV | sed -e 's/sd\([a-z]\)[0-9]*/sd\1/g' -e 's/part[0-9]/disc/'`"
+BOOTDEV="`echo $ROOTDEV | sed -e 's/sd\([a-z]\)[0-9]*/sd\1/g' -e 's/part[0-9]*/disc/'`"
 info "root: $ROOTDEV  boot: $BOOTDEV"
 
 db_progress STEP 1
