@@ -1,3 +1,13 @@
+partman (63.1) UNRELEASED; urgency=low
+
+  * Colin Watson
+    - devices[index_of_name(name)] has unspecified results, as
+      index_of_name() may change the devices pointer; this caused
+      parted_server to crash on OPEN when compiled with gcc 4.0. Insert a
+      sequence point to fix this (closes: #308577).
+
+ -- Colin Watson <cjwatson@debian.org>  Thu, 12 May 2005 15:27:49 +0100
+
 partman (63) unstable; urgency=low
 
   * Matt Kraai
