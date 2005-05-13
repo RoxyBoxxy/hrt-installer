@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: debian-installer\n"
 "POT-Creation-Date: 2004-07-19 11:39+0200\n"
-"PO-Revision-Date: 2005-05-01 18:47+1200\n"
+"PO-Revision-Date: 2005-05-14 00:20+1200\n"
 "Last-Translator:  Carlos Z.F. Liu <carlos_liu@yahoo.com>\n"
 "Language-Team:  Debian Chinese [GB] <debian-chinese-gb@lists.debian.org>\n"
 "MIME-Version: 1.0\n"
@@ -5043,7 +5043,7 @@ msgstr "创建 quik 主配置文件失败。"
 #. Description
 #: ../quik-installer.templates:82
 msgid "Failed to resolve kernel symlink"
-msgstr "无法解析内核链接"
+msgstr "无法解析内核的符号链接"
 
 #. Type: error
 #. Description
@@ -9141,6 +9141,12 @@ msgstr "配置并加载分区"
 #~ "您预设定的区域值(${LOCALE})目前并不被 Debian 所支持。您将被提示输入语言、"
 #~ "国家和区域设置。"
 
+#~ msgid "Choose other locales to be supported:"
+#~ msgstr "请选择其它被支持的区域(locale)："
+
+#~ msgid "You may choose additional locales to be installed from this list."
+#~ msgstr "您可以从列表中选择安装额外的区域(locale)。"
+
 #~ msgid "Do you intend to use FireWire Ethernet?"
 #~ msgstr "您准备使用 FireWire 以太网吗？"
 
@@ -9175,6 +9181,20 @@ msgstr "配置并加载分区"
 #~ "An error was returned while trying to install the initrd-tools package "
 #~ "onto the target system."
 #~ msgstr "向目标系统中安装 initrd-tools 时出现一个错误。"
+
+#~ msgid ""
+#~ "Couldn't retrieve ${SUBST0}. This may be due to a network problem or a "
+#~ "bad CD, depending on your installation method."
+#~ msgstr ""
+#~ "无法获取 ${SUBST0}。根据您所使用的安装方式，造成此问题的原因可能是网络故障"
+#~ "或光盘受损。"
+
+#~ msgid ""
+#~ "If you are installing from CD-R or CD-RW, burning the CD at a lower speed "
+#~ "may help."
+#~ msgstr ""
+#~ "如果您是通过 CD-R 或 CD-RW 进行安装，请尝试使用较低的速度来刻录光盘，这可"
+#~ "能会对您有所帮助。"
 
 #~ msgid "Saving installation logs to /var/log/installer/..."
 #~ msgstr "正在将安装日志保存到 /var/log/installer/..."
@@ -9282,21 +9302,18 @@ msgstr "配置并加载分区"
 #~ "您可以多试几遍光盘探测，但是，即使能够成功探测到安装光盘，您依然可能在稍后"
 #~ "的安装过程中遇到问题。"
 
-#, fuzzy
 #~ msgid "Failed to resolve initrd symlink"
-#~ msgstr "无法解析内核链接"
+#~ msgstr "无法解析 initrd 符号链接"
 
-#, fuzzy
 #~ msgid ""
 #~ "/initrd.img or /boot/initrd.img in the installed system appears not to be "
 #~ "a symlink to an initial RAM disk image. This is probably a bug."
 #~ msgstr ""
-#~ "系统中的 /vmlinux 或 /boot/vmlinux 并非是指向某个内核映像文件的链接。这可"
-#~ "能是一个错误。"
+#~ "系统中的 /initrd.img 或 /boot/initrd.img 并非是指向某个初始化内存磁盘映像"
+#~ "的链接。这可能是一个错误。"
 
-#, fuzzy
 #~ msgid "The new system is now ready to boot."
-#~ msgstr "可以启动新的 Debian GNU/Linux 系统了。"
+#~ msgstr "可以启动新系统了。"
 
 #~ msgid "ctc: Channel to Channel (CTC) or ESCON connection"
 #~ msgstr "ctc: Channel to Channel (CTC) 或 ESCON 连接"
@@ -9313,29 +9330,28 @@ msgstr "配置并加载分区"
 #~ "iucv: Inter-User Communication Vehicle - available for VM guests only"
 #~ msgstr "iucv: Inter-User Communication Vehicle - 仅适用于 VM 客户"
 
-#, fuzzy
 #~ msgid "Log files and debug info will be copied into this floppy."
-#~ msgstr "日志文件和配置信息将被复制到这张软盘上。"
+#~ msgstr "日志文件和调试信息将被复制到这张软盘上。"
 
-#, fuzzy
 #~ msgid ""
 #~ "The information will also be stored in /var/log/debian-installer/ on the "
 #~ "installed system."
-#~ msgstr ""
-#~ "这些信息将被存储到系统的 /var/log/debian-installer/ 目录中。如果程序找到了"
-#~ "软盘设备，还将存储到软盘上。"
+#~ msgstr "这些信息也将被存储到系统的 /var/log/debian-installer/ 目录中。"
 
-#, fuzzy
 #~ msgid "Failed to mount the floppy"
-#~ msgstr "无法挂载 /target/proc"
+#~ msgstr "无法挂载软盘"
 
-#, fuzzy
+#~ msgid ""
+#~ "Either the floppy device cannot be found, or a formatted floppy is not in "
+#~ "the drive."
+#~ msgstr "不是没找到软件设备，就是未在驱动器内放入已格式化的软盘。"
+
 #~ msgid ""
 #~ "You have mounted a JFS file system as /boot. This is likely to cause "
 #~ "problems with the bootloader used by default by this installer."
 #~ msgstr ""
-#~ "您的根文件系统是 JFS 文件系统。这极有可能与安装程序默认使用的启动引导器冲"
-#~ "突。"
+#~ "您已将一个 JFS 文件系统挂载为 /boot。这极有可能与安装程序默认使用的启动引"
+#~ "导器冲突。"
 
 #~ msgid "Use free space for the Logical Volume Manager"
 #~ msgstr "在空闲空间上使用逻辑卷管理器(LVM)"
@@ -9358,15 +9374,24 @@ msgstr "配置并加载分区"
 #~ msgid "An error occurred during the previous operation"
 #~ msgstr "上一步操作中出现了错误"
 
-#, fuzzy
 #~ msgid ""
 #~ "No standard floppy drive was found. If you have a USB floppy drive or "
 #~ "some other unusual type of floppy drive, select it from the list. Note "
 #~ "that the list may also include drives that are not floppy drives."
 #~ msgstr ""
 #~ "未找到标准的软驱设备。如果您的软驱是 USB 接口或者其他不常见的类型，请从列"
-#~ "表中选择。注意，列表中还包括一些非软驱的设备。安装程序只会尝试从被选择的设"
-#~ "备当中读取数据。"
+#~ "表中选择。注意，列表中还包括一些非软驱的设备。"
+
+#~ msgid "Really use software RAID ${LEVEL}?"
+#~ msgstr "您确定要使用软件 RAID ${LEVEL} 吗？"
+
+#~ msgid ""
+#~ "Debian does not currently support using software RAID level ${LEVEL} for "
+#~ "the root file system or /boot partition. A system installed in this way "
+#~ "will not boot."
+#~ msgstr ""
+#~ "现在 Debian 尚不支持在根文件系统或 /boot 分区上使用软件 RAID ${LEVEL}。这"
+#~ "样安装的系统将无法启动。"
 
 #~ msgid ""
 #~ "Your root file system is an JFS file system. This can cause problems with "
@@ -9382,17 +9407,6 @@ msgstr "配置并加载分区"
 #~ msgstr ""
 #~ "您已将 JFS 文件系统挂载为 /boot。这极有可能与安装程序默认使用的 GRUB 启动"
 #~ "引导器冲突。您将会在安装或启动 GRUB 时遇到问题。"
-
-#~ msgid "Really use software RAID ${LEVEL}?"
-#~ msgstr "您确定要使用软件 RAID ${LEVEL} 吗？"
-
-#~ msgid ""
-#~ "Debian does not currently support using software RAID level ${LEVEL} for "
-#~ "the root file system or /boot partition. A system installed in this way "
-#~ "will not boot."
-#~ msgstr ""
-#~ "现在 Debian 尚不支持在根文件系统或 /boot 分区上使用软件 RAID ${LEVEL}。这"
-#~ "样安装的系统将无法启动。"
 
 #, fuzzy
 #~ msgid ""
