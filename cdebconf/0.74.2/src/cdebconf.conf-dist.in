@@ -1,0 +1,37 @@
+// This is a sample debconf configuration file
+// Comments can be in C or C++ style, blank lines are ignored
+// This file is in a bind-8 like format.
+
+global {
+  module_path {
+    frontend "/usr/lib/cdebconf/frontend";
+    database "/usr/lib/cdebconf/db";
+  };
+
+  default {
+    frontend "default_fe";
+    template "templatedb";
+    config "configdb";
+  };
+};
+
+frontend {
+  instance "default_fe" {
+    driver "@DEFAULT_FRONTEND@";
+  };
+};
+
+template {
+  instance "templatedb" {
+    driver "rfc822db";
+    path "/var/lib/cdebconf/templates.dat";
+  };
+};
+
+config {
+  instance "configdb" {
+    driver "rfc822db";
+    path "/var/lib/cdebconf/questions.dat";
+  };
+};
+
