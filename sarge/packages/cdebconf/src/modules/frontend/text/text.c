@@ -761,7 +761,7 @@ struct question_handlers {
 };
 
 /*
- * Function: text_initialize
+ * Function: text_intitialize
  * Input: struct frontend *obj - frontend UI object
  *        struct configuration *cfg - configuration parameters
  * Output: int - DC_OK, DC_NOTOK
@@ -786,7 +786,7 @@ static int text_initialize(struct frontend *obj, struct configuration *conf)
  * Description: tells whether confmodule supports backing up
  * Assumptions: none
  */
-static bool
+static int
 text_can_go_back(struct frontend *obj, struct question *q)
 {
 	return (obj->capability & DCF_CAPB_BACKUP);

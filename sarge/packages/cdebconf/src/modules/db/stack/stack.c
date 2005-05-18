@@ -56,6 +56,7 @@
 
 static int stack_template_db_initialize(struct template_db *db, struct configuration *cfg)
 {
+     char buf[256];
      struct template_stack *tstack = NULL;
      struct configitem *tmp, *child;
      
@@ -69,7 +70,6 @@ static int stack_template_db_initialize(struct template_db *db, struct configura
                db->data = tstack;
           }
           tstack->db = template_db_new(cfg, child->value);
-          tstack->next = NULL;
      }
 
      return DC_OK;
@@ -122,20 +122,15 @@ static int stack_template_db_set(struct template_db *db, struct template *t)
      struct template_stack *tstack = (struct template_stack *)db->data;
      int ret;
      while (tstack) {
-          ret = tstack->db->methods.accept(tstack->db, t->tag, t->type);
-          if (ret == DC_REJECT) {
-               tstack = tstack->next;
-               continue;
-          }
           ret = tstack->db->methods.set(tstack->db, t);
           switch (ret) {
           case DC_OK:
                return DC_OK;
           case DC_NOTOK:
                return DC_NOTOK;
-          case DC_REJECT: /* obsolete as return code from set() */
+          case DC_REJECT:
                tstack = tstack->next;
-               continue;
+               break;
           }
      }
      /* everybody rejected it, it seems */
@@ -197,6 +192,7 @@ static int stack_question_db_initialize(struct question_db *db, struct configura
 {
      struct question_stack *qstack = NULL;
      struct configitem *tmp, *child;
+     char buf[256];
 
      tmp = cfg->tree(cfg, "config::instance::configdb::stack");
      for (child = tmp->child; child != NULL; child = child->next) {
@@ -208,7 +204,6 @@ static int stack_question_db_initialize(struct question_db *db, struct configura
                db->data = qstack;
           }
           qstack->db = question_db_new(cfg, db->tdb, child->value);
-          qstack->next = NULL;
      }
      return DC_OK;
 }
@@ -256,21 +251,15 @@ static int stack_question_db_set(struct question_db *db, struct question *t) {
      struct question_stack *qstack = (struct question_stack *)db->data;
      int ret;
      while (qstack) {
-          const char *type = t->template ? t->template->type : "";
-          ret = qstack->db->methods.accept(qstack->db, t->tag, type);
-          if (ret == DC_REJECT) {
-               qstack = qstack->next;
-               continue;
-          }
           ret = qstack->db->methods.set(qstack->db, t);
           switch (ret) {
           case DC_OK:
                return DC_OK;
           case DC_NOTOK:
                return DC_NOTOK;
-          case DC_REJECT: /* obsolete as return code from set() */
+          case DC_REJECT:
                qstack = qstack->next;
-               continue;
+               break;
           }
      }
      /* everybody rejected it, it seems */
