@@ -1,27 +1,2824 @@
-<!-- retain these comments for translator revision tracking -->
+<!-- Start of file boot-installer/boot-installer.xml -->
 
-<chapter id="boot-installer"><title>Εκκίνηση του Συστήματος Εγκατάστασης</title>
+<chapter id="boot-installer"
+><title
+>Εκκίνηση του Συστήματος Εγκατάστασης</title>
 
- <sect1><title>Ξεκινώντας τον εγκαταστάτη στην αρχιτεκτονική &arch-title;</title>
-<para> </para>
+<!-- Include only archs that are documented to avoid build-errors -->
+<!-- The arch="..." condition can be deleted when al archs are present -->
+ <sect1 arch="alpha;arm;i386;ia64;m68k;mips;s390;powerpc;sparc">
+ <title
+>Ξεκινώντας τον εγκαταστάτη στην αρχιτεκτονική &arch-title;</title>
+
 <!-- This info is so architecture dependent, that I have turned the   -->
 <!-- structure inside out for this chapter. Each arch has a document. -->
+<!-- Note: archs hppa and mipsel are currently missing -->
 
-&boot-installer-alpha.xml;
-&boot-installer-arm.xml;
-&boot-installer-i386.xml;
-&boot-installer-ia64.xml;
-&boot-installer-m68k.xml;
-&boot-installer-mips.xml;
-&boot-installer-s390.xml;
-&boot-installer-powerpc.xml;
-&boot-installer-sparc.xml;
+
+<!-- Start of file boot-installer/alpha.xml -->
+
+ <sect2 arch="alpha" id="alpha-firmware">
+ <title
+>Κονσόλα Firmware σε Alpha</title>
+<para
+>To firmware της κονσόλας αποθηκεύεται σε μια μνήμη flash ROM και ξεκινά όταν ένα σύστημα Alpha μπαίνει σε λειτουργία ή επαναξεκινά. Υπάρχουν δυο διαφορετικές προδιαγραφές για τις κονσόλες που χρησιμοποιούνται στα συστήματα Alpha, και κατάσυνέπειαν δυο διαφορετικές κλάσεις firmware για κονσόλα διαθέσιμες: </para>
+
+<itemizedlist>
+<listitem
+><para
+><emphasis
+>κονσόλα SRM</emphasis
+>, βασισμένη στις προδιαγραφές του Alpha Console Subsystem, που παρέχει ένα λειτουργικό περιβάλλον για τα λειτουργικά συστήματα OpenVMS, Tru64 UNIX, και Linux. </para
+></listitem>
+<listitem
+><para
+>Κονσόλες <emphasis
+>ARC, AlphaBIOS, ή ARCSBIOS</emphasis
+>, βασισμένες στις προδιαγραφές Advanced RISC Computing (ARC), που παρέχει ένα λειτουργικό περιβάλλον για τα Windows NT. </para
+></listitem>
+</itemizedlist>
+
+<para
+>Από τη σκοπιά του χρήστη, η σπουδαιότερη διαφορά ανάμεσα στα περιβάλλοντα SRM και ARC είναι ότι η επιλογή της κονσόλας περιορίζει (δεσμεύει) το πιθανό σχήμα διαμέρισης για τον δίσκο από τον οποίο επιθυμείτε να εκκινήσετε. </para
+><para
+>Η ARC απαιτεί να χρησιμοποιήσετε ένα MS-DOS πίνακα διαμέρισης (καθώς δημιουργείται με την εντολή <command
+>cfdisk</command
+>) για το δίσκο εκκίνησης.  Συνεπώς πίνακες διαμέρισης MS-DOS είναι η ''φυσική'' μορφήδιαμέρισης για εκκίνηση από ARC. Στην πραγματικότητα, καθώς το AlphaBIOS περιλαμβάνει ένα εργαλείο διαμέρισης δίσκων, πιθανόν να προτιμήσετε να διαμερίσετε τους δίσκους σας από τα μενού για το firmware πριν την εγκατάσταση του Linux. </para
+><para
+>Αντίθετα, η κονσόλα SRM είναι <emphasis
+>ασύμβατη</emphasis
+> με πίνακες διαμερίσεις MS-DOS. <footnote
+><para
+>Συγκεκριμένα, ο τύπος του bootsector που προϋποθέτει η προδιαγραφή Console Subsystem Specification συγκρούεται με την τοποθέτηση του πίνακα διαμέρισης από το DOS.</para
+></footnote
+> Μιας και το Tru64 Unix χρησιμοποιεί την μορφή του BSD disklabel, αυτός είναι και ο ''φυσικός'' τύπος διαμέρισης για εγκαταστάσεις σε SRM. </para
+><para
+>Επειδή το GNU/Linux είναι το μοναδικό λειτουργικό σύστημα για την αρχιτεκτονική Alpha που μπορεί να εκκινήσει και από τους δύο τύπους κονσόλας, η επιλογή σας θα εξαρτάται επίσης από το ποια άλλα λειτουργικά συστήματα θα θέλατε να χρησιμοποιήσετε στο ίδιο μηχάνημα.  Όλα τα άλλα τύπου-Unix λειτουργικά συστήματα (Tru64 Unix, FreeBSD, OpenBSD, και NetBSD) και το OpenVMS μπορούν να ξεκινήσουν μόνο από την κονσόλα SRM, ενώ τα  Windows NT μπορούν να εκκινήσουν μόνο από ARC. </para
+><para
+>Επειδή ο φορτωτής <command
+>MILO</command
+> δεν είναι διαθέσιμος για κανένα από τα συστήματα Alpha σε παραγωγή αυτή τη στιγμή (τον Φεβρουάριο του 2000), και καθώς δεν είναι πια απαραίτητο να αγοράσετε μια άδεια OpenVMS ή Tru64 Unix για ναέχετε SRM firmware στο παλιότερο σύστημά σας Alpha, σας συνιστούμε να χρησιμοποιήσετε την κονσόλα SRM. </para
+><para
+>Ο επόμενος πίνακας συνοψίζει τους διαθέσιμους και υποστηριζόμενους συνδυασμούς τύπου συστήματος/κονσόλας (δείτε <xref linkend="alpha-cpus"/> για τα ονόματα των τύπων συστημάτων).  Η λέξη `ARC' παρακάτω δηλώνει οποιαδήποτε ARC-συμβατήκονσόλα. </para
+><para>
+
+<informaltable
+><tgroup cols="2">
+<thead>
+<row>
+  <entry
+>Τύπος Συστήματος</entry>
+  <entry
+>Υποστηριζόμενη Κονσόλα</entry>
+</row>
+</thead>
+
+<tbody>
+<row>
+  <entry
+>alcor</entry>
+  <entry
+>ARC ή SRM</entry>
+</row
+><row>
+  <entry
+>avanti</entry>
+  <entry
+>ARC ή SRM</entry>
+</row
+><row>
+  <entry
+>book1</entry>
+  <entry
+>μόνο SRM</entry>
+</row
+><row>
+  <entry
+>cabriolet</entry>
+  <entry
+>ARC ή SRM</entry>
+</row
+><row>
+  <entry
+>dp264</entry>
+  <entry
+>μόνο SRM</entry>
+</row
+><row>
+  <entry
+>eb164</entry>
+  <entry
+>ARC ή SRM</entry>
+</row
+><row>
+  <entry
+>eb64p</entry>
+  <entry
+>ARC ή SRM</entry>
+</row
+><row>
+  <entry
+>eb66</entry>
+  <entry
+>ARC ή SRM</entry>
+</row
+><row>
+  <entry
+>eb66p</entry>
+  <entry
+>ARC ή SRM</entry>
+</row
+><row>
+  <entry
+>jensen</entry>
+  <entry
+>μόνο SRM</entry>
+</row
+><row>
+  <entry
+>lx164</entry>
+  <entry
+>ARC ή SRM</entry>
+</row
+><row>
+  <entry
+>miata</entry>
+  <entry
+>ARC ή SRM</entry>
+</row
+><row>
+  <entry
+>mikasa</entry>
+  <entry
+>ARC ή SRM</entry>
+</row
+><row>
+  <entry
+>mikasa-p</entry>
+  <entry
+>μόνο SRM</entry>
+</row
+><row>
+  <entry
+>nautilus</entry>
+  <entry
+>ARC (βλ. εγχειρίδιο μητρικής) ή SRM</entry>
+</row
+><row>
+  <entry
+>noname</entry>
+  <entry
+>ARC ή SRM</entry>
+</row
+><row>
+  <entry
+>noritake</entry>
+  <entry
+>μόνο SRM</entry>
+</row
+><row>
+  <entry
+>noritake-p</entry>
+  <entry
+>μόνο SRM</entry>
+</row
+><row>
+  <entry
+>pc164</entry>
+  <entry
+>ARC ή SRM</entry>
+</row
+><row>
+  <entry
+>rawhide</entry>
+  <entry
+>μόνο SRM</entry>
+</row
+><row>
+  <entry
+>ruffian</entry>
+  <entry
+>μόνο ARC</entry>
+</row
+><row>
+  <entry
+>sable</entry>
+  <entry
+>μόνο SRM</entry>
+</row
+><row>
+  <entry
+>sable-g</entry>
+  <entry
+>μόνο SRM</entry>
+</row
+><row>
+  <entry
+>sx164</entry>
+  <entry
+>ARC ή SRM</entry>
+</row
+><row>
+  <entry
+>takara</entry>
+  <entry
+>ARC ή SRM</entry>
+</row
+><row>
+  <entry
+>xl</entry>
+  <entry
+>μόνο ARC</entry>
+</row
+><row>
+  <entry
+>xlt</entry>
+  <entry
+>μόνο ARC</entry>
+</row>
+
+</tbody>
+</tgroup>
+</informaltable>
+
+</para
+><para
+>Γενικά, καμμιά από τις κονσόλες αυτές δεν μπορεί να εκκινήσει το Linux κατευθείαν, επομένως απαιτείται η βοήθεια ενός ενδιάμεσου φορτωτή εκκίνησης. Για την κονσόλα SRM, χρησιμοποιείται το <command
+>aboot</command
+>, ένας μικρός, ανεξάρτητος πλατφόρμας φορτωτής εκκίνησης. Δείτε επίσης και το (δυστυχώς ξεπερασμένο) <ulink url="&url-srm-howto;"
+>SRM HOWTO</ulink
+> για περισσότερες πληροφορίες για τo <command
+>aboot</command
+>. </para
+><para condition="FIXME"
+>Οι ακόλουθες παράγραφοι έχουν παρθεί από το εγχειρίδιο εγκατάστασης του woody, και συμπεριλαμβάνονται αναφορικά, πιθανόν να χρησιμεύσουν σε κάποιον αργότερα όταν το Debian υποστηρίξει ξανά εγκατάσταση με MILO. </para
+><para condition="FIXME"
+>Γενικά,  καμμιά από τις κονσόλες αυτές δεν μπορεί να εκκινήσει το Linux κατευθείαν, επομένως απαιτείται η βοήθεια ενός ενδιάμεσου φορτωτή εκκίνησης. Υπάρχουν δυο κύριοι φορτωτές Linux: <command
+>MILO</command
+> και <command
+>aboot</command
+>. </para
+><para condition="FIXME"
+>Ο <command
+>MILO</command
+> είναι ο ίδιος μια κονσόλα, που αντικαθιστά την ARC ή την SRM στην μνήμη.  Ο <command
+>MILO</command
+> μπορεί να ξεκινήσει τόσο από την ARC όσο και την SRM και είναι ο μόνος τρόπος να ξεκινήσει (bootstrap) το Linux από την κονσόλα ARC. Ο <command
+>MILO</command
+> είναι εξαρτώμενος από την πλατφόρμα (οπότε έναςδιαφορετικός  <command
+>MILO</command
+> χρειάζεται για κάθε τύπο συστήματος) και υπάρχει μόνο για εκείνα τα συστήματα στον παραπάνω πίνακα όπου εμφανίζεται υποστήριξη για ARC. Δείτε επίσης και το (δυστυχώς ξεπερασμένο) <ulink url="&url-milo-howto;"
+>MILO HOWTO</ulink
+>. </para
+><para condition="FIXME"
+>Το <command
+>aboot</command
+> είναι ένας μικρός, ανεξάρτητος απότην πλατφόρμα, φορτωτής εκκίνησης, που τρέχει μόνο στην κονσόλα SRM. Δείτε επίσης το (επίσης δυστυχώς ξεπερασμένο) <ulink url="&url-srm-howto;"
+>SRM HOWTO</ulink
+> για περισσότερες πληροφορίες σχετικά με το <command
+>aboot</command
+>. </para
+><para condition="FIXME"
+>Έτσι, υπάρχουν γενικά τρία πιθανά σενάρια, ανάλογα με το firmware της κονσόλας του συστήματος και το κατά πόσον είναι διαθέσιμος ο <command
+>MILO</command
+>: <informalexample
+><screen>
+SRM -&gt aboot
+SRM -&gt MILO
+ARC -&gt MILO
+</screen
+></informalexample
+></para
+><para
+> Επειδή ο φορτωτής <command
+>MILO</command
+> δεν είναι διαθέσιμος για κανένα από τα συστήματα Alpha σε παραγωγή αυτή τη στιγμή (τον Φεβρουάριο του 2000), και καθώς δεν είναι πια απαραίτητο να αγοράσετε μια άδεια OpenVMS ή Tru64 Unix για να έχετε SRM firmware στο παλιότερο σύστημά σας Alpha, σας συνιστούμε να χρησιμοποιήσετε την κονσόλα SRM και <command
+>aboot</command
+> σε νέες εγκαταστάσεις του GNU/Linux, εκτός και αν επιθυμείτε να έχετε διπλή-εκκίνησημε Windows NT. </para
+><para
+>Η πλειοψηφία των AlphaServers και όλων των τωρινών προϊόντων server και σταθμών εργασίας περιλαμβάνουν και την SRM και AlphaBIOS στο firmware τους. Για "half-flash" μηχανήματα όπως διάφορες πλατφόρμες δοκιμών, είναι δυνατόν να αλλάξεικανείς από την μια στην άλλη με reflashing του firmware. Επίσης, από τη στιγμή της  εγκατάστασης της SRM, είναι δυνατόν να τρέξει κανείς ARC/AlphaBIOS από μια δισκέττα (χρησιμοποιώντας την εντολή <command
+>arc</command
+>). Για τουςλόγους που αναφέρθηκαν παραπάνω, συνιστούμε να αλλάξετε στην κονσόλα SRM πριν την εγκατάσταση του  &debian;. </para
+><para
+>Όπως και με άλλες αρχιτεκτονικές, θα πρέπει να εγκαταστήσετε τις πιο πρόσφατες διαθέσιμες εκδόσεις του firmware <footnote
+><para
+>Με εξαίρεση την  Jensen, όπου το Linux δεν υποστηρίζεται για εκδόσεις του firmware μεταγενέστερες από την 1.7 - δείτε τη σελίδα <ulink url="&url-jensen-howto;"
+></ulink
+> για περισσότερες πληροφορίες </para
+></footnote
+> πριν εγκαταστήσετε το &debian;.  Για την Alpha, αναβαθμίσεις του firmware μπορούν να ληφθούν από τη σελίδα <ulink url="&url-alpha-firmware;"
+>Alpha Firmware Updates</ulink
+>. </para>
+ </sect2>
+
+
+  <sect2 arch="alpha"
+><title
+>Εκκίνηση μέσω TFTP</title>
+<para
+>Στην SRM, τα Ethernet interfaces ονοματοδοτούνται με το πρόθεμα <userinput
+>ewa</userinput
+>, και θα εμφανιστούν στην έξοδο της εντολής <userinput
+>show dev</userinput
+> κάπως έτσι (ελαφρά διορθωμένα ): <informalexample
+><screen>
+&gt;&gt;&gt; show dev
+ewa0.0.0.9.0               EWA0              08-00-2B-86-98-65
+ewb0.0.0.11.0              EWB0              08-00-2B-86-98-54
+ewc0.0.0.2002.0            EWC0              00-06-2B-01-32-B0
+</screen
+></informalexample
+> Πρέπει κατ' αρχήν να ορίσετε το πρωτόκολλο εκκίνησης: <informalexample
+><screen>
+&gt;&gt;&gt; set ewa0_protocol bootp
+</screen
+></informalexample
+> Μετά ελέγξτε ότι ο τύπος του μέσου είναι ο σωστός: <informalexample
+><screen
+>&gt;&gt;&gt; set ewa0_mode <replaceable
+>mode</replaceable>
+</screen
+></informalexample
+> Μπορείτε να πάρετε μια λίστα των έγκυρων τύπων με την εντολή <userinput
+>&gt;&gt;&gt;set ewa0_mode</userinput
+>. </para
+><para
+>Μετά, για να εκκινήσετε από το πρώτο Ethernet interface, θα πρέπει να τυπώσετε: <informalexample
+><screen>
+&gt;&gt;&gt; boot ewa0 -flags ""
+</screen
+></informalexample
+> Αυτό θα δώσει εκκίνηση με τις προκαθορισμένες παραμέτρους στον πυρήνα όπωςπεριλαμβάνεται στην εικόνα του netboot. </para
+><para
+>Αν θέλετε να χρησιμοποιήσετε μια σειριακή κονσόλα, θα <emphasis
+>πρέπει</emphasis
+> να περάσετε την παράμετρο <userinput
+>console=</userinput
+> στον πυρήνα. Αυτό μπορεί να γίνει χρησιμοποιώντας το όρισμα <userinput
+>-flags</userinput
+>στην εντολή <userinput
+>boot</userinput
+> της κονσόλας SRM.  Oι σειριακές θύρες έχουν τα ονόματα των αντίστοιχων τους αρχείων στον κατάλογο <userinput
+>/dev</userinput
+>.  Για παράδειγμα, για να ξεκινήσετε από το interface <userinput
+>ewa0</userinput
+> και να χρησιμοποιήσετε μια κονσόλα στην πρώτη σειριακή θύρα θα πρέπει να πληκτρολογήσετε:  <informalexample
+><screen
+>&gt;&gt;&gt; boot ewa0 -flags &quot;root=/dev/ram ramdisk_size=16384 console=ttyS0&quot;
+</screen
+></informalexample>
+
+</para>
+  </sect2>
+
+  <sect2 arch="alpha"
+><title
+>Εκκινώντας από CD-ROM με την κονσόλα SRM</title>
+<para
+>Δώστε <informalexample
+><screen>
+&gt;&gt;&gt; boot xxxx -flags 0
+</screen
+></informalexample
+> όπου <replaceable
+>xxxx</replaceable
+> είναι η μονάδα CD-ROM σε μορφή κατάλληλη για το SRM. </para>
+  </sect2>
+
+  <sect2 arch="alpha" condition="FIXME">
+  <title
+>Εκκίνηση από CD-ROM με την κονσόλα ARC ή AlphaBIOS</title>
+<para
+>Για να εκκινήσετε ένα CD-ROM από κονσόλα ARC, βρείτε το κωδικό όνομα της υποαρχιτεκτονικής σας (δείτε το <xreflinkend="alpha-cpus"/>), στη συνέχεια πληκτρολογήστε <filename
+>\milo\linload.exe</filename
+> σαν τον φορτωτή εκκίνησης καθώς και <filename
+>\milo\<replaceable
+>subarch</replaceable
+></filename
+> (όπου <replaceable
+>subarch</replaceable
+> είναι το κανονικό όνομα της υποαρχιτεκτονικής σας) σαν το OS Path στο μενού `OS Selection Setup'. Τα Ruffians αποτελούν εξαίρεση:θα πρέπει να χρησιμοποιήσετε <filename
+>\milo\ldmilo.exe</filename
+> σαν φορτωτή εκκίνησης. </para>
+  </sect2>
+
+
+  <sect2 arch="alpha" condition="supports-floppy-boot">
+  <title
+>Εκκίνηση από δισκέτες με την κονσόλα SRM</title>
+<para
+>Στην προτροπή της SRM (<prompt
+>&gt;&gt;&gt;</prompt
+>), δώστε την παρακάτω εντολή: <informalexample
+><screen>
+&gt;&gt;&gt; boot dva0 -flags 0n</screen
+></informalexample
+> πιθανόν αντικαθιστώντας το <filename
+>dva0</filename
+> με τό όνομα της πραγματικής συσκευής. Συνήθως <filename
+>dva0</filename
+> είναι η συσκευή δισκέττας. Πληκτρολογήστε <informalexample
+><screen>
+&gt;&gt;&gt; show dev
+</screen
+></informalexample
+> για να δείτε τη λιστα των συσκευών (πχ., αν θέλετε να εκκινήσετε από ένα CD). Σημειώστε ότι αν εκκινείτε μέσω MILO, το όρισμα <command
+>-flags</command
+> δεν λαμβάνεται υπόψιν, οπότε μπορείτε απλά να πληκτρολογήσετε <command
+>boot dva0</command
+>. Αν όλα πάνε καλά, θα δείτε τελικά τον πυρήνα του Linux να ξεκινά. </para
+><para
+>Αν θέλετε να προσδιορίσετε κάποιες παραμέτρους του πυρήνα όταν εκκινείτε μέσω του <command
+>aboot</command
+>, χρησιμοποιήστε την ακόλουθη εντολή: <informalexample
+><screen>
+&gt;&gt;&gt; boot dva0 -file linux.bin.gz -flags "root=/dev/fd0 load_ramdisk=1 arguments"
+</screen
+></informalexample
+> (δοσμένη σε μια γραμμή),αντικαθιστώντας, αν είναι απαραίτητο, το όνομα της πραγματικής SRM συσκευής αντί του  <filename
+>dva0</filename
+>, το όνομα της συσκευής εκκίνησης στο Linux αντί του <filename
+>fd0</filename
+>, και τις επιθυμητές παραμέτρους του πυρήνα για τα <filename
+>arguments</filename
+>. </para
+><para
+>Αν θέλετε να προσδιορίσετε παραμέτρους του πυρήνα όταν ξεκινάτε μέσω του <command
+>MILO</command
+>, θα πρέπει να διακόψετε την διαδικασία πρωτοεκκίνησης (bootstrap) μόλις μπείτε στο MILO.  Δείτε το <xref linkend="booting-from-milo"/>. </para>
+  </sect2>
+
+
+  <sect2 arch="alpha" condition="supports-floppy-boot">
+  <title
+>Εκκινώντας από δισκέτες με την κονσόλα ARC ή AlphaBIOS</title>
+
+<para
+>Στο μενού OS Selection, ορίστε το <command
+>linload.exe</command
+> σαν φορτωτή εκκίνησης, και το <command
+>milo</command
+> σαν OS Path. Πρωτοεκκινήστε χρησιμοποιώντας την μόλις δοσμένη επιλογή. </para>
+  </sect2>
+
+ <sect2 arch="alpha" condition="FIXME" id="booting-from-milo"
+><title
+>Εκκίνηση με MILO</title>
+<para
+>Ο MILO που περιλαμβάνεται στα μέσα της πρωτοεκκίνησης είναι ρυθμισμένος ώστε να προχωρά κατευθείαν στο Linux αυτόματα. Σε περίπτωση που θα θέλατε να παρέμβετε στη διαδικασία, το μόνο που χρειάζεται να κάνετε είναι να πατήσετε το πλήκτρο space στη διάρκεια της αντίστροφης μέτρησης του MILΟ. </para
+><para
+>Αν θέλετε να προσδιορίσετε όλα τα στοιχεία εκπεφρασμένα (για παράδειγμα, να δώσετε επιπλέον παραμέτρους), μπορείτε να χρησιμοποιήσετε μια εντολή όπως αυτή: <informalexample
+><screen>
+MILO&gt; boot fd0:linux.bin.gz root=/dev/fd0 load_ramdisk=1 <!-- arguments -->
+</screen
+></informalexample
+> αν εκκινείτε από κάτι άλλο εκτός από δισκέττα, αντικαταστήστε το <filename
+>fd0</filename
+> στο παραπάνω παράδειγμα με το κατάλληλο όνομα της συσκευής με το συμβολισμό του Linux.  Η εντολή <command
+>help</command
+> μπορεί να σας δώσει ένα σύντομο οδηγό αναφοράς για τις εντολές του MILO. </para>
+ </sect2>
+<!--   End of file boot-installer/alpha.xml -->
+
+<!-- Start of file boot-installer/arm.xml -->
+
+  <sect2 arch="arm" id="boot-tftp"
+><title
+>Εκκίνηση από TFTP</title>
+
+
+<!-- Start of file boot-installer/intro-net.xml -->
+
+<para
+>H εκκίνηση από το δίκτυο απαιτεί ότι διαθέτε μια δικτυακή σύνδεση και έναν δικτυακό TFTP server εκκίνησης (DHCP, RARP, ή BOOTP). </para
+><para arch="hppa"
+>Παλιότερα συστήματα όπως τα 715 πιθανόν να απαιτούν τη χρήση ενός RBOOT αντί ενός  BOOTP server. </para
+><para
+>Η μέθοδος εγκατάστασης με υποστήριξη δικτυακής εκκίνησης περιγράφεται στην ενότητα <xref linkend="install-tftp"/>. </para>
+<!--   End of file boot-installer/intro-net.xml -->
+
+  <sect3 arch="arm"
+><title
+>Εκκίνηση από TFTP σε NetWinder</title>
+
+<para
+>Συστήματα NetWinder έχουν δυο δικτυακά interfaces: η κάρτα των 10Mbps συμβατή με NE2000 είναι η <filename
+>eth0</filename
+> και η κάρτα Tulip των 100Mbps είναι η <filename
+>eth1</filename
+>. </para
+><note
+><para
+>Χρειάζεστε NeTTrom 2.2.1 ή μεταγενέστερο για να εκκινήσετε το σύστημα εγκατάστασης. Η έκδοση NeTTrom 2.3.3 είναι η συνιστώμενη: μπορείτε να πάρετε τα αρχεία αυτά από το: <ulink url="ftp://ftp.netwinder.org/pub/netwinder/firmware/"
+></ulink
+>: <itemizedlist>
+<listitem
+><para>
+
+<filename
+>nettrom-2.3-3.armv4l.rpm</filename>
+
+</para
+></listitem>
+<listitem
+><para>
+
+<filename
+>nettrom-2.3.3.bin</filename>
+
+</para
+></listitem>
+<listitem
+><para>
+
+<filename
+>nettrom-2.3.3.bin.md5sum</filename>
+
+</para
+></listitem>
+</itemizedlist>
+
+</para
+></note
+><para
+>Μετά την επανεκκίνηση και διακόπτοντας την διαδικασία εκκίνησης κατά την αντίστροφη μέτρηση, πρέπει πρώτα να ρυθμίσετε το δίκτυο είτε με μια στατική διεύθυνση:<informalexample
+><screen>
+    NeTTrom command-&gt; setenv eth0_ip 192.168.0.10/24
+</screen
+></informalexample
+> όπου το 24 είναι ο αριθμός bits προσδιορισμού της μάσκας του δικτύου, είτε με μια δυναμική διεύθυνση: <informalexample
+><screen>
+    NeTTrom command-&gt; boot diskless
+</screen
+></informalexample
+> Πιθανόν να πρέπει να θέσετε και τις ρυθμίσεις για την διαδρομή <userinput
+>route1</userinput
+> σε περίπτωση που ο server TFTP δεν βρίσκεται στο ίδιο τοπικό δίκτυο.  Οι υπόλοιπες ρυθμίσετε είναι αρκετά γνωστές και δεδομένες  (το βήμα "save-all" είναι προαιρετικό): <informalexample
+><screen>
+    NeTTrom command-&gt; setenv kerntftpserver 192.168.0.1
+    NeTTrom command-&gt; setenv kerntftpfile boot.img
+    NeTTrom command-&gt; save-all
+    NeTTrom command-&gt; setenv netconfig_eth0 flash
+    NeTTrom command-&gt; setenv kernconfig tftp
+    NeTTrom command-&gt; setenv rootdev /dev/ram
+    NeTTrom command-&gt; setenv cmdappend root=/dev/ram
+</screen
+></informalexample
+> Μόνο οι δυο τελευταίες ρυθμίσεις εμπλέκονται με τη συνηθισμένη διαδικασία εκκίνησης του δίσκου επομένως είναι ασφαλές να κάνετε <command
+>save-all</command
+> αμέσως πριν από αυτές, κάτι που θα αποθηκεύσει τις ρυθμίσεις του δικτύου σε περίπτωση που θα θελήσετε να ξαναξεκινήσετε από το δίκτυο. Αν θέλετε να χρησιμοποιήσετε την σειραϊκή κονσόλα για εγκατάσταση του NetWinder, θα πρέπει να χρησιμοποιήσετε την ακόλουθη ρύθμση: <informalexample
+><screen>
+    NeTTrom command-&gt; setenv cmdappend root=/dev/ram console=ttyS0,115200
+</screen
+></informalexample
+> Χρησιμοποιήστε την εντολή <command
+>printenv</command
+> για να έχετε μια εποπτεία των ρυθμίσεων του περιβάλλοντος σας. Τέλος, αν η μεταβλητή <envar
+>cmdappend</envar
+> NeTTrom στο σύστημά σας έχει την επιλογή <option
+>noinitrd</option
+> (που είναι απαραίτητη για την εκκίνηση πυρήνων 2.4), θα πρέπει να την απαλείψετε ώστε ο πυρήνας που θα κατεβάσετε να μπορεί να ξεκινήσει μαζί με την εικόνα ramdisk που τον συνοδεύει. </para>
+  </sect3>
+
+  <sect3 arch="arm"
+><title
+>Εκκίνηση από TFTP σε CATS</title>
+
+<para
+>Σε μηχανήματα CATS, χρησιμοποιήστε  <command
+>boot de0:</command
+> ή κάτι αντίστοιχο στην προτροπή του Cyclone. </para>
+   </sect3>
+  </sect2>
+
+
+
+  <sect2 arch="arm"
+><title
+>Εκκίνηση από CD-ROM</title>
+
+
+<!-- Start of file boot-installer/intro-cd.xml -->
+
+<para
+>Ο ευκολότερος τρόπος για τους περισσότερους χρήστες είναι να χρησιμοποιήσουν ένα σετ με τα CD του Debian. Αν έχετε ένα τέτοιο σετ και αν το μηχάνημά σας υποστηρίζει απευθείας εκκίνηση από το CD τότε είστε εντάξει! Απλά <phrase arch="i386"
+>ρυθμίστε το σύστημά σας για εκκίνηση από το CD όπως περιγράφεται στην ενότητα <xref linkend="boot-dev-select"/>,</phrase
+> βάλτε το CD σας στη συσκευή, επανεκκινήστε και προχωρήστε στο επόμενο κεφάλαιο. </para
+><para
+>Σημειώστε ότι κάποιες συσκευές CD πιθανόν να απαιτούν συγκεκριμένους οδηγούς και έτσι να μην είναι προσβάσιμες στα πρώτα στάδια της εγκατάστασης. Αν συμβεί λοιπόν ο συνηθισμένος τρόπος εκκίνησης από το CD να μην δουλέψει για το σύστημά σας,ξαναεπισκεφθείτε το κεφάλαιο αυτό και διαβάστε για πιθανούς εναλλακτικούς πυρήνες και μεθόδους εγκατάστασης που πιθανόν να δουλέψουν για σας.  </para
+><para
+>Ακόμα και αν δεν μπορείτε να εκκινήσετε από το CD-ROM, έχετε τη δυνατότητα ίσως να εγκαταστήσετε μέρη του Debian συστήματος και οποιοαδήποτε πακέτα θέλετε από το CD-ROM. Απλά εκκινήστε χρησιμοποιώντας ένα άλλο μέσο, όπως δισκέττες. Όταν έρθει η στιγμή για να εγκαταστήσετε το λειτουργικό σύστημα, το βασικό σύστημα και οποιαδήποτε επιπλέον πακέτα υποδείξτε στο σύστημα εγκατάστασης να χρησιμοποιήσει τον οδηγό του CD-ROM.  </para
+><para
+>Αν έχετε προβλήματα κατά την εκκίνηση, δείτε το <xref linkend="boot-troubleshooting"/>. </para>
+<!--   End of file boot-installer/intro-cd.xml -->
+
+<para
+>Για να εκκινήσετε ένα CD-ROM από την προτροπή της κονσόλας του Cyclone, χρησιμοποιήστε την εντολή <command
+>boot cd0:cats.bin</command
+> </para>
+  </sect2>
+<!--   End of file boot-installer/arm.xml -->
+<!-- &boot-installer-hppa.xml; -->
+
+<!-- Start of file boot-installer/i386.xml -->
+
+  <sect2 arch="i386"
+><title
+>Εκκίνηση από CD-ROM</title>
+
+
+<!-- Start of file boot-installer/intro-cd.xml -->
+
+<para
+>Ο ευκολότερος τρόπος για τους περισσότερους χρήστες είναι να χρησιμοποιήσουν ένα σετ με τα CD του Debian. Αν έχετε ένα τέτοιο σετ και αν το μηχάνημά σας υποστηρίζει απευθείας εκκίνηση από το CD τότε είστε εντάξει! Απλά <phrase arch="i386"
+>ρυθμίστε το σύστημά σας για εκκίνηση από το CD όπως περιγράφεται στην ενότητα <xref linkend="boot-dev-select"/>,</phrase
+> βάλτε το CD σας στη συσκευή, επανεκκινήστε και προχωρήστε στο επόμενο κεφάλαιο. </para
+><para
+>Σημειώστε ότι κάποιες συσκευές CD πιθανόν να απαιτούν συγκεκριμένους οδηγούς και έτσι να μην είναι προσβάσιμες στα πρώτα στάδια της εγκατάστασης. Αν συμβεί λοιπόν ο συνηθισμένος τρόπος εκκίνησης από το CD να μην δουλέψει για το σύστημά σας,ξαναεπισκεφθείτε το κεφάλαιο αυτό και διαβάστε για πιθανούς εναλλακτικούς πυρήνες και μεθόδους εγκατάστασης που πιθανόν να δουλέψουν για σας.  </para
+><para
+>Ακόμα και αν δεν μπορείτε να εκκινήσετε από το CD-ROM, έχετε τη δυνατότητα ίσως να εγκαταστήσετε μέρη του Debian συστήματος και οποιοαδήποτε πακέτα θέλετε από το CD-ROM. Απλά εκκινήστε χρησιμοποιώντας ένα άλλο μέσο, όπως δισκέττες. Όταν έρθει η στιγμή για να εγκαταστήσετε το λειτουργικό σύστημα, το βασικό σύστημα και οποιαδήποτε επιπλέον πακέτα υποδείξτε στο σύστημα εγκατάστασης να χρησιμοποιήσει τον οδηγό του CD-ROM.  </para
+><para
+>Αν έχετε προβλήματα κατά την εκκίνηση, δείτε το <xref linkend="boot-troubleshooting"/>. </para>
+<!--   End of file boot-installer/intro-cd.xml -->
+
+<!-- We'll comment the following section until we know exact layout -->
+<!-- 
+CD #1 of official Debian CD-ROM sets for &arch-title; will present a
+<prompt
+>boot:</prompt
+> prompt on most hardware. Press
+<keycap
+>F3</keycap
+> to see the list of kernel options available
+from which to boot. Just type your chosen flavor name (idepci,
+vanilla, compact, bf24) at the <prompt
+>boot:</prompt
+> prompt
+followed by &enterkey;.
+
+</para
+><para>
+
+If your hardware doesn't support booting of multiple images, put one
+of the other CDs in the drive. It appears that most SCSI CD-ROM drives 
+do not support <command
+>isolinux</command
+> multiple image booting, so users
+with SCSI CD-ROMs should try either CD2 (vanilla) or CD3 (compact), 
+or CD5 (bf2.4). 
+
+</para
+><para>
+
+CD's 2 through 5 will each boot a 
+different ``flavor'' depending on which CD-ROM is
+inserted. See <xref linkend="kernel-choice"/> for a discussion of the
+different flavors.  Here's how the flavors are laid out on the
+different CD-ROMs:
+
+<variablelist>
+<varlistentry>
+<term
+>CD 1</term
+><listitem
+><para>
+
+Allows a selection of kernel images to boot from (the idepci flavor is
+the default if no selection is made). 
+
+</para
+></listitem
+></varlistentry>
+<varlistentry>
+<term
+>CD 2</term
+><listitem
+><para>
+
+Boots the `vanilla' flavor.
+
+</para
+></listitem
+></varlistentry>
+<varlistentry>
+<term
+>CD 3</term
+><listitem
+><para>
+
+Boots the `compact' flavor.
+
+</para
+></listitem
+></varlistentry>
+<varlistentry>
+<term
+>CD 4</term
+><listitem
+><para>
+
+Boots the `idepci' flavor.
+
+</para
+></listitem
+></varlistentry>
+<varlistentry>
+<term
+>CD 5</term
+><listitem
+><para>
+
+Boots the `bf2.4' flavor.
+
+</para
+></listitem
+></varlistentry>
+
+ </variablelist>
+
+</para
+><para>
+
+-->
+
+  </sect2>
+
+<!-- FIXME the documented procedure does not exactly work, commented out
+     until fixes
+
+  <sect2 arch="i386" id="install-from-dos">
+  <title
+>Booting from a DOS partition</title>
+
+
+<para>
+
+Boot into DOS (not Windows) without any drivers being loaded.  To do
+this, you have to press <keycap
+>F8</keycap
+> at exactly the right
+moment (and optionally select the `safe mode command prompt only'
+option).  Enter the subdirectory for the flavor you chose, e.g.,
+
+<informalexample
+><screen
+>
+cd c:\install
+</screen
+></informalexample
+>.  
+
+Next, execute <command
+>install.bat</command
+>.
+The kernel will load and launch the installer system. 
+
+</para
+><para>
+
+Please note, there is currently a loadlin problem (#142421) which
+precludes <filename
+>install.bat</filename
+> from being used with the
+bf2.4 flavor. The symptom of the problem is an
+<computeroutput
+>invalid compressed format</computeroutput
+> error.
+
+</para>
+  </sect2>
+
+END FIXME -->
+
+  <sect2 arch="i386" id="boot-initrd">
+  <title
+>Booting from Linux Using <command
+>LILO</command
+> or <command
+>GRUB</command
+></title>
+
+<para
+>Για να ξεκινήσετε τον εγκαταστάτη από τον σκληρό δίσκο θα πρέπει πρώτα να κατεβάσετε και να τοποθετήσετε τα απαραίτητα αρχεία όπως περιγράφεται στην ενότητα <xref linkend="boot-drive-files"/>. </para>
+
+<para
+>Αν σκοπεύετε να χρησιμοποιήσετε τον σκληρό δίσκο μόνο για την εκκίνηση και στη συνέχεια να κατεβάσετε ο,τιδήποτε άλλο από το δίκτυο, θα πρέπει να κατεβάσετε το αρχείο <filename
+>netboot/debian-installer/i386/initrd.gz</filename
+> και τον αντίστοιχο πυρήνα. Αυτό θα σας επιτρέψει να επαναδιαμερίσετε το δίσκο από τον οποίο θα εκκινήσετε τον εγκαταστάτη, αν και θα πρέπει να κάνετε κάτι τέτοιο με προσοχή. </para>
+
+<para
+>Εναλλακτικά, αν σκοπεύετε να κρατήσετε αμετάβλητη μια υπάρχουσα διαμέριση στον σκληρό δίσκο κατά τη διάρκεια της εγκατάστασης, μπορείτε να κατεβάσετε το αρχείο <filename
+>hd-media/initrd.gz</filename
+> και τον πυρήνα του, καθώς και να αντιγράψετε ένα CD iso (βεβαιωθείτε ότι το αρχείο έχει κατάληξη σε ".iso"). Ο εγκαταστάτης μπορεί τότε να εκκινήσει από τη συσκευή του CD-ROM και να κάνει την εγκατάσταση από την εικόνα του CD iso, χωρίς την ανάγκη δικτύου. </para>
+
+<para
+>Για το  <command
+>LILO</command
+>, θα πρέπει να ρυθμίσετε δυο ουσιαστικά στοιχεία στο αρχείο <filename
+>/etc/lilo.conf</filename
+>: <itemizedlist
+><listitem
+><para
+> για να φορτώσει τον εγκαταστάτη <filename
+>initrd.gz</filename
+> κατά τη διάρκεια της εκκίνησης. </para
+></listitem
+><listitem
+><para
+> να κάνετε τον πυρήνα <filename
+>vmlinuz</filename
+> να χρησιμοποιήσει έναν δίσκο RAM σαν τη ριζική του διαμέριση. </para
+></listitem
+></itemizedlist
+> Εδώ είναι ένα παράδειγμα αρχείου <filename
+>/etc/lilo.conf</filename
+>: </para
+><para>
+
+<informalexample
+><screen
+>image=/boot/newinstall/vmlinuz
+       label=newinstall
+       initrd=/boot/newinstall/initrd.gz
+       root=/dev/ram0
+       append="<phrase condition="sarge">devfs=mount,dall </phrase>ramdisk_size=12000"
+</screen
+></informalexample
+> Για περισσότερες λεπτομέρειες, αναφερθείτε στις σελίδες χρήσης των <citerefentry
+><refentrytitle
+>initrd</refentrytitle
+><manvolnum
+>4</manvolnum
+></citerefentry
+> και <citerefentry
+><refentrytitle
+>lilo.conf</refentrytitle
+> <manvolnum
+>5</manvolnum
+></citerefentry
+>. Τρέξτε τώρα το <userinput
+>lilo</userinput
+> και επανεκκινήστε. </para
+><para
+>The procedure for <command
+>GRUB</command
+> is quite similar. Locate your <filename
+>menu.lst</filename
+> in the <filename
+>/boot/grub/</filename
+> directory (sometimes in the <filename
+>/boot/boot/grub/</filename
+>), add the following lines: <informalexample
+><screen
+>
+title  New Install
+kernel (hd0,0)/boot/newinstall/vmlinuz root=/dev/ram0 ramdisk_size=12000
+initrd (hd0,0)/boot/newinstall/initrd.gz
+</screen
+></informalexample
+> and reboot. <phrase condition="sarge"
+>If the boot fails, you can try adding <userinput
+>devfs=mount,dall</userinput
+> to the <quote
+>kernel</quote
+> line. </phrase
+> </para
+><para
+>Σημειώστε ότι η τιμή <userinput
+>ramdisksize</userinput
+> πιθανόν να χρειάζεται προσαρμογή για το μέγεθος της εικόνας initrd. Από το σημείο αυτό και μετά, δεν θα υπάρχει διαφορά ανάμεσα στα <command
+>GRUB</command
+> και <command
+>LILO</command
+>. </para>
+  </sect2>
+
+  <sect2 arch="i386" id="usb-boot">
+  <title
+>Booting from USB Memory Stick</title>
+<para
+>Ας υποθέσουμε ότι έχετε προετοιμάσει όσα υποδεικνύονται στις ενότητες  <xref linkend="boot-dev-select"/> και <xref linkend="boot-usb-files"/>.  Τώρα απλά συνδέστε το USB stick σε μια ελεύθερη θύρα σύνδεσης USB connector καιεπανεκκινήστε τον υπολογιστή.  Το σύστημα θα πρέπει να ξεκινήσει, και θα εμφανιστεί μπροστά σας η προτροπή <prompt
+>boot:</prompt
+>.  Εδώ μπορείτε να εισάγετε προαιρετικά ορίσματα για την εκκίνηση ή απλά να πατήσετε &enterkey;. </para
+><para
+>Σε περίπτωση που ο υπολογιστής σας δεν υποστηρίζει εκκίνηση από USB συσκευές μνήμης μπορείτε ακόμα να χρησιμοποιήσετε μια μόνο δισκέττα για την αρχική εκκίνηση και μετά να αλλάξετε σε USB. Εκκινήστε το σύστημά σας όπως περιγράφεται στην ενότητα<xref linkend="floppy-boot"/>. Ο πυρήνας στη δισκέττα εκκίνησης θα πρέπει να ανιχνεύσει το USB stick αυτόματα.Όταν ρωτηθείτε για τη δισκέττα root, πατήστε απλά &enterkey;. Θα πρέπει να δείτε τον &d-i; να ξεκινά. </para>
+  </sect2>
+
+  <sect2 arch="i386" id="floppy-boot">
+  <title
+>Εκκίνηση από Δισκέττες</title>
+<para
+>Θα έχετε ήδη κατεβάσει τις εικόνες των δισκεττών που χρειάζεστε και δημιουργήσει απο αυτές τις αντίστοιχες δισκέττες στο <xreflinkend="create-floppy"/>. </para
+><para
+>Για να εκκινήσετε από τη δισκέττα εκκίνησης του εγκαταστάτη, τοποθετήστε τη δισκέττα στην κύρια οδηγό δισκεττών, κλείστε το σύστημα κατά το συνηθισμένο τρόπο, και μετά ξανανοίξτε το. </para
+><para
+>For installing from an LS-120 drive (ATAPI version) with a set of floppies, you need to specify the virtual location for the floppy device. This is done with the <emphasis
+>root=</emphasis
+> boot argument, giving the device that the ide-floppy driver maps the device to. For example, if your LS-120 drive is connected as the first IDE device (master) on the second cable, you enter <userinput
+>linux root=/dev/hdc</userinput
+> at the boot prompt. Installation from LS-120 is only supported by 2.4 and later kernels. </para
+><para
+>Σημειώστε ότι σε μερικά μηχανήματα ο συνδυασμός πλήκτρων <keycombo
+><keycap
+>Control</keycap
+><keycap
+>Alt</keycap
+> <keycap
+>Delete</keycap
+></keycombo
+>δεν επανεκκινεί το μηχάνημα κανονικά, οπότε συνίσταται μια ``σκληρή'' επανεκκίνηση. Αν κάνετε την εγκατάσταση από ένα υπάρχον λειτουργικό σύστημα (πχ., από ένα ''κουτί''  DOS) δεν έχετεεπιλογή. Διαφορετικά, παρακαλούμε να κάνετε μια ''σκληρή'' επανεκκίνηση κατά τη διαδικασία της εκκίνησης. </para
+><para
+>Στη συνέχεια η δισκέττα θα είναι προσβάσιμη και θα δείτε μια οθόνη που εισάγει τη δισκέττα και τελειώνει με την προτροπή <prompt
+>boot:</prompt
+>. </para
+><para
+>Όταν πληκτρολογήσετε &enterkey;, θα δείτε το μήνυμα <computeroutput
+>Loading...</computeroutput
+>, ακολουθούμενο από το<computeroutput
+>Uncompressing Linux...</computeroutput
+>, και στη συνέχεια μια γεμάτη οθόνη από πληροφορίες σχετικά με το υλικό του συστήματος. Περισσότερες πληροφορίες γι' αυτή τη φάση της διαδικασίας μπορούν να βρεθούν στο  <xref linkend="kernel-msgs"/>. </para
+><para
+>Μετά την εκκίνηση από τη δισκέττα εκκίνησης θα ζητηθεί η δισκέττα root. Εισάγετε τη δισκέττα αυτή και πατήστε &enterkey;,που το περιεχόμενό της φορτώνεται στην μνήμη. Το πρόγραμμα του εγκαταστάτη <command
+>debian-installer</command
+> ξεκινά αυτόματα. </para>
+  </sect2>
+  
+  <sect2 arch="i386" id="boot-tftp"
+><title
+>Εκκίνηση μέσω TFTP</title>
+ 
+
+<!-- Start of file boot-installer/intro-net.xml -->
+
+<para
+>H εκκίνηση από το δίκτυο απαιτεί ότι διαθέτε μια δικτυακή σύνδεση και έναν δικτυακό TFTP server εκκίνησης (DHCP, RARP, ή BOOTP). </para
+><para arch="hppa"
+>Παλιότερα συστήματα όπως τα 715 πιθανόν να απαιτούν τη χρήση ενός RBOOT αντί ενός  BOOTP server. </para
+><para
+>Η μέθοδος εγκατάστασης με υποστήριξη δικτυακής εκκίνησης περιγράφεται στην ενότητα <xref linkend="install-tftp"/>. </para>
+<!--   End of file boot-installer/intro-net.xml -->
+ 
+<para
+>Υπάρχουν διάφοροι τρόποι για να κάνετε μια εκκίνηση με TFTP στην αρχιτεκτονική i386. </para>
+
+   <sect3
+><title
+>Κάρτα δικτύου ή μητρική που υποστηρίζουν PXE</title>
+<para
+>Πιθανόν η κάρτα δικτύου σας (Network Interface Card) ή η μητρική σας να παρέχουν τη δυνατότητα/λειτουργικότητα  για εκκίνηση με PXE. Αυτή είναι μια επανα-υλοποίηση από την <trademark class="trade"
+>Intel</trademark
+> της εκκίνησης με TFTP. Αν αυτό συμβαίνει πιθανόν να μπορείτε να ρυθμίσετε το BIOS του συστήματος σας ώστε να εκκινεί από το δίκτυο. </para>
+   </sect3>
+   
+   <sect3
+><title
+>NIC with Network BootROM</title>
+<para
+>Πιθανόν να υπάρχει η περίπτωση που η κάρτα δικτύου σας παρέχει τη δυνατότητα εκκίνησης με TFTP. </para
+><para condition="FIXME"
+>Ενημερώστε μας  (<email
+>&email-debian-boot-list;</email
+>) για τον τρόπο που τα καταφέρατε. Παρακαλούμε αναφερθείτε στο κείμενο αυτό. </para>
+   </sect3>
+
+   <sect3
+><title
+>Etherboot</title>
+<para
+>Tο <ulink url="http://www.etherboot.org"
+>etherboot project</ulink
+> διαθέτει δισκέττες εκκίνησης και ίσως ακόμα bootroms που να πραγματοποιούν μια εκκίνηση με TFTPboot. </para>
+   </sect3>
+  </sect2>
+
+  <sect2 arch="i386"
+><title
+>The Boot Prompt</title>
+<para
+>When the installer boots, you should be presented with a friendly graphical screen showing the Debian logo and the boot prompt: <informalexample
+><screen
+>
+Press F1 for help, or ENTER to boot:
+</screen
+></informalexample
+> At the boot prompt you can either just press &enterkey; to boot the installer with default options or enter a specific boot method and, optionally, boot parameters. </para
+><para
+>Information on available boot methods and on boot parameters which might be useful can be found by pressing <keycap
+>F2</keycap
+> through <phrase condition="sarge"
+><keycap
+>F7</keycap
+></phrase
+><phrase condition="etch"
+><keycap
+>F8</keycap
+></phrase
+>. If you add any parameters to the boot command line, be sure to type the boot method (the default is <userinput
+>linux</userinput
+>) and a space before the first parameter (e.g., <userinput
+>linux debconf/priority=medium</userinput
+>). <note
+><para
+>If you are installing the system via a remote management device that provides a text interface to the VGA console, you may not be able to see the initial graphical splash screen upon booting the installer; you may even not see the boot prompt. Examples of these devices include the text console of Compaq's <quote
+>integrated Lights Out</quote
+> (iLO) and HP's <quote
+>Integrated Remote Assistant</quote
+> (IRA). You can blindly press F1<footnote
+> <para
+> In some cases these devices will require special escape sequences to enact this keypress, for example the IRA uses <keycombo
+> <keycap
+>Ctrl</keycap
+> <keycap
+>F</keycap
+> </keycombo
+>,&nbsp;<keycap
+>1</keycap
+>. </para
+> </footnote
+> to bypass this screen and view the help text. Once you are past the splash screen and at the help text your keystrokes will be echoed at the prompt as expected. To prevent the installer from using the framebuffer for the rest of the installation, you will also want to add <userinput
+>debian-installer/framebuffer=false</userinput
+> to the boot prompt, as described in the help text. </para
+></note>
+</para>
+
+  </sect2>
+<!--   End of file boot-installer/i386.xml -->
+
+<!-- Start of file boot-installer/ia64.xml -->
+
+  <sect2 arch="ia64"
+><title
+>Εκκίνηση από CD-ROM</title>
+
+
+<!-- Start of file boot-installer/intro-cd.xml -->
+
+<para
+>Ο ευκολότερος τρόπος για τους περισσότερους χρήστες είναι να χρησιμοποιήσουν ένα σετ με τα CD του Debian. Αν έχετε ένα τέτοιο σετ και αν το μηχάνημά σας υποστηρίζει απευθείας εκκίνηση από το CD τότε είστε εντάξει! Απλά <phrase arch="i386"
+>ρυθμίστε το σύστημά σας για εκκίνηση από το CD όπως περιγράφεται στην ενότητα <xref linkend="boot-dev-select"/>,</phrase
+> βάλτε το CD σας στη συσκευή, επανεκκινήστε και προχωρήστε στο επόμενο κεφάλαιο. </para
+><para
+>Σημειώστε ότι κάποιες συσκευές CD πιθανόν να απαιτούν συγκεκριμένους οδηγούς και έτσι να μην είναι προσβάσιμες στα πρώτα στάδια της εγκατάστασης. Αν συμβεί λοιπόν ο συνηθισμένος τρόπος εκκίνησης από το CD να μην δουλέψει για το σύστημά σας,ξαναεπισκεφθείτε το κεφάλαιο αυτό και διαβάστε για πιθανούς εναλλακτικούς πυρήνες και μεθόδους εγκατάστασης που πιθανόν να δουλέψουν για σας.  </para
+><para
+>Ακόμα και αν δεν μπορείτε να εκκινήσετε από το CD-ROM, έχετε τη δυνατότητα ίσως να εγκαταστήσετε μέρη του Debian συστήματος και οποιοαδήποτε πακέτα θέλετε από το CD-ROM. Απλά εκκινήστε χρησιμοποιώντας ένα άλλο μέσο, όπως δισκέττες. Όταν έρθει η στιγμή για να εγκαταστήσετε το λειτουργικό σύστημα, το βασικό σύστημα και οποιαδήποτε επιπλέον πακέτα υποδείξτε στο σύστημα εγκατάστασης να χρησιμοποιήσει τον οδηγό του CD-ROM.  </para
+><para
+>Αν έχετε προβλήματα κατά την εκκίνηση, δείτε το <xref linkend="boot-troubleshooting"/>. </para>
+<!--   End of file boot-installer/intro-cd.xml -->
+
+  <note>
+  <title
+>Περιεχόμενα CD</title>
+
+<para
+>Υπάρχουν τρεις βασικές παραλαγές CD της εγκατάστασης του Debian. To <emphasis
+>Business Card</emphasis
+> CD έχει μια μίνιμαλ εγκατάσταση που χωράει σε ένα CD μικρού σχήματος. Απαιτεί μια δικτυακή σύνδεση για την ολοκλήρωση του υπόλοιπου της βασικής εγκατάστασης και τη δημιουργία ενός χρηστικού συστήματος. Το CD <emphasis
+>Network Install</emphasis
+> έχει όλα τα πακέτα για μια βασική εγκατάσταση αλλά απαιτεί και μια δικτυακή σύνδεση σε έναν καθρέφτη του Debian για την εγκατάσταση των επιπλέον πακέτων που θα ήθελε κάποιος για να έχει ένα πλήρες σύστημα. Το σετ των CD του Debian μπορεί να εγκαταστήσει ένα πλήρες σύστημα από την ευρεία συλλογή των πακέτων χωρίς την ανάγκη πρόσβαση στο δίκτυο. </para>
+  </note>
+
+<para
+>Η αρχιτεκτονική IA-64 χρησιμοποιεί το επόμενης γενιάς Extensible Firmware Interface (EFI) από την Intel. Σε αντίθεση με το παραδοσιακό x86 BIOS που ξέρει πολύ λίγα πράγματα για τη συσκευή εκκίνησης πέρα από τον πίνακα διαμέρισης και το Master Boot Record (MBR), το EFI μπορεί να διαβάσει και να γράψει αρχεία από τμήματα δίσκου με μορφοποίηση σε FAT16 ή FAT32.Αυτό απλοποιεί την συχνά παρωχημένη (αρχαϊκή) διαδικασία της έναρξης ενός συστήματος. Ο φορτωτής εκκίνησης του συστήματος και το EFI firmware που τον υποστηρίζει έχουν ένα πλήρες σύστημα αρχείων για την αποθήκευση των απαραίτητων αρχείων για την εκκίνηση του μηχανήματος. Αυτό σημαίνει ότι ο δίσκος του συστήματος σε ένα σύστημα IA-64 έχει ένα επιπλέον τμήμα αφιερωμένη στο EFI αντί του απλού MBR ή του μπλοκ εκκίνησης στα περισσότερα συμβατικά συστήματα. </para
+><para
+>Το CD της εγκατάστασης του Debian περιέχει μια μικρή διαμέριση EFI όπου βρίσκονται ο φορτωτής εκκίνησης <command
+>ELILO</command
+>, το αρχείο ρύθμισης του, ο πυρήνας του εγκαταστάτη και ένα αρχικό σύστημα αρχείων (initrd). Το τρέχον σύστημα περιέχει επίσης ένα τμήμα EFI όπου βρίσκονται τα απαραίτητα για την εκκίνηση του συστήματος αρχεία. Τα αρχεία αυτά είναι αναγνώσιμα από το κέλυφος EFI όπως περιγράφεται στη συνέχεια. </para
+><para
+>Οι περισσότερες λεπτομέρειες για το πώς φορτώνει και ξεκινά στην πραγματικότητα το <command
+>ELILO</command
+> ένα σύστημα είναι διαφανή στον εγκαταστάτη του συστήματος. Όμως. ο εγκατάστασης πρέπει να ορίσει μια διαμέριση EFI πριν τηνεγκατάσταση του βασικού συστήματος. Διαφορετικά, η εγκατάσταση του <command
+>ELILO</command
+> θα αποτύχει, καθιστώντας το σύστημα μη-εκκινήσιμο. Το τμήμα EFI προσδιορίζεται και μορφοποιείται στη φάση της διαμέρισης κατά την εγκατάσταση και πριν τη φόρτωση οποιονδήποτε πακέτων στο δίσκο του συστήματος. Η φάση της κατάτμησης επαληθεύει επίσης ότι ένα κατάλληλο τμήμα EFI όντως υπάρχει πριν επιτρέψει την συνέχιση της εγκατάστασης. </para
+><para
+>Ο Διαχειριστής εκκίνησης του EFI εμφανίζεται σαν το τελευταίο βήμα της αρχικοποίησης του firmware. Παρουσιάζει μια λίστα επιλογών από την μπορεί ο χρήστης να διαλέξει. Ανάλογα με το μοντέλο του συστήματος και το υπόλοιπο λογισμικό που έχειφορτωθεί σε αυτό, το μενού των επιλογών αυτών μπορεί να διαφέρει από το ένα σύστημα στο άλλο. Θα πρέπει όμως να υπάρχουν τουλάχιστον δυο αντικείμενα στην εμφανιζόμενη λίστα, τα <command
+>Boot Option Maintenance Menu</command
+> και<command
+>EFI Shell (Built-in)</command
+>. Η χρήση της πρώτης επιλογής προτιμάται, αλλά αν δεν είναι διαθέσιμη ή το CD γιακάποιο λόγο δεν εκκινεί με αυτήν, χρησιμοποιείστε την δεύτερη. </para>
+
+  <warning>
+  <title
+>ΣΗΜΑΝΤΙΚΟ</title>
+<para
+>Ο Διαχειριστής εκκίνησης του EFI θα επιλέξει μια προκαθορισμένη ενέργεια για την εκκίνηση, συνήθως την πρώτη επιλογή του μενού, μέσα σε ένα προκαθορισμένο αριθμό δευτερολέπτων. Κάτι που υποδεικνύεται από την αντίστροφη μέτρηση στην βάση τηςοθόνης .Από τη στιγμή που ο χρόνος αυτός τελειώσει και το σύστημα ξεκινά με την προκαθορισμένη ενέργεια, πιθανόν να πρέπει να επανεκκινήσετε το μηχάνημα για να συνεχίσετε την εγκατάσταση. Αν η προκαθορισμένη ενέργεια είναι το κέλυφος EFI,μπορείτε να επιστρέψετε στον Διαχειριστή της εκκίνησης τρέχοντας <command
+>exit</command
+> στο προτρεπτικό του κελύφους. </para>
+  </warning>
+
+  <sect3 arch="ia64" id="bootable-cd">
+  <title
+>Eπιλογή 1: Εκκίνηση από το Μενού Συντήρησης Επιλογής Εκκίνησης</title>
+ 
+
+<itemizedlist>
+
+<listitem
+><para
+>Εισάγετε το CD στη συσκευή DVD/CD και επανεκκινήστε το μηχάνημα. Το firmware θα εμφανίσει τη σελίδα και το μενού του Διαχειριστή Εκκίνησης του EFI αφού ολοκληρώσει την αρχικοποίηση του συστήματος. </para
+></listitem>
+
+<listitem
+><para
+>Επιλέξτε <command
+>Boot Maintenance Menu</command
+> από το μενού με τα πλήκτρα διεύθυνσης (arrow keys) και πατήστε <command
+>ENTER</command
+>. Αυτό θα εμφανίσει ένα καινούριο μενού. </para
+></listitem>
+
+<listitem
+><para
+>Επιλέξτε <command
+>Boot From a File</command
+> από το μενού με τα πλήκτρα διεύθυνσης και πατήστε <command
+>ENTER</command
+>. Αυτό θα εμφανίσει μια λίστα με τις συσκευές που εξετάζονται από το firmware.Θα δείτε δύο γραμμές από το μενού που περιέχουν είτε την επικεφαλίδα <command
+>Debian Inst [Acpi ...</command
+> ή <command
+>Removable Media Boot</command
+>. Εξετάζοντας το υπόλοιπο της γραμμής του μενού θα διαπιστώσετε ότι η πληροφορία για τη συσκευή και τον ελεγκτή θα πρέπει να είναι η ίδια.  </para
+></listitem>
+
+<listitem
+><para
+>Mπορείτε να επιλέξετε οποιαδήποτε από τις δυο επιλογές που αναφέρονται στη συσκευή CD/DVD. Κάντε την επιλογή σας με τα πλήκτρα και πατήστε <command
+>ENTER</command
+>. Αν επιλέξετε <command
+>Removable Media Boot</command
+> το μηχάνημα θα ξεκινήσει αμέσως την ακολουθία της εκκίνησης. Αν αντίθετα επιλέξετε <command
+>Debian Inst [Acpi ...</command
+>, θα σας εμφανίσει μια λίστα καταλόγων του εκκινήσιμου μέρους του, ζητώντας σας να προχωρήσετε στο επόμενο (επιπρόσθετο) βήμα. </para
+></listitem>
+
+<listitem
+><para
+>Θα χρειαστείτε αυτό το βήμα μόνο αν επιλέξετε το <command
+>Debian Inst [Acpi ...</command
+>. Η λίστα των καταλόγων θα σας δείξει επίσης <command
+>[Treat like Removable Media Boot]</command
+> μετά την τελευταία γραμμή του μενού.Επιλέξτε τη γραμμή με τα πλήκτρα και πατήστε  <command
+>ENTER</command
+>. Αυτό θα ξεκινήσει την ακολουθία της εκκίνησης. </para
+></listitem>
+
+</itemizedlist>
+
+<para
+>Τα βήματα αυτά θα ξεκινήσουν τον φορτωτή εκκίνησης του Debian που θα εμφανίσει μια σελίδα του μενού για να διαλέξετε έναν πυρήνα για την εκκίνηση και να δώσετε άλλες επιλογές. Προχωρήστε στις επιλογές αυτές. </para>
+  </sect3>
+
+  <sect3 arch="ia64" id="boot-with-efi">
+  <title
+>Επιλογή 2: Εκκίνηση από το κέλυφος του EFI</title>
+<para
+>Αν, για κάποιο λόγο, η επιλογή 1 δεν είναι επιτυχής επανεκκινήστε το μηχάνημα και όταν εμφανιστεί η οθόνη του διαχειριστή εκκίνησης του EFI θα πρέπει να υπάρχει μια επιλογή με τίτλο <command
+>EFI Shell [Built-in]</command
+>. Εκκινήστε το CD του εγκαταστάτη του Debian με τα ακόλουθα βήματα: </para>
+
+<itemizedlist>
+
+<listitem
+><para
+>Εισάγετε το CD στη συσκευή DVD/CD και επανεκκινήστε το μηχάνημα. Το firmware θα εμφανίσει τη σελίδα και το μενού του διαχειριστή εκκίνησης του EFI και μετά από αυτό ολοκληρώνει την αρχικοποίηση του συστήματος. </para
+></listitem>
+
+<listitem
+><para
+>Επιλέξτε <command
+>EFI Shell</command
+> από το μενού με τα πλήκτρα και πατήστε <command
+>ENTER</command
+>.Το κέλυφος EFI θα ανιχνεύσει όλες τις εκκινήσιμες συσκευές και θα τις εμφανίσει στην κονσόλα πριν από την εμφάνιση της γραμμής εντολών του. Οι αναγνωρισμένες εκκινήσιμες διαμερίσεις στις συσκευές εμφανίζονται με ένα όνομα <filename
+>fs<emphasis
+>n</emphasis
+>:</filename
+>. Όλες οι υπόλοιπες αναγνωρισμένες διαμερίσεις ονομάζονται<filename
+>blk<emphasis
+>n</emphasis
+>:</filename
+>. Αν εισάγατε το CD μόλις πριν την είσοδο στο κέλυφος, αυτό ίσως πάρει μερικά δευτερόλεπτα επιπλέον καθώς γίνεται η εκκίνηση της συσκευής του. </para>
+</listitem>
+
+<listitem
+><para
+>Εξετάστε το αποτέλεσμα από το κέλυφος για το όνομα της συσκευής του CD-ROM. Το πιο πιθανόν είναι η συσκευή <filename
+>fs0:</filename
+> αν και άλλες συσκευές με εκκινήσιμες διαμερίσεις θα εμφανίζονται σαν<filename
+>fs<emphasis
+>n</emphasis
+></filename
+>. </para
+></listitem>
+
+<listitem
+><para
+>Εισάγετε <command
+>fs<emphasis
+>n</emphasis
+>:</command
+> και πατήστε <command
+>ENTER</command
+> για να επιλέξετε τη συσκευή όπου <emphasis
+>n</emphasis
+> είναι ο αριθμός της διαμέρισης για το CDROM.  Το κέλυφος θα εμφανίσει τώρα τοναριθμό της διαμέρισης σαν την προτροπή του. </para
+></listitem>
+
+<listitem
+><para
+>Εισάγετε <command
+>elilo</command
+> και πατήστε <command
+>ENTER</command
+>. Αυτό θα ξεκινήσει την ακολουθία της εκκίνησης. </para
+></listitem>
+
+</itemizedlist>
+
+<para
+>Όπως και με την επιλογή 1, τα βήματα αυτά ξεκινούν τον φορτωτή εκκίνησης του Debian που θα εμφανίσει μια σελίδα του μενού για να διαλέξετε πυρήνα για την εκκίνηση και άλλες επιλογές. Μπορείτε επίσης να εισάγετε τη συντομότερη <command
+>fs<emphasis
+>n</emphasis
+>:elilo</command
+> εντολή στην προτροπή του κελύφους. Προχωρήστε στην επιλογή πυρήνα εκκίνησης καθώς και άλλων δυνατοτήτων. </para>
+
+  </sect3>
+
+  <sect3 arch="ia64" id="serial-console">
+  <title
+>Εγκατάσταση μέσω Σειριακής Κονσόλας</title>
+
+<para
+>Πιθανόν να θέλετε να κάνετε μια εγκατάσταση χρησιμοποιώντας οθόνη και πληκτρολόγιο ή μια σειριακή σύνδεση. Για να χρησιμοποιήσετε ένα τέτοιο συνδυασμό οθόνης/πληκτρολογίου επιλέξτε την δυνατότητα που περιέχει την συμβολοσειρά [VGAconsole].  Για εγκατάσταση πάνω από μια σειριακή σύνδεση, διαλέξτε την επιλογή που περιέχει τη συμβολοσειρά [<replaceable
+>BAUD</replaceable
+> baud serial console], όπου <replaceable
+>BAUD</replaceable
+> είναι η ταχύτητα της σειριακής κονσόλας σας. Δίνονται προκαθορισμένες οι επιλογές στο μενού για τις πιο τυπικές ρυθμίσεις των ταχυτήτων για τη συσκευή ttyS0. </para
+><para
+>Στις περισσότερες περιπτώσεις, θα θέλετε ο εγκαταστάτης να χρησIμοποιήσει την ίδια ταχύτητα σύνδεσης με αυτήν της σύνδεσής σας με την κονσόλα EFI.  Αν δεν είσαστε βέβαιοι για τη ρύθμιση αυτή, μπορείτε να την πάρετε χρησιμοποιώντας την εντολή<command
+>baud</command
+> στο κέλυφος  EFI. </para
+><para
+>Αν δεν υπάρχει διαθέσιμη επιλογή με ρύθμιση για τη σειριακή συσκευή ή ταχύτητα σύνδεσης που θα θέλατε να χρησιμοποιήσετε, μπορείτε να υπερκεράσετε τη ρύθμιση της κονσόλας με μια από τις υπάρχουσες επιλογές στο μενού. Για παράδειγμα, για ναχρησιμοποιήσετε μια κονσόλα με ταχύτητα 57600 baud πάνω από τη συσκευή ttyS1, εισάγετε το <command
+>console=ttyS1,57600n8</command
+> στο παράθυρο κειμένου <classname
+>Boot:</classname
+>. </para>
+
+<note
+><para
+>Τα περισσότερα συστήματα IA-64 έρχονται με μια προκαθορισμένη ρύθμισης ταχύτητας για την κονσόλα στα 9600 baud.Αυτή η ρύθμιση είναι μάλλον αργή, και η κανονική διαδικασία της εγκατάστασης θα χρειαστεί σημαντικό χρόνο για να αποτυπώσει την κάθε οθόνη. Θα πρέπει λοιπόν να θεωρήσετε την περίπτωση είτε να αυξήσετε την ταχύτητα που χρησιμοποιείται για τηνεγκατάσταση ή να κάνετε μια εγκατάσταση σε "κατάσταση κειμένου".  Δείτε το μενού βοήθειας  <classname
+>Params</classname
+> για οδηγίες σχετικά με το ξεκίνημα του εγκαταστάτη σε "Κατάσταση Κειμένου". </para
+></note>
+
+<warning
+><para
+>Αν επιλέξετε λάθος τύπο κονσόλας, θα είσαστε σε θέση να επιλέξετε το πυρήνα και να βάλετε παραμέτρους αλλά τόσο η οθόνη όσο και η είσοδος σας θα παγώσουν με το ξεκίνημα του πυρήνα απαιτώντας έτσι την επανεκκίνηση του συστήματος για να μπορέσεινα ξεκινήσει η εγκατάσταση.  </para
+></warning>
+  </sect3>
+
+  <sect3 arch="ia64" id="kernel-option-menu">
+  <title
+>Επιλογή του πυρήνα εκκίνησης και των άλλων επιλογών</title>
+
+<para
+>Ο φορτωτής εκκίνησης θα εμφανίσει μια φόρμα με ένα μενού-λίστα και ένα παράθυρο κειμένου με το προτρεπτικό <classname
+>Boot:</classname
+>. Τα πλήκτρα επιλέγουν ένα αντικείμενο από το μενού αυτό και οποιοδήποτε κείμενοπληκτρολογείται θα εμφανιστεί στο παράθυρο για κείμενο.  Υπάρχουν επίσης οθόνες βοήθειας που εμφανίζονται με το πάτημα του αντίστοιχου πλήκτρου συνάρτησης.. Η οθόνη βοήθειας <classname
+>General</classname
+> εξηγεί τις επιλογές από το μενούκαι η οθόνη <classname
+>Params</classname
+> επεξηγεί τις πιο κοινές επιλογές για τη γραμμή εντολών. </para
+><para
+>Συμβουλευτείτε την οθόνη βοήθειας <classname
+>General</classname
+> για την περιγραφή των πυρήνων και των τύπων εγκατάστασης των πιο κατάλληλων για την εγκατάστασή σας. Μπορείτε επίσης να συμβουλευτείτε την ενότητα <xreflinkend="boot-parms"/> στη συνέχεια για επιπρόσθετες παραμέτρους που ίσως να θέλετε να βάλετε στο παράθυρο κειμένου <classname
+>Boot:</classname
+>. Η έκδοση του πυρήνα που θα διαλέξετε επιλέγει την έκδοση του πυρήνα που θαχρησιμοποιηθεί τόσο κατά τη διαδικασία εγκατάστασης όσο και από το εγκατεστημμένο σύστημα. Αν αντιμετωπίσετε προβλήματα με τον πυρήνα στην εγκατάσταση πιθανόν να έχετε τα ίδια προβλήματα και με το εγκαταστημμένο σύστημα. Τα επόμενα δυο βήματα θα επιλέξουν και θα ξεκινήσουν την εγκατάσταση: </para>
+
+<itemizedlist>
+
+<listitem
+><para
+>Διαλέξτε την έκδοση του πυρήνα και τον τρόπο εγκατάστασης που ταιριάζειπερισσότερο στις ανάγκες σας με τα βελάκια του πληκτρολογίου. </para
+></listitem>
+
+<listitem
+><para
+>Εισάγετε οποιεσδήποτε παραμέτρους εκκίνησης πληκτρολογώντας τις. Το κείμενο θα εμφανιστεί άμεσα στο παράθυρο. Εκεί προσδιορίζονται και οι παράμετροι του πυρήνα (όπως για παράδειγμα οι ρυθμίσεις της σειριακής κονσόλας). </para
+></listitem>
+
+<listitem
+><para
+>Πατήστε <command
+>ENTER</command
+>.  Αυτό θα φορτώσει και θα ξεκινήσει τον πυρήνα. Ο πυρήνας θα εμφανίσει τα συνηθισμένα μηνύματα εκκίνησης ακολουθούμενα από την πρώτη οθόνη του εγκαταστάτη. </para
+></listitem
+> 
+
+</itemizedlist>
+
+<para
+>Προχωρήστε στο επόμενο κεφάλαιο για να συνεχίσετε την εγκατάσταση όπου και θα κάνετε τις ρυθμίσεις της τοπικής γλώσσας, του δικτύου και των διαμερίσεων του δίσκου. </para>
+  </sect3>
+  </sect2>
+
+  <sect2 arch="ia64" id="boot-tftp"
+><title
+>Εκκίνηση μέσω TFTP</title>
+
+<para
+>Η εκκίνηση ενός συστήματος IA64 από το δίκτυο είναι ανάλογη της εκκίνησης από ένα CD. Η μόνη διαφορά βρίσκεται στον τρόπο φόρτωσης του πυρήνα. Ο Διαχειριστής εκκίνησης του EFI μπορεί να φορτώσει και να ξεκινήσει προγράμματα από έναν server στο δίκτυο. Από τη στιγμή που ο πυρήνας της εγκατάστασης φορτωθεί και ξεκινήσει η εγκατάσταση του συστήματος θα προχωρήσει μέσα από τα ίδια βήματα όπως και η εγκατάσταση από το CD με τη διαφορά ότι τα πακέτα της βασικής εγκατάστασης θα φορτωθούν από το δίκτυο αντί για το CD. </para>
+
+
+<!-- Start of file boot-installer/intro-net.xml -->
+
+<para
+>H εκκίνηση από το δίκτυο απαιτεί ότι διαθέτε μια δικτυακή σύνδεση και έναν δικτυακό TFTP server εκκίνησης (DHCP, RARP, ή BOOTP). </para
+><para arch="hppa"
+>Παλιότερα συστήματα όπως τα 715 πιθανόν να απαιτούν τη χρήση ενός RBOOT αντί ενός  BOOTP server. </para
+><para
+>Η μέθοδος εγκατάστασης με υποστήριξη δικτυακής εκκίνησης περιγράφεται στην ενότητα <xref linkend="install-tftp"/>. </para>
+<!--   End of file boot-installer/intro-net.xml -->
+
+<para
+>Η εκκίνηση από το δίκτυο σε ένα σύστημα ia64 απαιτεί δυο ενέργειες συγκεκριμένα για την αρχιτεκτονική αυτή. Στον server εκκίνησης, οι DHCP και ΤFTP πρέπει να ρυθμιστούν ώστε να δίνουν το <command
+>elilo</command
+>. Στην πλευρά του πελάτη, μια καινούρια επιλογή για την εκκίνηση πρέπει να προσδιοριστεί στον διαχειριστή εκκίνησης του EFI για να επιτρέψει την φόρτωση απότο δίκτυο. </para>
+
+  <sect3 arch="ia64" id="boot-tftp-server">
+  <title
+>Ρύθμιση του Server</title>
+<para
+>Μια κατάλληλη διαμόρφωση του TFTP για εκκίνηση από το δίκτυο ενός συστήματος ia64 μοιάζει κάπως έτσι: <informalexample
+><screen>
+host mcmuffin {
+        hardware ethernet 00:30:6e:1e:0e:83;
+        fixed-address 10.0.0.21;
+        filename "debian-installer/ia64/elilo.efi";
+}
+</screen
+></informalexample
+> Σημειώστε ότι ο στόχος είναι να πετύχουμε την εκτέλεση του <command
+>elilo.efi</command
+> στην πλευρά του πελάτη. </para
+><para
+>Αποσυμπιέστε το αρχείο <filename
+>netboot.tar.gz</filename
+> στον κατάλογο που χρησιμοποιήσατε σαν root στον  tftp server σας. Τυπικοί ριζικοί κατάλογοι για tftp περιλαμβάνουν τους: <filename
+>/var/lib/tftp</filename
+> και <filename
+>/tftpboot</filename
+>. Αυτό θα δημιουργήσει ένα δέντρο κατάλογων <filename
+>debian-installer</filename
+>που θα περιέχει τα αρχεία εκκίνησης για ένα σύστημα IA-64. </para
+><para>
+
+<informalexample
+><screen
+># cd /var/lib/tftp
+# tar xvfz /home/user/netboot.tar.gz
+./
+./debian-installer/
+./debian-installer/ia64/
+[...]
+</screen
+></informalexample
+> Tο αρχείο <filename
+>netboot.tar.gz</filename
+> περιέχει ένα αρχείο <filename
+>elilo.conf</filename
+> που πρέπει να δουλεύει στις περισσότερες περιπτώσεις. Αν όμως για κάποιο λόγο χρειαστεί να κάνετε κάποιες αλλαγές στο αρχείο μπορείτε να το βρείτε στον κατάλογο <filename
+>debian-installer/ia64/</filename
+>. Είναι δυνατόν να έχετε διαφορετικά αρχεία ρύθμισης για διαφορετικούς πελάτες ονομάζοντάς τα με την διεύθυνση IP του συστήματος σε δεκαεξαδική μορφή και την κατάληξη <filename
+>.conf</filename
+> αντί για  <filename
+>elilo.conf</filename
+>. Δείτε την τεκμηρίωση που δίνεται με το πακέτο <classname
+>elilo</classname
+> για λεπτομέρειες. </para>
+  </sect3>
+
+  <sect3 arch="ia64" id="boot-tftp-client">
+  <title
+>Ρύθμιση του πελάτη</title>
+<para
+>Για να ρυθμίσετε τον πελάτη ώστε να υποστηρίζει εκκίνηση με TFTP, αρχίστε με εκκίνηση στο EFI και μπείτε στο μενού  <guimenu
+>Boot Option Maintenance Menu</guimenu
+>. <itemizedlist
+><listitem
+><para
+>Προσθέστε μια επιλογή εκκίνησης.</para
+></listitem
+><listitem
+><para
+>Θα δείτε μια ή περισσότερες γραμμές με το κείμενο <guimenuitem
+>Load File [Acpi()/.../Mac()]</guimenuitem
+>. Αν υπάρχουν περισσότερες από μια τέτοιες επιλογές, διαλέξτε αυτήν που περιέχει την διεύθυνση MAC του  interface από το οποίο θα εκκινήσετε. Χρησιμοποιήστε τα βελάκια στο πληκτρολόγιο για να τονίσετε την επιλογή σας και στη συνέχεια πατήστε enter.</para
+></listitem
+><listitem
+><para
+> Ονομάστε την επιλογή σας  <userinput
+>Netboot</userinput
+> ή κάτι ανάλογο, αποθηκεύστε και βγείτε πάλι στο μενού των επιλογών εκκίνησης. </para
+></listitem
+></itemizedlist
+> Θα δείτε την καινούρια επιλογή που μόλις δημιουργήσατε και επιλέγοντας την θα ξεκινήσει μια αναζήτηση DHCP, οδηγώντας στο φόρτωμα μέσω του TFTP του αρχείου <filename
+>elilo.efi</filename
+> από τον server. </para
+><para
+>Ο φορτωτής εκκίνησης θα εμφανίσει το προτρεπτικό του  μετά το κατέβασμα και την επεξεργασία του αρχείου ρυθμίσεων. Στο σημείο αυτό η διαδικασία της εγκατάστασης θα προχωρήσει με τα ίδια βήματα όπως και η εγκατάσταση με το CD. Διαλέξτε μια επιλογή εκκίνησης όπως και παραπάνω και όταν τελειώσει η εγκατάσταση του πυρήνα από το δίκτυο θα ξεκινήσει ο εγκαταστάτης του Debian. </para
+><para
+>Προχωρήστε στο επόμενο κεφάλαιο για να συνεχίσετε την εγκατάσταση όπου και θα κάνετε την ρύθμιση της τοπικής γλώσσας, του δικτύου και των διαμερίσεων του δίσκου. </para>
+  </sect3>
+  </sect2>
+<!--   End of file boot-installer/ia64.xml -->
+
+<!-- Start of file boot-installer/m68k.xml -->
+
+  <sect2 arch="m68k"
+><title
+>Επιλέγοντας Μέθοδο Εγκατάστασης</title>
+
+<para
+>Μερικές υπο-αρχιτεκτονικές της &arch-title; έχουν την επιλογή της εκκίνησης χρησιμοποιώντας είτε έναν πυρήνα 2.4.x είτε έναν 2.2.x. Όταν έχετε μια τέτοια δυνατότητα δοκιμάστε τον πυρήνα 2.4.x. O εγκαταστάτης επιπλέον απαιτεί λιγότερη μνήμη όταν χρησιμοποιεί τον πυρήνα 2.4.x καθώς η υποστήριξη του πυρήνα 2.2.x απαιτεί μια σταθερού μεγέθους ramdisk ενώ ο πυρήνας 2.4.x χρησιμοποιεί tmpfs. </para
+><para
+>Αν χρησιμοποιείτε έναν πυρήνα 2.2.x, τότε σιγουρευτείτε ότι χρησιμοποιείτε μια ramdisk ικανή να ''φιλοξενήσει'' αυτόν τον πυρήνα, δείτε την ενότητα <ulink url="&disturl;/main/installer-&architecture;/current/images/MANIFEST"
+>MANIFEST</ulink
+>. Θα πρέπει ακόμα να χρησιμοποιήσετε την παράμετρο &ramdisksize; του πυρήνα. </para
+><para
+>Βεβαιωθείτε ότι η <userinput
+>root=/dev/ram</userinput
+> είναι μια από τις παραμέτρους του πυρήνα σας. </para
+><para
+>Αν έχετε πρόβλημα ελέγξτε τις συχνές ερωτήσεις στο <ulink url="&url-m68k-cts-faq;"
+>cts's &arch-title; debian-installer FAQ</ulink
+>. </para>
+
+<itemizedlist>
+	<listitem
+><para
+><xref linkend="m68k-boot-amiga"/></para
+></listitem>
+	<listitem
+><para
+><xref linkend="m68k-boot-atari"/></para
+></listitem>
+	<listitem
+><para
+><xref linkend="m68k-boot-bvme6000"/></para
+></listitem>
+	<listitem
+><para
+><xref linkend="m68k-boot-mac"/></para
+></listitem>
+	<listitem
+><para
+><xref linkend="m68k-boot-mvme"/></para
+></listitem>
+	<listitem
+><para
+><xref linkend="m68k-boot-q40"/></para
+></listitem>
+</itemizedlist>
+
+
+    <sect3 arch="m68k" id="m68k-boot-amiga"
+><title
+>Amiga</title>
+<para
+>Η μόνη διαθέσιμη μέθοδος εγκατάστασης για την amiga είναι από τον σκληρό δίσκο (δείτε το  <xref linkend="m68k-boot-hd"/>).  <emphasis
+>Με άλλα λόγια ένα cdrom δεν είναι εκκινήσιμο.</emphasis
+>  </para
+><para
+>Η Amiga δεν δουλεύει προς το παρόν με το bogl, επομένως αν δείτε μηνύματα λάθους από το bogl, θα πρέπει να συμπεριλάβετε την παράμετρο <userinput
+>debian-installer/framebuffer=false</userinput
+> για τον πυρήνα. </para>
+    </sect3>
+
+    <sect3 arch="m68k" id="m68k-boot-atari"
+><title
+>Atari</title>
+<para
+>Ο εγκαταστάτης για τον  atari μπορεί να ξεκινήσει είτε από τον σκληρό δίσκο (δείτε το <xref linkend="m68k-boot-hd"/>) ή από δισκέττες (δείτε το <xref linkend="boot-from-floppies"/>). <emphasis
+>Με άλλα λόγια το cdrom δεν είναι εκκινήσιμο.</emphasis
+>  </para
+><para
+>Ο Atari δεν δουλεύει προς το παρόν με το bogl, επομένως αν δείτε μηνύματα λάθους από το bogl, θα πρέπει να συμπεριλάβετε την παράμετρο <userinput
+>debian-installer/framebuffer=false</userinput
+> για τον πυρήνα. </para>
+    </sect3>
+
+    <sect3 arch="m68k" id="m68k-boot-bvme6000"
+><title
+>BVME6000</title>
+<para
+>Ο εγκαταστάτης για BVME6000 μπορεί να ξεκινήσει είτε από ένα cdrom (δείτε <xref linkend="m68k-boot-cdrom"/>), είτε από δισκέττες (δείτε <xref linkend="boot-from-floppies"/>), ή από το δίκτυο (δείτε <xref linkend="boot-tftp"/>). </para>
+    </sect3>
+
+    <sect3 arch="m68k" id="m68k-boot-mac"
+><title
+>Macintosh</title>
+<para
+>Η μοναδική μέθοδος διαθέσιμη για εγκατάσταση στον mac είναι από το σκληρό δίσκο (δείτε <xref linkend="m68k-boot-hd"/>).<emphasis
+>Με άλλα λόγια το cdrom δεν είναι εκκινήσιμο.</emphasis
+> Για τους Mac δεν υπάρχει κάποιος πυρήνας 2.4.x που να δουλεύει. </para
+><para
+>If your hardware uses a 53c9x-based scsi bus, then you may need to include the kernel parameter <userinput
+>mac53c9x=1</userinput
+>. Hardware with two such scsi buses, such as the Quadra 950, will need <userinput
+>mac53c9x=2</userinput
+> instead. </para>
+    </sect3>
+
+    <sect3 arch="m68k" id="m68k-boot-mvme"
+><title
+>MVME147 και MVME16x</title>
+<para
+>O εγκαταστάτης για MVEM147 και MVEM16x μπορεί να ξεκινήσει είτε από δισκέττες (δείτε <xref linkend="boot-from-floppies"/>) ή από το δίκτυο (δείτε <xref linkend="boot-tftp"/>). <emphasis
+>Με άλλα λόγια το cdrom δεν είναι εκκινήσιμο.</emphasis
+>  </para>
+    </sect3>
+
+    <sect3 arch="m68k" id="m68k-boot-q40"
+><title
+>Q40/Q60</title>
+<para
+>Η μόνη διαθέσιμη μέθοδος εγκατάστασης για Q40/Q60 είναι από το σκληρό δίσκο (δείτε <xref linkend="m68k-boot-hd"/>).<emphasis
+>Με άλλα λόγια το cdrom δεν είναι εκκινήσιμο.</emphasis
+>  </para>
+    </sect3>
+
+  </sect2>
+
+  <sect2 arch="m68k" id="m68k-boot-hd"
+><title
+>Εκκίνηση από Σκληρό Δίσκο</title>
+
+
+<!-- Start of file boot-installer/intro-hd.xml -->
+
+<para
+>Η εκκίνηση από ένα υπάρχον λειτουργικό σύστημα έιναι συχνά μια βολική μέθοδος. Για κάποια συστήματα είναι η μοναδική υποστηριζόμενη μέθοδος εγκατάστασης. </para
+><para
+>Για να ξεκινήσετε τον εγκαταστάτη από ένα σκληρό δίσκο, θα πρέπει να έχετε ήδη ολοκληρώσει το κατέβασμα και την τοποθέτηση των απαραίτητων αρχείων  στο <xref linkend="boot-drive-files"/>. </para>
+<!--   End of file boot-installer/intro-hd.xml -->
+
+<para
+>Τουλάχιστον έξι διαφορετικές ramdisk μπορούν να χρησιμοποιηθούν για εκκίνηση από το σκληρό δίσκο, τρεις διαφορετικοί τύποι κάθε ένας με κα χωρίς υποστήριξη για έναν πυρήνα 2.2.x (δείτε το <ulinkurl="&disturl;/main/installer-&architecture;/current/images/MANIFEST"
+>MANIFEST</ulink
+> για λεπτομέρειες). </para
+><para
+>Οι τρεις διαφορετικοί τύποι ramdisk είναι οι <filename
+>cdrom</filename
+>, <filename
+>hd-media</filename
+>, και <filename
+>nativehd</filename
+>. Αυτοί διαφέρουν μόνο στην πηγή τους για τα πακέτα της εγκατάστασης. Η <filename
+>cdrom</filename
+> ramdisk χρησιμοποιεί ένα cdrom για την απόκτηση των πακέτων του debian-installer. Η <filename
+>hd-media</filename
+> ramdisk χρησιμοποιεί το αρχείο μιας εικόνας iso ενός cdrom που βρίσκεται σε έναν σκληρό δίσκο. Τέλος, η <filename
+>nativehd</filename
+> ramdisk χρησιμοποιεί το δίκτυο για την εγκατάσταση των πακέτων. </para>
+
+<itemizedlist>
+	<listitem
+><para
+><xref linkend="m68k-boothd-amiga"/></para
+></listitem>
+	<listitem
+><para
+><xref linkend="m68k-boothd-atari"/></para
+></listitem>
+	<listitem
+><para
+><xref linkend="m68k-boothd-mac"/></para
+></listitem>
+	<listitem
+><para
+><xref linkend="m68k-boothd-q40"/></para
+></listitem>
+</itemizedlist>
+
+
+    <sect3 arch="m68k" id="m68k-boothd-amiga"
+><title
+>Εκκίνηση από το AmigaOS</title>
+<para
+>Ευρισκόμενοι στο <command
+>Workbench</command
+>, ξεκινήστε τη διαδικασία της εγκατάστασης του Linux με διπλό κλικ στο εικονίδιο <guiicon
+>StartInstall</guiicon
+> στον κατάλογο  <filename
+>debian</filename
+>. </para
+><para
+>Ίσως να πρέπει να πατήσετε το &enterkey; μετά την εμφάνιση σε ένα παράθυρο πληροφορίας αποσφαλμάτωσης από το πρόγραμμα του εγκαταστάτη στην Amiga. Μετά από αυτό η οθόνη θα γίνει γκρι, και θα υπάρξει μια καθυστέρηση μερικώνδευτερολέπτων. Στη συνέχεια θα εμφανιστεί μια μαύρη οθόνη με άσπρο κείμενο που εμφανίζει κάθε είδους πληροφορία αποσφαλμάτωσης από την εκκίνηση του πυρήνα. Τα μηνύματα αυτά πιθανόν να τρέχουν πολυ γρήγορα για να τα διαβάσετε αλλά αυτό είναι εντάξει. Μετά από ένα-δύο δευτερόλεπτα, το πρόγραμμα εγκατάστασης θα ξεκινήσει αυτόματα οπότε μπορείτε να συνεχίσετε παρακάτω στο  <xref linkend="d-i-intro"/>. </para>
+    </sect3>
+
+
+    <sect3 arch="m68k" id="m68k-boothd-atari"
+><title
+>Ξεκινώντας από το Atari TOS</title>
+<para
+>Στο περιβάλλον εργασίας GEM, ξεκινήστε τη διαδικασία εγκατάστασης του Linux με διπλό-κλικ στο εικονίδιο <guiicon
+>bootstra.prg</guiicon
+> στον κατάλογο <filename
+>debian</filename
+> και πληκτρολογώντας <guibutton
+>Ok</guibutton
+> στο πλαίσιο διαλόγου των επιλογών του προγράμματος. </para
+><para
+>Ίσως να πρέπει να πατήσετε το &enterkey; μετά την εμφάνιση σε ένα παράθυρο πληροφορίας αποσφαλμάτωσης από το πρόγραμμα του εγκαταστάτη στον Atari. Μετά από αυτό η οθόνη θα γίνει γκρι, και θα υπάρξει μια καθυστέρηση μερικώνδευτερολέπτων. Στη συνέχεια θα εμφανιστεί μια μαύρη οθόνη με άσπρο κείμενο που εμφανίζει κάθε είδους πληροφορία αποσφαλμάτωσης από την εκκίνηση του πυρήνα. Τα μηνύματα αυτά πιθανόν να τρέχουν πολυ γρήγορα για να τα διαβάσετε αλλά αυτό είναι εντάξει. Μετά από ένα-δύο δευτερόλεπτα, το πρόγραμμα εγκατάστασης θα ξεκινήσει αυτόματα οπότε μπορείτε να συνεχίσετε παρακάτω στο  <xref linkend="d-i-intro"/> </para>
+    </sect3>
+
+
+    <sect3 arch="m68k" id="m68k-boothd-mac"
+><title
+>Ξεκινώντας από το MacOS</title>
+<para
+>Πρέπει να διατηρήσετε το αρχικό Mac σύστημα και να εκκινήσετε από αυτό. Είναι <emphasis
+>ουσιώδες</emphasis
+> όταν ξεκινάτε το MacOS προετοιμάζοντας την εκκίνηση του φορτωτή Penguin linux, να κρατήσετε πατημένο το πλήκτρο <keycap
+>shift</keycap
+> ώστε να αποτρέψετε το φόρτωμα των επεκτάσεων του MacOS. Αν δεν χρησιμοποιήσετε το MacOS παρά μόνο για το φόρτωμα του linux, μπορείτε να πετύχετε το ίδιο αποτέλεσμα απομακρύνοντας όλες τις επεκτάσεις και ταπάνελ ρυθμίσεων από τον φάκελο Συστήματος του Mac. Διαφορετικά επεκτάσεις πιθανόν να εξακολουθούν να τρέχουν προκαλώντας έτσι απρόβλεπτα προβλήματα με τον τρέχοντα πυρήνα του linux. </para
+><para
+>Οι Mac απαιτούν τον φορτωτή εκκίνησης <command
+>Penguin</command
+>.  Αν δεν έχετε τα εργαλεία για το χειρισμό ενός αρχείου  <command
+>Stuffit</command
+>, το &penguin19.hfs; είναι μια εικόνα δίσκου hfs με αποσυμπιεσμένο τον φορτωτή <command
+>Penguin</command
+>. Η ενότητα <xref linkend="create-floppy"/> περιγράφει πώς μπορείτε νααντιγράψετε αυτή την εικόνα σε μια δισκέττα. </para
+><para
+>Ενώ είσαστε στο MacOS desktop, ξεκινήστε τη διαδικασία της εγκατάστασης του Linux με διπλό-κλικ στο εικονίδιο <guiicon
+>Penguin Prefs</guiicon
+> στον κατάλογο <filename
+>Penguin</filename
+>. Ο φορτωτής <command
+>Penguin</command
+> θα ξεκινήσει. Πηγαίνετε στο αντικείμενο <guimenuitem
+>Settings</guimenuitem
+> στο μενού <guimenu
+>File</guimenu
+>, και πατήστε το <guilabel
+>Kernel</guilabel
+> tab. Επιλέξτε τον πυρήνα (<filename
+>vmlinuz</filename
+>) και τις εικόνες ramdisk (<filename
+>initrd.gz</filename
+>) στον κατάλογο <filename
+>install</filename
+> πατώντας τα αντίστοιχα κουμπιά στην πάνω δεξιάγωνία και κινούμενοι ανάμεσα στους διαλόγους επιλογής αρχείων για να εντοπίσετε τα συγκεκριμένα αρχεία.  </para
+><para
+>Για να θέσετε τις παραμέτρους εκκίνησης στο Penguin, επιλέξτε <guimenu
+>File</guimenu
+> -&gt; <guimenuitem
+>Settings...</guimenuitem
+>, και μετά πηγαίνετε στο <guilabel
+>Options</guilabel
+> tab. Οι παράμετροι εκκίνησης μπορούν να τυπωθούν στην περιοχή εισόδου κειμένου. Αν θέλετε να χρησιμοποιείτε μόνιμα αυτές τις ρυθμίσεις επιλέξτε <guimenu
+>File</guimenu
+> -&gt; <guΚλείστε το διάλογο <guilabel
+>Settings</guilabel
+>dialog, σώστε τις ρυθμίσεις και ξεκινήστε την διαδικασία εκκίνησηςχρησιμοποιώντας το αντικείμενο <guimenuitem
+>Boot Now</guimenuitem
+> στομενού <guimenu
+>File</guimenu
+>.imenuitem
+>Save Settings as Default</guimenuitem
+>. </para
+><para
+>Κλείστε το διάλογο <guilabel
+>Settings</guilabel
+> dialog, αποθηκεύστε τις ρυθμίσεις και ξεκινήστε την διαδικασία εκκίνησηςχρησιμοποιώντας το αντικείμενο <guimenuitem
+>Boot Now</guimenuitem
+> στο μενού <guimenu
+>File</guimenu
+>. </para
+><para
+>Ο φορτωτής <command
+>Penguin</command
+> θα εμφανίσει κάποιες πληροφορίες αποσφαλμάτωσης σε ένα παράθυρο. Μετά από αυτό η οθόνη θα γίνει γκρι, και θα υπάρξει μια καθυστέρηση μερικών δευτερολέπτων. Στη συνέχεια θα εμφανιστεί μια μαύρη οθόνη με άσπρο κείμενο που εμφανίζει κάθε είδους πληροφορία αποσφαλμάτωσης από την εκκίνηση του πυρήνα. Τα μηνύματα αυτά πιθανόν να τρέχουν πολυ γρήγορα για να τα διαβάσετε αλλά αυτό είναι εντάξει. Μετά από ένα-δύο δευτερόλεπτα, το πρόγραμμα εγκατάστασης θα ξεκινήσει αυτόματα οπότε μπορείτε να συνεχίσετε παρακάτω στο <xref linkend="d-i-intro"/> </para>
+
+    </sect3>
+
+    <sect3 arch="m68k" id="m68k-boothd-q40"
+><title
+>Ξεκινώντας από το Q40/Q60</title>
+
+<para
+>ΔΙΟΡΘΩΣΕ ΜΕ </para
+><para
+>Το πρόγραμμα εγκατάστασης θα ξεκινήσει αυτόματα οπότε μπορείτε να προχωρήσετε παρακάτω στο <xref linkend="d-i-intro"/>. </para>
+
+    </sect3>
+  </sect2>
+
+
+  <sect2 arch="m68k" id="m68k-boot-cdrom"
+><title
+>Εκκίνηση από CD-ROM</title>
+<para
+>Προς το παρόν η μόνη &arch-title; υπο-αρχιτεκτονική που υποστηρίζει εκκίνηση από CD-ROM είναι η BVME6000.  </para>
+
+
+<!-- Start of file boot-installer/intro-cd.xml -->
+
+<para
+>Ο ευκολότερος τρόπος για τους περισσότερους χρήστες είναι να χρησιμοποιήσουν ένα σετ με τα CD του Debian. Αν έχετε ένα τέτοιο σετ και αν το μηχάνημά σας υποστηρίζει απευθείας εκκίνηση από το CD τότε είστε εντάξει! Απλά <phrase arch="i386"
+>ρυθμίστε το σύστημά σας για εκκίνηση από το CD όπως περιγράφεται στην ενότητα <xref linkend="boot-dev-select"/>,</phrase
+> βάλτε το CD σας στη συσκευή, επανεκκινήστε και προχωρήστε στο επόμενο κεφάλαιο. </para
+><para
+>Σημειώστε ότι κάποιες συσκευές CD πιθανόν να απαιτούν συγκεκριμένους οδηγούς και έτσι να μην είναι προσβάσιμες στα πρώτα στάδια της εγκατάστασης. Αν συμβεί λοιπόν ο συνηθισμένος τρόπος εκκίνησης από το CD να μην δουλέψει για το σύστημά σας,ξαναεπισκεφθείτε το κεφάλαιο αυτό και διαβάστε για πιθανούς εναλλακτικούς πυρήνες και μεθόδους εγκατάστασης που πιθανόν να δουλέψουν για σας.  </para
+><para
+>Ακόμα και αν δεν μπορείτε να εκκινήσετε από το CD-ROM, έχετε τη δυνατότητα ίσως να εγκαταστήσετε μέρη του Debian συστήματος και οποιοαδήποτε πακέτα θέλετε από το CD-ROM. Απλά εκκινήστε χρησιμοποιώντας ένα άλλο μέσο, όπως δισκέττες. Όταν έρθει η στιγμή για να εγκαταστήσετε το λειτουργικό σύστημα, το βασικό σύστημα και οποιαδήποτε επιπλέον πακέτα υποδείξτε στο σύστημα εγκατάστασης να χρησιμοποιήσει τον οδηγό του CD-ROM.  </para
+><para
+>Αν έχετε προβλήματα κατά την εκκίνηση, δείτε το <xref linkend="boot-troubleshooting"/>. </para>
+<!--   End of file boot-installer/intro-cd.xml -->
+
+  </sect2>
+
+
+  <sect2 arch="m68k" id="boot-tftp"
+><title
+>Εκκίνηση μέσω TFTP</title>
+
+
+<!-- Start of file boot-installer/intro-net.xml -->
+
+<para
+>H εκκίνηση από το δίκτυο απαιτεί ότι διαθέτε μια δικτυακή σύνδεση και έναν δικτυακό TFTP server εκκίνησης (DHCP, RARP, ή BOOTP). </para
+><para arch="hppa"
+>Παλιότερα συστήματα όπως τα 715 πιθανόν να απαιτούν τη χρήση ενός RBOOT αντί ενός  BOOTP server. </para
+><para
+>Η μέθοδος εγκατάστασης με υποστήριξη δικτυακής εκκίνησης περιγράφεται στην ενότητα <xref linkend="install-tftp"/>. </para>
+<!--   End of file boot-installer/intro-net.xml -->
+
+<para
+>Μετά την εκκίνηση των συστημάτων VMEbus θα βρεθείτε μπροστά στο προτρεπτικό <prompt
+>Boot:</prompt
+> του LILO. Εκεί πληκτρολογήσετε ένα από τα ακόλουθα για να εκκινήσετε το Linux και να αρχίσετε την κανονική διαδικασία εγκατάστασης τουλογισμικού του Debian χρησιμοποιώντας προσομοίωση τερματικού vt102: <itemizedlist>
+<listitem
+><para
+>πληκτρολογήστε <screen
+>i6000 &enterkey;</screen
+> για εγκατάσταση σε ένα BVME4000/6000 </para
+></listitem>
+<listitem
+><para
+>πληκτρολογήστε <screen
+>i162 &enterkey;</screen
+> για εγκατάσταση σε ένα MVME162 </para
+></listitem>
+<listitem
+><para
+>πληκτρολογήστε <screen
+>i167 &enterkey;</screen
+> για εγκατάσταση σε ένα  MVME166/167 </para
+></listitem>
+    </itemizedlist>
+
+</para
+><para
+>Μπορείτε επιπρόσθετα να παραθέσετε τη συμβολοσειρά <screen
+>TERM=vt100</screen
+> για χρήση προσομοίωσης τερματικού vt100, πχ., <screen
+>i6000 TERM=vt100 &enterkey;</screen
+>. </para>
+  </sect2>
+
+
+  <sect2 arch="m68k" id="boot-from-floppies">
+  <title
+>Εκκίνηση από Δισκέττες</title>
+<para
+>Για τις περισσότερες &arch-title; υπο-αρχιτεκτονικές, η εκκίνηση από ένα τοπικό σύστημα αρχείων είναι η προτεινόμενη μέθοδος. </para
+><para
+>Αυτή τη στιγμή εκκίνηση από δισκέττα υποστηρίζεται μόνο για Atari και VME (με έναν οδηγό  SCSI για δισκέττα στην VME).  </para>
+ </sect2>
+
+<!--   End of file boot-installer/m68k.xml -->
+
+<!-- Start of file boot-installer/mips.xml -->
+
+
+  <sect2 arch="mips" id="boot-tftp"
+><title
+>Εκκίνηση μέσω TFTP</title>
+
+   <sect3>
+   <title
+>SGI Indys TFTP Booting</title>
+<para
+>After entering the command monitor use <informalexample
+><screen
+>
+bootp():
+</screen
+></informalexample
+> on SGI Indys to boot linux and to begin installation of the Debian Software. In order to make this work you may have to unset the <envar
+>netaddr</envar
+> environment variable. Type <informalexample
+><screen
+>
+unsetenv netaddr
+</screen
+></informalexample
+> in the command monitor to do this. </para>
+  </sect3>
+
+   <sect3>
+   <title
+>Broadcom BCM91250A TFTP Booting</title>
+<para
+>On the Broadcom BCM91250A evaluation board, you have to load the SiByl boot loader via TFTP which will then load and start the Debian installer. In most cases, you will first obtain an IP address via DHCP but it is also possible to configure a static address. In order to use DHCP, you can enter the following command on the CFE prompt: <informalexample
+><screen
+>
+ifconfig eth0 -auto
+</screen
+></informalexample
+> Once you have obtained an IP address, you can load SiByl with the following command: <informalexample
+><screen
+>
+boot 192.168.1.1:/boot/sibyl
+</screen
+></informalexample
+> You need to substitute the IP address listed in this example with either the name or the IP address of your TFTP server. Once you issue this command, the installer will be loaded automatically. </para>
+</sect3>
+  </sect2>
+
+  <sect2 arch="mips"
+><title
+>Boot Parameters</title>
+
+   <sect3>
+   <title
+>SGI Indys TFTP Booting</title>
+<para
+>On SGI Indys you can append boot parameters to the <command
+>bootp():</command
+> command in the command monitor. </para
+><para
+>Following the <command
+>bootp():</command
+> command you can give the path and name of the file to boot if you did not give an explicit name via your bootp/dhcp server. Example: <informalexample
+><screen
+>
+bootp():/boot/tftpboot.img
+</screen
+></informalexample
+> Further kernel parameters can be passed via <command
+>append</command
+>: <informalexample
+><screen
+>bootp(): append="root=/dev/sda1"
+</screen
+></informalexample>
+
+</para>
+  </sect3>
+
+   <sect3>
+   <title
+>Broadcom BCM91250A TFTP Booting</title>
+<para
+>You cannot pass any boot parameters directly from the CFE prompt. Instead, you have to edit the <filename
+>/boot/sibyl.conf</filename
+> file on the TFTP server and add your parameters to the <replaceable
+>extra_args</replaceable
+> variable. </para>
+  </sect3>
+
+  </sect2>
+<!--   End of file boot-installer/mips.xml -->
+<!-- &boot-installer-mipsel.xml; -->
+
+<!-- Start of file boot-installer/s390.xml -->
+
+  <sect2 arch="s390"
+><title
+>Περιορισμοί του s390</title>
+<para
+>In order to run the installation system a working network setup and ssh session is needed on S/390. </para
+><para
+>The booting process starts with a network setup that prompts you for several network parameters. If the setup is successful, you will login to the system by starting a ssh session which will launch the standard installation system. </para>
+  </sect2>
+
+
+  <sect2 arch="s390"
+><title
+>s390 Boot Parameters</title>
+<para
+>On S/390 you can append boot parameters in the parm file. This file can either be in ASCII or EBCDIC format. Please read <ulink url="&url-s390-devices;"
+>Device Drivers and Installation Commands</ulink
+> for more information about S/390-specific boot parameters. </para>
+  </sect2>
+<!--   End of file boot-installer/s390.xml -->
+
+<!-- Start of file boot-installer/powerpc.xml -->
+
+  <sect2 arch="powerpc" id="boot-cd"
+><title
+>Εκκίνηση από CD-ROM</title>
+
+
+<!-- Start of file boot-installer/intro-cd.xml -->
+
+<para
+>Ο ευκολότερος τρόπος για τους περισσότερους χρήστες είναι να χρησιμοποιήσουν ένα σετ με τα CD του Debian. Αν έχετε ένα τέτοιο σετ και αν το μηχάνημά σας υποστηρίζει απευθείας εκκίνηση από το CD τότε είστε εντάξει! Απλά <phrase arch="i386"
+>ρυθμίστε το σύστημά σας για εκκίνηση από το CD όπως περιγράφεται στην ενότητα <xref linkend="boot-dev-select"/>,</phrase
+> βάλτε το CD σας στη συσκευή, επανεκκινήστε και προχωρήστε στο επόμενο κεφάλαιο. </para
+><para
+>Σημειώστε ότι κάποιες συσκευές CD πιθανόν να απαιτούν συγκεκριμένους οδηγούς και έτσι να μην είναι προσβάσιμες στα πρώτα στάδια της εγκατάστασης. Αν συμβεί λοιπόν ο συνηθισμένος τρόπος εκκίνησης από το CD να μην δουλέψει για το σύστημά σας,ξαναεπισκεφθείτε το κεφάλαιο αυτό και διαβάστε για πιθανούς εναλλακτικούς πυρήνες και μεθόδους εγκατάστασης που πιθανόν να δουλέψουν για σας.  </para
+><para
+>Ακόμα και αν δεν μπορείτε να εκκινήσετε από το CD-ROM, έχετε τη δυνατότητα ίσως να εγκαταστήσετε μέρη του Debian συστήματος και οποιοαδήποτε πακέτα θέλετε από το CD-ROM. Απλά εκκινήστε χρησιμοποιώντας ένα άλλο μέσο, όπως δισκέττες. Όταν έρθει η στιγμή για να εγκαταστήσετε το λειτουργικό σύστημα, το βασικό σύστημα και οποιαδήποτε επιπλέον πακέτα υποδείξτε στο σύστημα εγκατάστασης να χρησιμοποιήσει τον οδηγό του CD-ROM.  </para
+><para
+>Αν έχετε προβλήματα κατά την εκκίνηση, δείτε το <xref linkend="boot-troubleshooting"/>. </para>
+<!--   End of file boot-installer/intro-cd.xml -->
+
+<para
+>Προς το παρόν, οι μόνες υπο-αρχιτεκτονικές &arch-title; που υποστηρίζουν εκκίνηση από CD-ROM είναι οι  PReP και New World PowerMac. Σε έναν PowerMac, κρατήστε κάτω το πλήκτρο <keycap
+>c</keycap
+> , ή αλλιώς τον συνδυασμό των πλήκτρων<keycap
+>Command</keycap
+>, <keycap
+>Option</keycap
+>, <keycap
+>Shift</keycap
+>, και <keycap
+>Delete</keycap
+>κατά την εκκίνηση του μηχανήματος για να ξεκινήσετε από το CD-ROM. </para
+><para
+>Οι OldWorld PowerMac δεν θα ξεκινήσουν από ένα Debian CD, γιατί αυτοί οι υπολογιστές εξαρτώνται από την παρουσία ενός MacOS ROM οδηγού για το CD στο CD και για τον οποίον δεν υπάρχει προς το παρόν διαθέσιμη μια ελεύθερη έκδοση. Όλα τασυστήματα όμως OldWorld έχουν συσκευές δισκέττας οπότε χρησιμοποιήστε τον οδηγό της δισκέττας για την εκκίνηση του εγκαταστάτη και στη συνέχεια κατευθύνετε τον εγκαταστάτη στο CD για την λήψη των απαραίτητων αρχείων. </para
+><para
+>Αν το σύστημά σας δεν ξεκινά κατευθείαν από το CD-ROM, μπορείτε ακόμα να χρησιμοποιήσετε το CD-ROM για να εγκαταστήσετε το σύστημα. Σε συστήματα NewWorld, μπορείτε να χρησιμοποιήσετε μια εντολή του OpenFirmware για να εκκινήσετε από το  CD-ROM χειροκίνητα. Ακολουθήστε τις οδηγίες στο <xref linkend="boot-newworld"/> για εκκίνηση από τον σκληρό δίσκο, με τη διαφορά ότι πρέπει να δώσετε στην προτροπή του OpenFirmware τη διαδρομή για το <command
+>yaboot</command
+> στo CD, για παράδειγμα: <informalexample
+><screen
+>0 &gt; boot cd:,\install\yaboot
+</screen
+></informalexample>
+
+</para>
+  </sect2>
+
+  <sect2 arch="powerpc" id="install-drive">
+  <title
+>Εκκίνηση από τον σκληρό δίσκο</title>
+
+
+<!-- Start of file boot-installer/intro-hd.xml -->
+
+<para
+>Η εκκίνηση από ένα υπάρχον λειτουργικό σύστημα έιναι συχνά μια βολική μέθοδος. Για κάποια συστήματα είναι η μοναδική υποστηριζόμενη μέθοδος εγκατάστασης. </para
+><para
+>Για να ξεκινήσετε τον εγκαταστάτη από ένα σκληρό δίσκο, θα πρέπει να έχετε ήδη ολοκληρώσει το κατέβασμα και την τοποθέτηση των απαραίτητων αρχείων  στο <xref linkend="boot-drive-files"/>. </para>
+<!--   End of file boot-installer/intro-hd.xml -->
+
+  <sect3
+><title
+>Εκκίνηση της CHRP από το OpenFirmware</title>
+
+<para>
+
+  <emphasis
+>Δεν έχει γραφτεί ακόμη.</emphasis>
+
+</para>
+   </sect3>
+
+   <sect3
+><title
+>Εκκίνηση OldWorld PowerMac από το MacOS</title>
+<para
+>Αν ρυθμίσετε το BootX όπως στην ενότητα <xref linkend="files-oldworld"/>, μπορείτε να το χρησιμοποιήσετε για να εκκινήσετε το σύστημα εγκαταστάσης. Κάντε διπλό κλικ στο εικονίδιο της εφαρμογής <guiicon
+>BootX</guiicon
+>. Πατήστε το κουμπί <guibutton
+>Options</guibutton
+> και επιλέξτε <guilabel
+>Use Specified RAM Disk</guilabel
+>. Αυτό θα σας δώσει την ευκαιρία να διαλέξετε το αρχείο  <filename
+>ramdisk.image.gz</filename
+>. 'ισως χρειαστεί να τσεκάρετε την επιλογή <guilabel
+>No Video Driver</guilabel
+>, ανάλογα με το hardware του συστήματός σας. Πατήστε στην συνέχεια το κουμπί <guibutton
+>Linux</guibutton
+> για να σταματήσετε το MacOS και ξεκινήστε τον εγκαταστάτη. </para>
+   </sect3>
+
+
+  <sect3 id="boot-newworld">
+  <title
+>Εκκίνηση ενός NewWorld Mac από το OpenFirmware</title>
+<para
+>Θα έχετε ήδη τοποθετήσει τα αρχεία <filename
+>vmlinux</filename
+>, <filename
+>initrd.gz</filename
+>, <filename
+>yaboot</filename
+>, και <filename
+>yaboot.conf</filename
+> στη ρίζα της HFS διαμέρισής σας σύμφωνα με την  ενότητα <xref linkend="files-newworld"/>. Ξαναξεκινήστε τιον υπολογιστή, και αμέσως (κατά τη διάρκεια της επανεκκίνησης)κρατήστε ταυτόχρονα κάτω τα πλήκτρα <keycap
+>Option</keycap
+>, <keycap
+>Command (cloverleaf/Apple)</keycap
+>,<keycap
+>o</keycap
+>, και <keycap
+>f</keycap
+>. Μετά από λίγα δευτερόλεπτα θα δείτε μπροστά σας το προτρεπτικό του Open Firmware. Εκεί, πληκτρολογήστε <informalexample
+><screen>
+0 &gt; boot hd:<replaceable
+>x</replaceable
+>,yaboot
+</screen
+></informalexample
+> αντικαθιστώντας το <replaceable
+>x</replaceable
+> με τον αριθμό της HFS διαμέρισης όπου βρίσκονται τα αρχεία του πυρήνα και του yaboot, και στη συνέχεια πατήστε το &enterkey;. Σε μερικά μηχανήματα ίσως χρειαστεί να χρησιμοποιήσετε <userinput
+>ide0:</userinput
+> αντί για <userinput
+>hd:</userinput
+>. Σε μερικά ακόμα δευτερόλεπτα θα δείτε το προτρεπτικό του yaboot.<informalexample
+><screen>
+boot:
+</screen
+></informalexample
+> Στο προτρεπτικό του yaboot <prompt
+>boot:</prompt
+>, πληκτρολογήστε είτε <userinput
+>install</userinput
+> ή <userinput
+>install video=ofonly</userinput
+> και στη συνέχεια &enterkey;. Το όρισμα<userinput
+>video=ofonly</userinput
+> είναι για μέγιστη συμβατότητα. Mπορείτε να τη δοκιμάσετε σε περίπτωση που η επιλογή<userinput
+>install</userinput
+> δεν δουλέψει. Το πρόγραμμα εγκατάστασης του Debian θα πρέπει τότε να ξεκινήσει. </para>
+   </sect3>
+  </sect2>
+
+  <sect2 arch="powerpc" id="usb-boot">
+  <title
+>Εκκίνηση από USB stick μνήμης</title>
+<para
+>Currently, NewWorld PowerMac systems are known to support USB booting. </para>
+
+<para
+>Make sure you have prepared everything from <xref linkend="boot-usb-files"/>. To boot a Macintosh system from a USB stick, you will need to use the Open Firmware prompt, since Open Firmware does not search USB storage devices by default. To get to the prompt, hold down <keycombo
+><keycap
+>Command</keycap
+> <keycap
+>Option</keycap
+> <keycap
+>o</keycap
+> <keycap
+>f</keycap
+></keycombo
+> all together while booting (see <xref linkend="invoking-openfirmware"/>). </para
+><para
+>You will need to work out where the USB storage device appears in the device tree, since at the moment <command
+>ofpath</command
+> cannot work that out automatically. Type <userinput
+>dev / ls</userinput
+> and <userinput
+>devalias</userinput
+> at the Open Firmware prompt to get a list of all known devices and device aliases. On the author's system with various types of USB stick, paths such as <filename
+>usb0/disk</filename
+>, <filename
+>usb0/hub/disk</filename
+>, <filename
+>/pci@f2000000/usb@1b,1/disk@1</filename
+>, and <filename
+>/pci@f2000000/usb@1b,1/hub@1/disk@1</filename
+> work. </para
+><para
+>Having worked out the device path, use a command like this to boot the installer: <informalexample
+><screen
+>
+boot <replaceable>usb0/disk</replaceable>:<replaceable>2</replaceable>,\\:tbxi
+</screen
+></informalexample
+> The <replaceable
+>2</replaceable
+> matches the Apple_HFS or Apple_Bootstrap partition onto which you copied the boot image earlier, and the <userinput
+>,\\:tbxi</userinput
+> part instructs Open Firmware to boot from the file with an HFS file type of "tbxi" (i.e. <command
+>yaboot</command
+>) in the directory previously blessed with <command
+>hattrib -b</command
+>. </para
+><para
+>The system should now boot up, and you should be presented with the <prompt
+>boot:</prompt
+> prompt. Here you can enter optional boot arguments, or just hit &enterkey;. </para
+><warning
+><para
+>This boot method is new, and may be difficult to get to work on some NewWorld systems. If you have problems, please file an installation report, as explained in <xref linkend="submit-bug"/>. </para
+></warning>
+  </sect2>
+
+  <sect2 arch="powerpc" id="boot-tftp"
+><title
+>Εκκίνηση μέσω TFTP</title>
+
+
+<!-- Start of file boot-installer/intro-net.xml -->
+
+<para
+>H εκκίνηση από το δίκτυο απαιτεί ότι διαθέτε μια δικτυακή σύνδεση και έναν δικτυακό TFTP server εκκίνησης (DHCP, RARP, ή BOOTP). </para
+><para arch="hppa"
+>Παλιότερα συστήματα όπως τα 715 πιθανόν να απαιτούν τη χρήση ενός RBOOT αντί ενός  BOOTP server. </para
+><para
+>Η μέθοδος εγκατάστασης με υποστήριξη δικτυακής εκκίνησης περιγράφεται στην ενότητα <xref linkend="install-tftp"/>. </para>
+<!--   End of file boot-installer/intro-net.xml -->
+
+<para
+>Προς το παρόν, μόνο PReP και New World PowerMac συστήματα υποστηρίζουν εκκίνηση από το δίκτυο.  </para
+><para
+>Σε μηχανήματα με Open Firmware, όπως NewWorld Power Mac, μπείτε στην οθόνη εκκίνησης (δείτε το <xref linkend="invoking-openfirmware"/>) και χρησιμοποιήστε την εντολή <command
+>boot enet:0</command
+>.  Συστήματα PReP και CHRP ίσως να έχουν διαφορετικούς τρόπους χειρισμού του δικτύου. Σε ένα μηχάνημα PReP, θα μπορούσατε να δοκιμάσετε <userinput
+>boot <replaceable
+>server_ipaddr</replaceable
+>,<replaceable
+>file</replaceable
+>,<replaceable
+>client_ipaddr</replaceable
+></userinput
+>. </para>
+  </sect2>
+
+
+  <sect2 arch="powerpc">
+  <title
+>Εκκίνηση από Δισκέττες</title>
+<para
+>Εκκίνηση από δισκέττες υποστηρίζεται από την αρχιτεκτονική &arch-title;, αν και γενικά είναι εφαρμόσιμη στα συστήματα OldWorld.Συστήματα NewWorld δεν είναι εφοδιασμένα με συσκευές δισκέττας και προσαρτώμενες USB συσκευές δισκέττας δεν υποστηρίζονται για εκκίνηση. </para
+><para
+>Θα έχετε ήδη κατεβάσει τις εικόνες των δισκεττών που χρειάζεστε και δημιουργήσει απο αυτές τις αντίστοιχες δισκέττες στο <xreflinkend="create-floppy"/>. </para
+><para
+>Για εκκίνηση από την εικόνα δισκέττας <filename
+>boot-floppy-hfs.img</filename
+>, βάλτε τη δισκέττα στον οδηγό μετά το σβήσιμο του μηχανήματος και πριν πατήσετε τον διακόπτη για την επανεκκίνηση. </para
+><note
+><para
+>Για όσους δεν είναι εξοικειωμένοι με τον τρόπο λειτουργίας μιας δισκέττας σε Macintosh: μια δισκέττα που μπαίνει στο μηχάνημα πριν το ξεκίνημά του θα είναι η πρώτη προτεραιότητα για την εκκίνηση του συστήματος. Μια δισκέττα χωρίς έγκυρο σύστημα εκκίνησης θα απορριφθεί και στη συνέχεια το μηχάνημα θα ελέγξει για εκκινήσιμες διαμερίσεις στον σκληρό δίσκο. </para
+></note
+><para
+>Μετά την εκκίνηση, θα σας ζητηθεί η δισκέττα <filename
+>root.bin</filename
+>. Βάλετε τη δισκέττα με το ριζικό σύστημα και πατήστε &enterkey;. Το πρόγραμμα της εγκαταστάσης θα ξεκινήσει μετά το φόρτωμα του ριζικού συστήματος στη μνήμη. </para>
+  </sect2>
+
+
+  <sect2 arch="powerpc"
+><title
+>Παράμετροι Εκκίνησης για PowerPC</title>
+<para
+>Πολλές παλιότερες οθόνες Apple χρησιμοποιούσαν την ανάλυση 640x480 67Hz. Αν η εικόνα εμφανίζεται παραμορφωμένη σε μια τέτοια παλιότερη οθόνη Apple, προσπαθήστε να προσθέσετε το όρισμα εκκίνησης <userinput
+>video=atyfb:vmode:6</userinput
+> ,που θα επιλέξει αυτή την κατάσταση για τις περισσότερες κάρτες οθόνης Mach64 και Rage. Για κάρτες  Rage 128, αυτό αλλάζεισε <userinput
+>video=aty128fb:vmode:6</userinput
+> . </para>
+  </sect2>
+<!--   End of file boot-installer/powerpc.xml -->
+
+<!-- Start of file boot-installer/sparc.xml -->
+
+  <sect2 arch="sparc" id="boot-tftp"
+><title
+>Εκκίνηση μέσω TFTP</title>
+
+
+<!-- Start of file boot-installer/intro-net.xml -->
+
+<para
+>H εκκίνηση από το δίκτυο απαιτεί ότι διαθέτε μια δικτυακή σύνδεση και έναν δικτυακό TFTP server εκκίνησης (DHCP, RARP, ή BOOTP). </para
+><para arch="hppa"
+>Παλιότερα συστήματα όπως τα 715 πιθανόν να απαιτούν τη χρήση ενός RBOOT αντί ενός  BOOTP server. </para
+><para
+>Η μέθοδος εγκατάστασης με υποστήριξη δικτυακής εκκίνησης περιγράφεται στην ενότητα <xref linkend="install-tftp"/>. </para>
+<!--   End of file boot-installer/intro-net.xml -->
+
+<para
+>On machines with OpenBoot, simply enter the boot monitor on the machine which is being installed (see <xref linkend="invoking-openboot"/>). Use the command <userinput
+>boot net</userinput
+> to boot from a TFTP and RARP server, or try <userinput
+>boot net:bootp</userinput
+> or <userinput
+>boot net:dhcp</userinput
+> to boot from a TFTP and BOOTP or DHCP server. Some older OpenBoot revisions require using the device name, such as <userinput
+>boot le()</userinput
+>; these probably don't support BOOTP nor DHCP. </para>
+  </sect2>
+
+
+  <sect2 arch="sparc"
+><title
+>Εκκίνηση από CD-ROM</title>
+
+
+<!-- Start of file boot-installer/intro-cd.xml -->
+
+<para
+>Ο ευκολότερος τρόπος για τους περισσότερους χρήστες είναι να χρησιμοποιήσουν ένα σετ με τα CD του Debian. Αν έχετε ένα τέτοιο σετ και αν το μηχάνημά σας υποστηρίζει απευθείας εκκίνηση από το CD τότε είστε εντάξει! Απλά <phrase arch="i386"
+>ρυθμίστε το σύστημά σας για εκκίνηση από το CD όπως περιγράφεται στην ενότητα <xref linkend="boot-dev-select"/>,</phrase
+> βάλτε το CD σας στη συσκευή, επανεκκινήστε και προχωρήστε στο επόμενο κεφάλαιο. </para
+><para
+>Σημειώστε ότι κάποιες συσκευές CD πιθανόν να απαιτούν συγκεκριμένους οδηγούς και έτσι να μην είναι προσβάσιμες στα πρώτα στάδια της εγκατάστασης. Αν συμβεί λοιπόν ο συνηθισμένος τρόπος εκκίνησης από το CD να μην δουλέψει για το σύστημά σας,ξαναεπισκεφθείτε το κεφάλαιο αυτό και διαβάστε για πιθανούς εναλλακτικούς πυρήνες και μεθόδους εγκατάστασης που πιθανόν να δουλέψουν για σας.  </para
+><para
+>Ακόμα και αν δεν μπορείτε να εκκινήσετε από το CD-ROM, έχετε τη δυνατότητα ίσως να εγκαταστήσετε μέρη του Debian συστήματος και οποιοαδήποτε πακέτα θέλετε από το CD-ROM. Απλά εκκινήστε χρησιμοποιώντας ένα άλλο μέσο, όπως δισκέττες. Όταν έρθει η στιγμή για να εγκαταστήσετε το λειτουργικό σύστημα, το βασικό σύστημα και οποιαδήποτε επιπλέον πακέτα υποδείξτε στο σύστημα εγκατάστασης να χρησιμοποιήσει τον οδηγό του CD-ROM.  </para
+><para
+>Αν έχετε προβλήματα κατά την εκκίνηση, δείτε το <xref linkend="boot-troubleshooting"/>. </para>
+<!--   End of file boot-installer/intro-cd.xml -->
+
+<para
+>Most OpenBoot versions support the <userinput
+>boot cdrom</userinput
+> command which is simply an alias to boot from the SCSI device on ID 6 (or the secondary master for IDE based systems). You may have to use the actual device name for older OpenBoot versions that don't support this special command. Note that some problems have been reported on Sun4m (e.g., Sparc 10s and Sparc 20s) systems booting from CD-ROM. </para>
+  </sect2>
+
+
+  <sect2 arch="sparc" condition="supports-floppy-boot">
+  <title
+>Εκκίνηση από Δισκέττες</title>
+<para
+>To boot from floppy on a Sparc, use <informalexample
+><screen
+>
+Stop-A -&gt; OpenBoot: "boot floppy"
+</screen
+></informalexample
+> Be warned that the newer Sun4u (ultra) architecture does not support floppy booting. A typical error message is <computeroutput
+>Bad magic number in disk label - Can't open disk label package</computeroutput
+>. Furthermore, a number of Sun4c models (such as the IPX) do not support the compressed images found on the disks, so also are not supported. </para
+><para
+>Several Sparcs (e.g. Ultra 10) have an OBP bug that prevents them from booting (instead of not supporting booting at all). The appropriate OBP update can be downloaded as product ID 106121 from <ulink url="http://sunsolve.sun.com"
+></ulink
+>. </para
+><para
+>If you are booting from the floppy, and you see messages such as <informalexample
+><screen
+>
+Fatal error: Cannot read partition
+Illegal or malformed device name
+</screen
+></informalexample
+> then it is possible that floppy booting is simply not supported on your machine. </para>
+  </sect2>
+
+  <sect2 arch="sparc"
+><title
+>IDPROM Messages</title>
+<para
+>If you cannot boot because you get messages about a problem with ``IDPROM'', then it's possible that your NVRAM battery, which holds configuration information for you firmware, has run out. See the <ulink url="&url-sun-nvram-faq;"
+>Sun NVRAM FAQ</ulink
+> for more information. </para>
+  </sect2>
+<!--   End of file boot-installer/sparc.xml -->
 
  </sect1>
 
-&boot-installer-parameters.xml;
-&boot-installer-trouble.xml;
+
+<!-- Start of file boot-installer/parameters.xml -->
+
+ <sect1 id="boot-parms"
+><title
+>Boot Parameters</title>
+<para
+>Boot parameters are Linux kernel parameters which are generally used to make sure that peripherals are dealt with properly. For the most part, the kernel can auto-detect information about your peripherals. However, in some cases you'll have to help the kernel a bit. </para
+><para
+>If this is the first time you're booting the system, try the default boot parameters (i.e., don't try setting parameters) and see if it works correctly. It probably will. If not, you can reboot later and look for any special parameters that inform the system about your hardware. </para
+><para
+>Information on many boot parameters can be found in the <ulink url="http://www.tldp.org/HOWTO/BootPrompt-HOWTO.html"
+> Linux BootPrompt HOWTO</ulink
+>, including tips for obscure hardware. This section contains only a sketch of the most salient parameters. Some common gotchas are included below in <xref linkend="boot-troubleshooting"/>. </para
+><para
+>When the kernel boots, a message <informalexample
+><screen
+>
+Memory:<replaceable>avail</replaceable>k/<replaceable>total</replaceable>k available 
+</screen
+></informalexample
+> should be emitted early in the process. <replaceable
+>total</replaceable
+> should match the total amount of RAM, in kilobytes. If this doesn't match the actual amount of RAM you have installed, you need to use the <userinput
+>mem=<replaceable
+>ram</replaceable
+></userinput
+> parameter, where <replaceable
+>ram</replaceable
+> is set to the amount of memory, suffixed with ``k'' for kilobytes, or ``m'' for megabytes. For example, both <userinput
+>mem=65536k</userinput
+> and <userinput
+>mem=64m</userinput
+> mean 64MB of RAM. </para
+><para condition="supports-serial-console"
+>If you are booting with a serial console, generally the kernel will autodetect this<phrase arch="mipsel"
+> (although not on DECstations)</phrase
+>. If you have a videocard (framebuffer) and a keyboard also attached to the computer which you wish to boot via serial console, you may have to pass the <userinput
+>console=<replaceable
+>device</replaceable
+></userinput
+> argument to the kernel, where <replaceable
+>device</replaceable
+> is your serial device, which is usually something like <filename
+>ttyS0</filename
+>. </para
+><para arch="sparc"
+>For &arch-title; the serial devices are <filename
+>ttya</filename
+> or <filename
+>ttyb</filename
+>. Alternatively, set the <envar
+>input-device</envar
+> and <envar
+>output-device</envar
+> OpenPROM variables to <filename
+>ttya</filename
+>. </para>
+
+
+  <sect2 id="installer-args"
+><title
+>Debian Installer Parameters</title>
+<para
+>The installation system recognizes a few additional boot parameters<footnote
+> <para
+> Note that the kernel accepts a maximum of 8 command line options and 8 environment options (including any options added by default for the installer). If these numbers are exceeded, 2.4 kernels will drop any excess options and 2.6 kernels will panic. </para
+> </footnote
+> which may be useful. </para>
+
+<variablelist>
+<varlistentry>
+<term
+>debconf/priority</term>
+<listitem
+><para
+>This parameter sets the lowest priority of messages to be displayed. </para
+><para
+>The default installation uses <userinput
+>debconf/priority=high</userinput
+>. This means that both high and critical priority messages are shown, but medium and low priority messages are skipped. If problems are encountered, the installer adjusts the priority as needed. </para
+><para
+>If you add <userinput
+>debconf/priority=medium</userinput
+> as boot parameter, you will be shown the installation menu and gain more control over the installation. When <userinput
+>debconf/priority=low</userinput
+> is used, all messages are shown (this is equivalent to the <emphasis
+>expert</emphasis
+> boot method). With <userinput
+>debconf/priority=critical</userinput
+>, the installation system will display only critical messages and try to do the right thing without fuss. </para
+></listitem>
+</varlistentry>
+
+
+<varlistentry>
+<term
+>DEBIAN_FRONTEND</term>
+<listitem
+><para
+>This boot parameter controls the type of user interface used for the installer. The current possible parameter settings are: <itemizedlist
+> <listitem
+> <para
+><userinput
+>DEBIAN_FRONTEND=noninteractive</userinput
+></para
+> </listitem
+><listitem
+> <para
+><userinput
+>DEBIAN_FRONTEND=text</userinput
+></para
+> </listitem
+><listitem
+> <para
+><userinput
+>DEBIAN_FRONTEND=newt</userinput
+></para
+> </listitem
+><listitem
+> <para
+><userinput
+>DEBIAN_FRONTEND=slang</userinput
+></para
+> </listitem
+><listitem
+> <para
+><userinput
+>DEBIAN_FRONTEND=ncurses</userinput
+></para
+> </listitem
+><listitem
+> <para
+><userinput
+>DEBIAN_FRONTEND=bogl</userinput
+></para
+> </listitem
+><listitem
+> <para
+><userinput
+>DEBIAN_FRONTEND=gtk</userinput
+></para
+> </listitem
+><listitem
+> <para
+><userinput
+>DEBIAN_FRONTEND=corba</userinput
+></para
+> </listitem
+> </itemizedlist
+> The default front end is <userinput
+>DEBIAN_FRONTEND=newt</userinput
+>. <userinput
+>DEBIAN_FRONTEND=text</userinput
+> may be preferable for serial console installs. Generally only the <userinput
+>newt</userinput
+> frontend is available on default install media, so this is not very useful right now. </para
+></listitem>
+</varlistentry>
+
+
+<varlistentry>
+<term
+>BOOT_DEBUG</term>
+<listitem
+><para
+>Passing this boot parameter will cause the boot to be more verbosely logged. <variablelist>
+<varlistentry>
+<term
+><userinput
+>BOOT_DEBUG=0</userinput
+></term>
+<listitem
+><para
+>This is the default.</para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><userinput
+>BOOT_DEBUG=1</userinput
+></term>
+<listitem
+><para
+>More verbose than usual.</para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><userinput
+>BOOT_DEBUG=2</userinput
+></term>
+<listitem
+><para
+>Lots of debugging information.</para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><userinput
+>BOOT_DEBUG=3</userinput
+></term>
+<listitem
+><para
+>Shells are run at various points in the boot process to allow detailed debugging. Exit the shell to continue the boot. </para
+></listitem>
+</varlistentry>
+</variablelist>
+
+</para
+></listitem>
+</varlistentry>
+
+
+<varlistentry>
+<term
+>INSTALL_MEDIA_DEV</term>
+<listitem
+><para
+>The value of the parameter is the path to the device to load the Debian installer from. For example, <userinput
+>INSTALL_MEDIA_DEV=/dev/floppy/0</userinput
+> </para
+><para
+>The boot floppy, which normally scans all floppies and USB storage devices it can to find the root floppy, can be overridden by this parameter to only look at the one device. </para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+>debian-installer/framebuffer</term>
+<listitem
+><para
+>Some architectures use the kernel framebuffer to offer installation in a number of languages. If framebuffer causes a problem on your system you can disable the feature by the parameter <userinput
+>debian-installer/framebuffer=false</userinput
+>. Problem symptoms are error messages about bterm or bogl, a blank screen, or a freeze within a few minutes after starting the install. </para
+><para arch="i386"
+>The <userinput
+>video=vga16:off</userinput
+> argument may also be used to disable the framebuffer. Such problems have been reported on a Dell Inspiron with Mobile Radeon card. </para
+><para arch="m68k"
+>Such problems have been reported on the Amiga 1200 and SE/30. </para
+><para arch="hppa"
+>Such problems have been reported on hppa. </para
+><note arch="sparc"
+><para
+>Because of display problems on some systems, framebuffer support is <emphasis
+>disabled by default</emphasis
+> for &arch-title;. This can result in ugly display on systems that do properly support the framebuffer, like those with ATI graphical cards. If you see display problems in the installer, you can try booting with parameter <userinput
+>debian-installer/framebuffer=true</userinput
+>. </para
+></note
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+>debian-installer/probe/usb</term>
+<listitem
+><para
+>Set to <userinput
+>false</userinput
+> to prevent probing for USB on boot, if that causes problems. </para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+>netcfg/disable_dhcp</term>
+<listitem
+><para
+>By default, the &d-i; automatically probes for network configuration via DHCP. If the probe succeeds, you won't have a chance to review and change the obtained settings. You can get to the manual network setup only in case the DHCP probe fails. </para
+><para
+>If you have a DHCP server on your local network, but want to avoid it because e.g. it gives wrong answers, you can use the parameter <userinput
+>netcfg/disable_dhcp=true</userinput
+> to prevent configuring the network with DHCP and to enter the information manually. </para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+>hw-detect/start_pcmcia</term>
+<listitem
+><para
+>Set to <userinput
+>false</userinput
+> to prevent starting PCMCIA services, if that causes problems. Some laptops are well known for this misbehavior. </para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+>preseed/url</term>
+<listitem
+><para
+>Specify the url to a preconfiguration file to download and use in automating the install. See <xref linkend="automatic-install"/>. </para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+>preseed/file</term>
+<listitem
+><para
+>Specify the url to a preconfiguration file to load to automating the install. See <xref linkend="automatic-install"/>. </para
+></listitem>
+</varlistentry>
+
+<varlistentry condition="etch">
+<term
+>cdrom-detect/eject</term>
+<listitem
+><para
+>By default, before rebooting, &d-i; automatically ejects the optical media used during the installation. This can be unnecessary if the system does not automatically boot off the CD. In some cases it may even be undesirable, for example if the optical drive cannot reinsert the media itself and the user is not there to do it manually. Many slot loading, slim-line, and caddy style drives cannot reload media automatically. </para
+><para
+>Set to <userinput
+>false</userinput
+> to disable automatic ejection, and be aware that you may need to ensure that the system does not automatically boot from the optical drive after the initial installation. </para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+>ramdisk_size</term>
+<listitem
+><para
+>If you are using a 2.2.x kernel, you may need to set &ramdisksize;. </para
+></listitem>
+</varlistentry>
+
+</variablelist>
+  </sect2>
+ </sect1>
+
+<!--   End of file boot-installer/parameters.xml -->
+
+<!-- Start of file boot-installer/trouble.xml -->
+
+ <sect1 id="boot-troubleshooting">
+ <title
+>Troubleshooting the Installation Process</title>
+ 
+
+  <sect2 condition="supports-floppy-boot" id="unreliable-floppies">
+  <title
+>Floppy Disk Reliability</title>
+
+<para
+>The biggest problem for people using floppy disks to install Debian seems to be floppy disk reliability. </para
+><para
+>The boot floppy is the floppy with the worst problems, because it is read by the hardware directly, before Linux boots. Often, the hardware doesn't read as reliably as the Linux floppy disk driver, and may just stop without printing an error message if it reads incorrect data. There can also be failures in the Driver Floppies most of which indicate themselves with a flood of messages about disk I/O errors. </para
+><para
+>If you are having the installation stall at a particular floppy, the first thing you should do is re-download the floppy disk image and write it to a <emphasis
+>different</emphasis
+> floppy. Simply reformatting the old floppy may not be sufficient, even if it appears that the floppy was reformatted and written with no errors. It is sometimes useful to try writing the floppy on a different system. </para
+><para
+>One user reports he had to write the images to floppy <emphasis
+>three</emphasis
+> times before one worked, and then everything was fine with the third floppy. </para
+><para
+>Other users have reported that simply rebooting a few times with the same floppy in the floppy drive can lead to a successful boot. This is all due to buggy hardware or firmware floppy drivers. </para>
+  </sect2>
+
+  <sect2
+><title
+>Boot Configuration</title>
+
+<para
+>If you have problems and the kernel hangs during the boot process, doesn't recognize peripherals you actually have, or drives are not recognized properly, the first thing to check is the boot parameters, as discussed in <xref linkend="boot-parms"/>. </para
+><para
+>If you are booting with your own kernel instead of the one supplied with the installer, be sure that <userinput
+>CONFIG_DEVFS</userinput
+> is set in your kernel. The installer requires <userinput
+>CONFIG_DEVFS</userinput
+>. </para
+><para
+>Often, problems can be solved by removing add-ons and peripherals, and then trying booting again. <phrase arch="i386"
+>Internal modems, sound cards, and Plug-n-Play devices can be especially problematic.</phrase
+> </para
+><para
+>If you have a large amount of memory installed in your machine, more than 512M, and the installer hangs when booting the kernel, you may need to include a boot argument to limit the amount of memory the kernel sees, such as <userinput
+>mem=512m</userinput
+>. </para>
+  </sect2>
+
+  <sect2 arch="i386" id="i386-boot-problems">
+  <title
+>Common &arch-title; Installation Problems</title>
+<para
+>There are some common installation problems that can be solved or avoided by passing certain boot parameters to the installer. </para
+><para
+>Some systems have floppies with <quote
+>inverted DCLs</quote
+>. If you receive errors reading from the floppy, even when you know the floppy is good, try the parameter <userinput
+>floppy=thinkpad</userinput
+>. </para
+><para
+>ε κάποια συστήματα, όπως τα IBM PS/1 ή ValuePoint (που έχουν οδηγούς δίσκου ST-506), η συσκευή IDE ίσως να μην αναγνωρίζεται κανονικά. Και πάλι, δοκιμάστε στην αρχή χωρίς τις παραμέτρους και δείτε αν η συσκευή IDE αναγνωρίζεται κανονικά. Αν όχι προσδιορίστε τη γεωμετρία του δίσκου (κύλινδροι, κεφαλές και τομείς) και χρησιμοποιήστε τιην παράμετρο<userinput
+>hd=<replaceable
+>cylinders</replaceable
+>,<replaceable
+>heads</replaceable
+>,<replaceable
+>sectors</replaceable
+></userinput
+>. </para
+><para
+>Αν έχετε ένα πολύ παλιό μηχάνημα, και ο πυρήνας ''κρεμάει'' μετά το μήνυμα <computeroutput
+>Checking 'hlt' instruction...</computeroutput
+>, τότε θα έπρεπε να δοκιμάσετε το όρισμα  <userinput
+>no-hlt</userinput
+> στην εκκίνηση, πουαπενεργοποιεί αυτό το τεστ. </para
+><para
+>Αν η οθόνη σας αρχίζει να εμφανίζει κάποια περίεργη εικόνα κατά την εκκίνηση του πυρήνα, πχ. γίνεται εντελώς λευκή, εντελώς μαύρη ή δείχνει άσχετα έγχρωμα pixel, είναι πιθανόν το σύστημά σας να έχει μια προβληματική κάρτα οθόνης που δεν αλλάζει σωστά σε κατάσταση framebuffer.  Μπορείτε τότε να χρησιμοποιήσετε  τις παραμέτρους εκκίνησης <userinput
+>debian-installer/framebuffer=false</userinput
+> ή <userinput
+>video=vga16:off</userinput
+> για να απενεργοποιήσετε την κονσόλα framebuffer. Στην περίπτωση αυτή μόνο η αγγλική γλώσσα θα είναι διαθέσιμη κατά την εγκατάσταση λόγω των περιορισμένων χαρακτηριστικών της κονσόλας. Δείτε το   <xref linkend="boot-parms"/> για λεπτομέρειες. </para>
+  
+  <sect3>
+  <title
+>System Freeze During the PCMCIA Configuration Phase</title>
+<para
+>Μερικά μοντέλα φορητών υπολογιστών που παράγονται από τη DELL είναι γνωστό ότι παγώνουν μόλις η διαδικασία ανίχνευσης της συσκευής PCMCIA προσπαθεί να προσπελάσει κάποιες διευθύνσεις υλικού. Αν αντιμετωπίσετε αυτό το πρόβλημα και δενχρειάζεστε την υποστήριξη PCMCIA κατά την εγκατάσταση, μπορείτε να απενεργοποιήσετε την PCMCIA χρησιμοποιώντας την παράμετρο εκκίνησης <userinput
+>hw-detect/start_pcmcia=false</userinput
+>. Μπορείτε τότε να ρυθμίσετε την PCMCIA μετά την ολοκλήρωση της εγκατάστασης και να αποκλείσετε το φάσμα των πόρων εκείνων που προκαλούν τα προβλήματα. </para
+><para
+>Εναλλακτικά μπορείτε να εκκινήσετε τον εγκαταστάτη στην κατάσταση ''έμπειρου χρήστη''. Θα ρωτηθείτε τότε να εισάγετε τις επιλογές για την περιοχή των πόρων που χρειάζεται το υλικό σας. Για παράδειγμα, αν έχετε έναν από τους φορητούςυπόλογιστές Dell που προαναφέρθηκαν, θα πρέπει εδώ να εισάγετε την επιλογή <userinput
+>exclude port 0x800-0x8ff</userinput
+>. Υπάρχει ακόμα και μια λίστα μερικών κοινών επιλογών για την περιοχή των πόρων στή σελίδα <ulinkurl="http://pcmcia-cs.sourceforge.net/ftp/doc/PCMCIA-HOWTO-2.html#ss2.5"
+>System resource settings section of the PCMCIA HOWTO</ulink
+>. Σημειώστε ότι θα πρέπει να παραλείψετε τα κόμματα, αν υπάρχουν, όταν εισάγετε αυτή την τιμή στον εγκαταστάτη. </para>
+   </sect3>
+
+   <sect3>
+   <title
+>System Freeze while Loading the USB Modules</title>
+<para
+>Ο πυρήνας προσπαθεί κανονικά να εγκαταστήσει αρθρώματα USB και τον οδηγό του πληκτρολογίου USB ώστε να μπορέσει να υποστηρίξει μερικά όχι διαδεδομένα πληκτρολόγια USB. Υπάρχουν όμως κάποια προβληματικά συστήματα USB στα οποία οοδηγός ''παγώνει'' κατά τη φόρτωση. Μια πιθανή λύση σε αυτό ίσως είναι η απενεργοποίηση του ελεγκτή USB κατά τη ρύθμιση του BIOS της μητρικής. Μια άλλη επιλογή είναι να δώσει κανείς την παράμετρο <userinput
+>debian-installer/probe/usb=false</userinput
+>στο προτρεπτικό της εκκίνησης, που θα αποτρέψει τη φόρτωση των αρθρωμάτων. </para>
+   </sect3>
+  </sect2>
+
+  <sect2 id="kernel-msgs">
+  <title
+>Interpreting the Kernel Startup Messages</title>
+
+<para
+>During the boot sequence, you may see many messages in the form <computeroutput
+>can't find <replaceable
+>something</replaceable
+> </computeroutput
+>, or <computeroutput
+> <replaceable
+>something</replaceable
+> not present</computeroutput
+>, <computeroutput
+>can't initialize <replaceable
+>something</replaceable
+> </computeroutput
+>, or even <computeroutput
+>this driver release depends on <replaceable
+>something</replaceable
+> </computeroutput
+>. Most of these messages are harmless. You see them because the kernel for the installation system is built to run on computers with many different peripheral devices. Obviously, no one computer will have every possible peripheral device, so the operating system may emit a few complaints while it looks for peripherals you don't own. You may also see the system pause for a while. This happens when it is waiting for a device to respond, and that device is not present on your system. If you find the time it takes to boot the system unacceptably long, you can create a custom kernel later (see <xref linkend="kernel-baking"/>). </para>
+  </sect2>
+
+
+  <sect2 id="problem-report">
+  <title
+>Bug Reporter</title>
+<para
+>If you get through the initial boot phase but cannot complete the install, the bug reporter menu choice may be helpful. It copies system error logs and configuration information to a user-supplied floppy. This information may provide clues as to what went wrong and how to fix it. If you are submitting a bug report you may want to attach this information to the bug report. </para
+><para
+>Other pertinent installation messages may be found in <filename
+>/var/log/</filename
+> during the installation, and <filename
+>/var/log/debian-installer/</filename
+> after the computer has been booted into the installed system. </para>
+  </sect2>
+
+  <sect2 id="submit-bug">
+  <title
+>Submitting Installation Reports</title>
+<para
+>If you still have problems, please submit an installation report. We also encourage installation reports to be sent even if the installation is successful, so that we can get as much information as possible on the largest number of hardware configurations. Please use this template when filling out installation reports, and file the report as a bug report against the "installation-reports" pseudo package, by sending it to <email
+>submit@bugs.debian.org</email
+>. <informalexample
+><screen
+>
+Package: installation-reports
+
+Debian-installer-version: &lt;Fill in date and from where you got the image&gt;
+uname -a: &lt;The result of running uname -a on a shell prompt&gt;
+Date: &lt;Date and time of the install&gt;
+Method: &lt;How did you install?  What did you boot off?  If network
+      install, from where?  Proxied?&gt;
+
+Machine: &lt;Description of machine (eg, IBM Thinkpad R32)&gt;
+Processor:
+Memory:
+Root Device: &lt;IDE?  SCSI?  Name of device?&gt;
+Root Size/partition table: &lt;Feel free to paste the full partition
+      table, with notes on which partitions are mounted where.&gt;
+Output of lspci and lspci -n:
+
+Base System Installation Checklist:
+[O] = OK, [E] = Error (please elaborate below), [ ] = didn't try it
+
+Initial boot worked:    [ ]
+Configure network HW:   [ ]
+Config network:         [ ]
+Detect CD:              [ ]
+Load installer modules: [ ]
+Detect hard drives:     [ ]
+Partition hard drives:  [ ]
+Create file systems:    [ ]
+Mount partitions:       [ ]
+Install base system:    [ ]
+Install boot loader:    [ ]
+Reboot:                 [ ]
+
+Comments/Problems:
+
+&lt;Description of the install, in prose, and any thoughts, comments
+      and ideas you had during the initial install.&gt;
+</screen
+></informalexample
+> In the bug report, describe what the problem is, including the last visible kernel messages in the event of a kernel hang. Describe the steps that you did which brought the system into the problem state. </para>
+  </sect2>
+ </sect1>
+<!--   End of file boot-installer/trouble.xml -->
 
 </chapter>
-
-
+<!--   End of file boot-installer/boot-installer.xml -->

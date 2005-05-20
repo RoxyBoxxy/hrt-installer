@@ -648,11 +648,13 @@ append initrd=initrd.gz ramdisk_size=12000 root=/dev/rd/0 init=/linuxrc rw
 ></informalexample
 > Учтите, что может потребоваться увеличить параметр <userinput
 >ramdisk_size</userinput
-> в зависимости от загружаемого образа. Если загрузка завершилась неудачно, попробуйте добавить <userinput
+> в зависимости от загружаемого образа. <phrase condition="sarge"
+>Если загрузка завершилась неудачно, попробуйте добавить <userinput
 >devfs=mount,dall</userinput
 > в строку <quote
 >append</quote
->. </para>
+>.</phrase
+> </para>
    </sect3>
 <!--   End of file install-methods/usb-setup/i386.xml -->
 
@@ -750,8 +752,8 @@ message=/boot.msg
 image=/vmlinux
         label=install
         initrd=/initrd.gz
-        initrd-size=10000
-        append="devfs=mount,dall --"
+        initrd-size=10000<phrase condition="sarge">
+        append="devfs=mount,dall --"</phrase>
         read-only
 </screen
 ></informalexample
@@ -1628,12 +1630,15 @@ END FIXME -->
 >autoinstall</classname
 > и сама программа установки Debian. </para>
 
-<sect2>
-<title
+  <sect2 id="preseed">
+  <title
 >Автоматическая установка с помощью программы установки Debian</title>
-
 <para
 >Программа установки Debian поддерживает автоматическую установку через файл автоматической установки. Файл автоматической установки может быть загружен по сети или со сменного носителя, и используется для ответов на вопросы, задаваемые во время процесса установки. </para
+><para
+>Хотя большинство диалогов &d-i; могут быть заполнены автоматически, есть несколько исключений. Вы можете переразмечать весь диск или использовать только его свободное пространство, но невозможно использовать существующие разделы. В настоящий момент невозможно автоматически настроить RAID и LVM. <phrase condition="sarge"
+>Также, за исключением сетевых модулей ядра, невозможна предварительная настройка параметров модулей ядра.</phrase
+> </para
 ><para
 >Файл автоматической установки содержит команды, которые понимает программа debconf-set-selections. Хорошо документированный и рабочий пример, который вы можете отредактировать, находится в <xref linkend="example-preseed"/>. </para
 ><para
@@ -1658,7 +1663,25 @@ $ debconf-get-selections &gt;&gt; <replaceable
 >Чтобы добавить файл автоматической установки на CD, вам потребуется изменить ISO образ. Подробности смотрите на странице руководства mkisofs. Или же запишите файл автоматической установки на дискету и используйте preseed/file=/floppy/preseed.cfg </para
 ><para arch="i386"
 >Если вы можете загружаться с карты памяти USB, то просто скопируйте файл автоматической установки в файловую систему карты памяти, и отредактируйте файл syslinux.cfg добавив preseed/file=/hd-media/preseed.cfg в параметра загрузки ядра. </para>
-</sect2>
+  
+   <sect3 condition="etch">
+   <title
+>Использование автоматической установки для изменения значений по умолчанию</title>
+<para
+>Дополнительно, автоматическую установку можно использовать для изменения ответов по умолчанию на вопросы, которые при таком использовании будут задаваться. Для этого, присвойте флагу <firstterm
+>seen</firstterm
+> значение <quote
+>false</quote
+>после установки значения в шаблоне. <informalexample
+><screen
+>d-i foo/bar параметр значение
+d-i foo/bar seen false
+</screen
+></informalexample>
+
+</para>
+   </sect3>
+  </sect2>
  </sect1>
 <!--   End of file install-methods/automatic-install.xml -->
 
