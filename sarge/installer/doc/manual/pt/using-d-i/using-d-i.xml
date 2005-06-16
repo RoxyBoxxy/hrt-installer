@@ -105,7 +105,7 @@
 >Pode chegar ao menu principal seleccionando repetidamente a opção "Voltar" para retroceder todo o caminho para fora do componente em que actualmente se encontrar a correr. </para
 ></listitem>
 </varlistentry>
-<varlistentry>
+<varlistentry condition="sarge">
 
 <term
 >languagechooser</term
@@ -114,13 +114,22 @@
 >Mostra uma lista de idiomas e variantes de idiomas. O instalador irá mostrar mensagens no idioma escolhido a menos que a tradução para esse idioma não esteja completa. Quando uma tradução não está completa, são mostradas as mensagens em Inglês. </para
 ></listitem>
 </varlistentry>
-<varlistentry>
+<varlistentry condition="sarge">
 
 <term
 >countrychooser</term
 ><listitem
 ><para
 >Mostra uma lista de países. O utilizador pode escolher o país onde vive. </para
+></listitem>
+</varlistentry>
+<varlistentry condition="etch">
+
+<term
+>localechooser</term
+><listitem
+><para
+>Permite ao utilizador seleccionar as opções de localização para a instalação e para o sistema instalado: idioma, país e definições locais. O instalador irá mostrar mensagens no idioma escolhido a menos que a tradução para esse idioma não esteja completa, nesse caso algumas mensagens podem ser mostradas em Inglês. </para
 ></listitem>
 </varlistentry>
 <varlistentry>
@@ -361,9 +370,9 @@
 <!-- Start of file using-d-i/modules/languagechooser.xml -->
 
 
-   <sect3 id="lang-chooser">
+   <sect3 id="lang-chooser" condition="sarge">
    <title
->Escolher o Idioma</title>
+>Escolha do Idioma</title>
 
 <para
 >Como primeiro passo da instalação, escolha o idioma no qual deseja que prossiga o processo da instalação. Os nomes dos idiomas estão listados em ambos os idiomas Inglês (esquerda) e no próprio idioma (direita); Os nomes do lado direito também são mostrados no script adequado para o idioma. A lista está ordenada pelos nomes em Inglês. </para
@@ -375,9 +384,9 @@
 <!-- Start of file using-d-i/modules/countrychooser.xml -->
 
 
-   <sect3 id="country-chooser">
+   <sect3 id="country-chooser" condition="sarge">
    <title
->Escolher o País</title>
+>Escolha do País</title>
 
 <para
 >Se você seleccionou um idioma na <xref linkend="lang-chooser"/> que tenha mais que um país associado (aplicável a Chinês, Inglês, Francês, e muitos outros idiomas), pode aqui especificar o idioma. Se você escolheu <guimenuitem
@@ -387,6 +396,40 @@
 >Esta selecção será posteriormente utilizada no processo de instalação para escolher por omissão um fuso horário e um mirror Debian apropriado para a sua localização geográfica. Se os valores por omissão propostos pelo instalador não forem adequados, você poderá fazer uma escolha diferente. O país seleccionado, em conjunto com o idioma seleccionado, pode também afectar as definições locais para o seu novo sistema Debian. </para>
    </sect3>
 <!--   End of file using-d-i/modules/countrychooser.xml -->
+
+<!-- Start of file using-d-i/modules/localechooser.xml -->
+
+
+   <sect3 id="localechooser" condition="etch">
+   <title
+>Selecção das Opções de Localização</title>
+
+<para
+>Na maioria dos casos as primeiras questões que lhe serão colocadas dizem respeito à selecção das opções de localização a serem utilizadas tanto na instalação como para o sistema a instalar. As opções de localização consistem no idioma, país e definições locais. </para
+><para
+>O idioma que escolher será utilizado para o resto do processo de instalação, na medida em que exista tradução nos diferentes diálogos disponíveis. Se não estiver disponível nenhuma tradução válida para o idioma seleccionado, o instalador utilizará por omissão o Inglês. </para
+><para
+>O país seleccionado será mais tarde utilizado no processo de instalação para escolher por omissão um fuso horário e um mirror Debian apropriado para a sua localização geográfica. O idioma e o país em conjunto serão utilizados para configurar as definições locais para o seu sistema e para o ajudar a configurar seleccionar o seu teclado. </para
+><para
+>Ser-lhe-á no ínicio pedido para seleccionar o seu idioma preferido. A lista de idiomas encontra-se em Inglês (lado esquerdo) e na sua própria língua (lado direito); os nomes do lado direito mostram também o respectivo script para o idioma. A lista está disposta pelos nomes em Inglês. No topo da lista existe uma opção extra que lhe permite seleccionar as definições locais <quote
+>C</quote
+> em vez do idioma. Ao escolher a definição local <quote
+>C</quote
+> a sua instalação proseguirá em Inglês, o sistema não terá suporte de definição local, já que não será instalado o pacote <classname
+>locales</classname
+>. </para
+><para
+>Se você seleccionou um idioma que é reconhecido por se tratar de um idioma não oficial para mais de um país <footnote
+> <para
+> Em termos técnicos: onde existem múltiplas definições locais para esse idioma que diferem nos códigos de país. </para
+> </footnote
+>, ser-lhe-á pedido em seguida o país. Se você escolheu <guimenuitem
+>Other</guimenuitem
+> no fundo da lista, ser-lhe-á apresentada uma lista de todos os países, agrupados por continente. Se o idioma tem apenas um único país associado, esse país será seleccionado automaticamente. </para
+><para
+>As definições locais serão seleccionadas com base no idioma e país escolhido. Se estiver a instalar em prioridade média ou baixa, terá a opção de seleccionar definições locais diferentes e de seleccionar definições locais adicionais para serem geradas no sistema instalado. </para>
+   </sect3>
+<!--   End of file using-d-i/modules/localechooser.xml -->
 
 <!-- Start of file using-d-i/modules/kbd-chooser.xml -->
 
