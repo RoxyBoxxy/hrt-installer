@@ -1,0 +1,35 @@
+#! /usr/bin/make -f
+
+PACKAGE=$(shell dh_listpackages)
+
+build: 
+build-stamp:
+
+clean:
+	dh_testdir
+	dh_testroot
+	rm -f build-stamp
+	dh_clean
+
+install-dirs:
+	dh_testdir
+	dh_testroot
+	dh_clean -k
+	dh_installdirs usr/bin lib/debian-installer-startup.d dev/vc
+
+install: install-dirs
+	install S10userdevfs debian/$(PACKAGE)/lib/debian-installer-startup.d
+	dh_install init-dev update-dev subarch-dev usr/bin
+
+binary-indep: install
+	dh_testdir
+	dh_testroot
+	dh_fixperms
+	dh_installdeb
+	dh_gencontrol
+	dh_builddeb
+
+binary-arch: 
+
+binary: binary-indep binary-arch
+.PHONY: build clean binary-indep binary-arch binary install
