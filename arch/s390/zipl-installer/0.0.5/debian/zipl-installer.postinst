@@ -1,0 +1,42 @@
+#!/bin/sh -e
+
+. /usr/share/debconf/confmodule
+
+findfs () {
+	mount | grep "on /target${1%/} " | cut -d' ' -f1
+}
+
+ROOTDEV="$(findfs /)"
+ROOT="$(mapdevfs "$ROOTDEV")"
+
+db_get debian-installer/kernel/commandline
+PARAMETER="$RET root=$ROOT"
+
+cat > /target/etc/zipl.conf << EOF
+[defaultboot]
+defaultmenu = menu
+
+:menu
+target = /boot
+1 = debian
+2 = old
+default = 1
+prompt = 1
+timeout = 10
+
+[debian]
+target = /boot
+image = /boot/vmlinuz
+parameters = $PARAMETER
+
+[old]
+target = /boot
+image = /boot/vmlinuz.old
+parameters = $PARAMETER
+optional = 1
+EOF
+
+sed -e 's/^do_bootloader.*$/do_bootloader = yes/' < /target/etc/kernel-img.conf > /target/etc/kernel-img.conf.$$
+mv /target/etc/kernel-img.conf.$$ /target/etc/kernel-img.conf
+
+chroot /target /sbin/zipl
