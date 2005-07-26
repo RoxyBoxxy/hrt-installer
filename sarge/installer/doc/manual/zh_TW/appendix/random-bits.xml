@@ -31,92 +31,84 @@
 
 <informalexample
 ><screen
->#### Modifying syslinux.cfg.
+>#### 修改 syslinux.cfg.
 
-# Edit the syslinux.cfg (or similar) file, and add parameters to the end
-# of the append line(s) for the kernel.
+# 修改 syslinux.cfg (或類似的檔案) 並在各行尾端加入核心參數。
 #
-# You'll at least want to add a parameter telling the installer where to
-# get its preseed file from.
-# If you're installing from USB media, use this, and put the preseed file
-# in the toplevel directory of the USB stick.
+# 您至少要加入一項參數以告知安裝程式預先設定檔的位置。
+# 如果您從 USB 媒介安裝，使用以下參數，並將預先設定檔放在 USB 隨身碟的最上層
+# 目錄。
 #   preseed/file=/hd-media/preseed
-# If you're netbooting, use this instead:
+# 如果您以網路開機，使用以下參數：
 #   preseed/url=http://host/path/to/preseed
-# If you're remastering a CD, you could use this:
+# 如果您使用光碟，您可以設定:
 #   preseed/file=/cdrom/preseed
-# Be sure to copy this file to the location you specify.
+# 請確定把預先設定檔複製到您所指定的位置。
 # 
-# While you're at it, you may want to throw a debconf/priority=critical in
-# there, to avoid most questions even if the preseeding below misses some.
-# And you might set the timeout to 1 in syslinux.cfg to avoid needing to hit
-# enter to boot the installer.
+# 您可以指定檢查和 (checksum) 數值來確保安裝程式取得正確的預先設定檔。
+# 目前必須使用 md5sum 檢查和，一旦檢查和被指定，就必須和檔案的檢查和相同，
+# 否則安裝程式將會拒絕使用此檔案。(Sarge 安裝程式不支援檢查和功能) 
 #
-# Language, country, and keyboard selection cannot be preseeded from a file,
-# because the questions are asked before the preseed file can be loaded.
-# Instead, to avoid these questions, pass some more parameters to the kernel.
-# If you are using the sarge installer, you need three:
+#   preseed/url/checksum=5da499872becccfeda2c4872f9171c3d
+#   preseed/file/checksum=5da499872becccfeda2c4872f9171c3d
+#
+# 您也許想要在預先設定檔中設置 debconf/priority=critical 以省略大部分問題 (
+# 儘管在接下來的預先設置中您可能會遺漏某些參數)。您也可以將倒數設定為 1，這
+# 樣就不用按下 enter 鍵來啟動安裝程式。
+# 
+# 語言、國家和鍵盤配置無法在預先設定檔中做預設，因為這些問題會在預先設定檔被
+# 載入之前提出。欲略過這些問題，請加入核心參數。
+# 如果您使用 sarge 安裝程式，請加入以下三項：
 #
 #    languagechooser/language-name=English
 #    countrychooser/shortlist=US
 #    console-keymaps-at/keymap=us
 #
-# Newer versions of the installer need only two:
+# 較新版本的安裝程式只需要兩項：
 #
 #    debian-installer/locale=en_US
 #    console-keymaps-at/keymap=us
 #
-# Note that the kernel accepts a maximum of 8 command line options and
-# 8 environment options (including any options added by default for the
-# installer). If these numbers are exceeded, 2.4 kernels will drop any
-# excess options and 2.6 kernels will panic. With kernel 2.6.9 or newer,
-# you can use 32 command line options and 32 environment options.
+# 請注意，核心最多接受 8 個命令列參數、8 個環境選項 (包括被安裝程式自動帶入
+# 的參數)。如果超過這兩個限制，2.4 版的核心會忽略超過的參數，而 2.6 版的核心
+# 會產生錯誤 (panic)。比 2.6.9 更新的核心版本可以使用 32 個命令列參數和 32 
+# 個環境選項。
 #
-# Some of the default options, like 'vga=normal' may be safely removed
-# for most installations, which may allow you to add more options for
-# preseeding.
+# 大部分狀況下，可以移除 'vga=normal' 此一預設選項，藉此加入更多預設參數。
 
-#### Shell commands.
+#### 介殼命令
 
-# d-i preseeding is inherently not secure. Nothing in the installer checks
-# for attempts at buffer overflows or other exploits of the values of a
-# preseed file like this one. Only use preseed files from trusted
-# locations! To drive that home, and because it's generally useful, here's
-# a way to run any shell command you'd like inside the installer,
-# automatically.
+# d-i的預先設置是不安全的，安裝程式將不會檢查這類設定檔中的參數是否會造成暫
+# 存滿溢或是設定不足。因此，請確定您從可信任的地方存取預先設定檔！接下來將詳
+# 述在安裝程式中執行介殼命令的方法，這非常的實用。
 
-# This first command is run as early as possible, just after
-# preseeding is read.
+# 這個命令應該在讀取預先設定檔之後立刻被執行
 #d-i preseed/early_command              string \
 #    wget http://url/to/my.udeb -O /tmp/my.udeb; udpkg -i /tmp/my.udeb
 
-# This command is run just before the install finishes, but when there is
-# still a usable /target directory.
+# 這個命令在安裝程式結束的前一步執行，但 /target 目錄必須存在且可以使用。
 #d-i preseed/late_command               string \
 #    for deb in /hd-media/*.deb; do cp $deb /target/tmp; \
 #    chroot /target dpkg -i /tmp/$(basename $deb); done
 
-# This command is run just as base-config is starting up.
+# 這個指令在 base-config 執行的時候被執行。
 #base-config base-config/early_command  string echo hi mom
 
-# This command is run after base-config is done, just before the login:
-# prompt. This is a good way to install a set of packages you want, or to
-# tweak the configuration of the system.
+# 這個指令在 base-config 結束之後、login: 提示號之前被執行。如果您想安裝某些
+# 軟體套件，或是調整系統設定，這將是一個好方法。
 #base-config base-config/late_command   string \
 #    apt-get install zsh; chsh -s /bin/zsh
 
-#### Network configuration.
+#### 網路設定
 
-# Of course, this won't work if you're loading your preseed file from the
-# network! But it's great if you're booting from CD or USB stick. You can
-# also pass network config parameters in on the kernel params if you are
-# loading preseed files from the network.
+# 如果您從網路開機，這部分內容當然不適用。但如果您是以 USB 隨碟或是光碟開機
+# ，您仍可以設定核心的網路設定參數以從網路讀取預先設定檔
 
-# netcfg will choose an interface that has link if possible. This makes it
-# skip displaying a list if there is more than one interface.
+# 如果有可用連線，netcfg 將會選擇其中一條。如果有一條以上的連線，將不會顯示
+# 連線清單。
 d-i  netcfg/choose_interface            select auto
 
-# If you prefer to configure the network manually, here's how:
+# 如果您想要手動設定網路，請參考以下方法：
 #d-i netcfg/disable_dhcp                boolean true
 #d-i netcfg/get_nameservers             string 192.168.1.1
 #d-i netcfg/get_ipaddress               string 192.168.1.42
@@ -124,18 +116,17 @@ d-i  netcfg/choose_interface            select auto
 #d-i netcfg/get_gateway                 string 192.168.1.1
 #d-i netcfg/confirm_static              boolean true
 
-# Note that any hostname and domain names assigned from dhcp take
-# precedence over values set here. However, setting the values still
-# prevents the questions from being shown even if values come from dhcp.
+# 請注意，任何從 DHCP 取得的主機名稱和網域名稱將會蓋過以下設定，但是設定以下
+# 參數仍可以在從 DHCP 取得資料的請況下避免顯示對話框.
 d-i  netcfg/get_hostname                string unassigned-hostname
 d-i  netcfg/get_domain                  string unassigned-domain
 
-# Disable that annoying WEP key dialog.
+# 取消煩人的 WEP 密鑰對話框。
 d-i  netcfg/wireless_wep                string
-# The wacky dhcp hostname that some ISPs use as a password of sorts.
+# 某些 ISP 供應商用奇怪的 DHCP 主機名稱來當作密碼一類的用途。
 #d-i netcfg/dhcp_hostname               string radish
 
-#### Mirror settings.
+#### 設定鏡像站
 
 d-i  mirror/country                     string enter information manually
 d-i  mirror/http/hostname               string http.us.debian.org
@@ -143,39 +134,36 @@ d-i  mirror/http/directory              string /debian
 d-i  mirror/suite                       string testing
 d-i  mirror/http/proxy                  string 
 
-### Partitioning.
+### 分割磁區
 
-# If the system has free space you can choose to only partition that space.
+# 如果系統還有剩餘空間，您可以要求只分割該剩餘空間。
 #d-i partman-auto/init_automatically_partition \
 #    select Use the largest continuous free space
 
-# Alternatively, you can specify a disk to partition. The device name can
-# be given in either devfs or traditional non-devfs format.
-# For example, to use the first disk devfs knows of:
+# 或者，您可以選擇要被分割的磁碟，設備的名稱可以用 devfs 格式或是傳統的 
+# 非devfs 格式指定。例如，第一個磁碟的 devfs 名稱為：
 d-i  partman-auto/disk                  string /dev/discs/disc0/disc
 
-# You can choose from any of the predefined partitioning recipes:
+# 您可以選擇任何預設的分割方式：
 d-i  partman-auto/choose_recipe         select \
      All files in one partition (recommended for new users)
 #d-i partman-auto/choose_recipe         select Desktop machine
 #d-i partman-auto/choose_recipe         select Multi-user workstation
 
-# Or provide a recipe of your own...
-# The recipe format is documented in the file devel/partman-auto-recipe.txt.
-# If you have a way to get a recipe file into the d-i environment, you can
-# just point at it.
+# 或是提供您自己的分割方式...
+# 設定分割方法的格式請參考 devel/partman-auto-recipe.txt。
+# 如果您有任何其他的分割方式設定檔，您也可以直接指定：
 #d-i partman-auto/expert_recipe_file    string /hd-media/recipe
 
-# If not, you can put an entire recipe in one line. This example creates
-# a small /boot partition, suitable swap, and uses the rest of the space
-# for the root partition:
+# 如果沒有，您可以加入一行設定，下面範例會建立一個 /boot 小分割區，大小適中
+# 的置換分割區，並把剩下的空間分配給根分割區：
 #d-i partman-auto/expert_recipe         string boot-root :: \
 #    20 50 100 ext3 $primary{ } $bootable{ } method{ format } format{ } \
 #    use_filesystem{ } filesystem{ ext3 } mountpoint{ /boot } . \
 #    500 10000 1000000000 ext3 method{ format } format{ } \
 #    use_filesystem{ } filesystem{ ext3 } mountpoint{ / } . \
 #    64 512 300% linux-swap method{ swap } format{ } . 
-# For reference, here is that same recipe in a more readable form:
+# 下面用適合閱讀的格式表示同樣的設定，以利您參考：
 #    boot-root ::
 #       40 50 100 ext3
 #          $primary{ } $bootable{ }
@@ -192,196 +180,193 @@ d-i  partman-auto/choose_recipe         select \
 #          method{ swap } format{ }
 #       .
 
-# This makes partman automatically partition without confirmation.
+# 以下設定使 partman 不確認就開始分割。
 d-i partman/confirm_write_new_label     boolean true
 d-i partman/choose_partition            select \
     Finish partitioning and write changes to disk
 d-i partman/confirm                     boolean true
 
-#### Boot loader installation.
+#### 安裝 boot-loader
 
-# Grub is the default boot loader (for x86). If you want lilo installed
-# instead, uncomment this:
+# Grub 是預設的 boot-loader (在 x86 下)，如果您想安裝 lilo，移除下面設定的
+# 註解：
 #d-i grub-installer/skip                boolean true
 
-# This is fairly safe to set, it makes grub install automatically to the MBR
-# if no other operating system is detected on the machine.
+# 請安心使用以下設定，這將使 grub 在沒有其他作業系統的情況下自動安裝
+# 到 MBR。
 d-i  grub-installer/only_debian         boolean true
 
-# This one makes grub-installer install to the MBR if if finds some other OS
-# too, which is less safe as it might not be able to boot that other OS.
+# 這會讓 grub-installer 在有其他作業系統的狀況下仍安裝 grub 到 MBR。這可能會
+# 您無法啟動其他作業系統。
 d-i  grub-installer/with_other_os       boolean true
 
-# Alternatively, if you want to install to a location other than the mbr,
-# uncomment and edit these lines:
+# 或者，若您想要把 grub 安裝到 MBR 以外的地方，把下面數行加上註解：
 #d-i grub-installer/bootdev             string (hd0,0)
 #d-i grub-installer/only_debian         boolean false
 #d-i grub-installer/with_other_os       boolean false
 
-##### Finishing up the first stage install.
+##### 結束安裝程序的第一階段
 
-# Avoid that last message about the install being complete.
+# 取消安裝即將結束的訊息。
 d-i  prebaseconfig/reboot_in_progress   note 
 
 
-##### Preseeding base-config.
+##### 預先設定 base-config
 
-# Avoid the introductory message.
+# 取消介紹訊息。
 base-config  base-config/intro          note
 
-# Avoid the final message.
+# 取消最後的訊息
 base-config  base-config/login          note
 
-# If you installed a display manager, but don't want to start it immediately
-# after base-config finishes.
+# 如果您安裝了顯示管理程式，但又不想在 base-config 結束後立刻啟動之：
 #base-config base-config/start-display-manager        boolean false
 
-###### Time zone setup.
+# 安裝程式的某些版本能夠回報您安裝了什麼，預設為不回報，但是送出回報能夠幫
+# 助專案得知哪些軟體很熱門，並將之放入光碟中。
+#popularity-contest popularity-contest/participate    boolean false
 
-# Controls whether or not the hardware clock is set to GMT.
+###### 設定時區
+
+# 決定硬體時間是否被設定成 GMT 時間。
 base-config  tzconfig/gmt                             boolean true
 
-# Simple timezone preseeding. You may set this to any valid setting for $TZ;
-# see the contents of /usr/share/zoneinfo/ for options.
+# 簡單的時區預設。您可以選擇任何可用的設定值給 $TZ。請參考
+# /usr/share/zoneinf/ 中的選項
 base-config  tzconfig/preseed_zone                    string US/Eastern
 
-# Timezone preseeding used to be more complex; the old method is documented
-# here as well for completeness. If you're using sarge, you'll need this
-# method.
+# 時區的預先設置曾經很複雜，舊的設定方式將完整描述於下文，如果您正在使用 sarge，
+# 您需要下面的方法。
 
-# If you told the installer that you're in the United States, then you
-# can set the time zone using this variable.
-# (Choices are: Eastern, Central, Mountain, Pacific, Alaska, Hawaii,
-# Aleutian, Arizona East-Indiana, Indiana-Starke, Michigan, Samoa, other)
-#base-config tzconfig/choose_country_zone/US          select Eastern
-# If you told it you're in Canada.
-# (Choices are: Newfoundland, Atlantic, Eastern, Central,
+# 如果您告訴安裝程式您位於美國，那麼您可以用此變數設定時區。
+# (選項有：Eastern, Central, Mountain, Pacific, Alaska, Hawaii, Aleutian, 
+# Arizona East-Indiana, Indiana-Starke, Michigan, Samoa, other)
+base-config  tzconfig/choose_country_zone/US          select Eastern
+# 如果您位於加拿大
+# (選項有：Newfoundland, Atlantic, Eastern, Central,
 # East-Saskatchewan, Saskatchewan, Mountain, Pacific, Yukon, other)
-#base-config tzconfig/choose_country_zone/CA          select Eastern
-# If you told it you're in Brazil. (Choices are: East, West, Acre,
+base-config  tzconfig/choose_country_zone/CA          select Eastern
+# 如果您位於巴西 (Choices are: East, West, Acre,
 # DeNoronha, other)
-#base-config tzconfig/choose_country_zone/BR          select East
-# Many countries have only one time zone. If you told the installer you're
-# in one of those countries, you can choose its standard time zone via this
-# question.
-#base-config tzconfig/choose_country_zone_single      boolean true
-# This question is asked as a fallback for countries other than those
-# listed above, which have more than one time zone. You can preseed one of
-# the time zones, or "other".
+base-config  tzconfig/choose_country_zone/BR          select East
+# 很多國家只有一個時區，如果您告訴安裝程式您位於那些國家之一，您可以透過以
+# 下問題來選擇標準時區。
+base-config  tzconfig/choose_country_zone_single      boolean true
+# 這個問題是為了確認上述中具有多個時區國家之外的國家。您可以選擇其中一個時
+# 區或是 "other"。
 #base-config tzconfig/choose_country_zone_multiple    select 
 
-###### Account setup.
+###### 設定帳號
 
-# To preseed the root password, you have to put it in the clear in this
-# file. That is not a very good idea, use caution!
+# 欲設定 root 的密碼，您必須在這個檔案中以明文表示。這不是個好做法，請小心
+# 使用！
 #passwd passwd/root-password            password r00tme
 #passwd passwd/root-password-again      password r00tme
 
-# If you want to skip creation of a normal user account.
+# 如果您想跳過建立一般使用者帳號的步驟：
 #passwd passwd/make-user                boolean false
 
-# Alternatively, you can preseed the user's name and login.
+# 或者，您可以預先設定使用者全名和登入帳號。
 #passwd passwd/user-fullname            string Debian User
 #passwd passwd/username                 string debian
-# And their password, but use caution!
+# 以及密碼，但請小心使用這個設定！
 #passwd passwd/user-password            password insecure
 #passwd passwd/user-password-again      password insecure
 
-###### Apt setup.
+###### 設定 Apt
 
-# This question controls what source the second stage installation uses
-# for packages. Choices are cdrom, http, ftp, filesystem, edit sources list
+# 這個問題決定在第二階段中軟體套件的來源，可選的有 cdrom、http、ftp、
+# filesystem 和 edit source list manually。
 # by hand
 base-config  apt-setup/uri_type         select http
 
-# If you choose ftp or http, you'll be asked for a country and a mirror.
+# 如果您選擇 ftp 或 http，您將會被詢問國家和鏡像站。
 base-config  apt-setup/country          select enter information manually
 base-config  apt-setup/hostname         string http.us.debian.org
 base-config  apt-setup/directory        string /debian
 # Stop after choosing one mirror.
 base-config  apt-setup/another          boolean false
 
-# You can choose to install non-free and contrib software.
+# 您可以選擇是否安裝 non-free 和 contrib 軟體。
 #base-config apt-setup/non-free         boolean true
 #base-config apt-setup/contrib          boolean true
 
-# Do enable security updates.
+# 啟用安全更新。
 base-config  apt-setup/security-updates boolean true
 
-###### Package selection.
+###### 選擇軟體套件
 
-# You can choose to install any combination of tasks that are available.
-# Available tasks as of this writing include: Desktop environment,
-# Web server, Print server, DNS server, File server, Mail server, 
-# SQL database, manual package selection. The last of those will run
-# aptitude. You can also choose to install no tasks, and force the
-# installation of a set of packages in some other way.
+# 您可以選擇安裝任何組合的可用軟體集。本文中可用的軟體集有：
+# Desktop environment, Web server, Print server, DNS server, File server
+# Mail server, SQL database 和 manual package selection。最後一個選項將會
+# 執行 aptitude。您也可以不安裝軟體集，並以其他方式強迫安裝其他軟體套件。
 tasksel      tasksel/first   multiselect Desktop environment
 #tasksel     tasksel/first   multiselect Web server, Mail server, DNS server
 
-###### Mailer configuration.
+###### 郵件設定
 
-# During a normal install, exim asks only two questions. Here's how to
-# avoid even those. More complicated preseeding is possible.
+# 在一般安裝中，exit 只會問兩個問題，下面告訴您如何跳過這兩個問題。您也可以
+# 設置更複雜的預先設定。
 exim4-config exim4/dc_eximconfig_configtype \
     select no configuration at this time
+exim4-config exim4/no_config boolean true
 
-# It's a good idea to set this to whatever user account you choose to
-# create. Leaving the value blank results in postmaster mail going to
-# /var/mail/mail.
+# 建議您對任何您建立的使用者帳號作以下的設定，如果這個選項留白，那麼 
+# postmaster 的郵件將會存到 /var/mail/mail.
 exim4-config exim4/dc_postmaster        string 
 
-###### X Configuration.
+###### 設定 X
 
-# Preseeding Debian's X config is possible, but you probably need to know
-# some details about the video hardware of the machine, since Debian's X
-# configurator does not do fully automatic configuration of everything.
+# 您也可以預先設定 Debian 的 X。但是您可能需要知道顯示硬體的細節，因為 
+# Debian 的 X 設定程式不會自動設定所有的參數。
 
-# X can detect the right driver for some cards, but if you're preseeding,
-# you override whatever it chooses. Still, vesa will work most places.
+# X 可以正確偵測某些顯示卡的驅動程式，但如果您使用預先設定，您將會蓋過自動
+# 偵測的結果。不過，VESA 能在大多數狀況下使用。
 #xserver-xfree86 xserver-xfree86/config/device/driver select vesa
 
-# A caveat with mouse autodetection is that if it fails, X will retry it
-# over and over. So if it's preseeded to be done, there is a possibility of
-# an infinite loop if the mouse is not autodetected.
+# 這裡必須警告您，如果 X 無法偵測到滑鼠，它將會不斷嘗試。所以，如果您預先設定
+# 了滑鼠，那麼就有可能陷入偵測不到滑鼠的無限迴圈。
 #xserver-xfree86 xserver-xfree86/autodetect_mouse     boolean true
 
-# Monitor autodetection is recommended.
+# 建議您使用自動偵測顯示器
 xserver-xfree86 xserver-xfree86/autodetect_monitor    boolean true
-# Uncomment if you have an LCD display.
+# 如果使用液晶顯示器，請註解下面設定。
 #xserver-xfree86 xserver-xfree86/config/monitor/lcd   boolean true
-# X has three configuration paths for the monitor. Here's how to preseed
-# the "medium" path, which is always available. The "simple" path may not
-# be available, and the "advanced" path asks too many questions.
+# X 有三種階級來設定顯示器，下面是 "medium" 階級的設定，理當永久可用。而
+# "simple" 階級可能不會永久可用，至於 "advanced" 則會詢問非常多問題。
 xserver-xfree86  xserver-xfree86/config/monitor/selection-method \
     select medium
 xserver-xfree86  xserver-xfree86/config/monitor/mode-list \
     select 1024x768 @ 60 Hz
 
-###### Everything else.
+###### 其他
 
-# Depending on what software you choose to install, or if things go wrong
-# during the installation process, it's possible that other questions may
-# be asked. You can preseed those too, of course. To get a list of every
-# possible question that could be asked during an install, do an
-# installation, and then run these commands:
-#   debconf-get-selections --installer > file
-#   debconf-get-selections >> file
+# 根據您所安裝的軟體，或是安裝過程中出現的錯誤，其他問題可能會被提及。您也可
+# 預先設定它們。您可以藉由執行安裝程式，並且執行下面指令以取得其他問題的
+# 清單：
+#   debconf-get-selections --installer 
+> file
+#   debconf-get-selections 
+>
+> file
 
-# If you like, you can include other preseed files into this one.
-# Any settings in those files will override pre-existing settings from this
-# file. More that one file can be listed, separated by spaces; all will be
-# loaded. The included files can have preseed/include directives of their
-# own as well. Note that if the filenames are relative, they are taken from
-# the same directory as the preseed file that includes them.
+# 如果您喜歡，您可以帶入其他預先設定檔到此檔案中。那些檔案中的設定將會覆蓋本
+# 檔案之前有設定的部份。您可以帶入一個以上的預先設定檔，請以空白格開。這些
+# 檔案也可以帶入它們自己的預先設定指令。請注意，如果檔案路徑是以相對路徑
+# 表示，那麼將從帶入它們的父檔案所處位置開始。
 #d-i preseed/include                    string x.cfg
 
-# More flexibly, this runs a shell command and if it outputs the names of
-# preseed files, includes those files. For example, to switch configs based
-# on a particular usb storage device (in this case, a built-in card reader):
+# 安裝程式在使用預先設定檔之前得確認該檔案的檢查和。目前只支援 md5sum，按照
+# 引入的檔案順序列出這些檔案的檢查和。(Sarge 安裝程式不支援檢查和。)
+#d-i pressed/include/checksum                string 5da499872becccfeda2c4872f9171c3d
+
+# 或者您可以更靈活的設定，下面的介殼命令會決定預先設定設定檔的名稱。例如，
+# 在 USB 隨身碟 (在這個範例中，為一內建讀卡機) 下的設定檔之中切換：
 #d-i preseed/include_command            string \
 #    if $(grep -q "GUID: 0aec3050aec305000001a003" /proc/scsi/usb-storage-*/*); \
 #    then echo kraken.cfg; else echo otherusb.cfg; fi
+# 在安裝之前您可以檢查您的預先設置檔語法是否正確，請使用：
+#   debconf-set-selections -c preseed.cfg
 </screen
 ></informalexample>
 
@@ -400,7 +385,7 @@ xserver-xfree86  xserver-xfree86/config/monitor/mode-list \
 >/dev</filename
 >發現許多很特別的檔案。這些檔案被稱為設備檔。在 Unix 世界裡，存取硬體的方式有些不一樣。這些特別的檔案的背後其實運行著驅動程式，而正是驅動程式控制著硬體。設備檔就是存取真實的系統元件的介面。<filename
 >/dev</filename
-> 目錄下的檔案的各種特性也和普通檔案大相徑庭。下面列舉了最重要的一些設備檔。 </para
+> 目錄下的檔案的各種特性也和普通檔案大相逕庭。下面列舉了最重要的一些設備檔。 </para
 ><para>
 
 <informaltable
@@ -687,14 +672,14 @@ mouse =&gt; /dev/psaux  =&gt; gpm =&gt; /dev/gpmdata -&gt; /dev/mouse =&gt; X
 >/etc/sysctl.conf</filename
 > 檔案。 <informalexample
 ><screen
-># 3-button mouse emulation 
-# turn on emulation
+># 模擬三鍵滑鼠
+# 啟用模擬
 /dev/mac_hid/mouse_button_emulation = 1
-# Send middle mouse button signal with the F11 key
+# 按下 F11 則送出滑鼠中鍵訊號
 /dev/mac_hid/mouse_button2_keycode = 87
-# Send right mouse button signal with the F12 key
+# 按下 F12 則送出滑鼠右鍵訊號
 /dev/mac_hid/mouse_button3_keycode = 88
-# For different keys, use showkey to tell you what the code is.
+# 對於其他不同的按鍵，使用 showkey 指令來得知其編碼。
 </screen
 ></informalexample>
 
@@ -714,12 +699,12 @@ mouse =&gt; /dev/psaux  =&gt; gpm =&gt; /dev/gpmdata -&gt; /dev/mouse =&gt; X
  installed, quit aptitude and repeat for other tasks.
  Space requirements need to be determined from tasksel as tasksel will not
  install recommended packages while selecting a task from aptitude will.
--->       
+-->
 
 <para
 >在 i386 架構上，基本的安裝預設使用 2.4 核心，需要 573MB 的磁碟空間，這裡面包含了標準軟體套件。 </para
 ><para
->下面的表格一一列出了 tasksel 中每個軟體集所需的磁碟空間大小。該列表是使用 aptitude 產生的。請注意，有些軟體集之間會有相重疊的部分，所以兩個軟體集一同 安裝後所占的空間，可能會小於這兩個軟體集分別安裝所占的空間。 </para
+>下面的表格一一列出了 tasksel 中每個軟體集所需的磁碟空間大小。該列表是使用 aptitude 產生的。請注意，有些軟體集之間會有相重疊的部分，所以兩個軟體集一同 安裝後所佔的空間，可能會小於這兩個軟體集分別安裝所佔的空間。 </para
 ><para
 >注意您需要將表格中列出的大小加上基本安裝大小以決定分割區的大小。多數列出的大小如 <quote
 >安裝大小</quote
@@ -853,13 +838,17 @@ mouse =&gt; /dev/psaux  =&gt; gpm =&gt; /dev/gpmdata -&gt; /dev/mouse =&gt; X
 >透過 Unix/Linux 系統來安裝 &debian;</title>
 
 <para
->本節說明了如何透過現有的 Unix 或 Linux 系統來安裝 &debian;，而非使用本手冊後面要談到的基於 ncurses，由選單驅動的安裝軟體。這篇``交叉安裝(cross-install)'' HOWTO 是應使用者的要求而撰寫的。他們原來是 Redhat、Mandrake 和 SUSE 的使用者，現轉而使用 &debian;。在本節中，我們假設您對於輸入 *nix 指令以及在檔案系統中穿梭移動並不生疏。同時，在本節中，<prompt
+>本節說明了如何透過現有的 Unix 或 Linux 系統來安裝 &debian;，而非使用本手冊後面要談到的基於 ncurses，由選單驅動的安裝軟體。這篇<quote
+>交叉安裝(cross-install)</quote
+> HOWTO 是應使用者的要求而撰寫的。他們原來是 Redhat、Mandrake 和 SUSE 的使用者，現轉而使用 &debian;。在本節中，我們假設您對於輸入 *nix 指令以及在檔案系統中穿梭移動並不生疏。同時，在本節中，<prompt
 >$</prompt
 > 符號表示這個指令是在使用者當前使用的系統中輸入的，而 <prompt
 >#</prompt
 > 則表示這個指令是在 Debian chroot 環境中輸入的。 </para
 ><para
->您一旦根據自己的需求設定好了新的 Debian 系統，就可以將您的原來系統中的使用者資料(如果有的話)全部遷移到 Debian 裡去。然後就能繼續爽了。一言以蔽之，這是一次"不關機"的 &debian; 安裝。同時，這也是處理那些因為硬體原因不能透過任何開機或者安裝媒介完成安裝的權宜之計。 </para>
+>您一旦根據自己的需求設定好了新的 Debian 系統，就可以將您的原來系統中的使用者資料(如果有的話)全部遷移到 Debian 裡去。然後就能繼續爽了。一言以蔽之，這是一次<quote
+>不關機</quote
+>的 &debian; 安裝。同時，這也是處理那些因為硬體原因不能透過任何開機或者安裝媒介完成安裝的權宜之計。 </para>
 
   <sect2>
   <title
@@ -1008,11 +997,11 @@ mouse =&gt; /dev/psaux  =&gt; gpm =&gt; /dev/gpmdata -&gt; /dev/mouse =&gt; X
   <title
 >基本系統的設定</title>
 <para
->現在您在硬碟上已經裝上了一套真正的 Debian 作業系統，盡管它還很瘦小。<command
+>現在您在硬碟上已經裝上了一套真正的 Debian 作業系統，儘管它還很瘦小。<command
 >Chroot</command
 > 用來進入該系統： <informalexample
 ><screen
-># chroot /mnt/debinst /bin/bash
+># LANG= chroot /mnt/debinst /bin/bash
 </screen
 ></informalexample>
 
@@ -1058,7 +1047,7 @@ proc             /proc         proc    defaults                 0    0
 # mount /path   # e.g.: mount /usr
 </screen
 ></informalexample
-> 您可以多次掛載 proc 檔案系統。盡管通常把它掛載到 /proc，但是它還是可以被掛載到任意的地方。如果您沒有用 <userinput
+> 您可以多次掛載 proc 檔案系統。儘管通常把它掛載到 /proc，但是它還是可以被掛載到任意的地方。如果您沒有用 <userinput
 >mount -a</userinput
 >，那麼請一定要在接著做之前先把 proc 掛載好： <informalexample
 ><screen
@@ -1094,12 +1083,12 @@ proc             /proc         proc    defaults                 0    0
 >/etc/hostname</filename
 >。 <informalexample
 ><screen>
-# editor /etc/network/interfaces 
+# 編輯器 /etc/network/interfaces 
 </screen
 ></informalexample
 > 這裡有些從 <filename
 >/usr/share/doc/ifupdown/examples</filename
->: <informalexample
+> 取出的範例: <informalexample
 ><screen>
 ######################################################################
 # /etc/network/interfaces -- configuration file for ifup(8), ifdown(8)
@@ -1107,17 +1096,17 @@ proc             /proc         proc    defaults                 0    0
 # available.
 ######################################################################
 
-# We always want the loopback interface.
+# 我們永遠需要 loopback 介面。
 #
 auto lo
 iface lo inet loopback
 
-# To use dhcp:
+# 使用 DHCP：
 #
 # auto eth0
 # iface eth0 inet dhcp
 
-# An example static IP setup: (broadcast and gateway are optional)
+# 靜態 IP 的設置範例 (broadcast 和 gateway 不一定要設定)：
 #
 # auto eth0
 # iface eth0 inet static
@@ -1132,7 +1121,7 @@ iface lo inet loopback
 >/etc/resolv.conf</filename
 >: <informalexample
 ><screen>
-# editor /etc/resolv.conf
+# 編輯器 /etc/resolv.conf
 </screen
 ></informalexample
 > 這裡有個簡單的 <filename

@@ -43,23 +43,29 @@
 ><para
 >ARC requer que utilize uma tabela de partições MS-DOS (como as criadas pelo <command
 >cfdisk</command
->) para o disco de arranque. Assim, as tabelas de partições MS-DOS são do formato ``nativo'' quando se arranca a partir de ARC. De facto, desde que AlphaBIOS contenha um utilitário de partição de disco, poderá preferir particionar o seu disco a partir do menu do firmware, antes de instalar o Linux. </para
+>) para o disco de arranque. Assim, as tabelas de partições MS-DOS são do formato <quote
+>nativo</quote
+> quando se arranca a partir de ARC. De facto, como o AlphaBIOS contém um utilitário de particionamento de disco, você poderá preferir particionar os seus discos a partir dos menus do firmware, antes de instalar Linux. </para
 ><para
 >Inversamente, SRM é <emphasis
 >incompatível</emphasis
-> com as tabelas de partições MS-DOS. <footnote
+><footnote
+> <para
+> Especificamente, o formato do sector de boot necessário pela Console Subsystem Specification entra em conflito com a colocação da tabela de partições do DOS. </para
+> </footnote
+> com as tabelas de partições MS-DOS. Como o Tru64 Unix utiliza o formato disklabel BSD, este é o formato de partição <quote
+>nativo</quote
+> para instalações SRM. </para
 ><para
->Especificamente, o formato do sector de arranque pedido pelo subsistema de especificação da Consola (Console Subsystem Specification), entra em conflito com a colocação da tabela de partição do DOS.</para
-></footnote
-> Desde que o Tru64 Unix usa o formato disklabel do BSD, este é o formato de partição ``nativo'' para instalações SRM. </para
-><para
->GNU/Linux é o único sistema operativo em Alpha que pode ser iniciado a partir de ambos os tipos de consola, mas &debian; &release; apenas suporta arranque em sistemas baseados em SRM (SRM-based). Se tem um Alpha para o qual nenhuma versão de SRM está disponível, se irá fazer dual-boot do sistema com Windows NT, ou se o seu periférico de boot requer suporte para uma consola ARC para inicialização por BIOS, não lhe irá ser possível correr o instalador de &debian; &release;. Será, no entanto, possivel correr &debian; &release; em tais sistemas usando outro meio para instalar; por exemplo, poderá instalar o Debian woody com recurso ao MILO e fazendo upgrade. </para
+>GNU/Linux é o único sistema operativo em Alpha que pode ser iniciado a partir de ambos os tipos de consola, mas &debian; &release; apenas suporta arranque em sistemas baseados em SRM (SRM-based). Se tem um Alpha para o qual nenhuma versão de SRM está disponível, se irá fazer dual-boot do sistema com Windows NT, ou se o seu periférico de boot requer suporte para uma consola ARC para inicialização por BIOS, não lhe irá ser possível correr o instalador de &debian; &release;. Será, no entanto, possível correr &debian; &release; em tais sistemas usando outro meio para instalar; por exemplo, poderá instalar o Debian woody com recurso ao MILO e fazendo upgrade. </para
 ><para
 >Uma vez que o <command
 >MILO</command
 > não está disponível para nenhum dos sistemas Alpha em produção corrente (em Fevereiro de 2000), e uma vez que já não é necessário comprar uma licença OpenVMS ou Tru64 Unix para ter firmware SRM no seu antigo Alpha, é recomendado que utilize SRM quando possível. </para
 ><para
->A tabela seguinte sumariza as combinações disponíveis e suportadas do tipo de sistema/consola (ver <xref linkend="alpha-cpus"/> para os nomes dos tipos de sistema). A palavra `ARC' abaixo referia mostra as consolas compatíveis com ARC. </para
+>A tabela seguinte sumariza as combinações disponíveis e suportadas do tipo de sistema/consola (ver <xref linkend="alpha-cpus"/> para os nomes dos tipos de sistema). A palavra <quote
+>ARC</quote
+> abaixo denota qualquer das consolas compatíveis com ARC. </para
 ><para>
 
 <informaltable
@@ -253,7 +259,7 @@
 ><para condition="FIXME"
 >Os parágrafos seguintes são referentes ao manual de instalação do woody, e são aqui incluídos para referência; podem vir a ser úteis mais à frente, quando o Debian voltar a suportar instalações baseadas em MILO. </para
 ><para condition="FIXME"
->Geralmente, nenhuma destas consolas pode arrancar o Linux directamente, portanto é necessário o recurso a um gestor de arranqe intermediário. Há dois gestores de arranque de Linux muito populares: <command
+>Geralmente, nenhuma destas consolas pode arrancar o Linux directamente, portanto é necessário o recurso a um gestor de arranque intermediário. Há dois gestores de arranque de Linux muito populares: <command
 >MILO</command
 > e <command
 >aboot</command
@@ -294,16 +300,18 @@ ARC -&gt; MILO
 >aboot</command
 > nas novas instalações de GNU/Linux, a não ser que deseje fazer dual-boot com Windows NT. </para
 ><para
->A maioria dos servidores Alpha (AlphaServers) e todos os produtos para servidores e workstations contém tanto SRM como AlphaBIOS no seu firmware. Para máquinas "half-flash" tais como as várias avaliações de boards, é possível mudar de uma versão para outra apenas com um flash ao firmware. Além disso, mal o SRM esteja instalado, é possível correr ARC/AlphaBIOS a partir de uma disquete (usando o comando <command
+>A maioria dos AlphaServers e todos os produtos actuais para servidores e estações de trabalho contém tanto SRM como AlphaBIOS no seu firmware. Para máquinas <quote
+>half-flash</quote
+> tais como as várias placas de avaliação, é possível mudar de uma versão para outra apenas fazendo novamente o flash ao firmware. Além disso, uma vez o SRM esteja instalado, é possível correr o ARC/AlphaBIOS a partir de uma disquete (usando o comando <command
 >arc</command
->). Pelas razões mencionadas anteriormente, recomendamos que mude para SRM antes de instalar &debian;. </para
+>). Pelas razões mencionadas acima, nós recomendamos que mude para SRM antes de instalar &debian;. </para
 ><para
->Assim como noutras arquitecturas, deverá instalar a revisão de firmware mais recente <footnote
-><para
+>Assim como noutras arquitecturas, deverá instalar a revisão de firmware mais recente<footnote
+> <para
 > Excepto em Jensen, onde o Linux não é suportado nas versões superiores a 1.7 &mdash; ver <ulink url="&url-jensen-howto;"
 ></ulink
-> para mais informação </para
-></footnote
+> para mais informação. </para
+> </footnote
 > antes de instalar &debian;. Para Alpha, os updates de firmware podem ser obtidos a partir de <ulink url="&url-alpha-firmware;"
 >Alpha Firmware Updates </ulink
 >. </para>
@@ -358,7 +366,7 @@ ewc0.0.0.2002.0            EWC0              00-06-2B-01-32-B0
 >boot</userinput
 > do SRM.As portas série são nomeadas da mesma maneira que o seu correspondente em ficheiros em <userinput
 >/dev</userinput
->. Também, quando especifcar parâmetros de kernel adicionais, terá de repetir certas opções pré-definias que são necessárias pelas imagens do &d-i;. Por exemplo, para arrancar a partir de <userinput
+>. Também, quando especificar parâmetros de kernel adicionais, terá de repetir certas opções pré-definias que são necessárias pelas imagens do &d-i;. Por exemplo, para arrancar a partir de <userinput
 >ewa0</userinput
 > e usar uma consola na primeira porta série, deverá digitar: <informalexample
 ><screen
@@ -412,7 +420,7 @@ ewc0.0.0.2002.0            EWC0              00-06-2B-01-32-B0
 &gt;&gt;&gt; boot dva0 -flags 0
 </screen
 ></informalexample
-> possivelmente substituíndo <filename
+> possivelmente substituindo <filename
 >dva0</filename
 > pelo nome do dispositivo correcto. Normalmente, <filename
 >dva0</filename
@@ -434,7 +442,7 @@ ewc0.0.0.2002.0            EWC0              00-06-2B-01-32-B0
 &gt;&gt;&gt; boot dva0 -file linux.bin.gz -flags "root=/dev/fd0 load_ramdisk=1 arguments"
 </screen
 ></informalexample
-> (escrito numa linha), substituíndo, se necessário, o nome do dispositivo actual de boot SRM para <filename
+> (escrito numa linha), substituindo, se necessário, o nome do dispositivo actual de boot SRM para <filename
 >dva0</filename
 >, o nome do dispositivo de arranque do Linux para <filename
 >fd0</filename
@@ -464,7 +472,7 @@ ewc0.0.0.2002.0            EWC0              00-06-2B-01-32-B0
 ><title
 >Iniciar com o MILO</title>
 <para
->O MILO contido na bootstrap media está configurado automáticamente para proceder automáticamente para Linux. Caso deseje invertir, tudo o que necessita fazer é pressionar a tecla de espaço durante a contagem decrescente do MILO. </para
+>O MILO contido na bootstrap media está configurado automaticamente para proceder automaticamente para Linux. Caso deseje intervir, tudo o que necessita fazer é pressionar a tecla de espaço durante a contagem decrescente do MILO. </para
 ><para
 >Se deseja especificar todos os bits explicitamente (por exemplo, para fornecer parâmetros adicionais), poderá usar um comando como o seguinte: <informalexample
 ><screen>
@@ -494,7 +502,7 @@ MILO
 ><para arch="hppa"
 >Sistemas mais antigos como o 712 poderão requerer o uso de um servidor RBOOT em vez de um servidor BOOTP. </para
 ><para
->O metodo de instalação para suportar o arranque pela rede é descrito em <xref linkend="install-tftp"/>. </para>
+>O método de instalação para suportar o arranque pela rede é descrito em <xref linkend="install-tftp"/>. </para>
 <!--   End of file boot-installer/intro-net.xml -->
 
   <sect3 arch="arm"
@@ -600,7 +608,7 @@ MILO
 > configure o seu sistema para arrancar a partir de um CD como descrito em <xref linkend="boot-dev-select"/>, </phrase
 > insira o seu CD, reinicie, e proceda para o próximo capítulo. </para
 ><para
->Note que determinadas drives de CD podem requerer drivers especiais, e portanto estarem inacessíveis nas fases iniciais da instalação. Se se verificar que a maneira comum de iniciar a partir do CD não funciona no seu hardware, revisite este capítulo e leia sobre métodos alternativos para installar e kernels alternativos que poderão funcionar consigo. </para
+>Note que determinadas drives de CD podem requerer drivers especiais, e portanto estarem inacessíveis nas fases iniciais da instalação. Se se verificar que a maneira comum de iniciar a partir do CD não funciona no seu hardware, visite novamente este capítulo e leia sobre métodos alternativos para instalar e kernels alternativos que poderão funcionar consigo. </para
 ><para
 >Mesmo se não conseguir iniciar a partir do CD-ROM, poderá provavelmente instalar os componentes do Debian e qualquer pacote que deseje a partir do CD-ROM. Simplesmente arranque utilizando uma media diferente, tal como disquetes. Quanto for altura de instalar o sistema operativo, sistema base, e qualquer pacote adicional, aponte o sistema de instalação para a drive de CD-ROM. </para
 ><para
@@ -629,7 +637,7 @@ MILO
 > configure o seu sistema para arrancar a partir de um CD como descrito em <xref linkend="boot-dev-select"/>, </phrase
 > insira o seu CD, reinicie, e proceda para o próximo capítulo. </para
 ><para
->Note que determinadas drives de CD podem requerer drivers especiais, e portanto estarem inacessíveis nas fases iniciais da instalação. Se se verificar que a maneira comum de iniciar a partir do CD não funciona no seu hardware, revisite este capítulo e leia sobre métodos alternativos para installar e kernels alternativos que poderão funcionar consigo. </para
+>Note que determinadas drives de CD podem requerer drivers especiais, e portanto estarem inacessíveis nas fases iniciais da instalação. Se se verificar que a maneira comum de iniciar a partir do CD não funciona no seu hardware, visite novamente este capítulo e leia sobre métodos alternativos para instalar e kernels alternativos que poderão funcionar consigo. </para
 ><para
 >Mesmo se não conseguir iniciar a partir do CD-ROM, poderá provavelmente instalar os componentes do Debian e qualquer pacote que deseje a partir do CD-ROM. Simplesmente arranque utilizando uma media diferente, tal como disquetes. Quanto for altura de instalar o sistema operativo, sistema base, e qualquer pacote adicional, aponte o sistema de instalação para a drive de CD-ROM. </para
 ><para
@@ -637,7 +645,7 @@ MILO
 <!--   End of file boot-installer/intro-cd.xml -->
 
 <!-- We'll comment the following section until we know exact layout -->
-<!-- 
+<!--
 CD #1 of official Debian CD-ROM sets for &arch-title; will present a
 <prompt
 >boot:</prompt
@@ -655,17 +663,17 @@ followed by &enterkey;.
 ><para>
 
 If your hardware doesn't support booting of multiple images, put one
-of the other CDs in the drive. It appears that most SCSI CD-ROM drives 
+of the other CDs in the drive. It appears that most SCSI CD-ROM drives
 do not support <command
 >isolinux</command
 > multiple image booting, so users
-with SCSI CD-ROMs should try either CD2 (vanilla) or CD3 (compact), 
-or CD5 (bf2.4). 
+with SCSI CD-ROMs should try either CD2 (vanilla) or CD3 (compact),
+or CD5 (bf2.4).
 
 </para
 ><para>
 
-CD's 2 through 5 will each boot a 
+CD's 2 through 5 will each boot a
 different ``flavor'' depending on which CD-ROM is
 inserted. See <xref linkend="kernel-choice"/> for a discussion of the
 different flavors.  Here's how the flavors are laid out on the
@@ -679,7 +687,7 @@ different CD-ROMs:
 ><para>
 
 Allows a selection of kernel images to boot from (the idepci flavor is
-the default if no selection is made). 
+the default if no selection is made).
 
 </para
 ></listitem
@@ -690,7 +698,9 @@ the default if no selection is made).
 ><listitem
 ><para>
 
-Boots the `vanilla' flavor.
+Boots the <quote
+>vanilla</quote
+> flavor.
 
 </para
 ></listitem
@@ -701,7 +711,9 @@ Boots the `vanilla' flavor.
 ><listitem
 ><para>
 
-Boots the `compact' flavor.
+Boots the <quote
+>compact</quote
+> flavor.
 
 </para
 ></listitem
@@ -712,7 +724,9 @@ Boots the `compact' flavor.
 ><listitem
 ><para>
 
-Boots the `idepci' flavor.
+Boots the <quote
+>idepci</quote
+> flavor.
 
 </para
 ></listitem
@@ -723,7 +737,9 @@ Boots the `idepci' flavor.
 ><listitem
 ><para>
 
-Boots the `bf2.4' flavor.
+Boots the <quote
+>bf2.4</quote
+> flavor.
 
 </para
 ></listitem
@@ -752,7 +768,8 @@ Boot into DOS (not Windows) without any drivers being loaded.  To do
 this, you have to press <keycap
 >F8</keycap
 > at exactly the right
-moment (and optionally select the `safe mode command prompt only'
+moment (and optionally select the <quote
+>safe mode command prompt only</quote>
 option).  Enter the subdirectory for the flavor you chose, e.g.,
 
 <informalexample
@@ -761,12 +778,12 @@ option).  Enter the subdirectory for the flavor you chose, e.g.,
 cd c:\install
 </screen
 ></informalexample
->.  
+>.
 
 Next, execute <command
 >install.bat</command
 >.
-The kernel will load and launch the installer system. 
+The kernel will load and launch the installer system.
 
 </para
 ><para>
@@ -802,9 +819,11 @@ END FIXME -->
 > e do kernel correspondente. Isto permitir-lhe-á reparticionar o disco rígido do qual o instalador inicia, deverá fazer isto com bastante cuidado. </para>
 
 <para
->Alternativamente, se pretende guardar a partição existente no disco rígido inalterada durante a instalação, poderá fazer o download do ficheiro <filename
+>Em alternativa, se pretende manter uma partição, existente no disco rígido, inalterada durante a instalação, poderá fazer o download do ficheiro <filename
 >hd-media/initrd.gz</filename
-> e do seu kernel, assim como uma copia do iso do CD que está na drive (garanta que o ficheiro tem a extensão ".iso"). O instalador poderá então arrancar a partir da drive e instalar a partir da imagem do CD, sem necessitar da rede. </para>
+> e do seu kernel, assim como uma copia do iso de CD para a drive (garanta que o ficheiro tem o nome que termine em <literal
+>.iso</literal
+>). O instalador poderá então arrancar a partir da drive e instalar a partir da imagem do CD, sem necessitar da rede. </para>
 
 <para
 >Para o <command
@@ -882,7 +901,7 @@ initrd (hd0,0)/boot/newinstall/initrd.gz
 ><para
 >Note que para o valor de <userinput
 >ramdisk_size</userinput
-> poderá necessitar de ser ajustado para o tamanho da imagen do initrd. A partir daqui, não deverá haver diferenças entre o <command
+> poderá necessitar de ser ajustado para o tamanho da imagem do initrd. A partir daqui, não deverá haver diferenças entre o <command
 >GRUB</command
 > ou o <command
 >LILO</command
@@ -910,7 +929,7 @@ initrd (hd0,0)/boot/newinstall/initrd.gz
 ><para
 >Para instalar a partir de uma drive LS-120 (versão ATAPI) com um conjunto de disquetes, necessita de especificar a localização virtual para o dispositivo de disquetes. Isto é feito com o argumento de arranque <emphasis
 >root=</emphasis
->, dando o disposivo para onde o driver ide-floppy mapeia o dispositivo. Por exemplo, se a sua drive LS-120 está conectada no primeiro dispositivo IDE (master) no segundo cabo, deverá introduzir <userinput
+>, dando o dispositivo para onde o driver ide-floppy mapeia o dispositivo. Por exemplo, se a sua drive LS-120 está conectada no primeiro dispositivo IDE (master) no segundo cabo, deverá introduzir <userinput
 >linux root=/dev/hdc</userinput
 > na linha de comandos de arranque. Instalação a partir de LS-120 apenas é suportada em kernel 2.4 e posteriores. </para
 ><para
@@ -922,7 +941,9 @@ initrd (hd0,0)/boot/newinstall/initrd.gz
 > <keycap
 >Delete</keycap
 ></keycombo
-> não faz reset à máquina portanto é recomendado um ``hard reboot''. Se está a instalar a partir de um sistema operativo já existente (e.g., a partir do DOS) não terá escolha. Caso contrário, por favor, faça um ``hard reboot'' quando arrancar. </para
+> não faz reset à máquina portanto é recomendado um <quote
+>hard</quote
+> reboot. Se está a instalar a partir de um sistema operativo já existente (p.e., a partir de uma máquina com DOS) não terá escolha. Caso contrário, por favor, faça um hard reboot quando arrancar. </para
 ><para
 >A disquete irá ser acedida e deverá ver um ecrã que introduz a disquete de arranque e acaba com a prompt <prompt
 >boot:</prompt
@@ -938,11 +959,11 @@ initrd (hd0,0)/boot/newinstall/initrd.gz
 >debian-installer</command
 > é lançado automaticamente. </para>
   </sect2>
-  
+
   <sect2 arch="i386" id="boot-tftp"
 ><title
 >Iniciar com TFTP</title>
- 
+
 
 <!-- Start of file boot-installer/intro-net.xml -->
 
@@ -951,9 +972,9 @@ initrd (hd0,0)/boot/newinstall/initrd.gz
 ><para arch="hppa"
 >Sistemas mais antigos como o 712 poderão requerer o uso de um servidor RBOOT em vez de um servidor BOOTP. </para
 ><para
->O metodo de instalação para suportar o arranque pela rede é descrito em <xref linkend="install-tftp"/>. </para>
+>O método de instalação para suportar o arranque pela rede é descrito em <xref linkend="install-tftp"/>. </para>
 <!--   End of file boot-installer/intro-net.xml -->
- 
+
 <para
 >Existem várias maneiras fazer um arranque TFTP em i386. </para>
 
@@ -963,9 +984,9 @@ initrd (hd0,0)/boot/newinstall/initrd.gz
 <para
 >Pode acontecer que a sua Network Interface Card (NIC, ou placa de rede), ou a sua Motherboard providencie a funcionalidade de arranque PXE. Isto é uma re-implementação da <trademark class="trade"
 >Intel</trademark
-> do arranque TFTP. Se tal acontecer, ser-lhe-á possível configuar a sua BIOS para arrancar pela rede. </para>
+> do arranque TFTP. Se tal acontecer, ser-lhe-á possível configurar a sua BIOS para arrancar pela rede. </para>
    </sect3>
-   
+
    <sect3
 ><title
 >NIC (placa de rede) com Network bootROM</title>
@@ -1030,7 +1051,7 @@ Carregue em F1 para ajuda, ou ENTER para iniciar:
 >1</keycap
 >. </para
 > </footnote
-> para ultrapassar este ecrã e ver o texto de ajuda. Uma vez ultrapassado o ecrã inicial e estando no ecrã de ajuda as suas tecla serão ecoados para a linha de comandos como é de esperar. Para previnir o instalador de utilizar o framebuffer para o resto da instalação, você também vai querer adicionar à linha de comandos de arranque <userinput
+> para ultrapassar este ecrã e ver o texto de ajuda. Uma vez ultrapassado o ecrã inicial e estando no ecrã de ajuda as suas tecla serão ecoados para a linha de comandos como é de esperar. Para prevenir o instalador de utilizar o framebuffer para o resto da instalação, você também vai querer adicionar à linha de comandos de arranque <userinput
 >debian-installer/framebuffer=false</userinput
 >, conforme é descrito no texto de ajuda. </para
 ></note>
@@ -1053,7 +1074,7 @@ Carregue em F1 para ajuda, ou ENTER para iniciar:
 > configure o seu sistema para arrancar a partir de um CD como descrito em <xref linkend="boot-dev-select"/>, </phrase
 > insira o seu CD, reinicie, e proceda para o próximo capítulo. </para
 ><para
->Note que determinadas drives de CD podem requerer drivers especiais, e portanto estarem inacessíveis nas fases iniciais da instalação. Se se verificar que a maneira comum de iniciar a partir do CD não funciona no seu hardware, revisite este capítulo e leia sobre métodos alternativos para installar e kernels alternativos que poderão funcionar consigo. </para
+>Note que determinadas drives de CD podem requerer drivers especiais, e portanto estarem inacessíveis nas fases iniciais da instalação. Se se verificar que a maneira comum de iniciar a partir do CD não funciona no seu hardware, visite novamente este capítulo e leia sobre métodos alternativos para instalar e kernels alternativos que poderão funcionar consigo. </para
 ><para
 >Mesmo se não conseguir iniciar a partir do CD-ROM, poderá provavelmente instalar os componentes do Debian e qualquer pacote que deseje a partir do CD-ROM. Simplesmente arranque utilizando uma media diferente, tal como disquetes. Quanto for altura de instalar o sistema operativo, sistema base, e qualquer pacote adicional, aponte o sistema de instalação para a drive de CD-ROM. </para
 ><para
@@ -1085,7 +1106,7 @@ Carregue em F1 para ajuda, ou ENTER para iniciar:
 >ELILO</command
 > irá falhar, criando um sistema incapaz de arrancar. A partição EFI está alocada e formatada no passo relativo à partição da instalação anterior ao carregamento de quaisquer pacotes do disco de sistema. A tarefa de particionamento também verifica que uma partição EFI apropriada está presente antes de autorizar a continuação da instalação. </para
 ><para
->O gestor de arranque EFI está presente como o último passo da inicialização do firmware. Mostra uma lista sob a forma de menu a partir da qual o utilizador pode seleccionar uma opção. Dependendo do modelo do sistema e qual o software carregado no sistema, este menu pode ser diferente de sistema para sistema. Deverá haver pelo menos dois items mostrados, <command
+>O gestor de arranque EFI está presente como o último passo da inicialização do firmware. Mostra uma lista sob a forma de menu a partir da qual o utilizador pode seleccionar uma opção. Dependendo do modelo do sistema e qual o software carregado no sistema, este menu pode ser diferente de sistema para sistema. Deverá haver pelo menos dois itens mostrados, <command
 >Boot Option Maintenance Menu</command
 > e <command
 >EFI Shell (Built-in)</command
@@ -1142,7 +1163,7 @@ Carregue em F1 para ajuda, ou ENTER para iniciar:
 >Removable Media Boot</command
 >, a máquina irá imediatamente iniciar a sequência de carregamento no arranque. Se em vez disso escolher <command
 >Debian Inst [Acpi ...</command
->, irá mostrar uma lista de directorios da parte de arrqnque do CD, requerendo que proceda para o proximo passo (adicional). </para
+>, irá mostrar uma lista de directórios da parte de arranque do CD, requerendo que proceda para o próximo passo (adicional). </para
 ></listitem>
 
 <listitem
@@ -1230,7 +1251,7 @@ Carregue em F1 para ajuda, ou ENTER para iniciar:
 </itemizedlist>
 
 <para
->Tal como a opção 1, estes passos iniciam o gestor de arranque de Debian que irá mostrar uma página de menu para você escolher um kernel e opções de arranque. Você pode também introduziro o comando mais curto <command
+>Tal como a opção 1, estes passos iniciam o gestor de arranque de Debian que irá mostrar uma página de menu para você escolher um kernel e opções de arranque. Você pode também introduzir o comando mais curto <command
 >fs<replaceable
 >n</replaceable
 >:elilo</command
@@ -1308,8 +1329,7 @@ Carregue em F1 para ajuda, ou ENTER para iniciar:
 >Carregue em <command
 >ENTER</command
 >. Isto irá carregar e iniciar o kernel. O kernel irá mostrar as suas típicas mensagens de inicialização seguidas do primeiro ecrã do Instalador Debian. </para
-></listitem
-> 
+></listitem>
 
 </itemizedlist>
 
@@ -1333,7 +1353,7 @@ Carregue em F1 para ajuda, ou ENTER para iniciar:
 ><para arch="hppa"
 >Sistemas mais antigos como o 712 poderão requerer o uso de um servidor RBOOT em vez de um servidor BOOTP. </para
 ><para
->O metodo de instalação para suportar o arranque pela rede é descrito em <xref linkend="install-tftp"/>. </para>
+>O método de instalação para suportar o arranque pela rede é descrito em <xref linkend="install-tftp"/>. </para>
 <!--   End of file boot-installer/intro-net.xml -->
 
 <para
@@ -1360,7 +1380,7 @@ host mcmuffin {
 ><para
 >Extraia o ficheiro <filename
 >netboot.tar.gz</filename
-> para o directório utilizado como raíz do seu servidor tftp. Tipicamente os directórios raíz de tftp incluem <filename
+> para o directório utilizado como raiz do seu servidor tftp. Tipicamente os directórios raiz de tftp incluem <filename
 >/var/lib/tftp</filename
 > e <filename
 >/tftpboot</filename
@@ -1398,7 +1418,7 @@ host mcmuffin {
   <title
 >Configurar o Cliente</title>
 <para
->Para configurar o cliente para suportar aranque por TFTP, começe por arrancar em EFI e entre em <guimenu
+>Para configurar o cliente para suportar arranque por TFTP, comece por arrancar em EFI e entre em <guimenu
 >Boot Option Maintenance Menu</guimenu
 >. <itemizedlist
 > <listitem
@@ -1422,7 +1442,7 @@ host mcmuffin {
 >elilo.efi</filename
 > via TFTP a partir do servidor. </para
 ><para
->O gestor de arranque irá mostrar a sua linha de comandos após ter feito o download e processado o seu ficheiro de configuração. Neste ponto, a instalação continua com os mesmos passos do que a instalação por CD. Escolha uma opção de arranque tal como em cima quando o kernel completar de se instalalar a ele próprio a apartir da rede, e irá iniciar o Instalador Debian. </para
+>O gestor de arranque irá mostrar a sua linha de comandos após ter feito o download e processado o seu ficheiro de configuração. Neste ponto, a instalação continua com os mesmos passos do que a instalação por CD. Escolha uma opção de arranque tal como em cima quando o kernel completar de se instalar a ele próprio a partir da rede, e irá iniciar o Instalador Debian. </para
 ><para
 >Continue para o próximo capítulo para continuar a instalação onde irá configurar idioma do locale, rede, e partições de disco. </para>
   </sect3>
@@ -1638,7 +1658,7 @@ host mcmuffin {
 >essencial</emphasis
 > que, quando arrancar em MacOS em preparação para iniciar o instalador de linux Penguin, pressione a tecla <keycap
 >shift</keycap
-> para pervenir extenções no arranque. Se apenas utiliza MacOS para iniciar o linux, pode conseguir o mesmo removendo todas as extensões e a pasta do painel de controle do sistema Mac. Caso contrário as extenções podem ser deixadas correr e causar problemas aleatórios com o kernel linux que está a ser executado. </para
+> para prevenir extensões no arranque. Se apenas utiliza MacOS para iniciar o linux, pode conseguir o mesmo removendo todas as extensões e a pasta do painel de controle do sistema Mac. Caso contrário as extensões podem ser deixadas correr e causar problemas aleatórios com o kernel linux que está a ser executado. </para
 ><para
 >Os Macs requerem o gestor de arranque <command
 >Penguin</command
@@ -1701,7 +1721,7 @@ host mcmuffin {
 <para
 >FIXME </para
 ><para
->O programa de instalção deverá iniciar automaticamente, assim poderá continuar abaixo em <xref linkend="d-i-intro"/>. </para>
+>O programa de instalação deverá iniciar automaticamente, assim poderá continuar abaixo em <xref linkend="d-i-intro"/>. </para>
 
     </sect3>
   </sect2>
@@ -1721,7 +1741,7 @@ host mcmuffin {
 > configure o seu sistema para arrancar a partir de um CD como descrito em <xref linkend="boot-dev-select"/>, </phrase
 > insira o seu CD, reinicie, e proceda para o próximo capítulo. </para
 ><para
->Note que determinadas drives de CD podem requerer drivers especiais, e portanto estarem inacessíveis nas fases iniciais da instalação. Se se verificar que a maneira comum de iniciar a partir do CD não funciona no seu hardware, revisite este capítulo e leia sobre métodos alternativos para installar e kernels alternativos que poderão funcionar consigo. </para
+>Note que determinadas drives de CD podem requerer drivers especiais, e portanto estarem inacessíveis nas fases iniciais da instalação. Se se verificar que a maneira comum de iniciar a partir do CD não funciona no seu hardware, visite novamente este capítulo e leia sobre métodos alternativos para instalar e kernels alternativos que poderão funcionar consigo. </para
 ><para
 >Mesmo se não conseguir iniciar a partir do CD-ROM, poderá provavelmente instalar os componentes do Debian e qualquer pacote que deseje a partir do CD-ROM. Simplesmente arranque utilizando uma media diferente, tal como disquetes. Quanto for altura de instalar o sistema operativo, sistema base, e qualquer pacote adicional, aponte o sistema de instalação para a drive de CD-ROM. </para
 ><para
@@ -1743,7 +1763,7 @@ host mcmuffin {
 ><para arch="hppa"
 >Sistemas mais antigos como o 712 poderão requerer o uso de um servidor RBOOT em vez de um servidor BOOTP. </para
 ><para
->O metodo de instalação para suportar o arranque pela rede é descrito em <xref linkend="install-tftp"/>. </para>
+>O método de instalação para suportar o arranque pela rede é descrito em <xref linkend="install-tftp"/>. </para>
 <!--   End of file boot-installer/intro-net.xml -->
 
 <para
@@ -1807,7 +1827,7 @@ host mcmuffin {
 bootp():
 </screen
 ></informalexample
-> em SGI Indys para iniciar o Linux e para começar a intalação do software Debian. Com o intuito de fazer com que isto funcione deve ter de retirar a variável de ambiente <envar
+> em SGI Indys para iniciar o Linux e para começar a instalação do software Debian. Com o intuito de fazer com que isto funcione deve ter de retirar a variável de ambiente <envar
 >netaddr</envar
 >. Para fazer isto digite  na consola<informalexample
 ><screen>
@@ -1831,7 +1851,7 @@ ifconfig eth0 -auto
 boot 192.168.1.1:/boot/sibyl
 </screen
 ></informalexample
-> Precisa de substituir o endereço IP listado neste exemplo seja com o nome ou o endereço IP do seu servdor TFTP. Uma vez este comando emitido, o instalador irá iniciar automaticamente. </para>
+> Precisa de substituir o endereço IP listado neste exemplo seja com o nome ou o endereço IP do seu servidor TFTP. Uma vez este comando emitido, o instalador irá iniciar automaticamente. </para>
 </sect3>
   </sect2>
 
@@ -1886,7 +1906,7 @@ bootp():/boot/tftpboot.img
 <para
 >Com o intuito de executar o sistema de instalação num S/390 é necessário uma rede funcional e uma sessão de ssh. </para
 ><para
->O processo de arranque começa com a configuração da rede que o alerta para vários parâmetros de rede. Se a configuração fôr bem sucedida, irá fazer login no sistema iniciando uma sessão de ssh que irá lançar o  sistema de instalação standard. </para>
+>O processo de arranque começa com a configuração da rede que o alerta para vários parâmetros de rede. Se a configuração for bem sucedida, irá fazer login no sistema iniciando uma sessão de ssh que irá lançar o  sistema de instalação standard. </para>
   </sect2>
 
 
@@ -1914,7 +1934,7 @@ bootp():/boot/tftpboot.img
 > configure o seu sistema para arrancar a partir de um CD como descrito em <xref linkend="boot-dev-select"/>, </phrase
 > insira o seu CD, reinicie, e proceda para o próximo capítulo. </para
 ><para
->Note que determinadas drives de CD podem requerer drivers especiais, e portanto estarem inacessíveis nas fases iniciais da instalação. Se se verificar que a maneira comum de iniciar a partir do CD não funciona no seu hardware, revisite este capítulo e leia sobre métodos alternativos para installar e kernels alternativos que poderão funcionar consigo. </para
+>Note que determinadas drives de CD podem requerer drivers especiais, e portanto estarem inacessíveis nas fases iniciais da instalação. Se se verificar que a maneira comum de iniciar a partir do CD não funciona no seu hardware, visite novamente este capítulo e leia sobre métodos alternativos para instalar e kernels alternativos que poderão funcionar consigo. </para
 ><para
 >Mesmo se não conseguir iniciar a partir do CD-ROM, poderá provavelmente instalar os componentes do Debian e qualquer pacote que deseje a partir do CD-ROM. Simplesmente arranque utilizando uma media diferente, tal como disquetes. Quanto for altura de instalar o sistema operativo, sistema base, e qualquer pacote adicional, aponte o sistema de instalação para a drive de CD-ROM. </para
 ><para
@@ -2000,7 +2020,7 @@ bootp():/boot/tftpboot.img
 >yaboot</filename
 >, e <filename
 >yaboot.conf</filename
-> ao nível da raíz da sua partição HFS em <xref linkend="files-newworld"/>. Reinicie  o computador, e (durante o apito) pressione em simultâneo o conjunto de teclas constituído por <keycap
+> ao nível da raiz da sua partição HFS em <xref linkend="files-newworld"/>. Reinicie  o computador, e (durante o apito) pressione em simultâneo o conjunto de teclas constituído por <keycap
 >Option</keycap
 >, <keycap
 >Command (cloverleaf/Apple)</keycap
@@ -2059,9 +2079,9 @@ boot:
 ></keycombo
 > enquanto inicia (veja <xref linkend="invoking-openfirmware"/>). </para
 ><para
->Terá de utilizar onde aparece o dispostivo de armazenamento USB na árvore de dispositivos, dado que no momento <command
+>Terá de utilizar onde aparece o dispositivo de armazenamento USB na árvore de dispositivos, dado que no momento <command
 >ofpath</command
-> não o consegue utilizar de uma maneira automatica. Digite no prompt de OpenFirmware <userinput
+> não o consegue utilizar de uma maneira automática. Digite no prompt de OpenFirmware <userinput
 >dev / ls</userinput
 > e <userinput
 >devalias</userinput
@@ -2075,7 +2095,7 @@ boot:
 >/pci@f2000000/usb@1b,1/hub@1/disk@1</filename
 > funcionam. </para
 ><para
->Tendo retirado a localização do dispositivo, urilize um comando como este para iniciar o instalador: <informalexample
+>Tendo retirado a localização do dispositivo, utilize um comando como este para iniciar o instalador: <informalexample
 ><screen>
 boot <replaceable
 >usb0/disk</replaceable
@@ -2115,7 +2135,7 @@ boot <replaceable
 ><para arch="hppa"
 >Sistemas mais antigos como o 712 poderão requerer o uso de um servidor RBOOT em vez de um servidor BOOTP. </para
 ><para
->O metodo de instalação para suportar o arranque pela rede é descrito em <xref linkend="install-tftp"/>. </para>
+>O método de instalação para suportar o arranque pela rede é descrito em <xref linkend="install-tftp"/>. </para>
 <!--   End of file boot-installer/intro-net.xml -->
 
 <para
@@ -2183,7 +2203,7 @@ boot <replaceable
 ><para arch="hppa"
 >Sistemas mais antigos como o 712 poderão requerer o uso de um servidor RBOOT em vez de um servidor BOOTP. </para
 ><para
->O metodo de instalação para suportar o arranque pela rede é descrito em <xref linkend="install-tftp"/>. </para>
+>O método de instalação para suportar o arranque pela rede é descrito em <xref linkend="install-tftp"/>. </para>
 <!--   End of file boot-installer/intro-net.xml -->
 
 <para
@@ -2211,7 +2231,7 @@ boot <replaceable
 > configure o seu sistema para arrancar a partir de um CD como descrito em <xref linkend="boot-dev-select"/>, </phrase
 > insira o seu CD, reinicie, e proceda para o próximo capítulo. </para
 ><para
->Note que determinadas drives de CD podem requerer drivers especiais, e portanto estarem inacessíveis nas fases iniciais da instalação. Se se verificar que a maneira comum de iniciar a partir do CD não funciona no seu hardware, revisite este capítulo e leia sobre métodos alternativos para installar e kernels alternativos que poderão funcionar consigo. </para
+>Note que determinadas drives de CD podem requerer drivers especiais, e portanto estarem inacessíveis nas fases iniciais da instalação. Se se verificar que a maneira comum de iniciar a partir do CD não funciona no seu hardware, visite novamente este capítulo e leia sobre métodos alternativos para instalar e kernels alternativos que poderão funcionar consigo. </para
 ><para
 >Mesmo se não conseguir iniciar a partir do CD-ROM, poderá provavelmente instalar os componentes do Debian e qualquer pacote que deseje a partir do CD-ROM. Simplesmente arranque utilizando uma media diferente, tal como disquetes. Quanto for altura de instalar o sistema operativo, sistema base, e qualquer pacote adicional, aponte o sistema de instalação para a drive de CD-ROM. </para
 ><para
@@ -2254,7 +2274,9 @@ Illegal or malformed device name
 ><title
 >Mensagens ID</title>
 <para
->Se não consegue iniciar porque recebe mensagens sobre um problema com ``IDPROM'', então é possível que a sua bateria NVRAM, que contém informação de configuração para o seu firmware. Veja as <ulink url="&url-sun-nvram-faq;"
+>Se não consegue arrancar porque recebe mensagens sobre um problema com <quote
+>IDPROM</quote
+>, então é possível que a sua bateria NVRAM, que contém informação de configuração para o seu firmware, se tenha esgotado. Veja a <ulink url="&url-sun-nvram-faq;"
 >Sun NVRAM FAQ</ulink
 > para mais informação. </para>
   </sect2>
@@ -2275,9 +2297,9 @@ Illegal or malformed device name
 ><para
 >Informação sobre muitos parâmetros de arranque podem ser encontrados em <ulink url="http://www.tldp.org/HOWTO/BootPrompt-HOWTO.html"
 > Linux BootPrompt HOWTO</ulink
->, incluindo dicas para hardware obscuro. Esta secção contém apenas um esboço dos pârametros mais distintos. Alguns truques para identificar problemas estão incluídos abaixo em <xref linkend="boot-troubleshooting"/>. </para
+>, incluindo dicas para hardware obscuro. Esta secção contém apenas um esboço dos parâmetros mais distintos. Alguns truques para identificar problemas estão incluídos abaixo em <xref linkend="boot-troubleshooting"/>. </para
 ><para
->Quando o kernel arranca, é enviado anteriormente no processo a mensagem <informalexample
+>Quando o kernel arranca, deve ser emitida no inicio do processo <informalexample
 ><screen>
 Memory:<replaceable
 >avail</replaceable
@@ -2286,19 +2308,23 @@ Memory:<replaceable
 >k. available 
 </screen
 ></informalexample
->. <replaceable
+> uma mensagem. <replaceable
 >total</replaceable
-> deverá coincidir com o total de kilobytes da RAM. Se isto não coincidir com a quantidade real de RAM que tem instalado, precisa de utilizar o parâmetro <userinput
+> deve coincidir com a quantidade total de RAM, em kilobytes. Se isto não coincidir com a quantidade real de RAM que tem instalado, precisa de utilizar o parâmetro <userinput
 >mem=<replaceable
 >ram</replaceable
 ></userinput
 >, onde <replaceable
 >ram</replaceable
-> é substituido pela quantidade de memória, seguido de ``k'' para kilobytes, ou ``m'' para megabytes. Por  exemplo<userinput
+> é substituído pela quantidade de memória, seguido de <quote
+>k</quote
+> para kilobytes, ou <quote
+>m</quote
+> para megabytes. Por  exemplo<userinput
 >mem=65536k</userinput
-> and <userinput
+> e <userinput
 >mem=64m</userinput
-> significa 64MB of RAM. </para
+> significam 64MB of RAM. </para
 ><para condition="supports-serial-console"
 >Se estiver a iniciar de uma consola de série, geralmente o kernel irá auto detectar isto <phrase arch="mipsel"
 > (embora não o faça em DECstations)</phrase
@@ -2431,7 +2457,7 @@ Memory:<replaceable
 >BOOT_DEBUG</term>
 <listitem
 ><para
->Passar este parâmetro de arranque irá fazer com que o log de arranque seja mais detalhado. <variablelist>
+>Definir este parâmetro de arranque para 2 irá fazer com que o processo de arranque da instalação seja feito com um registo detalhado. Defini-lo para 3 faz com que estejam disponíveis shells de debug em pontos estratégicos do processo de arranque. (Sair das shells para continuar o processo de arranque.) <variablelist>
 <varlistentry>
 <term
 ><userinput
@@ -2542,7 +2568,7 @@ Memory:<replaceable
 ><para
 >Se tem um servidor DHCP na sua rede local, mas quer evitar utilizá-lo ex.: devolve respostas erradas, pode utilizar o parâmetro <userinput
 >netcfg/disable_dhcp=true</userinput
-> que previne que a rede não seja configurada por DHCP e que a inormação seja inserida manualmente. </para
+> que previne que a rede não seja configurada por DHCP e que a informação seja inserida manualmente. </para
 ></listitem>
 </varlistentry>
 
@@ -2553,7 +2579,7 @@ Memory:<replaceable
 ><para
 >Ponha como <userinput
 >false</userinput
-> para prevenir que sejam iniciados serviços PCMCIA, se isso causar problemas. Alguns portáteis são bem conhecidos por este mau comportamente. </para
+> para prevenir que sejam iniciados serviços PCMCIA, se isso causar problemas. Alguns portáteis são bem conhecidos por este mau comportamento. </para
 ></listitem>
 </varlistentry>
 
@@ -2580,11 +2606,11 @@ Memory:<replaceable
 >cdrom-detect/eject</term>
 <listitem
 ><para
->Por omissão, antes de reiniciar, &d-i; ejecta automaticamente o media utilizado durante a instalação. Isto poderá ser desnecessário se o sistema não iniciar de CD. Em alguns casos pode até não ser desejável, por exemplo o dispositivo optical </para
+>Por omissão, antes de reiniciar, o &d-i; ejecta automaticamente o media óptico utilizado durante a instalação. Isto poderá ser desnecessário se o sistema não iniciar automaticamente de CD. Em alguns casos pode até não ser desejável, por exemplo se o drive óptica não conseguir inserir novamente o media sozinha e o utilizador não estiver lá para o fazer manualmente. Muitas drives de carregamento de slots, slim-line, e caddy style não conseguem recarregar automaticamente. </para
 ><para
 >Coloque <userinput
 >false</userinput
-> para desactivar ejecção automatica, e fique atento pois pode necessitar de assegurar que o sistema não inicia automaticamente a partir da drive optical após a instalação inicial. </para
+> para desactivar ejecção automática, e fique atento pois pode necessitar de assegurar que o sistema não inicia automaticamente a partir da drive optical após a instalação inicial. </para
 ></listitem>
 </varlistentry>
 
@@ -2594,6 +2620,17 @@ Memory:<replaceable
 <listitem
 ><para
 >Se está a utilizar um kernel 2.2.x, você pode necessitar de definir &ramdisksize;. </para
+></listitem>
+</varlistentry>
+
+<varlistentry condition="etch">
+<term
+>rescue/enable</term>
+<listitem
+><para
+>Defina como <userinput
+>true</userinput
+> para entrar em modo de recuperação em vez de efectuar uma instalação normal. Veja <xref linkend="rescue"/>. </para
 ></listitem>
 </varlistentry>
 
@@ -2685,14 +2722,14 @@ Memory:<replaceable
 > ou <userinput
 >video=vga16:off</userinput
 >, para desabilitar a consola com framebuffer. Apenas o idioma inglês estará disponível durante a instalação devido a características limitadas na consola. Veja <xref linkend="boot-parms"/> para mais detalhes. </para>
-  
+
   <sect3>
   <title
 >Bloqueio do Sistema Durante a Fase de Configuração de PCMCIA</title>
 <para
->Alguns modelos de portáteis produzidos pela DELL, são conhecidos por bloquearem quando um dispositivo PCMCIA tenta aceder a alguns endereços de hardware. Outros portáteis poderão mostrar problemas similares. Se experimentou tal problema e não necessita do suporte PCMCIA durante a intalação, poderá descativar PCMCIA usando o parâmetro de arranque <userinput
+>Alguns modelos de portáteis produzidos pela DELL, são conhecidos por bloquearem quando um dispositivo PCMCIA tenta aceder a alguns endereços de hardware. Outros portáteis poderão mostrar problemas similares. Se experimentou tal problema e não necessita do suporte PCMCIA durante a instalação, poderá desactivar PCMCIA usando o parâmetro de arranque <userinput
 >hw-detect/start_pcmcia=false</userinput
->. Pode depois configurar a PCMCIA após a instalação estar concluída e excluír o recurso a causar o conflito. </para
+>. Pode depois configurar a PCMCIA após a instalação estar concluída e excluir o recurso a causar o conflito. </para
 ><para
 >Em alternativa, poderá iniciar o instalador em modo expert. Ser-lhe-á pedido para introduzir o intervalo de recursos que o seu hardware necessita. Por exemplo, se tem um dos portáteis Dell mencionados acima deverá introduzir <userinput
 >exclude port 0x800-0x8ff</userinput
@@ -2716,7 +2753,7 @@ Memory:<replaceable
 >Interpretar as mensagens de arranque do kernel</title>
 
 <para
->Durante a sequência de arranque, pode vêr muitas mensagens sob a forma <computeroutput
+>Durante a sequência de arranque, pode ver muitas mensagens sob a forma <computeroutput
 >can't find <replaceable
 >something</replaceable
 > </computeroutput
@@ -2732,7 +2769,7 @@ Memory:<replaceable
 >this driver release depends on <replaceable
 >something</replaceable
 > </computeroutput
->. A maioria destas mensagens são inofensivas. Visualiza-as porque o kernel para a instalação do sistema é feito para correr em computadores de diferente periféricos. Obviamente, nenhum computador terá todos os periféricos possíveis, então o sistema operativo poderá emitir algumas queixas enquanto procura por periféricos que não possui. Poderá também verificar uma pausa no sistema. Isto acontece quando aguarda pela resposta de um dispositivo, e o mesmo não está presente no seu sistema. Se considerar que o tempo de arranque do sistema incrivelmente longo, poderá mais tarde criar um kernel customizaado (veja <xref linkend="kernel-baking"/>). </para>
+>. A maioria destas mensagens são inofensivas. Visualiza-as porque o kernel para a instalação do sistema é feito para correr em computadores de diferente periféricos. Obviamente, nenhum computador terá todos os periféricos possíveis, então o sistema operativo poderá emitir algumas queixas enquanto procura por periféricos que não possui. Poderá também verificar uma pausa no sistema. Isto acontece quando aguarda pela resposta de um dispositivo, e o mesmo não está presente no seu sistema. Se considerar que o tempo de arranque do sistema incrivelmente longo, poderá mais tarde criar um kernel personalizado (veja <xref linkend="kernel-baking"/>). </para>
   </sect2>
 
 
@@ -2753,7 +2790,9 @@ Memory:<replaceable
   <title
 >Submeter Relatórios de Instalação</title>
 <para
->Se ainda tiver problemas, por favor submeta um relatório de instalação. Nós também encorajamos que sejam enviados relatórios de instalação mesmo que a instalação tenha sucesso, de modo a que possamos obter tanta informação quanto possível no maior número de configurações de hardware. Por favor utilize este template quando preencher relatórios de instalação, e envie o relatório como um relatório de bug sobre o pseudo-pacote "installation-reports", enviando-o para <email
+>Se ainda tiver problemas, por favor submeta um relatório de instalação. Nós também encorajamos que sejam enviados relatórios de instalação mesmo que a instalação tenha sucesso, de modo a que possamos obter tanta informação quanto possível no maior número de configurações de hardware. Por favor utilize este template quando preencher relatórios de instalação, e envie o relatório como um relatório de bug sobre o pseudo-pacote <classname
+>installation-reports</classname
+>, enviando-o para <email
 >submit@bugs.debian.org</email
 >. <informalexample
 ><screen>
@@ -2762,15 +2801,15 @@ Package: installation-reports
 Debian-installer-version: &lt;Preencha a data e de onde obteve a imagem&gt;
 uname -a: &lt;O resultado da execução de uname -a numa linha de comandos da shell&gt;
 Date: &lt;Data e hora da instalação&gt;
-Method: &lt;Como fez a instalação?  De onde iniciou?  Caso seja pela
+Method: &lt;Como fez a instalação?  De onde iniciou?  Caso seja
       uma instalação pela rede, de onde? Com Proxy?&gt;
 
 Machine: &lt;Descrição da máquina (ex, IBM Thinkpad R32)&gt;
 Processor:
 Memory:
 Root Device: &lt;IDE?  SCSI?  Nome do dispositivo?&gt;
-Root Size/partition table: &lt;Copie para aqui a tabela de partições completa
-      com notas a indicar que partição é montada onde.&gt;
+Root Size/partition table: &lt;Copie para aqui a tabela de partições 
+	completa com notas a indicar que partição é montada onde.&gt;
 Output de lspci and lspci -n:
 
 Base System Installation Checklist:

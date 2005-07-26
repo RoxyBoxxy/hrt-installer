@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<!-- original version: 27624 -->
+<!-- original version: 28997 -->
 
  <chapter id="d-i-intro"><title>Het Debian installatiesysteem gebruiken</title>
 
@@ -66,10 +66,11 @@ toe te voegen. De expert modus geeft u volledige controle over &d-i;.
 De standaard schermweergave van het installatiesysteem is karakter georiënteerd
 (dit in tegenstelling tot de tegenwoordig meer vertrouwde grafische interface).
 De muis is in deze omgeving niet actief. Dit zijn de toetsen waarmee u kunt
-navigeren binnen de diverse configuratieschermen. Om `vooruit' of `terug' te gaan
-tussen getoonde knoppen of selecties, gebruikt u de toetsen <keycap>Tab</keycap>
-of pijl <keycap>rechts</keycap>, respectievelijk de <keycombo> <keycap>Shift</keycap>
-<keycap>Tab</keycap> </keycombo> of pijl <keycap>links</keycap>. Met de pijlen
+navigeren binnen de diverse configuratieschermen. Om <quote>vooruit</quote> of
+<quote>terug</quote> te gaan tussen getoonde knoppen of selecties, gebruikt u de
+toetsen <keycap>Tab</keycap> of pijl <keycap>rechts</keycap>, respectievelijk de
+<keycombo> <keycap>Shift</keycap> <keycap>Tab</keycap> </keycombo> of pijl
+<keycap>links</keycap>. Met de pijlen
 <keycap>omhoog</keycap> en <keycap>omlaag</keycap> selecteert u de verschillende
 regels in een schuifbare lijst en verschuift u ook de lijst zelf. Daarnaast
 kunt u, bij lange lijsten, een letter intoetsen waardoor meteen het deel van de
@@ -88,14 +89,14 @@ ssh sessie openen om de hieronder beschreven logboeken te bekijken.
 Foutmeldingen worden omgeleid naar de derde console.
 U kunt toegang krijgen tot deze console door
 op <keycombo><keycap>linker Alt</keycap><keycap>F3</keycap></keycombo>
-te drukken (houd de linker <keycap>Alt</keycap> toets vast terwijl u de 
+te drukken (houd de linker <keycap>Alt</keycap> toets vast terwijl u de
 <keycap>F3</keycap> functietoets indrukt); u keert terug naar het hoofd
 installatiescherm met
 <keycombo><keycap>linker Alt</keycap><keycap>F1</keycap></keycombo>.
 
 </para><para>
 
-Deze meldingen kunnen ook worden teruggevonden in 
+Deze meldingen kunnen ook worden teruggevonden in
 <filename>/var/log/messages</filename>. Na de installatie wordt dit logbestand
 gekopieerd naar <filename>/var/log/debian-installer/messages</filename> op uw
 nieuwe systeem. Andere installatiemeldingen kunnen tijdens de installatie worden
@@ -133,12 +134,12 @@ geval kan dus het menu alsnog verschijnen.
 </para><para>
 
 U kunt het hoofdmenu van het installatiesysteem bereiken door herhaaldelijk
-de "Terug" knop te selecteren, waardoor u stapsgewijs teruggaat uit de op dat
-moment actieve module.
+de <quote>Terug</quote> knop te selecteren, waardoor u stapsgewijs teruggaat
+uit de op dat moment actieve module.
 
 </para></listitem>
 </varlistentry>
-<varlistentry>
+<varlistentry condition="sarge">
 
 <term>languagechooser</term><listitem><para>
 
@@ -146,21 +147,28 @@ De module 'languagechooser' (taalkiezer) toont een lijst van talen en
 varianten daarvan. Tijdens de installatie zullen boodschappen in de gekozen
 taal worden getoond, tenzij de vertaling voor die taal niet compleet is. Als
 een vertaling niet compleet is, worden de boodschappen in het Engels getoond.
-<!-- FJP Mogelijk hier toevoegen waarom dat relevant is?
-Alleen installer of ook defaulttaal van nieuwe systeem? //-->
-<!-- FJP Toevoegen?: als u uw systeem Engelstalig wilt hebben, kies dan als taal
-'??? (en)' (niet en_US!); u kunt daarna alsnog als land Nederland kiezen. -->
 
 </para></listitem>
 </varlistentry>
-<varlistentry>
+<varlistentry condition="sarge">
 
 <term>countrychooser</term><listitem><para>
 
 De module 'countrychooser' (landkiezer) toont een lijst van landen waaruit de
 gebruiker het land waar hij woont kan kiezen.
-<!-- FJP Mogelijk hier toevoegen waarom dat relevant is?
-Alleen keuze mirror of ook Localization in nieuwe systeem? //-->
+
+</para></listitem>
+</varlistentry>
+<varlistentry condition="etch">
+
+<term>localechooser</term><listitem><para>
+
+Stelt de gebruiker in staat om de lokalisatie te bepalen voor zowel
+de installatie als het geïnstalleerde systeem: taal, locatie en
+<quote>locale</quote>. Tijdens de installatie zullen boodschappen in de
+gekozen taal worden getoond, tenzij de vertaling voor die taal niet
+compleet is. Als een vertaling niet compleet is, worden de boodschappen
+in het Engels getoond.
 
 </para></listitem>
 </varlistentry>

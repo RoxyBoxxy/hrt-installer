@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<!-- original version: 27282 -->
+<!-- original version: 29307 -->
 
 <sect1 id="example-preseed">
 <title>Exemple de fichier de préconfiguration</title>
@@ -46,6 +46,14 @@ sur internet, <ulink url="&url-example-preseed;"></ulink>.
 #   preseed/file=/cdrom/preseed
 # N'oubliez pas de mettre le fichier à l'endroit que vous indiquez.
 # 
+# Pour être sûr que l'installateur prend le bon fichier, vous pouvez indiquer
+# une somme de contrôle pour le fichier. Pour le moment, cette somme doit être
+# de type md5sum. Quand elle est indiquée, elle doit correspondre au fichier ;
+# sinon, l'installateur refuse d'utiliser le fichier. L'installateur de sarge
+# n'accepte pas les sommes de contrôle.
+#   preseed/url/checksum=5da499872becccfeda2c4872f9171c3d
+#   preseed/file/checksum=5da499872becccfeda2c4872f9171c3d
+#
 # Pendant que vous y êtes, vous pourriez déclarer un debconf/priority=critical
 # pour éviter la plupart des questions, même s'il n'y en a pas beaucoup dans 
 # la préconfiguration qui suit.
@@ -55,12 +63,17 @@ sur internet, <ulink url="&url-example-preseed;"></ulink>.
 #
 # Langue, pays et clavier ne peuvent être présélectionnés dans ce fichier
 # car ces questions sont posées avant que le fichier ne soit chargé.
-# Pour éviter ces questions, il faut ajouter ces paramètres aux paramètres du
-# noyau&nbsp;:
+# Pour éviter ces questions, il faut ajouter des paramètres aux paramètres du
+# noyau. Avec l'installateur de Sarge, vous avez besoin de ces trois&nbsp;:
 #
-#    languagechooser/language-name=English
-#    countrychooser/shortlist=US
-#    console-keymaps-at/keymap=us
+#    languagechooser/language-name=French
+#    countrychooser/shortlist=FR
+#    console-keymaps-at/keymap=fr-latin9
+#
+# Avec les nouvelles versions de l'installateur, deux suffisent :
+#
+#    debian-installer/locale=fr_FR
+#    console-keymaps-at/keymap=fr-latin9
 #
 # Il faut savoir que le noyau accepte un maximum de huit options ligne de
 # de commandes et huit variables d'environnement. Et les options ajoutées
@@ -243,31 +256,44 @@ base-config	base-config/login	note
 # lancer immédiatemment après base-config&nbsp;:
 #base-config base-config/start-display-manager	boolean false
 
+# Certaines versions de l'installateur peuvent dire ce que vous avez installé.
+# Par défaut, rien n'est signalé. Mais l'envoi de rapport d'installation aide le projet
+# à connaître les logiciels populaires. 
+#popularity-contest popularity-contest/participate    boolean false
+
 ###### Configuration du fuseau horaire.
 
 # Cette commande règle l'horloge matérielle sur GMT ou non&nbsp;:
 base-config tzconfig/gmt		boolean true
+
+# Configuration simple du fuseau horaire. Vous pouvez mettre toute valeur acceptée pour $TZ.
+# Voyez ce que contient /usr/share/zoneinfo/ pour des options.
+base-config  tzconfig/preseed_zone                    string US/Eastern
+
+# La configuration du fuseau horaire était plus complexe jusqu'à récemment ; l'ancienne
+# méthode est expliquée maintenant à toutes fins utiles. Si vous utilisez sarge, 
+# vous avez besoin de cette méthode.
 
 # Si vous avez dit à l'installateur que vous habitez aux USA, vous pouvez
 # utiliser cette valeur pour déclarer le fuseau horaire.
 # (Les choix sont les suivants&nbsp;: Eastern, Central, Mountain, Pacific, 
 # Alaska, Hawaii, Aleutian, Arizona East-Indiana, Indiana-Starke, Michigan, 
 # Samoa, autre)
-base-config tzconfig/choose_country_zone/US	select Eastern
+#base-config tzconfig/choose_country_zone/US	select Eastern
 
 # Si vous avez dit à l'installateur que vous habitez au Canada.
 # (Choix : Newfoundland, Atlantic, Eastern, Central,
 # East-Saskatchewan, Saskatchewan, Mountain, Pacific, Yukon, autre)
-base-config tzconfig/choose_country_zone/CA	select Eastern
+#base-config tzconfig/choose_country_zone/CA	select Eastern
 
 # Si vous avez dit à l'installateur que vous habitez au Brésil. (Choix : 
 # East, West, Acre, DeNoronha, autre)
-base-config tzconfig/choose_country_zone/BR	select East
+#base-config tzconfig/choose_country_zone/BR	select East
 
 # Beaucoup de pays n'ont qu'un seul fuseau horaire. Si vous avez dit à 
 # l'installateur que vous habitez dans l'un de ces pays, vous pouvez le choisir
 # avec cette question.
-base-config tzconfig/choose_country_zone_single boolean true
+#base-config tzconfig/choose_country_zone_single boolean true
 
 # Cette question est posée pour les pays qui n'appartiennent pas à la liste
 # précédente et qui ont plusieurs fuseaux horaires. Vous pouvez préconfigurer
@@ -330,7 +356,7 @@ tasksel		tasksel/first	multiselect Desktop environment
 
 # Pendant une installation normale, exim pose seulement deux questions. Voici
 # comment les éviter. Une préconfiguration plus complexe est possible.
-exim4-config exim4/dc_eximconfig_configtype \
+exim4-config exim4/no_config boolean true
     select no configuration at this time
 
 # C'est une bonne idée d'indiquer ici le nom de l'utilisateur que vous avez 
@@ -385,6 +411,13 @@ xserver-xfree86	xserver-xfree86/config/monitor/mode-list \
 # Notez que si les fichiers sont relatifs, ils seront pris dans le répertoire 
 # où se trouve le fichier qui les inclut.
 #d-i preseed/include	string x.cfg
+
+# L'installateur peut vérifier la somme de contrôle des fichiers de
+# préconfiguration avant de les utiliser.  Pour le moment, cette somme doit être
+# de type md5sum. Il faut lister les sommes de contrôles dans le même ordre
+# que les fichiers à inclure. L'installateur de sarge
+# n'accepte pas les sommes de contrôle. 
+#d-i preseed/include/checksum          string 5da499872becccfeda2c4872f9171c3d
 
 # D'une manière plus souple, cela exécute des commandes du shell et si le 
 # résultat donne les noms de ces fichiers, ils sont inclus. Par exemple,

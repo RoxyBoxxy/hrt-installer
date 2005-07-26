@@ -11,8 +11,7 @@
 
  <sect1 id="install-overview">
  <title
->Vista Geral do Processo de Instalação</title
-> 
+>Vista Geral do Processo de Instalação</title>
 <para
 >Primeiro, apenas uma nota sobre re-instalações. Com debian, a circunstância em que você necessita de uma reinstalação completa do seu sistema é muito rara; talvez por falha mecânica do disco rígido na maior parte dos casos. </para
 ><para
@@ -24,8 +23,7 @@
 ><para
 >Aqui está um roadmap para as etapas que você vai tomar durante o processo de instalação. </para>
 
-<orderedlist
-> 
+<orderedlist>
 <listitem
 ><para
 >Salvaguardar todos os dados existentes ou documentos que estão no disco rígido onde está a planear instalar. </para
@@ -157,7 +155,11 @@
 >Se você está a criar um sistema com várias opções de arranque, certifique-se que tem a mão o meio de distribuição dos outros sistemas operativos instalados. Especialmente se reparticionar a sua drive de arranque, você pode descobrir que tem de reinstalar o gestor de arranque do seu sistema operativo, ou em muitos casos o sistema operativo em si e todos os ficheiros nas partições afectadas. </para>
 
 <para arch="m68k"
->Com a excepção do BVM e de computadores Motorola VMEbus, o único método de instalação suportado para sistemas m68k é iniciar o sistema através de um disco local ou diskette utilizando um AmigaOS/TOS/MacOS-based bootstrap, para estas máquinas você vai precisar do sistema operativo original de maneira a poder iniciar Linux. Para que possa iniciar em Linux nas máquinas BVM e Motorola VMEbus vai necessitar das ROMs de arranque ``BVMBug'' ou ``16xBug''. </para>
+>Com a excepção do BVM e de computadores Motorola VMEbus, o único método de instalação suportado para sistemas m68k é iniciar o sistema através de um disco local ou diskette utilizando um AmigaOS/TOS/MacOS-based bootstrap, para estas máquinas você vai precisar do sistema operativo original de maneira a poder iniciar Linux. Para que possa iniciar em Linux nas máquinas BVM e Motorola VMEbus vai necessitar das ROMs de arranque <quote
+>BVMBug</quote
+> ou <quote
+>16xBug</quote
+>. </para>
 
  </sect1>
 <!--   End of file preparing/backup.xml -->
@@ -194,8 +196,7 @@
       as long as not architectures have a paragraph -->
  <itemizedlist arch="i386;m68k;alpha;sparc;mips;mipsel">
 <listitem arch="i386"
-><para
-> 
+><para>
 
 <ulink url="&url-hardware-howto;"
 >Compatibilidade de Hardware em Linux HOWTO</ulink>
@@ -204,8 +205,7 @@
 ></listitem>
 
 <listitem arch="m68k"
-><para
-> 
+><para>
 
 <ulink url="&url-m68k-faq;"
 >Linux/m68k FAQ</ulink>
@@ -214,8 +214,7 @@
 ></listitem>
 
 <listitem arch="alpha"
-><para
-> 
+><para>
 
 <ulink url="&url-alpha-faq;"
 >Linux/Alpha FAQ</ulink>
@@ -454,8 +453,7 @@
 ></row>
 <row arch="not-s390">
   <entry
->Resolução e profundidade de cor suportadas (devem ser verificadas de acordo com as capacidades do seu monitor).</entry
-> 
+>Resolução e profundidade de cor suportadas (devem ser verificadas de acordo com as capacidades do seu monitor).</entry>
 </row>
 
 <row arch="s390">
@@ -708,7 +706,9 @@
 <para
 >Particionar o seu disco rígido refere-se simplesmente ao acto de dividir o seu disco em secções. Cada secção é então independente das outras. É de certa forma equivalente a pôr paredes dentro de uma casa; se colocar mobília num quarto não afecta qualquer outro quarto. </para
 ><para arch="s390"
->Quando esta secção falar sobre ``discos'' você deve traduzir isto em DASD ou minidisk VM no mundo de &arch-title;. Também neste caso uma máquina significa LPAR ou VM guest. </para
+>Quando esta secção falar sobre <quote
+>discos</quote
+> você deve traduzir isto em DASD ou minidisk VM no mundo de &arch-title;. Também neste caso uma máquina significa LPAR ou VM guest. </para
 ><para
 >Se você já tem um sistema operativo no seu sistema <phrase arch="i386"
 > (Windows 9x, Windows NT/2000/XP, OS/2, MacOS, Solaris, FreeBSD, &hellip;) </phrase
@@ -718,7 +718,7 @@
 > (VM, z/OS, OS/390, &hellip;) </phrase
 > <phrase arch="m68k"
 > (Amiga OS, Atari TOS, Mac OS, &hellip;) </phrase
-> e quiser meter Linux no mesmo disco, vai necessitar de reparticionar o disco. Debian necessita das suas próprias partições no disco rígido. Não pode ser instalado em partições Windows ou MacOS. Pode ser possível partilhar algumas partições com outros sistemas Linux, mas isso não é coberto aqui. No mínimo necessita de uma partição dedicada para a raíz de Debian. </para
+> e quiser meter Linux no mesmo disco, vai necessitar de reparticionar o disco. Debian necessita das suas próprias partições no disco rígido. Não pode ser instalado em partições Windows ou MacOS. Pode ser possível partilhar algumas partições com outros sistemas Linux, mas isso não é coberto aqui. No mínimo necessita de uma partição dedicada para a raiz de Debian. </para
 ><para
 >Você pode encontrar informação acerca da sua configuração actual de partições utilizando um utilitário de particionamento para o seu actual sistema operativo, <phrase arch="i386"
 > tal como o fdisk ou o PartitionMagic</phrase
@@ -799,13 +799,33 @@
 ><title
 >Particionamento em Tru64 UNIX</title>
 <para
->Tru64 UNIX, antigamente conhecido como Digital UNIX, que era conhecido como OSF/1, utiliza um esquema de particionamento similar ao `disk label' de BSD, que permite até oito partições por disco. As partições são numeradas de `1' até `8' em Linux e com as letras de `a' até `h' em UNIX. Os kernel Linux 2.2 ou posteriores fazem sempre corresponder `1' a `a', `2' a `b' e assim sucessivamente. Por exemplo, em Tru64 UNIX <filename
+>Tru64 UNIX, antigamente conhecido como Digital UNIX, que era conhecido como OSF/1, utiliza um esquema de particionamento similar ao <quote
+>disk label</quote
+> de BSD, que permite até oito partições por disco. As partições são numeradas de <quote
+>1</quote
+> até <quote
+>8</quote
+> em Linux e com as letras de <quote
+>a</quote
+> até <quote
+>h</quote
+> em UNIX. Os kernel Linux 2.2 ou posteriores fazem sempre corresponder <quote
+>1</quote
+> a <quote
+>a</quote
+>, <quote
+>2</quote
+> a <quote
+>b</quote
+> e assim sucessivamente. Por exemplo, em Tru64 UNIX <filename
 >rz0e</filename
 > deverá ser chamado de <filename
 >sda5</filename
 > em Linux. </para
 ><para
->As partições num disk label de Tru64 podem sobrepor-se. E mais, se este disco for utilizado em Tru64, a partição `c' envolve todo o disco (e assim sobrepõe-se a todas as outras partições que não estejam vazias.). Em Linux isto torna <filename
+>As partições num disk label de Tru64 podem sobrepor-se. E mais, se este disco for utilizado em Tru64, a partição <quote
+>c</quote
+> envolve todo o disco (e assim sobrepõe-se a todas as outras partições que não estejam vazias.). Em Linux isto torna <filename
 >sda3</filename
 > idêntico a <filename
 >sda</filename
@@ -815,7 +835,9 @@
 >sdb</filename
 >, se estiverem presentes, assim sucessivamente.). No entanto, o utilitário de particionamento partman utilizado pelo &d-i; de momento não pode lidar com partições que se sobrepõem. Como resultado, não é recomendado partilhar discos entre Tru64 e Debian. As partições em True64 podem ser montadas em Debian após a instalação ser completada. </para
 ><para
->Outra necessidade convencional é que a partição `a' comece no inicio do disco, de modo a incluir sempre o bloco de arranque com a disk label. Se pretende iniciar Debian a partir desse disco, tem de lhe dar um tamanho de pelo menos 2MB para que o aboot caiba e talvez o kernel. Note que esta partição só é necessária para compatibilidade; você não pode criar lá um sistema de ficheiros, ou irá destruir os dados. </para
+>Outra necessidade convencional é que a partição <quote
+>a</quote
+> comece no inicio do disco, de modo a incluir sempre o bloco de arranque com a disk label. Se pretende iniciar Debian a partir desse disco, tem de lhe dar um tamanho de pelo menos 2MB para que o aboot caiba e talvez o kernel. Note que esta partição só é necessária para compatibilidade; você não pode criar lá um sistema de ficheiros, ou irá destruir os dados. </para
 ><para
 >É possível, e na verdade bastante razoável, partilhar uma partição swap entre Linux e UNIX. Neste caso irá necessitar de fazer <command
 >mkswap</command
@@ -833,7 +855,9 @@
 >Particionamento em Windows NT</title>
 
 <para
->O Windows NT utiliza uma tabela de partições do tipo PC. Se está a manipular partições FAT ou NTFS existentes, é recomendado que utilize utilitários nativos de Windows NT (ou, mais convenientemente, também pode reparticionar o seu disco a partir do menu de definições AlphaBIOS). Caso contrário, não é realmente necessário reparticionar a partir do Windows; Normalmente os utilitários de particionamento de Linux são melhores. Note que quando corre NT, o Disk Administrator pode oferecer-se para escrever uma ``assinatura inofensiva'' em discos que não tenham Windows, se você possuir algum. <emphasis
+>O Windows NT utiliza uma tabela de partições do tipo PC. Se está a manipular partições FAT ou NTFS existentes, é recomendado que utilize utilitários nativos de Windows NT (ou, mais convenientemente, também pode reparticionar o seu disco a partir do menu de definições AlphaBIOS). Caso contrário, não é realmente necessário reparticionar a partir do Windows; Normalmente os utilitários de particionamento de Linux são melhores. Note que quando corre NT, o Disk Administrator pode oferecer-se para escrever uma <quote
+>assinatura inofensiva</quote
+> em discos que não tenham Windows, se você possuir algum. <emphasis
 >Nunca</emphasis
 > permita ele faça isso, já que a assinatura irá destruir a informação da partição. </para
 ><para
@@ -942,7 +966,13 @@
 ><title
 >Particionar em Atari TOS</title>
 <para
->Os IDs das partições de Atari são três caracteres ASCII, utilize ``LNX'' para dados e ``SWP'' para partições swap. Se está a utilizar o método de instalação de pouca memória, também é necessária uma pequena partição de Minix (cerca de 2 MB), para a qual o ID da partição é ``MNX''. A não definição dos IDs apropriados fará com que o processo de instalação de Debian não reconheça as partições, mas resulta também na tentativa do TOS tentar utilizar as partições de Linux, o que irá confundir o controlador do disco rígido e tornar todo o disco inacessível. </para
+>Os IDs das partições de Atari são três caracteres ASCII, utilize <quote
+>LNX</quote
+> para dados e <quote
+>SWP</quote
+> para partições swap. Se está a utilizar o método de instalação de pouca memória, também é necessária uma pequena partição de Minix (cerca de 2 MB), para a qual o ID da partição é <quote
+>MNX</quote
+>. A não definição dos IDs apropriados fará com que o processo de instalação de Debian não reconheça as partições, mas resulta também na tentativa do TOS tentar utilizar as partições de Linux, o que irá confundir o controlador do disco rígido e tornar todo o disco inacessível. </para
 ><para
 >Existem muitos utilitários de particionamento de terceiros (o comando do utilitário Atari <command
 >harddisk</command
@@ -977,7 +1007,7 @@
 >New</guimenuitem
 >, escolha <guilabel
 >existing</guilabel
-> na caixa de diálogo que pede as definições iniciais. A próxima janela mostra uma lista de partições existentes que podem ser ajustadas com o os botões de scroll, ou clicando nos gráficos de barras. A primeira coluna na lista de partições é o tipo da partição; basta clicar no campo de texto para o editar. Quando tiver terminado de alterar as definições das partições, grave as alterações saíndo da janela com o botão <guibutton
+> na caixa de diálogo que pede as definições iniciais. A próxima janela mostra uma lista de partições existentes que podem ser ajustadas com o os botões de scroll, ou clicando nos gráficos de barras. A primeira coluna na lista de partições é o tipo da partição; basta clicar no campo de texto para o editar. Quando tiver terminado de alterar as definições das partições, grave as alterações saindo da janela com o botão <guibutton
 >OK</guibutton
 >. </para
 ></listitem>
@@ -1057,7 +1087,7 @@
 >Particionar em SunOS</title>
 
 <para
->É perfeitamente possível particionar a partir de SunOS; de facto, se você pretende correr ambos SunOS e Debian na mesma máquina, é recomendado que particione utilizando o SunOS antes de instalar Debian. O kernel Linux lida perfeitamente com disk labels Sun, por isso aí não existem problemas. Assegure-se apenas que deixa espaço para a partição raíz de Debian no primeiro 1GB no disco de arranque. Você pode também colocar uma imagem do kernel numa partição UFS se isso for mais fácil do que lá colocar a partição raíz. O SILO suporta o arranque de Linux e SunOS a partir de qualquer das partições EXT2 (Linux), UFS (SunOS), romfs e iso9660 (CDROM). </para>
+>É perfeitamente possível particionar a partir de SunOS; de facto, se você pretende correr ambos SunOS e Debian na mesma máquina, é recomendado que particione utilizando o SunOS antes de instalar Debian. O kernel Linux lida perfeitamente com disk labels Sun, por isso aí não existem problemas. Assegure-se apenas que deixa espaço para a partição raiz de Debian no primeiro 1GB no disco de arranque. Você pode também colocar uma imagem do kernel numa partição UFS se isso for mais fácil do que lá colocar a partição raiz. O SILO suporta o arranque de Linux e SunOS a partir de qualquer das partições EXT2 (Linux), UFS (SunOS), romfs e iso9660 (CDROM). </para>
   </sect2>
 
   <sect2 arch="sparc"
@@ -1065,7 +1095,9 @@
 >Particionar a partir de Linux ou outro SO</title>
 
 <para
->Qualquer que seja o sistema que você está a utilizar para particionar, assegure-se que cria um ``Sun disk label'' no seu disco de arranque. Este é o único esquema de particionamento que OpenBoot PROM compreende, por isso é o único esquema pelo qual consegue arrancar. No <command
+>Qualquer que seja o sistema que você está a utilizar para particionar, assegure-se que cria um <quote
+>Sun disk label</quote
+> no seu disco de arranque. Este é o único esquema de particionamento que OpenBoot PROM compreende, por isso é o único esquema pelo qual consegue arrancar. No <command
 >fdisk</command
 >, a tecla <keycap
 >s</keycap
@@ -1105,7 +1137,7 @@
 >yaboot</application
 >. Além disso, o Startup Disk irá tirar a benção a outras partições que possam ser montadas, o que pode afectar o arranque de GNU/Linux. As partições de ambos OS 9 e OS X serão acessíveis quer a partir de OS 9 ou de OS X. </para
 ><para
->GNU/Linux não consegue aceder à informação em partições HFS+ (aka MacOS Extended) ou UFS. O OS X precisa de um destes dois tipos para a partição de arranque. MacOS 9 pode ser instalado quer em HFS (aka MacOS Standard) ou em HFS+. Para partilhar informação entre os sistemas MacOS e GNU/Linux, é útil ter uma partição para trocas. Partições HFS e MS-DOS FAT são suportadas por ambos MacOS e Linux. </para>
+>GNU/Linux não consegue aceder à informação em partições UFS, mas suporta partições HFS+ (aka MacOS Extended). O OS X precisa de um destes dois tipos para a partição de arranque. MacOS 9 pode ser instalado quer em HFS (aka MacOS Standard) ou em HFS+. Para partilhar informação entre os sistemas MacOS e GNU/Linux, é útil ter uma partição para trocas. Partições HFS. HFS+ e MS-DOS FAT são suportadas por ambos MacOS e Linux. </para>
   </sect2>
 <!--   End of file preparing/nondeb-part/powerpc.xml -->
 
@@ -1118,7 +1150,9 @@
  <title
 >Pré-Instalação do Hardware e Configuração do Sistema Operativo</title>
 <para
->Esta secção vai leva-lo através da preparação do hardware da pré-instalação, se existir alguma, que você necessite fazer antes de instalar Debian. Normalmente isto involve verificar e possivelmente alterar definições no firmware para o seu sistema. O ``firmware'' é o software mais importante utilizado pelo hardware; é o mais crítico invocado pelo processo de arranque (depois de o ligar). Também são sublinhados alguns casos conhecidos de hardware que afectam a estabilidade de &debian; no seu sistema. </para>
+>Esta secção vai leva-lo através da preparação do hardware da pré-instalação, se existir alguma, que você necessite fazer antes de instalar Debian. Normalmente isto envolve verificar e possivelmente alterar definições no firmware para o seu sistema. O <quote
+>firmware</quote
+> é o software mais importante utilizado pelo hardware; é o mais crítico invocado pelo processo de arranque (depois de o ligar). Também são sublinhados alguns casos conhecidos de hardware que afectam a estabilidade de &debian; no seu sistema. </para>
 
 
 <!-- Start of file preparing/bios-setup/i386.xml -->
@@ -1135,7 +1169,11 @@
 ><para
 >O resto desta secção é levantada a partir do <ulink url="&url-pc-hw-faq;"
 ></ulink
->, respondendo à questão, "Como é que entro no menu de configuração da CMOS?". Como aceder ao menu da BIOS (ou ``CMOS'') depende de quem escreveu o software da BIOS: </para>
+>, respondendo à questão, <quote
+>Como é que entro no menu de configuração da CMOS?</quote
+>. Como aceder ao menu da BIOS (ou <quote
+>CMOS</quote
+>) depende de quem escreveu o software da BIOS: </para>
 
 <!-- From: burnesa@cat.com (Shaun Burnet) -->
 <variablelist>
@@ -1287,8 +1325,7 @@
 >Entradas comuns em máquinas IDE são C, A, cdrom ou A, C, cdrom. </para
 ><para
 >C é o disco rígido, e A a drive de disquetes. </para
-></listitem
->   
+></listitem>
 <listitem
 ><para
 >Alterar a sequência de arranque de modo a que o primeiro seja o CD-ROM ou a disquete. Normalmente, as teclas <keycap
@@ -1372,12 +1409,11 @@
 ><title
 >Protecção de Vírus</title>
 <para
->Desligue os avisos que a sua BIOS possa dar da possibilidade de virus. Se tem uma placa de protecção de virus ou outro hardware especial, assegure-se que está desabilitada ou removida fisicamente enquanto executa GNU/Linux. Estas não são compatíveis com GNU/Linux; e mais, devido às permissões de ficheiros e à memória protegida do kernel Linux, os virus são praticamente desconhecidos. <footnote
+>Desligue os avisos que a sua BIOS possa dar da possibilidade de vírus. Se tem uma placa de protecção de vírus ou outro hardware especial, assegure-se que está desabilitado ou removido fisicamente enquanto executa GNU/Linux. Estes não são compatíveis com GNU/Linux; e mais, devido às permissões de ficheiros e à memória protegida do kernel Linux, os vírus são praticamente desconhecidos<footnote
 > <para
->Após a instalação você pode voltar a activar a protecção do Boot Sector se assim o desejar. Isto não oferece segurança adicional em Linux, mas se você corre Windows isto pode prevenir uma catástrofe. Não é necessário alterar o Master Boot Record (MBR) após o gestor de arranque ter sido instalado. </para>
-</footnote>
-
-</para>
+> Após a instalação pode ligar a pretecção do Boot Sector se assim o desejar. Isto não ofereçe segurança adicional em Linux mas se você também utiliza Windows pode prevenir uma catástrofe. Não é preciso mexer no Master Boot Record (MBR) após o gestor de arranque ter sido configurado. </para
+> </footnote
+>. </para>
    </sect3>
 
    <sect3
@@ -1386,7 +1422,11 @@
 <para
 >A sua motherboard pode disponibilizar <emphasis
 >shadow RAM</emphasis
-> ou cache da BIOS. Você pode ver as definições para ``Video BIOS Shadow'', ``C800-CBFF Shadow'', etc. <emphasis
+> ou cache da BIOS. Você pode ver as definições para <quote
+>Video BIOS Shadow</quote
+>, <quote
+>C800-CBFF Shadow</quote
+>, etc. <emphasis
 >Desligue</emphasis
 > toda a shadow RAM. A shadow RAM é utilizada para acelerar o acesso às ROMs da sua motherboard e de algumas cartas de controladores. Linux não utiliza essas ROMs após ter arrancado porque disponibiliza software 32-bit mais rápido do que os programas de 16-bit nas ROMs. Desligar a shadow RAM pode tornar disponível alguma da memória para os programas a utilizarem como memória normal. Deixar a shadow RAM ligada pode interferir com o acesso de Linux a dispositivos de hardware. </para>
    </sect3>
@@ -1395,9 +1435,21 @@
 ><title
 >Memory Hole</title>
 <para
->Se a sua BIOS oferece algo do tipo ``15-16 MB Memory Hole'', por favor desligue-o. Linux espera encontrar lá memória se você tiver tanta memória como isso. </para
+>Se a sua BIOS oferece algo do tipo <quote
+>15&ndash;16 MB Memory Hole</quote
+>, por favor desligue-o. Linux espera encontrar lá memória se você tiver tanta memória como isso. </para
 ><para
->Nós temos um relatório acerca de uma motherboard Intel Endeavor na qual existe uma opção chamada ``LFB'' ou ``Linear Frame Buffer''. Isto tem duas opções possíveis: ``Disabled'' e ``1 Megabyte''. Ponha-a em ``1 Megabyte''. Quando desligada, a disquete de instalação não foi lida correctamente, e o sistema eventualmente bloqueou. Quando isto foi escrito nós não compreendemos o que está a acontecer com este dispositivo em particular &mdash; apenas funcionou com essa definição e sem essa não. </para>
+>Nós temos um relatório acerca de uma motherboard Intel Endeavor na qual existe uma opção chamada <quote
+>LFB</quote
+> ou <quote
+>Linear Frame Buffer</quote
+>. Isto tem duas opções possíveis: <quote
+>Disabled</quote
+> e <quote
+>1 Megabyte</quote
+>. Ponha-a em <quote
+>1 Megabyte</quote
+>. Quando desligada, a disquete de instalação não foi lida correctamente, e o sistema eventualmente bloqueou. Quando isto foi escrito nós não compreendemos o que está a acontecer com este dispositivo em particular &mdash; apenas funcionou com essa definição e sem essa não. </para>
    </sect3>
 
 <!-- no other platforms other than x86 provide this sort of thing, AFAIK -->
@@ -1511,7 +1563,21 @@ ok
 >Sun OpenBoot Reference</ulink
 >. </para
 ><para
->Tipicamente, com revisões mais recentes, você pode utilizar um dispositivo OpenBoot tal como ``floppy'', ``cdrom'', ``net'', ``disk'', ou ``disk2''. Estes têm significados óbvios; o dispositivo ``net'' é utilizado para arrancar a partir da rede. Adicionalmente, o nome de dispositivo pode especificar uma partição específica do disco, tal como ``disk2:a'' para arrancar a partir de disk2, primeira partição. Nomes completos de dispositivos OpenBoot têm a forma <informalexample
+>Tipicamente, com revisões mais recentes, você pode utilizar um dispositivo OpenBoot tal como <quote
+>floppy</quote
+>, <quote
+>cdrom</quote
+>, <quote
+>net</quote
+>, <quote
+>disk</quote
+>, ou <quote
+>disk2</quote
+>. Estes têm significados óbvios; o dispositivo <quote
+>net</quote
+> é utilizado para arrancar a partir da rede. Adicionalmente, o nome de dispositivo pode especificar uma partição específica do disco, tal como <quote
+>disk2:a</quote
+> para arrancar a partir de disk2, primeira partição. Nomes completos de dispositivos OpenBoot têm a forma <informalexample
 > <screen>
 <replaceable
 >driver-name</replaceable
@@ -1522,13 +1588,17 @@ ok
 >device-arguments</replaceable>
 </screen
 ></informalexample
->. Em versões mais antigas do OpenBoot, o esquema de nomes é um pouco diferente: a disquete é chamada de ``/fd'', e dispositivos de discos SCSI têm a forma ``sd(<replaceable
+>. Em versões mais antigas do OpenBoot, o esquema de nomes é um pouco diferente: a disquete é chamada de <quote
+>/fd</quote
+>, e dispositivos de discos SCSI têm a forma <quote
+>sd(<replaceable
 >controller</replaceable
 >, <replaceable
 >disk-target-id</replaceable
 >, <replaceable
 >disk-lun</replaceable
->)''. Em revisões mais recentes de OpenBoot o comando <userinput
+>)</quote
+>. Em revisões mais recentes de OpenBoot o comando <userinput
 >show-devs</userinput
 > é útil para ver os dispositivos actualmente configurados. Para mais informação, qualquer que seja a sua revisão, veja a <ulink url="&url-openboot;"
 >Sun OpenBoot Reference</ulink
@@ -1561,8 +1631,7 @@ ok
 ><screen
 >eeprom boot-device=disk1:1
 </screen
-></informalexample
-> 
+></informalexample>
 
 </para>
   </sect2>
@@ -1680,14 +1749,20 @@ ok
 <para
 >Você pode ter de alterar algumas definições ou jumpers nas cartas de periféricos do seu computador. Algumas cartas têm menus de configuração, enquanto outras são baseadas em jumpers. Este documento não pode disponibilizar todas as informações acerca de cada dispositivo de hardware; o que se deseja que disponibilize são dicas úteis. </para
 ><para
->Se alguma das cartas disponibilizar ``memória mapeada'', a memória deve ser mapeada algures entre 0xA0000 e 0xFFFFF (a partir de 640K até abaixo de 1 megabyte) ou num endereço pelo menos 1 megabyte superior ao total de RAM no seu sistema. </para>
+>Se alguma das cartas disponibilizar <quote
+>memória mapeada</quote
+>, a memória deve ser mapeada algures entre 0xA0000 e 0xFFFFF (a partir de 640K até abaixo de 1 megabyte) ou num endereço pelo menos 1 megabyte superior ao total de RAM no seu sistema. </para>
    </sect3>
 
    <sect3 arch="i386" id="usb-keyboard-config">
    <title
 >Suporte USB da BIOS e teclados</title>
 <para
->Se não possuir nenhum teclado do tipo AT e apenas um modelo USB, você pode necessitar de habilitar emulação de teclado AT legacy na sua configuração da BIOS. Faça isto apenas se o sistema de instalação falhar devido à utilização do seu teclado em modo USB. Pelo contrário, para alguns sistemas (especialmente portáteis) você pode ter de desabilitar o suporte legacy USB se o seu teclado não responder. Consulte o manual da sua motherboard e veja as opções para "Legacy keyboard emulation" ou "USB keyboard support". </para>
+>Se não possuir nenhum teclado do tipo AT e apenas um modelo USB, você pode necessitar de habilitar emulação de teclado AT legacy na sua configuração da BIOS. Faça isto apenas se o sistema de instalação falhar devido à utilização do seu teclado em modo USB. Pelo contrário, para alguns sistemas (especialmente portáteis) você pode ter de desabilitar o suporte legacy USB se o seu teclado não responder. Consulte o manual da sua motherboard e veja as opções para <quote
+>Legacy keyboard emulation</quote
+> ou <quote
+>USB keyboard support</quote
+>. </para>
    </sect3>
 
    <sect3

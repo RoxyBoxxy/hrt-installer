@@ -102,7 +102,9 @@
 ></ulink
 >). Заметим, что эти <command
 >MILO</command
-> не поддерживают ext2 ``sparse superblocks'', поэтому вы не сможете использовать их для загрузки ядер с только что созданной файловой системы ext2. В качестве обходного решения, вы можете положить ядро на FAT раздел после <command
+> не поддерживают ext2 <quote
+>sparse superblocks</quote
+>, поэтому вы не сможете использовать их для загрузки ядер с только что созданной файловой системы ext2. В качестве обходного решения, вы можете положить ядро на FAT раздел после <command
 >MILO</command
 >. </para
 ><para
@@ -132,8 +134,7 @@
    <title
 >Файлы установки для NetWinder</title>
 <para
->Простейший путь загрузки NetWinder &mdash; по сети изTFTP образа &netwinder-boot-img;. </para
-> 
+>Простейший путь загрузки NetWinder &mdash; по сети изTFTP образа &netwinder-boot-img;. </para>
    </sect3>
 
    <sect3 arch="arm" id="cats-install-files">
@@ -155,7 +156,7 @@
 
 For floppy-less installation on NewWorld Macs, it may be most
 convenient to obtain all the necessary files packaged into one Stuffit
-archive from 
+archive from
 <ulink url="&url-powerpc-of;"
 ></ulink
 > (separate instructions are
@@ -166,10 +167,10 @@ on your system.  You will also need the <filename
 > and
 <filename
 >yaboot.conf</filename
-> files from the 
+> files from the
 <ulink url="&downloadable-file;new-powermac/"
 >new-powermac</ulink
-> or 
+> or
 <ulink url="&downloadable-file;powermac/"
 >powermac</ulink
 > archive folder.
@@ -177,7 +178,7 @@ However, the newest G4 PowerMacs, and those that work without MacOS 9,
 need the newest version of <command
 >yaboot</command
 >; the one in the
-archive will not work. Obtain the newest version from 
+archive will not work. Obtain the newest version from
 <ulink url="http://penguinppc.org/projects/yaboot/"
 ></ulink
 >.
@@ -315,7 +316,7 @@ $ dd if=<replaceable
 
 
 <!--  This is not set off for i386 only, because many people will have -->
-<!--  access to a PC in order to make a floppy for other arches. --> 
+<!--  access to a PC in order to make a floppy for other arches. -->
 
   <sect2
 ><title
@@ -417,7 +418,9 @@ $ dd if=<replaceable
 >Get Info</userinput
 > что посмотреть Finder информацию об образе дискеты, а в поле <userinput
 >File Locked</userinput
-> должен стоять `X', чтобы MacOS не смог удалить загрузочные блоки, если образ будет случайно смонтирован. </para
+> должен стоять <quote
+>X</quote
+>, чтобы MacOS не смог удалить загрузочные блоки, если образ будет случайно смонтирован. </para
 ></listitem>
     <listitem
 ><para
@@ -431,8 +434,12 @@ $ dd if=<replaceable
 ><para
 >Запустите <command
 >Disk Copy</command
->, и выберите `Make a Floppy' из меню<userinput
->Utilities</userinput
+>, и выберите <menuchoice
+><guimenu
+>Utilities</guimenu
+> <guimenuitem
+>Make a Floppy</guimenuitem
+> </menuchoice
 >, затем выберите <emphasis
 >locked</emphasis
 > файл образа в появившемся диалоговом окне. Вас попросят вставить дискету, затем спросят хотите ли вы стереть её содержимое. Когда всё закончится, дискета вылезет из дисковода. </para
@@ -457,7 +464,9 @@ $ dd if=<replaceable
 > </ulink
 >. Запустите программу <command
 >suntar</command
-> и выберите `Overwrite Sectors...' из меню <userinput
+> и выберите <quote
+>Overwrite Sectors...</quote
+> из меню <userinput
 >Special</userinput
 >. </para
 ></listitem>
@@ -473,8 +482,12 @@ $ dd if=<replaceable
 ></listitem>
 <listitem
 ><para
->После успешного создания дискеты, выдерите `Eject' из меню<userinput
->File</userinput
+>После успешного создания дискеты, выдерите <menuchoice
+> <guimenu
+>File</guimenu
+> <guimenuitem
+>Eject</guimenuitem
+> </menuchoice
 >. Если были какие-то ошибки при записи дискеты, просто выньте эту и вставьте другую дискету. </para
 ></listitem>
 </orderedlist>
@@ -817,7 +830,9 @@ image=/vmlinux
 <para
 >Программа установки может быть загружена из файлов, размещённых на существующем разделе жёсткого диска, или запущена из другой операционной системы или вызовом системного загрузчика прямо из BIOS. </para
 ><para
->"Полностью сетевой" установки можно достичь с помощью этой техники. Она позволяет избежать всех неприятностей со сменными носителями, например поиск и прожиг CD образов или борьбы с кучей нечитаемых дискет. </para
+><quote
+>Полностью сетевой</quote
+> установки можно достичь с помощью этой техники. Она позволяет избежать всех неприятностей со сменными носителями, например поиск и прожиг CD образов или борьбы с кучей нечитаемых дискет. </para
 ><para arch="i386"
 >Программа установки не может загрузиться из файлов, расположенных в файловой системе NTFS. </para
 ><para arch="powerpc"
@@ -829,7 +844,11 @@ image=/vmlinux
 >Mac OS Extended</userinput
 >. Вы должны иметь HFS раздел для обмена файлами между MacOS и Linux, в особенности, для загрузки файлов установки. </para
 ><para arch="powerpc"
->Для загрузки системы установки с жёсткого диска использую различные программы, в зависимости от модели: ``NewWorld'' или ``OldWorld''. </para>
+>Для загрузки системы установки с жёсткого диска используются различные программы, в зависимости от модели: <quote
+>NewWorld</quote
+> или <quote
+>OldWorld</quote
+>. </para>
 
   <sect2 arch="i386" id="files-lilo">
   <title
@@ -999,13 +1018,13 @@ image=/vmlinux
 ><para arch="powerpc"
 >Для PowerPC, если вы имеете машину NewWorld Power Macintosh, лучше использовать DHCP вместо BOOTP. Некоторые из последних машин невозможно загрузить с помощью BOOTP. </para
 ><para arch="alpha"
->В отличие от Open Firmware в машинах Sparc и PowerPC, SRM консоль<emphasis
+>В отличие от Open Firmware в машинах Sparc и PowerPC, SRM консоль <emphasis
 >не</emphasis
-> будет использовать RARP для получения IP адреса, и поэтомувы должны использовать BOOTP для загрузки по сети вашей Alpha. Также вы можете ввести IP настройку для сетевых интерфейсов в SRM консоли. <footnote
+> будет использовать RARP для получения IP адреса, и поэтому вы должны использовать BOOTP для загрузки по сети вашей Alpha<footnote
 > <para
->Системы Alpha также могут быть загружены по сети с помощью DECNet MOP (Maintenance Operations Protocol), но это здесь не описано. По-видимому, вам локальный операторOpenVMS будет счастлив рассказать, что нужно для MOP, чтобы загрузить Linux на Alpha. </para>
-</footnote
-></para
+> Кроме этого системы Alpha способны загружаться по сети с помощью DECNet MOP (Maintenance Operations Protocol), но в данном руководстве это не описывается. По-видимому, ваш оператор OpenVMS будет рад помочь с настройкой MOP, чтобы загрузить Linux на Alpha. </para
+> </footnote
+>. Также вы можете выполнить IP настройку для сетевых интерфейсов в SRM консоли. </para
 ><para arch="hppa"
 >Некоторые старые HPPA машины (например 715/75) используют RBOOTD, а не BOOTP. ПакетRBOOTD доступен на веб сайте parisc-linux. </para
 ><para
@@ -1036,7 +1055,9 @@ image=/vmlinux
 > получить её из сообщений начальной загрузки OpenPROM, воспользоваться командой OpenBoot <userinput
 >.enet-addr</userinput
 > или </phrase
-> загрузиться в ``Rescue'' режиме (например, со спасательной дискеты) и выполнить команду <userinput
+> загрузиться в <quote
+>Rescue</quote
+> режиме (например, со спасательной дискеты) и выполнить команду <userinput
 >/sbin/ifconfig eth0</userinput
 >. </para
 ><para
@@ -1065,8 +1086,8 @@ SIOCSRARP: Invalid argument
 </screen
 ></informalexample
 > то вероятно, нужно загрузить модуль RARP ядра или пересобрать ядро с поддержкой RARP. Попробуйте <userinput
->modprobe rarp</userinput
-> а затем попробуйте команду <command
+>modprobe rarp </userinput
+>, а затем попробуйте команду <command
 >rarp</command
 > ещё раз. </para
 ><para
@@ -1074,9 +1095,13 @@ SIOCSRARP: Invalid argument
 >rarpd</command
 >. Процедура очень похожа на ту, которая используется в SunOS из следующего параграфа. </para
 ><para
->В SunOS вам нужно проверить, что аппаратный адрес Ethernet клиента содержится в базе данных ``ethers'' (или в файле <filename
+>В SunOS вам нужно проверить, что аппаратный адрес Ethernet клиента содержится в базе данных <quote
+>ethers</quote
+> (или в файле <filename
 >/etc/ethers</filename
-> или через NIS/NIS+) и базе данных ``hosts''. Затем, вам нужно запустить демона RARP. В SunOS 4 выполните команду (от суперпользователя): <userinput
+> или через NIS/NIS+) и базе данных <quote
+>hosts</quote
+>. Затем, вам нужно запустить демона RARP. В SunOS 4 выполните команду (от суперпользователя): <userinput
 >/usr/etc/rarpd -a</userinput
 >; в SunOS 5 используйте <userinput
 >/usr/sbin/rarpd -a</userinput
@@ -1139,7 +1164,11 @@ client:\
   ha=0123456789AB:
 </screen
 ></informalexample
->Нужно изменить по крайней мере параметр "ha", который содержит аппаратный адрес клиента. Параметр "bf" содержит файл, который клиент должен получить по TFTP; подробности смотрите в <xref linkend="tftp-images"/>. <phrase arch="mips"
+>Нужно изменить по крайней мере параметр <quote
+>ha</quote
+>, который содержит аппаратный адрес клиента. Параметр <quote
+>bf</quote
+> содержит файл, который клиент должен получить по TFTP; подробности смотрите в <xref linkend="tftp-images"/>. <phrase arch="mips"
 > На SGI Indy вы можете просто войти в командный монитор и набрать <userinput
 >printenv</userinput
 >. Значение переменной <userinput
@@ -1189,7 +1218,7 @@ host clientname {
   filename "/tftpboot/tftpboot.img";
   server-name "servername";
   next-server servername;
-  hardware ethernet 01:23:45:67:89:AB; 
+  hardware ethernet 01:23:45:67:89:AB;
   fixed-address 192.168.1.90;
 }
 </screen
@@ -1201,9 +1230,9 @@ host clientname {
 >. </para
 ><para
 >В этом примере определён единственный сервер <replaceable
->"servername"</replaceable
->, который выполняет всю работу DHCP, TFTP серверов и шлюза сети. Вам почти наверняка нужно изменить опцию domain-name, а также server-name и аппаратный адрес клиента. Опция <replaceable
->"filename"</replaceable
+>servername</replaceable
+>, который работает в качестве DHCP, TFTP серверов и шлюза сети. Вам почти наверняка нужно изменить опцию domain-name, а также имя сервера и аппаратный адрес клиента. Опция <replaceable
+>filename</replaceable
 > должна содержать имя файла, который нужно получить по TFTP. </para
 ><para
 >После редактирования конфигурационного файла <command
@@ -1232,7 +1261,7 @@ allow bootp;
 subnet 192.168.1.0 netmask 255.255.255.0 {
   range 192.168.1.200 192.168.1.253;
   option broadcast-address 192.168.1.255;
-# the gateway address which can be different 
+# the gateway address which can be different
 # (access to the internet for instance)
   option routers 192.168.1.1;
 # indicate the dns you want to use
@@ -1251,7 +1280,7 @@ group {
 ></informalexample
 > Заметим, что для PXE загрузки в filename клиента <filename
 >pxelinux.0</filename
-> записано имя системного загрузчика, а не образа ядра (смотрите ниже <xref linkend="tftp-images"/>). </para>
+> записан системный загрузчик, а не образ ядра (смотрите ниже <xref linkend="tftp-images"/>). </para>
    </sect3>
   </sect2>
 <!--   End of file install-methods//tftp/dhcp.xml -->
@@ -1356,13 +1385,15 @@ tftp dgram udp wait nobody /usr/sbin/tcpd in.tftpd /tftpboot
 >/tftpboot/tftpboot.img</userinput
 >, если вы работаете с настройками BOOTP/DHCP, как примере, приведённом выше. </para
 ><para
->Микропрограмма DECstation производит загрузку по TFTP по команде <userinput
+>Микропрограмма DECstation производит загрузку с TFTP по команде <userinput
 >boot <replaceable
 >#</replaceable
 >/tftp</userinput
 >, где <replaceable
 >#</replaceable
-> это номер устройства TurboChannel с которого нужно загрузиться. На большинстве DECstation это номер "3". Если сервер BOOTP/DHCP не передаёт имя файла или вам нужно передать дополнительные параметры, они могут быть добавлены с помощью в следующем виде: </para
+> это номер устройства TurboChannel с которого нужно загрузиться. На большинстве DECstation это номер <quote
+>3</quote
+>. Если сервер BOOTP/DHCP не передаёт имя файла или вам нужно передать дополнительные параметры, они могут быть добавлены с помощью в следующем виде: </para
 ><para>
 
 <userinput
@@ -1420,11 +1451,15 @@ tftp dgram udp wait nobody /usr/sbin/tcpd in.tftpd /tftpboot
    <title
 >Загрузка SPARC по TFTP</title>
 <para
->На SPARC архитектурах используются имена субархитектур, например``SUN4M'' или ``SUN4C''; в некоторых случаях, имя архитектуры оставляют пустым, для того чтобы имя файла клиент искал просто как <filename
+>На SPARC архитектурах используются имена субархитектур, например <quote
+>SUN4M</quote
+> или <quote
+>SUN4C</quote
+>; в некоторых случаях, имя архитектуры оставляют пустым, для того чтобы имя файла клиент искал просто как <filename
 >ip-клиента-в-шестнадцатеричной-форме</filename
 >. То есть, если система с субархитектурой SUN4C и IP адресом 192.168.1.3, то имя файла будет <filename
 >C0A80103.SUN4C</filename
->. Простой способ его определения &mdash; это ввести следующую команду в оболочке (предполагается, что машине назначен IP адрес равный 10.0.0.4).<informalexample
+>. Простой способ его определения &mdash; это ввести следующую команду в оболочке командной строки (предполагается, что машине назначен IP адрес равный 10.0.0.4).<informalexample
 ><screen>
 $ printf '%.2x%.2x%.2x%.2x\n' 10 0 0 4
 </screen
@@ -1481,7 +1516,7 @@ $ printf '%.2x%.2x%.2x%.2x\n' 10 0 0 4
 
 <!-- FIXME: commented out since it seems too old to be usable and a current
             way is not known
-  
+
   <sect2 id="tftp-low-memory">
   <title
 >TFTP Installation for Low-Memory Systems</title>
@@ -1515,7 +1550,7 @@ booting.
 ><para>
 
 Untar the root archive on your NFS server (can be the same system as
-your TFTP server): 
+your TFTP server):
 
 <informalexample
 ><screen
@@ -1590,8 +1625,8 @@ IP address is 192.168.1.3, do
 >Installing with TFTP and NFS Root</title>
 <para>
 
-Installing with TFTP and NFS Root is similar to 
-<xref linkend="tftp-low-memory"/> because you don't want to 
+Installing with TFTP and NFS Root is similar to
+<xref linkend="tftp-low-memory"/> because you don't want to
 load the RAMdisk anymore but boot from the newly created NFS-root file
 system.  You then need to replace the symlink to the tftpboot image by
 a symlink to the kernel image (for example,
@@ -1663,7 +1698,7 @@ $ debconf-get-selections &gt;&gt; <replaceable
 >Чтобы добавить файл автоматической установки на CD, вам потребуется изменить ISO образ. Подробности смотрите на странице руководства mkisofs. Или же запишите файл автоматической установки на дискету и используйте preseed/file=/floppy/preseed.cfg </para
 ><para arch="i386"
 >Если вы можете загружаться с карты памяти USB, то просто скопируйте файл автоматической установки в файловую систему карты памяти, и отредактируйте файл syslinux.cfg добавив preseed/file=/hd-media/preseed.cfg в параметра загрузки ядра. </para>
-  
+
    <sect3 condition="etch">
    <title
 >Использование автоматической установки для изменения значений по умолчанию</title>

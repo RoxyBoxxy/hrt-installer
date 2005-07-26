@@ -46,7 +46,14 @@
 # If you're remastering a CD, you could use this:
 #   preseed/file=/cdrom/preseed
 # Be sure to copy this file to the location you specify.
-# 
+#
+# To make sure the installer gets the right preseed file, you can specify
+# a checksum for the file. Currently this needs to be a md5sum, and if
+# specified it must match the file or the installer will refuse to use the
+# file. (Checksums are not supported in the sarge installer.)
+#   preseed/url/checksum=5da499872becccfeda2c4872f9171c3d
+#   preseed/file/checksum=5da499872becccfeda2c4872f9171c3d
+#
 # While you're at it, you may want to throw a debconf/priority=critical in
 # there, to avoid most questions even if the preseeding below misses some.
 # And you might set the timeout to 1 in syslinux.cfg to avoid needing to hit
@@ -54,10 +61,16 @@
 #
 # Language, country, and keyboard selection cannot be preseeded from a file,
 # because the questions are asked before the preseed file can be loaded.
-# Instead, to avoid these questions, pass some more parameters to the kernel:
+# Instead, to avoid these questions, pass some more parameters to the kernel.
+# If you are using the sarge installer, you need three:
 #
 #    languagechooser/language-name=English
 #    countrychooser/shortlist=US
+#    console-keymaps-at/keymap=us
+#
+# Newer versions of the installer need only two:
+#
+#    debian-installer/locale=en_US
 #    console-keymaps-at/keymap=us
 #
 # Note that the kernel accepts a maximum of 8 command line options and
@@ -135,7 +148,7 @@ d-i  mirror/country                     string enter information manually
 d-i  mirror/http/hostname               string http.us.debian.org
 d-i  mirror/http/directory              string /debian
 d-i  mirror/suite                       string testing
-d-i  mirror/http/proxy                  string 
+d-i  mirror/http/proxy                  string
 
 ### Partitioning.
 
@@ -168,7 +181,7 @@ d-i  partman-auto/choose_recipe         select \
 #    use_filesystem{ } filesystem{ ext3 } mountpoint{ /boot } . \
 #    500 10000 1000000000 ext3 method{ format } format{ } \
 #    use_filesystem{ } filesystem{ ext3 } mountpoint{ / } . \
-#    64 512 300% linux-swap method{ swap } format{ } . 
+#    64 512 300% linux-swap method{ swap } format{ } .
 # For reference, here is that same recipe in a more readable form:
 #    boot-root ::
 #       40 50 100 ext3
@@ -215,7 +228,7 @@ d-i  grub-installer/with_other_os       boolean true
 ##### Finishing up the first stage install.
 
 # Avoid that last message about the install being complete.
-d-i  prebaseconfig/reboot_in_progress   note 
+d-i  prebaseconfig/reboot_in_progress   note
 
 
 ##### Preseeding base-config.
@@ -230,31 +243,44 @@ base-config  base-config/login          note
 # after base-config finishes.
 #base-config base-config/start-display-manager        boolean false
 
+# Some versions of the installer can report back on what you've installed.
+# The default is not to report back, but sending reports helps the project
+# determine what software is most popular and include it on CDs.
+#popularity-contest popularity-contest/participate    boolean false
+
 ###### Time zone setup.
 
 # Controls whether or not the hardware clock is set to GMT.
 base-config  tzconfig/gmt                             boolean true
 
+# Simple timezone preseeding. You may set this to any valid setting for $TZ;
+# see the contents of /usr/share/zoneinfo/ for options.
+base-config  tzconfig/preseed_zone                    string US/Eastern
+
+# Timezone preseeding used to be more complex; the old method is documented
+# here as well for completeness. If you're using sarge, you'll need this
+# method.
+
 # If you told the installer that you're in the United States, then you
 # can set the time zone using this variable.
 # (Choices are: Eastern, Central, Mountain, Pacific, Alaska, Hawaii,
 # Aleutian, Arizona East-Indiana, Indiana-Starke, Michigan, Samoa, other)
-base-config  tzconfig/choose_country_zone/US          select Eastern
+#base-config tzconfig/choose_country_zone/US          select Eastern
 # If you told it you're in Canada.
 # (Choices are: Newfoundland, Atlantic, Eastern, Central,
 # East-Saskatchewan, Saskatchewan, Mountain, Pacific, Yukon, other)
-base-config  tzconfig/choose_country_zone/CA          select Eastern
+#base-config tzconfig/choose_country_zone/CA          select Eastern
 # If you told it you're in Brazil. (Choices are: East, West, Acre,
 # DeNoronha, other)
-base-config  tzconfig/choose_country_zone/BR          select East
+#base-config tzconfig/choose_country_zone/BR          select East
 # Many countries have only one time zone. If you told the installer you're
 # in one of those countries, you can choose its standard time zone via this
 # question.
-base-config  tzconfig/choose_country_zone_single      boolean true
+#base-config tzconfig/choose_country_zone_single      boolean true
 # This question is asked as a fallback for countries other than those
 # listed above, which have more than one time zone. You can preseed one of
 # the time zones, or "other".
-#base-config tzconfig/choose_country_zone_multiple    select 
+#base-config tzconfig/choose_country_zone_multiple    select
 
 ###### Account setup.
 
@@ -298,7 +324,7 @@ base-config  apt-setup/security-updates boolean true
 
 # You can choose to install any combination of tasks that are available.
 # Available tasks as of this writing include: Desktop environment,
-# Web server, Print server, DNS server, File server, Mail server, 
+# Web server, Print server, DNS server, File server, Mail server,
 # SQL database, manual package selection. The last of those will run
 # aptitude. You can also choose to install no tasks, and force the
 # installation of a set of packages in some other way.
@@ -311,11 +337,12 @@ tasksel      tasksel/first   multiselect Desktop environment
 # avoid even those. More complicated preseeding is possible.
 exim4-config exim4/dc_eximconfig_configtype \
     select no configuration at this time
+exim4-config exim4/no_config boolean true
 
 # It's a good idea to set this to whatever user account you choose to
 # create. Leaving the value blank results in postmaster mail going to
 # /var/mail/mail.
-exim4-config exim4/dc_postmaster        string 
+exim4-config exim4/dc_postmaster        string
 
 ###### X Configuration.
 
@@ -365,12 +392,22 @@ xserver-xfree86  xserver-xfree86/config/monitor/mode-list \
 # the same directory as the preseed file that includes them.
 #d-i preseed/include                    string x.cfg
 
+# The installer can optionally verify checksums of preseed files before
+# using them. Currently only md5sums are supported, list the md5sums
+# in the same order as the list of files to include.
+# (Checksums are not supported in the sarge installer.)
+#d-i preseed/include/checksum                string 5da499872becccfeda2c4872f9171c3d
+
 # More flexibly, this runs a shell command and if it outputs the names of
 # preseed files, includes those files. For example, to switch configs based
 # on a particular usb storage device (in this case, a built-in card reader):
 #d-i preseed/include_command            string \
 #    if $(grep -q "GUID: 0aec3050aec305000001a003" /proc/scsi/usb-storage-*/*); \
 #    then echo kraken.cfg; else echo otherusb.cfg; fi
+
+# To check the format of your preseed file before performing an install,
+# you can use debconf-set-selections:
+#   debconf-set-selections -c preseed.cfg
 </screen
 ></informalexample>
 
@@ -679,11 +716,11 @@ mouse =&gt; /dev/psaux  =&gt; gpm =&gt; /dev/gpmdata -&gt; /dev/mouse =&gt; X
 ># эмуляция 3-кнопочной мыши 
 # включить эмуляцию
 /dev/mac_hid/mouse_button_emulation = 1
-# Посылать сингал средней кнопки мышки клавишей F11
+# Посылать сигнал средней кнопки мыши клавишей F11
 /dev/mac_hid/mouse_button2_keycode = 87
-# Посылать сингал правой кнопки мышки клавишей F12
+# Посылать сигнал правой кнопки мыши клавишей F12
 /dev/mac_hid/mouse_button3_keycode = 88
-# Для других клавиш, используйте showkey, который скажет вам нужный код.
+# Для кодов других клавиш, используйте программу showkey.
 </screen
 ></informalexample>
 
@@ -703,14 +740,14 @@ mouse =&gt; /dev/psaux  =&gt; gpm =&gt; /dev/gpmdata -&gt; /dev/mouse =&gt; X
  installed, quit aptitude and repeat for other tasks.
  Space requirements need to be determined from tasksel as tasksel will not
  install recommended packages while selecting a task from aptitude will.
--->       
+-->
 
 <para
 >Для базовой установки на i386 с ядром версии 2.4 со всеми стандартными пакетами требуется 573 МБ дискового пространства. </para
 ><para
 >В таблице ниже приведено количество используемого места при установке задач, описанных в tasksel. Данные величины получены с помощью aptitude. Заметим, что некоторые пакеты входят в несколько задач одновременно, поэтому полный размер установки для двух задач вместе может быть меньше, чем полный размер, полученный сложением размеров. </para
 ><para
->Заметьте, что при подчёте размера разделов к размеру базовой установки, нужно добавить размеры из таблицы. Большинство размеров из колонки <quote
+>Заметьте, что при подсчёте размера разделов к размеру базовой установки, нужно добавить размеры из таблицы. Большинство размеров из колонки <quote
 >Размер после установки</quote
 > нужно приплюсовывать к <filename
 >/usr</filename
@@ -842,13 +879,17 @@ mouse =&gt; /dev/psaux  =&gt; gpm =&gt; /dev/gpmdata -&gt; /dev/mouse =&gt; X
 >Установка &debian; из системы Unix/Linux</title>
 
 <para
->В этом разделе объясняется, как установить &debian; из существующей системы Unix или Linux без использования управляемой из меню программы установки, основанной на библиотеке ncurses, как это описывается в остальном руководстве. Это "междистрибутивное" HOWTO попросили пользователи, переходящие на &debian; из Redhat, Mandrake и SUSE. В этом разделе подразумевается наличие некоторого опыта работы с командами *nix и навигации по файловой системе. Здесь символ <prompt
+>В этом разделе объясняется, как установить &debian; из существующей системы Unix или Linux без использования управляемой из меню программы установки, основанной на библиотеке ncurses, как это описывается в остальном руководстве. Это <quote
+>междистрибутивное</quote
+> HOWTO попросили пользователи, переходящие на &debian; из Redhat, Mandrake и SUSE. В этом разделе подразумевается наличие некоторого опыта работы с командами *nix и навигации по файловой системе. Здесь символ <prompt
 >$</prompt
 > означает команду, вводимую в текущей пользовательской системе, а <prompt
 >#</prompt
 > относится к команде, вводимой в Debian chroot. </para
 ><para
->Как только вы получите новую систему Debian, настроенную по вашим предпочтениям, вы можете перенести ваши данные (если они есть) в неё и продолжать работу. Поэтому такая установка &debian; считается "с нулевым временем простоя" (zero downtime). Также это мудрый способ работы с аппаратурой, которая не может нормально работать с разными загрузочными или установочными носителями. </para>
+>Как только вы получите новую систему Debian, настроенную по вашим предпочтениям, вы можете перенести ваши данные (если они есть) в неё и продолжать работу. Поэтому такая установка &debian; считается <quote
+>с нулевым временем простоя</quote
+> (zero downtime). Также это мудрый способ работы с аппаратурой, которая не может нормально работать с разными загрузочными или установочными носителями. </para>
 
   <sect2>
   <title
@@ -928,7 +969,7 @@ mouse =&gt; /dev/psaux  =&gt; gpm =&gt; /dev/gpmdata -&gt; /dev/mouse =&gt; X
 >пула</ulink
 >, скопируйте пакет в каталог work и извлеките из него бинарные файлы. Вам потребуются привилегии суперпользователя (root) для установки бинарных файлов. <informalexample
 ><screen
-># tar -xf debootstrap_0.X.X_arch.deb
+># ar -x debootstrap_0.X.X_arch.deb
 # cd /
 # zcat /full-path-to-work/work/data.tar.gz | tar xv
 </screen
@@ -1001,7 +1042,7 @@ mouse =&gt; /dev/psaux  =&gt; gpm =&gt; /dev/gpmdata -&gt; /dev/mouse =&gt; X
 >Chroot</command
 > в неё: <informalexample
 ><screen
-># chroot /mnt/debinst /bin/bash
+># LANG= chroot /mnt/debinst /bin/bash
 </screen
 ></informalexample>
 
@@ -1092,7 +1133,7 @@ proc             /proc         proc    defaults                 0    0
 ><screen>
 ######################################################################
 # /etc/network/interfaces -- configuration file for ifup(8), ifdown(8)
-# See the interfaces(5) manpage for information on what options are 
+# See the interfaces(5) manpage for information on what options are
 # available.
 ######################################################################
 
@@ -1133,7 +1174,7 @@ nameserver 10.1.1.36
 nameserver 192.168.9.100
 </screen
 ></informalexample
-> Укажите имя системы (2 - 63 символа): <informalexample
+> Укажите имя системы (от 2 до 63 символов): <informalexample
 ><screen>
 # echo DebianHostName &gt; /etc/hostname
 </screen

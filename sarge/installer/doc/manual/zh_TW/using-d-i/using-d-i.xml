@@ -13,11 +13,13 @@
 ><para
 >執行預設安裝時，只有必要的 (高優先級) 的問題會被問到。使得安裝過程可以高度自動化，幾乎不需使用者干預。元件按次序執行﹔至於哪些元件會執行，取決於您使用的安裝方法，以及您的硬體。對於沒有詢問的問題，安裝程式將採用預設值。 </para
 ><para
->如何遇到麻煩，使用者會看到錯誤畫面，並且顯示安裝選單供選擇其它替代操作。如果沒有問題，使用者將不會碰到安裝選單，只需依此回答每個元件的提問。嚴重錯誤提示的優先級為 'critical'，因此使用者總會注意到。 </para
+>如何遇到麻煩，使用者會看到錯誤畫面，並且顯示安裝選單供選擇其它替代操作。如果沒有問題，使用者將不會碰到安裝選單，只需依此回答每個元件的提問。嚴重錯誤提示的優先級為 <quote
+>critical</quote
+>，因此使用者總會注意到。 </para
 ><para
 >如果在 &d-i; 開始的時候，加上一些啟動參數，它將會影響安裝程式使用的預設值。例如，假設您希望指定靜態網路連接配置 (如果存在 DHCP，將會被採用)，您可以為啟動參數加上 <userinput
 >netcfg/disable_dhcp=true</userinput
->。請參閱 <xref linkend="installer-args"/> 以了解有效的選項。 </para
+>。請參閱 <xref linkend="installer-args"/> 以瞭解有效的選項。 </para
 ><para
 >熟練的使用者也許更習慣以選單進行，安裝中的每一步都可以被使用者控制，而不是讓安裝程式自動依此執行。要使用選單驅動的手動安裝方式，添加啟動參數選項 <userinput
 >debconf/priority=medium</userinput
@@ -35,7 +37,9 @@
 >Tab</keycap
 > 或 <keycap
 >右</keycap
-> 箭頭鍵向 `前' 移動，<keycombo
+> 箭頭鍵向<quote
+>前</quote
+>移動，<keycombo
 > <keycap
 >Shift</keycap
 > <keycap
@@ -43,7 +47,9 @@
 > </keycombo
 > 或 <keycap
 >左</keycap
-> 方向鍵，它們用於按鈕和選擇之間。<keycap
+> 方向鍵，它們用於按鈕和選擇之間向<quote
+>後</quote
+>移動。<keycap
 >上</keycap
 > 與 <keycap
 >下</keycap
@@ -91,7 +97,7 @@
 ><title
 >元件介紹</title>
 <para
->下面列出安裝程式使用的元件，和各個元件目的的簡要說明。如果您需要了解各元件詳細的資訊，請參閱 <xref linkend="module-details"/>。 </para>
+>下面列出安裝程式使用的元件，和各個元件目的的簡要說明。如果您需要瞭解各元件詳細的資訊，請參閱 <xref linkend="module-details"/>。 </para>
 
 <variablelist>
 <varlistentry>
@@ -102,7 +108,9 @@
 ><para
 >在安裝進行中，顯示元件列表，並執行選中的元件。主選單的優先級設為中，如果您的優先級設為高或緊急 (預設為高)，您不會看到該選單。另一方面，假如出現問題需要您決定，詢問的優先級會臨時調低，讓您解決該問題，選單可能在這種情況下出現。 </para
 ><para
->您可以透過不斷地按"返回"按鈕，從目前執行的元件回到主選單。 </para
+>您可以透過不斷地按<quote
+>返回</quote
+>按鈕，從目前執行的元件回到主選單。 </para
 ></listitem>
 </varlistentry>
 <varlistentry condition="sarge">
@@ -126,10 +134,10 @@
 <varlistentry condition="etch">
 
 <term
->languagechooser</term
+>localechooser</term
 ><listitem
 ><para
->Allows the user to select localization options for the installation and the installed system: language, country and locales. The installer will display messages in the selected language, unless the translation for that language is not complete in which case some messages may be shown in English. </para
+>讓使用者選擇安裝過程以及安裝好的系統所使用的語言、國家和地區選項。除非選取的語言沒有被翻譯，安裝程式將以您選擇的語言顯示資訊。對於沒有翻譯的部分，將以英文顯示。 </para
 ></listitem>
 </varlistentry>
 <varlistentry>
@@ -304,7 +312,9 @@
 >base-config</term
 ><listitem
 ><para
->根據使用者喜好提供設定系統軟體套件的對話框。它通常在新 Debian 系統'首次運行'時工作。 </para
+>根據使用者喜好提供設定系統軟體套件的對話框。它通常在新 Debian 系統<quote
+>首次運行</quote
+>時工作。 </para
 ></listitem>
 </varlistentry>
 <varlistentry>
@@ -345,11 +355,11 @@
   <title
 >啟動 Debian 安裝程式與配置硬體</title>
 <para
->假設 Debian 安裝程式已經啟動，然後您看到了初始畫面。此時， &d-i; 的能力還很有限。它還不了解您的硬體、語言、甚至不知道要執行什麼任務。不用擔心，因為 &d-i; 相當聰明，它能自動探測您的硬體，尋找其餘的元件，並更新自己以具備安裝系統的能力。但您仍然要協助 &d-i;，不能自動決定的內容 (例如選擇語言，鍵盤配置或網路鏡像站)。 </para
+>假設 Debian 安裝程式已經啟動，然後您看到了初始畫面。此時， &d-i; 的能力還很有限。它還不瞭解您的硬體、語言、甚至不知道要執行什麼任務。不用擔心，因為 &d-i; 相當聰明，它能自動探測您的硬體，尋找其餘的元件，並更新自己以具備安裝系統的能力。但您仍然要協助 &d-i;，不能自動決定的內容 (例如選擇語言，鍵盤配置或網路鏡像站)。 </para
 ><para
 >您會留意到 &d-i; 在本階段執行<firstterm
 >硬體偵測</firstterm
-> 多次。第一次目的是指定哪些硬體需要安裝 (例如，您的 CD-ROM 或者網卡)。在第一次執行的時候並不是所有的驅動程式都就緒，硬體偵測會在後續過程裡面多次重復。 </para>
+> 多次。第一次目的是指定哪些硬體需要安裝 (例如，您的 CD-ROM 或者網卡)。在第一次執行的時候並不是所有的驅動程式都就緒，硬體偵測會在後續過程裡面多次重複。 </para>
 
 
 <!-- Start of file using-d-i/modules/lowmem.xml -->
@@ -400,14 +410,14 @@
 
    <sect3 id="localechooser" condition="etch">
    <title
->Selecting Localization Options</title>
+>選擇區域化選項</title>
 
 <para
 >在大部分情況下，第一個問您的問題將會是安裝程式以及安裝好之後的系統所要使用的本地化選項。選項包括了語言、國家以及地區設定。 </para
 ><para
->The language you choose will be used for the rest of the installation process, provided a translation of the different dialogs is available. If no valid translation is available for the selected language, the installer will default to English. </para
+>您選擇的語言將用於接下來的安裝過程，對話框已經有各種語言翻譯的版本。如果選擇的語言沒有對應翻譯的版本，安裝將預設使用英文。選擇的語言也將助於選擇一個合適的鍵盤配置。 </para
 ><para
->The selected country will be used later in the installation process to pick the default timezone and a Debian mirror appropriate for your geographic location. Language and country together will be used to set the default locale for your system and to help select your keyboard. </para
+>在安裝過程的後面，這個選項還會被用於設置預設的時區和您所處地理位置的 Debian 鏡像站。如果安裝程式預設的建議不合適，您可以做其它選擇。選擇國家，還有選擇語言，都會影響您新 Debian 系統的本地化設置。 </para
 ><para
 >首先您將會被要求選擇您偏好的語言。語言清單中，各語言名稱將以英文列出 (左邊)，而語言本身將以適當的文字則列於右邊。清單以英文名稱排序。清單的頂端是一個額外的 <quote
 >C</quote
@@ -417,7 +427,7 @@
 >locales</classname
 > 軟體套件將不會安裝在安裝好的系統中，因此系統也不會支援任何地區設定。 </para
 ><para
->如果您選擇的語言 <xref linkend="lang-chooser"/>與多個國家關聯(存在於中文，英文，法文，以及其它語言)，您可以在這裡選擇國家。如果您選擇列表底部的 <guimenuitem
+>如果您選擇的語言屬於多個國家的官方語言(存在於中文，英文，法文，以及其它語言)，您可以在這裡選擇國家。如果您選擇列表底部的 <guimenuitem
 >其它</guimenuitem
 >，您將看到按大洲分組的全部國家。 </para
 ><para
@@ -510,7 +520,7 @@
 >.iso</filename
 > (或 <filename
 >.ISO</filename
-> 之類)。注意，第一次只嘗試掃描位於根目錄和第一層子目錄的檔案 (例如，它找到 <filename
+> 之類)。注意，第一次只嘗試掃瞄位於根目錄和第一層子目錄的檔案 (例如，它找到 <filename
 >/<replaceable
 >whatever</replaceable
 >.iso</filename
@@ -522,19 +532,19 @@
 >/data/tmp/<replaceable
 >whatever</replaceable
 >.iso</filename
->)。在 iso 映象檔案找到後，<command
+>)。在 iso 映像檔案找到後，<command
 >iso-scan</command
-> 會檢查它包含的內容，確定該映象檔是不是有效的 Debian iso 映象。 如為前者，任務結束﹔如果是後者，<command
+> 會檢查它包含的內容，確定該映像檔是不是有效的 Debian iso 映像。 如為前者，任務結束﹔如果是後者，<command
 >iso-scan</command
-> 會搜索其它的映象檔案。 </para
+> 會搜索其它的映像檔案。 </para
 ><para
->萬一前面嘗試尋找 iso 映象失敗，<command
+>萬一前面嘗試尋找 iso 映像失敗，<command
 >iso-scan</command
 > 會詢問您是否原意進行完整的搜索。這次不只查看最上級目錄，而是真正地搜尋整個檔案系統。 </para
 ><para
 >如果 <command
 >iso-scan</command
-> 找不到您的安裝 iso 映象檔，請重新啟動返回到您以前的作業系統，檢查映象檔名是否正確 (以 <filename
+> 找不到您的安裝 iso 映像檔，請重新啟動返回到您以前的作業系統，檢查映像檔名是否正確 (以 <filename
 >.iso</filename
 >結尾)，是否放在一個能被 &d-i; 識別的檔案系統上，是否損壞 (用 checksum 校驗)。有經驗的 Unix 使用者可以在第二個控制台上完成這些動作，而毋須重新啟動。 </para>
    </sect3>
@@ -560,7 +570,7 @@
 > </citerefentry
 > man 頁。 </para
 ><para
->預設情況下，&d-i; 會自動嘗試使用 DHCP 設定您的電腦網路。如果 DHCP 偵測成功，這一步就完成。如果失敗，造成的原因會有多種因素，從沒有接網線到錯誤設定的 DHCP。或者您的區域網路裡面根本就沒有 DHCP 伺服器。查閱第三個控制台上的錯誤訊息以了解更多資訊。不管怎樣，您將被要求選擇再試一次或是手動設定。DHCP 伺服器有時候回應很慢，因此，如果您確定都正常，再試一次。 </para
+>預設情況下，&d-i; 會自動嘗試使用 DHCP 設定您的電腦網路。如果 DHCP 偵測成功，這一步就完成。如果失敗，造成的原因會有多種因素，從沒有接網線到錯誤設定的 DHCP。或者您的區域網路裡面根本就沒有 DHCP 伺服器。查閱第三個控制台上的錯誤訊息以瞭解更多資訊。不管怎樣，您將被要求選擇再試一次或是手動設定。DHCP 伺服器有時候回應很慢，因此，如果您確定都正常，再試一次。 </para
 ><para
 >手動設定網路會按序詢問一些您網路的問題，值得注意的是 <computeroutput
 > IP 位址</computeroutput
@@ -622,7 +632,7 @@
 >硬碟的分割區</title>
 
 <para
->現在是時候對您的硬碟進行分割了。要是您對分割還有心存疑慮，或者只是想了解更多的細節，請參閱 <xref linkend="partitioning"/>。 </para
+>現在是時候對您的硬碟進行分割了。要是您對分割還有心存疑慮，或者只是想瞭解更多的細節，請參閱 <xref linkend="partitioning"/>。 </para
 ><para
 >首先您可以選擇對整塊硬碟或是其上的未使用空間進行自動分割區。這也被稱為 <quote
 >嚮導式</quote
@@ -916,7 +926,7 @@
 ><para
 > 這是一個速度、可靠性和資料冗餘的折衷方案。RAID5 將資料分割成 strips (類似於RAID0) 但只平均分配到一個磁碟上。與 RAID0 不同的是，RAID5 還會計算<firstterm
 >奇偶檢驗</firstterm
->資訊，並將之寫入其他磁碟。奇偶檢驗磁碟不是靜態的 (那被稱為 RAID4)，而會周期性的修改，所以奇偶檢驗資訊平均分配到所有磁碟。當其中的一個磁碟損壞，失去的資料可以從其他資料以及奇偶檢驗資訊計算出來。RAID5 最少需要三個可用的分割區。您可以選用備用的磁碟放在陣列中，用於替代故障損壞的磁碟。 </para
+>資訊，並將之寫入其他磁碟。奇偶檢驗磁碟不是靜態的 (那被稱為 RAID4)，而會週期性的修改，所以奇偶檢驗資訊平均分配到所有磁碟。當其中的一個磁碟損壞，失去的資料可以從其他資料以及奇偶檢驗資訊計算出來。RAID5 最少需要三個可用的分割區。您可以選用備用的磁碟放在陣列中，用於替代故障損壞的磁碟。 </para
 ><para
 > 如您所見，RAID5 的可靠性接近 RAID1 並具有較少的資料冗余。另一方面，它只比 RAID0 在寫入的時候慢，這是因為要計算校驗資訊。 </para
 ></listitem
@@ -933,7 +943,7 @@
   <entry
 >備用設備</entry>
   <entry
->幸免於磁碟損壞？</entry>
+>倖免於磁碟損壞？</entry>
   <entry
 >可用空間</entry>
 </row>
@@ -985,7 +995,7 @@
 
 </para
 ><para
->如果您想真正全面了解 Software RAID，請參閱 <ulink url="&url-software-raid-howto;"
+>如果您想真正全面瞭解 Software RAID，請參閱 <ulink url="&url-software-raid-howto;"
 >Software RAID HOWTO</ulink
 >。 </para
 ><para
@@ -1054,7 +1064,7 @@
   <title
 >安裝基本系統</title>
 <para
->盡管這一階段少有問題，但卻需要大量時間用於整個基本系統的下載、檢驗和解開套件。如果您用較慢的電腦或網路連接，這要花費好一會兒時間。 </para>
+>儘管這一階段少有問題，但卻需要大量時間用於整個基本系統的下載、檢驗和解開套件。如果您用較慢的電腦或網路連接，這要花費好一會兒時間。 </para>
 
 
 <!-- Start of file using-d-i/modules/base-installer.xml -->
@@ -1098,7 +1108,7 @@
 >您也許希望預設 OpenBoot 為網路啟動﹔請參閱 <xref linkend="boot-dev-select-sun"/>。</phrase
 > </para
 ><para
->注意，從單機上啟動多個作業系統仍然是種魔術。本文件無意描寫各種 boot-loader， 它們會依硬體架構甚至是子架構而變化。您應該參考 boot-loader 的文件以了解更多資訊。 </para>
+>注意，從單機上啟動多個作業系統仍然是種魔術。本文件無意描寫各種 boot-loader， 它們會依硬體架構甚至是子架構而變化。您應該參考 boot-loader 的文件以瞭解更多資訊。 </para>
 
 
 <!-- Start of file using-d-i/modules/os-prober.xml -->
@@ -1110,7 +1120,7 @@
 <para
 >在啟動開機器安裝之前，安裝程式會試著偵測已經安裝到電腦上的其他作業系統。如果它找到支援的作業系統，您將在啟動開機器安裝步驟裡得到提示，與 Debian 一起，電腦也將設定為可以啟動其他作業系統。 </para
 ><para
->注意，從單機上啟動多個作業系統仍然是種魔術。自動偵測和設定 boot-loader 啟動其他作業系統的功能會依硬體架構甚至是子架構而不同。如果它不能運作，您應該參考 boot-loader 的文件以了解更多資訊。 </para>
+>注意，從單機上啟動多個作業系統仍然是種魔術。自動偵測和設定 boot-loader 啟動其他作業系統的功能會依硬體架構甚至是子架構而不同。如果它不能運作，您應該參考 boot-loader 的文件以瞭解更多資訊。 </para>
 
 <note condition="sarge"
 ><para
@@ -1156,7 +1166,7 @@
 >LILO</command
 >，只有一些地方不同。首先， <command
 >PALO</command
-> 允許您從開機分割區啟動任何核心映象。這是因為 <command
+> 允許您從開機分割區啟動任何核心映像。這是因為 <command
 >PALO</command
 > 能真正地讀 Linux 分割區。 </para
 ><para condition="FIXME"
@@ -1597,7 +1607,7 @@
 </variablelist>
 
 <para
->盡管 <filename
+>儘管 <filename
 >/etc/delo.conf</filename
 > 位於硬碟的第一個分割區，並且應該使用預設的開機設定，但也可以用 <informalexample
 ><screen

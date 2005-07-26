@@ -96,13 +96,15 @@
 ><para
 >Infelizmente, estas imagens <command
 >MILO</command
-> podem não ter sido testadas e podem não funcionar em todas as sub-arquitecturas. Se achar que para si não funcionam, tente copiar o binário apropriado do <command
+> podem não ter sido testadas e podem não funcionar em todas as sub-arquitecturas. Se descobrir que não funcionam para si, tente copiar o binário apropriado do <command
 >MILO</command
 > para a disquete (<ulink url="&disturlftp;main/disks-alpha/current/MILO/"
 ></ulink
 >). Note que os <command
 >MILO</command
->s não suportam ext2 ``sparse superblocks'', não os poderá utilizar para carregar o Kernel a partir de um sistema de ficheiros ext2 recentemente gerado. Como alternativa, pode colocar o Kernel numa partição FAT ao lado do <command
+>s não suportam ext2 <quote
+>sparse superblocks</quote
+>, não os poderá utilizar para carregar o Kernel a partir de um sistema de ficheiros ext2 recentemente gerado. Como alternativa, pode colocar o Kernel numa partição FAT ao lado do <command
 >MILO</command
 >. </para
 ><para
@@ -130,8 +132,7 @@
    <title
 >Ficheiros de Instalação NetWinder</title>
 <para
->A maneira mais simples de iniciar um NetWinder é através da rede, utilizando a imagem TFTP fornecida &netwinder-boot-img;. </para
-> 
+>A maneira mais simples de iniciar um NetWinder é através da rede, utilizando a imagem TFTP fornecida &netwinder-boot-img;. </para>
    </sect3>
 
    <sect3 arch="arm" id="cats-install-files">
@@ -153,7 +154,7 @@
 
 For floppy-less installation on NewWorld Macs, it may be most
 convenient to obtain all the necessary files packaged into one Stuffit
-archive from 
+archive from
 <ulink url="&url-powerpc-of;"
 ></ulink
 > (separate instructions are
@@ -164,10 +165,10 @@ on your system.  You will also need the <filename
 > and
 <filename
 >yaboot.conf</filename
-> files from the 
+> files from the
 <ulink url="&downloadable-file;new-powermac/"
 >new-powermac</ulink
-> or 
+> or
 <ulink url="&downloadable-file;powermac/"
 >powermac</ulink
 > archive folder.
@@ -175,7 +176,7 @@ However, the newest G4 PowerMacs, and those that work without MacOS 9,
 need the newest version of <command
 >yaboot</command
 >; the one in the
-archive will not work. Obtain the newest version from 
+archive will not work. Obtain the newest version from
 <ulink url="http://penguinppc.org/projects/yaboot/"
 ></ulink
 >.
@@ -313,7 +314,7 @@ $ dd if=<replaceable
 
 
 <!--  This is not set off for i386 only, because many people will have -->
-<!--  access to a PC in order to make a floppy for other arches. --> 
+<!--  access to a PC in order to make a floppy for other arches. -->
 
   <sect2
 ><title
@@ -413,7 +414,9 @@ $ dd if=<replaceable
 >Importante:</emphasis
 > No Finder, use <userinput
 >Get Info</userinput
-> para expor a informação sobre a imagem de disquete encontrada pelo Finder, e marque com `X'a check box <userinput
+> para expôr a informação sobre a imagem de disquete encontrada pelo Finder, e marque com <quote
+>X</quote
+> a check box <userinput
 >File Locked</userinput
 > para que o MacOS fique impossibilitado de remover os blocos de arranque se a imagem for acidentalmente montada. </para
 ></listitem>
@@ -429,11 +432,15 @@ $ dd if=<replaceable
 ><para
 >Execute <command
 >Disk Copy</command
->, e seleccione 'Make a Floppy' a partir do menu <userinput
->Utilities</userinput
->, seleccione então do resultado a imagem <emphasis
+>, e seleccione <menuchoice
+> <guimenu
+>Utilitiess</guimenu
+> <guimenuitem
+>Make a Floppy</guimenuitem
+> </menuchoice
+>, e depois seleccione o ficheiro da imagem <emphasis
 >locked</emphasis
->. Ser-lhe-á pedido que insira uma disquete, em seguida ser-lhe-á pedida a confirmação para apagá-la. Quando terminado a disquete deverá ser ejectada. </para
+>. Ser-lhe-á pedido que insira uma disquete, em seguida ser-lhe-à perguntado se quer mesmo apagá-la. Quando terminado a disquete deverá ser ejectada. </para
 ></listitem>
 </orderedlist>
 
@@ -455,7 +462,9 @@ $ dd if=<replaceable
 > </ulink
 >. Inicie o programa <command
 >suntar</command
-> e seleccione 'Overwrite Sectors...' do menu <userinput
+> e seleccione <quote
+>Overwrite Sectors...</quote
+> do menu <userinput
 >Special</userinput
 >. </para
 ></listitem>
@@ -471,8 +480,12 @@ $ dd if=<replaceable
 ></listitem>
 <listitem
 ><para
->Depois da disquete ser criada com sucesso, seleccione 'Eject' a partir do menu <userinput
->Ficheiro</userinput
+>Depois da disquete ser criada com sucesso, seleccione <menuchoice
+> <guimenu
+>File</guimenu
+> <guimenuitem
+>Eject</guimenuitem
+> </menuchoice
 >. Se existirem quaisquer erros durante a escrita na disquete, simplesmente deite-a fora e tente com outra. </para
 ></listitem>
 </orderedlist>
@@ -815,7 +828,9 @@ image=/vmlinux
 <para
 >O instalador pode ser iniciado utilizando os ficheiros de arranque colocados numa partição do disco rígido, quer seja lançado a partir de outro sistema operativo ou invocando directamente o gestor de arranque da BIOS. </para
 ><para
->Uma instalação completa "pure network" pode ser conseguida utilizando esta técnica. Isto evita todo o aborrecimento do media amovível, tal como encontrar e gravar imagens de CD ou lutar com demasiadas e não fiáveis imagens de disquetes. </para
+>Uma instalação completa <quote
+>pure network</quote
+> pode ser conseguida utilizando esta técnica. Isto evita todo o aborrecimento do media amovível, tal como encontrar e gravar imagens de CD ou lutar com demasiadas e não fiáveis imagens de disquetes. </para
 ><para arch="i386"
 >O instalador não pode arrancar a partir dos ficheiros num sistema de ficheiros NTFS. </para
 ><para arch="powerpc"
@@ -827,7 +842,11 @@ image=/vmlinux
 >Mac OS Extended</userinput
 >. Você deve ter uma partição HFS com o intuito de trocar ficheiros entre MacOS e Linux, em particular os ficheiros de instalação dos quais fez download. </para
 ><para arch="powerpc"
->Diferentes programas são utilizados para iniciar uma instalação de um disco rígido, dependendo se o sistema é do modelo ``NewWorld'' ou um ``OldWorld''. </para>
+>Diferentes programas são utilizados para iniciar uma instalação de um disco rígido, dependendo se o sistema é do modelo <quote
+>NewWorld</quote
+> ou um <quote
+>OldWorld</quote
+>. </para>
 
   <sect2 arch="i386" id="files-lilo">
   <title
@@ -997,11 +1016,11 @@ image=/vmlinux
 ><para arch="alpha"
 >Ao contrário do Open Firmware encontrado nas máquinas Sparc PowerPC, a consola SRM <emphasis
 >não</emphasis
-> irá utilizar RARP para obter o seu endereço IP, e portanto você deve usar BOOTP para iniciar o seu Alpha através da rede. Você pode também inserir a configuração IP para as interfaces de rede directamente na consola SRM. <footnote
+> irá utilizar RARP para obter o seu endereço IP, e portanto você deve usar BOOTP para arrancar o seu Alpha através da rede<footnote
 > <para
->Os sistemas Alpha podem também iniciar através da rede utilizando o DECNet MOP (Maintenance Operations Protocol), mas isto não é coberto aqui. Presumívelmente, o seu operador local de OpenVMS irá ficar feliz por assisti-lo caso você tenha uma necessidade incandescente de utilizar MOP para iniciar Linux no seu Alpha. </para>
-</footnote
-></para
+> Os sistemas Alpha também podem arrancar através da rede utilizando o DECNet MOP (Maintenance Operations Protocol), mas este assunto não é coberto aqui. Presumivelmente, o seu operador local de OpenVMS ficará contente por o ajudar se você estiver a arder por utilizar MOP para arrancar Linux no seu Alpha. </para
+> </footnote
+>. Você pode também inserir a configuração IP para as interfaces de rede directamente na consola SRM. </para
 ><para arch="hppa"
 >Algumas máquinas mais antigas HPPA (ex.: 715/78) usam RBOOTD em vez de BOOTP. Um pacote RBOOTD está disponível no site parisc-linux. </para
 ><para
@@ -1032,11 +1051,13 @@ image=/vmlinux
 > nas mensagens de arranque do OpenPROM inicial, use o comando OpenBoot <userinput
 >.enet-addr</userinput
 >, ou </phrase
-> arranque no modo ``Rescue'' (ex.:, a partir da disquete de salvação) e utilize o comando <userinput
+> arranque no modo <quote
+>Rescue</quote
+> (ex.:, a partir da disquete de recuperação) e utilize o comando <userinput
 >/sbin/ifconfig eth0</userinput
 >. </para
 ><para
->Num sistema servidor RARP usando um kernel Linux 2.2.x, você necessita de povoar a tabela RARP do kernel. Para fazer isto, execute os seguintes comandos: <informalexample
+>Num sistema servidor RARP com um kernel Linux 2.2.x, você necessita de povoar a tabela RARP do kernel. Para fazer isto, execute os seguintes comandos: <informalexample
 ><screen>
 # <userinput
 >/sbin/rarp -s 
@@ -1060,7 +1081,7 @@ image=/vmlinux
 SIOCSRARP: Invalid argument
 </screen
 ></informalexample
-> você provavelmente necessita de carregar o módulo RARP do kernel ou recompilar o kernel para suportar RARP. Tente <userinput
+> você provavelmente necessita de carregar o módulo RARP do kernel ou então recompilar o kernel para suportar RARP. Tente <userinput
 >modprobe rarp</userinput
 > e em seguida tente novamente o comando <command
 >rarp</command
@@ -1070,9 +1091,13 @@ SIOCSRARP: Invalid argument
 >rarpd</command
 >. O procedimento é similar ao que é utilizado em SunOS no próximo parágrafo. </para
 ><para
->Em SunOS, necessita de assegurar que o endereço do hardware de Ethernet para o cliente é listado na base de dados ``ethers'' (seja no ficheiro <filename
+>Em SunOS, necessita de assegurar que o endereço do hardware de Ethernet para o cliente é listado na base de dados <quote
+>ethers</quote
+> (seja no ficheiro <filename
 >/etc/ethers</filename
->, ou via NIS/NIS+) e na base de dados ''hosts''. Em seguida precisa de iniciar o daemon RARP. Em SunOS 4, execute o comando (como root): <userinput
+>, ou via NIS/NIS+) e na base de dados <quote
+>hosts</quote
+>. Em seguida precisa de iniciar o daemon RARP. Em SunOS 4, execute o comando (como root): <userinput
 >/usr/etc/rarpd -a</userinput
 >; em SunOS 5, use <userinput
 >/usr/sbin/rarpd -a</userinput
@@ -1103,9 +1128,7 @@ SIOCSRARP: Invalid argument
 >/etc/inetd.conf</filename
 >. Em &debian;, você pode executar <userinput
 >update-inetd --enable bootps</userinput
->, e de seguida <userinput
->/etc/init.d/inetd reload</userinput
->. De qualquer modo a linha em questão deve parecer-se com: <informalexample
+>, para o fazer. Caso contrário, a linha em questão deve parecer-se com: <informalexample
 ><screen>
 bootps  dgram  udp  wait  root  /usr/sbin/bootpd  bootpd -i -t 120
 </screen
@@ -1122,7 +1145,7 @@ bootps  dgram  udp  wait  root  /usr/sbin/bootpd  bootpd -i -t 120
 >bootptab</filename
 >. Para o CMU <command
 >bootpd</command
->, você vai necessitar saber o endereço de hardware (MAC) do cliente. Aqui está um <filename
+>, você vai necessitar saber o endereço (MAC) de hardware do cliente. Aqui está um <filename
 >/etc/bootptab</filename
 > de exemplo: <informalexample
 ><screen>
@@ -1135,7 +1158,11 @@ client:\
   ha=0123456789AB:
 </screen
 ></informalexample
->Você tem de alterar pelo menos a opção "ha", que especifica o endereço de hardware do cliente. A opção "bf" especifica o ficheiro que o cliente deve obter via TFTP; para mais detalhes veja a <xref linkend="tftp-images"/>. <phrase arch="mips"
+>Você tem de alterar pelo menos a opção <quote
+>ha</quote
+>, que especifica o endereço de hardware do cliente. A opção <quote
+>bf</quote
+> especifica o ficheiro que o cliente deve obter via TFTP; para mais detalhes veja a <xref linkend="tftp-images"/>. <phrase arch="mips"
 >Em Indys da SGI você pode apenas entrar no monitor de comandos e escrever <userinput
 >printenv</userinput
 >. O valor da variável <userinput
@@ -1161,11 +1188,11 @@ client:\
    <title
 >Configurar um servidor DHCP</title>
 <para
->Um software livre de servidor DHCP é o ISC <command
+>Um software livre de servidor DHCP é o <command
 >dhcpd</command
->. Em &debian;, isto está disponível no pacote <classname
+> do ISC. Em &debian;, isto está disponível no pacote <classname
 >dhcp</classname
->. Aqui está um exemplo de um ficheiro de configuração para ele (usualmente <filename
+>. Aqui está um exemplo de um ficheiro de configuração para ele (normalmente <filename
 >/etc/dhcpd.conf</filename
 >): <informalexample
 ><screen>
@@ -1185,22 +1212,22 @@ host clientname {
   filename "/tftpboot/tftpboot.img";
   server-name "servername";
   next-server servername;
-  hardware ethernet 01:23:45:67:89:AB; 
+  hardware ethernet 01:23:45:67:89:AB;
   fixed-address 192.168.1.90;
 }
 </screen
 ></informalexample
-> Nota: O novo pacote (e preferível) <classname
+> Nota: O novo (e preferêncial) pacote <classname
 >dhcp3</classname
 > utiliza <filename
 >/etc/dhcp3/dhcpd.conf</filename
 >. </para
 ><para
 >Neste exemplo, existe um servidor <replaceable
->"servername"</replaceable
-> que executa todo o trabalho de servidor DHCP, TFTP e gateway de rede. Vai precisar quase de certeza de alterar as opções de domain-name, tal como o nome do servidor e o endereço de hardware do cliente. A opção <replaceable
->"filename"</replaceable
-> deve ser o nome do ficheiro recuperado via TFTP. </para
+>servername</replaceable
+> que executa todo o trabalho de servidor DHCP, de servidor TFTP e gateway de rede. Vai precisar quase de certeza de alterar as opções de domain-name, tal como o nome do servidor e o endereço de hardware do cliente. A opção <replaceable
+>filename</replaceable
+> deve ser o nome do ficheiro obtido via TFTP. </para
 ><para
 >Após ter editado o ficheiro de configuração <command
 >dhcpd</command
@@ -1224,11 +1251,11 @@ max-lease-time 7200;
 allow booting;
 allow bootp;
 
-# O próximo parágrafo necessita de ser alterado para ser compatível com o seu caso
+# O próximo parágrafo necessita ser alterado para se adequar com o seu caso
 subnet 192.168.1.0 netmask 255.255.255.0 {
   range 192.168.1.200 192.168.1.253;
   option broadcast-address 192.168.1.255;
-# O endereço de gateway que pode ser diferente 
+# O endereço de gateway que pode ser diferente
 # (acesso à internet por exemplo)
   option routers 192.168.1.1;
 # indica o dns que quer utilizar
@@ -1247,7 +1274,7 @@ group {
 ></informalexample
 > Note que para um arranque PXE, o ficheiro cliente com o nome de <filename
 >pxelinux.0</filename
->, é o gestor de arranque e não imagem de kernel (veja a <xref linkend="tftp-images"/> abaixo). </para>
+>, é o gestor de arranque, não uma imagem de kernel (veja a <xref linkend="tftp-images"/> abaixo). </para>
    </sect3>
   </sect2>
 <!--   End of file install-methods//tftp/dhcp.xml -->
@@ -1350,13 +1377,15 @@ tftp dgram udp wait nobody /usr/sbin/tcpd in.tftpd /tftpboot
 >/tftpboot/tftpboot.img</userinput
 >, se trabalhar com o exemplo de configurações BOOTP/DHCP descritas acima. </para
 ><para
->O firmware DECstation inicia por TFTP com o comando <userinput
+>O firmware DECstation arranca por TFTP com o comando <userinput
 >boot <replaceable
 >#</replaceable
 >/tftp</userinput
 >, onde <replaceable
 >#</replaceable
-> é o número do dispositivo TurboChannel do qual vai iniciar. Na maioria das DECstation é  "3". Se servidor BOOTP/DHCP não fornecer o nome do ficheiro ou necessitar de passar parâmetros adicionais, podem ser adicionados com a seguinte sintax: </para
+> é o número do dispositivo TurboChannel do qual vai iniciar. Na maioria das DECstation é <quote
+>3</quote
+>. Se servidor BOOTP/DHCP não fornecer o nome do ficheiro ou necessitar de passar parâmetros adicionais, podem ser adicionados com a seguinte sintaxe: </para
 ><para>
 
 <userinput
@@ -1369,7 +1398,7 @@ tftp dgram udp wait nobody /usr/sbin/tcpd in.tftpd /tftpboot
 >. Isto pode derivar de várias razões:  <orderedlist
 > <listitem
 ><para
-> O firmware não responde a pedidos ARP durante a transferência TFTP. Isto leva a um timeout e a tranferência pára. A solução é adicionar o MAC address da placa de Ethernet na DECstation estacticamente para a tabela ARP do servidor TFTP. Isto é feito executando <userinput
+> O firmware não responde a pedidos ARP durante a transferência TFTP. Isto leva a um timeout e a transferência pára. A solução é adicionar o MAC address da placa de Ethernet na DECstation estaticamente para a tabela ARP do servidor TFTP. Isto é feito executando <userinput
 >arp -s <replaceable
 >IP-address</replaceable
 > <replaceable
@@ -1381,7 +1410,7 @@ tftp dgram udp wait nobody /usr/sbin/tcpd in.tftpd /tftpboot
 ></listitem
 > <listitem
 ><para
-> O firmware tem um tamanho limite nos ficheiros que poodem iniciar por TFTP. </para
+> O firmware tem um tamanho limite nos ficheiros que podem iniciar por TFTP. </para
 ></listitem
 > </orderedlist
 > Existem também revisões de firmware que não podem ser iniciadas via TFPT. Uma visão geral sobre as diferentes revisões podem ser encontradas nas páginas web NetBSD: <ulink url="http://www.netbsd.org/Ports/pmax/board-list.html#proms"
@@ -1414,16 +1443,20 @@ tftp dgram udp wait nobody /usr/sbin/tcpd in.tftpd /tftpboot
    <title
 >Iniciar SPARC TFTP</title>
 <para
->As Arquitecturas SPARC por exemplo utilizam os nome de sub-arquitecturas, tal como ``SUN4M'' ou ``SUN4C'';  Em alguns casos, a sub-arquitectura é deixada em branco, o ficheiro cliente procura só por <filename
+>As Arquitecturas SPARC por exemplo utilizam os nome de sub-arquitecturas, tais como <quote
+>SUN4M</quote
+> ou <quote
+>SUN4C</quote
+>; Em alguns casos, a sub-arquitectura é deixada em branco, para que o ficheiro que o cliente procura é apenas <filename
 >client-ip-in-hex</filename
->.  Assim se a seu sistema sub-arquitectura  é SUN4C, e o seu IP é 192.168.1.3, o nome do ficheiros será <filename
+>. Assim, se a sub-arquitectura do seu sistema for SUN4C, e o seu IP é 192.168.1.3, o nome do ficheiros será <filename
 >C0A80103.SUN4C</filename
 >. Uma maneira simples de determinar isto é executando o seguinte comando na consola (assumindo que o IP pretendido para a máquina é 10.0.0.4). <informalexample
 ><screen>
 $ printf '%.2x%.2x%.2x%.2x\n' 10 0 0 4
 </screen
 ></informalexample
-> Isto irá mandar o IP em hexadecimal; para alcançar o nome do ficheiro correcto, necessitará de alterar todas as letras para maiúsculas e se necessário adicionar o nome da sub-arquitectura. </para
+> Isto irá mandar o IP em hexadecimal; para obter o nome do ficheiro correcto, necessitará de alterar todas as letras para maiúsculas e se necessário adicionar o nome da sub-arquitectura. </para
 ><para
 >Pode também forçar alguns sistemas sparc a procurar por um nome de ficheiro especifico adicionando-o no final do comando de arranque OpenPROM, tal como <userinput
 >boot net my-sparc.image</userinput
@@ -1473,7 +1506,7 @@ $ printf '%.2x%.2x%.2x%.2x\n' 10 0 0 4
 
 <!-- FIXME: commented out since it seems too old to be usable and a current
             way is not known
-  
+
   <sect2 id="tftp-low-memory">
   <title
 >TFTP Installation for Low-Memory Systems</title>
@@ -1507,7 +1540,7 @@ booting.
 ><para>
 
 Untar the root archive on your NFS server (can be the same system as
-your TFTP server): 
+your TFTP server):
 
 <informalexample
 ><screen
@@ -1582,8 +1615,8 @@ IP address is 192.168.1.3, do
 >Installing with TFTP and NFS Root</title>
 <para>
 
-Installing with TFTP and NFS Root is similar to 
-<xref linkend="tftp-low-memory"/> because you don't want to 
+Installing with TFTP and NFS Root is similar to
+<xref linkend="tftp-low-memory"/> because you don't want to
 load the RAMdisk anymore but boot from the newly created NFS-root file
 system.  You then need to replace the symlink to the tftpboot image by
 a symlink to the kernel image (for example,
@@ -1648,14 +1681,14 @@ $ debconf-get-selections &gt;&gt; <replaceable
 ></informalexample
 > Contudo, um ficheiro gerado desta maneira terá alguns itens que não devem ser pré-carregados, e o ficheiro na <xref linkend="example-preseed"/> é o melhor local de começo para a maioria dos utilizadores. </para
 ><para
->Uma vez que tenha um ficheiro pré-configurado, você pode edita-lo se necessário, e colocá-lo num servidor web, ou copiá-lo para um instalador num meio de arranque. Seja lá onde colocar o ficheiro, necessita de passar o pârametro para o instalador na altura do arranque para utilizar o ficheiro. </para
+>Uma vez que tenha um ficheiro pré-configurado, você pode edita-lo se necessário, e colocá-lo num servidor web, ou copiá-lo para um instalador num meio de arranque. Seja lá onde colocar o ficheiro, necessita de passar o parâmetro para o instalador na altura do arranque para utilizar o ficheiro. </para
 ><para
->Para fazer o instalador utilizar o ficheiro pré-configurado, conseguido através de download da rede, adicione preseed/url=http://url/to/preseed.cfg aos pârametros de arranque do kernel. Claro que a pré-configuração não terá efeito até o instalador conseguir configurar a rede para fazer download do ficheiro, isto é portanto muito útil se o instalador conseguir configurar a rede via DHCP sem fazer nenhuma pergunta. Pode querer configurar a prioridade de instalação para evitar qualquer questão enquanto a rede está a ser configurada. Veja na <xref linkend="installer-args"/>. </para
+>Para fazer o instalador utilizar o ficheiro pré-configurado, conseguido através de download da rede, adicione preseed/url=http://url/to/preseed.cfg aos parâmetros de arranque do kernel. Claro que a pré-configuração não terá efeito até o instalador conseguir configurar a rede para fazer download do ficheiro, isto é portanto muito útil se o instalador conseguir configurar a rede via DHCP sem fazer nenhuma pergunta. Pode querer configurar a prioridade de instalação para evitar qualquer questão enquanto a rede está a ser configurada. Veja na <xref linkend="installer-args"/>. </para
 ><para
 >Para colocar um ficheiro de pré-configuração num CD, necessita de recriar a imagem ISO para incluir o seu ficheiro pré-configurado. Veja a página do manual de mkisofs para mais detalhes. Alternativamente, coloque o ficheiro preseed numa disquete, e utilize preseed/file=/floppy/preseed.cfg </para
 ><para arch="i386"
 >Se vai arrancar a partir de um USB memory stick, então pode simplesmente copiar o ficheiro de pré-configuração para o sistema de ficheiros do memory stick, e editar o ficheiro syslinux.cfg para adicionar preseed/file=/hd-media/preseed.cfg aos parâmetros de arranque do kernel. </para>
-  
+
    <sect3 condition="etch">
    <title
 >Utilizar o Preseed para Alterar Valores por Omissão</title>

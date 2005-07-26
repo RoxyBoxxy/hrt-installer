@@ -19,7 +19,7 @@
 >. Colocando a swap numa partição separada, o Linux poderá fazer um uso mais eficiente dela. É possível forçar o Linux a utilizar um ficheiro normal como swap, mas isto não é recomendado. </para
 ><para
 >A maioria das pessoas escolhem dar ao GNU/Linux mais que o número mínimo de partições. No entanto, existem duas razões para querer dividir o sistema de arquivos em partições mais pequenas. O primeiro é a segurança. Se algo acontecer e corromper seu sistema de arquivos, geralmente somente uma partição é afectada. Assim, terá somente que substituir (utilizando backups do sistema) uma parte do sistema. No mínimo poderá considerar a criação do que é normalmente chamado <quote
->partição raíz</quote
+>partição raiz</quote
 >. Ela contém os componentes mais essenciais do sistema. Se qualquer outra partição for corrompida, poderá ainda inicializar no GNU/Linux e corrigir o sistema. Isto podo evitar-lhe que tenha de reinstalar o sistema a partir do nada. </para
 ><para
 >A segunda razão é por norma mais importante num meio empresarial, mas realmente depende da sua utilização da máquina. Por exemplo, um servidor de mail que recebe spam de emails pode facilmente encher a partição. Se no servidor de email fez da <filename
@@ -39,9 +39,9 @@
 <para
 >&debian; adere ao <ulink url="&url-fhs-home;"
 >Filesystem Hierarchy Standard</ulink
-> para as directorias e nomes de ficheiros. Este padrão permite aos utilizadores e a programas de software predizer o local dos ficheiros e directorias. O nível do directório raíz é representada simplesmente por uma barra <filename
+> para as directorias e nomes de ficheiros. Este padrão permite aos utilizadores e a programas de software predizer o local dos ficheiros e directorias. O nível do directório raiz é representada simplesmente por uma barra <filename
 >/</filename
->. No nível raíz, todos os sistemas Debian incluem estas directorias: <informaltable
+>. No nível raiz, todos os sistemas Debian incluem estas directorias: <informaltable
 > <tgroup cols="2">
 <thead>
 <row>
@@ -191,7 +191,7 @@
 <itemizedlist>
 <listitem
 ><para
->A partição raíz <filename
+>A partição raiz <filename
 >/</filename
 > deve conter sempre fisicamente  <filename
 >/etc</filename
@@ -446,7 +446,9 @@
 >/dev/sfd0</filename
 >. </para
 ><para arch="sparc"
->Partições de disco Sun permitem 8 partições separadas (ou slices). A terceira partição é normalmente (e é preferível que tenha) a partição 'Whole Disk'. Esta partição referencia todos os sectores do disco e é usada pelo gestor de arranque (seja o SILO ou Sun's). </para
+>Partições de disco Sun permitem 8 partições separadas (ou slices). A terceira partição é normalmente (e é preferível que tenha) a partição <quote
+>Whole Disk</quote
+>. Esta partição referencia todos os sectores do disco e é usada pelo gestor de arranque (seja o SILO ou o da Sun). </para
 ><para arch="s390"
 >As partições em cada disco são representadas acrescentando-se um número decimal ao nome do disco: <filename
 >dasda1</filename
@@ -473,7 +475,7 @@
 ></term>
 <listitem
 ><para
->Ferramenta de particionamento recomendada em Debian. Este canivete suiço também pode redimensionar partições, criar sistemas de ficheiros <phrase arch="i386"
+>Ferramenta de particionamento recomendada em Debian. Este canivete suíço também pode redimensionar partições, criar sistemas de ficheiros <phrase arch="i386"
 > (<quote
 >format</quote
 > na linguagem Windows)</phrase
@@ -596,9 +598,9 @@
 >instalador Debian</command
 > e continue para o próximo passo. </para
 ><para
->Se vai trabalhar com mais de 20 partições no disco IDE, vai precisar de criar dispositivos para a partição 21 e superiores. O passo seguinte da inicialização da partição falhará a menos que um dispositivo apropriado esteja presente no sistema alvo. Como exemplo, aqui estão os comandos que poderá utilizar no <userinput
+>Se vai trabalhar com mais de 20 partições no seu disco ide, vai precisar de criar dispositivos para a partição 21 e superiores. O passo seguinte da inicialização da partição falhará a menos que um dispositivo apropriado esteja presente. Como exemplo, aqui estão os comandos que poderá utilizar no <userinput
 >tty2</userinput
-> ou executando-os numa consola para adicionar o dispositivo para que a 21º partição possa ser inicializada: <informalexample
+> ou sob Executar uma Shell para adicionar um dispositivo para que a 21ª partição possa ser inicializada: <informalexample
 ><screen>
 # cd /dev
 # mknod hda21 b 3 21 
@@ -606,7 +608,7 @@
 # chmod 660 hda21
 </screen
 ></informalexample
-> Arrancar para o novo sistema irá falhar a menos que dispositivos apropriados estejam presentes no sistema alvo. Após feita a instalação do Kernel e módulos, execute: <informalexample
+> Arrancar para o novo sistema irá falhar a menos que dispositivos apropriados estejam presentes no sistema alvo. Após instalar o kernel e módulos, execute: <informalexample
 ><screen>
 # cd /target/dev
 # mknod hda21 b 3 21 
@@ -620,7 +622,9 @@
 >.</phrase
 > </para
 ><para condition="mac-fdisk.txt"
-> Um ponto chave quando particiona discos do tipo Mac, é que a partição de swap é identificada pelo seu nome; tem que ser chamada de 'swap'. Todas as partições Linux no Mac são do mesmo tipo, Apple_UNIX_SRV2. Leia, por favor, o manual. Sugerimos também a leitura do <ulink url="&url-mac-fdisk-tutorial;"
+>Um ponto chave quando particionar discos do tipo Mac, é que a partição de swap seja identificada pelo seu nome; tem que ser chamada de <quote
+>swap</quote
+>. Todas as partições Linux no Mac são do mesmo tipo, Apple_UNIX_SRV2. Leia, por favor, o manual. Sugerimos também a leitura do <ulink url="&url-mac-fdisk-tutorial;"
 >Tutorial mac-fdisk</ulink
 >, que inclui passos que deverá seguir se está a partilhar os seus discos com MacOS. </para>
 
@@ -638,7 +642,9 @@
 ><para
 >Se escolheu utilizar o <command
 >fdisk</command
-> para particionar o disco, e o disco que seleccionou para particionar não possui já uma BSD disk label, tem de utilizar o comando 'b' para entrar em modo de disk label. </para
+> para particionar o disco, e o disco que seleccionou para particionar não possui já uma BSD disk label, tem de utilizar o comando <quote
+>b</quote
+> para entrar em modo de disk label. </para
 ><para
 >A menos que deseje utilizar o disco que está a particionar a partir de Tru64 Unix ou dos sistemas operativos derivados do livre 4.4BSD-Lite (FreeBSD, OpenBSD, e NetBSD), é sugerido que <emphasis
 >NÃO</emphasis
@@ -677,13 +683,13 @@
 ><title
 >Particionar para &arch-title;</title>
 <para
->PALO, o gestor de arranque de HPPA, requer uma partição do tipo <quote
+>PALO, o gestor de arranque para HPPA, requer uma partição do tipo <quote
 >F0</quote
-> algures nos primeiros 2GB. É aqui onde o gestor de arranque, o Kernel opcional e o RAMdisk serão guardados, portanto deixe espaço suficiente para tal -- 4 MB no mínimo (Eu prefiro 8-16MB). Outros requisitos adicionais do firmware é que o Kernel Linux resida nos primeiros 2GB do disco. Isto é tipicamente alcançado fazendo a partição root do tipo ext2 caber inteiramente nos primeiros 2GB do disco. Alternativamente poderá criar uma pequena partição ext2 perto do início do disco e montá-la em <filename
+> algures nos primeiros 2GB. É aqui onde o gestor de arranque, e um kernel opcional e o RAMdisk serão guardados, portanto deixe espaço suficiente para tal &mdash; pelo menos 4Mb no mínimo (Eu prefiro 8&ndash;16MB). Outros requisitos adicionais do firmware é que o Kernel Linux resida nos primeiros 2GB do disco. Isto é tipicamente alcançado fazendo a partição raiz do tipo ext2 caber inteiramente nos primeiros 2GB do disco. Alternativamente poderá criar uma pequena partição ext2 perto do início do disco e montá-la em <filename
 >/boot</filename
->, dado que é nesta directoria onde o Kernel(s) Linux é guardado. <filename
+>, dado que é nesta directoria onde o kernel(s) Linux será guardado. <filename
 >/boot</filename
-> necessita de ser suficientemente grande para conter todos os Kernel que poderá querer ter; 8-16MB geralmente é suficiente. </para>
+> necessita de ser suficientemente grande para conter todos os kernel que poderá querer ter; 8&ndash;16MB geralmente é suficiente. </para>
   </sect2>
 <!--   End of file partitioning/partition/hppa.xml -->
 
@@ -696,11 +702,11 @@
 <para
 >Se tem outro sistema operativo existente tal como o DOS ou Windows e quer preservá-lo durante a instalação do Debian, irá precisar de redimensionar as partições de modo a libertar espaço para para a instalação do Debian. O instalador suporta o redimensionamento de ambos os sistemas de ficheiros, FAT e NTFS; Quando chegar à fase de particionamento, seleccione a opção para particionar manualmente e depois simplesmente escolha a partição existente e altere o seu tamanho. </para
 ><para
->A Bios do PC geralmente adiciona limitações adicionais ao particionamento do disco. Existe um limite de número de partições <quote
+>A BIOS do PC geralmente adiciona limitações adicionais ao particionamento do disco. Existe um limite de número de partições <quote
 >primárias</quote
 > e <quote
 >lógicas</quote
-> que um disco pode conter. Adicionalmente, com BIOS anteriores a 1994-98, existe limite sobre de qual dispositivo pode a BIOS arrancar. Poderá encontrar mais informação no <ulink url="&url-partition-howto;"
+> que um disco pode conter. Adicionalmente, com BIOS anteriores a 1994&ndash;98, existem limites sobre onde na drive a BIOS pode arrancar. Poderá encontrar mais informação no <ulink url="&url-partition-howto;"
 >Linux Partition HOWTO</ulink
 > e em <ulink url="&url-phoenix-bios-faq-large-disk;"
 >Phoenix BIOS FAQ</ulink
@@ -718,11 +724,11 @@
 ><para
 >Se tem um disco IDE de grande capacidade, e não está a utilizar nem endereçamento LBA nem drivers overlay (por vezes fornecidos pelos fabricantes de discos rígidos), então a partição de arranque (a partição que contém a sua imagem de kernel) tem de ser colocada dentro dos primeiros 1024 cilindros do seu disco rígido (por norma cerca de 524 megabytes, sem a tradução BIOS). </para
 ><para
->Esta restrição não se aplica se tiver uma BIOS mais recente que 1995-98 (dependendo do fabricante) que suporte a <quote
+>Esta restrição não se aplica se tiver uma BIOS mais recente que 1995&ndash;98 (dependendo do fabricante) que suporte a <quote
 >Enhanced Disk Drive Support Specification</quote
 >. Quer o Lilo, o gestor de arranque do Linux, e a alternativa do Debian <command
 >mbr</command
-> devem utilizar a BIOS para ler o kernel do disco para a RAM. Se as extensões para o acesso a discos de grandes dimensões da int 0x13 da BIOS estiverem presentes, serão utilizadas. Caso contrário, o interface antigo de acesso ao disco é utilizado como recurso, e não pode ser utilizado para endereçar qualquer localização acima do 1023º cilindro. Uma vez o Linux iniciado, não interessa o que a BIOS o seu computador tem, estas restrições já não se aplicam mais, já que Linux não utiliza a BIOS para acesso ao disco. </para
+> têm de utilizar a BIOS para ler o kernel do disco para a RAM. Se as extensões para o acesso a discos de grandes dimensões da int 0x13 da BIOS estiverem presentes, serão utilizadas. Caso contrário, o interface antigo de acesso ao disco é utilizado como recurso, e não pode ser utilizado para endereçar qualquer localização acima do 1023º cilindro. Uma vez o Linux iniciado, não interessa que BIOS o seu computador tem, estas restrições já não se aplicam mais, já que o Linux não utiliza a BIOS para acesso ao disco. </para
 ><para
 >Se tem um disco de grande capacidade, poderá querer utilizar as técnicas de tradução de cilindros, que pode ajustar a partir do programa de configuração da BIOS, tal como LBA (Logical Block Addressing) ou o modo de tradução CHS (<quote
 >Large</quote
@@ -732,11 +738,11 @@
 >traduzida</emphasis
 > dos primeiros 1024 cilindros. </para
 ><para
->O modo recomendado de realizar isto é criar uma pequena partição (5-10MB serão suficientes) no início do disco para ser usado como partição de arranque, e então criar todas as outras partições que quer ter, na restante área. Esta partição de arranque <emphasis
->deve</emphasis
-> ser montada em <filename
+>O modo recomendado de realizar isto é criar uma pequena partição (5&ndash;10MB devem ser suficientes) no início do disco para ser usado como partição de arranque, e então criar todas as outras partições que quer ter, na restante área. Esta partição de arranque <emphasis
+>tem</emphasis
+> de ser montada em <filename
 >/boot</filename
->, dado que esta é a directoria onde o(s) kernel Linux serão guardados. Esta configuração funcionará em qualquer sistema, e independente da sua BIOS suportar extensões de acesso a discos de elevada capacidade. </para>
+>, dado que esta é a directoria onde o(s) kernel Linux serão guardados. Esta configuração funcionará em qualquer sistema, independentemente se é utilizada a tradução LBA ou large disc CHS, e independente da sua BIOS suportar extensões de acesso a discos de elevada capacidade. </para>
   </sect2>
 <!--   End of file partitioning/partition/i386.xml -->
 
@@ -807,7 +813,7 @@
 >partman</command
 > procura uma partição EFI ao mesmo tempo que procura uma partição devidamente configurada como <emphasis
 >root</emphasis
->. Isto dá-lhe a oportunidade de corrigir a disposição do disco antes que a instalação de pacotes comece. A maneira mais simples de corrigir esta omissão é encolher a última partição do disco para prefazer espaço suficiente para adicionar uma partição EFI. </para
+>. Isto dá-lhe a oportunidade de corrigir a disposição do disco antes que a instalação de pacotes comece. A maneira mais simples de corrigir esta omissão é encolher a última partição do disco para perfazer espaço suficiente para adicionar uma partição EFI. </para
 ><para
 >É bastante recomendado que a partição de arranque EFI esteja no mesmo disco que o sistema de ficheiros <emphasis
 >root</emphasis

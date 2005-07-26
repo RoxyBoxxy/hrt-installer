@@ -46,6 +46,14 @@
 #   preseed/file=/cdrom/preseed
 # Assegure-se que copiou este ficheiro para o local especificado.
 # 
+# Para ter a certeza que o instalador obtém o ficheiro de preseed correcto,
+# você pode especificar um checksum para o ficheiro. Actualmente isto tem 
+# de ser um md5sum, e se especificado tem de coincidir com o ficheiro ou o 
+# instalador vai-se recusar a utilizar o ficheiro. (Os checksums não são 
+# suportados no instalador sarge.)
+# preseed/url/checksum=5da499872becccfeda2c4872f9171c3d
+# preseed/file/checksum=5da499872becccfeda2c4872f9171c3d
+#
 # Enquanto o está a fazer, você pode querer mandar para lá um debconf/priority=critical
 # para evitar a maioria das questões mesmo que o preseeding abaixo falhe algumas.
 # E você pode definir o timeout para 1 em syslinux.cfg para evitar ter de carregar em
@@ -160,7 +168,7 @@ d-i  partman-auto/choose_recipe         select \
 
 # Caso contrário, você pode colocar toda a receita numa linha. Este exemplo cria
 # uma pequena partição /boot, adequada para swap, e utiliza o resto do espaço
-# para a partição raíz:
+# para a partição raiz:
 #d-i partman-auto/expert_recipe         string boot-root :: \
 #    20 50 100 ext3 $primary{ } $bootable{ } method{ format } format{ } \
 #    use_filesystem{ } filesystem{ ext3 } mountpoint{ /boot } . \
@@ -226,7 +234,12 @@ base-config  base-config/login          note
 
 # Se você instalou um gestor de display, mas não quer inicia-lo imediatamente
 # após o base-config terminar.
-#base-config base-config/start-display-manager        boolean false
+#base-config base-config/start-display-manager boolean false
+
+# Algumas versões do instalador podem relatar de volta o que você instalou.
+# O padrão é não relatar de volta, mas enviar relatórios ajuda o projecto
+# a determinar qual o software mais popular e inclui-lo nos CDs.
+#popularity-contest popularity-contest/participate boolean false
 
 ###### Configuração de Fuso Horário.
 
@@ -256,7 +269,7 @@ base-config  tzconfig/choose_country_zone_single      boolean true
 
 ###### Preparação de Contas.
 
-# Para fazer o pressed à password de root, você tem de pô-la a descoberto neste
+# Para fazer o preseed à password de root, você tem de pô-la a descoberto neste
 # ficheiro. Isso não é uma ideia muito boa, use com cautela!
 #passwd passwd/root-password            password r00tme
 #passwd passwd/root-password-again      password r00tme
@@ -361,7 +374,13 @@ xserver-xfree86  xserver-xfree86/config/monitor/mode-list \
 # carregados. Os ficheiros incluídos também podem ter directivas preseed/incluídas neles
 # próprios. Note que se os ficheiros forem relativos, eles são tirados da
 # mesma directoria que o ficheiros de preseed que os inclui.
-#d-i preseed/include                    string x.cfg
+#d-i preseed/include string x.cfg
+
+# O instalador pode opcionalmente verificar checksums de ficheiros preseed
+# antes de os utilizar. Actualmente apenas são suportados md5sums, liste os
+# md5sums na mesma ordem da lista de ficheiros a incluir.
+# (Checksums não são suportados no instalador sarge.)
+#d-i pressed/include/checksum string 5da499872becccfeda2c4872f9171c3d
 
 # Mais flexibilidade, isto corre um comando da shell e mostra os nomes dos
 # ficheiros de preseed, inclui esses ficheiros. Por exemplo, para trocar configurações
@@ -702,7 +721,7 @@ mouse =&gt; /dev/psaux  =&gt; gpm =&gt; /dev/gpmdata -&gt; /dev/mouse =&gt; X
  installed, quit aptitude and repeat for other tasks.
  Space requirements need to be determined from tasksel as tasksel will not
  install recommended packages while selecting a task from aptitude will.
--->       
+-->
 
 <para
 >A instalação base do sarge para i386, utilizando o kernel 2.4 por omissão, incluindo todos os pacotes standard, necessita de 573MB de espaço em disco. </para
@@ -841,13 +860,17 @@ mouse =&gt; /dev/psaux  =&gt; gpm =&gt; /dev/gpmdata -&gt; /dev/mouse =&gt; X
 >Instalar &debian; a partir de um sistema Unix/Linux</title>
 
 <para
->Esta secção explica como instalar &debian; a partir de um sistema Linux/Unix existente, sem utilizar o instalador pelo menu, baseado em ncurses, como é explicado no resto do manual. Este "cross-install" HOWTO foi pedido por utilizadores que mudam para &debian; a partir de Red Hat, Mandrake e SUSE. Nesta secção é assumida alguma familiaridade em introduzir comandos *nix e navegar através do sistema de ficheiros. Nesta secção, <prompt
+>Esta secção explica como instalar &debian; a partir de um sistema Unix ou Linux existente, sem utilizar o instalador guiado pelo menu como é explicado no resto do manual. Este <quote
+>cross-install</quote
+> HOWTO foi pedido por utilizadores que mudam para &debian; a partir de Red Hat, Mandrake e SUSE. Nesta secção é assumida alguma familiaridade em introduzir comandos *nix e navegar através do sistema de ficheiros. Nesta secção, <prompt
 >$</prompt
 > simboliza um comando a ser escrito pelo utilizador do sistema actual, e <prompt
 >#</prompt
 > refere-se a comandos introduzidos no chroot Debian. </para
 ><para
->Assim que tiver o novo sistema Debian configurado de acordo com as suas preferências, você pode migrar os dados existentes dos utilizadores (se os tiver) para lá, e continuar a rolar. Isto é portanto uma instalação &debian; com "zero paragens". É também uma maneira inteligente de lidar com hardware que não se dá bem com os vários media ou tipos de arranque. </para>
+>Assim que tiver o novo sistema Debian configurado de acordo com as suas preferências, você pode migrar os dados existentes dos utilizadores (se os tiver) para lá, e continuar a rolar. Isto é portanto uma instalação &debian; com <quote
+>zero paragens</quote
+>. É também uma maneira inteligente de lidar com hardware que de outro modo não se dá bem com os vários media ou tipos de arranque. </para>
 
   <sect2>
   <title
@@ -857,7 +880,7 @@ mouse =&gt; /dev/psaux  =&gt; gpm =&gt; /dev/gpmdata -&gt; /dev/mouse =&gt; X
 ><para
 >Para criar os sistemas de ficheiros nas suas partições. Por exemplo, para criar um sistema de ficheiros ext3 na partição <filename
 >/dev/hda6</filename
-> (é a nossa partição raíz no nosso exemplo): <informalexample
+> (é a nossa partição raiz no nosso exemplo): <informalexample
 ><screen>
 # mke2fs -j /dev/hda6
 </screen
@@ -875,7 +898,7 @@ mouse =&gt; /dev/psaux  =&gt; gpm =&gt; /dev/gpmdata -&gt; /dev/mouse =&gt; X
 ></informalexample
 > Monte uma partição como <filename
 >/mnt/debinst</filename
-> (o ponto de instalação, para ser o sistema de ficheiros raíz (<filename
+> (o ponto de instalação, para ser o sistema de ficheiros raiz (<filename
 >/</filename
 >) no seu novo sistema). O nome do ponto de montagem é completamente arbitrário, é referenciado depois mais abaixo. <informalexample
 ><screen
@@ -913,7 +936,7 @@ mouse =&gt; /dev/psaux  =&gt; gpm =&gt; /dev/gpmdata -&gt; /dev/mouse =&gt; X
 ></ulink
 > </para
 ><para
->Ou, pode utilizar o seguinte procedimento para instala-lo manualmente. Crie um directório de trabalho para extraír lá o .deb: <informalexample
+>Ou, pode utilizar o seguinte procedimento para instala-lo manualmente. Crie um directório de trabalho para extrair lá o .deb: <informalexample
 ><screen>
 # mkdir work
 # cd work
@@ -925,7 +948,7 @@ mouse =&gt; /dev/psaux  =&gt; gpm =&gt; /dev/gpmdata -&gt; /dev/mouse =&gt; X
 >debootstrap</command
 > a partir do <ulink url="http://ftp.debian.org/debian/pool/main/d/debootstrap/"
 > pool</ulink
->, copie o pacote para o directório de trabalho, e extraia dele os ficheiros binários. Você vai necessitar de previlégios de root para instalar os binários. <informalexample
+>, copie o pacote para o directório de trabalho, e extraia dele os ficheiros binários. Você vai necessitar de privilégios de root para instalar os binários. <informalexample
 ><screen
 ># tar -x debootstrap_0.X.X_arch.deb
 # cd /
@@ -1000,7 +1023,7 @@ mouse =&gt; /dev/psaux  =&gt; gpm =&gt; /dev/gpmdata -&gt; /dev/mouse =&gt; X
 >Chroot</command
 >: <informalexample
 ><screen
-># chroot /mnt/debinst /bin/bash
+># LANG= chroot /mnt/debinst /bin/bash
 </screen
 ></informalexample>
 
@@ -1105,7 +1128,7 @@ iface lo inet loopback
 # auto eth0
 # iface eth0 inet dhcp
 
-# Um exemplo de uma configuração de IP estático: (broadcast e gateway são opcionais)
+# Exemplo de uma configuração com IP estático: (broadcast e gateway são opcionais)
 #
 # auto eth0
 # iface eth0 inet static
@@ -1195,7 +1218,7 @@ nameserver 192.168.9.100
 <title
 >Configurar o Boot Loader</title>
 <para
->Para tornar o seu sistema &debian; iniciável, prepare o gestor de arranque para carregar o kernel com a sua nova partição raíz. Note que o debootstrap não instala um gestor de arranque, embora possa utilizar a apt-get dentro do seu chroot Debian para o fazer. </para
+>Para tornar o seu sistema &debian; iniciável, prepare o gestor de arranque para carregar o kernel com a sua nova partição raiz. Note que o debootstrap não instala um gestor de arranque, embora possa utilizar a apt-get dentro do seu chroot Debian para o fazer. </para
 ><para arch="i386"
 >Veja <userinput
 >info grub</userinput

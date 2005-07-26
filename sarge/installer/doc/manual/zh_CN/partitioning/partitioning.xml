@@ -12,11 +12,11 @@
  <title
 >决定 Debian 分区以及大小</title>
 <para
->最小化情况下，GNU/Linux 需要一个分区。您可以有一个包含整个操作系统，应用程序以及您私人数据的分区。大多数人感到一个分离的交换分区也是很有必要的，尽管它并非严格要求。 <quote
+>最小化情况下，GNU/Linux 需要一个分区。您可以有一个包含整个操作系统，应用程序以及您私人数据的分区。大多数人感到一个分离的交换分区也是很有必要的，尽管它并非严格要求。<quote
 >Swap</quote
 > 是一个操作系统用的空白空间，允许系统使用磁盘来提供 <quote
 >虚拟内存</quote
->。通过放置交换空间至一个分离的分区，Linux 可以非常有效地使用它。 强迫 Linux 使用一个普通文件作为交换空间也是可行的，但是并不推荐这种做法。 </para
+>。通过放置交换空间至一个分离的分区，Linux 可以非常有效地使用它。强迫 Linux 使用一个普通文件作为交换空间也是可行的，但是并不推荐这种做法。 </para
 ><para
 >但是大多数人选择给 GNU/Linu 更多的分区。这里有两个原因使您愿意把系统放置到一些较小的分区上。第一个问题是安全性。如果文件系统出现了问题，一般来说只是一个分区会受到影响。因此，您只需要更换(来自于您小心维护的备份)一个分区。在原始最小化阶段，您应该考虑创建所谓的 <quote
 >根分区</quote
@@ -39,9 +39,9 @@
 <para
 >&debian; 依照 <ulink url="&url-fhs-home;"
 >文件系统层次标准 (Filesystem Hierarchy Standard)</ulink
-> 安排文件以及文件命名。这个标准允许用户以及软件程序预测文件以及目录的位置。 根层次目录只是简单表现为 <filename
+> 安排文件以及文件命名。这个标准允许用户以及软件程序预测文件以及目录的位置。根层次目录只是简单表现为 <filename
 >/</filename
->。 在根层次，所有的 Debian 系统包括这些目录： <informaltable
+>。在根层次，所有的 Debian 系统包括这些目录： <informaltable
 > <tgroup cols="2">
 <thead>
 <row>
@@ -67,7 +67,7 @@
 >boot</filename
 ></entry>
   <entry
->引导装载器的静态链结文件</entry>
+>启动引导器的静态链结文件</entry>
 </row
 ><row>
   <entry
@@ -279,7 +279,7 @@
 >/var/mail</filename
 > 建立一个独立的分区。通常情况下放置 <filename
 >/tmp</filename
-> 至它独立的分区，比如20至50MB是一个好主意。 如果您正在配置一个服务器带有放多用户帐户，通常需要一个独立的大 <filename
+> 至它独立的分区，比如20至50MB是一个好主意。如果您正在配置一个服务器带有放多用户帐户，通常需要一个独立的大 <filename
 >/home</filename
 > 分区。一般来说，分区状况对每台计算机都有所不同，这取决于他们的用途。 </para
 ><para
@@ -369,12 +369,12 @@
 >/dev/hdc</filename
 > 以及 <filename
 >/dev/hdd</filename
->，较新的 IDE 控制器实际上有两个通道，扮演着两个控制器的角色。 <phrase arch="m68k"
+>，较新的 IDE 控制器实际上有两个通道，扮演着两个控制器的角色。<phrase arch="m68k"
 > 字母可能和 mac 程序 pdisk 显示有所不同。(在 pdisk 上的 <filename
 >/dev/hdc</filename
 > 可能在 Debian 中显示为 <filename
 >/dev/hda</filename
->)。 </phrase
+>)。</phrase
 > </para
 ></listitem>
 
@@ -450,7 +450,9 @@
 >/dev/sfd0</filename
 >。 </para
 ><para arch="sparc"
->Sun 磁盘分区允许8个独立的分区 (或者片)。第三个分区通常(一般也是)“整个磁盘”分区 。这个分区 代表磁盘上所有的扇区，并且将被引导装载器 (SILO 或者 SUN 的)使用。 </para
+>Sun 磁盘分区允许8个独立的分区(或者片)。第三个分区通常是(一般也被建议设置为)<quote
+>Whole Disk</quote
+>分区。这个分区代表磁盘上所有的扇区，并且将被启动引导器(SILO 或者 SUN 的)使用。 </para
 ><para arch="s390"
 >每个磁盘的分区名的显示，是通过在磁盘名称后面附加一个十进制数字： <filename
 >dasda1</filename
@@ -603,9 +605,9 @@
 >debian-installer</command
 > 并继续进行下一步。 </para
 ><para
->如果您的 ide 磁盘上会超过多过 20 个分区，您将需要为 21 以上的分区创建设备文件。这种情况下如果只是一个普通的设备文件则下一步初始化分区将失败。作为一个例子，这里列举了相关的命令，让您可以在 <userinput
+>如果您的 ide 磁盘上会超过多过 20 个分区，您将需要为 21 以上的分区创建设备。除非有正确的设备存在，否则下一步初始化分区将失败。作为一个例子，这里列举了相关的命令，让您可以在 <userinput
 >tty2</userinput
-> 中使用或者在运行一个 Shell 下加入一个设备文件，令多于 21 个的分区能够被初始化。 <informalexample
+> 中使用或者在运行一个 Shell 下加入一个设备文件，令第 21 个的分区能够被初始化。<informalexample
 ><screen>
 # cd /dev
 # mknod hda21 b 3 21 
@@ -627,8 +629,10 @@
 >。</phrase
 > </para
 ><para condition="mac-fdisk.txt"
->关键一点是交换分区的确认是根据它的名字；它必须被命名为 `swap'。所有的 Mac Linux 分区都是相同的 Apple_UNIX_SRV2 分区类型。请阅读合适的手册。我们也通常建议阅读 <ulink url="&url-mac-fdisk-tutorial;"
->mac-fdisk 使用指南</ulink
+>为 Mac 类型磁盘分区的关键点是，交换分区是根据其名称确定的，它必须被命名为<quote
+>swap</quote
+>。所有的 Mac Linux 分区都是相同的 Apple_UNIX_SRV2 分区类型。请阅读合适的手册。我们还建议您阅读 <ulink url="&url-mac-fdisk-tutorial;"
+>mac-fdisk Tutorial</ulink
 >，其中包括了如何同 MacOS 共享磁盘的步骤。 </para>
 
 
@@ -639,13 +643,15 @@
 ><title
 >为 &arch-title; 准备分区</title>
 <para
->从 SRM 控制台引导 Debian (唯一能被 &releasename; 支持的启动方法)要求您的启动盘上有 BSD 磁盘卷标， 而不是 DOS 分区。(注意， SRM 引导块不和 MS-DOS 分区兼容 &mdash; 请参阅 <xref linkend="alpha-firmware"/>。)因此，<command
+>从 SRM 控制台引导 Debian (唯一能被 &releasename; 支持的启动方法)要求您的启动盘上有 BSD 磁盘卷标，而不是 DOS 分区。(注意，SRM 引导块不和 MS-DOS 分区兼容 &mdash; 请参阅 <xref linkend="alpha-firmware"/>。)因此，<command
 >partman</command
-> 在 &architecture; 上运行时会创建 BSD 磁盘卷标，如果您的磁盘上已经存在一个 DOS 分区表， 在 partman 转换到磁盘卷标前需要将它删除。 </para
+> 在 &architecture; 上运行时会创建 BSD 磁盘卷标，如果您的磁盘上已经存在一个 DOS 分区表，在 partman 转换到磁盘卷标前需要将它删除。 </para
 ><para
 >如果您选择使用 <command
 >fdisk</command
-> 为您的磁盘分区，并且该磁盘上没有 BSD 磁盘卷标，您必须使用 `b' 命令进入磁盘卷标模式。 </para
+> 为您的磁盘分区，并且该磁盘上没有 BSD 磁盘卷标，您必须使用<quote
+>b</quote
+>命令进入磁盘卷标模式。 </para
 ><para
 >除非您想在 Tru64 Unix 或者一个 free 4.4BSD-Lite 兼容的系统下(FreeBSD, OpenBSD 或 NetBSD)使用这个磁盘，请 <emphasis
 >不要</emphasis
@@ -673,7 +679,7 @@
 >linload.exe</command
 > &mdash; 至少需要 5 MB 空间，请参见 <xref linkend="non-debian-partitioning"/>。不幸地是，从菜单建立 FAT 文件系统的方法是不被支持的，因此您必须在 Shell 下面使用 <command
 >mkdosfs</command
-> 然后再尝试安装引导装载器。 </para>
+> 然后再尝试安装启动引导器。 </para>
   </sect2>
 <!--   End of file partitioning/partition/alpha.xml -->
 
@@ -684,13 +690,13 @@
 ><title
 >为 &arch-title; 准备分区</title>
 <para
->PALO 是一个 HPPA 的引导装载器。它需要在磁盘前 2GB 内得到一个 <quote
+>PALO 是一个 HPPA 的启动引导器。它需要在磁盘前 2GB 内得到一个 <quote
 >F0</quote
-> 分区。这个分区里面装有引导装载器以及可选的内核和内存虚拟磁盘。因此最好这个分区的大小应该符合这个要求 -- 至少需要 4 MB (我个人倾向于 8-16 MB)。固件的一个附加的要求是 Linux 内核必须在磁盘的前 2 GB 内。达到这一点要求需要把根 ext2 分区整个放在磁盘的头 2GB 内。或者您可以在磁盘前部创建一个小分区，并且被挂载到 <filename
+> 分区。这个分区里面装有启动引导器以及可选的内核和内存虚拟磁盘。因此最好这个分区的大小应该符合这个要求 -- 至少需要 4 MB (我个人倾向于 8-16 MB)。固件的一个附加的要求是 Linux 内核必须在磁盘的前 2 GB 内。达到这一点要求需要把根 ext2 分区整个放在磁盘的头 2GB 内。或者您可以在磁盘前部创建一个小分区，并且被挂载到 <filename
 >/boot</filename
 >，然后在这个目录下面放置 Linux 内核。<filename
 >/boot</filename
-> 需要足够大以便能够放置入内核；8-16 MB 一般来说应该足够了。 </para>
+> 需要足够大以便能够放置入内核；8&ndash;16 MB 一般来说应该足够了。 </para>
   </sect2>
 <!--   End of file partitioning/partition/hppa.xml -->
 
@@ -703,11 +709,11 @@
 <para
 >如果您已经有 DOS 或 Windows 这样的其他操作系统存在，并想在安装 Debian 时保留它们，您应该重新设置分区大小，释放更多的空间给 Debian 安装程序。安装程序支持 FAT 和 NTFS 文件系统的尺寸修改；当您走到安装程序的分区步骤，选择手动分区，只需选择该分区，并更改其尺寸。 </para
 ><para
->PC BIOS 一般会对磁盘分区加入一些约束。比如一个磁盘驱动可以含有多少个 <quote
->主 (primry) </quote
-> 和 <quote
-> 逻辑 </quote
-> 分区。在 1994-1998 年的 BIOS 里，还有关于 BIOS 能够从什么地方引导的限制。详细的信息可以在 <ulink url="&url-partition-howto;"
+>PC BIOS 一般会对磁盘分区加入一些约束。比如一个磁盘驱动可以含有多少个<quote
+>主</quote
+>分区和<quote
+>逻辑</quote
+>分区。在 1994$ndash;98 年的 BIOS 里，还有关于 BIOS 能够从什么地方引导的限制。详细的信息可以在 <ulink url="&url-partition-howto;"
 >Linux Partition HOWTO</ulink
 > 以及 <ulink url="&url-phoenix-bios-faq-large-disk;"
 >Phoenix BIOS FAQ</ulink
@@ -725,11 +731,11 @@
 ><para
 >如果您有一个巨大的 IDE 磁盘，并且既没有使用 LBA 寻址，也没有扩展驱动器(硬盘制造商有时候提供此功能)，那么引导分区(含有您内核映像的分区)必须放置在硬盘第一个 1024 柱面内。(在没有 BIOS 转换的情况下，大约有 524MB)。 </para
 ><para
->如果您的 BIOS 在 1995-98 年之后出现(取决于制造商)并且支持 <quote
+>如果您的 BIOS 在 1995&ndash;98 年之后出现(取决于制造商)并且支持 <quote
 >Enhanced Disk Drive Support Specification</quote
->，这个限制并不有效。Lilo，Linux Loader 以及 Debian 的方案 <command
+>，这个限制并不有效。Lilo 引导器和 Debian 的 <command
 >mbr</command
-> 必须使用 BIOS 来从磁盘读取内核至内存。如果 BIOS int 0x13 大硬盘访问拓展被打开，则将被使用。否则会使用遗留的磁盘访问界面，并且它不能找到任何大于 1023rd 柱面。一旦 Linux 被引导后，不管您的计算机 BIOS 是什么，这些限制将不再起任何作用，因为 Linux 并不使用 BIOS 来进行磁盘寻址。 </para
+> 都必须使用 BIOS 来从磁盘读取内核至内存。如果 BIOS int 0x13 大硬盘访问拓展被打开，则将被使用。否则会使用旧的传统磁盘访问界面，并且它不能找到任何大于 1023 的柱面。一旦 Linux 被引导后，不管您的计算机 BIOS 是什么，这些限制将不再起任何作用，因为 Linux 并不使用 BIOS 来进行磁盘寻址。 </para
 ><para
 >如果您有一个大硬盘，您也许必须使用柱面转换(cylinder translation)技术。它可以在您的 BIOS 设置程序中打开，比如 LBA (Logical Block Addressing) 或者 CHS 转换模式(<quote
 >Large</quote
@@ -741,7 +747,7 @@
 ><para
 >解决这个问题的推荐方法，是在磁盘开始处创建一个小的(5-10MB 足矣)分区来作为引导分区。并且在其它地方创建其它的分区。这个引导分区 <emphasis
 >必须</emphasis
-> 挂接至<filename
+>挂接至 <filename
 >/boot</filename
 > 下，这是因为它是 Linux 内核放置的地方。这样的配置将可以在任意系统上工作，不管 LBA 或者大硬盘 CHS 转换是否起作用，甚至也不管您的 BIOS 是否支持大硬盘访问扩展。 </para>
   </sect2>
@@ -805,12 +811,12 @@
 
   <sect2 arch="ia64"
 ><title
->引导装载器分区要求</title>
+>启动引导器分区要求</title>
 
 <para
->ELILO 作为一种 ia64 引导装载器需要一个含有 FAT 文件系统的分区。且此分区标记为 <userinput
+>ELILO 作为一种 ia64 启动引导器需要一个含有 FAT 文件系统的分区。且此分区标记为 <userinput
 >boot</userinput
->。分区必须足够大以便能够放入引导装载器，您想引导的内核以及 RAMdisks 内存磁盘镜像。最小的尺寸大概有 20MB，但是如果您想使用多个内核的话，128MB 也许更好。 </para
+>。分区必须足够大以便能够放入启动引导器，您想引导的内核以及 RAMdisks 内存磁盘镜像。最小的尺寸大概有 20MB，但是如果您想使用多个内核的话，128MB 也许更好。 </para
 ><para
 >因为 EFI Boot Manager 以及 EFI Shell 完全支持 GPT 表格所以引导分区不需要一定是第一个分区，甚至可以不在本地磁盘上。这样方便您在格式化磁盘上的其它分区后再决定。<command
 >partman</command
@@ -829,7 +835,7 @@
 >EFI 诊断分区</title>
 
 <para
->对于在大多数 x86 PCs 上常见的 BIOS 来说，EFI 固件明显要复杂的多。一些系统制造商利用 EFI 的 优点从硬盘文件系统来访问文件以及运行程序以保存一些诊断信息和 EFI 的系统管理工具。 这将在系统磁盘上存在一个分开的 FAT 文件系统。请查阅随机相关的系统文档和附件以获得细节。 最轻松设置一个诊断分区的时候是在设置 EFI 引导分区的时候。 </para>
+>对于在大多数 x86 PCs 上常见的 BIOS 来说，EFI 固件明显要复杂的多。一些系统制造商利用 EFI 的 优点从硬盘文件系统来访问文件以及运行程序以保存一些诊断信息和 EFI 的系统管理工具。这将在系统磁盘上存在一个分开的 FAT 文件系统。请查阅随机相关的系统文档和附件以获得细节。最轻松设置一个诊断分区的时候是在设置 EFI 引导分区的时候。 </para>
 
    </sect2>
 <!--   End of file partitioning/partition/ia64.xml -->
@@ -852,7 +858,7 @@
 ><title
 >为较新的 PowerMacs 分区</title>
 <para
->如果您正在一台 NewWorld PowerMac 上面安装，您必须创建一个特殊的启动分区来驻留引导装载器。这个分区的尺寸必须是 800KB 并且它的分区类型必须是 <emphasis
+>如果您正在一台 NewWorld PowerMac 上面安装，您必须创建一个特殊的启动分区来驻留启动引导器。这个分区的尺寸必须是 800KB 并且它的分区类型必须是 <emphasis
 >Apple_Bootstrap</emphasis
 >。如果启动分区并非 <emphasis
 >Apple_Bootstrap</emphasis
@@ -911,9 +917,9 @@
 ><para
 >这里建议第三个分区应该是 <quote
 >Whole disk</quote
->(type 5)，并且包含整个磁盘 (从第一个柱面至最后一个)，这是 Sun 磁盘格式的惯例， 并且确保 <command
+>(type 5)，并且包含整个磁盘 (从第一个柱面至最后一个)，这是 Sun 磁盘格式的惯例，并且确保 <command
 >SILO</command
-> 引导装载器工作良好。 </para>
+> 启动引导器工作良好。 </para>
   </sect2>
 <!--   End of file partitioning/partition/sparc.xml -->
 

@@ -41,17 +41,21 @@
 <para
 >С точки зрения пользователя, наиболее важная разница между SRM и ARC это то, что выбор консоли ограничивает возможные схемы разметки жестого диска,с которого вы планируете загружаться. </para
 ><para
->ARC требует, чтобы вы использовали таблицу разделов MS-DOS (которая создается с помощью <command
+>Для ARC требуется использовать таблицу разделов MS-DOS (которая создается с помощью <command
 >cfdisk</command
->) для загрузочного диска. Таким образом, формат разделов MS-DOS для таблицы разделов является ``родным'', когда загрузка происходит из ARC. А еще, поскольку AlphaBIOS содержит утилиту разметки дисков, вы возможно предпочтете разметить ваши диски из меню консоли перед установкой Linux. </para
+>) для загрузочного диска. Таким образом, формат разделов MS-DOS для таблицы разделов является <quote
+>родным</quote
+>, когда загрузка происходит из ARC. А ещё, поскольку AlphaBIOS содержит утилиту разметки дисков, вы возможно предпочтёте разметить ваши диски из меню консоли перед установкой Linux. </para
 ><para
 >С другой стороны, SRM <emphasis
 >несовместима</emphasis
-> с таблицами разделов MS-DOS. <footnote
+> <footnote
 ><para
->Точнее, формат загрузочного сектора, требуемый спецификацией Console Subsystem, конфликтует с расположенем таблицы разделов DOS.</para
-></footnote
-> Поскольку Tru64 Unix использует формат BSD disklabel, это ``родной'' формат разделов для компьютеров с SRM. </para
+>Точнее, формат загрузочного сектора, требуемый спецификацией Console Subsystem, конфликтует с расположением таблицы разделов DOS.</para
+> </footnote
+> с таблицами разделов MS-DOS. Поскольку Tru64 Unix использует формат BSD disklabel, это <quote
+>родной</quote
+> формат разделов для компьютеров с SRM. </para
 ><para
 >Операционная система GNU/Linux является единставенной на Alpha, которая может загружаться с обоих типов консолей, но &debian; &release; поддерживает загрузку только для SRM-основанных консолей. Если у вас Alpha, для которой прошивка SRM недоступна, или если вы хотите сделать двойную загрузку системы с Windows NT, или если BIOS загрузочного устройства инициализируется только из ARC консоли, то вы не сможете использовать  программу установки &debian; &release;. Вы, тем не менее, можете запустить &debian; &release; на таких системах с помощью другого установочного носителя; например, мы можете установить Debian woody с MILO и обновиться. </para
 ><para
@@ -59,7 +63,9 @@
 >MILO</command
 > не доступен для всех типов систем Alpha, которые сейчас выпускаются (по состоянию на февраль 2000), и поскольку теперь не требуется покупать лицензию OpenVMS или Tru64 Unix, чтобы получить прошивку SRM для старых Alpha, рекомендуется, когда это возможно, использовать SRM. </para
 ><para
->Следующая таблица объединяет доступные и поддерживаемые комбинации типов системы/консоли (смотрите имена типов систем в <xref linkend="alpha-cpus"/> ). Ниже слово `ARC' означает любые ARC-совместимые консоли. </para
+>Следующая таблица объединяет доступные и поддерживаемые комбинации типов системы/консоли (смотрите имена типов систем в <xref linkend="alpha-cpus"/> ). Ниже слово <quote
+>ARC</quote
+> означает любые ARC-совместимые консоли. </para
 ><para>
 
 <informaltable
@@ -294,15 +300,17 @@ ARC -&gt; MILO
 >aboot</command
 > в новых установках GNU/Linux, если вам не нужна двойная загрузка с Windows NT. </para
 ><para
->Большинство AlphaServers и все нынешние сервера и рабочие станции содержат и SRM, и AlphaBIOS в своей прошивке. Для "half-flash" машин, таких как различные ограниченные платы, существует возможность переключиться от одной версии к другой путем перепрожига прошивки. К тому же, как только установлена SRM, можно запустить ARC/AlphaBIOS с дискеты (используя команду <command
+>Большинство AlphaServers и все нынешние сервера и рабочие станции содержат и SRM, и AlphaBIOS в своей прошивке. Для <quote
+>half-flash</quote
+> машин, таких как различные ограниченные платы, существует возможность переключиться от одной версии к другой путем перезаписи прошивки. К тому же, после установки SRM, можно запустить ARC/AlphaBIOS с дискеты (используя команду <command
 >arc</command
 >). По причинам, указанным выше, мы рекомендуем переключиться на SRM перед установкой &debian;. </para
 ><para
->Как и на других архитектурах, вы должны установить самую свежую из доступных ревизий микропрограммы <footnote
+>Как и на других архитектурах, вы должны установить самую свежую из доступных ревизий микропрограммы<footnote
 ><para
->За исключением Jensen, где Linux не поддерживается на версиях микропрограммы новее 1.7 &mdash; смотрите <ulink url="&url-jensen-howto;"
+>За исключением Jensen, где Linux не работает на версиях микропрограммы новее 1.7 &mdash; подробней смотрите <ulink url="&url-jensen-howto;"
 ></ulink
-> для более полной информации</para
+></para
 ></footnote
 > перед установкой &debian;. Для Alpha, обновление микропрограммы можно получить с <ulink url="&url-alpha-firmware;"
 >Alpha Firmware Updates</ulink
@@ -642,7 +650,7 @@ MILO
 <!--   End of file boot-installer/intro-cd.xml -->
 
 <!-- We'll comment the following section until we know exact layout -->
-<!-- 
+<!--
 CD #1 of official Debian CD-ROM sets for &arch-title; will present a
 <prompt
 >boot:</prompt
@@ -660,17 +668,17 @@ followed by &enterkey;.
 ><para>
 
 If your hardware doesn't support booting of multiple images, put one
-of the other CDs in the drive. It appears that most SCSI CD-ROM drives 
+of the other CDs in the drive. It appears that most SCSI CD-ROM drives
 do not support <command
 >isolinux</command
 > multiple image booting, so users
-with SCSI CD-ROMs should try either CD2 (vanilla) or CD3 (compact), 
-or CD5 (bf2.4). 
+with SCSI CD-ROMs should try either CD2 (vanilla) or CD3 (compact),
+or CD5 (bf2.4).
 
 </para
 ><para>
 
-CD's 2 through 5 will each boot a 
+CD's 2 through 5 will each boot a
 different ``flavor'' depending on which CD-ROM is
 inserted. See <xref linkend="kernel-choice"/> for a discussion of the
 different flavors.  Here's how the flavors are laid out on the
@@ -684,7 +692,7 @@ different CD-ROMs:
 ><para>
 
 Allows a selection of kernel images to boot from (the idepci flavor is
-the default if no selection is made). 
+the default if no selection is made).
 
 </para
 ></listitem
@@ -695,7 +703,9 @@ the default if no selection is made).
 ><listitem
 ><para>
 
-Boots the `vanilla' flavor.
+Boots the <quote
+>vanilla</quote
+> flavor.
 
 </para
 ></listitem
@@ -706,7 +716,9 @@ Boots the `vanilla' flavor.
 ><listitem
 ><para>
 
-Boots the `compact' flavor.
+Boots the <quote
+>compact</quote
+> flavor.
 
 </para
 ></listitem
@@ -717,7 +729,9 @@ Boots the `compact' flavor.
 ><listitem
 ><para>
 
-Boots the `idepci' flavor.
+Boots the <quote
+>idepci</quote
+> flavor.
 
 </para
 ></listitem
@@ -728,7 +742,9 @@ Boots the `idepci' flavor.
 ><listitem
 ><para>
 
-Boots the `bf2.4' flavor.
+Boots the <quote
+>bf2.4</quote
+> flavor.
 
 </para
 ></listitem
@@ -757,7 +773,8 @@ Boot into DOS (not Windows) without any drivers being loaded.  To do
 this, you have to press <keycap
 >F8</keycap
 > at exactly the right
-moment (and optionally select the `safe mode command prompt only'
+moment (and optionally select the <quote
+>safe mode command prompt only</quote>
 option).  Enter the subdirectory for the flavor you chose, e.g.,
 
 <informalexample
@@ -766,12 +783,12 @@ option).  Enter the subdirectory for the flavor you chose, e.g.,
 cd c:\install
 </screen
 ></informalexample
->.  
+>.
 
 Next, execute <command
 >install.bat</command
 >.
-The kernel will load and launch the installer system. 
+The kernel will load and launch the installer system.
 
 </para
 ><para>
@@ -809,7 +826,9 @@ END FIXME -->
 <para
 >Или же, если вы намереваетесь сохранить существующий раздел жёсткого диска неизменным, то можете получить файл <filename
 >hd-media/initrd.gz</filename
-> и его ядро, а также скопировать CD iso на жёсткий диск (проверьте, что имя заканчивается на ".iso"). Затем программу установки можно загрузить с диска и установить из образа CD без использования сети. </para>
+> и ядро, а также скопировать CD iso на жёсткий диск (проверьте, что имя заканчивается на <literal
+>.iso</literal
+>). Затем программу установки можно загрузить с диска и установить из образа CD без использования сети. </para>
 
 <para
 >В <command
@@ -927,7 +946,9 @@ initrd (hd0,0)/boot/newinstall/initrd.gz
 > <keycap
 >Delete</keycap
 ></keycombo
-> не по-настоящему перезагружает машину, поэтому рекомендуется ``аппаратная'' перезагрузка. Если вы производите установку из существующей операционной системы (например, из DOS), то у вас нет выбора. Иначе, выполните аппаратную перезагрузку перед загрузкой. </para
+> не по-настоящему перезагружает машину, поэтому рекомендуется <quote
+>аппаратная</quote
+> перезагрузка. Если вы производите установку из существующей операционной системы (например, из DOS), то у вас нет выбора. Иначе, выполните аппаратную перезагрузку перед загрузкой. </para
 ><para
 >Далее, будет произведён доступ к дискете, и далее вы должны увидеть экран, который показывает загрузку с дискеты и в конце появляется приглашение <prompt
 >boot:</prompt
@@ -943,11 +964,11 @@ initrd (hd0,0)/boot/newinstall/initrd.gz
 >debian-installer</command
 >. </para>
   </sect2>
-  
+
   <sect2 arch="i386" id="boot-tftp"
 ><title
 >Загрузка по TFTP</title>
- 
+
 
 <!-- Start of file boot-installer/intro-net.xml -->
 
@@ -958,7 +979,7 @@ initrd (hd0,0)/boot/newinstall/initrd.gz
 ><para
 >Метод установки с загрузкой из сети описан в <xref linkend="install-tftp"/>. </para>
 <!--   End of file boot-installer/intro-net.xml -->
- 
+
 <para
 >Есть несколько возможностей выполнить загрузку по TFTP на i386. </para>
 
@@ -970,7 +991,7 @@ initrd (hd0,0)/boot/newinstall/initrd.gz
 >Intel</trademark
 >.В этом случае вы можете настроить BIOS на загрузку по сети. </para>
    </sect3>
-   
+
    <sect3
 ><title
 >Сетевая карта с сетевым BootROM</title>
@@ -1313,8 +1334,7 @@ Press F1 for help, or ENTER to boot:
 >Нажмите <command
 >ENTER</command
 >. Загрузится и запустится ядро. Ядро выведет обычные сообщения инициализации, а затем появится первый экран программы установки Debian. </para
-></listitem
-> 
+></listitem>
 
 </itemizedlist>
 
@@ -2264,7 +2284,9 @@ Illegal or malformed device name
 ><title
 >Сообщения IDPROM</title>
 <para
->Если вы не можете загрузиться и получаете сообщение о проблеме с ``IDPROM'', то возможно, это из-за севшей батарейки NVRAM, который содержит конфигурационную информацию микропрограммы. Подробней смотрите в <ulink url="&url-sun-nvram-faq;"
+>Если вы не можете загрузиться и получаете сообщение о проблеме с <quote
+>IDPROM</quote
+>, то возможно, это из-за севшей батарейки NVRAM, которая содержит конфигурационную информацию микропрограммы. Подробней смотрите в <ulink url="&url-sun-nvram-faq;"
 >Sun NVRAM FAQ</ulink
 >. </para>
   </sect2>
@@ -2298,13 +2320,17 @@ Memory:<replaceable
 ></informalexample
 >Значение <replaceable
 >total</replaceable
-> должно совпадать с общим количеством ОЗУ в килобайтах. Если это не соответствует действительно установленному объёму ОЗУ, вам надо использовать параметр <userinput
+> должно совпадать с общим количеством ОЗУ в килобайтах. Если оно не соответствует действительно установленному объёму ОЗУ, вам надо использовать параметр <userinput
 >mem=<replaceable
 >ram</replaceable
 ></userinput
 >, где <replaceable
 >ram</replaceable
-> равно объёму памяти, дополненному буквой ``k'', если объём задан в килобайтах или ``m'', если в мегабайтах. Например, <userinput
+> равно объёму памяти, дополненному буквой <quote
+>k</quote
+>, если объём задан в килобайтах или <quote
+>m</quote
+>, если в мегабайтах. Например, <userinput
 >mem=65536k</userinput
 > или <userinput
 >mem=64m</userinput
@@ -2441,7 +2467,7 @@ Memory:<replaceable
 >BOOT_DEBUG</term>
 <listitem
 ><para
->Передача этого параметра вызовет более подробное протоколирование процесса загрузки. <variablelist>
+>Присвоение этому загрузочному параметру значения 2 приводит к более подробному протоколированию процесса загрузки программы установки. Значение 3 приводит к запуску интерпретатора командной строки в наиболее важных точках процесса загрузки. (Завершение работы с интерпретатором приводит к продолжению процесса загрузки.) <variablelist>
 <varlistentry>
 <term
 ><userinput
@@ -2607,6 +2633,17 @@ Memory:<replaceable
 ></listitem>
 </varlistentry>
 
+<varlistentry condition="etch">
+<term
+>rescue/enable</term>
+<listitem
+><para
+>Установка в <userinput
+>true</userinput
+> активирует режим восстановления, вместо обычного режима установки. Смотрите <xref linkend="rescue"/>. </para
+></listitem>
+</varlistentry>
+
 </variablelist>
   </sect2>
  </sect1>
@@ -2695,7 +2732,7 @@ Memory:<replaceable
 > или <userinput
 >video=vga16:off</userinput
 > чтобы выключить фрейм-буфер на консоли. Из-за этого ограничения консоли установка будет доступна только на английском языке. Подробней смотрите в <xref linkend="boot-parms"/>. </para>
-  
+
   <sect3>
   <title
 >Система подвисает во время настройки PCMCIA</title>
@@ -2763,7 +2800,9 @@ Memory:<replaceable
   <title
 >Отправка отчётов об ошибках установки</title>
 <para
->Если у вас возникли проблемы, отправьте отчёт об установке. Также, мы поощряем отправку отчётов об установке даже в случае успеха, чтобы получить побольше информации о разных аппаратных конфигурациях. Пожалуйста, используйте этот шаблон для заполнения отчёта об установке и направляйте отчёт как сообщение об ошибке псевдо-пакету "installation-reports" на адрес <email
+>Если у вас возникли проблемы, отправьте отчёт об установке. Также, мы поощряем отправку отчётов об установке даже в случае успеха, чтобы получить побольше информации о разных аппаратных конфигурациях. Пожалуйста, используйте этот шаблон для заполнения отчёта об установке и направляйте отчёт как сообщение об ошибке псевдо-пакету <classname
+>installation-reports</classname
+> на адрес <email
 >submit@bugs.debian.org</email
 >. <informalexample
 ><screen>

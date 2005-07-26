@@ -9,17 +9,19 @@
 ><title
 >安装程序如何工作</title>
 <para
->Debian 安装程序由一些特定功能的元件组成，它们完成各自的安装任务。 每一元件执行任务时，会询问一些任务相关的问题。每个任务又有各自的 优先级，可以在安装程序开始时设置优先级决定哪些问题会问到。 </para
+>Debian 安装程序由一些特定功能的组件组成，它们完成各自的安装任务。每一组件执行任务时，会询问一些任务相关的问题。每个任务又有各自的 优先级，可以在安装程序开始时设置优先级决定哪些问题会问到。 </para
 ><para
->执行默认安装时，只有必要的(高优先级)的问题会被问到。 使得安装过程可以高度自动化，几乎不需用户干预。 元件按次序字典执行；至于哪些元件会执行，这取决于您使用的安装方法， 以及您的硬件。对于没有询问的问题，安装程序将采用默认值。 </para
+>执行默认安装时，只有必要的(高优先级)的问题会被问到。使得安装过程可以高度自动化，几乎不需用户干预。组件按次序字典执行；至于哪些组件会执行，这取决于您使用的安装方法，以及您的硬件。对于没有询问的问题，安装程序将采用默认值。 </para
 ><para
->如何遇到麻烦，用户会看到错误画面，并且显示安装菜单供选择其它替代操作。 如果没有问题，用户将不会碰到安装菜单，只需依此回答每个元件的提问。 严重错误提示的优先级为 'critical'，因此用户总会注意到。 </para
+>如果遇到麻烦，用户会看到错误画面，并且显示安装菜单供选择其它替代操作。如果没有问题，用户将不会碰到安装菜单，只需依此回答每个组件的提问。严重错误提示的优先级为<quote
+>critical</quote
+>，因此用户总会注意到。 </para
 ><para
 >如果在 &d-i; 开始的时候，给启动加上一些参数，它将会影响安装程序使用的默认值。例如，假设您希望指定静态网络连接配置(如果存在 DHCP，将会被采用)，您可以为启动参数加上 <userinput
 >netcfg/disable_dhcp=true</userinput
 >。参阅 <xref linkend="installer-args"/> 了解有效的选项。 </para
 ><para
->熟练的用户也许更习惯菜单驱动的交互方式， 安装中的每一步都可以被用户控制，而不是让安装程序自动依此执行。 要使用菜单驱动的手动安装方式，添加启动参数选项 <userinput
+>熟练的用户也许更习惯菜单驱动的交互方式，安装中的每一步都可以被用户控制，而不是让安装程序自动依此执行。要使用菜单驱动的手动安装方式，添加启动参数选项 <userinput
 >debconf/priority=medium</userinput
 >。 </para
 ><para
@@ -31,11 +33,13 @@
 >debconf/priority=low</userinput
 > 启动参数。专家模式赋予您对 &d-i; 完全的控制力。 </para
 ><para
->正常的安装程序是基于字符界面的(相对于常见的图形界面)。在此环境下，鼠标不能使用。这些是操作各种对话框使用的按键。<keycap
+>正常的安装程序是基于字符界面的(相对于常见的图形界面)。在此环境下，用户无法使用鼠标。以下是操作各种对话框所需要使用的按键。<keycap
 >Tab</keycap
 > 或 <keycap
 >右</keycap
-> 箭头键向 `前' 移动，<keycombo
+> 箭头键向<quote
+>前</quote
+>移动，<keycombo
 > <keycap
 >Shift</keycap
 > <keycap
@@ -43,7 +47,9 @@
 > </keycombo
 > 或 <keycap
 >左</keycap
-> 箭头键向 `后' 移动，它们用于按钮和选择之间。<keycap
+> 箭头键向<quote
+>后</quote
+>移动，它们用于按钮和选择之间。<keycap
 >上</keycap
 > 与 <keycap
 >下</keycap
@@ -89,9 +95,9 @@
 
   <sect1 id="modules-list"
 ><title
->元件介绍</title>
+>组件介绍</title>
 <para
->下面列出安装程序使用的元件，和各个元件目的的简要说明。 如果您需要了解各元件详细的信息，见 <xref linkend="module-details"/>。 </para>
+>下面列出安装程序使用的组件，和各个组件目的的简要说明。如果您需要了解各组件详细的信息，见 <xref linkend="module-details"/>。 </para>
 
 <variablelist>
 <varlistentry>
@@ -100,27 +106,38 @@
 >main-menu</term
 ><listitem
 ><para
->在安装进行中，显示元件列表，并执行选中的元件。 主菜单的优先级设为中，如果您的优先级设为高或紧急(默认为高)， 您不会看的菜单。另一方面，假如出现问题需要您干预， 询问的优先级会临时调低，而让您解决该问题，菜单可能在这种情况下出现。 </para
+>在安装进行中，显示组件列表，并执行选中的组件。主菜单的优先级设为中，如果您的优先级设为高或紧急(默认为高)，您不会看的菜单。另一方面，假如出现问题需要您干预，询问的优先级会临时调低，而让您解决该问题，菜单可能在这种情况下出现。 </para
 ><para
->您可以通过不断地按"返回"按钮，从当前运行的元件回到主菜单。 </para
+>您可以通过不断地按<quote
+>返回</quote
+>按钮，从当前运行的组件回到主菜单。 </para
 ></listitem>
 </varlistentry>
-<varlistentry>
+<varlistentry condition="sarge">
 
 <term
 >languagechooser</term
 ><listitem
 ><para
->显示语言与方言的列表。除非选中的语言没有被翻译，安装程序将以您选择的语言显示信息。 对于没有翻译的语言，将显示英文信息。 </para
+>显示语言与方言的列表。除非选中的语言没有被翻译，安装程序将以您选择的语言显示信息。对于没有翻译的语言，将显示英文信息。 </para
 ></listitem>
 </varlistentry>
-<varlistentry>
+<varlistentry condition="sarge">
 
 <term
 >countrychooser</term
 ><listitem
 ><para
 >显示国家列表。用户可以选择自己生活的国家。 </para
+></listitem>
+</varlistentry>
+<varlistentry condition="etch">
+
+<term
+>localechooser</term
+><listitem
+><para
+>允许用户为安装程序和安装的系统选择地区选项: 语言，国家和位置。除非选中的语言没有被翻译，安装程序将以您选择的语言显示信息。对于没有翻译的语言，将显示英文信息。 </para
 ></listitem>
 </varlistentry>
 <varlistentry>
@@ -210,7 +227,7 @@
 >partman</term
 ><listitem
 ><para
->让用户为系统安排磁盘分区，创建文件系统，并分配挂载点。 它包括一些有趣的特性，如自动模式或 LVM 支持。 在 Debian 里这是推荐的分区工具。 </para
+>让用户为系统安排磁盘分区，创建文件系统，并分配挂载点。它包括一些有趣的特性，如自动模式或 LVM 支持。在 Debian 里这是推荐的分区工具。 </para
 ></listitem>
 </varlistentry>
 <varlistentry>
@@ -228,7 +245,7 @@
 >partitioner</term
 ><listitem
 ><para
->允许用户为系统安排磁盘分区。 根据用户计算机的体系选择和善的分区工具。 </para
+>允许用户为系统安排磁盘分区。根据用户计算机的体系选择和善的分区工具。 </para
 ></listitem>
 </varlistentry>
 <varlistentry>
@@ -277,7 +294,7 @@
 >os-prober</term
 ><listitem
 ><para
->检测当前计算机上安装的操作系统，将信息传递给 bootloader-installer， 使它能将检测到的操作系统添加到 bootloader 的启动菜单里面。 方便用户选择启动哪个操作系统。 </para
+>检测当前计算机上安装的操作系统，将信息传递给 bootloader-installer，使它能将检测到的操作系统添加到 bootloader 的启动菜单里面。方便用户选择启动哪个操作系统。 </para
 ></listitem>
 </varlistentry>
 <varlistentry>
@@ -286,7 +303,7 @@
 >bootloader-installer</term
 ><listitem
 ><para
->在硬盘上安装启动引导程序，这是必须的一步，使得计算机不必依靠软盘和 CD-ROM 启动。 许多引导程序都允许用户在启动的时候选择使用哪个操作系统。 </para
+>在硬盘上安装启动引导程序，这是必须的一步，使得计算机不必依靠软盘和 CD-ROM 启动。许多引导程序都允许用户在启动的时候选择使用哪个操作系统。 </para
 ></listitem>
 </varlistentry>
 <varlistentry>
@@ -295,7 +312,9 @@
 >base-config</term
 ><listitem
 ><para
->根据用户设置提供配置系统软件包的对话框。 它通常在新 Debian 系统'首次运行'时工作。 </para
+>根据用户设置提供配置系统软件包的对话框。它通常在新 Debian 系统<quote
+>首次运行</quote
+>时工作。 </para
 ></listitem>
 </varlistentry>
 <varlistentry>
@@ -309,11 +328,15 @@
 </varlistentry>
 <varlistentry>
 
-<term
+<term condition="sarge"
 >bugreporter</term
+><term condition="etch"
+>save-logs</term
 ><listitem
 ><para
->当用户遇到麻烦时，提供一种方式记录信息到软盘， 用于以后给 Debian 开发人员精确报告安装程序的问题。 </para
+>当用户遇到麻烦时，提供一种方式记录信息到软盘<phrase condition="etch"
+>，网络，硬盘或其他介质</phrase
+>，用于以后给 Debian 开发人员精确报告安装程序的问题。 </para
 ></listitem>
 </varlistentry>
 
@@ -326,19 +349,19 @@
 
  <sect1 id="module-details">
  <title
->使用单独的元件</title>
+>使用单独的组件</title>
 <para
->本节将会描述各个安装元件的详细信息。各元件按用户可以识别的阶段分组。 它们在安装过程中按次序显示出来。注意，每次安装并不会使用所有的模块； 至于使用哪些模块，取决于您的安装方法和您的硬件。 </para>
+>本节将会描述各个安装组件的详细信息。各组件按用户可以识别的阶段分组。它们在安装过程中按次序显示出来。注意，每次安装并不会使用所有的模块； 至于使用哪些模块，取决于您的安装方法和您的硬件。 </para>
 
   <sect2 id="di-setup">
   <title
 >启动 Debian 安装程序与配置硬件</title>
 <para
->假设 Debian 安装程序已经启动，然后您看到了初始画面。 此时， &d-i; 的能力还很有限。它还不了解您的硬件，首选的语言， 甚至不知道要执行什么任务。不用担心，因为 &d-i; 相当聪明， 它能自动探测您的硬件，定位其余的元件，并更新自己以具备安装系统的能力。 但您仍然要协助 &d-i;，提供给它不能自动决定的内容 (比如选择您首选的语言， 键盘布局或网络镜像)。 </para
+>假设 Debian 安装程序已经启动，然后您看到了初始画面。此时，&d-i; 的能力还很有限。它还不了解您的硬件，首选的语言，甚至不知道要执行什么任务。不用担心，因为 &d-i; 相当聪明，它能自动探测您的硬件，定位其余的组件，并更新自己以具备安装系统的能力。但您仍然要协助 &d-i;，提供给它不能自动决定的内容 (比如选择您首选的语言，键盘布局或网络镜像)。 </para
 ><para
 >您会留意到 &d-i; 在本阶段执行 <firstterm
 >硬件侦测</firstterm
-> 多次。第一次目的是指定哪些硬件需要安装(比如，您的 CD-ROM 或者网卡)。 在第一次运行的时候并不是所有的驱动程序都就绪， 硬件侦测会在后续过程里面多次重复。 </para>
+> 多次。第一次目的是指定哪些硬件需要安装(比如，您的 CD-ROM 或者网卡)。在第一次运行的时候并不是所有的驱动程序都就绪，硬件侦测会在后续过程里面多次重复。 </para>
 
 
 <!-- Start of file using-d-i/modules/lowmem.xml -->
@@ -348,41 +371,81 @@
 >检测有效的内存</title>
 
 <para
->&d-i; 首先要做的一件事是检测有效的内存。 如果内存有限，该元件将修改后续的安装进程， 使您可以将 &debian; 安装到您的系统上。 </para
+>&d-i; 首先要做的一件事是检测有效的内存。如果内存有限，该组件将修改后续的安装进程，使您可以将 &debian; 安装到您的系统上。 </para
 ><para
->在小内存的安装下，只有部分元件有效。 其中的一个限制是您无法在安装过程中选择语言。 </para>
+>在小内存的安装下，只有部分组件有效。其中的一个限制是您无法在安装过程中选择语言。 </para>
    </sect3>
 <!--   End of file using-d-i/modules/lowmem.xml -->
 
 <!-- Start of file using-d-i/modules/languagechooser.xml -->
 
 
-   <sect3 id="lang-chooser">
+   <sect3 id="lang-chooser" condition="sarge">
    <title
 >选择语言</title>
 
 <para
->安装的第一步，选择您希望安装过程使用的语言。 语言名称列表使用英文(左侧)和该语言本身(右侧)显示； 右侧的语言可以用正确的形态表现出来。 该列表以英文名称排序。 </para
+>安装的第一步，选择您希望安装过程使用的语言。语言名称列表使用英文(左侧)和该语言本身(右侧)显示； 右侧的语言可以用正确的形态表现出来。该列表以英文名称排序。 </para
 ><para
->您选择的语言将用于紧接着的安装过程，对话框已经有各种语言翻译的版本。 如果选择的语言没有对应翻译的版本，安装将默认使用英文。 选择的语言也将助于选择一个合适的键盘布局。 </para>
+>您选择的语言将用于紧接着的安装过程，对话框已经有各种语言翻译的版本。如果选择的语言没有对应翻译的版本，安装将默认使用英文。选择的语言也将助于选择一个合适的键盘布局。 </para>
    </sect3>
 <!--   End of file using-d-i/modules/languagechooser.xml -->
 
 <!-- Start of file using-d-i/modules/countrychooser.xml -->
 
 
-   <sect3 id="country-chooser">
+   <sect3 id="country-chooser" condition="sarge">
    <title
 >选择国家</title>
 
 <para
->如果您选择的语言 <xref linkend="lang-chooser"/>与多个国家关联(存在于中文，英文，法文，以及其它语言)， 您可以在这里选择国家。如果您从列表的底部选择 <guimenuitem
+>如果您选择的语言 <xref linkend="lang-chooser"/>与多个国家关联(存在于中文，英文，法文，以及其它语言)，您可以在这里选择国家。如果您从列表的底部选择 <guimenuitem
 >其它</guimenuitem
-> ， 您将看到按大洲分组的全部国家。 </para
+> ，您将看到按大洲分组的全部国家。 </para
 ><para
->在安装过程的后面，这个选择还会被用于设置默认的时区和您所处地理位置的 Debian 镜像。 如果安装程序默认的建议不合适，您可以做其它选择。选择国家，还有选择语言， 都会影响您新 Debian 系统的本地化设置。 </para>
+>在安装过程的后面，这个选择还会被用于设置默认的时区和您所处地理位置的 Debian 镜像。如果安装程序默认的建议不合适，您可以做其它选择。选择国家，还有选择语言，都会影响您新 Debian 系统的本地化设置。 </para>
    </sect3>
 <!--   End of file using-d-i/modules/countrychooser.xml -->
+
+<!-- Start of file using-d-i/modules/localechooser.xml -->
+
+
+   <sect3 id="localechooser" condition="etch">
+   <title
+>选择地区选项</title>
+
+<para
+>大多时候，您遇到的第一个问题是关于地区的选项，它用于安装过程和安装后的系统。
+地区选项由语言，国家和地点组成。 </para
+><para
+>您选择的语言将用于紧接着的安装过程，对话框已经有各种语言翻译的版本。如果选择的语言没有对应翻译的版本，安装将默认使用英文。 </para
+><para
+>在安装过程的后面，选择的国家还会被用于设置默认的时区和您所处地理位置的 Debian 镜像。语言和国家可以一起用来设置您系统默认的 locale，并帮助您选择键盘。 </para
+><para
+>您将被首先问到倾向的语言。语言名称同时以英文(左侧)和该语言(右侧)列出; 右侧名称是使用该语言来书写。
+列表以英文名称排列。在列表的顶端是一个额外的选项，允许您使用 <quote
+>C</quote
+> locale 替代语言。
+选择 <quote
+>C</quote
+> locale 使得安装过程使用英文; 安装的系统不再有本地化支持，
+<classname
+>locales</classname
+> 软件包也不会安装。 </para
+><para
+>如果您选择的语言被多个国家作为官方语言<footnote
+> <para
+> 技术范畴: 一种语言针对不同国家代码的不同 locale。</para
+> </footnote
+>,
+您会被要求选择国家。如果您在列表底部选择 <guimenuitem
+>Other</guimenuitem
+>，您将看到按大洲分组的全部国家。
+如果该语言只关联到一个国家，国家将自动选择。 </para
+><para
+>默认 locale 的选择是基于您先前所选的语言和国家。如果您以 medium 或 low 优先级安装，您可以选择不同的默认 locale 以及为安装好的系统生成额外的 locale。 </para>
+   </sect3>
+<!--   End of file using-d-i/modules/localechooser.xml -->
 
 <!-- Start of file using-d-i/modules/kbd-chooser.xml -->
 
@@ -391,17 +454,17 @@
 >选择键盘</title>
 
 <para
->键盘经常按照不同语言使用的字符裁剪。 选择一个您的键盘使用的合适布局，或者为没有的布局选择一个接近的。 一旦系统安装完毕，您可以从更大范围内您选择键盘的布局 (在安装完之后用 root 执行 <command
+>键盘经常按照不同语言使用的字符裁剪。选择一个您的键盘使用的合适布局，或者为没有的布局选择一个接近的。一旦系统安装完毕，您可以从更大范围内您选择键盘的布局 (在安装完之后用 root 执行 <command
 >kbdconfig</command
 >)。 </para
 ><para
->将高亮显示部分移到您选择的键盘，然后按下 &enterkey;。 用箭头健移到高亮显示 &mdash; 它们位于所以国家键盘布局相同的地方， 因此独立于键盘配置。'扩展的'键盘是有 <keycap
+>将高亮显示部分移到您选择的键盘，然后按下 &enterkey;。用箭头健移到高亮显示 &mdash; 它们位于所以国家键盘布局相同的地方，因此独立于键盘配置。'扩展的'键盘是有 <keycap
 >F1</keycap
 >到<keycap
 >F10</keycap
 > 健，沿着上箭头。 </para
 ><para arch="mipsel"
->当前 DEC 工作站上没有可以加载的 keymap， 因此您不得不跳过键盘选项，保持默认的内核 keymap (LK201 US)。 随着 Linux/MIPS 内核的开发，将来也许会改变。 </para
+>当前 DEC 工作站上没有可以加载的 keymap，因此您不得不跳过键盘选项，保持默认的内核 keymap (LK201 US)。随着 Linux/MIPS 内核的开发，将来也许会改变。 </para
 ><para arch="powerpc"
 >有两种 US 键盘布局；qwerty/mac-usb-us (Apple USB) 将 Alt 功能放在 <keycap
 >Command/Apple</keycap
@@ -411,7 +474,7 @@
 >Alt</keycap
 > )，另外 qwerty/us (Standard) 布局将 Alt 功能放在 <keycap
 >Option</keycap
-> 健上(在大多数 Mac 键盘上标明 'alt')。 其余地方这两种布局相似。 </para>
+> 健上(在大多数 Mac 键盘上标明 'alt')。其余地方这两种布局相似。 </para>
 
 <note arch="sparc"
 ><para
@@ -459,7 +522,7 @@
 <para
 >当安装是使用 <emphasis
 >hd-media</emphasis
-> 方式，将会有一个动作，是寻找和挂载 Debian 安装程序 iso 映像，用于获取其它的安装文件。 元件 <command
+> 方式，将会有一个动作，是寻找和挂载 Debian 安装程序 iso 映像，用于获取其它的安装文件。组件 <command
 >iso-scan</command
 > 正是用来完成此任务。 </para
 ><para
@@ -477,25 +540,25 @@
 >/data/<replaceable
 >whatever</replaceable
 >.iso</filename
->， 而不是 <filename
+>，而不是 <filename
 >/data/tmp/<replaceable
 >whatever</replaceable
 >.iso</filename
->)。 在 iso 映象文件找到后，<command
+>)。在 iso 映象文件找到后，<command
 >iso-scan</command
->检查它包含的内容，确定该映象文件是不是有效的 Debian iso 映象。 如为前者，任务结束；如果是后者， <command
+>检查它包含的内容，确定该映象文件是不是有效的 Debian iso 映象。如为前者，任务结束；如果是后者，<command
 >iso-scan</command
 > 搜索其它的映象。 </para
 ><para
->万一前面尝试寻找 iso 映象失败， <command
+>万一前面尝试寻找 iso 映象失败，<command
 >iso-scan</command
-> 会询问您是否原意进行完整的搜索。 这次不只查看最上级目录，而是真正地贯串整个文件系统。 </para
+> 会询问您是否原意进行完整的搜索。这次不只查看最上级目录，而是真正地贯串整个文件系统。 </para
 ><para
 >如果 <command
 >iso-scan</command
-> 找不到您的安装 iso 映象，请重新启动返回到您以前的操作系统， 检查映象文件名是否正确(以 <filename
+> 找不到您的安装 iso 映象，请重新启动返回到您以前的操作系统，检查映象文件名是否正确(以 <filename
 >.iso</filename
->结尾)，是否放在一个能被 &d-i; 识别的文件系统上，是否损坏(用 checksum 校验)。 有经验的 Unix 用户可以在第二个控制台上完成这些动作，而毋须重新启动。 </para>
+>结尾)，是否放在一个能被 &d-i; 识别的文件系统上，是否损坏(用 checksum 校验)。有经验的 Unix 用户可以在第二个控制台上完成这些动作，而毋须重新启动。 </para>
    </sect3>
 <!--   End of file using-d-i/modules/iso-scan.xml -->
 
@@ -511,7 +574,7 @@
 <para
 >进到这一步，如果系统检测到您有多于一个的网络接口，您将被要求选择哪个设备是您的 <emphasis
 >主</emphasis
->网络接口，比如，您在安装中要用的那个。 其他的网络接口这时不会配置。您可以在安装完毕之后去配置额外的接口；参考 <citerefentry
+>网络接口，比如，您在安装中要用的那个。其他的网络接口这时不会配置。您可以在安装完毕之后去配置额外的接口；参考 <citerefentry
 > <refentrytitle
 >interfaces</refentrytitle
 > <manvolnum
@@ -519,28 +582,28 @@
 > </citerefentry
 > man 页。 </para
 ><para
->默认情况下，&d-i; 会自动尝试使用 DHCP 配置您的计算机网络。 如果 DHCP 侦测成功，这一步就完成。如果失败，造成的原因会有多种因素， 从没有接网线到错误设置的 DHCP。或者您的局域网里面根本就没有 DHCP 服务器。 检查第三个控制台了解更多的解释。不管怎样，您将被要求选择再试还是手动配置。 DHCP 服务器有时候响应很慢，因此，如果您确定都正常，再试一次。 </para
+>默认情况下，&d-i; 会自动尝试使用 DHCP 配置您的计算机网络。如果 DHCP 侦测成功，这一步就完成。如果失败，造成的原因会有多种因素，从没有接网线到错误设置的 DHCP。或者您的局域网里面根本就没有 DHCP 服务器。检查第三个控制台了解更多的解释。不管怎样，您将被要求选择再试还是手动配置。DHCP 服务器有时候响应很慢，因此，如果您确定都正常，再试一次。 </para
 ><para
 >手动配置网络会依次询问一些您网络的问题，值得注意的是 <computeroutput
 >IP 地址</computeroutput
->， <computeroutput
+>，<computeroutput
 >网络掩码</computeroutput
->， <computeroutput
+>，<computeroutput
 >网关</computeroutput
->， <computeroutput
+>，<computeroutput
 >域名服务器地址</computeroutput
->， 和 <computeroutput
+>，和 <computeroutput
 >主机名</computeroutput
->。 此外，如果您有无线网络接口，您会被要求提供您的 <computeroutput
+>。此外，如果您有无线网络接口，您会被要求提供您的 <computeroutput
 >Wireless ESSID</computeroutput
 > 和 一个 <computeroutput
 >WEP key</computeroutput
->。 填写答案 <xref linkend="needed-info"/>。 </para
+>。填写答案 <xref linkend="needed-info"/>。 </para
 ><note
 ><para
->一些技术细节您也许需要，或者不需要，放在手边： 程序假定网络 IP 地址是按位与您的系统 IP 地址和网络掩码。 它还会猜测广播地址是按位或您的系统 IP 地址和按位反网络掩码。 它也会猜测您的网关。如果您不能回答这些问题，让系统猜测 &mdash; 您可以在系统安装完毕之后来修改它们，如果需要，编辑 <filename
+>一些技术细节您也许需要，或者不需要，放在手边： 程序假定网络 IP 地址是按位与您的系统 IP 地址和网络掩码。它还会猜测广播地址是按位或您的系统 IP 地址和按位反网络掩码。它也会猜测您的网关。如果您不能回答这些问题，让系统猜测 &mdash; 您可以在系统安装完毕之后来修改它们，如果需要，编辑 <filename
 >/etc/network/interfaces</filename
->。另外一种选择， 您可以安装 <classname
+>。另外一种选择，您可以安装 <classname
 >etherconf</classname
 >，它用来一步步进行网络配置。 </para
 ></note>
@@ -571,7 +634,7 @@
   <title
 >分区与选择挂载点</title>
 <para
->现在，经过最后的硬件检测，&d-i; 已经充满活力，按照用户定制，准备就绪。 正如本节标题指明，接下来元件的主要任务是为您的硬盘分区，创建文件系统， 安排挂载点，并为近似选项进行配置，比如 LVM 或 RAID 设备。 </para>
+>现在，经过最后的硬件检测，&d-i; 已经充满活力，按照用户定制，准备就绪。正如本节标题指明，接下来组件的主要任务是为您的硬盘分区，创建文件系统，安排挂载点，并为近似选项进行配置，比如 LVM 或 RAID 设备。 </para>
 
 
 <!-- Start of file using-d-i/modules/partman.xml -->
@@ -583,13 +646,13 @@
 <para
 >现在是时候对您的硬盘进行分区了。要是您对分区还有心存疑虑，或者只是想了解 更多的细节，请参阅 <xref linkend="partitioning"/>。 </para
 ><para
->首先您可以选择对整块硬盘或是其上的空闲空间进行自动分区。 这也被称为 <quote
+>首先您可以选择对整块硬盘或是其上的空闲空间进行自动分区。这也被称为 <quote
 >向导式</quote
-> 分区。倘若您不愿自动分区， 那么也可以选择菜单中的 <guimenuitem
+> 分区。倘若您不愿自动分区，那么也可以选择菜单中的 <guimenuitem
 >手动编辑分区表</guimenuitem
 > 。 </para
 ><para
->倘若您选择了向导式分区，那么就要从下表所列的几个方式中选择其一。每个方式都 各有利弊。在 <xref linkend="partitioning"/>中对它们中的几个有些评价。 如果您没有把握，请选择第一个选项吧。有一点要记住，就是使用向导式分区至少 需要一定大小的空闲空间才能正常运作。如果您没有给它 1GB 以上的空间(具体大小 示所选的方式而不同)，那么向导式分区将以失败告终。 </para>
+>倘若您选择了向导式分区，那么就要从下表所列的几个方式中选择其一。每个方式都 各有利弊。在 <xref linkend="partitioning"/>中对它们中的几个有些评价。如果您没有把握，请选择第一个选项吧。有一点要记住，就是使用向导式分区至少 需要一定大小的空闲空间才能正常运作。如果您没有给它 1GB 以上的空间(具体大小 示所选的方式而不同)，那么向导式分区将以失败告终。 </para>
 
 <informaltable>
 <tgroup cols="3">
@@ -651,9 +714,9 @@
 ></informaltable>
 
 <para arch="ia64"
->倘若您为您的 IA64 系统选择了自动分区，那就会另外分出来一个分区。 这个分区专门为 EFI bootloader 格式化成了 FAT16 的可引导文件系统。 同时，菜单里也会有另外的一项，可以让您手动把某个分区作为 EFI 引导分区。 </para
+>倘若您为您的 IA64 系统选择了自动分区，那就会另外分出来一个分区。这个分区专门为 EFI bootloader 格式化成了 FAT16 的可引导文件系统。同时，菜单里也会有另外的一项，可以让您手动把某个分区作为 EFI 引导分区。 </para
 ><para arch="alpha"
->如果您为 Alpha 系统选择自动分区，额外的，未格式化的分区将分配在磁盘的开始处， 作为 aboot boot loader 的保留空间。 </para
+>如果您为 Alpha 系统选择自动分区，额外的，未格式化的分区将分配在磁盘的开始处，作为 aboot boot loader 的保留空间。 </para
 ><para
 >在选定了分区方式后的下一个界面，您会看到关于自己分区的一张表格，上面标明了 分区是否将被格式化，将以何种方式格式化，以及它们将被挂载到哪里的相关信息。 </para
 ><para
@@ -676,17 +739,17 @@
         #9 logical   65.8 GB     ext2
 </screen
 ></informalexample
-> 本例中有两块硬盘，它们分别被分割成了几个分区。其中，第一块硬盘上还有些空闲空间。 表中，每行列出了分区编号、其类型、分区大小、可选的标志、采用的文件系统，及其 挂载点(如果有的话)。 </para
+> 本例中有两块硬盘，它们分别被分割成了几个分区。其中，第一块硬盘上还有些空闲空间。表中，每行列出了分区编号、其类型、分区大小、可选的标志、采用的文件系统，及其 挂载点(如果有的话)。 </para
 ><para
 >接下来，向导式分区就要完成了。如果您对上面生成的分区信息表感到满意，那么 请在菜单中选择 <guimenuitem
 >分区设定结束并将修改写入磁盘</guimenuitem
-> 一项， 这样，新的分区表就创建了(本节节末将会对此进行解释)。如果您认为分区设置不 如愿，那么可以选择 <guimenuitem
+> 一项，这样，新的分区表就创建了(本节节末将会对此进行解释)。如果您认为分区设置不 如愿，那么可以选择 <guimenuitem
 >撤销对分区设置的修改</guimenuitem
 >，之后就 可以再次进行向导式分区，或者按照下面将要介绍的手动分区的办法来完成自己所 设想的分区规划。 </para
 ><para
 >如果您选择了手动分区的话，它的界面和上面介绍的向导式分区大体上相同。不同之处在于，界面上显示的是您当前的分区列表，而且其中并没有挂载点的信息。关于如何手动设置您的分区表，以及新安装的 Debian 系统将如何使用这些分区，这些内容将会在本节的后面谈到。 </para
 ><para
->倘若您选用的是一块全新的硬盘，它还没有被分过区，上面也没有空闲空间。那么 系统会要求您新建一个分区表(只有这样，您才能创建新的分区)。分区表建好之后， 在被选中的磁盘条目下会出现一个新行，上面写着 <quote
+>倘若您选用的是一块全新的硬盘，它还没有被分过区，上面也没有空闲空间。那么 系统会要求您新建一个分区表(只有这样，您才能创建新的分区)。分区表建好之后，在被选中的磁盘条目下会出现一个新行，上面写着 <quote
 >空闲空间</quote
 >。 </para
 ><para
@@ -698,7 +761,7 @@
 >partman</command
 > 的主界面。 </para
 ><para
->若是您希望修改分区的设置，只要选中该分区，分区的配置菜单就会出现在您的 面前。由于这个界面和新建分区时使用的界面是相同的，所以您可以像以前那样 修改那些设置项。有一件事，可能第一眼看不大出来，就是您还可以通过选中 显示分区大小的项目来调整分区的大小。已知适用的文件系统至少有 fat16、 fat32、ext2、ext3 和 swap。在这个菜单中，您还可以删除分区。 </para
+>若是您希望修改分区的设置，只要选中该分区，分区的配置菜单就会出现在您的 面前。由于这个界面和新建分区时使用的界面是相同的，所以您可以像以前那样 修改那些设置项。有一件事，可能第一眼看不大出来，就是您还可以通过选中 显示分区大小的项目来调整分区的大小。已知适用的文件系统至少有 fat16、fat32、ext2、ext3 和 swap。在这个菜单中，您还可以删除分区。 </para
 ><para
 >请确保至少分出两个分区：其中一个作为 <emphasis
 >root</emphasis
@@ -716,7 +779,7 @@
 ><para
 >由于 <command
 >partman</command
-> 的功能是通过安装本套件的各模块功能得以延伸和扩展的，但是具体又因您的系统的体系架构而有所区别。 因此，如果您发现安装的实际情况与我们所言不符，缺少了某些功能特性，那么请检查一下， 确保已加载了所有必须的模块(比如， <filename
+> 的功能是通过安装本套件的各模块功能得以延伸和扩展的，但是具体又因您的系统的体系架构而有所区别。因此，如果您发现安装的实际情况与我们所言不符，缺少了某些功能特性，那么请检查一下，确保已加载了所有必须的模块(比如，<filename
 >partman-ext3</filename
 >, <filename
 >partman-xfs</filename
@@ -726,7 +789,7 @@
 ><para
 >在您对分区设置感到满意后，就可以选择分区菜单中 的 <guimenuitem
 >分区设定结束并将修改写入磁盘</guimenuitem
-> 一项。在这之后， 会出现一个清单，它列出了即将在硬盘上进行的所有操作。此时，安装程序会让您确认 是否就照此分区。 </para>
+> 一项。在这之后，会出现一个清单，它列出了即将在硬盘上进行的所有操作。此时，安装程序会让您确认 是否就照此分区。 </para>
    </sect3>
 <!--   End of file using-d-i/modules/partman.xml -->
 
@@ -748,9 +811,9 @@
 <para
 >如果您做计算机系统管理员工作或者 <quote
 >高级</quote
-> 用户，您一定遇到过磁盘分区(经常是最重要的那个)空间不足， 同时其他的分区却不能平衡使用，然后您不得不靠移到或符号链接等方法来折腾。 </para
+> 用户，您一定遇到过磁盘分区(经常是最重要的那个)空间不足，同时其他的分区却不能平衡使用，然后您不得不靠移到或符号链接等方法来折腾。 </para
 ><para
->为了避免上面描述的情况，您可以采用逻辑卷管理(LVM)。 简而言之，使用 LVM 您可以组合您的分区(<firstterm
+>为了避免上面描述的情况，您可以采用逻辑卷管理(LVM)。简而言之，使用 LVM 您可以组合您的分区(<firstterm
 >物理卷</firstterm
 >，LVM 术语) 形成一个虚拟盘(称为 <firstterm
 >卷组</firstterm
@@ -760,13 +823,13 @@
 ><para
 >当您认识到需要给更多的空间给您已有的 160 GB <filename
 >/home</filename
-> 分区时，您只需加一个新的 300GB 磁盘到计算机，添加进您已经存在的卷组， 然后为 <filename
+> 分区时，您只需加一个新的 300GB 磁盘到计算机，添加进您已经存在的卷组，然后为 <filename
 >/home</filename
-> 分区的逻辑卷重新设置尺寸，然后 voila &mdash; 您的用户在更新的 460GB 分区上又有了空间。 这个例子当然过于简单。如果您还还没有读过，您应该查阅 <ulink url="&url-lvm-howto;"
+> 分区的逻辑卷重新设置尺寸，然后 voila &mdash; 您的用户在更新的 460GB 分区上又有了空间。这个例子当然过于简单。如果您还还没有读过，您应该查阅 <ulink url="&url-lvm-howto;"
 >LVM HOWTO</ulink
 >。 </para
 ><para
->在 &d-i; 里面设置 LVM 很简单。首先，您必须为 LVM 标记您的分区为物理卷。 (这由 <command
+>在 &d-i; 里面设置 LVM 很简单。首先，您必须为 LVM 标记您的分区为物理卷。(这由 <command
 >partman</command
 > 在 <guimenu
 >分区设置</guimenu
@@ -786,9 +849,9 @@
 >修改逻辑卷(LV)</guimenuitem
 >。 <note arch="powerpc"
 ><para
->在 Apple Power Macintosh 硬件上，现在还没有一个广为接受的识别包含 LVM 数据分区的标准。 在这种硬件上，以上创建物理卷和卷组的步骤将不能工作。假如您熟悉底层的 LVM 工具， 有一种突破这种限制的方法。 </para
+>在 Apple Power Macintosh 硬件上，现在还没有一个广为接受的识别包含 LVM 数据分区的标准。在这种硬件上，以上创建物理卷和卷组的步骤将不能工作。假如您熟悉底层的 LVM 工具，有一种突破这种限制的方法。 </para
 ><para
->为了在 Power Macintosh 硬件上安装使用逻辑卷，您应该按通常方式创建所有的磁盘分区。 在 <guimenu
+>为了在 Power Macintosh 硬件上安装使用逻辑卷，您应该按通常方式创建所有的磁盘分区。在 <guimenu
 >Partition settings</guimenu
 >菜单里，您应该选择 <menuchoice
 ><guimenu
@@ -796,13 +859,13 @@
 > <guimenuitem
 >Do Not Use</guimenuitem
 ></menuchoice
->对那些分区(您将不会被要求使用这些分区作为物理卷)。当您创建完所有的分区， 您可以正常启动逻辑卷管理器。然而，因为没有创建物理卷，您现在必须通过第二虚拟终端 打开命令 shell (参阅 <xref linkend="shell"/>) 并且手动创建它们。 </para
+>对那些分区(您将不会被要求使用这些分区作为物理卷)。当您创建完所有的分区，您可以正常启动逻辑卷管理器。然而，因为没有创建物理卷，您现在必须通过第二虚拟终端 打开命令 shell (参阅 <xref linkend="shell"/>) 并且手动创建它们。 </para
 ><para
 >在命令行提示符下使用 <command
 >pvcreate</command
 > 命令为您选择的分区创建物理卷。然后使用 <command
 >vgcreate</command
-> 命令创建您需要的卷组。在此过程中，您可以安全地忽略有关 incorrect metadata area header checksums 和 fsync failures 这些错误信息。当您建立完所有的卷组， 您可以返回到第一虚拟终端，然后直接跳到 <command
+> 命令创建您需要的卷组。在此过程中，您可以安全地忽略有关 incorrect metadata area header checksums 和 fsync failures 这些错误信息。当您建立完所有的卷组，您可以返回到第一虚拟终端，然后直接跳到 <command
 >lvmcfg</command
 > 逻辑卷管理菜单项。您将看到卷组，并可以像通常那样创建逻辑卷。 </para
 ></note>
@@ -825,11 +888,11 @@
 <para
 >如果您有多于一个的硬盘<footnote
 ><para
-> 其实，您可以从单个物理硬盘上不同分区创建 MD 设备， 但这样做不会给您带来任何用处。 </para
+> 其实，您可以从单个物理硬盘上不同分区创建 MD 设备，但这样做不会给您带来任何用处。</para
 ></footnote
 > 安装在您的计算机上，您可以用 <command
 >mdcfg</command
-> 配置硬盘以提升效能和/或更好的数据可靠性。 这种结果称为 <firstterm
+> 配置硬盘以提升效能和/或更好的数据可靠性。这种结果称为 <firstterm
 >多磁盘设备 MD</firstterm
 >(或者更有名的 <firstterm
 >software RAID</firstterm
@@ -847,15 +910,15 @@
 >RAID0</term
 ><listitem
 ><para
-> 它的主要目标是效能。 RAID0 将进来的数据分割成 <firstterm
+> 它的主要目标是效能。RAID0 将进来的数据分割成 <firstterm
 >stripes</firstterm
-> 然后平均分配到组里面的每个硬盘上。这样可以提升读/写操作速度， 但是一旦其中的一个硬盘损坏，您将丢失 <emphasis
+> 然后平均分配到组里面的每个硬盘上。这样可以提升读/写操作速度，但是一旦其中的一个硬盘损坏，您将丢失 <emphasis
 >一切</emphasis
 > (部分信息在好盘上，其他的 <emphasis
 >曾经</emphasis
-> 在坏盘上)。 </para
+> 在坏盘上)。</para
 ><para
-> 典型的 RAID0 应用是视频编辑分区。 </para
+> 典型的 RAID0 应用是视频编辑分区。</para
 ></listitem
 > </varlistentry
 > <varlistentry
@@ -863,9 +926,9 @@
 >RAID1</term
 ><listitem
 ><para
-> 适用于可靠性作为优先考虑的场合。它由多个(通常两个)相同尺寸的分区组成， 每个分区容纳相同的数据。这意味着三件事。第一，如果其中的一个损坏， 您仍然有数据镜像在其余的磁盘上。第二，您只能使用现有容量中的碎片 (更准确的说，它是 RAID 中尺寸最小的磁盘分区)。第三，文件读取在磁盘间 负载平衡，这可以提升服务器的性能，如文件服务器，它倾向于读的负载大于写。 </para
+> 适用于可靠性作为优先考虑的场合。它由多个(通常两个)相同尺寸的分区组成，每个分区容纳相同的数据。这意味着三件事。第一，如果其中的一个损坏，您仍然有数据镜像在其余的磁盘上。第二，您只能使用现有容量中的碎片 (更准确的说，它是 RAID 中尺寸最小的磁盘分区)。第三，文件读取在磁盘间 负载平衡，这可以提升服务器的性能，如文件服务器，它倾向于读的负载大于写。</para
 ><para
-> 可选择的是，您可以用备用的磁盘放在组中，用于顶替事故中损坏的磁盘。 </para
+> 可选择的是，您可以用备用的磁盘放在组中，用于顶替事故中损坏的磁盘。</para
 ></listitem
 > </varlistentry
 > <varlistentry
@@ -873,11 +936,11 @@
 >RAID5</term
 ><listitem
 ><para
-> 这是一个速度、可靠性和数据冗余都不错的折衷方案。 RAID5 将进来的数据分割成 strips (类似于RAID0)但只平均分配到一个磁盘上。 与 RAID0 不同，RAID5 还会计算 <firstterm
+> 这是一个速度、可靠性和数据冗余都不错的折衷方案。RAID5 将进来的数据分割成 strips (类似于RAID0)但只平均分配到一个磁盘上。与 RAID0 不同，RAID5 还会计算 <firstterm
 >奇偶校验</firstterm
-> 信息，这将会写入其他磁盘。奇偶检验磁盘不是静态的(那被称为 RAID4)， 会周期性的修改，所以奇偶校验信息平均分配到所有磁盘。当其中的一个磁盘损坏， 丢失信息的部分可以从其他数据以及奇偶校验计算出来。RAID5 最少需要三个活动的分区。 作为选项，您可以用备用的磁盘放在组中，用于顶替事故中损坏的磁盘。 </para
+> 信息，这将会写入其他磁盘。奇偶检验磁盘不是静态的(那被称为 RAID4)，会周期性的修改，所以奇偶校验信息平均分配到所有磁盘。当其中的一个磁盘损坏，丢失信息的部分可以从其他数据以及奇偶校验计算出来。RAID5 最少需要三个活动的分区。作为选项，您可以用备用的磁盘放在组中，用于顶替事故中损坏的磁盘。</para
 ><para
-> 如您所见，RAID5 近于 RAID1 的可靠性并具有较少冗余。 另一方面，它只比 RAID0 在写入的时候慢，这是因为要计算校验信息。 </para
+> 如您所见，RAID5 近于 RAID1 的可靠性并具有较少冗余。另一方面，它只比 RAID0 在写入的时候慢，这是因为要计算校验信息。</para
 ></listitem
 > </varlistentry
 > </variablelist
@@ -961,9 +1024,9 @@
 >。) </para
 ><warning
 ><para
->在安装程序中支持 MD 是相对新的功能。 如果您尝试结合一些 RAID 类型与启动引导器并将 MD 用于根(<filename
+>在安装程序中支持 MD 是相对新的功能。如果您尝试结合一些 RAID 类型与启动引导器并将 MD 用于根(<filename
 >/</filename
->)文件系统，您也许会经历一些挫折。对有经验的用户， 从 shell 手动地处理一些配置和安装步骤，也许会绕开这些问题 </para
+>)文件系统，您也许会经历一些挫折。对有经验的用户，从 shell 手动地处理一些配置和安装步骤，也许会绕开这些问题 </para
 ></warning
 ><para
 >下一步，您应该从 <command
@@ -983,7 +1046,7 @@
 ></listitem>
 <listitem
 ><para
->RAID1 需要一些技巧。首先，您将要求输入组成 MD 的活动设备和备用设备数量。 其次，您需要从 RAID 可用分区列表中选择哪些是活动分区，哪些是备用的。 选择的分区总数必须与之前提供的数目相同。不必担心，如果您出错选择了不同的分区数， &d-i; 将不会允许您继续下去，直到纠正错误。 </para
+>RAID1 需要一些技巧。首先，您将要求输入组成 MD 的活动设备和备用设备数量。其次，您需要从 RAID 可用分区列表中选择哪些是活动分区，哪些是备用的。选择的分区总数必须与之前提供的数目相同。不必担心，如果您出错选择了不同的分区数，&d-i; 将不会允许您继续下去，直到纠正错误。 </para
 ></listitem>
 <listitem
 ><para
@@ -994,7 +1057,7 @@
 </itemizedlist>
 
 <para
->完美的解决方案或许是同时使用不同的 MD 类型。例如， 您有三块 200 GB 的硬盘打算用于 MD，没块包含两个 100 GB 的分区， 您可以将三块硬盘上的第一组分区组成 RAID0 (高速的视频编辑分区)， 其余的三个分区(2 个活动 1 个备用) 用于 RAID1 (相当可靠的 100 GB 分区用于 <filename
+>完美的解决方案或许是同时使用不同的 MD 类型。例如，您有三块 200 GB 的硬盘打算用于 MD，没块包含两个 100 GB 的分区，您可以将三块硬盘上的第一组分区组成 RAID0 (高速的视频编辑分区)，其余的三个分区(2 个活动 1 个备用) 用于 RAID1 (相当可靠的 100 GB 分区用于 <filename
 >/home</filename
 >)。 </para
 ><para
@@ -1013,7 +1076,7 @@
   <title
 >安装基本系统</title>
 <para
->尽管这一阶段少有问题，但却需要大量时间用于整个基本系统的下载、校验和解包。 如果您用较慢的计算机或网络连接，这要花费好一会儿时间。 </para>
+>尽管这一阶段少有问题，但却需要大量时间用于整个基本系统的下载、校验和解包。如果您用较慢的计算机或网络连接，这要花费好一会儿时间。 </para>
 
 
 <!-- Start of file using-d-i/modules/base-installer.xml -->
@@ -1043,7 +1106,7 @@
 >/var/log/messages</filename
 > 这是在安装程序通过串口控制台执行的情况下。 </para
 ><para
->作为安装的一部分，Linux 内核也要安装。 在默认的优先级下，安装程序会选择一个与您硬件最匹配的内核。 在较低的优先级下，您可以从列表中选择一个有效的内核。 </para>
+>作为安装的一部分，Linux 内核也要安装。在默认的优先级下，安装程序会选择一个与您硬件最匹配的内核。在较低的优先级下，您可以从列表中选择一个有效的内核。 </para>
    </sect3>
 <!--   End of file using-d-i/modules/base-installer.xml -->
   </sect2>
@@ -1057,7 +1120,7 @@
 >您也许希望默认设置 OpenBoot 为网络启动；参阅 <xref linkend="boot-dev-select-sun"/>。</phrase
 > </para
 ><para
->注意，从单机上启动多个操作系统仍然是黑色艺术。本文档无意描写各种启动管理器， 它们会依系统甚至是子系统而变化。您应该参考启动管理器的文档了解更多信息。 </para>
+>注意，从单机上启动多个操作系统仍然是黑色艺术。本文档无意描写各种启动引导器，它们会依系统甚至是子系统而变化。您应该参考启动引导器的文档了解更多信息。 </para>
 
 
 <!-- Start of file using-d-i/modules/os-prober.xml -->
@@ -1067,13 +1130,13 @@
 >检测其他的操作系统</title>
 
 <para
->在启动引导器安装之前，安装程序会试着侦测已经安装到计算机上的其他操作系统。 如果它找到支持的操作系统，您将在启动引导器安装步骤里得到提示， 与 Debian 一起，计算机也将配置为可以启动其他操作系统。 </para
+>在启动引导器安装之前，安装程序会试着侦测已经安装到计算机上的其他操作系统。如果它找到支持的操作系统，您将在启动引导器安装步骤里得到提示，与 Debian 一起，计算机也将配置为可以启动其他操作系统。 </para
 ><para
->注意，从单机上启动多个操作系统仍然是黑色艺术。 自动支持检测和设置启动引导器启动其他操作系统，会依系统甚至是子系统而变化。 如果它不能工作，您应该参考启动管理器的文档了解更多信息。 </para>
+>注意，从单机上启动多个操作系统仍然是黑色艺术。自动支持检测和设置启动引导器启动其他操作系统，会依系统甚至是子系统而变化。如果它不能工作，您应该参考启动管理器的文档了解更多信息。 </para>
 
-<note
+<note condition="sarge"
 ><para
->当安装程序检测操作系统的时候，如果分区已经挂载，检测可能会失败。 这可能是由于您使用 <command
+>当安装程序检测操作系统的时候，如果分区已经挂载，检测可能会失败。这可能是由于您使用 <command
 >partman</command
 > 选择的挂载点(如 /win)包含其他操作系统，或者通过控制台手动挂载一个分区。 </para
 ></note>
@@ -1109,11 +1172,11 @@
 <para
 >PA-RISC 上的 bootloader 是 <quote
 >palo</quote
->。 <command
+>。<command
 >PALO</command
 > 的配置和用法类似于 <command
 >LILO</command
->，只有个别地方不同。首先， <command
+>，只有个别地方不同。首先，<command
 >PALO</command
 > 允许您从引导分区启动任何内核映象。这是因为 <command
 >PALO</command
@@ -1133,11 +1196,11 @@
 <para
 >&architecture; 上主要的 boot loader 是 <quote
 >grub</quote
->。 Grub 是个灵活和稳定的 boot loader，它对新手来说是个不错的缺省选择。 对老鸟来说，它也同样适合。 </para
+>。Grub 是个灵活和稳定的 boot loader，它对新手来说是个不错的缺省选择。对老鸟来说，它也同样适合。 </para
 ><para
->缺省情况下，grub 会被装在主引导区(MBR)。如果装在那里的话， 它将会完全主宰启动的整个过程。如果您喜欢的话，您可以把 grub 装在其他地方。 若要全面和完整的信息，请参阅 grub 的手册。 </para
+>缺省情况下，grub 会被装在主引导区(MBR)。如果装在那里的话，它将会完全主宰启动的整个过程。如果您喜欢的话，您可以把 grub 装在其他地方。若要全面和完整的信息，请参阅 grub 的手册。 </para
 ><para
->缺省情况下，grub 会被装在主引导区(MBR)。如果装在那里的话， 它将会完全主宰启动的整个过程。如果您喜欢的话，您可以把 grub 装在其他地方。 若要全面和完整的信息，请参阅 grub 的手册。 </para>
+>如果您并不想安装 grub，请使用返回按钮回到主菜单，并从中选择您想要使用的任何启动引导器。 </para>
   </sect3>
 <!--   End of file using-d-i/modules/i386/grub-installer.xml -->
 
@@ -1151,9 +1214,9 @@
 <para
 >第二个 &architecture; boot loader 名叫 <quote
 >LILO</quote
->。 它是个老派的强大程序，提供了很多功能，包括对 DOS、Windows 以及 OS/2 的引导 管理。如果有特别的要求的话，请您仔细阅读 目录 <filename
+>。它是个老派的强大程序，提供了很多功能，包括对 DOS、Windows 以及 OS/2 的引导 管理。如果有特别的要求的话，请您仔细阅读 目录 <filename
 >/usr/share/doc/lilo/</filename
-> 里的提示和教程，同时， 您也可以参考一下 <ulink url="&url-lilo-howto;"
+> 里的提示和教程，同时，您也可以参考一下 <ulink url="&url-lilo-howto;"
 >LILO mini-HOWTO</ulink
 >。 </para>
 <note
@@ -1193,7 +1256,7 @@
 ><para
 >对于高级用户，想把 <command
 >LILO</command
-> 安装到其它地方很有用。这种方式下，会询问您希望的位置。 您可以采用 devfs 风格的名称，比如起始是 <filename
+> 安装到其它地方很有用。这种方式下，会询问您希望的位置。您可以采用 devfs 风格的名称，比如起始是 <filename
 >/dev/ide</filename
 >，<filename
 >/dev/scsi</filename
@@ -1210,7 +1273,7 @@
 
 </para
 ><para
->如果您在此步之后无法启动 Windows 9x (或 DOS)，您需要使用一个 Windows 9x (MS-DOS) 启动盘， 并用 <userinput
+>如果您在此步之后无法启动 Windows 9x (或 DOS)，您需要使用一个 Windows 9x (MS-DOS) 启动盘，并用 <userinput
 >fdisk /mbr</userinput
 > 命令重新安装 MS-DOS 主引导记录 &mdash; 但这也意味着您要使用其他方式才能启动 Debian！ 关于此的更多信息，请参阅 <xref linkend="reactivating-win"/>。 </para>
   </sect3>
@@ -1226,15 +1289,15 @@
 <para
 >&architecture; boot loader 称为 <quote
 >elilo</quote
->。 它模仿 x86 体系上的 <quote
+>。它模仿 x86 体系上的 <quote
 >lilo</quote
-> boot loader 并使用类似的配置文件。 然而，与写入 MBR 或分区引导记录到磁盘不同， 它将必要的文件复制到单独的 FAT 格式化过的磁盘分区，并修改 <guimenuitem
+> boot loader 并使用类似的配置文件。然而，与写入 MBR 或分区引导记录到磁盘不同，它将必要的文件复制到单独的 FAT 格式化过的磁盘分区，并修改 <guimenuitem
 >EFI Boot Manager</guimenuitem
-> 固件里的菜单指向 EFI 分区的文件。 <command
+> 固件里的菜单指向 EFI 分区的文件。<command
 >elilo</command
-> boot loader 实际上是两部分。 <filename
+> boot loader 实际上是两部分。<filename
 >/usr/sbin/elilo</filename
-> 命令管理分区和复制文件。 <filename
+> 命令管理分区和复制文件。<filename
 >elilo.efi</filename
 > 程序被复制到 EFI 分区，然后被 <quote
 >EFI Boot Manager</quote
@@ -1242,7 +1305,7 @@
 ><para
 ><quote
 >elilo</quote
-> 配置与安装在基本系统安装软件包的最后一步完成。&d-i; 会给您列出适合 EFI 分区的磁盘分区列表。 选择您安装前期配置的分区，典型的分区是与 <emphasis
+> 配置与安装在基本系统安装软件包的最后一步完成。&d-i; 会给您列出适合 EFI 分区的磁盘分区列表。选择您安装前期配置的分区，典型的分区是与 <emphasis
 >root</emphasis
 > 文件系统相同的磁盘。 </para>
 
@@ -1253,7 +1316,7 @@
 <para
 >选择分区的准则是格式化为 FAT 的文件系统并有 <emphasis
 >boot</emphasis
-> 标志。&d-i; 可能会显示多个选择，这取决于被扫描的包含 EFI 分区的磁盘和 EFI 诊断分区。 切记， <command
+> 标志。&d-i; 可能会显示多个选择，这取决于被扫描的包含 EFI 分区的磁盘和 EFI 诊断分区。切记，<command
 >elilo</command
 > 可能会在安装时格式化分区，这将清除以前的所有内容！ </para
 ></warning>
@@ -1265,7 +1328,7 @@
 >EFI 分区内容</title>
 
 <para
->EFI 分区是存在于系统中的一个硬盘上，它是 FAT 文件系统格式的分区， 通常也是包含 <emphasis
+>EFI 分区是存在于系统中的一个硬盘上，它是 FAT 文件系统格式的分区，通常也是包含 <emphasis
 >root</emphasis
 > 文件系统的同一磁盘。它通常不会挂载在一个运行的系统上，而只被 <quote
 >EFI Boot Manager</quote
@@ -1379,11 +1442,11 @@
 <para
 >SGI Indys 上的 boot loader 是 <command
 >arcboot</command
->。它必须被安装到与内核相同的磁盘上(安装程序自动完成)。 Arcboot 可以支持不同的设置，它们的配置在 <filename
+>。它必须被安装到与内核相同的磁盘上(安装程序自动完成)。Arcboot 可以支持不同的设置，它们的配置在 <filename
 >/etc/arcboot.conf</filename
 >。每个设置有单独的文件，安装程序创建的默认设置为 <quote
 >linux</quote
->。 acrboot 安装之后，系统可以从硬盘启动，这需要固件提示时设置一些固件环境变量 <informalexample
+>。acrboot 安装之后，系统可以从硬盘启动，这需要固件提示时设置一些固件环境变量 <informalexample
 ><screen>
 <userinput
 > setenv SystemPartition scsi(<replaceable
@@ -1421,7 +1484,7 @@
 > </term>
 <listitem
 ><para
->是启动的 SCSI 总线， <userinput
+>是启动的 SCSI 总线，<userinput
 >0</userinput
 > 为板载控制器 </para
 ></listitem>
@@ -1433,7 +1496,7 @@
 > </term>
 <listitem
 ><para
->硬盘的 SCSI ID， <command
+>硬盘的 SCSI ID，<command
 >arcboot</command
 > 安装在其上 </para
 ></listitem>
@@ -1445,7 +1508,7 @@
 > </term>
 <listitem
 ><para
->分区号， <filename
+>分区号，<filename
 >/etc/arcboot.conf</filename
 > 处于该分区 </para
 ></listitem>
@@ -1482,7 +1545,7 @@
 <para
 >DECstations 上的 boot loader 是 <command
 >DELO</command
->。它必须被安装到与内核相同的磁盘上(安装程序自动完成)。 DELO 可以支持不同的设置，它们的配置在<filename
+>。它必须被安装到与内核相同的磁盘上(安装程序自动完成)。DELO 可以支持不同的设置，它们的配置在<filename
 >/etc/delo.conf</filename
 >。每个设置有单独的文件，安装程序创建的默认设置为 <quote
 >linux</quote
@@ -1534,7 +1597,7 @@
 > </term>
 <listitem
 ><para
->分区号， <filename
+>分区号，<filename
 >/etc/delo.conf</filename
 > 处于此分区 </para
 ></listitem>
@@ -1588,7 +1651,7 @@
 >bootstrap</quote
 >，类型为 <emphasis
 >Apple_Bootstrap</emphasis
-> 这由分区元件创建。如果这步完全成功，硬盘就可以启动，OpenFireware 将设为启动 &debian;。 </para>
+> 这由分区组件创建。如果这步完全成功，硬盘就可以启动，OpenFireware 将设为启动 &debian;。 </para>
   </sect3>
 <!--   End of file using-d-i/modules/powerpc/yaboot-installer.xml -->
 
@@ -1604,7 +1667,7 @@
 >quik</command
 >。您可以将它用于 CHRP。安装程序会自动配置 <command
 >quik</command
->。该配置已知可以工作在 7200，7300 和 7600 Powermacs， 以及一些 Power Computing 克隆。 </para>
+>。该配置已知可以工作在 7200，7300 和 7600 Powermacs，以及一些 Power Computing 克隆。 </para>
   </sect3>
 <!--   End of file using-d-i/modules/powerpc/quik-installer.xml -->
 
@@ -1618,7 +1681,7 @@
 <para
 >&arch-title; 上的 boot loader 是 <quote
 >zipl</quote
->。 <command
+>。<command
 >ZIPL</command
 > 的配置和用法类似于 <command
 >LILO</command
@@ -1717,12 +1780,12 @@
   <title
 >杂项</title>
 <para
->这里的元件通常不在安装进程之内，但会在后台待命，以帮助用户遇到麻烦时处理问题。 </para>
+>这里的组件通常不在安装进程之内，但会在后台待命，以帮助用户遇到麻烦时处理问题。 </para>
 
 
-<!-- Start of file using-d-i/modules/bugreporter.xml -->
+<!-- Start of file using-d-i/modules/save-logs.xml -->
 
-   <sect3 id="bugreporter">
+   <sect3 id="save-logs">
    <title
 >保存安装记录</title>
 
@@ -1733,9 +1796,11 @@
 ><para
 >从主菜单上选择 <guimenuitem
 >保存调试记录</guimenuitem
-> 允许您将记录文件保存到软盘上。这是用于安装过程中遭遇严重错误的时，您想在其它系统上研究记录，或者用于报告的附件。 </para>
+> 允许您将记录文件保存到软盘上<phrase condition="etch"
+>，网络，硬盘或其他介质</phrase
+>。这是用于安装过程中遭遇严重错误的时，您想在其它系统上研究记录，或者用于报告的附件。 </para>
    </sect3>
-<!--   End of file using-d-i/modules/bugreporter.xml -->
+<!--   End of file using-d-i/modules/save-logs.xml -->
 
 <!-- Start of file using-d-i/modules/cdrom-checker.xml -->
 <!--   End of file using-d-i/modules/cdrom-checker.xml -->

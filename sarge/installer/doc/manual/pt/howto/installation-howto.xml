@@ -29,7 +29,7 @@
 > página inicial do &d-i;</ulink
 >. </phrase
 > A equipa do cd-debian fornece configurações das imagens de CD utilizando &d-i; na <ulink url="&url-debian-cd;"
->página Debiani GNU/Linux em CDs</ulink
+>página Debian GNU/Linux em CDs</ulink
 >. Para mais informações em onde adquirir CDs, visite a <xref linkend="official-cdrom"/>. </para
 ><para
 >Alguns métodos de instalação requerem outras imagens para além das de CD. <phrase condition="unofficial-build"
@@ -39,11 +39,11 @@
 > A <xref linkend="where-files"/> explica como encontrar imagens nos Debian mirrors. </para
 ><para
 >As subsecções abaixo irão dar os detalhes sobre qual das imagens deverá utilizar para cada possível meio de instalação. </para>
-  
+
   <sect2 id="howto-getting-images-cdrom">
   <title
 >CDROM</title>
-  
+
 <para
 >Existem duas imagens de CD para 'netinst' diferentes que podem ser utilizadas para instalar &releasename; com &d-i;. Estas imagens servem para iniciar a partir de CD e instalar pacotes adicionais a partir da rede, daí o nome 'netinst'. A diferença entre as duas imagens é que na imagem completa 'netinst' são incluídos os pacotes base, e na imagem business card tem de fazer download destes. Se preferir, pode adquirir uma imagem completa do CD que não precisará de rede para a instalação. Irá precisar apenas do primeiro CD do conjunto de CDs. </para
 ><para
@@ -55,7 +55,7 @@
 > enquanto o sistema inicia. Visite <xref linkend="boot-cd"/> para outras formas de iniciar a partir de CD. </phrase
 > </para>
   </sect2>
-  
+
   <sect2 condition="supports-floppy-boot" id="howto-getting-images-floppy">
   <title
 >Disquete</title>
@@ -84,24 +84,30 @@
 >.img</filename
 > para download cabe numa única disquete; poderá utilizar o comando dd para escrever para /dev/fd0 ou alguns outros meios (visite a <xref linkend="create-floppy"/> para detalhes). Dado que irá ficar com mais que uma disquete, é uma boa ideia etiqueta-las. </para>
   </sect2>
-  
+
   <sect2 condition="bootable-usb" id="howto-getting-images-usb">
   <title
 >USB memory stick</title>
 <para
 >É também possível instalar a partir de um dispositivo amovível USB. Um porta-chaves USB, por exemplo, pode dar para uma meio de instalação de Debian que poderá transportar para todo lado. </para
 ><para
->A maneira mais fácil de preparar o seu USB memory stick é fazer o download de <filename
+>A maneira mais fácil de preparar o seu stick de memória USB é fazer o download de <filename
 >hd-media/boot.img.gz</filename
->, e utilizar o gunzip para extrair a imagem de 128 MB do ficheiro. Grave essa imagem directamente para o memory stick, que deve ter pelo menos capacidade para 128 MB. Naturalmente isto destruirá o que já estiver no memory stick. Em seguida monte o USB memory stick que terá agora um sistema de arquivos FAT. Em seguida, faça o download da imagem netinst do CD Debian; qualquer ficheiro é válido desde que termine em ".iso". </para
+>, e utilizar o gunzip para extrair a imagem de 128 MB desse ficheiro. Escreva essa imagem directamente para o seu stick de memória, que deve ter pelo menos 128 MB de capacidade. Naturalmente isto destruirá o que já estiver no stick de memória. Em seguida monte o stick de memória USB, que terá agora um sistema de ficheiros FAT. Em seguida, faça o download da imagem de CD Debian netinst, e copie esse ficheiro para o stick de memória; qualquer ficheiro é válido desde que termine em <literal
+>.iso</literal
+>. </para
 ><para
 >Existem outras formas mais flexíveis para preparar o memory stick para utilizar o instalador debian, e é possível que funcione com um memory stick de menor capacidade. Para detalhes, visite a <xref linkend="boot-usb-files"/>. </para
 ><para arch="i386"
->Algumas BIOS iniciam directamente de USB, e outras não. Pode ter que configurar a BIOS para iniciar de "removable drive" ou até de "USB-ZIP" para que inicie a partir do dispositivo USB. Se isso não acontecer, pode iniciar de uma disquete e utilizar o USB stick para o resto da instalação. Para dicas úteis e detalhes, visite a <xref linkend="usb-boot"/>. </para
+>Algumas BIOS podem iniciar directamente de armazenamento USB, e outras não. Você pode ter de configurar a sua BIOS para iniciar de uma <quote
+>removable drive</quote
+> ou até de <quote
+>USB-ZIP</quote
+> para que inicie a partir do dispositivo USB. Se isso não acontecer, pode iniciar a partir de uma disquete e utilizar o stick USB para o resto da instalação. Para dicas úteis e detalhes, visite a <xref linkend="usb-boot"/>. </para
 ><para arch="powerpc"
 >Iniciar sistemas Macintosh a partir de dispositivos USB envolve a utilização manual de Open Firmware. Para indicações, visite <xref linkend="usb-boot"/>. </para>
   </sect2>
-  
+
   <sect2 id="howto-getting-images-netboot">
   <title
 >Iniciar a partir da rede</title>
@@ -118,17 +124,19 @@
 >/pxelinux.0</filename
 > aos clientes, e com sorte tudo estará simplesmente a funcionar correctamente. Para instruções mais detalhadas, visite a <xref linkend="install-tftp"/>. </para>
   </sect2>
-  
+
   <sect2 id="howto-getting-images-hard-disk">
   <title
 >Iniciar de disco rígido</title>
 <para
->É possível fazer a instalação não recorrendo a dispositivos amovíveis, mas apenas com o disco rígido existente, que poderá ter um sistema operativo diferente. Efectue o download de <filename
+>É possível iniciar o instalador sem utilizar dispositivos amovíveis, mas apenas com o disco rígido existente, que poderá ter um sistema operativo diferente. Faça o download de <filename
 >hd-media/initrd.gz</filename
 >, <filename
 >hd-media/vmlinuz</filename
->, e uma imagem de CD Debian para a directoria de raíz no disco rígido. Certifique-se que a imagem de CD tem um ficheiro cujo o nome termine em ".iso". Agora é só uma questão de iniciar o linux com o initrd. <phrase arch="i386"
-> A <xref linkend="boot-initrd"/> explica uma maneira de fazer isto. </phrase
+>, e uma imagem de CD Debian para a directoria de raiz do seu disco rígido. Certifique-se que a imagem de CD tem um ficheiro cujo o nome termine em <literal
+>.iso</literal
+>. Agora é só uma questão de iniciar o linux com o initrd. <phrase arch="i386"
+> A <xref linkend="boot-initrd"/> explica uma maneira de o fazer. </phrase
 > </para>
   </sect2>
  </sect1>
@@ -137,14 +145,20 @@
 <title
 >Instalação</title>
 <para
->Uma vez que a instalação começe, você será saudado com o ecrã inicial. Pressione a tecla &enterkey; para iniciar, ou leia as instruções para outros métodos e parâmetros de instalação (visite a <xref linkend="boot-parms"/>). <phrase arch="i386"
-> Se quiser o Kernel 2.6, escreva <userinput
+>Uma vez que o instalador inicie, você será saudado com um ecrã inicial. carregue na tecla &enterkey; para arrancar, ou leia as instruções para os outros métodos e parâmetros (visite a <xref linkend="boot-parms"/>). <phrase arch="i386"
+> <phrase condition="sarge"
+> Se quiser um kernel 2.6, escreva <userinput
 >linux26</userinput
-> na prompt de <prompt
->inicialização:</prompt
->. <footnote
+> na prompt <prompt
+>boot:</prompt
+>. </phrase
+><footnote
 ><para
-> O Kernel 2.6 está disponível para a maioria dos métodos de arranque, mas não para iniciar a partir de disquete. </para
+> <phrase condition="sarge"
+> O Kernel 2.6 está disponível para a maioria dos métodos de arranque, mas não para iniciar a partir de uma disquete. </phrase
+> <phrase condition="etch"
+> O kernel 2.6 é o padrão para a maioria dos métodos de arranque, mas não está disponível para arrancar a partir de uma disquete. </phrase
+> </para
 ></footnote
 > </phrase
 > </para
@@ -161,7 +175,9 @@
 ><para arch="i386"
 >Se tiver uma partição de Windows ou DOS que quer preservar, seja cuidadoso com o particionamento automático. Se optar pelo particionamento manual, poderá utilizar o instalador para redimensionar as partições FAT ou NTFS existentes para criar espaço para instalar o Debian: seleccione a partição e especifique um novo tamanho. </para
 ><para
->No ecrã seguinte irá ver a tabela de partições, como irão ser formatadas, e onde irão ser montadas. Seleccione a partição para a modificar ou apagar. Se fez o particionamento automático deverá poder escolher "Terminar particionamento" do menu para utilizar o que foi definido. Lembre-se de atribuir pelo menos uma partição para swap e montar uma partição em <filename
+>No ecrã seguinte irá ver a sua tabela de partições, como irão as partições ser formatadas, e onde irão ser montadas. Seleccione uma partição para a modificar ou a apagar. Se você fez o particionamento automático deverá poder escolher <guimenuitem
+>Terminar particionamento</guimenuitem
+> do menu para utilizar o que foi definido. Lembre-se de atribuir pelo menos uma partição para swap e montar uma partição em <filename
 >/</filename
 >. Veja o <xref linkend="partitioning"/> mais informações acerca do particionamento. </para
 ><para

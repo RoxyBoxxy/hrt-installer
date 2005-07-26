@@ -20,7 +20,9 @@
 >root</replaceable
 > 是您的根分割區，例如 <filename
 >/dev/sda1</filename
->。 </para>
+>。<phrase condition="etch"
+> 或者，請參閱 <xref linkend="rescue"/>以得知安裝程式內建的救援模式中的指令。</phrase
+> </para>
 
   <sect2 arch="m68k"
 ><title
@@ -290,7 +292,7 @@
 ><para
 >為什麼呢？避免使用 root 特權帳戶的一個原因是，它很容易對系統造成無法挽回的破壞。另一個原因是，您有可能被惡意誘使執行<emphasis
 >特洛伊木馬</emphasis
->程式 &mdash; 這是一種在您未知的情況下利用超級使用者權限損害系統安全的程式。任何合格的 Unix 系統管理書籍中都會涉及到這一主題 &mdash; 如果您不是很了解這方面的內容，建議您找一本書進行學習。 </para
+>程式 &mdash; 這是一種在您未知的情況下利用超級使用者權限損害系統安全的程式。任何合格的 Unix 系統管理書籍中都會涉及到這一主題 &mdash; 如果您不是很瞭解這方面的內容，建議您找一本書進行學習。 </para
 ><para
 >您首先會被要求輸入使用者的全名。然後要求輸入使用者帳號名﹔通常為姓之類的即可，並且會成為預設值。最後，您將要求輸入該帳號的密碼。 </para
 ><para
@@ -310,7 +312,7 @@
 <para
 >如果您的電腦沒有連上網路，接下來您將會被問到是否希望使用 PPP 安裝其餘的系統。PPP 是透過調變解調器建立撥號連接的通訊協定。如果您現在需要設定調變解調器，安裝系統將下載一些額外的軟體套件，或者在安裝的下一階段從網際網路安全更新。如果您的電腦沒有調變解調器，或者希望安裝完之後再設定調變解調器，您可以跳過這一節。 </para
 ><para
->為了設定 PPP 連線，您需要從網際網路伺服器供應商 (ISP) 那裡了解一些資訊，包括電話號碼，使用者名稱，密碼和 DNS 伺服器 (非必要)。一些 ISP 為 Linux 發行版提供安裝指引。即使他們並不是針對 Debian，您也可以使用這些資訊，這是因為在 Linux 發行版之間，大多數的設定參數 (和軟體) 都類似。 </para
+>為了設定 PPP 連線，您需要從網際網路伺服器供應商 (ISP) 那裡瞭解一些資訊，包括電話號碼，使用者名稱，密碼和 DNS 伺服器 (非必要)。一些 ISP 為 Linux 發行版提供安裝指引。即使他們並不是針對 Debian，您也可以使用這些資訊，這是因為在 Linux 發行版之間，大多數的設定參數 (和軟體) 都類似。 </para
 ><para
 >如果您選擇在現在設定PPP，應用程式 <command
 >pppconfig</command
@@ -324,7 +326,7 @@
 >pppconfig</command
 > 能夠帶領您快速完成設定。否則，您需要繼續查看下面的具體指令介紹。 </para
 ><para
->在開始之前，您需要了解在 GNU/Linux 中閱覽和編輯檔案的基礎知識。要閱覽一個檔案，您可以使用 <command
+>在開始之前，您需要瞭解在 GNU/Linux 中閱覽和編輯檔案的基礎知識。要閱覽一個檔案，您可以使用 <command
 >more</command
 >，和 <command
 >zmore</command
@@ -484,9 +486,9 @@
 >/etc/apt/sources.list</filename
 >。 </para
 ><para
->如果此時光碟機內放有官方發布的光碟，那麼光碟機將會被自動設定為 apt 來源，而不會有提示。您會發現系統掃描您的光碟。 </para
+>如果此時光碟機內放有官方發佈的光碟，那麼光碟機將會被自動設定為 apt 來源，而不會有提示。您會發現系統掃瞄您的光碟。 </para
 ><para
->對於那些沒有官方發布光碟的使用者，有一列選項會讓您選擇如何取得軟體套件：FTP、HTTP、CD-ROM 或者本地檔案系統。 </para
+>對於那些沒有官方發佈光碟的使用者，有一列選項會讓您選擇如何取得軟體套件：FTP、HTTP、CD-ROM 或者本地檔案系統。 </para
 ><para
 >您完全可以添加多個不同的 APT 來源 (甚至是同一 Debian 檔案庫也可以)。<command
 >apt-get</command
@@ -599,7 +601,7 @@
 
 </para
 ><para
->在 &num-of-distrib-pkgs; 的 Debian 軟體套件中，只有少數被軟體集安裝程式涵蓋。為了了解更多軟體套件的資訊，請使用 <userinput
+>在 &num-of-distrib-pkgs; 的 Debian 軟體套件中，只有少數被軟體集安裝程式涵蓋。為了瞭解更多軟體套件的資訊，請使用 <userinput
 >apt-cache search <replaceable
 >search-string</replaceable
 ></userinput
@@ -675,7 +677,7 @@
 >d</keycap
 ></entry
 > <entry
->顯示軟體套件依賴關系。</entry
+>顯示軟體套件依賴關係。</entry
 > </row
 ><row
 > <entry
@@ -726,14 +728,16 @@
 >apt-get</command
 > 和 <command
 >dpkg</command
-> 程式下載、解開並安裝的。部份特殊的軟體在安裝過程中需要使用者提供更多的資訊，在這一過程中會有相關提示。您需要留意該過程的螢幕輸出，以判斷安裝中是發生錯誤 (盡管一般情況下如果一個軟體套件無法安裝，您會收到一個明確的錯誤訊息)。 </para>
+> 程式下載、解開並安裝的。部份特殊的軟體在安裝過程中需要使用者提供更多的資訊，在這一過程中會有相關提示。您需要留意該過程的螢幕輸出，以判斷安裝中是發生錯誤 (儘管一般情況下如果一個軟體套件無法安裝，您會收到一個明確的錯誤訊息)。 </para>
 
   <sect3 arch="powerpc" id="xserver">
   <title
 >設定 X 伺服器</title>
 
 <para
->在 iMacs 或者一些古老的 Macintoshes 機器上，X 伺服器軟體無法自動計算出適當的顯示卡設定。您需要在設定顯示卡時選擇"進階"選項，在螢幕的水平同步範圍中，填入 59-63。對垂直刷新範圍，可以選擇預設值。 </para
+>在 iMacs 或者一些古老的 Macintoshes 機器上，X 伺服器軟體無法自動計算出適當的顯示卡設定。您需要在設定顯示卡時選擇<guimenuitem
+>進階</guimenuitem
+>選項，在螢幕的水平同步範圍中，填入 59&ndash;63。對垂直更新範圍，可以選擇預設值。 </para
 ><para
 >滑鼠設備可以設定為 <userinput
 >/dev/input/mice</userinput
@@ -869,7 +873,7 @@
 >| more</userinput
 > 於指令之後，可以讓輸出暫停在頂端螢幕。查看某字母開始的所有可用指令，鍵入該字母，再按兩次 tab 鍵。 </para
 ><para
->想要多了解 Debian 和 GNU/Linux，請參閱 <filename
+>想要多瞭解 Debian 和 GNU/Linux，請參閱 <filename
 >/usr/share/doc/debian-guide/html/noframes/index.html</filename
 >。 </para>
 

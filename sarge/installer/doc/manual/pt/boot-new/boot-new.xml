@@ -18,9 +18,11 @@
 ></userinput
 >, onde <replaceable
 >root</replaceable
-> é a sua partição de raíz, como por exemplo <filename
+> é a sua partição de raiz, como por exemplo <filename
 >/dev/sda1</filename
->. </para>
+>. <phrase condition="etch"
+> Alternativamente, leia o <xref linkend="rescue"/> para instruções em como usar o modo de recuperação do instalador. </phrase
+> </para>
 
   <sect2 arch="m68k"
 ><title
@@ -164,7 +166,7 @@
 >BootX</command
 > para iniciar para o sistema instalado, seleccione apenas o kernel pretendido na directoria <filename
 >Linux Kernels</filename
->, desseleccionando a opção ramdisk, e adicionando o dispositivo de raíz correspondente à sua instalação; p.e. <userinput
+>, desseleccionando a opção ramdisk, e adicionando o dispositivo de raiz correspondente à sua instalação; p.e. <userinput
 >/dev/hda8</userinput
 >. </para>
    </sect2>
@@ -272,9 +274,9 @@
 >super-user</emphasis
 >; é um acesso ao sistema que ultrapassa qualquer protecção de segurança no seu sistema. A conta de root deve apenas ser utilizada para efectuar administração do sistema, e apenas por um período que deve ser o mais curto possível. </para
 ><para
->Qualquer password que criar deve conter pelo menos 6 caracteres, e deve conter tanto caracteres maísculos como minúsculos, bem como caracteres de pontuação. Tenha especial atenção quando definir a sua password de root, uma vez que é uma conta com muitos poderes. Evite o uso de palavras que constem em dicionários ou que contenham alguma informação pessoal que facilmente possa ser adivinhada. </para
+>Qualquer password que criar deve conter pelo menos 6 caracteres, e deve conter tanto caracteres maíusculos como minúsculos, bem como caracteres de pontuação. Tenha especial atenção quando definir a sua password de root, uma vez que é uma conta com muitos poderes. Evite o uso de palavras que constem em dicionários ou que contenham alguma informação pessoal que facilmente possa ser adivinhada. </para
 ><para
->Se alguma vez alguém lhe disser que precisa da sua password de root, esteja atento. Normalmente não deve dar a sua password de root, a não ser que esteja a administrar uma máquina com mais do que um admninistrador de sistemas. </para>
+>Se alguma vez alguém lhe disser que precisa da sua password de root, esteja atento. Normalmente não deve dar a sua password de root, a não ser que esteja a administrar uma máquina com mais do que um administrador de sistemas. </para>
   </sect3>
 
   <sect3 id="make-normal-user">
@@ -286,7 +288,7 @@
 >Não</emphasis
 > Deve usar a conta de root para o uso diário ou para seu o acesso pessoal. </para
 ><para
->Porque não? Bem, uma das razões para evitar usar os previlégios de root é porque é muito fácil fazer estragos irreparáveis como root. Outra razão é porque poderá ser levado a correr um programa <emphasis
+>Porque não? Bem, uma das razões para evitar usar os privilégios de root é porque é muito fácil fazer estragos irreparáveis como root. Outra razão é porque poderá ser levado a correr um programa <emphasis
 >Cavalo de Tróia</emphasis
 > &mdash; que é um programa que tira vantagens de poderes de um super-utilizador para comprometer a segurança do seu sistema sem dar por isso. Qualquer bom livro de administração de sistemas Unix cobrirá este tópico com mais detalhe &mdash; considere a leitura de um se este assunto for novo para si. </para
 ><para
@@ -320,7 +322,7 @@
 ><para
 >Se tudo correr bem, o programa <command
 >pppconfig</command
-> irá guiá-lo a uma configuração da ligação PPP sem problemas. No entanto, se não funcionar, veja embaixo instruções detalhadas. </para
+> irá guiá-lo a uma configuração da ligação PPP sem problemas. No entanto, se não funcionar, veja abaixo instruções detalhadas. </para
 ><para
 >Para poder configurar o PPP, irá necessitar de conhecer os princípios básicos da edição e visualização de ficheiros em GNU/Linux. Para visualizar ficheiros, deverá usar o <command
 >more</command
@@ -372,7 +374,7 @@
 >\q</quote
 > que antecede a password. Isto faz com que a sua password não apareça nos ficheiros de registo. </para
 ><para
->Muitos fornecedores usam o PAP ou o CHAP para a sequência de autenticação em vez de utilizarem a autenticação em modo de texto. Outros usam ambos. Se o seu fornecedor requer o uso de PAP ou CHAP, irá necessitar de seguir um procedimento diferente. Comente tudo abaixo da sequencia de marcação (a que começa com <quote
+>Muitos fornecedores usam o PAP ou o CHAP para a sequência de autenticação em vez de utilizarem a autenticação em modo de texto. Outros usam ambos. Se o seu fornecedor requer o uso de PAP ou CHAP, irá necessitar de seguir um procedimento diferente. Comente tudo abaixo da sequência de marcação (a que começa com <quote
 >ATDT</quote
 >) no <filename
 >/etc/chatscripts/provider</filename
@@ -406,7 +408,7 @@
 >/etc/ppp/peers/provider</filename
 >, o que irá activar a escolha automática dos servidores DNS, utilizando as definições que a máquina remota normalmente fornece. </para
 ><para
->A não ser que o seu fornecedor possua uma sequencia de login diferente da maioria dos ISPs, este passo está concluído! Inicie a ligação PPP escrevendo <command
+>A não ser que o seu fornecedor possua uma sequência de login diferente da maioria dos ISPs, este passo está concluído! Inicie a ligação PPP escrevendo <command
 >pon</command
 > como root, e verifique o processo utilizando o comando <command
 >plog</command
@@ -733,7 +735,9 @@
 >A Configurar o Servidor X</title>
 
 <para
->Nos iMacs, e também em alguns Machitoshes antigos, o software Servidor X não calcula as definições de vídeo apropriadas. Necessitará de escolher a opção 'Avançadas' durante a configuração das definições de vídeo. Para a gama de sincronização horizontal do monitor, introduza 59-63. Pode deixar o valor por defeito para a gama de refrescamento vertical. </para
+>Nos iMacs, e também em alguns Machitoshes antigos, o software Servidor X não calcula as definições de vídeo apropriadas. Necessitará de escolher a opção <guimenuitem
+>Avançadas</guimenuitem
+> durante a configuração das definições de vídeo. Para a gama de sincronização horizontal do monitor, introduza 59&ndash;63. Pode deixar o valor por defeito para a gama de refrescamento vertical. </para
 ><para
 >O rato deve ser definido para <userinput
 >/dev/input/mice</userinput
@@ -789,7 +793,7 @@
 >distribuição local apenas</term>
 <listitem
 ><para
->O seu sistema não está numa rede e o correio apenas é enviado ou recebido entre utilizadores locais. Mesmo que não tenha a intenção de enviar quaiquer mensagens, esta opção é altamente recomendável, porque algumas ferramentas do sistema podem enviar-lhe vários alertas de tempos a tempos (p.e. o adorado <quote
+>O seu sistema não está numa rede e o correio apenas é enviado ou recebido entre utilizadores locais. Mesmo que não tenha a intenção de enviar quaisquer mensagens, esta opção é altamente recomendável, porque algumas ferramentas do sistema podem enviar-lhe vários alertas de tempos a tempos (p.e. o adorado <quote
 >Disk quota exceeded</quote
 >). Esta opção é também conveniente para novos utilizadores, porque não irá fazer mais nenhuma pergunta. </para
 ></listitem>

@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="EUC-JP"?>
 <!-- retain these comments for translator revision tracking -->
-<!-- original version: 26472 -->
+<!-- original version: 29400 -->
 
   <sect2 condition="supports-dhcp" id="dhcpd">
    <title>DHCP サーバの設定</title>
 <para>
 
 <!--
-One free software DHCP server is ISC <command>dhcpd</command>.  
+One free software DHCP server is ISC <command>dhcpd</command>.
 In &debian;, this is available in the <classname>dhcp</classname> package.
 Here is a sample configuration file for it (usually
 <filename>/etc/dhcpd.conf</filename>):
@@ -35,7 +35,7 @@ host clientname {
   filename "/tftpboot/tftpboot.img";
   server-name "servername";
   next-server servername;
-  hardware ethernet 01:23:45:67:89:AB; 
+  hardware ethernet 01:23:45:67:89:AB;
   fixed-address 192.168.1.90;
 }
 </screen></informalexample>
@@ -51,18 +51,18 @@ Note: the new (and preferred) <classname>dhcp3</classname> package uses
 
 <!--
 In this example, there is one server
-<replaceable>"servername"</replaceable> which performs all of the work
-of DHCP, server, TFTP server, and network gateway.  You will almost
+<replaceable>servername</replaceable> which performs all of the work
+of DHCP server, TFTP server, and network gateway.  You will almost
 certainly need to change the domain-name options, as well as the
 server name and client hardware address.  The
-<replaceable>"filename"</replaceable> option should be the name of the
+<replaceable>filename</replaceable> option should be the name of the
 file which will be retrieved via TFTP.
 -->
-この例では、<replaceable>"servername"</replaceable> というサーバがひとつあり、
+この例では、<replaceable>servername</replaceable> というサーバがひとつあり、
 DHCP サーバ, TFTP サーバ, ネットワークゲートウェイの仕事をすべて行っています。
 domain-name オプション、サーバ名、クライアントのハードウェアアドレスは、
 必ず変更する必要があります。
-<replaceable>"filename"</replaceable> オプションは TFTP 経由で取得するファイルの名前です。
+<replaceable>filename</replaceable> オプションは TFTP 経由で取得するファイルの名前です。
 
 </para><para>
 
@@ -99,7 +99,7 @@ allow bootp;
 subnet 192.168.1.0 netmask 255.255.255.0 {
   range 192.168.1.200 192.168.1.253;
   option broadcast-address 192.168.1.255;
-# the gateway address which can be different 
+# the gateway address which can be different
 # (access to the internet for instance)
   option routers 192.168.1.1;
 # indicate the dns you want to use

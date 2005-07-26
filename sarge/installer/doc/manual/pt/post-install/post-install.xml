@@ -44,7 +44,7 @@
 ><title
 >Sistema de Pacotes Debian</title>
 <para
->O conceito que mais importa realçar é o do sistema de pacotes Debian. Na sua essência, grande parte do seu sistema está sob o controlo do sistema de pacotes. Incluem-se: <itemizedlist
+>O conceito mais importante para realçar é o sistema de pacotes Debian. Na sua essência, grande parte do seu sistema deve ser consdiderado sob o controlo do sistema de pacotes. Incluem-se: <itemizedlist
 > <listitem
 ><para
 > <filename
@@ -84,7 +84,7 @@
 >/usr/bin/perl</filename
 >, isso irá funcionar, mas se fizer um upgrade ao seu pacote <classname
 >perl</classname
-> , o ficheiro que lá puser irá ser substituído. Utilizadores mais avançados poderão contornar isto, ao colocar pacotes em espera no <command
+> , o ficheiro que lá puser irá ser substituído. Utilizadores mais avançados poderão contornar isto, ao colocar pacotes como hold no <command
 >aptitude</command
 >. </para
 ><para
@@ -108,7 +108,7 @@
 <para
 >Todas as tarefas debaixo da supervisão do administrador do sistema, devem estar colocadas em <filename
 >/etc</filename
->, uma vez que são ficheiros de configuração. Se tem um Cron Job para root, para correr diáriamente ou semanalmente, coloque-os em <filename
+>, uma vez que são ficheiros de configuração. Se tem um Cron Job para root, para correr diariamente ou semanalmente, coloque-os em <filename
 >/etc/cron.{daily,weekly,monthly}</filename
 >. Eles serão invocados a partir de <filename
 >/etc/crontab</filename
@@ -317,9 +317,9 @@
 >/usr/share/doc/kernel-package</filename
 >. Esta secção apenas contém um breve tutorial. </para
 ><para
->A partir de aqui, iremos assumir que tem as rédeas da sua máquina, e irá extraír a sua fonte do kernel para algum local dentro da sua directoria home<footnote
+>A partir de aqui, iremos assumir que tem as rédeas da sua máquina, e irá extrair a sua fonte do kernel para algum local dentro da sua directoria home<footnote
 > <para
-> Há outras localizações para onde pode extraír as fontes dos kernels e construir o seu kernel personalizado, mas esta é a mais simples, uma vez que não requer permissões especiais. </para
+> Há outras localizações para onde pode extrair as fontes dos kernels e construir o seu kernel personalizado, mas esta é a mais simples, uma vez que não requer permissões especiais. </para
 > </footnote
 >. Iremos também assumir que a sua versão do kernel é &kernelversion;. Assegure-se que está na directoria para onde deseja descompactar as fontes do kernel, extraia-as usando <userinput
 >tar xjf /usr/src/kernel-source-&kernelversion;.tar.bz2</userinput
@@ -395,6 +395,42 @@
   </sect2>
  </sect1>
 <!--   End of file post-install/kernel-baking.xml -->
+
+<!-- Start of file post-install/rescue.xml -->
+
+ <sect1 id="rescue" condition="etch">
+ <title
+>Recuperar um Sistema Estragado</title>
+<para
+>Por vezes, as coisas correm mal, e o sistema que você instalou cuidadosamente já não arranca. Talvez a configuração do carregador de arranque se tenha estragado enquanto experimentava uma alteração, ou talvez o novo kernel que você instalou não arranque, ou talvez raios cósmicos tenham atingido o seu disco rígido e tenham trocado um bit em <filename
+>/sbin/init</filename
+>. Seja qual for a causa, você precisa de um sistema que funcione enquanto você o compõe, e o modo de recuperação pode ser útil para isso. </para
+><para
+>Para aceder ao modo de recuperação, escreva <userinput
+>rescue</userinput
+> na prompt <prompt
+>boot:</prompt
+>, ou arranque com o parâmetro de arranque <userinput
+>rescue/enable=true</userinput
+>. Ser-lhe-ão mostrados os primeiros ecrãs do instalador, com uma nota no canto do seu monitor a indicar que este é o modo de recuperação, e não uma instalação completa. Não se preocupe, o seu sistema não está prestes a ser reescrito! O modo de recuperação apenas tira partido das capacidades de detecção de hardware disponíveis no instalador para se certificar que os seus discos, dispositivos de rede, e por aí fora estão disponíveis para si enquanro você repara o seu sistema. </para
+><para
+>Em vez da ferramenta de particionamento, deve ser-lhe apresentada uma lista das partições no seu sistema, e ser-lhe-à pedido que seleccione uma delas. Normalmente, você deverá escolher a partição que contém o sistema de ficheiros raiz que você necessita reparar. Você pode escolher partições em dispositivos RAID e LVM assim como as criadas directamente nos discos. </para
+><para
+>Se possível, o instalador irá agora apresentar-lhe uma prompt da shell no sistema de ficheiros que você seleccionou, o qual você pode utilizar para executar quaisquer reparações necessárias. <phrase arch="i386"
+> Por exemplo, se você necessitar reinstalar o carregador de arranque GRUB no master boot record do primeiro disco, você pode introduzir o comando <userinput
+>grub-install '(hd0)'</userinput
+> para o fazer. </phrase
+> </para
+><para
+>Se o instalador não conseguir correr uma shell utilizável no sistema de ficheiros raiz que você escolheu, talvez porque o sistema de ficheiros está corrompido, então irá lançar um aviso e oferecer-se para em vez disso dar-lhe uma shell no ambiente do instalador. Você poderá não ter tantos utilitários disponíveis neste ambiente, mas muitas vezes serão suficientes para reparar o seu sistema. O sistema de ficheiros raiz que você seleccionou será montado no directório <filename
+>/target</filename
+>. </para
+><para
+>Em qualquer dos casos, após você sair da shell, o sistema irá reiniciar. </para
+><para
+>Finalmente, note que reparar sistemas estragados pode ser dificil, e este manual não tenta desenvolver todas as coisas que podem ter corrido mal e como as corrigir. Se você tiver problemas, consulte um especialista. </para>
+ </sect1>
+<!--   End of file post-install/rescue.xml -->
 
 </chapter>
 <!--   End of file post-install/post-install.xml -->

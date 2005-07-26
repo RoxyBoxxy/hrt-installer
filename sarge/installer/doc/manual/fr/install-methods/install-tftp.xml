@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<!-- original version: 25834 -->
+<!-- original version: 29334 -->
 
  <sect1 condition="supports-tftp" id="install-tftp">
  <title>Préparer les fichiers pour amorcer depuis le réseau avec TFTP</title>
@@ -50,22 +50,19 @@ s'amorcer avec BOOTP.
 À la différence du microprogramme Open Firmware que l'on trouve sur les 
 machines SPARC et PowerPC, la console SRM n'utilisera 
 <emphasis>pas</emphasis> RARP pour obtenir les adresses IP&nbsp;; vous devrez 
-donc utiliser BOOTP pour amorcer votre Alpha depuis le réseau. Vous pouvez 
-aussi entrer directement depuis la console VRM la configuration IP des 
-interfaces réseau
+donc utiliser BOOTP pour amorcer votre Alpha <footnote>
 
-<footnote>
 <para>
-
 Les systèmes Alpha peuvent aussi s'amorcer depuis le réseau en utilisant 
 MOP DECNet («&nbsp;Maintenance Operations Protocol&nbsp;», protocole des 
 opérations de maintenance), mais l'on n'en dira rien ici. Il est 
 vraisemblable que votre opérateur local OpenVMS sera ravi de vous assister si
 vous ne pouvez résister à l'envie d'utiliser MOP pour amorcer Linux sur votre 
 Alpha.
-
 </para>
-</footnote>.
+
+</footnote> depuis le réseau. Vous pouvez aussi entrer directement depuis la console VRM 
+la configuration IP des interfaces réseau.
 </para><para arch="hppa"> 
 
 Quelques vieilles machines HPPA (p. ex. 715/75) utilisent RBOOTD plutôt que 
@@ -207,7 +204,7 @@ Le microprogramme des DECstation autorise l'amorçage via TFTP par
 la commande <userinput>boot <replaceable>#</replaceable>/tftp</userinput> 
 où <replaceable>#</replaceable> est le numéro de périphérique 
 «&nbsp;TurboChannel&nbsp;» sur lequel amorcer. Sur la plupart des DECstation, 
-c'est le numéro «&nbsp;3&nbsp;». Si le serveur BOOTP/DHCP ne fournit pas le
+c'est le numéro <quote>3</quote>. Si le serveur BOOTP/DHCP ne fournit pas le
 nom du fichier ou bien que vous ayez besoin de passer des paramètres 
 supplémentaires, cela peut se faire avec la syntaxe suivante&nbsp;:
 
@@ -272,7 +269,7 @@ de fichier.
 <para>
 
 Les architectures SPARC utilisent des noms de sous-architecture, comme 
-«&nbsp;SUN4M&nbsp;» ou «&nbsp;SUN4C&nbsp;»&nbsp;; dans certains cas, 
+<quote>SUN4M</quote> ou <quote>SUN4C</quote>&nbsp;; dans certains cas, 
 l'architecture est laissée en blanc et le fichier que le client recherche
 est simplement <filename>ip-du-client-en-hexa</filename>. Ainsi, si
 votre sous-architecture système est SUN4C et que son adresseIP est 
@@ -280,13 +277,9 @@ votre sous-architecture système est SUN4C et que son adresseIP est
 Pour déterminer facilement ce nom et en supposant que l'adresse IP est 
 10.0.0.4, lancez un interpréteur de commandes et faites&nbsp;:
 
-</para>
-
 <informalexample><screen>
 $ printf '%.2x%.2x%.2x%.2x\n' 10 0 0 4
 </screen></informalexample>
-
-<para>
 
 Cela recrache l'adresse en hexadécimal. Il suffira de mettre les lettres en 
 majuscule et d'ajouter le nom de la sous-architecture pour obtenir le nom du 

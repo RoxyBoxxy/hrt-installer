@@ -13,7 +13,9 @@
 ><para
 >Quando é feita uma instalação por omissão, apenas serão colocadas as questões essenciais (de alta prioridade). Isto resulta num processo de instalação altamente automatizado, com pouca interacção por parte do utilizador. Os componentes são executados sequencialmente e de uma forma automatica; quais os componentes que são executados depende principalmente do método da instalação utilizado e do seu hardware. O instalador utilizará valores por omissão para as questões que não são colocadas. </para
 ><para
->Se existir um problema, o utilizador irá visualizar um ecrã de erro, e o menu do instalador poderá aparecer com o intuito de ser seleccionada uma acção alternativa. Se não existir qualquer problema, o utilizador nunca irá visualizar o menu do instalador, apenas irá responder a simples questões para cada mudança de componente. Notificações de erros sérios são ajustadas para prioridade 'crítica' que faz com que o utilizador seja sempre notificado. </para
+>Se existir um problema, o utilizador irá visualizar um ecrã de erro, e o menu do instalador poderá aparecer com o intuito de ser seleccionada uma acção alternativa. Se não existir qualquer problema, o utilizador nunca irá visualizar o menu do instalador, apenas irá responder a simples questões para cada mudança de componente. Notificações de erros sérios são ajustadas para prioridade <quote
+>crítica</quote
+> que faz com que o utilizador seja sempre notificado. </para
 ><para
 >Algumas das omissões utilizadas pelo instalador poderão ser influenciadas passando argumentos de arranque quando o &d-i; está a iniciar. Se, por exemplo, você desejar forçar uma configuração de rede estática (se estiver disponível DHCP é utilizado por omissão), pode adicionar o parâmetro de arranque <userinput
 >netcfg/disable_dhcp=true</userinput
@@ -31,10 +33,12 @@
 >debconf/priority=low</userinput
 >. O Modo Expert dá-lhe total controlo sobre o &d-i;. </para
 ><para
->O modo gráfico do instalador normal é baseado em caracteres (diferente do interface gráfico, agora mais familiar). O rato não se encontra operacional neste ambiente. As seguintes teclas podem ser utilizadas para navegar nos vários diálogos. A tecla  <keycap
+>O modo gráfico do instalador normal é baseado em caracteres (diferente do interface gráfico, agora mais familiar). O rato não se encontra operacional neste ambiente. As seguintes teclas podem ser utilizadas para navegar nos vários diálogos. A tecla <keycap
 >Tab</keycap
 > ou a tecla seta para a <keycap
 >direita</keycap
+> movem para a <quote
+>frente</quote
 >, e a tecla <keycombo
 > <keycap
 >Shift</keycap
@@ -43,19 +47,21 @@
 > </keycombo
 > ou a seta para a <keycap
 >esquerda</keycap
-> alternam entre botões e selecções. As setas para <keycap
+> movem-se para <quote
+>trás</quote
+> através dos botões e selecções mostrados. As setas para <keycap
 >cima</keycap
 > e para <keycap
 >baixo</keycap
-> seleccionam diferentes itens contidos numa lista de scroll, e permitem ainda movimentar a lista. Para longas listas pode ainda digitar um caracter para que a lista se movimente directamente para a secção de itens que começem com a letra digitada e ainda usar as teclas <keycap
+> seleccionam diferentes itens contidos numa lista com scroll, e permitem ainda fazer movimentar à própria lista. Além disso, para longas listas pode ainda digitar um caracter para que a lista se movimente directamente para a secção de itens que comecem com a letra digitada e ainda usar as teclas <keycap
 >Pg-Up</keycap
 > e <keycap
 >Pg-Down</keycap
 > para movimentar a lista entre secções. A tecla <keycap
->space bar</keycap
+>barra de espaços</keycap
 > selecciona um item como por exemplo uma checkbox. Utilize a tecla &enterkey; para activar as escolhas. </para
 ><para arch="s390"
->S/390 não suporta consolas virtuais. Pode abrir uma segunda e terceira sessão de ssh para vêr os logs descrito abaixo. </para
+>S/390 não suporta consolas virtuais. Pode abrir uma segunda e terceira sessão de ssh para ver os logs descrito abaixo. </para
 ><para
 >As mensagens de erro são reencaminhadas para a terceira consola. Pode aceder a essa consola premindo as teclas <keycombo
 ><keycap
@@ -102,7 +108,9 @@
 ><para
 >Mostra ao utilizador durante o processo de instalação a lista de componentes, e inicia um componente quando seleccionado. Questões do Main-menu são ajustadas para prioridade média, se a sua prioridade estiver ajustada para alta ou crítica (por omissão é alta), não irá visualizar o menu. Por outro lado, se existir um erro que requer a sua intervenção, a prioridade da questão pode temporariamente baixar para permitir que resolva o problema, e nesse caso o menu pode aparecer. </para
 ><para
->Pode chegar ao menu principal seleccionando repetidamente a opção "Voltar" para retroceder todo o caminho para fora do componente em que actualmente se encontrar a correr. </para
+>Pode chegar ao menu principal seleccionando repetidamente a opção <quote
+>Voltar</quote
+> para retroceder todo o caminho para fora do componente em que actualmente se encontrar a correr. </para
 ></listitem>
 </varlistentry>
 <varlistentry condition="sarge">
@@ -304,7 +312,9 @@
 >base-config</term
 ><listitem
 ><para
->Disponibiliza caixas de diálogo para configurar os pacotes do sistema base de acordo com as preferências do utilizador. Isto é normalmente feito após o computador reiniciar; é a 'primeira vez' que o seu novo sistema Debian corre. </para
+>Disponibiliza caixas de diálogo para configurar os pacotes do sistema base de acordo com as preferências do utilizador. Isto é normalmente feito após o computador reiniciar; é a <quote
+>primeira vez</quote
+> que o seu novo sistema Debian corre. </para
 ></listitem>
 </varlistentry>
 <varlistentry>
@@ -411,11 +421,11 @@
 ><para
 >O país seleccionado será mais tarde utilizado no processo de instalação para escolher por omissão um fuso horário e um mirror Debian apropriado para a sua localização geográfica. O idioma e o país em conjunto serão utilizados para configurar as definições locais para o seu sistema e para o ajudar a configurar seleccionar o seu teclado. </para
 ><para
->Ser-lhe-á no ínicio pedido para seleccionar o seu idioma preferido. A lista de idiomas encontra-se em Inglês (lado esquerdo) e na sua própria língua (lado direito); os nomes do lado direito mostram também o respectivo script para o idioma. A lista está disposta pelos nomes em Inglês. No topo da lista existe uma opção extra que lhe permite seleccionar as definições locais <quote
+>Ser-lhe-á no inicio pedido para seleccionar o seu idioma preferido. A lista de idiomas encontra-se em Inglês (lado esquerdo) e na sua própria língua (lado direito); os nomes do lado direito mostram também o respectivo script para o idioma. A lista está disposta pelos nomes em Inglês. No topo da lista existe uma opção extra que lhe permite seleccionar as definições locais <quote
 >C</quote
 > em vez do idioma. Ao escolher a definição local <quote
 >C</quote
-> a sua instalação proseguirá em Inglês, o sistema não terá suporte de definição local, já que não será instalado o pacote <classname
+> a sua instalação prosseguirá em Inglês, o sistema não terá suporte de definição local, já que não será instalado o pacote <classname
 >locales</classname
 >. </para
 ><para
@@ -427,7 +437,7 @@
 >Other</guimenuitem
 > no fundo da lista, ser-lhe-á apresentada uma lista de todos os países, agrupados por continente. Se o idioma tem apenas um único país associado, esse país será seleccionado automaticamente. </para
 ><para
->As definições locais serão seleccionadas com base no idioma e país escolhido. Se estiver a instalar em prioridade média ou baixa, terá a opção de seleccionar definições locais diferentes e de seleccionar definições locais adicionais para serem geradas no sistema instalado. </para>
+>Uma definição local padrão será seleccionada com base no idioma e país escolhido. Se estiver a instalar em prioridade média ou baixa, terá a opção de seleccionar definições locais padrão diferentes e de seleccionar definições locais adicionais para serem geradas no sistema instalado. </para>
    </sect3>
 <!--   End of file using-d-i/modules/localechooser.xml -->
 
@@ -509,7 +519,7 @@
 >.iso</filename
 > (ou <filename
 >.ISO</filename
-> para esse efeito). Tenha em atenção que a primeira tentativa procura apenas ficheiros no directório raíz e no primeiro nível dos subdirectórios (i.e. encontra <filename
+> para esse efeito). Tenha em atenção que a primeira tentativa procura apenas ficheiros no directório raiz e no primeiro nível dos subdirectórios (i.e. encontra <filename
 >/<replaceable
 >qualquercoisa</replaceable
 >.iso</filename
@@ -905,7 +915,7 @@
 ><para
 > É indicado para configurações onde a fiabilidade é a primeira preocupação. Consiste em várias (normalmente duas) partições iguais, onde cada partição contém exactamente a mesma informação. Isto significa basicamente três coisas. Primeiro, se um dos discos falha, poderá sempre ter a sua informação espelhada nos outros discos. Segundo, pode usar apenas uma fracção da capacidade disponível (mais precisamente, é a dimensão da partição mais pequena do RAID). Terceiro, as leituras dos ficheiros são balanceadas entre os discos o que poderá melhorar a performance num servidor, tal como um servidor de ficheiros que tende a ser carregado com mais leituras do que escritas de ficheiros. </para
 ><para
-> Em opção pode utilizar um disco sobressalente no array que tomará o lugar do disco em falta em caso de falha do sistema. </para
+> Em opção pode utilizar um disco sobresselente no array que tomará o lugar do disco em falta em caso de falha do sistema. </para
 ></listitem
 > </varlistentry
 > <varlistentry
@@ -930,7 +940,7 @@
   <entry
 >Dispositivos Mínimos</entry>
   <entry
->Dispositivo Sobressalente</entry>
+>Dispositivo Sobresselente</entry>
   <entry
 >Sobrevive a falhas de disco?</entry>
   <entry
@@ -1023,7 +1033,7 @@
 ></listitem>
 <listitem
 ><para
->O RAID1 possuí mais alguns truques. Primeiro, ser-lhe-á pedido que introduza o número de dispositivos activos e o número de dispositivos sobressalentes que formaram o MD. De seguida, necessitará de seleccionar de uma lista de partições RAID as que serão activas e as que serão sobressalentes. O número de partições seleccionadas terá que ser igual ao número fornecido alguns segundos atrás. Não se preocupe. Se efectuar algum erro e seleccionar um número diferente de partições, o  &d-i; não lhe deixará continuar até que o erro seja corrigido. </para
+>O RAID1 possuí mais alguns truques. Primeiro, ser-lhe-á pedido que introduza o número de dispositivos activos e o número de dispositivos sobresselentes que formaram o MD. De seguida, necessitará de seleccionar de uma lista de partições RAID as que serão activas e as que serão sobresselentes. O número de partições seleccionadas terá que ser igual ao número fornecido alguns segundos atrás. Não se preocupe. Se efectuar algum erro e seleccionar um número diferente de partições, o  &d-i; não lhe deixará continuar até que o erro seja corrigido. </para
 ></listitem>
 <listitem
 ><para
@@ -1034,7 +1044,7 @@
 </itemizedlist>
 
 <para
->É perfeitamente possível ter vários tipos de MD ao mesmo tempo. Por exemplo se tiver três discos rígidos de 200 GB dedicados a MD, cada uma contendo partições de 100 GB, pode combinar as primeiras partições nos três discos em RAID0 (partição rápida de 300GB para edição de vídeo) e usar as outras três partições (2 activas e 1 sobressalente) para RAID1 (muito fiável para uma partição <filename
+>É perfeitamente possível ter vários tipos de MD ao mesmo tempo. Por exemplo se tiver três discos rígidos de 200 GB dedicados a MD, cada uma contendo partições de 100 GB, pode combinar as primeiras partições nos três discos em RAID0 (partição rápida de 300GB para edição de vídeo) e usar as outras três partições (2 activas e 1 sobresselente) para RAID1 (muito fiável para uma partição <filename
 >/home</filename
 > de 100GB). </para
 ><para

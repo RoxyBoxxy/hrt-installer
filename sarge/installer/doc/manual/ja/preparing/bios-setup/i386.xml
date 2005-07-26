@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="EUC-JP"?>
 <!-- retain these comments for translator revision tracking -->
-<!-- original version: 18674 -->
+<!-- original version: 28997 -->
 
 
   <sect2 arch="i386" id="bios-setup"><title>BIOS 設定メニューの起動</title>
@@ -27,15 +27,16 @@ Debian のインストールができなくなるかもしれません。
 </para><para>
 
 <!--
-The rest of this section is lifted from the 
-<ulink url="&url-pc-hw-faq;"></ulink>, answering the question, "How do I
-enter the CMOS configuration menu?".  How you access the BIOS (or
-``CMOS'') configuration menu depends on who wrote your BIOS software:
+The rest of this section is lifted from the
+<ulink url="&url-pc-hw-faq;"></ulink>, answering the question, <quote>How do I
+enter the CMOS configuration menu?</quote>.  How you access the BIOS (or
+<quote>CMOS</quote>) configuration menu depends on who wrote your BIOS
+software:
 -->
 この節の残りの部分は、<ulink url="&url-pc-hw-faq;"></ulink> の
-「CMOS 設定メニューを呼び出すにはどのキーを押せばよいのでしょうか？」
+<quote>CMOS 設定メニューを呼び出すにはどのキーを押せばよいのでしょうか?</quote>
 という質問への答から引用したものです。
-BIOS (あるいは ``CMOS'') 設定メニューの呼び出し方は、
+BIOS (あるいは <quote>CMOS</quote>) 設定メニューの呼び出し方は、
 BIOS ソフトウェアの製造者によって異なります。
 
 </para>
@@ -141,7 +142,7 @@ or
 <para>
 
 <!--
-Information on invoking other BIOS routines can be found in 
+Information on invoking other BIOS routines can be found in
 <ulink url="&url-invoking-bios-info;"></ulink>.
 -->
 他の BIOS ルーチンの起動に関する情報は、
@@ -153,7 +154,7 @@ Information on invoking other BIOS routines can be found in
 Some &arch-title; machines don't have a CMOS configuration menu in the
 BIOS.  They require a software CMOS setup program.  If you don't have
 the Installation and/or Diagnostics diskette for your machine, you can
-try using a shareware/freeware program.  Try looking in 
+try using a shareware/freeware program.  Try looking in
 <ulink url="&url-simtel;"></ulink>.
 -->
 &arch-title; マシンの中には、
@@ -197,7 +198,7 @@ Debian のインストールに最も良く用いられるのはこの両者ですから。
 If you have a newer SCSI controller and you have a CD-ROM device
 attached to it, you are usually able to boot from the CD-ROM.  All you
 have to do is enable booting from a CD-ROM in the SCSI-BIOS of your
-controller. 
+controller.
 -->
 最近の SCSI コントローラを使っていて、そこに CD-ROM を接続している場合、
 普通はその CD-ROM から起動できます。
@@ -240,7 +241,7 @@ Linux のインストールが終ったら、起動の順序を元に戻し、
 <listitem><para>
 
 <!--
-As your computer starts, press the keys to enter the BIOS 
+As your computer starts, press the keys to enter the BIOS
 utility. Often, it is the <keycap>Delete</keycap> key. However,
 consult the hardware documentation for the exact keystrokes.
 -->
@@ -261,7 +262,7 @@ BIOS 設定メニューから起動順序 (boot sequence) の設定項目を探してください。
 
 </para><para>
 
-<!--   
+<!--
 Common entries on IDE machines are C, A, cdrom or A, C, cdrom.
 -->
 IDE マシンでは C, A, CDROM または A, C, CDROM となっていることが
@@ -269,18 +270,18 @@ IDE マシンでは C, A, CDROM または A, C, CDROM となっていることが
 
 </para><para>
 
-<!--   
+<!--
 C is the hard drive, and A is the floppy drive.
 -->
 C はハードディスクで、A はフロッピードライブです。
 
-</para></listitem>   
+</para></listitem>
 <listitem><para>
 
 <!--
 Change the boot sequence setting so that the CD-ROM or the
 floppy is first. Usually, the <keycap>Page Up</keycap> or
-<keycap>Page Down</keycap> keys cycle 
+<keycap>Page Down</keycap> keys cycle
 through the possible choices.
 -->
 この起動順序を変更して、CD-ROM またはフロッピーが先に来るようにしてください。
@@ -420,7 +421,7 @@ a virus-protection board or other special hardware, make sure it is
 disabled or physically removed while running GNU/Linux. These aren't
 compatible with GNU/Linux; moreover, due to the file system
 permissions and protected memory of the Linux kernel, viruses are
-almost unheard of.
+almost unheard of<footnote>
 -->
 BIOS のウィルス警告機能の類は一切使用しないでください。
 ウィルス防御用のボードや特別なハードウェアがある場合は、
@@ -429,9 +430,7 @@ Linux が動いている間は無効にするか、
 これらは Linux と互換性がありません。
 それに Linux にはファイルシステムの許可属性機能と
 カーネルのメモリ保護機能があるため、
-ウィルスはほとんど存在しません。
-
-<footnote>
+ウィルスはほとんど存在しません<footnote>
 <para>
 
 <!--
@@ -447,7 +446,7 @@ Windows での大惨事を防いでくれるかもしれません。
 マスタブートレコード (MBR) を変更する必要はありません。
 
 </para>
-</footnote>
+</footnote>。
 
 </para>
    </sect3>
@@ -457,8 +456,9 @@ Windows での大惨事を防いでくれるかもしれません。
 
 <!--
 Your motherboard may provide <emphasis>shadow RAM</emphasis> or BIOS
-caching. You may see settings for ``Video BIOS Shadow'', ``C800-CBFF
-Shadow'', etc. <emphasis>Disable</emphasis> all shadow RAM.  Shadow
+caching. You may see settings for <quote>Video BIOS Shadow</quote>,
+<quote>C800-CBFF Shadow</quote>, etc. <emphasis>Disable</emphasis>
+all shadow RAM.  Shadow
 RAM is used to accelerate access to the ROMs on your motherboard and
 on some of the controller cards. Linux does not use these ROMs once it
 has booted because it provides its own faster 32-bit software in place
@@ -469,8 +469,8 @@ devices.
 -->
 あなたのマザーボードでは、恐らく <emphasis>shadow RAM</emphasis>
 (または BIOS キャッシュ) が使えるはずです。
-この場合は ``Video BIOS Shadow'' とか
-``C800-CBFF Shadow'' などの設定があるはずです。
+この場合は <quote>Video BIOS Shadow</quote> や
+<quote>C800-CBFF Shadow</quote> などの設定があるはずです。
 shadow RAM は、すべて <emphasis>無効</emphasis> にしてください。
 shadow RAM は、マザーボードやコントローラカード上の ROM への
 アクセスを高速にするために利用されるものですが、
@@ -489,11 +489,11 @@ Linux のハードウェアのアクセスが邪魔されてしまうかもしれません。
 <para>
 
 <!--
-If your BIOS offers something like ``15-16 MB Memory Hole'', please
-disable that. Linux expects to find memory there if you have that much
-RAM.
+If your BIOS offers something like <quote>15&ndash;16 MB Memory
+Hole</quote>, please disable that. Linux expects to find memory there if
+you have that much RAM.
 -->
-BIOS に ``15-16 MB Memory Hole'' というような設定があったら、
+BIOS に <quote>15&ndash;16 MB Memory Hole</quote> というような設定があったら、
 それは無効にしておいてください。
 16MB 以上のメモリがある場合は、
 Linux はこの領域にもメモリがあるものとして動作します。
@@ -502,18 +502,19 @@ Linux はこの領域にもメモリがあるものとして動作します。
 
 <!--
 We have a report of an Intel Endeavor motherboard on which there is an
-option called ``LFB'' or ``Linear Frame Buffer''. This had two
-settings: ``Disabled'' and ``1 Megabyte''. Set it to ``1 Megabyte''.
+option called <quote>LFB</quote> or <quote>Linear Frame Buffer</quote>.
+This had two settings: <quote>Disabled</quote> and <quote>1
+Megabyte</quote>. Set it to <quote>1 Megabyte</quote>.
 When disabled, the installation floppy was not read correctly, and the
 system eventually crashed. At this writing we don't understand what's
 going on with this particular device &mdash; it just worked with that
 setting and not without it.
 -->
 Intel Endeavor マザーボードでは、
-``LFB'' とか ``Linear Frame Buffer'' とかいう設定がある、
+<quote>LFB</quote> とか <quote>Linear Frame Buffer</quote> とかいう設定がある、
 というレポートを受けています。これの設定は
-``Disabled'' と ``1 Megabyte'' から選べるようになっていますが、
-設定は ``1 Megabyte'' にしてください。
+<quote>Disabled</quote> と <quote>1 Megabyte</quote> から選べるようになっていますが、
+設定は <quote>1 Megabyte</quote> にしてください。
 無効 (Disabled) にすると、インストールフロッピーが正しく読み込まれず、
 システムがクラッシュしてしまいます。
 現時点では、このデバイスでなにが起こっているのか、
