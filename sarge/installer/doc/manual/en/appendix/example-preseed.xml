@@ -1,6 +1,6 @@
 <!-- retain these comments for translator revision tracking -->
 <!-- $Id$ -->
-<!-- copied version: 29307 -->
+<!-- copied version: 29505 -->
 
 <sect1 id="example-preseed">
 <title>Preconfiguration File Example</title>
@@ -119,6 +119,10 @@ the Internet at <ulink url="&url-example-preseed;"></ulink>.
 # netcfg will choose an interface that has link if possible. This makes it
 # skip displaying a list if there is more than one interface.
 d-i  netcfg/choose_interface            select auto
+
+# If you have a slow dhcp server and the installer times out waiting for
+# it, this might be useful.
+#d-i netcfg/dhcp_timeout		string 60
 
 # If you prefer to configure the network manually, here's how:
 #d-i netcfg/disable_dhcp                boolean true

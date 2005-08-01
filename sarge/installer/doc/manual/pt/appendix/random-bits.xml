@@ -114,7 +114,11 @@ de ambiente
 
 # Se possível o netcfg irá escolher um interface que tenha uma ligação. Isto faz com que
 # não mostre uma lista se existir mais de um interface.
-d-i  netcfg/choose_interface            select auto
+d-i  netcfg/choose_interface select auto
+
+# Se tiver um servidor dhcp lento e o instalador esgota o tempo à espera, 
+# isto pode ser útil.
+#d-i netcfg/dhcp_timeout string 60
 
 # Se você preferir configurar a rede manualmente, aqui está como o fazer:
 #d-i netcfg/disable_dhcp                boolean true
