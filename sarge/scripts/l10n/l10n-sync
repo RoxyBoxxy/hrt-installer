@@ -86,7 +86,14 @@ exit 1
 
 gettexterr() {
 echo "Error in a gettext operation, please investigate"
+echo "Lock file NOT removed"
 exit 2
+}
+
+criticalerr() {
+echo "Critical error during run, please investigate"
+echo "Lock file NOT removed"
+exit 3
 }
 
 ##  Command line parsing
@@ -176,8 +183,8 @@ if [ ! -d $DI_COPY ] ; then
   exit 1
 fi
 
-if [ ! -d $DI_COPY/packages/.svn ] ; then
-  echo No $DI_COPY/.svn directory found
+if [ ! -d $DI_COPY/.svn ] ; then
+  echo No $DI_COPY/packages/.svn directory found
   echo $DI_COPY may not be a copy of Debian Installer SVN repository
   exit 1
 fi
@@ -200,6 +207,14 @@ if [ -n "$MERGEDIR" ] ; then
     exit 1
   fi   
 fi
+
+# Checking a few utilities we need
+for i in msgcat msgmerge msgattrib `echo ${debconfupdatepo} | awk '{print $1};'` ; do
+  if ! which $i >/dev/null 2>&1 ; then
+    echo $i not found in the PATH
+    exit 1
+  fi
+done
 
 # Do not accept working on an unclean copy
 if $(svn st $DI_COPY/packages | grep -q "^C") ; then
@@ -305,6 +320,10 @@ pots_new=""
 # Put packages from the SORT_ORDER list first
 # of course we check if they are really in the list
 for package in ${SORT_ORDER} ; do
+  if [ ! -d ${package} ] ; then
+    echo Package $package from the sort list does not exist
+    criticalerr
+  fi
   if (echo ${packages} | grep $package >/dev/null 2>&1) ; then
     packages_new="${packages_new} ${package}"
     pots_new="${pots_new} ${package}/debian/po/templates.pot"
@@ -381,14 +400,18 @@ cd $DI_COPY/packages
 if [ "$DEBUG" = "Y" ] ; then
   echo -n "Creating the general template.pot file..."
 fi
+# Check that the next msgcat will not fail (otherwise the template.pot would be empty!)
+if ! msgcat $pots >/dev/null ; then
+  svnerr
+fi
 if [ "$DEBUG" = "Y" ] ; then
-  msgcat $pots | sed 's/charset=CHARSET/charset=UTF-8/g' >$DI_COPY/packages/po/template.pot.new
+  msgcat $pots || svnerr | sed 's/charset=CHARSET/charset=UTF-8/g' >$DI_COPY/packages/po/template.pot.new
 else
   msgcat $pots  | sed 's/charset=CHARSET/charset=UTF-8/g'>$DI_COPY/packages/po/template.pot.new 2>/dev/null
 fi
 # We don't want all templates.pot files headers as we don't care about them
 # So we merge the generated file with a simple header.pot file
-if [ -f po/header.pot ] ; then
+if [ -f po/header.pot -a -s po/template.pot.new ] ; then
   msgcat --use-first po/header.pot po/template.pot.new | sed 's/charset=UTF-8/charset=CHARSET/g' > po/template.pot
   rm po/template.pot.new
 else
