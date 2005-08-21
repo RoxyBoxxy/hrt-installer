@@ -24,6 +24,7 @@
 # 26-07-2005 - Miguel Figueiredo <elmig@debianpt.org> - 1f
 # 30-07-2005 - Miguel Figueiredo <elmig@debianpt.org> - 6f18u
 # 14-08-2005 - Miguel Figueiredo <elmig@debianpt.org> - 7f14u
+# 18-08-2005 - Miguel Figueiredo <elmig@debianpt.org> - 35f42u
 #
 msgid ""
 msgstr ""
@@ -9774,6 +9775,9 @@ msgstr "Configurar e montar partições"
 #~ "Se você deseja utilizar este interface, por favor mude-o para ligado "
 #~ "antes de continuar."
 
+#~ msgid "USB net"
+#~ msgstr "Rede USB"
+
 #~ msgid ""
 #~ "The network autoconfiguration was successful. However, no default route "
 #~ "was set: the system does not know how to communicate with hosts on the "
@@ -9891,16 +9895,25 @@ msgstr "Configurar e montar partições"
 #~ msgid "Check /target/var/log/bootstrap.log for the details."
 #~ msgstr "Para detalhes verifique /var/log/bootstrap.log."
 
-#, fuzzy
-#~ msgid "Unable to install ${PACKAGE}"
-#~ msgstr "Não é possível instalar o GRUB em ${BOOTDEV}"
+#~ msgid "${KERNELS}, none"
+#~ msgstr "${KERNELS}, nenhum"
 
 #, fuzzy
+#~ msgid "Continue without installing a kernel?"
+#~ msgstr "Continuar com a instalação?"
+
+#, fuzzy
+#~ msgid "Cannot install kernel"
+#~ msgstr "Não pode instalar Debian"
+
+#~ msgid "Unable to install ${PACKAGE}"
+#~ msgstr "Não é possível instalar ${PACKAGE}"
+
 #~ msgid ""
 #~ "An error was returned while trying to install the ${PACKAGE} package onto "
 #~ "the target system."
 #~ msgstr ""
-#~ "Foi retornado um erro ao tentar instalar o pacote initrd-tools no sistema "
+#~ "Foi retornado um erro ao tentar instalar o pacote ${PACKAGE} no sistema "
 #~ "alvo."
 
 #~ msgid "Failed getting Release signature file ${SUBST0}."
@@ -10045,6 +10058,10 @@ msgstr "Configurar e montar partições"
 #~ msgid "If you do not wish to set a GRUB password, leave this field blank."
 #~ msgstr ""
 #~ "Se não deseja definir uma password para o GRUB, deixe este campo vazio."
+
+#, fuzzy
+#~ msgid "Saving debconf database..."
+#~ msgstr "A guardar o fuso horário..."
 
 #~ msgid "Rebooting into your new system..."
 #~ msgstr "A reiniciar para o seu novo sistema..."
@@ -10247,9 +10264,8 @@ msgstr "Configurar e montar partições"
 #~ "partição Debian de arranque, e agora o seu sistema deve conseguir "
 #~ "arrancar sozinho."
 
-#, fuzzy
 #~ msgid "Unsupported boot filesystem type"
-#~ msgstr "Aviso: sistema de ficheiros de arranque não suportado!"
+#~ msgstr "Sistema de ficheiros de arranque não suportado"
 
 #~ msgid ""
 #~ "In order to be successfully loaded by SILO (Sparc Linux Loader), the "
@@ -10262,9 +10278,8 @@ msgstr "Configurar e montar partições"
 #~ "esquema actual de particionamento o kernel vai vai ser instalado na "
 #~ "partição ${SILO_PART} do tipo ${SILO_TYPE}."
 
-#, fuzzy
 #~ msgid "Boot partition may cause problems with SILO"
-#~ msgstr "Aviso: a partição de arranque pode causar problemas com o SILO!"
+#~ msgstr "A partição de arranque pode causar problemas com o SILO"
 
 #~ msgid ""
 #~ "This machine is likely to suffer from a firmware bug, which makes it "
@@ -10275,7 +10290,6 @@ msgstr "Configurar e montar partições"
 #~ "seja impossível ao SILO (Sparc Linux Loader) arrancar um kernel colocado "
 #~ "além de 1 GB a partir do inicio do disco."
 
-#, fuzzy
 #~ msgid ""
 #~ "To avoid problems it is strongly recommended to install the kernel into a "
 #~ "partition which fits entirely within the first GB of the disk (by "
@@ -10285,16 +10299,14 @@ msgstr "Configurar e montar partições"
 #~ "Keeping this configuration may result in an unbootable system."
 #~ msgstr ""
 #~ "Para evitar problemas é fortemente recomendado instalar o kernel para "
-#~ "uma\n"
-#~ " partição que caiba totalmente no primeiro GB do disco (por exemplo \n"
-#~ " criando uma pequena partição /boot no inicio do disco). No actual\n"
-#~ " esquema de particionamento irá ser instalado na partição ${SILO_PART}\n"
-#~ " que se estende até à marca ${SILO_OFF}. Manter esta configuração pode\n"
-#~ " resultar não sistema não arranca."
+#~ "umapartição que caiba totalmente no primeiro GB do disco (por exemplo "
+#~ "criando uma pequena partição /boot no inicio do disco). No actual esquema "
+#~ "de particionamento irá ser instalado na partição ${SILO_PART} que se "
+#~ "estende até à marca ${SILO_OFF}. Manter esta configuração pode resultar "
+#~ "não sistema não arranca."
 
-#, fuzzy
 #~ msgid "Unsupported partition table on the boot disk"
-#~ msgstr "Aviso: tabela de partições não suportada no disco de arranque!"
+#~ msgstr "Tabela de partições não suportada no disco de arranque"
 
 #~ msgid ""
 #~ "SILO (Sparc Linux Loader) can only boot the kernel off a disk with the "
@@ -10498,6 +10510,51 @@ msgstr "Configurar e montar partições"
 #~ msgid "Saving time zone..."
 #~ msgstr "A guardar o fuso horário..."
 
+#, fuzzy
+#~ msgid ""
+#~ "Some variables need to be set in the Pegasos OpenFirmware in order for "
+#~ "your system to boot linux automatically.  At the end of the installation, "
+#~ "the system will reboot.  At the Pegasos OpenFirmware prompt, set the "
+#~ "following OpenFirmware variables to enable auto-booting:"
+#~ msgstr ""
+#~ "Algumas variáveis necessitam ser definidas no Pegasos OpenFirmware de "
+#~ "modo a que o seu sistema Debian arranque automaticamente.  No fim da "
+#~ "instalação, o sistema irá reiniciar.  Na linha de comandos do Pegasos "
+#~ "OpenFirmware, defina as seguintes variáveis do OpenFirmware para "
+#~ "habilitar o arranque automático:"
+
+#, fuzzy
+#~ msgid ""
+#~ "Some variables need to be set in the Netwinder NeTTrom firmware in order "
+#~ "for your system to boot linux automatically.  At the end of this "
+#~ "installation stage, the system will reboot, and the firmware will attempt "
+#~ "to autoboot.  You can abort this by pressing any key. You will then be "
+#~ "dropped into the NeTTrom command system where you have to execute the "
+#~ "following commands:"
+#~ msgstr ""
+#~ "Algumas variáveis necessitam ser definidas no firmware Netwinder NeTTrom "
+#~ "de modo que o seu sistema Debian arranque automaticamente.  No fim desta "
+#~ "etapa de instalação, o sistema vai reiniciar, e o firmware vai tentar "
+#~ "iniciar automaticamente.  Pode abortar pressionando qualquer tecla. Irá "
+#~ "então para o sistema de comandos NeTTrom onde tem de executar os "
+#~ "seguintes comandos:"
+
+#, fuzzy
+#~ msgid ""
+#~ "You will only need to do this once.  Afterwards, enter the \"boot\" "
+#~ "command or reboot the system to proceed to the next installation stage."
+#~ msgstr ""
+#~ "Só necessita fazer isto uma vez.  Depois, introduza o comando \"boot\" ou "
+#~ "reinicie o sistema para proceder à próxima etapa de instalação de Debian."
+
+#, fuzzy
+#~ msgid ""
+#~ "You will need to boot manually with the ${KERNEL} kernel on partition "
+#~ "${BOOT} and ${ROOT} passed as a kernel argument."
+#~ msgstr ""
+#~ "Vai necessitar iniciar manualmente com o kernel ${KERNEL} na partição "
+#~ "${BOOT} e ${ROOT} passados como argumentos do kernel."
+
 #~ msgid ""
 #~ "Your root file system is a JFS file system. This can cause problems with "
 #~ "the boot loader used by default by this installer."
@@ -10597,159 +10654,335 @@ msgstr "Configurar e montar partições"
 #~ msgid "The PowerPC PReP boot partition must be in the first 8MB."
 #~ msgstr "A partição de arranque PowerPC PReP tem de estar nos primeiros 8MB."
 
-#, fuzzy
 #~ msgid "physical volume for encryption"
-#~ msgstr "volume físico para LVM"
+#~ msgstr "volume físico para encriptação"
 
-#, fuzzy
+#~ msgid "crypto"
+#~ msgstr "encriptação"
+
+#~ msgid "not active"
+#~ msgstr "não activa"
+
+#~ msgid "Encryption type:"
+#~ msgstr "Tipo de encriptação:"
+
 #~ msgid "Encryption type for this partition:"
-#~ msgstr "Mount point para esta partição:"
+#~ msgstr "Tipo de encriptação para esta partição:"
 
-#, fuzzy
+#~ msgid "Encryption:"
+#~ msgstr "Encriptação:"
+
 #~ msgid "Encryption for this partition:"
-#~ msgstr "Mount point para esta partição:"
+#~ msgstr "Encriptação para esta partição:"
 
-#, fuzzy
+#~ msgid "Key size:"
+#~ msgstr "Tamanho da chave:"
+
 #~ msgid "Key size for this partition:"
-#~ msgstr "Sistema de ficheiros para esta partição:"
+#~ msgstr "Tamanho da chave para esta partição:"
 
-#, fuzzy
+#~ msgid "Encryption key:"
+#~ msgstr "Chave de encriptação:"
+
 #~ msgid "Type of encryption key for this partition:"
-#~ msgstr "Sistema de ficheiros para esta partição:"
+#~ msgstr "Tipo de chave de encriptação para esta partição:"
 
-#, fuzzy
 #~ msgid "Setting up encryption..."
-#~ msgstr "A definir o frame buffer..."
+#~ msgstr "A configurar a encriptação..."
 
-#, fuzzy
 #~ msgid "Configure encrypted volumes"
-#~ msgstr "Configurar fuso horário"
+#~ msgstr "Configurar volumes encriptados"
 
-#, fuzzy
 #~ msgid "No partitions to encrypt"
-#~ msgstr "Não foi encontrada nenhuma partição"
+#~ msgstr "Nenhuma partição para encriptar"
 
-#, fuzzy
 #~ msgid "No partitions have been selected for encryption."
-#~ msgstr "Não foi seleccionado nenhum pacote de kernel para a instalação."
+#~ msgstr "Não foi seleccionada nenhuma partição para encriptação."
 
-#, fuzzy
+#~ msgid "Required programs missing"
+#~ msgstr "Faltam programas necessários"
+
+#~ msgid ""
+#~ "This build of debian-installer does not include one or more programs that "
+#~ "are required for partman-crypt to function correctly."
+#~ msgstr ""
+#~ "Esta compilação do debian-installer não incluí um ou mais programas que "
+#~ "são necessários para o partman-crypt funcionar correctamente."
+
+#~ msgid "Required encryption options missing"
+#~ msgstr "Faltam opções necessárias para a encriptação"
+
+#~ msgid ""
+#~ "The encryption options for ${DEVICE} are incomplete. Please return to the "
+#~ "partition menu and select all required options."
+#~ msgstr ""
+#~ "Estão incompletas as opções de encriptação para o dispositivo ${DEVICE}. "
+#~ "Por favor volte ao menu de particionamento e seleccione as opções "
+#~ "necessárias."
+
 #~ msgid "Encryption package installation failure"
-#~ msgstr "A instalação do ELILO falhou"
+#~ msgstr "Falha da  instalação de pacote de encriptação"
 
-#, fuzzy
+#~ msgid ""
+#~ "The kernel module package ${PACKAGE} could not be found or an error "
+#~ "occurred during installation."
+#~ msgstr ""
+#~ "O pacote do módulo do kernel ${PACKAGE} não pode ser encontrado ou "
+#~ "ocorreu um erro durante a instalação."
+
+#~ msgid ""
+#~ "There will likely be problems during boot when the systems tries to setup "
+#~ "encrypted partitions. You can still correct them by installing the "
+#~ "required package later on."
+#~ msgstr ""
+#~ "Provavelmente irão existir problemas durante o arranque quando o sistema "
+#~ "tentar configurar as partições encriptadas. Você pode mesmo assim corrigi-"
+#~ "los instalando depois o pacote necessário."
+
 #~ msgid "Write the changes to disks and configure encrypted volumes?"
-#~ msgstr "Escrever as alterações nos discos e configurar o LVM?"
+#~ msgstr ""
+#~ "Escrever as alterações nos discos e configurar os volumes encriptados?"
 
-#, fuzzy
 #~ msgid ""
 #~ "Before encrypted volumes can be configured, the current partitioning "
 #~ "scheme has to be written to disk.  These changes cannot be undone."
 #~ msgstr ""
-#~ "Antes que o Gestor de Volumes Lógicos possa ser configurado, o esquema "
-#~ "actual de partições necessita de ser escrito no disco. Estas alterações "
-#~ "não podem ser desfeitas."
+#~ "Antes dos volumes encriptados poderem ser configurados, o actual esquema "
+#~ "de particionamento tem de ser escrito para o disco. Essas alterações não "
+#~ "podem ser desfeitas."
 
-#, fuzzy
 #~ msgid ""
 #~ "After encrypted volumes have been configured, no additional changes to "
 #~ "the partitions in the discs containing encrypted volumes are allowed. "
 #~ "Please decide if you are satisfied with the current partitioning scheme "
 #~ "in these disks before continuing."
 #~ msgstr ""
-#~ "Após o Gestor de Volumes Lógicos ser configurado, nenhuma alteração "
-#~ "adicional nas partições dos discos que contêm os volumes físicos será "
-#~ "permitida. Por favor, certifique-se que está satisfeito com o esquema "
-#~ "actual de particionamento nesses discos antes de continuar."
+#~ "Após os volumes encriptados terem sido configurados, não será permitida "
+#~ "nenhuma alteração adicional nas partições dos discos que contêm os "
+#~ "volumes encriptados. Por favor decida se está satisfeito com o actual "
+#~ "esquema de particionamento nesses discos antes de continuar."
 
-#, fuzzy
 #~ msgid "Keep current partition layout and configure encrypted volumes?"
-#~ msgstr "Manter o layout das partições actual e configurar o LVM?"
+#~ msgstr ""
+#~ "Manter o esquema de partições actual e configurar volumes encriptados?"
 
-#, fuzzy
 #~ msgid ""
-#~ "After the encrypted volumes after configured, no additional changes to "
-#~ "the partitions in the disks containing encrypted volumes are allowed. "
+#~ "After the encrypted volumes have been configured, no additional changes "
+#~ "to the partitions in the disks containing encrypted volumes are allowed. "
 #~ "Please decide if you are satisfied with the current partitioning scheme "
 #~ "in these disks before continuing."
 #~ msgstr ""
-#~ "Após o Gestor de Volumes Lógicos ser configurado, nenhuma alteração "
-#~ "adicional nas partições dos discos que contêm os volumes físicos será "
-#~ "permitida. Por favor, certifique-se que está satisfeito com o esquema "
+#~ "Após terem sido configurados os volumes encriptados, não será permitida "
+#~ "nenhuma alteração adicional nas partições dos discos que contêm os "
+#~ "volumes encriptados. Por favor decida se está satisfeito com o esquema "
 #~ "actual de particionamento nesses discos antes de continuar."
 
-#, fuzzy
 #~ msgid "Encrypted volumes configuration failure"
-#~ msgstr "A configuração do LVM falhou"
+#~ msgstr "Falha da configuração de volumes encriptados"
 
-#, fuzzy
 #~ msgid "An error occurred while configuring encrypted volumes."
-#~ msgstr "Ocorreu um erro durante a escrita das alterações nos discos."
+#~ msgstr "Ocorreu um erro ao configurar os volumes encriptados."
 
-#, fuzzy
 #~ msgid "The configuration is aborted."
-#~ msgstr "A configuração do RAID está abortada."
+#~ msgstr "A configuração está abortada."
 
-#, fuzzy
 #~ msgid "Encrypted volume initialisation failed"
-#~ msgstr "A instalação do ELILO falhou"
+#~ msgstr "Falhou a inicialização do volume encriptado"
 
-#, fuzzy
 #~ msgid "An error occurred while setting up encrypted volumes."
-#~ msgstr "Ocorreu um erro durante a escrita das alterações nos discos."
+#~ msgstr "Ocorreu um erro ao configurar os volumes encriptados."
 
-#, fuzzy
 #~ msgid "Loopback (loop-AES)"
-#~ msgstr "Loopback (loop%s)"
+#~ msgstr "Loopback (loop-AES)"
 
-#, fuzzy
+#~ msgid "Device-mapper (dm-crypt)"
+#~ msgstr "Device-mapper (dm-crypt)"
+
+#~ msgid "Device-mapper (LUKS)"
+#~ msgstr "Device-mapper (LUKS)"
+
+#~ msgid "Passphrase"
+#~ msgstr "Frase chave"
+
+#~ msgid "Keyfile (GnuPG)"
+#~ msgstr "Ficheiro de chave (GnuPG)"
+
+#~ msgid "Random key"
+#~ msgstr "Chave aleatória"
+
+#~ msgid "Unsafe swap space detected"
+#~ msgstr "Detectado espaço swap não seguro"
+
+#~ msgid "An unsafe swap space has been detected."
+#~ msgstr "Foi detectado um espaço swap não seguro."
+
+#~ msgid ""
+#~ "This is a fatal error since sensitive data could be written out to disk "
+#~ "unencrypted. This would allow someone with access to the disk to recover "
+#~ "parts of the encryption key or passphrase."
+#~ msgstr ""
+#~ "Este é um erro fatal já que dados sensíveis podem ser escritos para um "
+#~ "disco não encriptado. Isto pode permitir a alguém com acesso ao disco "
+#~ "recuperar partes da chave de encriptação ou da frase chave."
+
+#~ msgid ""
+#~ "Please disable the swap space (eg. by running swapoff) or configure an "
+#~ "encrypted swap space and then run setup of encrypted volumes again. This "
+#~ "program will now abort."
+#~ msgstr ""
+#~ "Por favor desabilite o espaço swap (p.e. executar swapoff) ou configure "
+#~ "um espaço swap encriptado e depois corra novamente a configuração de "
+#~ "volumes encriptados. Este programa irá agora abortar."
+
+#~ msgid "Encryption passphrase:"
+#~ msgstr "Frase chave de encriptação:"
+
+#~ msgid "You need to choose a passphrase to encrypt ${DEVICE}."
+#~ msgstr "Você necessita escolher uma frase chave para encriptar ${DEVICE}."
+
 #~ msgid ""
 #~ "The overall strength of the encryption depends strongly on this "
 #~ "passphrase, so you should take care to choose a passphrase that is not "
 #~ "easy to guess. It should not be a word or sentence found in dictionaries, "
 #~ "or a phrase that could be easily associated with you."
 #~ msgstr ""
-#~ "Necessita definir uma password para acesso remoto ao instalador de "
-#~ "Debian. Um utilizador mal intencionado ou não qualificado com acesso ao "
-#~ "instalador pode provocar resultados desastrosos, por isso deve tomar o "
-#~ "cuidado de escolher uma password que não seja fácil de adivinhar. Não "
-#~ "deve ser uma palavra que possa ser encontrada num dicionário, ou uma "
-#~ "palavra que possa ser facilmente associada consigo, como por exemplo o "
-#~ "seu nome do meio."
+#~ "O poder total da encriptação depende fortemente desta frase chave, por "
+#~ "isso deve tomar o cuidado de escolher uma frase chave que não seja fácil "
+#~ "de adivinhar. Não deve ser uma palavra ou frase que possa ser encontrada "
+#~ "em dicionários, ou uma frase que possa facilmente ser associada consigo."
 
-#, fuzzy
+#~ msgid ""
+#~ "A good passphrase will contain a mixture of letters, numbers and "
+#~ "punctuation. Passphrases are recommended to have a length of 20 or more "
+#~ "characters."
+#~ msgstr ""
+#~ "uma boa frase chave irá conter uma mistura de letras, números e de "
+#~ "pontuação. É recomendado que as frases chave tenham um comprimento de 20 "
+#~ "ou mais caracteres."
+
+#~ msgid "Re-enter passphrase to verify:"
+#~ msgstr "Re-introduza a frase chave para verificar:"
+
 #~ msgid ""
 #~ "Please enter the same passphrase again to verify that you have typed it "
 #~ "correctly."
 #~ msgstr ""
-#~ "Por favor introduza a mesma password de instalação remota novamente para "
-#~ "verificar que a escreveu correctamente."
+#~ "Por favor introduza a mesma frase chave para verificar que você a "
+#~ "escreveu correctamente."
 
-#, fuzzy
+#~ msgid "Passphrase input error"
+#~ msgstr "Erro de entrada da frase chave"
+
 #~ msgid "The two passphrases you entered were not the same. Please try again."
 #~ msgstr ""
-#~ "As duas password que introduziu não são as mesmas. Por favor introduza "
-#~ "novamente uma password."
+#~ "As duas frases chave que você introduziu não são as mesmas. Por favor "
+#~ "tente novamente."
 
-#, fuzzy
+#~ msgid "Empty passphrase"
+#~ msgstr "Frase chave vazia"
+
+#~ msgid ""
+#~ "You entered an empty passphrase, which is not allowed. Please choose a "
+#~ "non-empty passphrase."
+#~ msgstr ""
+#~ "Você introduziu uma frase chave vazia, o que não é permitido. Por favor "
+#~ "escolha uma frase chave que não seja vazia."
+
+#~ msgid "Use weak passphrase?"
+#~ msgstr "Utilizar uma frase chave fraca?"
+
+#~ msgid ""
+#~ "You entered a passphrase that consists of less than ${MINIMUM} "
+#~ "characters, which is considered too weak. You should choose a stronger "
+#~ "passphrase."
+#~ msgstr ""
+#~ "Você introduziu uma frase chave que consiste em menos de ${MINIMUN} "
+#~ "caracteres, o que é considerado demasiado débil. Você deve escolher uma "
+#~ "frase chave mais forte."
+
 #~ msgid "Enter random characters to continue"
-#~ msgstr "[Pressione enter para continuar]"
+#~ msgstr "Introduza caracteres aleatórios para continuar"
 
-#, fuzzy
+#~ msgid "The encryption key for ${DEVICE} is now being created. (${PROGRESS})"
+#~ msgstr ""
+#~ "Está a ser criada a chave de encriptação para ${DEVICE}. (${PROGRESS})"
+
+#~ msgid ""
+#~ "You can help speed up the process by entering random data on the keyboard "
+#~ "to fill the randomness pool and continuing once in a while. This dialog "
+#~ "will recur until enough keydata has been collected."
+#~ msgstr ""
+#~ "Você pode ajudar a acelerar o processo introduzindo dados aleatórios no "
+#~ "teclado para preencher a zona aleatória e continuar daqui a um pouco. "
+#~ "Este diálogo irá voltar a aparecer até terem sido colhidos dados chave "
+#~ "uficientes."
+
+#~ msgid "Enter random characters"
+#~ msgstr "Introduzir caracteres aleatórios"
+
+#~ msgid "The encryption key for ${DEVICE} is now being created."
+#~ msgstr "A chave de encriptação para ${DEVICE} está agora a ser criada."
+
+#~ msgid ""
+#~ "This process requires the system to have large amounts of collected "
+#~ "randomness (\"entropy\"), of which there is likely too little at this "
+#~ "stage of the installation."
+#~ msgstr ""
+#~ "Este processo requer que o sistema tenha coleccionado uma grande "
+#~ "quantidade de aleatório (\"entropia\"), da qual parece existir muito "
+#~ "pouco nesta etapa da instalação."
+
+#~ msgid ""
+#~ "You can help speed up the process by entering random characters on the "
+#~ "keyboard, or just wait until enough keydata has been collected. (NOTE: "
+#~ "this can take a long time)"
+#~ msgstr ""
+#~ "Você pode acelerar o processo introduzindo no teclado caracteres "
+#~ "aleatórios, ou apenas esperar até ter sido coleccionado dados "
+#~ "suficientes. (NOTA: isto pode demorar muito tempo)"
+
 #~ msgid "Keyfile creation failure"
-#~ msgstr "Falha na operação de redimensionamento"
+#~ msgstr "Falha na criação do ficheiro da chave"
 
-#, fuzzy
 #~ msgid "An error occurred while creating the keyfile."
-#~ msgstr "Ocorreu um erro durante a escrita das alterações nos discos."
+#~ msgstr "Ocorreu um erro ao criar o ficheiro da chave."
 
-#, fuzzy
 #~ msgid "Encryption configuration failure"
-#~ msgstr "A configuração do LVM falhou"
+#~ msgstr "Falha da configuração de encriptação"
 
-#, fuzzy
+#~ msgid ""
+#~ "You have selected the root filesystem to be stored on an encrypted "
+#~ "partition. This feature is not available and continuing now would result "
+#~ "in an installation that cannot be used."
+#~ msgstr ""
+#~ "Você seleccionou o sistema de ficheiros raiz para ser guardado numa "
+#~ "partição encriptada. Esta funcionalidade não está disponível e continuar "
+#~ "agora iria resultar numa instalação que não pode ser utilizada."
+
+#~ msgid ""
+#~ "Please go back and choose a non-encrypted partition for the root "
+#~ "filesystem."
+#~ msgstr ""
+#~ "Por favor volte atrás e escolha uma partição não encriptada para o "
+#~ "sistema de ficheiros raiz."
+
 #~ msgid "Are you sure you want to use a random key?"
-#~ msgstr "Tem a certeza que quer terminar agora?"
+#~ msgstr "Tem a certeza que quer utilizar uma chave aleatória?"
+
+#~ msgid ""
+#~ "You have chosen a random key type for ${DEVICE} but requested the "
+#~ "partitioner to create a filesystem on it."
+#~ msgstr ""
+#~ "Você escolheu um tipo de chave aleatória para ${DEVICE} mas pediu ao "
+#~ "particionador para criar lá um sistema de ficheiros."
+
+#~ msgid ""
+#~ "Using a random key type means that the partition data is going to be "
+#~ "destroyed upon each reboot. This should only be used for swap partitions."
+#~ msgstr ""
+#~ "Utilizar um tipo de chave aleatória significa que os dados da partição "
+#~ "vão ser destruídos a cada reboot. Isto só deve ser utilizado para "
+#~ "partições swap."
 
 #~ msgid "Configure the clock"
 #~ msgstr "Configurar o relógio"
@@ -11311,6 +11544,18 @@ msgstr "Configurar e montar partições"
 
 #~ msgid "Saving installation logs to /var/log/installer/..."
 #~ msgstr "A gravar os logs da instalação em /var/log/installer/..."
+
+#, fuzzy
+#~ msgid ""
+#~ "After the encrypted volumes after configured, no additional changes to "
+#~ "the partitions in the disks containing encrypted volumes are allowed. "
+#~ "Please decide if you are satisfied with the current partitioning scheme "
+#~ "in these disks before continuing."
+#~ msgstr ""
+#~ "Após o Gestor de Volumes Lógicos ser configurado, nenhuma alteração "
+#~ "adicional nas partições dos discos que contêm os volumes físicos será "
+#~ "permitida. Por favor, certifique-se que está satisfeito com o esquema "
+#~ "actual de particionamento nesses discos antes de continuar."
 
 #~ msgid ""
 #~ "An error was returned while trying to install the initrd-tools package "
