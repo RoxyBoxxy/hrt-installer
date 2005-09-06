@@ -54,7 +54,13 @@ for lang in $languages; do
     done
 done
 
-PRESEED="../en/appendix/example-preseed.xml"
+if [ "$manual_release" = "etch" ] ; then
+    PRESEED="../en/appendix/example-preseed-etch.xml"
+    LCKEEP="-v lckeep=1"
+else
+    PRESEED="../en/appendix/example-preseed-sarge.xml"
+    LCKEEP=""
+fi
 if [ -f $PRESEED ] && [ -f preseed.awk ] ; then
-    gawk -f preseed.awk $PRESEED >$destination/example-preseed.txt
+    gawk -f preseed.awk $LCKEEP $PRESEED >$destination/example-preseed.txt
 fi

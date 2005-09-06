@@ -496,9 +496,6 @@
 <!-- Start of file using-d-i/modules/s390/netdevice.xml -->
 <!--   End of file using-d-i/modules/s390/netdevice.xml -->
 
-<!-- Start of file using-d-i/modules/s390/dasd.xml -->
-<!--   End of file using-d-i/modules/s390/dasd.xml -->
-
 <!-- Start of file using-d-i/modules/ddetect.xml -->
 <!--   End of file using-d-i/modules/ddetect.xml -->
 
@@ -626,6 +623,9 @@
 >Αυτή τη στιγμή, αφού έχει γίνει η ανίχνευση υλικού για τελευταία φορά, o &d-i; πρέπει να είναι πανέτοιμος, προσαρμοσμένος στις ανάγκες του χρήστη και έτοιμος για σοβαρή δουλειά. Όπως δείχνει και ο τίτλος αυτού του τμήματος, το κύριο καθήκον κάποιων από τα επόμενα συστατικά είναι η κατάτμηση των δίσκων, η δημιουργία συστημάτων αρχείων, ο ορισμός σημείων προσάρτησης και προαιρετικά η ρύθμιση θεμάτων που σχετίζονται πολύ μεταξύ τους όπως οι συσκευές LVM ή του RAID. </para>
 
 
+<!-- Start of file using-d-i/modules/s390/dasd.xml -->
+<!--   End of file using-d-i/modules/s390/dasd.xml -->
+
 <!-- Start of file using-d-i/modules/partman.xml -->
 
    <sect3 id="partman">
@@ -709,8 +709,9 @@
 ><para
 >Μετά την επιλογή σχήματος, η επόμενη οθόνη θα σας δείξει το νέο πίνακα τμημάτων, η οποία περιέχει και πληροφορίες για το εάν και με ποιο τρόπο θα διαμορφωθούν και που θα προσαρτηθούν. </para
 ><para
->Η λίστα των τμημάτων μπορεί να μοιάζει σαν την παρακάτω: <informalexample
-><screen>
+>The list of partitions might look like this: <informalexample
+><screen
+>
   IDE1 master (hda) - 6.4 GB WDC AC36400L
         #1 primary   16.4 MB     ext2       /boot
         #2 primary  551.0 MB     swap       swap
@@ -723,12 +724,12 @@
         #3 primary    3.9 GB     xfs        /home
         #5 logical    6.0 GB     ext3       /
         #6 logical    1.0 GB     ext3       /var
-        #7 logical  498.8 GB     ext3
-        #8 logical  551.5 GB     swap       swap
+        #7 logical  498.8 MB     ext3
+        #8 logical  551.5 MB     swap       swap
         #9 logical   65.8 GB     ext2
 </screen
 ></informalexample
-> Αυτό το παράδειγμα δείχνει δυο IDE σκληρούς δίσκους που είναι χωρισμένοι σε μερικά τμήματα. Ο πρώτος δίσκος έχει κάποιο ελεύθερο χώρο. Κάθε γραμμή που αναφέρεται σ' ένα τμήμα περιλαμβάνει τον αριθμό τμήματος, τον τύπο του, το μέγεθός του, προαιρετικές επιλογές, το σύστημα αρχείων, και το σημείο προσάρτησης (εάν υπάρχει). </para
+> This example shows two IDE harddrives divided into several partitions; the first disk has some free space. Each partition line consists of the partition number, its type, size, optional flags, file system, and mountpoint (if any). </para
 ><para
 >Εδώ ολοκληρώνεται ο οδηγός κατάτμησης. Εάν είστε ικανοποιημένοι με τον δημιουργημένο πίνακα τμημάτων, τότε για να υλοποιηθεί ο νέος πίνακας τμημάτων (όπως περιγράφεται στο τέλος αυτού του τμήματος), μπορείτε να επιλέξετε από το μενού την επιλογή <guimenuitem
 >Ολοκλήρωση κατάτμησης και αποθήκευση των αλλαγών στο δίσκο</guimenuitem
@@ -836,7 +837,7 @@
 >Τροποποίηση των ομάδων τόμων (VG)</guimenuitem
 > συνδυάστε φυσικούς τόμους με ομάδα ή ομάδες τομών. Μετά απ’αυτό, μέσω του μενού <guimenuitem
 >Τροποποίηση των ομάδων τόμων (VG)</guimenuitem
->, θα πρέπει να δημιουργήσετε λογικούς τόμους στην αρχή των ομάδων τομών. <note arch="powerpc"
+>, θα πρέπει να δημιουργήσετε λογικούς τόμους στην αρχή των ομάδων τομών. <note arch="powerpc" condition="sarge"
 ><para
 >Όσον αφορά το υλικό των Apple Power Macintosh, δεν υπάρχει κανένα ευρέως αποδεκτό πρότυπο για τον προσδιορισμό της ταυτότητας των τμημάτων που περιέχουν δεδομένα LVM. Σ’αυτό το συγκεκριμένο υλικό, δεν θα μπορέσει να λειτουργήσει η παραπάνω διαδικασία δημιουργίας φυσικών τόμων. Έχει γίνει καλή δουλιά για την αντιμετώπιση αυτού του περιορισμού, με την προυπόθεση φυσικά ότι είστε εξοικειωμένοι με τα βασικά εργαλεία του LVM. </para
 ><para
@@ -998,7 +999,12 @@
 ><para
 >Εάν θέλετε πραγματικά να γνωρίσετε όλα τα σχετικά με το Λογισμικό RAID, ρίξτε μια ματιά στην ιστοσελίδα <ulink url="&url-software-raid-howto;"
 >Software RAID HOWTO</ulink
->. </para
+>. <note arch="powerpc" condition="sarge"
+><para
+>There is no widely accepted standard to identify partitions containing RAID data on Apple Power Macintosh hardware. This means that &d-i; currently does not support setting up RAID on this platform. </para
+></note>
+
+</para
 ><para
 >Για να δημιουργήσετε μια συσκευή MD, απαιτούνται τα τμηματα από τα οποία επιθυμείτε να αποτελείται, σημειωμένα για χρήση σε συστοιχία RAID. (Αυτό επιτυγχάνεται με το <command
 >προγραμμα κατάτμησης</command
@@ -1848,6 +1854,72 @@
    </sect3>
 <!--   End of file using-d-i/modules/shell.xml -->
 
+<!-- Start of file using-d-i/modules/network-console.xml -->
+
+   <sect3 id="network-console">
+   <title
+>Installation Over the Network</title>
+
+<para arch="not-s390"
+>One of the more interesting components is <firstterm
+>network-console</firstterm
+>. It allows you to do a large part of the installation over the network via SSH. The use of the network implies you will have to perform the first steps of the installation from the console, at least to the point of setting up the networking. (Although you can automate that part with <xref linkend="automatic-install"/>.) </para
+><para arch="not-s390"
+>This component is not loaded into the main installation menu by default, so you have to explicitly ask for it. If you are installing from CD, you need to boot with medium priority or otherwise invoke the main installation menu and choose <guimenuitem
+>Load installer components from CD</guimenuitem
+> and from the list of additional components select <guimenuitem
+>network-console: Continue installation remotely using SSH</guimenuitem
+>. Successful load is indicated by a new menu entry called <guimenuitem
+>Continue installation remotely using SSH</guimenuitem
+>. </para
+><para arch="s390"
+>For installations on &arch-title;, this is the default method after setting up the network. </para
+><para
+><phrase arch="not-s390"
+>After selecting this new entry, you</phrase
+> <phrase arch="s390"
+>You</phrase
+> will be asked for a new password to be used for connecting to the installation system and for its confirmation. That's all. Now you should see a screen which instructs you to login remotely as the user <emphasis
+>installer</emphasis
+> with the password you just provided. Another important detail to notice on this screen is the fingerprint of this system. You need to transfer the fingerprint securely to the <quote
+>person who will continue the installation remotely</quote
+>. </para
+><para
+>Should you decide to continue with the installation locally, you can always press &enterkey;, which will bring you back to the main menu, where you can select another component. </para
+><para
+>Now let's switch to the other side of the wire. As a prerequisite, you need to configure your terminal for UTF-8 encoding, because that is what the installation system uses. If you do not, remote installation will be still possible, but you may encounter strange display artefacts like destroyed dialog borders or unreadable non-ascii characters. Establishing a connection with the installation system is as simple as typing: <informalexample
+><screen
+>
+<prompt>$</prompt> <userinput>ssh -l installer <replaceable>install_host</replaceable></userinput>
+</screen
+></informalexample
+> Where <replaceable
+>install_host</replaceable
+> is either the name or IP address of the computer being installed. Before the actual login the fingerprint of the remote system will be displayed and you will have to confirm that it is correct. </para
+><note
+><para
+>If you install several computers in turn and they happen to have the same IP address or hostname, <command
+>ssh</command
+> will refuse to connect to such host. The reason is that it will have different fingerprint, which is usually a sign of a spoofing attack. If you are sure this is not the case, you will need to delete the relevant line from <filename
+>~/.ssh/known_hosts</filename
+> and try again. </para
+></note
+><para
+>After the login you will be presented with an initial screen where you have two possibilities called <guimenuitem
+>Start menu</guimenuitem
+> and <guimenuitem
+>Start shell</guimenuitem
+>. The former brings you to the main installer menu, where you can continue with the installation as usual. The latter starts a shell from which you can examine and possibly fix the the remote system. You should only start one SSH session for the installation menu, but may start multiple sessions for shells. </para
+><warning
+><para
+>After you have started the installation remotely over SSH, you should not go back to the installation session running on the local console. Doing so may corrupt the database that holds the configuration of the new system. This in turn may result in a failed installation or problems with the installed system. </para
+><para
+>Also, if you are running the SSH session from an X terminal, you should not resize the window as that will result in the connection being terminated. </para
+></warning>
+
+   </sect3>
+<!--   End of file using-d-i/modules/network-console.xml -->
+
 <!-- Start of file using-d-i/modules/baseconfig.xml -->
 
    <sect3 id="baseconfig">
@@ -1857,11 +1929,11 @@
 > Μέσα Από τον &d-i;</title>
 
 <para
->Είναι δυνατόν να ρυθμίσετε το βασικό σύστημα στη διάρκεια του πρώτου σταδίου της εγκατάστασης ( πριν την εκκίνηση από τον σκληρό δίσκο), εκτελώντας την εντολή <command
+>It is possible to configure the base system within the first stage installer (before rebooting from the hard drive), by running <command
 >base-config</command
-> σε περιβάλλον <firstterm
+> in a <firstterm
 >chroot</firstterm
->. Αυτό είναι χρήσιμο κυρίως για έλεγχο του εγκαταστάτη και η μεγάλη πλειοψηφία θα αποφύγει το κάνει. </para>
+> environment. This is mainly useful for testing the installer and should normally be avoided. </para>
    </sect3>
 <!--   End of file using-d-i/modules/baseconfig.xml -->
   </sect2>

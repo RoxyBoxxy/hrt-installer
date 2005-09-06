@@ -1456,10 +1456,12 @@ host mcmuffin {
 
 <para
 >Μερικές υπο-αρχιτεκτονικές της &arch-title; έχουν την επιλογή της εκκίνησης χρησιμοποιώντας είτε έναν πυρήνα 2.4.x είτε έναν 2.2.x. Όταν έχετε μια τέτοια δυνατότητα δοκιμάστε τον πυρήνα 2.4.x. O εγκαταστάτης επιπλέον απαιτεί λιγότερη μνήμη όταν χρησιμοποιεί τον πυρήνα 2.4.x καθώς η υποστήριξη του πυρήνα 2.2.x απαιτεί μια σταθερού μεγέθους ramdisk ενώ ο πυρήνας 2.4.x χρησιμοποιεί tmpfs. </para
-><para
->Αν χρησιμοποιείτε έναν πυρήνα 2.2.x, τότε σιγουρευτείτε ότι χρησιμοποιείτε μια ramdisk ικανή να ''φιλοξενήσει'' αυτόν τον πυρήνα, δείτε την ενότητα <ulink url="&disturl;/main/installer-&architecture;/current/images/MANIFEST"
+><para condition="etch"
+>If you are using a 2.2.x linux kernel, then you need to use the &ramdisksize; kernel parameter. </para
+> <para condition="sarge"
+>Also, if you are using a 2.2.x linux kernel, then you must make sure you are using a ramdisk built to accommodate it, see the <ulink url="&disturl;/main/installer-&architecture;/current/images/MANIFEST"
 >MANIFEST</ulink
->. Θα πρέπει ακόμα να χρησιμοποιήσετε την παράμετρο &ramdisksize; του πυρήνα. </para
+>. In general, this means you need to use the initrd22.gz ramdisk from the respective directory. </para
 ><para
 >Βεβαιωθείτε ότι η <userinput
 >root=/dev/ram</userinput
@@ -1497,7 +1499,7 @@ host mcmuffin {
 </itemizedlist>
 
 
-    <sect3 arch="m68k" id="m68k-boot-amiga"
+    <sect3 id="m68k-boot-amiga"
 ><title
 >Amiga</title>
 <para
@@ -1510,7 +1512,7 @@ host mcmuffin {
 > για τον πυρήνα. </para>
     </sect3>
 
-    <sect3 arch="m68k" id="m68k-boot-atari"
+    <sect3 id="m68k-boot-atari"
 ><title
 >Atari </title>
 <para
@@ -1523,14 +1525,14 @@ host mcmuffin {
 > για τον πυρήνα. </para>
     </sect3>
 
-    <sect3 arch="m68k" id="m68k-boot-bvme6000"
+    <sect3 id="m68k-boot-bvme6000"
 ><title
 >BVME6000 </title>
 <para
 >Ο εγκαταστάτης για BVME6000 μπορεί να ξεκινήσει είτε από ένα cdrom (δείτε <xref linkend="m68k-boot-cdrom"/>), είτε από δισκέττες (δείτε <xref linkend="boot-from-floppies"/>), είτε από το δίκτυο (δείτε <xref linkend="boot-tftp"/>). </para>
     </sect3>
 
-    <sect3 arch="m68k" id="m68k-boot-mac"
+    <sect3 id="m68k-boot-mac"
 ><title
 >Macintosh </title>
 <para
@@ -1538,14 +1540,16 @@ host mcmuffin {
 >Με άλλα λόγια το cdrom δεν είναι εκκινήσιμο.</emphasis
 > Για τους Mac δεν υπάρχει κάποιος πυρήνας 2.4.x που να δουλεύει. </para
 ><para
->Εάν το υλικό σας χρησιμοποιεί scsi δίαυλο βασισμένο στο 53c9x, τότε πρέπει να συμπεριλάβετε την παράμετρο πυρήνα <userinput
->mac53c9x=1</userinput
->. Υλικό με δυο τέτοιους διαύλους scsi, όπως στο Quadra 950, θα χρειαστεί αντί της προηγουμένης παραμέτρου την <userinput
->mac53c9x=2</userinput
->. </para>
+>If your hardware uses a 53c9x-based scsi bus, then you may need to include the kernel parameter <userinput
+>mac53c9x=1,0</userinput
+>. Hardware with two such scsi buses, such as the Quadra 950, will need <userinput
+>mac53c9x=2,0</userinput
+> instead. Alternatively, the parameter can be specified as <userinput
+>mac53c9x=-1,0</userinput
+> which will leave autodetection on, but which will disable SCSI disconnects. Note that specifying this parameter is only necessary if you have more than one hard disk; otherwise, the system will run faster if you do not specify it. </para>
     </sect3>
 
-    <sect3 arch="m68k" id="m68k-boot-mvme"
+    <sect3 id="m68k-boot-mvme"
 ><title
 >MVME147 και MVME16x</title>
 <para
@@ -1554,7 +1558,7 @@ host mcmuffin {
 >  </para>
     </sect3>
 
-    <sect3 arch="m68k" id="m68k-boot-q40"
+    <sect3 id="m68k-boot-q40"
 ><title
 >Q40/Q60 </title>
 <para
@@ -1617,7 +1621,7 @@ host mcmuffin {
 </itemizedlist>
 
 
-    <sect3 arch="m68k" id="m68k-boothd-amiga"
+    <sect3 id="m68k-boothd-amiga"
 ><title
 >Εκκίνηση από το AmigaOS</title>
 <para
@@ -1633,7 +1637,7 @@ host mcmuffin {
     </sect3>
 
 
-    <sect3 arch="m68k" id="m68k-boothd-atari"
+    <sect3 id="m68k-boothd-atari"
 ><title
 >Ξεκινώντας από το Atari TOS</title>
 <para
@@ -1649,7 +1653,7 @@ host mcmuffin {
     </sect3>
 
 
-    <sect3 arch="m68k" id="m68k-boothd-mac"
+    <sect3 id="m68k-boothd-mac"
 ><title
 >Ξεκινώντας από το MacOS</title>
 <para
@@ -1713,7 +1717,7 @@ host mcmuffin {
 
     </sect3>
 
-    <sect3 arch="m68k" id="m68k-boothd-q40"
+    <sect3 id="m68k-boothd-q40"
 ><title
 >Ξεκινώντας από το Q40/Q60</title>
 
@@ -1807,7 +1811,6 @@ host mcmuffin {
 ><para
 >Αυτή τη στιγμή εκκίνηση από δισκέττα υποστηρίζεται μόνο για Atari και VME (με έναν οδηγό  SCSI για δισκέττα στην VME). </para>
  </sect2>
-
 <!--   End of file boot-installer/m68k.xml -->
 
 <!-- Start of file boot-installer/mips.xml -->
@@ -2361,11 +2364,13 @@ Memory:<replaceable
 ><title
 >Παράμετροι του Εγκαταστάτη του Debian</title>
 <para
->Το σύστημα εγκατάστασης αναγνωρίζει μερικές επιπρόσθετες παραμέτρους εκκίνησης<footnote
+>The installation system recognizes a few additional boot parameters<footnote
 > <para
-> Σημειώστε ότι ο πυρήνας δέχεται ένα μέγιστο 8 επιλογών γραμμής εντολής και 8 επιλογές περιβάλλοντος (που συμπεριλαμβάνουν και τις εξ ορισμού επιλογές που προστίθενται για τον εγκαταστάτη). Αν οι αριθμοί αυτοί ξεπεραστούν, οι πυρήνες 2.4θα απορρίψουν τις πλεονάζουσες επιλογές ενώ οι πυρήνες 2.6 θα περάσουν σε κατάσταση ''πανικου'' (kernel panic). </para
+> Note that the kernel accepts a maximum of 8 command line options and 8 environment options (including any options added by default for the installer). If these numbers are exceeded, 2.4 kernels will drop any excess options and 2.6 kernels will panic. <phrase condition="etch"
+>With kernel 2.6.9 or newer, you can use 32 command line options and 32 environment options.</phrase
+> </para
 > </footnote
-> που μπορεί να είναι χρήσιμες. </para>
+> which may be useful. </para>
 
 <variablelist>
 <varlistentry>
@@ -2702,7 +2707,7 @@ Memory:<replaceable
 >Υπάρχουν μερικά συνηθισμένα προβλήματα εγκατάστασης που μπορούν να αποφευχθούν περνώντας συγκεκριμένες παραμέτρους εκκίνησης στον εγκαταστάτη. </para
 ><para
 >Μερικά συστήματα έχουν δισκέττες με <quote
->αντεστραμμένα DCLs </quaote
+>αντεστραμμένα DCLs </quote
 >. Αν έχετε σφάλματα στην ανάγνωση της δισκέττας, ακόμα κι αν ξέρετε ότι η δισκέττα είναι καλή, δοκιμάσετε την παράμετρο <userinput
 >floppy=thinkpad</userinput
 >.  </para
