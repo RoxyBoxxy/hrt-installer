@@ -492,9 +492,6 @@
 <!-- Start of file using-d-i/modules/s390/netdevice.xml -->
 <!--   End of file using-d-i/modules/s390/netdevice.xml -->
 
-<!-- Start of file using-d-i/modules/s390/dasd.xml -->
-<!--   End of file using-d-i/modules/s390/dasd.xml -->
-
 <!-- Start of file using-d-i/modules/ddetect.xml -->
 <!--   End of file using-d-i/modules/ddetect.xml -->
 
@@ -624,6 +621,9 @@
 >Neste ponto, após a detecção do hardware ter sido feita uma última vez, o  &d-i; deverá estar no auge, configurado para as necessidades do utilizador e pronto para efectuar algum trabalho real. Como o título desta secção indica, a tarefa principal dos seguintes componentes resumem-se ao particionamento do disco, atribuição de pontos de montagem e opcionalmente configuração de aspectos relacionados com dispositivos LVM e RAID. </para>
 
 
+<!-- Start of file using-d-i/modules/s390/dasd.xml -->
+<!--   End of file using-d-i/modules/s390/dasd.xml -->
+
 <!-- Start of file using-d-i/modules/partman.xml -->
 
    <sect3 id="partman">
@@ -721,8 +721,8 @@
         #3 primary    3.9 GB     xfs        /home
         #5 logical    6.0 GB     ext3       /
         #6 logical    1.0 GB     ext3       /var
-        #7 logical  498.8 GB     ext3
-        #8 logical  551.5 GB     swap       swap
+        #7 logical  498.8 MB     ext3
+        #8 logical  551.5 MB     swap       swap
         #9 logical   65.8 GB     ext2
 </screen
 ></informalexample
@@ -834,7 +834,7 @@
 >Alterar volume groups (VG)</guimenuitem
 > . Depois disto deverá criar volumes lógicos no topo do volume groups a partir do menu <guimenuitem
 >Modificar logical volumes (LV)</guimenuitem
->. <note arch="powerpc"
+>. <note arch="powerpc" condition="sarge"
 ><para
 >Não existe um standard largamente aceite na identificação de partições contendo informação LVM no hardware Power Macintosh. Neste hardware particular, o procedimento atrás para criar volumes físicos e volume groups não funcionará. Existe um modo de contornar esta limitação, contando que esteja familiarizado com as ferramentas LVM. </para
 ><para
@@ -996,7 +996,12 @@
 ><para
 >Se quiser saber toda a verdade sobre o software RAID, dê uma vista de olhos no <ulink url="&url-software-raid-howto;"
 >Software RAID HOWTO</ulink
->. </para
+>. <note arch="powerpc" condition="sarge"
+><para
+>Não existe um standard largamente aceite para identificar partições que contenham dados RAID em hardware Power Macintosh. Isto significa que o &d-i; actualmente não suporta configurar RAID nesta plataforma. </para
+></note>
+
+</para
 ><para
 >Para criar um dispositivo MD necessita de ter as partições desejadas marcadas para uso em RAID. (Isto é feito com o <command
 >partman</command
@@ -1844,6 +1849,76 @@
    </sect3>
 <!--   End of file using-d-i/modules/shell.xml -->
 
+<!-- Start of file using-d-i/modules/network-console.xml -->
+
+   <sect3 id="network-console">
+   <title
+>Instalação Através da Rede</title>
+
+<para arch="not-s390"
+>Um dos componentes mais interessantes é o <firstterm
+>network-console</firstterm
+>. Permite-lhe fazer uma grande parte da instalação através da rede via SSH. A utilização da rede implica que tem de executar as primeiras etapas da instalação a partir da consola, pelo menos até ao ponto de configurar a rede. (Embora possa automatizar essa parte com <xref linkend="automatic-install"/>.) </para
+><para arch="not-s390"
+>Este componente não é carregado por omissão para o menu principal da instalação, por isso tem de o pedir explicitamente. Se está a instalar a partir de CD, necessita arrancar com prioridade média ou caso contrário invoque o menu principal de instalação e escolha <guimenuitem
+>Carregar do CD componentes do instalador</guimenuitem
+> e a partir da lista de componentes adicionais escolha <guimenuitem
+>network-console: Continuar a instalação remotamente com SSH</guimenuitem
+>. O sucesso do carregamento é indicado com uma nova opção no menu chamada <guimenuitem
+>Continuar instalação remotamente com SSH</guimenuitem
+>. </para
+><para arch="s390"
+>Para a instalação em &arch-title;. este é o método por omissão após configurar a rede. </para
+><para
+><phrase arch="not-s390"
+>Após escolher esta nova opção, ser-lhe-à</phrase
+> <phrase arch="s390"
+>Ser-lhe-à</phrase
+> pedida uma nova password e a sua confirmação para ser utilizada para ligar ao sistema de instalação. E é tudo. Agora deve ver um ecrã que lhe diz para fazer o login remotamente como o utilizador <emphasis
+>installer</emphasis
+> com a password que você acabou de indicar. Outro detalhe importante a notar é a impressão digital (fingerprint) deste sistema. Você precisa de transferir de forma segura a impressão digital para <quote
+>a pessoa que irá continuar a instalação remotamente</quote
+>. </para
+><para
+>Caso você decida continuar com a instalação localmente, você pode sempre pressionar &enterkey;, que o irá trazer de volta ao menu principal, onde poderá escolher outro componente. </para
+><para
+>Agora vamos mudar para o outro lado do cabo. Como pré-requisito, você precisa de configurar o seu terminal para utilizar a codificação UTF-8, porque é essa que o sistema de instalação utiliza. Se não o fizer, a instalação remota ainda será possível, mas poderão aparecer no ecrã símbolos estranhos tais como cantos de caixas de diálogo destruídos ou caracteres não-ascii ilegíveis. Establecer uma ligação com o sistema de instalação é tão simples como escrever: <informalexample
+><screen>
+<prompt
+>$</prompt
+> <userinput
+>ssh -l installer <replaceable
+>install_host</replaceable
+></userinput>
+</screen
+></informalexample
+> Onde <replaceable
+>install_host</replaceable
+> é o nome ou o endereço IP do computador a ser instalado. Antes do login ser-lhe-à mostrada a impressão digital (fingerprint) do sistema remoto e você terá de confirmar se é o correcto. </para
+><note
+><para
+>Se você instalar vários computadores de cada vez e estes tiverem o mesmo endereço IP ou hostname, o <command
+>ssh</command
+> irá recusar-se a ligar a esses hosts. A razão é que terão impressões digitais (fingerprints) diferentes, que normalmente é o sinal de um ataque de spoofing. Se você tiver a certza que não é o caso, você necessita apagar a linha relevante em <filename
+>~/.ssh/known_hosts</filename
+> e tentar novamente. </para
+></note
+><para
+>Após o login ser-lhe-à apresentado um ecrã inicial onde terá duas possibilidades chamadas <guimenuitem
+>Iniciar menu</guimenuitem
+> e <guimenuitem
+>Iniciar shell</guimenuitem
+>. A anterior leva-o para o menu principal do instalador, onde pode prosseguir normalmente com a instalação. A último inicia uma shell onde você pode examinar e reparar o sistema remoto. Você deve iniciar apenas uma sessão SSH para o menu de instalação, mas pode iniciar várias sessões para shells. </para
+><warning
+><para
+>Após ter iniciado a instalação remotamente por SSH, você não deve voltar atrás para a sessão da instalação que corre na consola local. Se o fizer você pode corromper a base de dados que mantém a configuração do novo sistema. Isto pode resultar numa instalação falhada ou em problemas com o sistema instalado. </para
+><para
+>Além disso, se estiver a correr a sessão SSH a partir de um terminal X, você não deve redimensionar a janela já que irá fazer com que a ligação seja terminada. </para
+></warning>
+
+   </sect3>
+<!--   End of file using-d-i/modules/network-console.xml -->
+
 <!-- Start of file using-d-i/modules/baseconfig.xml -->
 
    <sect3 id="baseconfig">
@@ -1857,7 +1932,7 @@
 >base-config</command
 > num ambiente <firstterm
 >chroot</firstterm
->. Isto é basicamente útil para testar o instalador e a maioria dos utilizadores deve evitá-lo. </para>
+>. Isto é principalmente útil para testar o instalador e normalmente deve ser evitado. </para>
    </sect3>
 <!--   End of file using-d-i/modules/baseconfig.xml -->
   </sect2>

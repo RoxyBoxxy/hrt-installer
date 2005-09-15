@@ -1457,10 +1457,12 @@ host mcmuffin {
 
 <para
 >Algumas sub-arquitecturas &arch-title; têm a opção de iniciar utilizando qualquer kernel linux seja 2.4.x ou 2.2.x. Quando existem tais escolhas, tente o kernel linux 2.4.x. O instalador requer menos memória utilizando um kernel linux 2.4.x o suporte para o kernel linux 2.2.x requerem um tamanho fixo de ramdisk e o 2.4.x utilizam tmpfs. </para
-><para
->Se está a utilizar um kernel linux 2.2.x, terá que se certificar que está a utilizar uma ramdisk built para o alojar, veja o <ulink url="&disturl;/main/installer-&architecture;/current/images/MANIFEST"
+><para condition="etch"
+>Se está a utilizar um kernel linux 2.2.x, então necessita utilizar &ramdisksize;. </para
+> <para condition="sarge"
+>Se está a utilizar um kernel linux 2.2.x, então terá de se certificar que está a utilizar um ramdisk criado para o alojar, veja o <ulink url="&disturl;/main/installer-&architecture;/current/images/MANIFEST"
 >MANIFEST</ulink
->. Irá também necessitar de utilizar o parâmetro do kernel &ramdisksize;. Na generalidade, isto significa que necessita de utilizar o ramdisk initrd22.gz da directoria respectiva. </para
+>. Normalmente, isto significa que necessita utilizar o ramdisk initrd22.gz a partir do respectivo directório. </para
 ><para
 >Certifique-se que <userinput
 >root=/dev/ram</userinput
@@ -1498,7 +1500,7 @@ host mcmuffin {
 </itemizedlist>
 
 
-    <sect3 arch="m68k" id="m68k-boot-amiga"
+    <sect3 id="m68k-boot-amiga"
 ><title
 >Amiga</title>
 <para
@@ -1511,7 +1513,7 @@ host mcmuffin {
 >. </para>
     </sect3>
 
-    <sect3 arch="m68k" id="m68k-boot-atari"
+    <sect3 id="m68k-boot-atari"
 ><title
 >Atari</title>
 <para
@@ -1524,14 +1526,14 @@ host mcmuffin {
 >. </para>
     </sect3>
 
-    <sect3 arch="m68k" id="m68k-boot-bvme6000"
+    <sect3 id="m68k-boot-bvme6000"
 ><title
 >BVME6000</title>
 <para
 >O instalador para BVME6000 pode iniciar a partir de cdrom (veja <xref linkend="m68k-boot-cdrom"/>), disquetes (veja <xref linkend="boot-from-floppies"/>), ou a partir da rede (veja <xref linkend="boot-tftp"/>). </para>
     </sect3>
 
-    <sect3 arch="m68k" id="m68k-boot-mac"
+    <sect3 id="m68k-boot-mac"
 ><title
 >Macintosh</title>
 <para
@@ -1539,14 +1541,16 @@ host mcmuffin {
 >Por outras palavras não é possível iniciar de cdrom.</emphasis
 > Macs não têm um kernel 2.4.x funcional. </para
 ><para
->Se o seu hardware utiliza um scsi bus 53c9x-based, então pode necessitar de incluir o parâmetro <userinput
->mac53c9x=1</userinput
-> no kernel. Hardware com dois buses scsi, tais como o Quadra 950, necessitará de <userinput
->mac53c9x=2</userinput
->. </para>
+>Se o seu hardware utiliza um bus scsi baseado em 53c9x, então pode precisar de incluir o parâmetro de kernel <userinput
+>mac53c9x=1,0</userinput
+>. Hardware com dois desses bus scsi, tal como o Quadra 950, em vez disso irá necessitar de <userinput
+>mac53c9x=2,0</userinput
+>. Em alternativa, o parâmetro pode ser especificado como <userinput
+>mac53c9x=-1,0</userinput
+> que deixará a autodetecção ligada, mas que irá desabilitar desligar SCSIs. Note que especificar este parâmetro é apenas necessário se tiver mais do que um disco rígido; caso contrário, o sistema irá correr mais rápido se não o especificar. </para>
     </sect3>
 
-    <sect3 arch="m68k" id="m68k-boot-mvme"
+    <sect3 id="m68k-boot-mvme"
 ><title
 >MVME147 e MVME16x</title>
 <para
@@ -1555,7 +1559,7 @@ host mcmuffin {
 > </para>
     </sect3>
 
-    <sect3 arch="m68k" id="m68k-boot-q40"
+    <sect3 id="m68k-boot-q40"
 ><title
 >Q40/Q60</title>
 <para
@@ -1618,7 +1622,7 @@ host mcmuffin {
 </itemizedlist>
 
 
-    <sect3 arch="m68k" id="m68k-boothd-amiga"
+    <sect3 id="m68k-boothd-amiga"
 ><title
 >Iniciar a partir de SO Amiga</title>
 <para
@@ -1634,7 +1638,7 @@ host mcmuffin {
     </sect3>
 
 
-    <sect3 arch="m68k" id="m68k-boothd-atari"
+    <sect3 id="m68k-boothd-atari"
 ><title
 >Iniciar a partir de Atari TOS</title>
 <para
@@ -1650,7 +1654,7 @@ host mcmuffin {
     </sect3>
 
 
-    <sect3 arch="m68k" id="m68k-boothd-mac"
+    <sect3 id="m68k-boothd-mac"
 ><title
 >Iniciar a partir de MacOS</title>
 <para
@@ -1714,7 +1718,7 @@ host mcmuffin {
 
     </sect3>
 
-    <sect3 arch="m68k" id="m68k-boothd-q40"
+    <sect3 id="m68k-boothd-q40"
 ><title
 >Iniciar a partir de Q40/Q60</title>
 
@@ -1808,7 +1812,6 @@ host mcmuffin {
 ><para
 >Iniciar a partir da disquete de arranque é suportado apenas, neste momento, por Atari e VME (com um drive de disquetes SCSI no VME). </para>
  </sect2>
-
 <!--   End of file boot-installer/m68k.xml -->
 
 <!-- Start of file boot-installer/mips.xml -->
@@ -2357,9 +2360,11 @@ Memory:<replaceable
 <para
 >O sistema de instalação reconhece uns quantos parâmetros de arranque adicionais <footnote
 > <para
-> Note que o kernel aceita um máximo de 8 opções de comando de linha e 8 opções de ambiente (incluindo qualquer opção adicionada por omissão pelo instalador). Se este números form excedidos, kernels 2.4 irão retirar as opções em excesso e o kernel 2.6 pode gerar alguns erros (kernel panic).</para
+> Note que o kernel aceita um máximo de 8 opções de comando de linha e 8 opções de ambiente (incluindo qualquer opção adicionada por omissão pelo instalador). Se este números forem excedidos, os kernel 2.4 irão retirar as opções em excesso e o kernel 2.6 pode gerar alguns erros (kernel panic) <phrase condition="etch"
+>Com o kernel 2.6.9 ou mais recente, pode utilizar 32 opções de comando de linha e 32 opções de ambiente.</phrase
+> </para
 > </footnote
-> Que pode ser útil. </para>
+> que podem ser úteis. </para>
 
 <variablelist>
 <varlistentry>

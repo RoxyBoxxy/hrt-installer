@@ -1460,10 +1460,12 @@ host mcmuffin {
 
 <para
 >На некоторых суб-архитектурах &arch-title; есть вариант загрузки с использованием либо ядра linux 2.4.x, либо 2.2.x. Когда такой выбор существует, попробуйте ядро 2.4.x. Программа установки должна требовать меньше памяти, когда используется ядро 2.4.x, потому что поддержка 2.2.x требует ramdisk фиксированного размера, а 2.4.x использует tmpfs. </para
-><para
+><para condition="etch"
+>Если вы используете ядро версии 2.2.x, может потребоваться установить параметр ядра &ramdisksize;. </para
+> <para condition="sarge"
 >Если вы используете ядро 2.2.x, то должны убедиться, что поддержка ramdisk в нём включена, смотрите <ulink url="&disturl;/main/installer-&architecture;/current/images/MANIFEST"
 >MANIFEST</ulink
->. Вам также надо использовать параметр ядра &ramdisksize;.В общем, это означает, что вам нужно использоватьinitrd22.gz ramdisk из соответствующего каталога. </para
+>. В общем, это означает, что вам нужно использовать initrd22.gz ramdisk из соответствующего каталога. </para
 ><para
 >Убедитесь, что одним из параметров вашего ядра является <userinput
 >root=/dev/ram</userinput
@@ -1501,7 +1503,7 @@ host mcmuffin {
 </itemizedlist>
 
 
-    <sect3 arch="m68k" id="m68k-boot-amiga"
+    <sect3 id="m68k-boot-amiga"
 ><title
 >Amiga</title>
 <para
@@ -1514,7 +1516,7 @@ host mcmuffin {
 >. </para>
     </sect3>
 
-    <sect3 arch="m68k" id="m68k-boot-atari"
+    <sect3 id="m68k-boot-atari"
 ><title
 >Atari</title>
 <para
@@ -1527,14 +1529,14 @@ host mcmuffin {
 >. </para>
     </sect3>
 
-    <sect3 arch="m68k" id="m68k-boot-bvme6000"
+    <sect3 id="m68k-boot-bvme6000"
 ><title
 >BVME6000</title>
 <para
 >Программа установки для BVME6000 может быть запущена с компакт-диска (смотрите <xref linkend="m68k-boot-cdrom"/>), с дискет (смотрите <xref linkend="boot-from-floppies"/>) или по сети (смотрите <xref linkend="boot-tftp"/>). </para>
     </sect3>
 
-    <sect3 arch="m68k" id="m68k-boot-mac"
+    <sect3 id="m68k-boot-mac"
 ><title
 >Macintosh</title>
 <para
@@ -1542,14 +1544,16 @@ host mcmuffin {
 >Другими словами, с компакт-диска загрузиться не удастся.</emphasis
 > Для mac нет работоспособного ядра 2.4.x. </para
 ><para
->Если в вашем аппаратном обеспечениии используется scsi шина, основанная на 53c9x, то вам может понадобиться добавить параметр ядра <userinput
->mac53c9x=1</userinput
->. Для аппаратуры с двумя подобными scsi шинами, например Quadra 950, нужно указать <userinput
->mac53c9x=2</userinput
->. </para>
+>Если в вашем аппаратном обеспечении используется scsi шина, основанная на чипе 53c9x, то вам может понадобиться добавить параметр ядра <userinput
+>mac53c9x=1,0</userinput
+>. Для аппаратуры с двумя scsi шинами, например Quadra 950, нужно указать <userinput
+>mac53c9x=2,0</userinput
+>. Или же можно указать параметр <userinput
+>mac53c9x=-1,0</userinput
+>, при котором автоопределение остаётся включённым, но запрещаются SCSI отключения. Заметим, что такой параметр требуется указывать только если имеется более одного жёсткого диска; без параметрасистема будет работать быстрее. </para>
     </sect3>
 
-    <sect3 arch="m68k" id="m68k-boot-mvme"
+    <sect3 id="m68k-boot-mvme"
 ><title
 >MVME147 и MVME16x</title>
 <para
@@ -1558,7 +1562,7 @@ host mcmuffin {
 > </para>
     </sect3>
 
-    <sect3 arch="m68k" id="m68k-boot-q40"
+    <sect3 id="m68k-boot-q40"
 ><title
 >Q40/Q60</title>
 <para
@@ -1621,7 +1625,7 @@ host mcmuffin {
 </itemizedlist>
 
 
-    <sect3 arch="m68k" id="m68k-boothd-amiga"
+    <sect3 id="m68k-boothd-amiga"
 ><title
 >Загрузка из AmigaOS</title>
 <para
@@ -1637,7 +1641,7 @@ host mcmuffin {
     </sect3>
 
 
-    <sect3 arch="m68k" id="m68k-boothd-atari"
+    <sect3 id="m68k-boothd-atari"
 ><title
 >Загрузка из Atari TOS</title>
 <para
@@ -1653,7 +1657,7 @@ host mcmuffin {
     </sect3>
 
 
-    <sect3 arch="m68k" id="m68k-boothd-mac"
+    <sect3 id="m68k-boothd-mac"
 ><title
 >Загрузка из MacOS</title>
 <para
@@ -1717,7 +1721,7 @@ host mcmuffin {
 
     </sect3>
 
-    <sect3 arch="m68k" id="m68k-boothd-q40"
+    <sect3 id="m68k-boothd-q40"
 ><title
 >Загрузка из Q40/Q60</title>
 
@@ -1811,7 +1815,6 @@ host mcmuffin {
 ><para
 >На данный момент, загрузка с загрузочной дискеты поддерживается только для Atari и VME (с дисководом гибких дисков SCSI на VME). </para>
  </sect2>
-
 <!--   End of file boot-installer/m68k.xml -->
 
 <!-- Start of file boot-installer/mips.xml -->
@@ -2367,7 +2370,9 @@ Memory:<replaceable
 <para
 >Система установки анализирует некоторые дополнительные параметры загрузки<footnote
 > <para
->. Заметим, что ядро позволяет задать только 8 параметров в командной строке и 8 переменных среды (включая параметры, добавляемые по умолчанию программой установки). Если данные значения превышены, ядра версии 2.4 отбросят все лишние параметрые, а ядра версии 2.6 остановятся с ошибкой </para
+>. Заметим, что ядро позволяет задать только 8 параметров в командной строке и 8 переменных среды (включая параметры, добавляемые по умолчанию программой установки). Если данные значения превышены, ядра версии 2.4 отбросят все лишние параметрые, а ядра версии 2.6 остановятся с ошибкой. <phrase condition="etch"
+>С ядрами 2.6.9 и новее можно использовать 32 параметра в командной строке и 32 переменных среды.</phrase
+> </para
 > </footnote
 >, что может быть полезно. </para>
 
