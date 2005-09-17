@@ -4,15 +4,23 @@
 
 # Uncomment this to turn on verbose mode.
 #export DH_VERBOSE=1
+export DH_COMPAT=4
 
-PACKAGE = partman-palo
+PACKAGE=$(shell dh_listpackages)
+VERSION=$(shell dpkg-parsechangelog | grep ^Version: | cut -d ' ' -f 2)
+ARCH=hppa
+FILENAME=$(PACKAGE)_$(VERSION)_$(ARCH).udeb
+PRIORITY=$(shell grep ^Priority: debian/control | cut -d ' ' -f 2)
 
-build:
-# Ye olde no-op.
+build: build-stamp
+build-stamp:
+	dh_testdir
+	touch build-stamp
 
 clean:
 	dh_testdir
 	dh_testroot
+	rm -f build-stamp
 	rm -f `find . -name '*~'`
 	dh_clean
 
@@ -27,7 +35,6 @@ install: build
 	debian/install-rc valid_filesystems
 	dh_install parted_names lib/partman
 	rm -rf `find debian/$(PACKAGE) -name CVS`
-	rm -rf `find debian/$(PACKAGE) -name .svn`
 
 binary-indep: build install
 
@@ -37,8 +44,9 @@ binary-arch: build install
 	dh_installdebconf
 	dh_fixperms
 	dh_installdeb
-	dh_gencontrol
-	dh_builddeb
+	dh_gencontrol -- -fdebian/files~
+	dpkg-distaddfile $(FILENAME) debian-installer $(PRIORITY)
+	dh_builddeb --filename=$(FILENAME)
 
 binary: binary-indep binary-arch
 .PHONY: build clean binary-indep binary-arch binary install
