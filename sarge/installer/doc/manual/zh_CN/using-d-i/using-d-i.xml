@@ -276,7 +276,7 @@
 ><para
 >让用户设置 Software <firstterm
 >RAID</firstterm
-> (Redundant Array of Inexpensive Disks)。Software RAID 是新主板提供的 廉价 IDE (虚拟硬件) RAID 控制器的高级管理。 </para
+> (Redundant Array of Inexpensive Disks)。Software RAID 是新主板提供的廉价 IDE (虚拟硬件) RAID 控制器的高级管理。 </para
 ></listitem>
 </varlistentry>
 <varlistentry>
@@ -505,9 +505,6 @@
 <!-- Start of file using-d-i/modules/s390/netdevice.xml -->
 <!--   End of file using-d-i/modules/s390/netdevice.xml -->
 
-<!-- Start of file using-d-i/modules/s390/dasd.xml -->
-<!--   End of file using-d-i/modules/s390/dasd.xml -->
-
 <!-- Start of file using-d-i/modules/ddetect.xml -->
 <!--   End of file using-d-i/modules/ddetect.xml -->
 
@@ -637,6 +634,9 @@
 >现在，经过最后的硬件检测，&d-i; 已经充满活力，按照用户定制，准备就绪。正如本节标题指明，接下来组件的主要任务是为您的硬盘分区，创建文件系统，安排挂载点，并为近似选项进行配置，比如 LVM 或 RAID 设备。 </para>
 
 
+<!-- Start of file using-d-i/modules/s390/dasd.xml -->
+<!--   End of file using-d-i/modules/s390/dasd.xml -->
+
 <!-- Start of file using-d-i/modules/partman.xml -->
 
    <sect3 id="partman">
@@ -739,7 +739,7 @@
         #9 logical   65.8 GB     ext2
 </screen
 ></informalexample
-> 本例中有两块硬盘，它们分别被分割成了几个分区。其中，第一块硬盘上还有些空闲空间。表中，每行列出了分区编号、其类型、分区大小、可选的标志、采用的文件系统，及其 挂载点(如果有的话)。 </para
+> 本例中有两块硬盘，它们分别被分割成了几个分区。其中，第一块硬盘上还有些空闲空间。表中，每行列出了分区编号、其类型、分区大小、可选的标志、采用的文件系统，及其挂载点(如果有的话)。 </para
 ><para
 >接下来，向导式分区就要完成了。如果您对上面生成的分区信息表感到满意，那么 请在菜单中选择 <guimenuitem
 >分区设定结束并将修改写入磁盘</guimenuitem
@@ -847,7 +847,7 @@
 >修改卷组(VG)</guimenuitem
 >菜单。之后，您应该为卷组创建逻辑卷，这是从菜单 <guimenuitem
 >修改逻辑卷(LV)</guimenuitem
->。 <note arch="powerpc"
+>。 <note arch="powerpc" condition="sarge"
 ><para
 >在 Apple Power Macintosh 硬件上，现在还没有一个广为接受的识别包含 LVM 数据分区的标准。在这种硬件上，以上创建物理卷和卷组的步骤将不能工作。假如您熟悉底层的 LVM 工具，有一种突破这种限制的方法。 </para
 ><para
@@ -1009,7 +1009,12 @@
 ><para
 >如果您想真正全面了解 Software RAID，看一下 <ulink url="&url-software-raid-howto;"
 >Software RAID HOWTO</ulink
->。 </para
+>。 <note arch="powerpc" condition="sarge"
+><para
+>在 Apple Power Macintosh 硬件上，现在还没有一个广为接受的识别包含 RAID 数据分区的标准。这意味着当前 &d-i; 还不支持在此平台上建立 RAID。 </para
+></note>
+
+</para
 ><para
 >为了创建 MD 设备，您需要将期望的分区标记为供 RAID 使用。(通过 <guimenu
 >Partition settings</guimenu
@@ -1831,7 +1836,7 @@
 >虚拟控制台</emphasis
 >。就是同时按下 <keycap
 >Alt</keycap
-> 健，它位于 <keycap
+> 健，它位于<keycap
 >空格健</keycap
 >的左手边，和 <keycap
 >F2</keycap
@@ -1847,17 +1852,85 @@
 >nano</command
 >。该 shell 有一些好用的特性，如自动完成与历史纪录。 </para
 ><para
->使用菜单完成它们能完成的工作 &mdash; shell 和命令只在出错的时候使用。尤其要使用菜单，而不是 shell 去激活您的交换分区，因为菜单软件无法检测到您在 shell 做的工作。按下 <keycombo
+>使用菜单完成它们能完成的工作 &mdash; shell 和命令只在出错的时候使用。尤其要使用菜单，而不是 shell 去激活您的交换分区，因为菜单软件无法检测到您在 shell 做的工作。如果您用菜单打开的 shell，按下<keycombo
 ><keycap
 >左 Alt</keycap
 > <keycap
 >F1</keycap
 ></keycombo
-> 返回菜单，或者键入 <command
+>，或者键入 <command
 >exit</command
->，如果您用菜单打开的 shell。 </para>
+> 返回菜单。 </para>
    </sect3>
 <!--   End of file using-d-i/modules/shell.xml -->
+
+<!-- Start of file using-d-i/modules/network-console.xml -->
+
+   <sect3 id="network-console">
+   <title
+>通过网络安装</title>
+
+<para arch="not-s390"
+>更好玩的一个组件是<firstterm
+>network-console</firstterm
+>。它可以让您使用 SSH 通过网络完成大部分安装工作。使用网络也就是您要用控制台完成第一阶段，或者至少先建立网络。(您可以使用 <xref linkend="automatic-install"/> 做这部分工作。) </para
+><para arch="not-s390"
+>该组件默认不会加载到安装主菜单，因此必须单独指定。如果使用 CD，您需要使用 medium 优先级或者打开安装主菜单并选择 <guimenuitem
+>Load installer components from CD</guimenuitem
+>，在额外的组件列表里面选择 <guimenuitem
+>network-console: Continue installation remotely using SSH</guimenuitem
+>。加载成功后会出现一个新的菜单项，名为 <guimenuitem
+>Continue installation remotely using SSH</guimenuitem
+>。 </para
+><para arch="s390"
+>在 &arch-title; 上安装，建立网络之后这是默认的方法。 </para
+><para
+><phrase arch="not-s390"
+>选择新菜单项之后，您</phrase
+> <phrase arch="s390"
+>您</phrase
+> 会被问到新密码用于连接到安装系统，以及确认。就这些。现在您应该看到一个画面，提示您使用 <emphasis
+>installer</emphasis
+> 用户远程登录，密码就是刚才您提供的。另外一个需要留意的重要细节，是屏幕上显示的该系统的 fingerprint。您需要安全地传输该 fingerprint 给<quote
+>那些要继续远程安装的人</quote
+>。 </para
+><para
+>当您决定继续本地安装时，不断地按 &enterkey;，就可以返回主菜单，之后可以选择其他的组件。 </para
+><para
+>现在转到网线的另一端。有一个先决条件，您需要配置您的终端使用 UTF-8 编码，因为安装系统使用这种编码。如果您不这样做，远程安装也可以进行，但是您可能看到奇怪的显示，比如破碎的对话框边界，或者不可读的非 ASCII 字符。与安装系统建立连接只需键入: <informalexample
+><screen>
+<prompt
+>$</prompt
+> <userinput
+>ssh -l installer <replaceable
+>install_host</replaceable
+></userinput>
+</screen
+></informalexample
+> 其中 <replaceable
+>install_host</replaceable
+> 是安装计算机的名字或 IP 地址。正式登录之前，会显示远程系统的 fingerprint，您需要确认是否正确。 </para
+><note
+><para
+>如果您依次安装多台电脑，他们碰巧使用相同的 IP 地址或主机名，那么 ssh 将拒绝连接。造成的原因是它具有不同的 fingerprint，这通常是欺骗攻击的标志。如果您确信不是那种情况，需要删除 <filename
+>~/.ssh/known_hosts</filename
+> 里面相关的行，再重新来过。 </para
+></note
+><para
+>登录之后您将看到一个初始画面，显示有两个可能，<guimenuitem
+>Start menu</guimenuitem
+> 和 <guimenuitem
+>Start shell</guimenuitem
+>。前一个将带您到安装主菜单，那么您可以像普通方式一样安装。后一个打开一个 shell，您可以检查修复远程的系统。在安装菜单只能打开一个 SSH 会话，但 shell 可以打开多个。 </para
+><warning
+><para
+>使用 SSH 开始远程安装之后，您不该返回本地控制台运行的安装会话。这将破坏新系统配置的数据库。结果可能导致安装失败或者安装完成的系统出现问题。 </para
+><para
+>另外，如果您在 X 终端下运行 ssh 会话，也不要改变窗口大小，它可能会造成连接中止。 </para
+></warning>
+
+   </sect3>
+<!--   End of file using-d-i/modules/network-console.xml -->
 
 <!-- Start of file using-d-i/modules/baseconfig.xml -->
 
@@ -1868,11 +1941,11 @@
 ></title>
 
 <para
->在安装程序的第一阶段，配置基本系统也可以做到(在从硬盘启动之前)，在 <firstterm
+>在安装程序的第一阶段(从硬盘启动之前)，<firstterm
 >chroot</firstterm
 > 环境下执行 <command
 >base-config</command
->。这主要是用来测试安装程序，绝大多数的用户应该避免使用。 </para>
+>，也可以配置基本系统。但这主要是用来测试安装程序，通常应该避免使用。 </para>
    </sect3>
 <!--   End of file using-d-i/modules/baseconfig.xml -->
   </sect2>

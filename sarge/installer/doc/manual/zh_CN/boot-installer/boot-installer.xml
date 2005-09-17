@@ -1475,10 +1475,12 @@ host mcmuffin {
 
 <para
 >一些 &arch-title; 子体系可以选择使用从 2.4.x 或 2.2.x linux 内核启动。如果可以这样选取，请使用 2.4.x linux 内核。使用 2.4.x linux 内核的安装程序要求较少的内存，因为 2.2.x 支持需要固定尺寸的 ramdisk 而 2.4.x 使用 tmpfs。 </para
-><para
->如果您使用 2.2.x linux 内核，那么必须确保 ramdisk 满足要求，参考 <ulink url="&disturl;/main/installer-&architecture;/current/images/MANIFEST"
+><para condition="etch"
+>如果您在使用 2.2.x 内核，那么需要设置 &ramdisksize; 内核参数。 </para
+> <para condition="sarge"
+>如果您使用 2.2.x linux 内核，那么必须确保 ramdisk 满足要求，参阅 <ulink url="&disturl;/main/installer-&architecture;/current/images/MANIFEST"
 >MANIFEST</ulink
->。您还需要使用 &ramdisksize; 内核参数。通常，这意味需要分别使用 initrd22.gz ramdisk。 </para
+>。通常，这意味需要从各自的目录使用 initrd22.gz ramdisk。 </para
 ><para
 >确保 <userinput
 >root=/dev/ram</userinput
@@ -1516,7 +1518,7 @@ host mcmuffin {
 </itemizedlist>
 
 
-    <sect3 arch="m68k" id="m68k-boot-amiga"
+    <sect3 id="m68k-boot-amiga"
 ><title
 >Amiga</title>
 <para
@@ -1529,7 +1531,7 @@ host mcmuffin {
 >。 </para>
     </sect3>
 
-    <sect3 arch="m68k" id="m68k-boot-atari"
+    <sect3 id="m68k-boot-atari"
 ><title
 >Atari</title>
 <para
@@ -1542,14 +1544,14 @@ host mcmuffin {
 >。 </para>
     </sect3>
 
-    <sect3 arch="m68k" id="m68k-boot-bvme6000"
+    <sect3 id="m68k-boot-bvme6000"
 ><title
 >BVME6000</title>
 <para
 >BVME6000 上安装程序可以从 cdrom (参阅 <xref linkend="m68k-boot-cdrom"/>), 软盘(参阅 <xref linkend="boot-from-floppies"/>)，或网络(参阅 <xref linkend="boot-tftp"/>)。 </para>
     </sect3>
 
-    <sect3 arch="m68k" id="m68k-boot-mac"
+    <sect3 id="m68k-boot-mac"
 ><title
 >Macintosh</title>
 <para
@@ -1558,13 +1560,15 @@ host mcmuffin {
 > Macs 不能工作在 2.4 内核上。 </para
 ><para
 >如果您的硬件中包括基于 53c9x 的 scsi 总线，那么您需要包括下面的内核参数 <userinput
->mac53c9x=1</userinput
+>mac53c9x=1,0</userinput
 >。带有两个这种 scsi 总线的硬件，如 Quadra 950，您需要 <userinput
->mac53c9x=2</userinput
-> 参数。 </para>
+>mac53c9x=2,0</userinput
+> 参数。另外，参数指定为 <userinput
+>mac53c9x=-1,0</userinput
+> 可打开自动侦测，但却禁止了 SCSI 断开。注意，使用这种参数仅用于不止一个硬盘的情况下; 如果不指定，您的系统将运行得更快。 </para>
     </sect3>
 
-    <sect3 arch="m68k" id="m68k-boot-mvme"
+    <sect3 id="m68k-boot-mvme"
 ><title
 >MVME147 and MVME16x</title>
 <para
@@ -1573,7 +1577,7 @@ host mcmuffin {
 > </para>
     </sect3>
 
-    <sect3 arch="m68k" id="m68k-boot-q40"
+    <sect3 id="m68k-boot-q40"
 ><title
 >Q40/Q60</title>
 <para
@@ -1636,7 +1640,7 @@ host mcmuffin {
 </itemizedlist>
 
 
-    <sect3 arch="m68k" id="m68k-boothd-amiga"
+    <sect3 id="m68k-boothd-amiga"
 ><title
 >从 AmigaOS 上引导</title>
 <para
@@ -1652,7 +1656,7 @@ host mcmuffin {
     </sect3>
 
 
-    <sect3 arch="m68k" id="m68k-boothd-atari"
+    <sect3 id="m68k-boothd-atari"
 ><title
 >从 Atari TOS 引导</title>
 <para
@@ -1668,7 +1672,7 @@ host mcmuffin {
     </sect3>
 
 
-    <sect3 arch="m68k" id="m68k-boothd-mac"
+    <sect3 id="m68k-boothd-mac"
 ><title
 >从 MacOS 引导</title>
 <para
@@ -1732,7 +1736,7 @@ host mcmuffin {
 
     </sect3>
 
-    <sect3 arch="m68k" id="m68k-boothd-q40"
+    <sect3 id="m68k-boothd-q40"
 ><title
 >从 Q40/Q60 启动</title>
 
@@ -1826,7 +1830,6 @@ host mcmuffin {
 ><para
 >从软盘引导的方法目前只支持 Atari 以及 VME (VME 有一个 SCSI 软驱)。 </para>
  </sect2>
-
 <!--   End of file boot-installer/m68k.xml -->
 
 <!-- Start of file boot-installer/mips.xml -->
@@ -2380,9 +2383,11 @@ Memory:<replaceable
 ><title
 >Debian 安装程序的参数</title>
 <para
->安装系统确认一些附加的引导参数 <footnote
+>安装系统能识别一些比较有用的附加引导参数 <footnote
 > <para
-> 注意，内核最多可以接受 8 个命令行参数和 8 个环境变量选项(包括安装程序默认使用的选项)。如果超出，2.4 内核会丢弃过多的选项，2.6 内核则会崩溃。</para
+> 注意，内核最多可以接受 8 个命令行参数和 8 个环境变量选项(包括安装程序默认使用的选项)。如果超出，2.4 内核会丢弃过多的选项，2.6 内核则会崩溃。<phrase condition="etch"
+>2.6.9 以后的内核，您可以使用 32 个命令行参数和 32 个环境变量选项。</phrase
+></para
 > </footnote
 >，也许比较有用。 </para>
 
