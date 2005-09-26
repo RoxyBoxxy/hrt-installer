@@ -1,0 +1,54 @@
+#!/bin/sh
+set -e
+
+. /usr/share/debconf/confmodule
+
+TEMPLATE_ROOT=network-console
+
+KEY_FILE=/etc/ssh/ssh_host_rsa_key
+
+if [ ! -f $KEY_FILE ]; then
+  db_progress START 0 1 $TEMPLATE_ROOT/key
+  ssh-keygen -b 2048 -t rsa -N '' -f $KEY_FILE -q
+  db_progress STOP
+fi
+
+while [ -z "$PASSWORD" ]; do
+
+  db_input critical $TEMPLATE_ROOT/password || true
+  db_go
+  COMPARE_PW=''
+  db_input high $TEMPLATE_ROOT/password-again && COMPARE_PW=1 || true
+  db_go
+
+  db_get $TEMPLATE_ROOT/password
+  ROOT_PW="$RET"
+  if [ -z "$ROOT_PW" ]; then
+    db_input critical $TEMPLATE_ROOT/password-empty
+    db_go
+    continue
+  fi
+  db_get $TEMPLATE_ROOT/password-again
+  if [ "$COMPARE_PW" ] && [ "$ROOT_PW" != "$RET" ]; then
+    db_input critical $TEMPLATE_ROOT/password-mismatch
+    db_go
+    continue
+  fi
+  PASSWORD=$ROOT_PW
+
+  db_set $TEMPLATE_ROOT/password ""
+  db_set $TEMPLATE_ROOT/password-again ""
+done
+
+echo "installer:$(gen-crypt $PASSWORD):1:0:99999:7:::" >> /etc/shadow
+
+KEY_FINGERPRINT=$(ssh-keygen -l -f $KEY_FILE | cut -f2 -d ' ')
+
+/usr/sbin/sshd
+
+# Queue installation of network-console-config
+apt-install network-console-config || true
+
+db_subst $TEMPLATE_ROOT/start fingerprint $KEY_FINGERPRINT
+db_input critical $TEMPLATE_ROOT/start || true
+db_go

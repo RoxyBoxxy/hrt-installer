@@ -1,0 +1,18 @@
+#!/bin/sh
+set -e
+
+. /usr/share/debconf/confmodule
+
+TEMPLATE_ROOT=network-console
+
+db_input critical $TEMPLATE_ROOT/login
+db_go
+db_get $TEMPLATE_ROOT/login
+
+if [ "$RET" = 'Start menu' ]; then
+  exec main-menu
+elif [ "$RET" = 'Start shell' ]; then
+  # WORKAROUND
+  export UDPKG_QUIET=1
+  exec udpkg --configure --force-configure di-utils-shell
+fi
