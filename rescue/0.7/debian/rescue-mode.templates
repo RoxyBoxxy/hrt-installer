@@ -1,0 +1,53 @@
+Template: debian-installer/rescue-mode/title
+Type: text
+_Description: Enter rescue mode
+
+Template: rescue/root
+Type: select
+Choices: ${PARTITIONS}
+_Description: Device to mount as root file system:
+ Enter a device you wish to mount as your root file system.
+ .
+ After this message, if the file system was mounted successfully, you
+ will be given a shell with that file system on "/". If you need any
+ other file systems (such as a separate "/usr"), you will have to mount
+ those yourself.
+ .
+ When you exit this shell, the system will reboot.
+
+Template: rescue/no-such-device
+Type: error
+_Description: No such device
+ The device you entered for your root file system (${DEVICE}) does not
+ exist. Please try again.
+
+Template: rescue/mount-failed
+Type: error
+_Description: Mount failed
+ An error occurred while mounting the device you entered for your root
+ file system (${DEVICE}) on /target.
+ .
+ Please check the syslog for more information.
+
+Template: rescue/fallback-shell
+Type: note
+_Description: No shell found in /target
+ No usable shell was found on your root file system (${DEVICE}).
+ .
+ You will now be given a shell in the installer environment instead.
+ Your root file system is mounted on /target.
+ .
+ When you exit this shell, the system will reboot.
+
+Template: rescue/maybe-fallback-shell
+Type: boolean
+Default: true
+_Description: Try fallback shell?
+ A shell (${SHELL}) was found on your root file system (${DEVICE}),
+ but an error occurred while running it.
+ .
+ Please confirm whether you want to use a shell in the installer environment
+ instead. Your root file system will be mounted on /target.
+ .
+ When you exit this shell, or if you choose not to run it, the system
+ will reboot.
