@@ -1300,6 +1300,10 @@ mouse =&gt; /dev/psaux  =&gt; gpm =&gt; /dev/gpmdata -&gt; /dev/mouse =&gt; X
 ></informalexample>
 
 </para>
+<note
+><para
+>Если вы хотите монтировать некоторые файловые системы (например /usr) с отдельных разделов, то нужно создать и смонтировать эти каталоги вручную, перед тем как перейти к следующему этапу. </para
+></note>
   </sect2>
 
   <sect2>
@@ -1348,7 +1352,17 @@ mouse =&gt; /dev/psaux  =&gt; gpm =&gt; /dev/gpmdata -&gt; /dev/mouse =&gt; X
 </screen
 ></informalexample>
 
-</para>
+</para
+><para
+>Заметим, что для запуска <command
+>debootstrap</command
+> может потребоваться урезанная версия библиотеки <classname
+>glibc</classname
+> (на данный момент GLIBC_2.3). Сам <command
+>debootstrap</command
+> &mdash; это просто сценарий оболочки, но из него запускаются различные утилиты, которым требуется <classname
+>glibc</classname
+>. </para>
   </sect2>
 
   <sect2>
@@ -1437,8 +1451,8 @@ mouse =&gt; /dev/psaux  =&gt; gpm =&gt; /dev/gpmdata -&gt; /dev/mouse =&gt; X
 # /etc/fstab: информация о статических файловых системах.
 #
 # файл. система  точка монтир. тип     параметры                дамп проход
-/dev/XXX         /             ext2    defaults                 0    0
-/dev/XXX         /boot         ext2    ro,nosuid,nodev          0    2
+/dev/XXX         /             ext3    defaults                 0    1
+/dev/XXX         /boot         ext3    ro,nosuid,nodev          0    2
 
 /dev/XXX         none          swap    sw                       0    0
 proc             /proc         proc    defaults                 0    0
@@ -1446,10 +1460,10 @@ proc             /proc         proc    defaults                 0    0
 /dev/fd0         /mnt/floppy   auto    noauto,rw,sync,user,exec 0    0
 /dev/cdrom       /mnt/cdrom    iso9660 noauto,ro,user,exec      0    0
 
-/dev/XXX         /tmp          ext2    rw,nosuid,nodev          0    2
-/dev/XXX         /var          ext2    rw,nosuid,nodev          0    2
-/dev/XXX         /usr          ext2    rw,nodev                 0    2
-/dev/XXX         /home         ext2    rw,nosuid,nodev          0    2
+/dev/XXX         /tmp          ext3    rw,nosuid,nodev          0    2
+/dev/XXX         /var          ext3    rw,nosuid,nodev          0    2
+/dev/XXX         /usr          ext3    rw,nodev                 0    2
+/dev/XXX         /home         ext3    rw,nosuid,nodev          0    2
 </screen
 ></informalexample
 > Выполните <userinput
@@ -1458,14 +1472,26 @@ proc             /proc         proc    defaults                 0    0
 >/etc/fstab</filename
 >, а для монтирования определённой файловой системы выполните: <informalexample
 ><screen>
-# mount /path   # e.g.: mount /usr
+# mount /path   # пример: mount /usr
 </screen
 ></informalexample
-> Вы можете монтировать файловую систему proc несколько раз и в произвольные места, хотя принято в /proc. Если вы не использовали <userinput
+> Вы можете монтировать файловую систему proc несколько раз и в произвольные места, хотя принято в <filename
+>/proc</filename
+>. Если вы не использовали <userinput
 >mount -a</userinput
 >, то перед тем как продолжить, убедитесь, что proc смонтирована: <informalexample
 ><screen
 ># mount -t proc proc /proc
+</screen
+></informalexample>
+
+</para
+><para
+>Команда <userinput
+>ls /proc</userinput
+> теперь должна показывать, что каталог не пустой. Если это не так, можно смонтировать proc за пределами chroot: <informalexample
+><screen
+># mount -t proc proc /mnt/debinst/proc
 </screen
 ></informalexample>
 
@@ -1482,7 +1508,9 @@ proc             /proc         proc    defaults                 0    0
 </screen
 ></informalexample>
 
-</para>
+</para
+><para
+>Заметим, что клавиатура не может быть настроена, пока работа производится в chroot, но настройка будет произведена после следующей перезагрузки. </para>
    </sect3>
 
    <sect3>
@@ -1630,7 +1658,7 @@ nameserver 192.168.9.100
 ><screen
 >boot=/dev/hda6
 root=/dev/hda6
-install=/boot/boot-menu.b
+install=menu
 delay=20
 lba32
 image=/vmlinuz

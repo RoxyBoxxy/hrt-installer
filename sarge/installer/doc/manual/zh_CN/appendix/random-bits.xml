@@ -1300,6 +1300,10 @@ mouse =&gt; /dev/psaux  =&gt; gpm =&gt; /dev/gpmdata -&gt; /dev/mouse =&gt; X
 ></informalexample>
 
 </para>
+<note
+><para
+>如果您打算将部分文件系统(例如，/usr)放到独立的分区，在进入下一阶段之前，需要手动创建和加载这些目录。 </para
+></note>
   </sect2>
 
   <sect2>
@@ -1348,7 +1352,17 @@ mouse =&gt; /dev/psaux  =&gt; gpm =&gt; /dev/gpmdata -&gt; /dev/mouse =&gt; X
 </screen
 ></informalexample>
 
-</para>
+</para
+><para
+>注意，运行 <command
+>debootstrap</command
+> 可能需要您有最小版本的 <classname
+>glibc</classname
+> (当前为 GLIBC_2.3)。 <command
+>debootstrap</command
+> 本身是一个 shell 脚本，但它会调用 <classname
+>glibc</classname
+> 的一下工具。 </para>
   </sect2>
 
   <sect2>
@@ -1437,8 +1451,8 @@ mouse =&gt; /dev/psaux  =&gt; gpm =&gt; /dev/gpmdata -&gt; /dev/mouse =&gt; X
 # /etc/fstab: static file system information.
 #
 # file system    mount point   type    options                  dump pass
-/dev/XXX         /             ext2    defaults                 0    0
-/dev/XXX         /boot         ext2    ro,nosuid,nodev          0    2
+/dev/XXX         /             ext3    defaults                 0    1
+/dev/XXX         /boot         ext3    ro,nosuid,nodev          0    2
 
 /dev/XXX         none          swap    sw                       0    0
 proc             /proc         proc    defaults                 0    0
@@ -1446,10 +1460,10 @@ proc             /proc         proc    defaults                 0    0
 /dev/fd0         /mnt/floppy   auto    noauto,rw,sync,user,exec 0    0
 /dev/cdrom       /mnt/cdrom    iso9660 noauto,ro,user,exec      0    0
 
-/dev/XXX         /tmp          ext2    rw,nosuid,nodev          0    2
-/dev/XXX         /var          ext2    rw,nosuid,nodev          0    2
-/dev/XXX         /usr          ext2    rw,nodev                 0    2
-/dev/XXX         /home         ext2    rw,nosuid,nodev          0    2
+/dev/XXX         /tmp          ext3    rw,nosuid,nodev          0    2
+/dev/XXX         /var          ext3    rw,nosuid,nodev          0    2
+/dev/XXX         /usr          ext3    rw,nodev                 0    2
+/dev/XXX         /home         ext3    rw,nosuid,nodev          0    2
 </screen
 ></informalexample
 > 您可以通过 <userinput
@@ -1469,6 +1483,16 @@ proc             /proc         proc    defaults                 0    0
 </screen
 ></informalexample>
 
+</para
+><para
+><userinput
+>ls /proc</userinput
+> 命令现在应该列出非空目录。如果失败，您应该从 chroot: 以为加载 proc。 <informalexample
+><screen
+># mount -t proc proc /mnt/debinst/proc
+</screen
+></informalexample>
+
 </para>
    </sect3>
 
@@ -1482,7 +1506,9 @@ proc             /proc         proc    defaults                 0    0
 </screen
 ></informalexample>
 
-</para>
+</para
+><para
+>注意，在 chroot 里面不能设置键盘，但重新启动以后可以。 </para>
    </sect3>
 
    <sect3>
@@ -1632,7 +1658,7 @@ nameserver 192.168.9.100
 ><screen
 >boot=/dev/hda6
 root=/dev/hda6
-install=/boot/boot-menu.b
+install=menu
 delay=20
 lba32
 image=/vmlinuz

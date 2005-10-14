@@ -1329,6 +1329,10 @@ mouse =&gt; /dev/psaux  =&gt; gpm =&gt; /dev/gpmdata -&gt; /dev/mouse =&gt; X
 ></informalexample>
 
 </para>
+<note
+><para
+>Se deseja ter partes do sistema de ficheiros (e.g. /usr) montados em partições separadas, você tem de criar e montar manualmente esses directórios antes de proceser para a próxima etapa. </para
+></note>
   </sect2>
 
   <sect2>
@@ -1377,7 +1381,17 @@ mouse =&gt; /dev/psaux  =&gt; gpm =&gt; /dev/gpmdata -&gt; /dev/mouse =&gt; X
 </screen
 ></informalexample>
 
-</para>
+</para
+><para
+>Note que correr <command
+>debootstrap</command
+> pode necessitar que tenha instalada uma versão minimalista da <classname
+>glibc</classname
+> (actualmente GLIBC_2.3). O próprio <command
+>debootstrap</command
+> é um script da shell, mas chama vários utilitários que necessitam da <classname
+>glibc</classname
+>. </para>
   </sect2>
 
   <sect2>
@@ -1454,7 +1468,7 @@ mouse =&gt; /dev/psaux  =&gt; gpm =&gt; /dev/gpmdata -&gt; /dev/mouse =&gt; X
    <title
 >Partições a Montar</title>
 <para
->Você necessita criar <filename
+>Você tem de criar <filename
 >/etc/fstab</filename
 >. <informalexample
 ><screen>
@@ -1463,11 +1477,11 @@ mouse =&gt; /dev/psaux  =&gt; gpm =&gt; /dev/gpmdata -&gt; /dev/mouse =&gt; X
 ></informalexample
 > Isto é um exemplo que você pode modificar à sua medida: <informalexample
 ><screen>
-# /etc/fstab: informação estática do sistema de ficheiros
+# /etc/fstab: informação estáctica do sistema de ficheiros
 #
 # file system    mount point   type    options                  dump pass
-/dev/XXX         /             ext2    defaults                 0    0
-/dev/XXX         /boot         ext2    ro,nosuid,nodev          0    2
+/dev/XXX         /             ext3    defaults                 0    0
+/dev/XXX         /boot         ext3    ro,nosuid,nodev          0    2
 
 /dev/XXX         none          swap    sw                       0    0
 proc             /proc         proc    defaults                 0    0
@@ -1475,17 +1489,17 @@ proc             /proc         proc    defaults                 0    0
 /dev/fd0         /mnt/floppy   auto    noauto,rw,sync,user,exec 0    0
 /dev/cdrom       /mnt/cdrom    iso9660 noauto,ro,user,exec      0    0
 
-/dev/XXX         /tmp          ext2    rw,nosuid,nodev          0    2
-/dev/XXX         /var          ext2    rw,nosuid,nodev          0    2
-/dev/XXX         /usr          ext2    rw,nodev                 0    2
-/dev/XXX         /home         ext2    rw,nosuid,nodev          0    2
+/dev/XXX         /tmp          ext3    rw,nosuid,nodev          0    2
+/dev/XXX         /var          ext3    rw,nosuid,nodev          0    2
+/dev/XXX         /usr          ext3    rw,nodev                 0    2
+/dev/XXX         /home         ext3    rw,nosuid,nodev          0    2
 </screen
 ></informalexample
-> Para montar todos os sistemas de ficheiros que tem especificado em  <filename
+> Para montar todos os sistemas de ficheiros que tem especificado em <filename
 >/etc/fstab</filename
 > utilize <userinput
 >mount -a</userinput
->, ou para montar individualmente os sistemas de ficheiros utilize: <informalexample
+>, ou para montar os sistemas de ficheiros individualmente utilize: <informalexample
 ><screen>
 # mount /path   # e.g.: mount /usr
 </screen
@@ -1495,6 +1509,16 @@ proc             /proc         proc    defaults                 0    0
 > certifique-se que monta o proc antes de continuar. <informalexample
 ><screen
 ># mount -t proc proc /proc
+</screen
+></informalexample>
+
+</para
+><para
+>O comando <userinput
+>ls /proc</userinput
+> deve agora mostrar um directório não-vazio. Se isto falhar, você pode montar o proc fora da chroot: <informalexample
+><screen
+># mount -t proc proc /mnt/debinst/proc
 </screen
 ></informalexample>
 
@@ -1511,7 +1535,9 @@ proc             /proc         proc    defaults                 0    0
 </screen
 ></informalexample>
 
-</para>
+</para
+><para
+>Note que o teclado não pode ser definido enquanto está no chroot, mas será configurado após o próximo reboot. </para>
    </sect3>
 
    <sect3>
@@ -1659,7 +1685,7 @@ nameserver 192.168.9.100
 ><screen
 >boot=/dev/hda6
 root=/dev/hda6
-install=/boot/boot-menu.b
+install=menu
 delay=20
 lba32
 image=/vmlinuz

@@ -1290,6 +1290,10 @@ $ mke2fs -j /dev/hda6
 ></informalexample>
 
 </para>
+<note
+><para
+>If you want to have parts of the filesystem (e.g. /usr) mounted on separate partitions, you will need to create and mount these directories manually before proceding with the next stage. </para
+></note>
   </sect2>
 
   <sect2>
@@ -1334,7 +1338,17 @@ $ mke2fs -j /dev/hda6
 </screen
 ></informalexample>
 
-</para>
+</para
+><para
+>Note that running <command
+>debootstrap</command
+> may require you to have a minimal version of <classname
+>glibc</classname
+> installed (currently GLIBC_2.3). <command
+>debootstrap</command
+> itself is a shell script, but it calls various utilities that require <classname
+>glibc</classname
+>. </para>
   </sect2>
 
   <sect2>
@@ -1411,20 +1425,22 @@ $ mke2fs -j /dev/hda6
    <title
 >Προσαρτήστε τα τμήματα</title>
 <para
->Πρέπει να δημιουργήσετε το αρχείο <filename
+>You need to create <filename
 >/etc/fstab</filename
 >. <informalexample
-><screen>
+><screen
+>
 # editor /etc/fstab
 </screen
 ></informalexample
-> Εδώ υπάρχει ένα δείγμα που μπορείτε να τροποποιήσετε ώστε να ταιριάζει στις ανάγκες σας: <informalexample
-><screen>
+> Here is a sample you can modify to suit: <informalexample
+><screen
+>
 # /etc/fstab: static file system information.
 #
 # file system    mount point   type    options                  dump pass
-/dev/XXX         /             ext2    defaults                 0    0
-/dev/XXX         /boot         ext2    ro,nosuid,nodev          0    2
+/dev/XXX         /             ext3    defaults                 0    1
+/dev/XXX         /boot         ext3    ro,nosuid,nodev          0    2
 
 /dev/XXX         none          swap    sw                       0    0
 proc             /proc         proc    defaults                 0    0
@@ -1432,26 +1448,39 @@ proc             /proc         proc    defaults                 0    0
 /dev/fd0         /mnt/floppy   auto    noauto,rw,sync,user,exec 0    0
 /dev/cdrom       /mnt/cdrom    iso9660 noauto,ro,user,exec      0    0
 
-/dev/XXX         /tmp          ext2    rw,nosuid,nodev          0    2
-/dev/XXX         /var          ext2    rw,nosuid,nodev          0    2
-/dev/XXX         /usr          ext2    rw,nodev                 0    2
-/dev/XXX         /home         ext2    rw,nosuid,nodev          0    2
+/dev/XXX         /tmp          ext3    rw,nosuid,nodev          0    2
+/dev/XXX         /var          ext3    rw,nosuid,nodev          0    2
+/dev/XXX         /usr          ext3    rw,nodev                 0    2
+/dev/XXX         /home         ext3    rw,nosuid,nodev          0    2
 </screen
 ></informalexample
-> Χρησιμοποιήστε την εντολή  <userinput
+> Use <userinput
 >mount -a</userinput
-> για να προσαρτήσετε όλα τα συστήματα αρχείων που έχετε προσδιορίσει στο  <filename
+> to mount all the file systems you have specified in your <filename
 >/etc/fstab</filename
->, ή για να προσαρτήσετε μεμονωμένα συστήματα αρχείων χρησιμοποιήστε την εντολή: <informalexample
-><screen>
+>, or to mount file systems individually use: <informalexample
+><screen
+>
 # mount /path   # e.g.: mount /usr
 </screen
 ></informalexample
->Μπορείτε να προσαρτήσετε το σύστημα αρχείων proc αρκετές φορές και σε αυθαίρετες τοποθεσίες, αν και το σημείο /proc είναι το σύνηθες. Αν δεν χρησιμοποιήσατε την εντολή <userinput
+> You can mount the proc file system multiple times and to arbitrary locations, though <filename
+>/proc</filename
+> is customary. If you didn't use <userinput
 >mount -a</userinput
->, βεβαιωθείτε να προσαρτήσετε το proc πριν συνεχίσετε: <informalexample
+>, be sure to mount proc before continuing: <informalexample
 ><screen
 ># mount -t proc proc /proc
+</screen
+></informalexample>
+
+</para
+><para
+>The command <userinput
+>ls /proc</userinput
+> should now show a non-empty directory. Should this fail, you may be able to mount proc from outside the chroot: <informalexample
+><screen
+># mount -t proc proc /mnt/debinst/proc
 </screen
 ></informalexample>
 
@@ -1468,7 +1497,9 @@ proc             /proc         proc    defaults                 0    0
 </screen
 ></informalexample>
 
-</para>
+</para
+><para
+>Note that the keyboard cannot be set while in the chroot, but will be configured for the next reboot. </para>
    </sect3>
 
    <sect3>
@@ -1608,11 +1639,11 @@ nameserver 192.168.9.100
 ><screen
 >boot=/dev/hda6
 root=/dev/hda6
-install=/boot/boot-menu.b
+install=menu
 delay=20
 lba32
 image=/vmlinuz
-label=Debian 
+label=Debian
 </screen
 ></informalexample>
 
