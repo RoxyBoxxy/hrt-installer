@@ -293,6 +293,7 @@ configure_apt () {
 
 	[ ! -d /target/etc/apt ] && mkdir -p /target/etc/apt
 	if [ "$PROTOCOL" = file ] ; then
+		: > /target/etc/apt/sources.list
 		# This assumes the file protocol is only used for CD (image) installs
 		if ! chroot /target apt-cdrom -m add >>$LOGFILE 2>&1 ; then
 			error "error while running apt-cdrom"
