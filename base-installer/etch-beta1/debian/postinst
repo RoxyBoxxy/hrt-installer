@@ -297,8 +297,6 @@ configure_apt () {
 		# This assumes the file protocol is only used for CD (image) installs
 		if ! chroot /target apt-cdrom -m add >>$LOGFILE 2>&1 ; then
 			error "error while running apt-cdrom"
-		else
-			chroot /target apt-get update >>$LOGFILE 2>&1
 		fi
 	else
 		echo "deb $APTSOURCE $DISTRIBUTION $COMPONENTS" > /target/etc/apt/sources.list
