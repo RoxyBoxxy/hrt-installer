@@ -1,0 +1,74 @@
+Template: base-installer/kernel/image
+Type: string
+Default: kernel-image
+Default[hppa]: kernel-image-2.4.27-32
+Default[i386]: kernel-image-2.4.27-2-386
+Default[ia64]: kernel-image-2.4.27-2-itanium-smp
+Default[s390]: kernel-image-2.4.27-2-s390
+Description: default kernel image if nothing better is found
+
+Template: base-installer/kernel/image-2.6
+Type: string
+Default: linux-image
+Default[hppa]: kernel-image-2.6.12-1-parisc
+Default[i386]: linux-image-2.6-386
+Default[ia64]: linux-image-2.6-itanium-smp
+Default[amd64]: linux-image-2.6-amd64-generic
+Description: default kernel image if nothing better is found (2.6)
+
+Template: base-installer/kernel/linux/initrd
+Type: boolean
+Default: true
+Default[s390]: false
+Default[hppa]: false
+Default[mips]: false
+Default[mipsel]: false
+Default[powerpc]: false
+Default[m68k]: false
+Default[sparc]: true
+Description: kernel needs an initrd (linux only)
+
+Template: base-installer/kernel/linux/initrd-2.6
+Type: boolean
+Default: true
+Default[s390]: false
+Default[hppa]: true
+Default[mips]: false
+Default[mipsel]: false
+Default[m68k]: false
+Default[sparc]: true
+Description: kernel needs an initrd (linux 2.6 only)
+
+Template: base-installer/kernel/linux/initramfs-2.6
+Type: boolean
+Default: true
+Default[hppa]: false
+Default[ia64]: false
+# This only indicates whether to use an initramfs or not (and will be
+# ignored unless the appropriate base-installer/kernel/linux/initrd* is
+# true). Create a separate question with its own architecture-specific
+# defaults if you want to select among different initramfs creation tools.
+Description: use an initramfs (linux 2.6 only)
+
+Template: base-installer/kernel/linux/extra-packages
+Type: string
+Default:
+Description: extra packages to install with init*-tools (linux only)
+
+Template: base-installer/kernel/linux/extra-packages-2.6
+Type: string
+Default:
+Description: extra packages to install with init*-tools (linux 2.6 only)
+
+Template: base-installer/kernel/linux/link_in_boot
+Type: boolean
+Default: true
+Default[alpha]: false
+Default[i386]: false
+Default[amd64]: false
+Default[ia64]: false
+Default[mips]: false
+Default[mipsel]: false
+Default[m68k]: false
+Default[hppa]: true
+Description: kernel needs a link in /boot/ (linux only)
