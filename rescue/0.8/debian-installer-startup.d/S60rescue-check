@@ -1,0 +1,8 @@
+#! /bin/sh -e
+
+. /usr/share/debconf/confmodule
+
+db_get rescue/enable
+if [ "$RET" = true ]; then
+	anna-install rescue-mode
+fi
