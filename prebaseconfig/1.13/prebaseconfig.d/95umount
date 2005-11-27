@@ -1,0 +1,14 @@
+#! /bin/sh
+#
+# Umount all mounted file systems
+
+set -e
+
+for mpoint in $(cut -d ' ' -f 2 /proc/mounts | sort -r); do
+	if [ "$mpoint" = / ]; then
+		umount /proc || true
+		umount / || true
+	elif [ "$mpoint" != /proc ]; then
+		umount $mpoint || true
+	fi
+done
