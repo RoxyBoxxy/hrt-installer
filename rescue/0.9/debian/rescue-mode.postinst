@@ -1,0 +1,182 @@
+#! /bin/sh -e
+
+. /usr/share/debconf/confmodule
+
+# Be nice to monolithic users.
+db_get rescue/enable
+[ "$RET" = true ] || exit 0
+
+log () {
+	logger -t rescue-mode "$@"
+}
+
+try_load_module () {
+	log-output -t rescue modprobe "$1" || true
+}
+
+try_load_module ext2
+try_load_module ext3
+try_load_module jfs
+try_load_module reiserfs
+try_load_module xfs
+
+# Linux root filesystems won't be on vfat, but this may be useful anyway ...
+try_load_module vfat
+
+# RAID support
+try_load_module md
+try_load_module raid0
+try_load_module raid1
+try_load_module raid5
+log-output -t rescue mdrun || true
+
+# LVM support
+try_load_module dm-mod
+try_load_module lvm-mod
+log-output -t rescue pvscan || true
+log-output -t rescue vgscan || true
+
+db_capb backup
+
+# Choose a root filesystem.
+choose_root () {
+	PARTITIONS="$(find /dev/discs -follow -name part\* | sort | \
+		tr '\n' , | sed 's/,$//; s/,/, /g')"
+
+	if lvdisplay -c | cut -d: -f4 | grep 0 >/dev/null; then
+		# Some unavailable logical volumes; activate them
+		log-output -t rescue vgchange -a y || true
+	fi
+	LVMPARTS="$(lvdisplay -c | sed 's/^ *//' | cut -d: -f1 | sort | \
+		tr '\n' , | sed 's/,$//; s/,/, /g')" || LVMPARTS=
+	if [ "$LVMPARTS" ]; then
+		PARTITIONS="${PARTITIONS:+$PARTITIONS, }$LVMPARTS"
+	fi
+
+	if [ -z "$PARTITIONS" ]; then
+		# TODO: need a sensible error here, or perhaps drop through
+		# to a fallback shell?
+		log "no partitions found!"
+		exit 1
+	fi
+	log "partitions found: $PARTITIONS"
+	db_subst rescue/root PARTITIONS "$PARTITIONS"
+
+	db_input critical rescue/root
+	db_go || exit 10
+	db_get rescue/root
+	export RESCUE_ROOTDEV="$RET"
+	log "selected root device '$RESCUE_ROOTDEV'"
+	if [ ! -e "$RESCUE_ROOTDEV" ]; then
+		log "'$RESCUE_ROOTDEV' does not exist"
+		db_subst rescue/no-such-device DEVICE "$RESCUE_ROOTDEV"
+		db_input critical rescue/no-such-device
+		# Since continuing returns to the rescue/root question,
+		# backing up returns to the main menu.
+		db_go || exit 10
+		continue
+	fi
+
+	mkdir -p /target
+	log-output -t rescue umount /target || true
+	if ! log-output -t rescue mount "$RESCUE_ROOTDEV" /target; then
+		log "mount '$RESCUE_ROOTDEV' /target failed"
+		db_subst rescue/no-such-device DEVICE "$RESCUE_ROOTDEV"
+		db_input critical rescue/mount-failed
+		# Since continuing returns to the rescue/root question,
+		# backing up returns to the main menu.
+		db_go || exit 10
+		continue
+	fi
+}
+
+# Prepare a menu of the things you can do to this root filesystem.
+prep_menu () {
+	mkdir -p /var/lib/rescue
+	>/var/lib/rescue/menu-mapping
+	CHOICES=
+	ITEMS="$(find /lib/rescue.d/ -type f -perm -100 | sort)"
+	for item in $ITEMS; do
+		base="${item##*/}"
+		name="${base#[0-9][0-9]}"
+		case $name in
+			*.*)	continue ;;
+		esac
+		if [ -x "$item.tst" ] && ! "$item.tst"; then
+			continue
+		fi
+		db_subst "rescue/menu/$name" DEVICE "$RESCUE_ROOTDEV" \
+			|| continue
+		db_metaget "rescue/menu/$name" description || continue
+		echo "$base:$RET" >> /var/lib/rescue/menu-mapping
+		RET="$(echo "$RET" | sed 's/,/\\,/g')"
+		CHOICES="${CHOICES:+$CHOICES, }$RET"
+	done
+	db_subst rescue/menu CHOICES "$CHOICES"
+	db_subst rescue/menu DEVICE "$RESCUE_ROOTDEV"
+}
+
+# Work out which menu item was selected.
+get_menu_item () {
+	newline='
+'
+	IFS_SAVE="$IFS"
+	IFS="$newline"
+	for line in $(cat /var/lib/rescue/menu-mapping); do
+		IFS="$IFS_SAVE"
+		if [ "${line#*:}" = "$1" ]; then
+			echo "${line%%:*}"
+			return
+		fi
+		IFS="$newline"
+	done
+	IFS="$IFS_SAVE"
+}
+
+STATE=1
+while :; do
+	case $STATE in
+		1)
+			choose_root
+			STATE=2
+			;;
+		2)
+			prep_menu
+			db_input critical rescue/menu
+			if ! db_go; then
+				STATE=1
+				continue
+			fi
+			db_get rescue/menu
+			item="$(get_menu_item "$RET")"
+			if [ -z "$item" ]; then
+				log "Could not find menu item for '$RET'!"
+				continue
+			fi
+			db_input high "rescue/$item/intro" || true
+			db_go || true
+			code=0
+			"/lib/rescue.d/$item" || code=$?
+			case $code in
+				0)	: ;;
+				10)	STATE=1 ;;
+				*)
+					# This is just a fallback; on error,
+					# rescue operations should display a
+					# more specific error message and
+					# exit zero to indicate that the
+					# error has been handled.
+					db_capb
+					db_subst rescue/menu-error OPERATION "$item"
+					db_subst rescue/menu-error CODE "$code"
+					db_input critical rescue/menu-error
+					db_go || true
+					db_capb backup
+					;;
+			esac
+			;;
+		*)
+			exit 10
+			;;
+	esac
+done
