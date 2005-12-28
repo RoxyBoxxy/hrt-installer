@@ -1,7 +1,74 @@
 <!-- retain these comments for translator revision tracking -->
-<!-- $Id$ -->
+<!-- $Id: $ -->
 
- <sect2 id="base-config-mta">
+   <sect3 id="pkgsel">
+   <title>Selecting and Installing Software</title>
+
+<para>
+
+During the installation process, you are given the opportunity to select
+additional software to install. Rather than picking individual software
+packages from the &num-of-distrib-pkgs; available packages, this stage of
+the installation process focuses on selecting and installing predefined
+collections of software to quickly set up your computer to perform various
+tasks.
+
+</para><para>
+
+So, you have the ability to choose <emphasis>tasks</emphasis> first,
+and then add on more individual packages later.  These tasks loosely
+represent a number of different jobs or things you want to do with
+your computer, such as <quote>Desktop environment</quote>,
+<quote>Web server</quote>, or <quote>Print server</quote><footnote>
+
+<para>
+
+You should know that to present this list, the installer is merely
+invoking the <command>tasksel</command> program. It can be
+run at any time after installation to install (or remove) more
+packages, or you can use a more fine-grained tool such as <command>aptitude</command>.
+If you are looking for a specific single package, after
+installation is complete, simply run <userinput>aptitude install
+<replaceable>package</replaceable></userinput>, where
+<replaceable>package</replaceable> is the name of the package you are
+looking for.
+
+</para>
+
+</footnote>. <xref linkend="tasksel-size-list"/> lists the space
+requirements for the available tasks.
+
+</para><para>
+
+Once you've selected your tasks, select
+<guibutton>Ok</guibutton>. At this point,
+<command>aptitude</command> will install the packages you've
+selected.
+
+<note><para>
+
+In the standard user interface of the installer, you can use the space bar
+to toggle selection of a task.
+
+</para></note>
+
+<note><para>
+
+Note that some tasks may be pre-selected based on the characteristics of the
+computer you are installing. If you disagree with these selections you can
+un-select the tasks. You can even opt to install no tasks at all at this point.
+
+</para></note>
+
+</para><para>
+
+Each package you selected with <command>tasksel</command> is downloaded,
+unpacked and then installed in turn by the <command>apt-get</command> and
+<command>dpkg</command> programs. If a particular program needs more
+information from the user, it will prompt you during this process.
+
+</para>
+ <sect4 id="config-mta">
  <title>Configuring Your Mail Transport Agent</title>
 
 <para>
@@ -90,4 +157,5 @@ complete. More information about <command>exim4</command> may be found
 under <filename>/usr/share/doc/exim4</filename>.
 
 </para>
- </sect2>
+ </sect4>
+   </sect3>
