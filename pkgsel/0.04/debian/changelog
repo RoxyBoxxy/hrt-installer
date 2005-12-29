@@ -1,0 +1,139 @@
+pkgsel (0.04) unstable; urgency=low
+
+  * Use in-target for purging, debconf seems to be talking to cdebconf during
+    the purge otherwise.
+  * Run dpkg --configure -a if tasksel fails to avoid leaving the system
+    with packages in an unconfigured state and breaking pkgsel re-runs.
+  * Detect cleanup failure and log about it and still take down the progress
+    bar.
+
+  [ Updated translations ]
+  * Greek, Modern (1453-) (el.po) by quad-nrg.net
+
+ -- Joey Hess <joeyh@debian.org>  Thu, 29 Dec 2005 08:05:05 -0500
+
+pkgsel (0.03) unstable; urgency=low
+
+  [ Colin Watson ]
+  * Propagate debian-installer/keymap from cdebconf to /target, used by
+    xserver-xorg to infer the X keymap.
+  * Use loops for diversion handling so that the list is kept in just one
+    place.
+  * Stop removing popularity-contest for now until the cdebconf PURGE crash
+    is fixed.
+
+  [ Joey Hess ]
+  * Consolidate debconf-copydbs into one command.
+  * Pass -q to a few apt-get commands, to avoid gratuotous logging of download
+    progress (the main cause of this will be fixed in tasksel though).
+  * Propigate out nonzero exit codes from tasksel to main-menu so that it can
+    signal a back up.
+
+  [ Updated translations ]
+  * Catalan (ca.po) by Guillem Jover
+
+ -- Colin Watson <cjwatson@debian.org>  Mon, 26 Dec 2005 23:30:48 +0000
+
+pkgsel (0.02) unstable; urgency=low
+
+  [ Joey Hess ]
+  * Set LANG to C in postinst so that the bare chroot calls don't trigger
+    perl warning messages for C.UTF-8 locale. (See #344159)
+  * Note that this does not affect the LANG set for the main package
+    installation run, which will be handled by in-target.
+  * Fix progress bar title.
+
+  [ Colin Watson ]
+  * Fix di-utils build-dependency, and bump required version to 1.20 for
+    in-target.
+  * Capitalise db_progress subcommand names.
+  * Remove trailing spaces from pkgsel.templates, which confused cdebconf.
+  * Change section to debian-installer (fixes lintian warning).
+
+  [ Updated translations ]
+  * Spanish (es.po) by Javier Fernández-Sanguino Peña
+  * Indonesian (id.po) by Parlin Imanuel Toh
+  * Italian (it.po) by Giuseppe Sacco
+  * Korean (ko.po) by Sunjae park
+  * Macedonian (mk.po) by Georgi Stanojevski
+  * Dutch (nl.po) by Frans Pop
+  * Slovak (sk.po) by Peter Mann
+  * Slovenian (sl.po) by Jure Čuhalev
+  * Tagalog (tl.po) by Eric Pareja
+
+ -- Colin Watson <cjwatson@debian.org>  Sat, 24 Dec 2005 18:31:54 +0000
+
+pkgsel (0.01) unstable; urgency=low
+
+  [ Joey Hess ]
+  * First release, split off from base-config.
+  * Needs tasksel 2.36 and debconf 1.4.62.
+
+  [ Christian Perrier ]
+  * Change the menu entry to be more friendly to non technical users
+  * Add a few comments for translators
+
+  [ Joey Hess ]
+  * Propagate three debconf variables from cdebconf to /target:
+    debian-installer/language, debian-installer/country
+      sed by dictionaries-common to determine which dictionary to default to.
+    passwd/username
+      Used by exim4-config to determine where to send root mail.
+
+  [ Updated translations ]
+  * Arabic (ar.po) by Ossama M. Khayat
+  * Belarusian (be.po) by Andrei Darashenka
+  * Bulgarian (bg.po) by Ognyan Kulev
+  * Bengali (bn.po) by Baishampayan Ghose
+  * Bosnian (bs.po) by Safir Šećerović
+  * Catalan (ca.po) by Guillem Jover
+  * Czech (cs.po) by Miroslav Kure
+  * Welsh (cy.po) by Dafydd Harries
+  * Danish (da.po) by Claus Hindsgaul
+  * German (de.po) by Jens Seidel
+  * Greek, Modern (1453-) (el.po) by Greek Translation Team
+  * Esperanto (eo.po) by Serge Leblanc
+  * Spanish (es.po) by Javier Fernández-Sanguino Peña
+  * Estonian (et.po) by Siim Põder
+  * Basque (eu.po) by Piarres Beobide
+  * Persian (fa.po) by Arash Bijanzadeh
+  * Finnish (fi.po) by Tapio Lehtonen
+  * French (fr.po) by Christian Perrier
+  * Galician (gl.po) by Jacobo Tarrio
+  * Hebrew (he.po) by Lior Kaplan
+  * Hindi (hi.po) by Nishant Sharma
+  * Croatian (hr.po) by Krunoslav Gernhard
+  * Hungarian (hu.po) by VEROK Istvan
+  * Indonesian (id.po) by Arief S Fitrianto
+  * Icelandic (is.po) by David Steinn Geirsson
+  * Italian (it.po) by Giuseppe Sacco
+  * Japanese (ja.po) by Kenshi Muto
+  * Korean (ko.po) by Sunjae park
+  * Kurdish (ku.po) by Erdal Ronahi
+  * Lithuanian (lt.po) by Kęstutis Biliūnas
+  * Latvian (lv.po) by Aigars Mahinovs
+  * Malagasy (mg.po) by Jaonary Rabarisoa
+  * Macedonian (mk.po) by Georgi Stanojevski
+  * Bokmål, Norwegian (nb.po) by Bjørn Steensrud
+  * Dutch (nl.po) by Bart Cornelis
+  * Norwegian Nynorsk (nn.po)
+  * Norwegian Nynorsk (pa_IN.po) by Amanpreet Singh Alam
+  * Polish (pl.po) by Bartosz Fenski
+  * Portuguese (pt.po) by Miguel Figueiredo
+  * Portuguese (Brazil) (pt_BR.po) by André Luís Lopes
+  * Romanian (ro.po) by Eddy Petrişor
+  * Russian (ru.po) by Yuri Kozlov
+  * Slovak (sk.po) by Peter Mann
+  * Slovenian (sl.po) by Jure Čuhalev
+  * Albanian (sq.po) by Elian Myftiu
+  * Swedish (sv.po) by Daniel Nylander
+  * Tagalog (tl.po) by Eric Pareja
+  * Turkish (tr.po) by Recai Oktaş
+  * Ukrainian (uk.po) by Eugeniy Meshcheryakov
+  * Vietnamese (vi.po) by Clytie Siddall
+  * Wolof (wo.po) by Mouhamadou Mamoune Mbacke
+  * Xhosa (xh.po) by Canonical Ltd
+  * Simplified Chinese (zh_CN.po) by Ming Hua
+  * Traditional Chinese (zh_TW.po) by Tetralet
+
+ -- Joey Hess <joeyh@debian.org>  Fri, 16 Dec 2005 13:10:03 -0500
