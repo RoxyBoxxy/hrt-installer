@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<!-- original version: 26993 -->
+<!-- original version: 32251 -->
 
 <appendix id="installation-howto">
 <title>Howto de Instalação</title>
@@ -12,7 +12,8 @@ arquitetura &arch-title; (<quote>&architecture;</quote>) com o novo
 deve conter todas as informações que precisa para a 
 maioria das instalações. Se precisar de mais detalhes, 
 nós faremos um link para explicações mais detalhadas no 
-<link linkend="debian_installation_guide">Manual de Instalação da &debian;</link>.
+<link linkend="debian_installation_guide">Manual de Instalação do
+&debian;</link>.
 
 </para>
 
@@ -24,7 +25,7 @@ nós faremos um link para explicações mais detalhadas no
 O programa de instalação da Debian ainda está em estágio de desenvolvimento.
 </phrase>
 Caso encontre problemas durante a instalação, veja
-<xref linkend="submit-bug" /> por instruções de como relata-las. Se 
+<xref linkend="submit-bug" /> por instruções de como relatá-las. Se 
 tiver questões que não podem ser respondidas por este documento, 
 por favor direciona-as para a lista de discussão debian-boot
 (&email-debian-boot-list;) ou pergunte no IRC (no canal #debian-boot
@@ -44,7 +45,8 @@ página oficial do &d-i;</ulink>.
 O time do debian-cd oferece imagens de CD construídas usando o &d-i; 
 através do endereço
 <ulink url="&url-debian-cd;">Página do CD da Debian</ulink>.
-Para mais informações sobre onde obter os CDs, veja <xref linkend="official-cdrom" />.
+Para mais informações sobre onde obter os CDs, veja
+<xref linkend="official-cdrom" />.
 
 </para><para>
 
@@ -63,18 +65,18 @@ As subseções abaixo lhe darão detalhes sobre que imagens de disco
 deverá copiar para cada método de instalação possível.
 
 </para>
-  
+
   <sect2 id="howto-getting-images-cdrom">
   <title>CDROM</title>
-  
+
 <para>
 
-Existem duas imagens de CD netinst que podem ser usada para instalar
-&releasename; com o &d-i;. Estas imagens tem a intenção de serem 
-inicializadas através do CD e instalar pacotes adicionais através da 
-rede, por isto o nome 'netinst'. A diferença entre as duas imagens é porque 
+Existem duas imagens de CD netinst que podem ser usadas para instalar
+&releasename; com o &d-i;. Estas imagens tem a intenção de serem
+inicializadas através do CD e instalar pacotes adicionais através da
+rede, por isto o nome 'netinst'. A diferença entre as duas imagens é porque
 na imagem completa do netinst também estão incluídos os pacotes do sistema
-básico, assim você terá que baixa-las da internet se estiver usando um 
+básico, assim você terá que baixá-las da internet se estiver usando uma
 imagem no tamanho de um cartão de visita. Você somente precisará do primeiro
 CD do conjunto.
 
@@ -91,23 +93,22 @@ durante a inicialização. Veja
 
 </para>
   </sect2>
-  
+
   <sect2 condition="supports-floppy-boot" id="howto-getting-images-floppy">
   <title>Disquetes</title>
 <para>
 
 Caso não possa inicializar através do CD, você poderá baixar imagens de 
 disquetes para fazer a instalação da Debian. Você precisará da imagem
-<filename>floppy/boot.img</filename>, da
-<filename>floppy/root.img</filename> e possivelmente um dos disquetes de 
-controladores.
+<filename>floppy/boot.img</filename>, da <filename>floppy/root.img</filename> 
+e possivelmente um dos disquetes de controladores.
 
 </para><para>
 
-O disquete de partida é o que tem o arquivo <filename>boot.img</filename> gravado.
-Este disquetes, quando inicializado, solicitará que seja inserido um segundo 
-disquete &mdash;
-use o disquete com a imagem <filename>root.img</filename> gravada.
+O disquete de partida é o que tem o arquivo <filename>boot.img</filename> 
+gravado. Este disquete, quando inicializado, solicitará que seja inserido um 
+segundo disquete &mdash; use o disquete com a imagem
+<filename>root.img</filename> gravada.
 
 </para><para>
 
@@ -124,19 +125,19 @@ de controladores para completar a instalação usando o CD.
 
 </para><para>
 
-Os disquetes são um dos tipos de mídia menos confiável entre todas as 
+Os disquetes são um dos tipos de mídia menos confiável entre todas as
 disponíveis, assim esteja preparado para a possibilidade de encontrar muitos
 disquetes defeituosos (veja <xref linkend="unreliable-floppies" />). Cada
-arquivo <filename>.img</filename> que baixar precisa ser gravado em um 
-disquete correspondente; você pode usar o comando <command>dd</command> para 
-grava-lo para /dev/fd0 ou algum outro método
+arquivo <filename>.img</filename> que baixar precisa ser gravado em um
+disquete correspondente; você pode usar o comando <command>dd</command> para
+gravá-lo para /dev/fd0 ou algum outro método
 (veja <xref linkend="create-floppy" /> para detalhes).
-Como você gravará mais de um disquete. É uma boa idéia colar etiquetas para 
+Como você gravará mais de um disquete. É uma boa idéia colar etiquetas para
 identificar cada disquete.
 
 </para>
   </sect2>
-  
+
   <sect2 condition="bootable-usb" id="howto-getting-images-usb">
   <title>Memory stick USB/Pen drive</title>
 <para>
@@ -155,7 +156,7 @@ acomoda-la. É claro que isto destruirá tudo que tiver gravado na memory
 stick. Então monte a memory stick, que agora terá um sistema de arquivos 
 fat dentro dela. A seguir, baixe a imagem de CD da Debian netinst e copie 
 aquele arquivo para o memory stick; qualquer nome de arquivo que der para 
-ele é permitido, desde que termine em ".iso".
+ele é permitido, desde que termine em <literal>.iso</literal>.
 
 </para><para>
 
@@ -165,12 +166,13 @@ pequenas. Para detalhes, veja <xref linkend="boot-usb-files" />.
 
 </para><para arch="i386">
 
-Alguns tipos de BIOS não podem inicializar diretamente de dispositivos USB. 
-Você pode precisar configurar sua BIOS para inicializar através de um 
-dispositivo "removível" ou até mesmo através de um "USB-ZIP" para faze-la
-iniciar diretamente a partir do dispositivo USB. Caso ela não faça, você 
-poderá inicializar através de um disquete e usar a memória stick USB para fazer 
-o resto da instalação. Para dicas úteis e detalhes, veja <xref linkend="usb-boot" />.
+Alguns tipos de BIOS não podem inicializar diretamente de dispositivos USB.
+Você pode precisar configurar sua BIOS para inicializar através de um
+<quote>dispositivo removível</quote> ou até mesmo através de um
+<quote>USB-ZIP</quote> para fazê-la iniciar diretamente a partir do dispositivo
+USB. Caso ela não faça, você poderá inicializar através de um disquete e usar a
+memória USB para fazer o resto da instalação. Para dicas úteis e detalhes, veja
+<xref linkend="usb-boot" />.
 
 </para><para arch="powerpc">
 
@@ -180,7 +182,7 @@ como fazer isto, veja <xref linkend="usb-boot" />.
 
 </para>
   </sect2>
-  
+
   <sect2 id="howto-getting-images-netboot">
   <title>Inicializando através da rede</title>
 <para>
@@ -203,7 +205,7 @@ Para instruções detalhadas, veja <xref linkend="install-tftp" />.
 
 </para>
   </sect2>
-  
+
   <sect2 id="howto-getting-images-hard-disk">
   <title>Inicializando através do disco rígido</title>
 <para>
@@ -213,8 +215,8 @@ usando apenas um disco rígido existente, que pode já ter um sistema operacional
 diferente instalado. Baixe o arquivo
 <filename>hd-media/initrd.gz</filename>, <filename>hd-media/vmlinuz</filename>
 e uma imagem de CD da Debian para o diretório raíz do disco rígido. Tenha 
-certeza que o nome do arquivo da imagem de CD finalize com ".iso". Agora resta
-apenas inicializar o linux com o initrd.
+certeza que o nome do arquivo da imagem de CD finalize com 
+<literal>.iso</literal>. Agora resta apenas inicializar o linux com o initrd.
 <phrase arch="i386">
 <xref linkend="boot-initrd" /> explica a forma de como fazer isto.
 </phrase>
@@ -231,23 +233,35 @@ Assim que o programa de instalação for iniciado, você verá a tela inicial.
 Pressione &enterkey; para inicializar ou leia as instruções para outros
 métodos de inicialização e parâmetros (veja <xref linkend="boot-parms" />).
 <phrase arch="i386">
+<phrase condition="sarge">
 Se desejar um kernel 2.6, digite <userinput>linux26</userinput> no aviso de 
 <prompt>boot:</prompt>.
+</phrase>
+<phrase condition="etch">
+Se desejar um kernel 2.4, digite <userinput>linux24</userinput> no aviso de 
+<prompt>boot:</prompt>.
+</phrase>
 <footnote><para>
 
+<phrase condition="sarge">
 O kernel 2.6 está disponível para a maioria dos métodos de inicialização, mas 
 não quando está inicializando a partir de um disquete.
- 
+</phrase>
+<phrase condition="etch">
+O kernel 2.6 é o padrão para a maioria dos métodos de inicialização, mas 
+não quando está inicializando a partir de um disquete.
+</phrase>
+
 </para></footnote>
 </phrase>
 
 </para><para>
 
 Após algum tempo será solicitado que escolha seu idioma. Use as 
-setas de teclado para selecionar um idioma e pressione &enterkey; para continuar. 
-Em seguida, você será perguntado para selecionar um país, com as escolhas incluindo
-países onde o idioma é falado. Caso não esteja na lista simples, uma lista de todos
-os países do mundo estará disponível.
+setas de teclado para selecionar um idioma e pressione &enterkey; para 
+continuar. Em seguida, você será perguntado para selecionar um país, com as 
+escolhas incluindo países onde o idioma é falado. Caso não esteja na lista 
+simples, uma lista de todos os países do mundo estará disponível.
 
 </para><para>
 
@@ -256,8 +270,8 @@ a não ser que conheça um modelo melhor.
 
 </para><para>
 
-Agora retorne enquanto o debian-installer detecta alguns de seus hardwares e 
-carregue o resto a partir de um CD, disquete, USB, etc.
+Agora aguarde enquanto o debian-installer detecta alguns de seus hardwares e 
+carrega o restante do instalador a partir de um CD, disquete, USB, etc.
 
 </para><para>
 
@@ -277,19 +291,19 @@ o particionamento manual através do menu.
 </para><para>
 
 Na próxima tela você verá sua tabela de partições, como as partições 
-devem ser formatadas e aonde serão montadas. Selecione a partição para
-modificar ou apaga-la. Se não fizer o particionamento automático, você 
-deverá ser capaz de selecionar "Finalizar o Particionamento" através do 
-menu para usar as opções já configuradas.
-Lembre-se de escolher pelo menos uma partição para espaço swap e para 
-montar a partição em <filename>/</filename>. A seção 
+devem ser formatadas e onde serão montadas. Selecione a partição para
+modificar ou apagá-la. Se não fizer o particionamento automático, você 
+deverá ser capaz de selecionar <guimenuitem>Finalizar o
+Particionamento</guimenuitem> através do menu para usar as opções já 
+configuradas. Lembre-se de escolher pelo menos uma partição para espaço swap
+e para montar a partição em <filename>/</filename>. A seção 
 <xref linkend="partitioning" /> tem mais informações relacionadas com o 
 particionamento.
 
 </para><para>
 
 Agora o &d-i; irá formatar suas partições e iniciar a instalação do sistema
-básico, que pode levar algum tempo. Isto é seguido pela instalação de um 
+básico, que pode levar algum tempo. Isto é seguido pela instalação de um
 kernel.
 
 </para><para>
@@ -298,8 +312,8 @@ O último passo é instalar um gerenciador de partida. Caso o programa
 de instalação detectar outro sistema operacional em seu computador, ele 
 o adicionará no menu de inicialização e lhe informará isto. 
 <phrase arch="i386">Por padrão, o GRUB será instalado no registro mestre de 
-inicialização de seu primeiro disco rígido, que é uma boa escolha. Você será capaz de 
-alterar aquela escolha e instala-lo em qualquer outro lugar.
+inicialização de seu primeiro disco rígido, que é uma boa escolha. Você será
+capaz de alterar aquela escolha e instalá-lo em qualquer outro lugar.
 </phrase>
 
 </para><para>
@@ -321,19 +335,26 @@ Se precisar de mais informações relacionadas com o processo de instalação, veja
 <para>
 
 Caso tenha feito uma instalação com sucesso usando o &d-i;,
-dedique algum tempo e nos envie um relatório para tomar conhecimento disto. 
+por favor, dedique algum tempo e nos envie um relatório. 
+<phrase condition="sarge">
 Existe um modelo chamado
 <filename>install-report.template</filename> do diretório 
-<filename>/root</filename> em um sistema recentemente instalado. Por favor, o 
-preencha como um bug no pacote <classname>installation-reports</classname>, 
+<filename>/root</filename> em um sistema recentemente instalado. Por favor,
+preencha-o como um bug no pacote <classname>installation-reports</classname>, 
 como explicado em <xref linkend="submit-bug" />.
+</phrase>
+<phrase condition="etch">
+O caminho mais simples para fazer isto é instalar o pacote reportbug
+(<command>apt-get install reportbug</command>), e executar
+<command>reportbug installation-report</command>.
+</phrase>
 
 </para><para>
 
 Caso não tenha conseguido chegar no base-config ou aconteceu algum 
 outro problema, a razão mais provável é que tenha encontrado um bug 
 no debian-installer. Para melhorar o programa de instalação é importante 
-que nós tomemos conhecimento sobre isto, assim leve algum tempo para relata-lo. 
+que nós tomemos conhecimento sobre isto, assim leve algum tempo para relatá-lo. 
 Você poderá usar o relatório de instalação para relatar problemas; caso 
 falhe completamente, veja <xref linkend="problem-report" />.
 
@@ -344,8 +365,9 @@ falhe completamente, veja <xref linkend="problem-report" />.
  <title>E finalmente...</title>
 <para>
 
-Nós esperamos que sua instalação da Debian tenha sido prazerosa e que 
-achou a Debian útil. Recomendamos agora a leitura de <xref linkend="post-install" />.
+Nós esperamos que sua instalação do Debian tenha sido prazerosa e que 
+achou o Debian útil. Recomendamos agora a leitura de
+<xref linkend="post-install" />.
 
 </para>
  </sect1>

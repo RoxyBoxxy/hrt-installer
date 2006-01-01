@@ -63,9 +63,9 @@
 >MILO</command
 > 在当前生产型 Alpha 系统上并没有实现(从 2000 年二月份开始)。并且也不需要购买一个 OpenVMS 和 Tru64 Unix 授权，来在老 Alpha 上装上 SRM 固件。我们推荐在新的机器上使用 SRM。 </para
 ><para
->下面表格总结了可用以及支持的系统类型/控制台组合 (系统类型名称参见 <xref linkend="alpha-cpus"/> )。单词<quote
+>下面表格总结了可用以及支持的系统类型/控制台组合(系统类型名称参见 <xref linkend="alpha-cpus"/>)。单词 <quote
 >ARC</quote
->注明任何和 ARC 兼容的控制台。 </para
+> 注明任何和 ARC 兼容的控制台。 </para
 ><para>
 
 <informaltable
@@ -251,9 +251,9 @@
 ><para
 >一般来说，这些控制台都不能直接引导 Linux ，因此需要一个中间引导装载程序。对于 SRM 控制台，<command
 >aboot</command
->，小型的，平台独立的引导装载器。参见 (抱歉的是它也有点过时了) <ulink url="&url-srm-howto;"
+>，小型的，平台独立的引导装载器。参见(抱歉的是它也有点过时了)<ulink url="&url-srm-howto;"
 >SRM HOWTO</ulink
->来获得更多有关信息 <command
+> 来获得更多有关信息 <command
 >aboot</command
 >。 </para
 ><para condition="FIXME"
@@ -269,11 +269,11 @@
 >MILO</command
 > 自己本身是一个用来替换载入内存中的 ARC 和 SRM 的控制台。<command
 >MILO</command
-> 能够同时从 ARC 和 SRM 引导并且是唯一一种方法从 ARC 控制台引导 Linux 。<command
+> 能够同时从 ARC 和 SRM 引导并且是唯一一种方法从 ARC 控制台引导 Linux。<command
 >MILO</command
 > 取决与具体的平台。(对于每种不同的系统类型需要不同的 <command
 >MILO</command
-> 并且只适合这些系统。参见 (很遗憾有点过时) <ulink url="&url-milo-howto;"
+> 并且只适合这些系统。参见(很遗憾有点过时)<ulink url="&url-milo-howto;"
 >MILO HOWTO</ulink
 >。 </para
 ><para condition="FIXME"
@@ -397,15 +397,15 @@ ewc0.0.0.2002.0            EWC0              00-06-2B-01-32-B0
   <title
 >通过 ARC 或者 AlphaBIOS 控制台来从 CD 光盘上启动</title>
 <para
->为了从 ARC 控制台引导 CD 光盘，找出您的子体系结构代码名称 (参见 <xref linkend="alpha-cpus"/>)，然后输入 <filename
+>为了从 ARC 控制台引导 CD 光盘，找出您的子体系结构代码名称(参见 <xref linkend="alpha-cpus"/>)，然后输入 <filename
 >\milo\linload.exe</filename
-> 作为引导装载器并且在“OS Selection Setup”菜单下选择 <filename
+> 作为引导装载器并且在 `OS Selection Setup' 菜单下选择 <filename
 >\milo\<replaceable
 >subarch</replaceable
 ></filename
 > (这里 <replaceable
 >subarch</replaceable
-> 是相应的子体系结构名称) 作为操作系统路径。Ruffians 则是一个例外：您需要使用 <filename
+> 是相应的子体系结构名称)作为操作系统路径。Ruffians 则是一个例外：您需要使用 <filename
 >\milo\ldmilo.exe</filename
 > 作为引导装载器。 </para>
   </sect2>
@@ -431,7 +431,7 @@ ewc0.0.0.2002.0            EWC0              00-06-2B-01-32-B0
 &gt;&gt;&gt; show dev
 </screen
 ></informalexample
-> 来查看设备列表 (比如，如果您想从一张 CD 上面引导)。注意如果您想通过 MILO 引导 <command
+> 来查看设备列表(比如，如果您想从一张 CD 上面引导)。注意如果您想通过 MILO 引导 <command
 >-flags</command
 > 参数将被忽略，因此您可以只需输入 <command
 >boot dva0</command
@@ -502,7 +502,7 @@ MILO
 <!-- Start of file boot-installer/intro-net.xml -->
 
 <para
->从网络引导需要您已经具备网络的连接和一台 TFTP 网络引导服务器 (DHCP, RARP 以及 BOOTP)。 </para
+>从网络引导需要您已经具备网络的连接和一台 TFTP 网络引导服务器(DHCP, RARP 以及 BOOTP)。 </para
 ><para arch="hppa"
 >较早的系统比如 715 也许需要使用一台 RBOOT 服务器来取代 BOOTP 服务器。 </para
 ><para
@@ -619,9 +619,9 @@ console=ttyS0,115200
 <!-- Start of file boot-installer/intro-cd.xml -->
 
 <para
->对于大多数人来说，最快的途径是使用一套 Debian CD 光盘套件。如果您有此套件，并且如果您的机器支持直接 CD 引导，太棒了！只需要 <phrase arch="i386"
+>对于大多数人来说，最快的途径是使用一套 Debian CD 光盘套件。如果您有此套件，并且如果您的机器支持直接 CD 引导，太棒了！只需要<phrase arch="i386"
 > 来配置您的系统用于引导 CD，参见 <xref linkend="boot-dev-select"/>, </phrase
-> 插入您的 CD ，重启，然后继续下一章。 </para
+>插入您的 CD，重启，然后继续下一章。 </para
 ><para
 >注意某些特定的 CD 驱动器需要一些特殊的驱动程序，由此他们可能在安装的早期不能被访问。如果标准的从 CD 引导的方法不能用于您的硬件，阅读本章中关于其他种类的内核以及安装方法，它们有可能能解决问题。 </para
 ><para
@@ -648,9 +648,9 @@ console=ttyS0,115200
 <!-- Start of file boot-installer/intro-cd.xml -->
 
 <para
->对于大多数人来说，最快的途径是使用一套 Debian CD 光盘套件。如果您有此套件，并且如果您的机器支持直接 CD 引导，太棒了！只需要 <phrase arch="i386"
+>对于大多数人来说，最快的途径是使用一套 Debian CD 光盘套件。如果您有此套件，并且如果您的机器支持直接 CD 引导，太棒了！只需要<phrase arch="i386"
 > 来配置您的系统用于引导 CD，参见 <xref linkend="boot-dev-select"/>, </phrase
-> 插入您的 CD ，重启，然后继续下一章。 </para
+>插入您的 CD，重启，然后继续下一章。 </para
 ><para
 >注意某些特定的 CD 驱动器需要一些特殊的驱动程序，由此他们可能在安装的早期不能被访问。如果标准的从 CD 引导的方法不能用于您的硬件，阅读本章中关于其他种类的内核以及安装方法，它们有可能能解决问题。 </para
 ><para
@@ -938,7 +938,7 @@ initrd (hd0,0)/boot/newinstall/initrd.gz
   <title
 >从软盘引导</title>
 <para
->您可能已经下载了所需要得软盘映像，并且根据这些映像创建了软盘 <xref linkend="create-floppy"/>。 </para
+>您可能已经下载了所需要的软盘映像，并且根据这些映像创建了软盘 <xref linkend="create-floppy"/>。 </para
 ><para
 >从软盘引导安装程序需要放置软盘至主软驱。按照您平时的习惯关闭系统，然后重新打开。 </para
 ><para
@@ -987,7 +987,7 @@ initrd (hd0,0)/boot/newinstall/initrd.gz
 <!-- Start of file boot-installer/intro-net.xml -->
 
 <para
->从网络引导需要您已经具备网络的连接和一台 TFTP 网络引导服务器 (DHCP, RARP 以及 BOOTP)。 </para
+>从网络引导需要您已经具备网络的连接和一台 TFTP 网络引导服务器(DHCP, RARP 以及 BOOTP)。 </para
 ><para arch="hppa"
 >较早的系统比如 715 也许需要使用一台 RBOOT 服务器来取代 BOOTP 服务器。 </para
 ><para
@@ -1014,7 +1014,7 @@ initrd (hd0,0)/boot/newinstall/initrd.gz
 ><para condition="FIXME"
 >请让我们知道 (<email
 >&email-debian-boot-list;</email
->) 您如何来操作它，并参看此文档。 </para>
+>) 您如何来操作它，并参阅此文档。 </para>
    </sect3>
 
    <sect3
@@ -1053,7 +1053,7 @@ initrd (hd0,0)/boot/newinstall/initrd.gz
 >linux debconf/priority=medium</userinput
 >)。 <note
 ><para
->如果您通过远程设备安装系统，它在 VGA 控制台提供文本界面，您可能不会看到安装程序开始的图形启动画面; 甚至不会看到引导提示。这些设备的例子有 Compaq 的 <quote
+>如果您通过远程设备安装系统，它在 VGA 控制台提供文本界面，您可能不会看到安装程序开始的图形启动画面; 甚至不会看到引导提示。如这些设备，Compaq 的 <quote
 >integrated Lights Out</quote
 > (iLO) 和 HP 的 <quote
 >Integrated Remote Assistant</quote
@@ -1069,7 +1069,7 @@ initrd (hd0,0)/boot/newinstall/initrd.gz
 >1</keycap
 >。</para
 > </footnote
-> 切换到帮助文档。一但通过启动画面，在帮助文档按下的键会回显在提示符上。为了阻止安装程序在后续安装中使用 framebuffer，如帮助文档所述，您也可在引导提示后面加上 <userinput
+> 切换到帮助文档。一旦通过启动画面，在帮助文档按下的键会回显在提示符上。为了阻止安装程序在后续安装中使用 framebuffer，如帮助文档所述，您也可在引导提示后面加上 <userinput
 >debian-installer/framebuffer=false</userinput
 >。 </para
 ></note>
@@ -1088,9 +1088,9 @@ initrd (hd0,0)/boot/newinstall/initrd.gz
 <!-- Start of file boot-installer/intro-cd.xml -->
 
 <para
->对于大多数人来说，最快的途径是使用一套 Debian CD 光盘套件。如果您有此套件，并且如果您的机器支持直接 CD 引导，太棒了！只需要 <phrase arch="i386"
+>对于大多数人来说，最快的途径是使用一套 Debian CD 光盘套件。如果您有此套件，并且如果您的机器支持直接 CD 引导，太棒了！只需要<phrase arch="i386"
 > 来配置您的系统用于引导 CD，参见 <xref linkend="boot-dev-select"/>, </phrase
-> 插入您的 CD ，重启，然后继续下一章。 </para
+>插入您的 CD，重启，然后继续下一章。 </para
 ><para
 >注意某些特定的 CD 驱动器需要一些特殊的驱动程序，由此他们可能在安装的早期不能被访问。如果标准的从 CD 引导的方法不能用于您的硬件，阅读本章中关于其他种类的内核以及安装方法，它们有可能能解决问题。 </para
 ><para
@@ -1105,18 +1105,18 @@ initrd (hd0,0)/boot/newinstall/initrd.gz
 
 <para
 >有三种基本的 Debian 安装光盘 CD 衍生品：<emphasis
->名片式</emphasis
-> CD 具有最少量的安装程序并且可以装在一小张 CD 介质上。它的安装需要一个网络连接来安装其他部分 的基本安装程序来建立一个可用的系统。<emphasis
->网络安装</emphasis
-> CD 光盘具有所有基础安装所需要的包但是它还是需要一个有能连接到 Debian 镜像的网络连接来安装其他的软件 包来建立一个完全的系统。Debian CD 光盘套件则可以不通过网络就可以安装一个具有各种 范围软件包的完全系统。 </para>
+>名片式(Business Card)</emphasis
+> CD 有一个微型的安装程序，并且可以储存在一小张 CD 介质上。它需要借助网络连接来安装基本系统的其他部分，才能建立起一个可用的系统。<emphasis
+>网络安装(Network Install)</emphasis
+> CD 光盘具有基本系统需的所有包，但是它还是需要网络连接到 Debian 的镜像，安装其他的软件包建立一个完整的系统。Debian CD 光盘套件，则可以不使用网络就能安装大量软件包，建立完整的系统。 </para>
   </note>
 
 <para
->IA-64 使用 Intel 最新的可拓展固件界面 (Extensible Firmware Interface (EFI))。与传统的 x86 BIOS 只了解分区表和主引导记录 (MBR) 而不知道其他引导设备的特点不同，EFI 可以 对 FAT16 和 FAT32 格式的硬盘分区进行读写操作。这个特点简化了通常很难以理解的系统启动过程。系统引导装载器以及 EFI 固件支持一个完全的文件系统来保存引导一个机器所需要得所有文件。这意味着 在一个 IA-64 系统上的系统磁盘具有一个附加的专门为 EFI 服务的磁盘分区而不是像传统系统上只是 简单的 MBR 或者引导块记录。 </para
+>IA-64 使用 Intel 最新的可拓展固件界面(Extensible Firmware Interface (EFI))。与传统的 x86 BIOS 只了解分区表和主引导记录(MBR)而不知道其他引导设备的特点不同，EFI 可以对 FAT16 和 FAT32 格式的硬盘分区进行读写操作。这个特点简化了通常很难以理解的系统启动过程。系统引导装载器以及 EFI 固件支持一个完全的文件系统，来保存引导一个机器所需要得所有文件。这意味着在一个 IA-64 系统上的系统磁盘，具有一个附加的专门为 EFI 服务的磁盘分区，而不是像传统系统上只是简单的 MBR 或者引导块记录。 </para
 ><para
 >Debian CD 包含了一个小型版本的 EFI 分区来放置 <command
 >ELILO</command
->，它的 配置文件，安装程序内核以及初始的文件系统 (initrd) 。运行的系统同时也包含了一个 EFI 分区用于放置引导系统所需要的必要文件。这些文件可以从 EFI Shell 读出，描述如下。 </para
+>，它的配置文件，安装程序内核以及初始的文件系统(initrd)。运行的系统同时也包含了一个 EFI 分区用于放置引导系统所需要的必要文件。这些文件可以从 EFI Shell 读出，说明如下。 </para
 ><para
 >大部分有关如何 <command
 >ELILO</command
@@ -1367,7 +1367,7 @@ initrd (hd0,0)/boot/newinstall/initrd.gz
 <!-- Start of file boot-installer/intro-net.xml -->
 
 <para
->从网络引导需要您已经具备网络的连接和一台 TFTP 网络引导服务器 (DHCP, RARP 以及 BOOTP)。 </para
+>从网络引导需要您已经具备网络的连接和一台 TFTP 网络引导服务器(DHCP, RARP 以及 BOOTP)。 </para
 ><para arch="hppa"
 >较早的系统比如 715 也许需要使用一台 RBOOT 服务器来取代 BOOTP 服务器。 </para
 ><para
@@ -1759,9 +1759,9 @@ host mcmuffin {
 <!-- Start of file boot-installer/intro-cd.xml -->
 
 <para
->对于大多数人来说，最快的途径是使用一套 Debian CD 光盘套件。如果您有此套件，并且如果您的机器支持直接 CD 引导，太棒了！只需要 <phrase arch="i386"
+>对于大多数人来说，最快的途径是使用一套 Debian CD 光盘套件。如果您有此套件，并且如果您的机器支持直接 CD 引导，太棒了！只需要<phrase arch="i386"
 > 来配置您的系统用于引导 CD，参见 <xref linkend="boot-dev-select"/>, </phrase
-> 插入您的 CD ，重启，然后继续下一章。 </para
+>插入您的 CD，重启，然后继续下一章。 </para
 ><para
 >注意某些特定的 CD 驱动器需要一些特殊的驱动程序，由此他们可能在安装的早期不能被访问。如果标准的从 CD 引导的方法不能用于您的硬件，阅读本章中关于其他种类的内核以及安装方法，它们有可能能解决问题。 </para
 ><para
@@ -1781,7 +1781,7 @@ host mcmuffin {
 <!-- Start of file boot-installer/intro-net.xml -->
 
 <para
->从网络引导需要您已经具备网络的连接和一台 TFTP 网络引导服务器 (DHCP, RARP 以及 BOOTP)。 </para
+>从网络引导需要您已经具备网络的连接和一台 TFTP 网络引导服务器(DHCP, RARP 以及 BOOTP)。 </para
 ><para arch="hppa"
 >较早的系统比如 715 也许需要使用一台 RBOOT 服务器来取代 BOOTP 服务器。 </para
 ><para
@@ -1953,9 +1953,9 @@ bootp():/boot/tftpboot.img
 <!-- Start of file boot-installer/intro-cd.xml -->
 
 <para
->对于大多数人来说，最快的途径是使用一套 Debian CD 光盘套件。如果您有此套件，并且如果您的机器支持直接 CD 引导，太棒了！只需要 <phrase arch="i386"
+>对于大多数人来说，最快的途径是使用一套 Debian CD 光盘套件。如果您有此套件，并且如果您的机器支持直接 CD 引导，太棒了！只需要<phrase arch="i386"
 > 来配置您的系统用于引导 CD，参见 <xref linkend="boot-dev-select"/>, </phrase
-> 插入您的 CD ，重启，然后继续下一章。 </para
+>插入您的 CD，重启，然后继续下一章。 </para
 ><para
 >注意某些特定的 CD 驱动器需要一些特殊的驱动程序，由此他们可能在安装的早期不能被访问。如果标准的从 CD 引导的方法不能用于您的硬件，阅读本章中关于其他种类的内核以及安装方法，它们有可能能解决问题。 </para
 ><para
@@ -2158,7 +2158,7 @@ boot <replaceable
 <!-- Start of file boot-installer/intro-net.xml -->
 
 <para
->从网络引导需要您已经具备网络的连接和一台 TFTP 网络引导服务器 (DHCP, RARP 以及 BOOTP)。 </para
+>从网络引导需要您已经具备网络的连接和一台 TFTP 网络引导服务器(DHCP, RARP 以及 BOOTP)。 </para
 ><para arch="hppa"
 >较早的系统比如 715 也许需要使用一台 RBOOT 服务器来取代 BOOTP 服务器。 </para
 ><para
@@ -2188,7 +2188,7 @@ boot <replaceable
 <para
 >&arch-title; 支持从软盘引导，尽管它本来只适合 OldWorld 系统。NewWorld 系统并没有安装 软盘驱动器，并且附带的 USB 软盘并不支持引导。 </para
 ><para
->您可能已经下载了所需要得软盘映像，并且根据这些映像创建了软盘 <xref linkend="create-floppy"/>。 </para
+>您可能已经下载了所需要的软盘映像，并且根据这些映像创建了软盘 <xref linkend="create-floppy"/>。 </para
 ><para
 >若需要从 <filename
 >boot-floppy-hfs.img</filename
@@ -2226,7 +2226,7 @@ boot <replaceable
 <!-- Start of file boot-installer/intro-net.xml -->
 
 <para
->从网络引导需要您已经具备网络的连接和一台 TFTP 网络引导服务器 (DHCP, RARP 以及 BOOTP)。 </para
+>从网络引导需要您已经具备网络的连接和一台 TFTP 网络引导服务器(DHCP, RARP 以及 BOOTP)。 </para
 ><para arch="hppa"
 >较早的系统比如 715 也许需要使用一台 RBOOT 服务器来取代 BOOTP 服务器。 </para
 ><para
@@ -2254,9 +2254,9 @@ boot <replaceable
 <!-- Start of file boot-installer/intro-cd.xml -->
 
 <para
->对于大多数人来说，最快的途径是使用一套 Debian CD 光盘套件。如果您有此套件，并且如果您的机器支持直接 CD 引导，太棒了！只需要 <phrase arch="i386"
+>对于大多数人来说，最快的途径是使用一套 Debian CD 光盘套件。如果您有此套件，并且如果您的机器支持直接 CD 引导，太棒了！只需要<phrase arch="i386"
 > 来配置您的系统用于引导 CD，参见 <xref linkend="boot-dev-select"/>, </phrase
-> 插入您的 CD ，重启，然后继续下一章。 </para
+>插入您的 CD，重启，然后继续下一章。 </para
 ><para
 >注意某些特定的 CD 驱动器需要一些特殊的驱动程序，由此他们可能在安装的早期不能被访问。如果标准的从 CD 引导的方法不能用于您的硬件，阅读本章中关于其他种类的内核以及安装方法，它们有可能能解决问题。 </para
 ><para
@@ -2325,7 +2325,7 @@ Illegal or malformed device name
 ><para
 >有关很多引导参数的信息可以查看 <ulink url="http://www.tldp.org/HOWTO/BootPrompt-HOWTO.html"
 > Linux BootPrompt HOWTO</ulink
->，其中包括一些老旧硬件的解决方法。这一节只描述一些对最常用的基本参数。一些常见的问题描述见 <xref linkend="boot-troubleshooting"/>。 </para
+>，其中包括一些老旧硬件的解决方法。这一节只描述一些最常用的基本参数。一些常见的问题描述见 <xref linkend="boot-troubleshooting"/>。 </para
 ><para
 >当内核引导的时候，有一条消息 <informalexample
 ><screen>
@@ -2487,7 +2487,7 @@ Memory:<replaceable
 >BOOT_DEBUG</term>
 <listitem
 ><para
->设置引导参数为 2 会使记录更冗长一些。设置为 3 会在引导过程的临界点调出 debug shell。(退出 shell 以后会继续引导过程。) <variablelist>
+>设置引导参数为 2 会使记录更冗长一些。设置为 3 会在引导过程的特定位置调出 debug shell。(退出 shell 以后会继续引导过程。) <variablelist>
 <varlistentry>
 <term
 ><userinput
@@ -2558,7 +2558,7 @@ Memory:<replaceable
 ><para
 >一些体系使用内核帧缓存以提供不同的语言安装。如果帧缓存在您的系统上面有问题，您可以通过参数 <userinput
 >debian-installer/framebuffer=false</userinput
-> 关闭这个特性。这方面问题的特征是有关 bterm 或者 bogl 的错误信息，一个空白的屏幕，或者在开始安装的时候停止几分钟。 </para
+> 关闭这个特性。这方面问题的特征是有关 bterm 或者 bogl 的错误信息，一个空白的屏幕，或者在开始安装几分钟后停止。 </para
 ><para arch="i386"
 ><userinput
 >video=vga16:off</userinput
@@ -2587,7 +2587,7 @@ Memory:<replaceable
 ><para
 >设置成 <userinput
 >false</userinput
-> 可以阻止在引导的时候禁止 USB 检查来杜绝引起的问题。 </para
+> 可以阻止在引导的时候进行 USB 探测来杜绝引起的问题。 </para
 ></listitem>
 </varlistentry>
 
@@ -2809,7 +2809,11 @@ Memory:<replaceable
   <title
 >Bug Reporter</title>
 <para
->如果您通过了初始化引导但是不能完成安装，Bug Reporter 菜单选项可能会很有用。它会复制系统的错误记录和配置信息至一个用户提供的软盘中。这个信息可能提供了一些关于错误的走向和如何解决它的线索。如果您正在提交一个缺陷报告，您也许想附上这个信息。 </para
+>如果您过了初始化引导，但还是不能安装，Bug Reporter 菜单选项可能会很有用。<phrase condition="sarge"
+>它复制系统的错误记录和配置信息到一张用户提供的软盘。</phrase
+> <phrase condition="etch"
+>它让您保存安装程序的系统错误记录和配置信息到一张软盘，或者用网络浏览器下载。</phrase
+>这个信息可能提供了一些关于错误的起因和如何解决它的线索。如果您正在提交一个 bug 报告，您可以附上这个信息。 </para
 ><para
 >其他相关安装期间的安装信息可以在 <filename
 >/var/log/</filename
@@ -2822,26 +2826,31 @@ Memory:<replaceable
   <title
 >提交缺陷报告</title>
 <para
->如果您还是有问题，请提交一个缺陷报告。即使您成功安装了，我们还是希望您能发一份安装报告，让我们获得最大硬件配置范围的更多信息。请采用下列模板填写安装报告，并针对 <classname
->installation-reports</classname
-> 虚拟软件包提交报告，发送一封电子邮件至 <email
+>如果仍有问题，请提交安装报告。即使安装成功，我们也鼓励您发一份安装报告，这让我们可以尽可能多的了解硬件的配置数量。 </para
+><para condition="etch"
+>如果您有一个可以运转的 Debian 系统，发送安装报告最简单的方法是安装 installation-report 和 reportbug 软件包(<command
+>apt-get install installation-report reportbug</command
+>)，然后执行 <command
+>reportbug installation-report</command
+> 命令。 </para
+><para
+>请采用下列模板填写安装报告，并发邮件到 <email
 >submit@bugs.debian.org</email
->。<informalexample
+> 给 <classname
+>installation-reports</classname
+> 伪软件包发送 bug 报告。<informalexample
 ><screen>
 Package: installation-reports
 
-Debian-installer-version: &lt;Fill in date and from where you got the image&gt;
-uname -a: &lt;The result of running uname -a on a shell prompt&gt;
+Boot method: &lt;How did you boot the installer? CD? floppy? network?&gt;
+Image version: &lt;Fill in date and from where you got the image&gt;
 Date: &lt;Date and time of the install&gt;
-Method: &lt;How did you install?  What did you boot off?  If network
-      install, from where?  Proxied?&gt;
 
 Machine: &lt;Description of machine (eg, IBM Thinkpad R32)&gt;
 Processor:
 Memory:
-Root Device: &lt;IDE?  SCSI?  Name of device?&gt;
-Root Size/partition table: &lt;Feel free to paste the full partition
-      table, with notes on which partitions are mounted where.&gt;
+Partitions: &lt;df -Tl will do; the raw partition table is preferred&gt;
+
 Output of lspci and lspci -n:
 
 Base System Installation Checklist:
@@ -2866,7 +2875,7 @@ Comments/Problems:
       and ideas you had during the initial install.&gt;
 </screen
 ></informalexample
-> 在缺陷报告内，请描述问题是什么，包括内核挂停后最后见到的内核消息。描述让您进入问题状态前相关的步骤。 </para>
+> 在 bug 报告内，请说明问题所在，包括内核挂起后最后见到的内核消息。说明进入问题状态时您进行的步骤。 </para>
   </sect2>
  </sect1>
 <!--   End of file boot-installer/trouble.xml -->

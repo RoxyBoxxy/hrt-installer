@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="EUC-JP"?>
 <!-- retain these comments for translator revision tracking -->
-<!-- original version: 25496 -->
+<!-- original version: 32124 -->
 
  <sect1 condition="bootable-usb" id="boot-usb-files">
  <title>USB メモリスティックでの起動用ファイルの準備</title>
@@ -18,7 +18,7 @@ will probably have to turn off its write protection switch.
 -->
 USB スティックの準備のため、
 GNU/Linux が既に動いていて、USB をサポートしているシステムが必要になります。
-usb-storage カーネルモジュールをロードするのを保証し 
+usb-storage カーネルモジュールをきちんとロードして 
 (<userinput>modprobe usb-storage</userinput>)、
 USB スティックをマッピングしているのがどの SCSI デバイスかを検出してみるべきです。
 (この例では <filename>/dev/sda</filename> を使用します) 
@@ -54,15 +54,8 @@ have to extract it directly to to your USB stick:
 以下のように USB スティックに直接展開してください。
 
 <informalexample><screen>
-# gzip -dc boot.img.gz &gt; /dev/<replaceable>sda</replaceable>
+# zcat boot.img.gz &gt; /dev/<replaceable>sda</replaceable>
 </screen></informalexample>
-
-<!--
-Of course this will destroy anything already on the device, so take
-care that you use the correct device name for your USB stick.
--->
-もちろんこれはデバイス上の既存データを破壊しますので、
-正しい USB スティックのデバイス名を使用するよう注意してください。
 
 </para><para arch="powerpc">
 
@@ -79,21 +72,25 @@ extract the image directly to that:
 <filename>hd-media/boot.img.gz</filename> という
 オールインワンファイルがあります。
 <command>mac-fdisk</command> の <userinput>C</userinput> コマンドで
-USB スティックに "Apple_Bootstrap" タイプパーティションを作成し、
+USB スティックに "Apple_Bootstrap" タイプのパーティションを作成し、
 以下のように USB スティックに直接展開してください。
 
 <informalexample><screen>
-# gzip -dc boot.img.gz &gt; /dev/<replaceable>sda2</replaceable>
+# zcat boot.img.gz &gt; /dev/<replaceable>sda2</replaceable>
 </screen></informalexample>
 
-<!--
-Of course this will destroy anything already on the device, so take
-care that you use the correct device name for your USB stick.
--->
-もちろんこれはデバイス上の既存データを破壊しますので、
-正しい USB スティックのデバイス名を使用するよう注意してください。
+</para>
+<warning><para>
 
-</para><para>
+<!--
+Using this method will destroy anything already on the device. Make sure
+that you use the correct device name for your USB stick.
+-->
+この方法を使うとデバイス上の既存の物は破壊されてしまいます。
+USB スティックの正しいデバイス名を確認して使用してください。
+
+</para></warning>
+<para>
 
 <!--
 After that, mount the USB memory stick (<userinput>mount
@@ -146,7 +143,7 @@ Now you should put any Debian ISO image (businesscard, netinst or even
 a full one) onto your stick (if it fits). The file name of such an
 image must end in <filename>.iso</filename>.
 -->
-今度は、Debian ISO イメージ (名刺、netinst、完全版) を、
+今度は、Debian ISO イメージ (名刺、netinst、完全版のいずれか) を、
 USB スティックに (入るならば) 入れましょう。
 ISO イメージのファイル名は <filename>.iso</filename> 
 で終わっていなければなりません。

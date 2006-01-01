@@ -2782,7 +2782,11 @@ Memory:<replaceable
   <title
 >Relatório de Erros</title>
 <para
->Se avançar através da fase de arranque inicial mas não conseguir completar a instalação, a escolha de menu relatório de erros pode ser útil. Copia os logs de erro de sistema e informação de configuração para uma disquete fornecida pel utilizador. Esta informação pode dar pista acerca do que correu mal e como corrigir isso. Se estiver a submeter um relatório de erros você pode querer adicionar esta informação ao relatório de erros. </para
+>Se avançar através da fase inicial de arranque mas não conseguir completar a instalação, a escolha de menu relatório de erros pode ser útil. <phrase condition="sarge"
+> Copia os logs de erro de sistema e informação de configuração para uma disquete fornecida pelo utilizador. </phrase
+> <phrase condition="etch"
+> Permite-lhe guardar os logs de erros do sistema e informação de configuração do instalador para ma disquete, ou fazer o download deles para um browser web. </phrase
+> Esta informação pode dar pista acerca do que correu mal e como corrigir isso. Se estiver a submeter um relatório de erros você pode querer adicionar esta informação ao relatório de erros. </para
 ><para
 >Outras mensagens de instalação pertinentes podem ser encontradas em <filename
 >/var/log/</filename
@@ -2795,7 +2799,15 @@ Memory:<replaceable
   <title
 >Submeter Relatórios de Instalação</title>
 <para
->Se ainda tiver problemas, por favor submeta um relatório de instalação. Nós também encorajamos que sejam enviados relatórios de instalação mesmo que a instalação tenha sucesso, de modo a que possamos obter tanta informação quanto possível no maior número de configurações de hardware. Por favor utilize este template quando preencher relatórios de instalação, e envie o relatório como um relatório de bug sobre o pseudo-pacote <classname
+>Se ainda tiver problemas, por favor submita um relatório de instalação. Nós também encorajamos que sejam enviados relatórios de instalação mesmo que a instalação tenha sucesso, para que possamos obter tanta informação quanto possível no maior número de configurações de hardware. </para
+><para condition="etch"
+>Se tem um sistema Debian funcional, a forma mais fácil de enviar relatórios de instalação é instalar os pacotes installation-report e reportbug (<command
+>apt-get install installation-report reportbug</command
+>) e corra o comando <command
+>reportbug installation-report</command
+>. </para
+><para
+>Por favor utilize este modelo quando preencher relatórios de instalação, e arquivar o relatório como relato de bug contra o pseudo-pacote <classname
 >installation-reports</classname
 >, enviando-o para <email
 >submit@bugs.debian.org</email
@@ -2803,19 +2815,16 @@ Memory:<replaceable
 ><screen>
 Package: installation-reports
 
-Debian-installer-version: &lt;Preencha a data e de onde obteve a imagem&gt;
-uname -a: &lt;O resultado da execução de uname -a numa linha de comandos da shell&gt;
+Boot method: &lt;Como arrancou o instalador? CD? disquete? rede?&gt;
+Image version: &lt;Preencha a data e de onde obteve a imagem&gt;
 Date: &lt;Data e hora da instalação&gt;
-Method: &lt;Como fez a instalação?  De onde iniciou?  Caso seja
-      uma instalação pela rede, de onde? Com Proxy?&gt;
 
 Machine: &lt;Descrição da máquina (ex, IBM Thinkpad R32)&gt;
 Processor:
 Memory:
-Root Device: &lt;IDE?  SCSI?  Nome do dispositivo?&gt;
-Root Size/partition table: &lt;Copie para aqui a tabela de partições 
-	completa com notas a indicar que partição é montada onde.&gt;
-Output de lspci and lspci -n:
+Partições: &lt;df -Tl serve; é preferida a tabela de partições em bruto&gt;
+
+Output of lspci and lspci -n:
 
 Base System Installation Checklist:
 [O] = OK, [E] = Erro (por favor descreva abaixo), [ ] = não foi tentado

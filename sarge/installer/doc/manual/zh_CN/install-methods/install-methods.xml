@@ -519,34 +519,42 @@ $ dd if=<replaceable
   <title
 >复制文件 &mdash; 轻松的途径</title>
 <para arch="i386"
->这里有一个单一文件 <filename
+>这里有一个合集文件 <filename
 >hd-media/boot.img.gz</filename
-> ，其中包含了所有的安装程序文件(包括内核)，以及 <command
+>，其中包含了所有的安装程序文件(包括内核)，以及 <command
 >SYSLINUX</command
 > 和它的配置文件。您只需要把它直接解压到您的 USB 闪盘内即可： <informalexample
-><screen>
-# zcat boot.img.gz &gt; /dev/<replaceable
->sda</replaceable>
+><screen
+># zcat boot.img.gz &gt; /dev/<replaceable
+>sda</replaceable
+>
 </screen
-></informalexample
-> 当然，这会删除设备上现存的所有内容，因此请仔细检查您使用的是正确的 USB 闪盘设备名称。 </para
+></informalexample>
+
+</para
 ><para arch="powerpc"
->这里有一个单一文件 <filename
+>这里有一个合集文件 <filename
 >hd-media/boot.img.gz</filename
-> ，其中包含了所有的安装程序文件(包括内核)，以及 <command
+>，其中包含了所有的安装程序文件(包括内核)，以及 <command
 >yaboot</command
 > 和它的配置文件。您可以使用 <command
 >mac-fdisk</command
 > 的 <userinput
 >C</userinput
-> 命令在您的 USB 闪盘上创建一个类型为“Apple_Bootstrap”的分区，然后直接解开映像文件到： <informalexample
-><screen>
-# zcat boot.img.gz &gt; /dev/<replaceable
->sda2</replaceable>
+> 命令在您的 USB 闪盘上创建一个类型为 "Apple_Bootstrap" 的分区，然后直接解开映像文件到： <informalexample
+><screen
+># zcat boot.img.gz &gt; /dev/<replaceable
+>sda2</replaceable
+>
 </screen
-></informalexample
-> 当然，这会删除设备上现存的所有内容，因此请仔细检查您使用的是正确的 USB 闪盘设备名称。 </para
+></informalexample>
+
+</para>
+<warning
 ><para
+>采用这种方法将销毁设备上的任何内容。请确保您使用了 USB 闪盘的正确设备名。 </para
+></warning>
+<para
 >然后，挂载 USB 闪盘(<userinput
 >mount <replaceable arch="i386"
 >/dev/sda</replaceable
@@ -654,7 +662,7 @@ $ dd if=<replaceable
 > 配置文件应该含有下列两行： <informalexample
 ><screen>
 default vmlinuz
-append initrd=initrd.gz ramdisk_size=12000 root=/dev/rd/0 init=/linuxrc rw
+append initrd=initrd.gz ramdisk_size=12000 root=/dev/ram rw
 </screen
 ></informalexample
 > 请注意，根据所启动的内存映像的大小，在必要的时候，您可能需要增大<userinput
@@ -1671,14 +1679,14 @@ END FIXME -->
   <title
 >使用 Debian 安装程序进行自动安装</title>
 <para
->Debian 安装程序支持通过预先配置文件进行自动安装。一个预配置文件可以从网络上或者可移动介质上被装载，并且被用来在安装过程中自动回答问题。 </para
-><para
->虽然大多数 &d-i; 使用的对话框可以用这种方法预置，但还是有明显的例外。您可以(重新)分区整个硬盘或使用磁盘上可用的闲置空间; 但无法使用已存在的分区。当前还无法预先设置 RAID 和 LVM。<phrase condition="sarge"
->还有，网络驱动模块，也无法预先设置内核模块参数。</phrase
-> </para
-><para
+>Debian 安装程序支持使用预先配置的文件进行自动安装。预配置文件可以从网络或移动介质上加载，并自动回答安装过程中的问题。 </para
+><para condition="etch"
+>在 <xref linkend="appendix-preseed"/> 是有关预置文件的完整文档，并有一些可以使用的例子供您修改。 </para
+><para condition="sarge"
+>虽然大多数 &d-i; 使用的对话框可以用这种方法预置，但还是有明显的例外。您可以(重新)分区整个硬盘或使用磁盘上可用的闲置空间; 但无法使用已存在的分区。当前还无法预先设置 RAID 和 LVM。还有，除了网络驱动模块，也无法预先设置内核模块参数。 </para
+><para condition="sarge"
 >预配置文件是按照 debconf-set-selections 命令的格式写成的。这里有一个具有详尽注释并能正常工作的预配置文件例子：<xref linkend="example-preseed"/>。 </para
-><para
+><para condition="sarge"
 >除此之外，要得到一个包含所有可被预设置的项目的完整文件，您可以进行手动安装，然后使用 <filename
 >debconf-get-selections</filename
 > 命令(它来自 <classname
@@ -1692,32 +1700,14 @@ $ debconf-get-selections &gt;&gt; <replaceable
 </screen
 ></informalexample
 > 但是，按照这些方法生成的文件将会包含一些不应该被预设置的项目，因此 <xref linkend="example-preseed"/> 中的文件对于大多数用户来说是一个更好的起点。 </para
-><para
+><para condition="sarge"
 >一旦您有了一个预配置文件，可以在需要时编辑它，并且上传至一个 web 服务器，或者拷贝至安装程序的启动引导介质。无论您将此文件放置在哪里，都需要在启动安装程序时向它传递一个参数来告诉它使用这个文件。 </para
-><para
+><para condition="sarge"
 >要让安装程序使用一个从网络下载的预配置文件，请将 preseed/url=http://url/to/config 加入内核启动参数。当然这个预配置文件，只有安装程序能够管理网络并下载文件后才能起作用，因此如果安装程序能够通过 DHCP 设置网络而不需要询问任何问题的话，此方法会更有用。如果您已经被设置好了网络，可能还会想将安装优先级调至关键来避免任何提问。请参见 <xref linkend="installer-args"/>。 </para
-><para
+><para condition="sarge"
 >要将预配置文件放置在光盘中，您将需要重新生成 ISO 映像以包括您的预配置文件。请阅读 mkisofs 的手册来获得细节信息。另外，您也可以将预配置文件放置在一张软盘中，然后使用 preseed/file=/floppy/preseed.cfg 参数。 </para
-><para arch="i386"
+><para arch="i386" condition="sarge"
 >如果您要从 USB 闪盘上启动，那您可以简单拷贝您的预配置文件至闪盘的文件系统中，并编辑 syslinux.cfg 文件来加入 preseed/file=/hd-media/preseed.cfg 至内核启动参数。 </para>
-
-   <sect3 condition="etch">
-   <title
->使用预置修改默认值</title>
-<para
->可以使用预置修改问题的默认答案，但仍然会问问题。在为模板设置值之后，<firstterm
->seen</firstterm
->标识必须被重置为<quote
->false</quote
->。 <informalexample
-><screen
->d-i foo/bar string value
-d-i foo/bar seen false
-</screen
-></informalexample>
-
-</para>
-   </sect3>
   </sect2>
  </sect1>
 <!--   End of file install-methods/automatic-install.xml -->

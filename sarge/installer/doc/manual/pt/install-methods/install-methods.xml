@@ -521,32 +521,40 @@ Antes de utilizar a disquete que criou, <emphasis
 <para arch="i386"
 >Existe um ficheiro tudo-em-um <filename
 >hd-media/boot.img.gz</filename
-> que contém todos os ficheiros do instalador (incluindo o kernel) assim como <command
+> que contém todos os ficheiros do instalador (incluindo o kernel) assim como o <command
 >SYSLINUX</command
-> e o seu ficheiro de configuração. Você apenas terá de o descompactar directamente para o stick USB: <informalexample
-><screen>
-# zcat boot.img.gz &gt; /dev/<replaceable
->sda</replaceable>
+> e o seu ficheiro de configuração. Você apenas terá de o descompactar directamente para o seu stick USB:  <informalexample
+><screen
+># zcat boot.img.gz &gt; /dev/<replaceable
+>sda</replaceable
+>
 </screen
-></informalexample
-> claro que isto destruirá qualquer ficheiros que se encontre no dispositivo, certifique-se de que está a utilizar o nome de dispositivo correcto para o seu stick USB. </para
+></informalexample>
+
+</para
 ><para arch="powerpc"
 >Existe um ficheiro todos em um <filename
 >hd-media/boot.img.gz</filename
 > que contém todos os ficheiros da instalador (incluindo o kernel) tal como o <command
 >yaboot</command
-> e o seu ficheiro de configuração. Crie uma partição do tipo "Apple_Bootstrap" no seu stick USB utilizando o comando <command
->mac-fdisk</command
->'s <userinput
+> e o seu ficheiro de configuração. Crie uma partição do tipo "Apple_Bootstrap" no seu stick USB utilizando o comando  <userinput
 >C</userinput
+> do <command
+>mac-fdisk</command
 > e descompacte a imagem directamente para lá: <informalexample
-><screen>
-# zcat boot.img.gz &gt; /dev/<replaceable
->sda2</replaceable>
+><screen
+># zcat boot.img.gz &gt; /dev/<replaceable
+>sda2</replaceable
+>
 </screen
-></informalexample
-> claro que isto destruirá quaisquer ficheiros que se encontrem no dispositivo, certifique-se portanto de que está a utilizar o nome correcto do dispositivo para o stick USB. </para
+></informalexample>
+
+</para>
+<warning
 ><para
+>Utilizar este método irá destruir tudo o que já esteja no dispositivo. Assegure-se que utiliza o nome de dispositivo correcto do seu stick USB. </para
+></warning>
+<para
 >Em seguida, monte o stick de memória USB (<userinput
 >mount <replaceable arch="i386"
 >/dev/sda</replaceable
@@ -654,7 +662,7 @@ Antes de utilizar a disquete que criou, <emphasis
 > deve conter as duas linhas seguintes: <informalexample
 ><screen>
 default vmlinuz
-append initrd=initrd.gz ramdisk_size=12000 root=/dev/rd/0 init=/linuxrc rw
+append initrd=initrd.gz ramdisk_size=12000 root=/dev/ram rw
 </screen
 ></informalexample
 > Note, por favor, que o parâmetro <userinput
@@ -1661,14 +1669,14 @@ END FIXME -->
   <title
 >Instalação Automática Utilizando o Instalador Debian</title>
 <para
->O Instalador Debian suporta instalações automáticas via ficheiros pré-configurados. Um ficheiro pré-configurado pode ser carregado a partir da rede ou a partir de um meio amovível, e utiliza-o para preencher as respostas às perguntas feitas durante o processo de instalação. </para
-><para
->Embora a maioria das caixas de diálogo utilizadas pelo &d-i; possa ser feito o preseed utilizando este método, existem algumas notáveis excepções. Você pode (re)particionar um disco rígido completo ou utilizar o espaço livre num disco; não é possível utilizar partições existentes. Actualmente você não pode utilizar o preseed para configurar LVM e RAID. <phrase condition="sarge"
->Além disso, com a excepção dos módulos do driver de rede, não é possível pré-configurar parâmetros de módulos do kernel.</phrase
-> </para
-><para
+>O Instalador Debian suporta instalações automáticas via ficheiros de pré-configuração. Um ficheiro de pré-configuração pode ser carregado a partir da rede ou a partir de um meio amovível, e utilizado para preencher as respostas às perguntas feitas durante o processo de instalação. </para
+><para condition="etch"
+>Toda a documentação sobre a pré-configuração e um exemplo funcional que pode editar encontra-se na <xref linkend="appendix-preseed"/>. </para
+><para condition="sarge"
+>Embora na maioria das caixas de diálogo utilizadas pelo &d-i; possa ser feita a pré-configuração utilizando este método, existem algumas notáveis excepções. Você pode (re)particionar um disco rígido completo ou utilizar o espaço livre num disco; não é possível utilizar as partições existentes. Actualmente você não pode utilizar a pré-configuração para configurar LVM e RAID. Além disso, com a excepção dos módulos de driver de rede, não é possível pré-configurar parâmetros de módulos do kernel. </para
+><para condition="sarge"
 >O ficheiro da pré-configuração está num formato utilizado pelo comando debconf-set-selections. Um exemplo bem documentado e funcional que pode editar encontra-se na <xref linkend="example-preseed"/>. </para
-><para
+><para condition="sarge"
 >Alternativamente, uma maneira de conseguir uma lista completa de todos os valores que podem ser pré-carregados é fazer uma instalação manual, e depois utilizar <filename
 >debconf-get-selections</filename
 >, a partir do pacote  <classname
@@ -1682,32 +1690,14 @@ $ debconf-get-selections &gt;&gt; <replaceable
 </screen
 ></informalexample
 > Contudo, um ficheiro gerado desta maneira terá alguns itens que não devem ser pré-carregados, e o ficheiro na <xref linkend="example-preseed"/> é o melhor local de começo para a maioria dos utilizadores. </para
-><para
+><para condition="sarge"
 >Uma vez que tenha um ficheiro pré-configurado, você pode edita-lo se necessário, e colocá-lo num servidor web, ou copiá-lo para um instalador num meio de arranque. Seja lá onde colocar o ficheiro, necessita de passar o parâmetro para o instalador na altura do arranque para utilizar o ficheiro. </para
-><para
+><para condition="sarge"
 >Para fazer o instalador utilizar o ficheiro pré-configurado, conseguido através de download da rede, adicione preseed/url=http://url/to/preseed.cfg aos parâmetros de arranque do kernel. Claro que a pré-configuração não terá efeito até o instalador conseguir configurar a rede para fazer download do ficheiro, isto é portanto muito útil se o instalador conseguir configurar a rede via DHCP sem fazer nenhuma pergunta. Pode querer configurar a prioridade de instalação para evitar qualquer questão enquanto a rede está a ser configurada. Veja na <xref linkend="installer-args"/>. </para
-><para
+><para condition="sarge"
 >Para colocar um ficheiro de pré-configuração num CD, necessita de recriar a imagem ISO para incluir o seu ficheiro pré-configurado. Veja a página do manual de mkisofs para mais detalhes. Alternativamente, coloque o ficheiro preseed numa disquete, e utilize preseed/file=/floppy/preseed.cfg </para
-><para arch="i386"
+><para arch="i386" condition="sarge"
 >Se vai arrancar a partir de um USB memory stick, então pode simplesmente copiar o ficheiro de pré-configuração para o sistema de ficheiros do memory stick, e editar o ficheiro syslinux.cfg para adicionar preseed/file=/hd-media/preseed.cfg aos parâmetros de arranque do kernel. </para>
-
-   <sect3 condition="etch">
-   <title
->Utilizar o Preseed para Alterar Valores por Omissão</title>
-<para
->Também é possível utilizar o preseed para alterar a resposta por omissão de uma questão, mas será na mesma colocada a questão. Para fazer isto tem de ser feito reset para <quote
->false</quote
-> à flag <firstterm
->seen</firstterm
-> após definir o valor para um template. <informalexample
-><screen
->d-i·foo/bar·string·valor
-d-i·foo/bar·seen·false
-</screen
-></informalexample>
-
-</para>
-   </sect3>
   </sect2>
  </sect1>
 <!--   End of file install-methods/automatic-install.xml -->

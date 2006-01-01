@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<!-- original version: 25594 -->
+<!-- original version: 31190 -->
 <!-- revisado jfs, 21 noviembre 2004 -->
 <!-- revisado rudy, 24 feb. 2005 -->
 
@@ -9,22 +9,22 @@
 <para>
 
 Esta sección explica como instalar &debian; desde un sistema Unix o
-Linux existente, sin usar el instalador basado en ncurses y menús,
+Linux existente, sin usar el instalador basado en menús,
 como se explica en el resto de este manual.  Los usuarios que se
 cambian a &debian; desde Red Hat, Mandrake y SuSE han solicitado este
-CÓMO de «instalación cruzada». En esta sección se asume alguna
+CÓMO de <quote>instalación cruzada</quote>. En esta sección se asume alguna
 familiaridad con la introducción de órdenes en *nix y navegación en el
 sistema de ficheros. En esta sección <prompt>$</prompt> simboliza una
 orden a introducirse en el sistema actual del usuario, mientras que
 <prompt>#</prompt> se refiere a una orden introducida en la jaula
-(«chroot», N. del t.) de Debian.
+(<quote>chroot</quote>, N. del t.) de Debian.
 
 </para><para>
 
 Una vez que tenga el nuevo sistema Debian configurado a su preferencia,
 puede migrar los datos existentes de sus usuarios (si fuese el caso) a
 éste y continuar funcionando. Esto es por tanto una instalación
-«sin parada» de &debian;. Es también una forma inteligente de
+<quote>sin parada</quote> de &debian;. Es también una forma inteligente de
 tratar con hardware que no puede utilizarse de forma sencilla con
 los distintos mecanismos de instalación o arranque disponibles.
 
@@ -34,7 +34,7 @@ los distintos mecanismos de instalación o arranque disponibles.
   <title>Primeros pasos</title>
 <para>
 
-Reparticione el disco duro como lo necesita 
+Reparticione el disco duro como lo necesita
 con las herramientas de particionado de *nix que disponga,
 debe crear por lo menos un sistema de
 ficheros más una partición de intercambio. Necesita
@@ -43,8 +43,8 @@ consola o por lo menos 300 MB si va a instalar el entorno X.
 
 </para><para>
 
-Deberá crear sistemas de ficheros en sus particiones. Por ejemplo, 
-para crear un sistema de ficheros ext3 en la partición 
+Deberá crear sistemas de ficheros en sus particiones. Por ejemplo,
+para crear un sistema de ficheros ext3 en la partición
 <filename>/dev/hda6</filename> (es nuestra partición raíz de ejemplo):
 
 <informalexample><screen>
@@ -55,7 +55,7 @@ En cambio para crear un sistema de ficheros ext2, omita <userinput>-j</userinput
 
 </para><para>
 
-Inicialice y active la partición de intercambio (sustituya el número de 
+Inicialice y active la partición de intercambio (sustituya el número de
 partición por la partición de intercambio de Debian que vaya a utilizar):
 
 <informalexample><screen>
@@ -65,8 +65,8 @@ partición por la partición de intercambio de Debian que vaya a utilizar):
 </screen></informalexample>
 
 Monte una partición como <filename>/mnt/debinst</filename> (el punto
-de instalación, que será el sistema de ficheros raíz 
-(<filename>/</filename>) en su nuevo sistema). El nombre del punto de 
+de instalación, que será el sistema de ficheros raíz
+(<filename>/</filename>) en su nuevo sistema). El nombre del punto de
 montaje es estrictamente arbitrario, pero se utilizará este mismo
 nombre más adelante.
 
@@ -76,6 +76,15 @@ nombre más adelante.
 </screen></informalexample>
 
 </para>
+
+<note><para>
+
+Deberá crear y montar manualmente los directorios que sean necesarios antes de
+continuar con la siguiente parte del proceso si desea montar partes del sistema
+de ficheros (como por ejemplo <quote>/usr</quote>)
+en particiones distintas.
+
+</para></note>
   </sect2>
 
   <sect2>
@@ -84,7 +93,7 @@ nombre más adelante.
 
 <command>debootstrap</command> es la herramienta que usa el instalador
 de Debian, es también la forma oficial de instalar un sistema base
-Debian.  Éste usa <command>wget</command> y <command>ar</command>, 
+Debian.  Éste usa <command>wget</command> y <command>ar</command>,
 pero, salvo ésto, sólo
 depende de <classname>/bin/sh</classname>. Si aún no lo ha hecho,
 instale <command>wget</command> y <command>ar</command>
@@ -100,7 +109,7 @@ convertir el .deb en .rpm, o descargar una versión adaptada a rpm de
 </para><para>
 
 O bien, puede usar el siguiente procedimiento para instalarlo manualmente.
-Cree un directorio temporal «trabajo» para extraer el .deb en él:
+Cree un directorio temporal <quote>trabajo</quote> para extraer el .deb en él:
 
 <informalexample><screen>
 # mkdir trabajo
@@ -110,17 +119,26 @@ Cree un directorio temporal «trabajo» para extraer el .deb en él:
 El binario de <command>debootstrap</command> se encuentra en el archivo de
 Debian (asegúrese de elegir el fichero adecuado para su arquitectura).
 Descargue el .deb de <command>debootstrap</command> desde el almacén
-de paquetes en 
-<ulink url="http://ftp.debian.org/debian/pool/main/d/debootstrap/"></ulink>, 
-copie el paquete al directorio «trabajo» y extraiga los
-ficheros binarios de éste. Necesitará privilegios de superusuario para 
+de paquetes en
+<ulink url="http://ftp.debian.org/debian/pool/main/d/debootstrap/"></ulink>,
+copie el paquete al directorio <quote>trabajo</quote> y extraiga los
+ficheros binarios de éste. Necesitará privilegios de superusuario para
 instalar los binarios.
 
 <informalexample><screen>
-# tar -xf debootstrap_0.X.X_arch.deb
+# ar -x debootstrap_0.X.X_arch.deb
 # cd /
 # zcat /ruta-completa-hasta-trabajo/trabajo/data.tar.gz | tar xv
 </screen></informalexample>
+
+</para><para>
+
+Tenga en cuenta que puede necesitar tener al menos una versión de
+<classname>glibc</classname>igual o superior a la versión mínima soportada
+(actualmente GLIBC_2.3) para poder ejecutar <command>debootstrap</command>.
+Aunque <command>debootstrap</command> es un guión de línea de órdenes, tiene
+que llamar a distintas utilidades que necesitan que se disponga de
+<classname>glibc</classname>.
 
 </para>
   </sect2>
@@ -130,7 +148,7 @@ instalar los binarios.
 <para>
 
 <command>debootstrap</command> descargará los ficheros necesarios
-directamente desde el archivo cuando lo ejecute. Puede sustituir 
+directamente desde el archivo cuando lo ejecute. Puede sustituir
 <userinput>http.us.debian.org/debian</userinput> por cualquier servidor de réplica
 del archivo Debian, en la orden de ejemplo que se muestra a continuación.
 Es mejor que utilice un servidor de réplica cercano (es decir, en una red próxima).
@@ -150,15 +168,15 @@ Sustituya <replaceable>ARQ</replaceable> por alguno de los valores
 mostrados a continuación en la orden <command>debootstrap</command> en
 función de su arquitectura:
 
-<userinput>alpha</userinput>, 
+<userinput>alpha</userinput>,
 <userinput>arm</userinput>,
-<userinput>hppa</userinput>, 
-<userinput>i386</userinput>, 
-<userinput>ia64</userinput>, 
+<userinput>hppa</userinput>,
+<userinput>i386</userinput>,
+<userinput>ia64</userinput>,
 <userinput>m68k</userinput>,
-<userinput>mips</userinput>, 
-<userinput>mipsel</userinput>, 
-<userinput>powerpc</userinput>, 
+<userinput>mips</userinput>,
+<userinput>mipsel</userinput>,
+<userinput>powerpc</userinput>,
 <userinput>s390</userinput> o
 <userinput>sparc</userinput>.
 
@@ -178,7 +196,7 @@ Ahora tiene instalado un sistema Debian, aunque algo limitado, en
 su disco. Ejecute la orden <command>chroot</command> en él:
 
 <informalexample><screen>
-# chroot /mnt/debinst /bin/bash
+# LANG= chroot /mnt/debinst /bin/bash
 </screen></informalexample>
 </para>
 
@@ -198,8 +216,8 @@ Este es un ejemplo que puede modificar a sus necesidades:
 # /etc/fstab: información estática de sistema de ficheros.
 #
 # file system    mount point   type    options                  dump pass
-/dev/XXX         /             ext2    defaults                 0    0
-/dev/XXX         /boot         ext2    ro,nosuid,nodev          0    2
+/dev/XXX         /             ext3    defaults                 0    1
+/dev/XXX         /boot         ext3    ro,nosuid,nodev          0    2
 
 /dev/XXX         none          swap    sw                       0    0
 proc             /proc         proc    defaults                 0    0
@@ -207,13 +225,13 @@ proc             /proc         proc    defaults                 0    0
 /dev/fd0         /mnt/floppy   auto    noauto,rw,sync,user,exec 0    0
 /dev/cdrom       /mnt/cdrom    iso9660 noauto,ro,user,exec      0    0
 
-/dev/XXX         /tmp          ext2    rw,nosuid,nodev          0    2
-/dev/XXX         /var          ext2    rw,nosuid,nodev          0    2
-/dev/XXX         /usr          ext2    rw,nodev                 0    2
-/dev/XXX         /home         ext2    rw,nosuid,nodev          0    2
+/dev/XXX         /tmp          ext3    rw,nosuid,nodev          0    2
+/dev/XXX         /var          ext3    rw,nosuid,nodev          0    2
+/dev/XXX         /usr          ext3    rw,nodev                 0    2
+/dev/XXX         /home         ext3    rw,nosuid,nodev          0    2
 </screen></informalexample>
 
-Utilice <userinput>mount -a</userinput> para montar todos los sistemas de 
+Utilice <userinput>mount -a</userinput> para montar todos los sistemas de
 ficheros que ha especificado en <filename>/etc/fstab</filename> o
 móntelos individualmente usando:
 
@@ -221,14 +239,24 @@ móntelos individualmente usando:
 # mount /ruta  # por ej.:  mount /usr
 </screen></informalexample>
 
-Puede montar el sistema de ficheros «proc» tantas veces como quiera y
-en cualquier ubicación, aunque la ubicación habitual es /proc.
+Puede montar el sistema de ficheros <quote>proc</quote> tantas veces como quiera y
+en cualquier ubicación, aunque la ubicación habitual es <filename>/proc</filename>.
 Asegúrese de montar proc antes de continuar si no usa <userinput>mount
 -a</userinput>:
 
 
 <informalexample><screen>
 # mount -t proc proc /proc
+</screen></informalexample>
+
+</para><para>
+
+Si ejecuta la orden <userinput>ls /proc</userinput> debería ver que el directorio
+no está vacío. Si esto falla, puede intentar montar <quote>proc</quote> fuera
+del entorno chroot:
+
+<informalexample><screen>
+# mount -t proc proc /mnt/debinst/proc
 </screen></informalexample>
 
 </para>
@@ -244,6 +272,11 @@ Para configurar el teclado ejecute:
 # dpkg-reconfigure console-data
 </screen></informalexample>
 
+</para><para>
+
+Tenga en cuenta que no puede configurar el teclado mientras esté dentro del
+chroot, pero se configurará en el siguiente rearranque.
+
 </para>
    </sect3>
 
@@ -257,7 +290,7 @@ Para configurar la red, edite
 <filename>/etc/hostname</filename>.
 
 <informalexample><screen>
-# editor /etc/network/interfaces 
+# editor /etc/network/interfaces
 </screen></informalexample>
 
 Aquí hay algunos ejemplos sencillos que podrá encontrar en
@@ -408,7 +441,7 @@ Aquí tiene un ejemplo básico de /etc/lilo.conf:
 <informalexample><screen>
 boot=/dev/hda6
 root=/dev/hda6
-install=/boot/boot-menu.b
+install=menu
 delay=20
 lba32
 image=/vmlinuz
@@ -441,9 +474,9 @@ image=/vmlinux
 label=Debian
 </screen></informalexample>
 
-Puede que tenga que utilizar <userinput>ide0:</userinput> 
+Puede que tenga que utilizar <userinput>ide0:</userinput>
 en algunas máquinas
-en lugar de <userinput>hd:</userinput>. 
+en lugar de <userinput>hd:</userinput>.
 
 </para>
   </sect2>

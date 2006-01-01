@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<!-- original version: 22935 -->
+<!-- original version: 29895 -->
 <!-- Revisado Rudy Godoy, 22 feb. 2005 -->
 
  <sect1 id="module-details">
  <title>Usando componentes individuales</title>
 <para>
 
-En esta sección describiremos en detalle cada componente del 
+En esta sección describiremos en detalle cada componente del
 instalador. Los componentes han sido agrupados en etapas que serán
 reconocibles por los usuarios. Éstos se presentan en el orden en
 el que aparecen durante la instalación. Note que no todos los módulos
@@ -24,7 +24,7 @@ su pantalla inicial. En este momento, las capacidades del &d-i; son
 todavía algo limitadas. Éste no conoce mucho sobre su hardware, idioma
 preferido, o incluso la tarea que deberá realizar. No se preocupe.
 Porque &d-i; es bastante intuitivo, puede automáticamente explorar su
-hardware, localizar el resto de sus componentes y autoactualizarse 
+hardware, localizar el resto de sus componentes y autoactualizarse
 a un programa moderno y bien construido.
 
 Sin embargo, todavía deberá ayudar al &d-i; suministrándole la información
@@ -33,7 +33,7 @@ el mapa del teclado o el servidor de réplica deseado).
 
 </para><para>
 
-Notará que &d-i; realiza la <firstterm>detección de hardware</firstterm> 
+Notará que &d-i; realiza la <firstterm>detección de hardware</firstterm>
 varias veces durante esta etapa. La primera vez se enfoca específicamente
 en el hardware requerido para cargar los componentes del instalador (como
 su CD-ROM o tarjeta de red). En vista de que no todos los controladores
@@ -45,9 +45,9 @@ hardware necesita repetirse después, durante el proceso.
 &module-lowmem.xml;
 &module-languagechooser.xml;
 &module-countrychooser.xml;
+&module-localechooser.xml;
 &module-kbd-chooser.xml;
 &module-s390-netdevice.xml;
-&module-s390-dasd.xml;
 &module-ddetect.xml;
 &module-cdrom-detect.xml;
 &module-iso-scan.xml;
@@ -72,6 +72,7 @@ temas estrechamente relacionados como LVM o dispositivos RAID.
 
 </para>
 
+&module-s390-dasd.xml;
 &module-partman.xml;
 &module-autopartkit.xml;
 &module-partitioner.xml;
@@ -86,7 +87,7 @@ temas estrechamente relacionados como LVM o dispositivos RAID.
 
 Aunque esta etapa es la menos problemática, consume la mayor parte del
 tiempo de instalación debido a que descarga, verifica y desempaqueta
-el sistema base completo. Si tiene un ordenador o conexión de red 
+el sistema base completo. Si tiene un ordenador o conexión de red
 lentos, esto podría tomar algún tiempo.
 
 </para>
@@ -99,7 +100,7 @@ lentos, esto podría tomar algún tiempo.
 
 <para condition="supports-nfsroot">
 
-Si está instalando una estación de trabajo sin disco, obviamente, 
+Si está instalando una estación de trabajo sin disco, obviamente,
 arrancar desde el disco local no es una opción significativa, de modo
 que esta etapa se saltará. <phrase arch="sparc">Tal vez quiera
 configurar «OpenBoot» para arrancar desde red en forma predeterminada,
@@ -136,7 +137,7 @@ su gestor de arranque para más detalles.
 <para>
 
 Estas son las últimas cosas a hacer antes de reiniciar su nuevo
-sistema Debian. En su mayoría consiste en ordenar después del &d-i;. 
+sistema Debian. En su mayoría consiste en ordenar después del &d-i;.
 
 </para>
 
@@ -156,6 +157,7 @@ para ayudar al usuario en caso de que algo falle.
 &module-save-logs.xml;
 &module-cdrom-checker.xml;
 &module-shell.xml;
+&module-network-console.xml;
 &module-baseconfig.xml;
   </sect2>
  </sect1>

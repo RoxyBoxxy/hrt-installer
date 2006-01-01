@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="EUC-JP"?>
 <!-- retain these comments for translator revision tracking -->
-<!-- original version: 27345-->
+<!-- original version: 32141-->
 
    <sect3 arch="i386">
    <title>&arch-title; での USB スティックのパーティション分割</title>
@@ -60,6 +60,8 @@ USB スティックにブートローダを配置します。
 FAT16 パーティションを使用し、
 テキストファイルを編集するだけで再設定できるので、
 <command>SYSLINUX</command> を使用するのが便利です。
+FAT ファイルシステムをサポートするオペレーティングシステムなら、
+ブートローダの設定を変更するのに利用できます。
 
 </para><para>
 
@@ -143,7 +145,7 @@ contain the following two lines:
 
 <informalexample><screen>
 default vmlinuz
-append initrd=initrd.gz ramdisk_size=12000 root=/dev/rd/0 init=/linuxrc rw
+append initrd=initrd.gz ramdisk_size=12000 root=/dev/ram rw
 </screen></informalexample>
 
 <!--
