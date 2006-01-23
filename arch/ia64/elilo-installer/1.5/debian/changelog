@@ -1,0 +1,324 @@
+elilo-installer (1.5) unstable; urgency=low
+
+  [ Joey Hess ]
+  * Remove unused $log variable.
+
+  [ Christian Perrier ]
+  * Remove Debian branding from template to ease the work of derived
+    distributions
+  * Correct a "Text:" line in the templtes file. Thanks to Thomas Huriaux
+    for the bot which noticed it
+
+  [ dann frazier ]
+  * Use "true" instead of "yes" for the default value for
+    elilo-installer/apt-install-failed - detected by lintian
+  * Update standards version
+
+ -- dann frazier <dannf@debian.org>  Mon, 23 Jan 2006 15:46:03 -0700
+
+elilo-installer (1.4) unstable; urgency=low
+
+  * Colin Watson
+    - Fix name of title template so that it actually gets used.
+    - Remove bogus isinstallable script; it only works if debootstrap
+      installs elilo, which we're trying to avoid, and it's unnecessary
+      because the postinst now apt-installs elilo and checks for failure.
+    - The postinst is 'set -e'; fix logic for looking at elilo's exit code
+      to cope with that.
+    - Use debian-installer/elilo-installer/title for the progress bar title.
+      This template doesn't quite have the ideal text, but this is the best
+      we can do without breaking the string freeze.
+  * Matt Kraai
+    - Fix the spelling of "file system".
+  * dann frazier
+    - Update parted print output parsing in order to handle the new Size field
+
+ -- dann frazier <dannf@debian.org>  Tue, 06 Sep 2005 16:20:00 -0600
+
+elilo-installer (1.3) unstable; urgency=low
+
+  * dann frazier
+    - 's/do_bootloader = no/do_bootloader = yes/' in kernel-img.conf
+      Closes: #288897
+
+ -- dann frazier <dannf@debian.org>  Thu, 06 Jan 2005 11:16:41 -0700
+
+elilo-installer (1.2) unstable; urgency=low
+
+  * Joey Hess
+    - Build udeb in binary-arch target. Closes: #285078
+  * Updated translations: 
+    - Bulgarian (bg.po) by Ognyan Kulev
+    - Greek, Modern (1453-) (el.po) by Greek Translation Team
+    - Spanish (Castilian) (es.po) by Javier Fernandez-Sanguino Peña
+    - Finnish (fi.po) by Tapio Lehtonen
+    - French (fr.po) by French Team
+    - Hebrew (he.po) by Lior Kaplan
+    - Dutch (nl.po) by Bart Cornelis
+    - Romanian (ro.po) by Eddy Petrisor
+    - Russian (ru.po) by Russian L10N Team
+
+ -- Joey Hess <joeyh@debian.org>  Fri, 10 Dec 2004 17:34:06 -0500
+
+elilo-installer (1.1) unstable; urgency=low
+
+  * Updated translations: 
+    - Bulgarian (bg.po) by Ognyan Kulev
+    - Catalan (ca.po) by Jordi Mallach
+    - Czech (cs.po) by Miroslav Kure
+    - Welsh (cy.po) by Dafydd Harries
+    - Danish (da.po) by Claus Hindsgaul
+    - German (de.po) by Dennis Stampfer
+    - Greek, Modern (1453-) (el.po) by Greek Translation Team
+    - Spanish (Castilian) (es.po) by Javier Fernandez-Sanguino Peña
+    - Basque (eu.po) by Piarres Beobide Egaña
+    - Finnish (fi.po) by Tapio Lehtonen
+    - French (fr.po) by French Team
+    - Hebrew (he.po) by Lior Kaplan
+    - Croatian (hr.po) by Krunoslav Gernhard
+    - Hungarian (hu.po) by VEROK Istvan
+    - Indonesian (id.po) by Debian Indonesia Team
+    - Japanese (ja.po) by Kenshi Muto
+    - Korean (ko.po) by Changwoo Ryu
+    - Lithuanian (lt.po) by Kęstutis Biliūnasn
+    - Latvian (lv.po) by Aigars Mahinovs
+    - Bøkmal, Norwegian (nb.po) by Bjorn Steensrud
+    - Norwegian Nynorsk (nn.po) by Håvard Korsvoll
+    - Polish (pl.po) by Bartosz Fenski
+    - Portuguese (Brazil) (pt_BR.po) by André Luís Lopes
+    - Romanian (ro.po) by Eddy Petrisor
+    - Russian (ru.po) by Russian L10N Team
+    - Slovak (sk.po) by Peter KLFMANiK Mann
+    - Slovenian (sl.po) by Jure Čuhalev
+    - Albanian (sq.po) by Elian Myftiu
+    - Swedish (sv.po) by Per Olofsson
+    - Turkish (tr.po) by Recai Oktaş
+    - Simplified Chinese (zh_CN.po) by Carlos Z.F. Liu
+    - Traditional Chinese (zh_TW.po) by Tetralet
+
+ -- Joey Hess <joeyh@debian.org>  Wed,  6 Oct 2004 16:21:50 -0400
+
+elilo-installer (1.0) unstable; urgency=low
+
+  * Jim Lieb
+    - Make partition names more people readable. Closes: #268491
+  * Joey Hess
+    - Insane version number bump.
+
+ -- Joey Hess <joeyh@debian.org>  Fri, 17 Sep 2004 13:38:54 -0400
+
+elilo-installer (0.0.9) unstable; urgency=low
+
+  * Joey Hess
+    - Don't fail if efivars modprobe fails, it's built-in on 2.4.
+
+ -- joey hess <joeyh@debian.org>  Wed, 15 Sep 2004 11:55:05 -0400
+
+elilo-installer (0.0.8) unstable; urgency=low
+
+  * Joey Hess
+    - Allow elilo-installer/bootpart to be preseeded.
+  * Updated translations: 
+    - French (fr.po) by French Team
+    - Gallegan (gl.po) by Héctor Fenández López
+    - Russian (ru.po) by Russian L10N Team
+
+ -- Joey Hess <joeyh@debian.org>  Wed, 15 Sep 2004 11:42:12 -0400
+
+elilo-installer (0.0.7) unstable; urgency=low
+
+  * dann frazier
+    - add dependency on fat-modules
+    - add dependency on firmware-modules (for efivars)
+    - modprobe efivars
+    - mount sysfs for efibootmgr, if necessary.  Closes: #270934
+  * Joey Hess
+    - Remove unsetting of seen flag, that is not necessary in the d-i
+      environment and it makes preseeding difficult.
+
+ -- dann frazier <dannf@debian.org>  Fri, 10 Sep 2004 00:13:26 -0600
+
+elilo-installer (0.0.6) unstable; urgency=low
+
+  * Jim Lieb
+    - add apt-install to fix dependency on debootstrap to
+    -  install bootloader.
+    - Closes: #262182
+
+ -- dann frazier <dannf@debian.org>  Wed, 25 Aug 2004 00:39:36 -0600
+
+elilo-installer (0.0.5) unstable; urgency=low
+
+  * Colin Watson
+    - Depend on parted-udeb.
+  * Jim Lieb
+    - The script runs without sh scripting errors.
+    - Correctly finds and displays all partition candidates.
+    - the title is correctly displayed.
+    - the "no partition found" error message in the template
+    - Removes dependency on executables in /target filesystem.
+    - Closes: #255940
+
+ -- dann frazier <dannf@debian.org>  Sun, 27 Jun 2004 13:34:42 -0600
+
+elilo-installer (0.0.4) unstable; urgency=low
+
+  * Safir Secerovic
+    - Update Bosnian translation (bs.po).
+  * Giuseppe Sacco
+    - applied patch for normalizing menus and some italian translation (it.po)
+  *  h3li0s
+    - Added Albanian translation (sq.po)
+  * Jordi Mallach
+    - Update Catalan translation (ca.po).
+  * Eugen Meshcheryakov : added Ukrainian translation (uk.po)
+  * Joey Hess
+    - Add a dependency on di-utils-mapdevfs.
+  * Håvard Korsvoll
+    - Updated Norwegian, nynorsk (nn.po) translation.
+  * Changwoo Ryu
+    - Added Korean translation (ko.po)
+    - Updated Korean translation (ko.po)
+  * Kęstutis Biliūnas
+    - Updated Lithuanian translation (lt.po)
+  * Ming Hua
+    - Initial Traditional Chinese translation (zh_TW.po), by Tetralet
+    - Updated Traditional Chinese translation (zh_TW.po), by Tetralet
+  * Håvard Korsvoll
+    - Updated Norwegian, bokmål translation, (nb.po). From Axel Bojer
+  * Petter Reinholdtsen
+    - Remove Moshe Zadka and Tollef Fog Heen as uploaders.  Neither
+      have uploaded this package for months.
+  * Dafydd Harries
+    - Added Welsh translation (cy.po)
+  * Nikolai Prokoschenko
+    - Updated Russian translation (ru.po)
+  * Joshua Kwan
+    - Use debhelper's new udeb support.
+    - Add myself to Uploaders.
+    - Change Build-Depends-Indep to Build-Depends.
+
+ -- Joshua Kwan <joshk@triplehelix.org>  Tue,  6 Apr 2004 10:10:25 -0700
+
+elilo-installer (0.0.3) unstable; urgency=low
+
+  * Miguel Figueiredo
+    - Updated Portuguese translation (pt.po)
+  * Ming Hua
+    - Initial Simplified Chinese translation (zh_CN.po)
+  * Bartosz Fenski
+    - Updated Polish (pl) translation.
+  * Steinar H. Gunderson
+    - Update Norwegian translation (nb.po).
+  * Miroslav Kure
+    - Added Czech translation (cs.po).
+  * Ognyan Kulev
+    - Added/updated bulgarian translation (bg.po).
+  * Kęstutis Biliūnas
+    - Added Lithuanian translation (lt.po).
+  * Giuseppe Sacco
+    - Added italian translation by Stefano Melchior (it.po)
+  * Christian Perrier
+    - Updated french translation Project-Id-Version
+  * Bart Cornelis
+    - synchronize string translation over different Dutch po files
+    - Merged Norwegian Bokmael (nb.po) translations from skolelinux-cvs
+    - Merged Norwegian Nynorsk (nn.po) translations from skolelinux-cvs
+  * Dennis Stampfer
+    - Merged some strings in German translation de.po
+  * Jure Cuhalev
+    - Added/updated slovenian translation (sl.po).
+  * Miguel Figueiredo
+    - Initial Portuguese translation (pt.po).
+  * Kenshi Muto
+    - Update Japanese translation (ja.po)
+  * André Luís Lopes
+    - Made translation of "No boot partitions detected" be
+      consistent between elilo-installer and silo-installer.
+  * Peter Mann
+    - Updated Slovak translation
+  * André Dahlqvist
+    - Added Swedish translation
+  * Claus Hindsgaul
+    - Updated Danish translation (da.po).
+  * Teófilo Ruiz Suárez
+    - Fixed some inconsistencies in Spanish Translation (es.po)
+  * Anmar Oueja
+    - created and translated to Arabic (ar.po)
+  * Nikolai Prokoschenko
+    - Upated russian translation (ru.po)
+
+ -- dann frazier <dannf@debian.org>  Sat, 17 Jan 2004 17:41:57 -0700
+
+elilo-installer (0.0.2) unstable; urgency=low
+
+  * Petter Reinholdtsen
+    - Update nn.po, thanks to Gaute Hvoslef Kvalnes.
+  * Teófilo Ruiz Suárez <teo@debian.org>
+    - Update es.po
+  * Thorsten Sauter
+    - Include german translation (de.po)
+  * Alastair McKinstry
+    - Converted changelog to UTF-8
+    - Moved to Standards-Version: 3.6.1
+  * Kenshi Muto
+    - Added Japanese translation (ja.po)
+    - Update ja.po
+  * Denis Barbier
+    - Run debconf-updatepo
+    - Update fr.po
+  * Chris Tillman
+    - Update English usage in message templates
+  * Jordi Mallach
+    - Added Catalan (ca) translation.
+  * Pierre Machard
+    - Update French po-debconf translation.
+  * Andre Luis Lopes
+    - Update pt_BR (Brazilian Portuguese) translation.
+  * Bart Cornelis
+    - Updated dutch translation
+  * Ilgiz Kalmetev
+    - Initial Russian translation. Closes: #214347.
+  * Miroslav Kure
+    - Initial Czech translation.
+  * Claus Hindsgaul
+    - Initial Danish translation (da.po).
+  * Safir Secerovic, Amila Akagic
+    - Add Bosnian translation. (bs.po).
+  * Peter Mann
+    - Initial Slovak translation (sk.po).
+  * Konstantinos Margaritis
+    - Initial Greek translation (el.po).
+  * Christian Perrier
+    - Refined and standardized templates. Closes: #218568
+    - Update French translation.
+  * Verok Istvan
+    - Initial Hungarian translation
+  * Dennis Stampfer
+    - Update German translation (de.po)
+  * Konstantinos Margaritis
+    - Updated Greek translation (el.po)
+  * Teófilo Ruiz Suárez
+    - Updated Spanish translation (es.po)
+    - Switched to UTF-8
+
+ -- Bart Cornelis <cobaco@linux.be>  Fri, 19 Dec 2003 17:30:12 +0100
+
+elilo-installer (0.0.1) unstable; urgency=low
+
+  * Bdale Garbee
+    - copied from lilo-installer and hacked for elilo
+    - add French templates translation
+  * André Luís Lopes
+    - Add Brazilian Portuguese (pt_BR) elilo
+      template translation.
+  * Richard Hirst
+    - change menu item number to match lilo
+    - offers list of possible boot partitions; basically works now
+  * Petter Reinholdtsen
+    - Added Norwegian Bokmål (nb.po) translations recieved from
+      Bjørn Steensrud.
+    - Added Norwegian Nynorsk (nn.po) translations recieved from
+      Gaute Hvoslef Kvalnes.
+
+ -- dann frazier <dannf@debian.org>  Sun, 16 Mar 2003 12:21:18 -0700
