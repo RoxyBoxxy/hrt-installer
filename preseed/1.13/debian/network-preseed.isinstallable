@@ -1,0 +1,15 @@
+#!/bin/sh
+. /usr/share/debconf/confmodule
+db_get preseed/url || exit 1
+if [ -n "$RET" ]; then
+	exit 0
+fi
+for file in /var/lib/dhcp/dhclient.leases /var/lib/dhcp3/dhclient.leases; do
+	if [ -r "$file" ]; then
+		FN="$(sed -n -e '/filename/s/.*"\(.*\)"./\1/p' $file)"
+		if [ -z "${FN##*://*}" ]; then
+			exit 0
+		fi
+	fi
+done
+exit 1
