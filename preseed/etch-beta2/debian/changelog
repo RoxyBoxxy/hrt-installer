@@ -1,3 +1,37 @@
+preseed (1.14.1) UNRELEASED; urgency=low
+
+  * Revert DHCP preseeding changes; it's not ready for release.
+
+ -- Frans Pop <fjp@debian.org>  Tue, 28 Feb 2006 17:08:35 +0100
+
+preseed (1.14) unstable; urgency=low
+
+  * debconf-set-selections: use sed instead of tr; tr does not grok UTF-8.
+
+ -- Frans Pop <fjp@debian.org>  Thu, 23 Feb 2006 00:44:37 +0100
+
+preseed (1.13) unstable; urgency=low
+
+  [ Geert Stappers ]
+  * Allow the URL to a preseed file to be specified as the filename in
+    the DHCP lease. The filename must contain "://" to be used as an URL.
+
+  [ Joey Hess ]
+  * Don't ignore the last continued line.
+  * When extracting filename from DHCP lease, be sure to quote it to prevent
+    accidents.
+  * Look for dhcp lease files in turn, not based on which dhcp client is
+    found, to avoid tight binding to which one netcfg prefers to run.
+  * Load dhcp preseed file first, but then load any specified preseed/url.
+    This allows for using dhcp preseeding for network-global stuff, like
+    mirrors etc, while fully automating installs in the old manner. Note that
+    I chose to let preseed/url override the dhcp preseeding; which should
+    override the other is debatable. Also, there is some code duplication
+    between network-preseed.isinstallable and network-preseed.postinst.
+    Closes: #319524
+
+ -- Joey Hess <joeyh@debian.org>  Tue, 21 Feb 2006 18:37:30 -0500
+
 preseed (1.12) unstable; urgency=low
 
   * My paranoia has gotten the best of me and I've decided it's not worth the
