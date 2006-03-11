@@ -1,0 +1,44 @@
+#!/usr/bin/make -f
+
+DESTDIR = debian/sarge-support
+
+scripts = \
+	21sarge-quirks \
+	51target-network-sarge \
+	91base-config-prep
+
+build:
+	dh_testdir
+
+clean:
+	dh_testdir
+	dh_testroot
+	dh_clean
+
+install: build
+	dh_testdir
+	dh_testroot
+	dh_installdirs
+	install -m0644 inittab.install $(DESTDIR)/usr/share/sarge-support/inittab
+	install -m0644 termwrap $(DESTDIR)/usr/share/sarge-support/
+	set -e ; for file in $(scripts); do \
+		install -m0755 prebaseconfig.d/$$file $(DESTDIR)/usr/lib/prebaseconfig.d/$$file; \
+	done
+
+
+binary-indep: build install
+	dh_testdir
+	dh_testroot
+	dh_installdebconf
+	dh_strip
+	dh_compress
+	dh_fixperms
+	dh_installdeb
+	dh_shlibdeps
+	dh_gencontrol
+	dh_builddeb
+
+binary-arch: build install
+
+binary: binary-indep binary-arch
+.PHONY: build clean binary-indep binary-arch binary install
