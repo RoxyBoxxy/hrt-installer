@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: debian-installer\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2004-07-19 11:39+0200\n"
-"PO-Revision-Date: 2006-01-20 13:42+0100\n"
+"PO-Revision-Date: 2006-03-08 13:39+0100\n"
 "Last-Translator:  Elian Myftiu <elian.myftiu@gmail.com>\n"
 "Language-Team: Debian L10n Albanian <debian-l10n-albanian@lists.debian.org>\n"
 "MIME-Version: 1.0\n"
@@ -10224,6 +10224,15 @@ msgstr "Konfiguro dhe monto ndarje"
 #~ msgid "Resolving dependencies of base packages..."
 #~ msgstr "Duke zgjidhur varësitë e paketave bazë..."
 
+#~ msgid "Found additional base dependencies: ${SUBST0}"
+#~ msgstr "U gjetën varësi themelore shtesë: ${SUBST0}"
+
+#~ msgid "Found additional required dependencies: ${SUBST0}"
+#~ msgstr "U gjetën varësi të nevojshme shtesë: ${SUBST0}"
+
+#~ msgid "Found packages in base already in required: ${SUBST0}"
+#~ msgstr "U gjetën paketa themelore që janë të nevojshme: ${SUBST0}"
+
 #~ msgid "Resolving dependencies of required packages..."
 #~ msgstr "Duke zgjidhur varësitë e paketave të duhura..."
 
@@ -11149,28 +11158,37 @@ msgstr "Konfiguro dhe monto ndarje"
 #~ "Kjo ndodhi sepse zgjedhja nuk përmban asnjë ndarje që mund të krijohet në "
 #~ "volume LVM."
 
-#, fuzzy
 #~ msgid "Existing physical volume on the selected device"
-#~ msgstr "Nuk u zgjodh asnjë volum fizik"
+#~ msgstr "Volum fizik i pranishëm në dispozitivin e zgjedhur"
 
-#, fuzzy
+#~ msgid ""
+#~ "The device you selected already contains one or more physical volumes. It "
+#~ "is not possible to automatically partition this device using LVM."
+#~ msgstr ""
+#~ "Dispozitivi që zgjodhe përmban një ose më tepër volumë fizikë. Nuk është "
+#~ "e mundur ndarja automatike e këtij dispozitivi duke përdorur LVM."
+
+#~ msgid ""
+#~ "The volume group name used to automatically partition using LVM is "
+#~ "already in use. Lowering the priority for configuration questions will "
+#~ "allow you to specify an alternative name."
+#~ msgstr ""
+#~ "Emri i grupit të volumeve i përdorur për të ndarë automatikisht LVM është "
+#~ "në përdorim e sipër. Duke ulur përparësinë e pyetjeve të konfiguruesit do "
+#~ "jetë i mundur caktimi i një emri tjetër."
+
 #~ msgid "Unexpected error while creating volume group"
-#~ msgstr "Gabim në fshirjen e Grupit të Volumit"
+#~ msgstr "Gabim në krijimin e grupit të volumit"
 
-#~ msgid "physical volume for encryption"
-#~ msgstr "volumi fizik për kriptimin"
-
-#~ msgid "crypto"
-#~ msgstr "crypto"
+#~ msgid ""
+#~ "Autopartitioning using LVM failed because an error occurred while "
+#~ "creating the volume group."
+#~ msgstr ""
+#~ "Autondarja me anë të LVM-së dështoi pasi ndodhi një gabim ndërsa krijohej "
+#~ "grupi i volumeve."
 
 #~ msgid "not active"
 #~ msgstr "jo aktiv"
-
-#~ msgid "Encryption type:"
-#~ msgstr "Lloji i kriptimit:"
-
-#~ msgid "Encryption type for this partition:"
-#~ msgstr "Lloji i kriptimit për këtë ndarje:"
 
 #~ msgid "Encryption:"
 #~ msgstr "Kriptimi:"
@@ -11283,15 +11301,6 @@ msgstr "Konfiguro dhe monto ndarje"
 
 #~ msgid "An error occurred while setting up encrypted volumes."
 #~ msgstr "Ndodhi një gabim duke rregulluar volumet e kriptuara."
-
-#~ msgid "Loopback (loop-AES)"
-#~ msgstr "Loopback (cikël AES)"
-
-#~ msgid "Device-mapper (dm-crypt)"
-#~ msgstr "Rilevues i dispozitivit (dm-crypt)"
-
-#~ msgid "Device-mapper (LUKS)"
-#~ msgstr "Rilevues i dispozitivit (LUKS)"
 
 #~ msgid "Passphrase"
 #~ msgstr "Fjalëkalim"
@@ -11413,14 +11422,6 @@ msgstr "Konfiguro dhe monto ndarje"
 #~ msgstr "Çelësi i kriptimit për ${DEVICE} po krijohet."
 
 #~ msgid ""
-#~ "This process requires the system to have large amounts of collected "
-#~ "randomness (\"entropy\"), of which there is likely too little at this "
-#~ "stage of the installation."
-#~ msgstr ""
-#~ "Ky proçes kërkon që sistemi të ketë sasi të mjaftueshme rastësie "
-#~ "(\"entropie\"), për të cilën ngjan të ketë pak në këtë hap të instalimit."
-
-#~ msgid ""
 #~ "You can help speed up the process by entering random characters on the "
 #~ "keyboard, or just wait until enough keydata has been collected. (NOTE: "
 #~ "this can take a long time)"
@@ -11491,6 +11492,35 @@ msgstr "Konfiguro dhe monto ndarje"
 #~ msgid ""
 #~ "iucv: Inter-User Communication Vehicle - available for VM guests only"
 #~ msgstr "iucv: Inter-User Communication Vehicle - vetëm për klientët VM."
+
+#~ msgid ""
+#~ "This process requires the system to have large amounts of collected "
+#~ "randomness (\"entropy\"), of which there is likely too little at this "
+#~ "stage of the installation."
+#~ msgstr ""
+#~ "Ky proçes kërkon që sistemi të ketë sasi të mjaftueshme rastësie "
+#~ "(\"entropie\"), për të cilën ngjan të ketë pak në këtë hap të instalimit."
+
+#~ msgid "physical volume for encryption"
+#~ msgstr "volumi fizik për kriptimin"
+
+#~ msgid "crypto"
+#~ msgstr "crypto"
+
+#~ msgid "Encryption type:"
+#~ msgstr "Lloji i kriptimit:"
+
+#~ msgid "Encryption type for this partition:"
+#~ msgstr "Lloji i kriptimit për këtë ndarje:"
+
+#~ msgid "Loopback (loop-AES)"
+#~ msgstr "Loopback (cikël AES)"
+
+#~ msgid "Device-mapper (dm-crypt)"
+#~ msgstr "Rilevues i dispozitivit (dm-crypt)"
+
+#~ msgid "Device-mapper (LUKS)"
+#~ msgstr "Rilevues i dispozitivit (LUKS)"
 
 #, fuzzy
 #~ msgid ""
