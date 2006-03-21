@@ -14,8 +14,11 @@ db_set debconf/priority $RET
 # Make sure debconf has saved the database.
 db_x_save
 
-test -d $logsavedir || mkdir $logsavedir
+mkdir -p $logsavedir/cdebconf
 cp /var/log/* $logsavedir
+chmod 600 $logsavedir/*
+chmod 755 $logsavedir/cdebconf # done this way for idempotency
 
 # Copy current debconf database
 cp -a /var/lib/cdebconf $logsavedir
+chmod 600 $logsavedir/cdebconf/*
