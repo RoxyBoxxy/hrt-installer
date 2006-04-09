@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: debian-installer\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2004-07-19 11:39+0200\n"
-"PO-Revision-Date: 2006-03-28 14:48+0900\n"
+"PO-Revision-Date: 2006-04-05 19:15+0900\n"
 "Last-Translator:  Kenshi Muto <kmuto@debian.org>\n"
 "Language-Team: Debian L10n Japanese <debian-l10n-japanese@lists.debian.org>\n"
 "MIME-Version: 1.0\n"
@@ -9858,6 +9858,10 @@ msgstr "パーティションの設定とマウント"
 #~ "続けると、以下に挙げた変更はディスクに書き込まれます。あるいは、手動でさら"
 #~ "に変更を加えることができます。"
 
+#, fuzzy
+#~ msgid "Encrypted volume (%s)"
+#~ msgstr "暗号化されたボリュームの設定"
+
 #~ msgid "Loopback (loop%s)"
 #~ msgstr "ループバック (loop%s)"
 
@@ -9869,6 +9873,34 @@ msgstr "パーティションの設定とマウント"
 
 #~ msgid "Small-disk (< 1GB) partitioning scheme"
 #~ msgstr "小さなディスク (< 1GB) のパーティショニング機構"
+
+#, fuzzy
+#~ msgid ""
+#~ "Before you can select a partition to copy, any previous changes have to "
+#~ "be written to disk."
+#~ msgstr ""
+#~ "サイズ変更操作を行う前に、変更をディスクに書き込んでおく必要があります。"
+
+#, fuzzy
+#~ msgid "Please note that the copy operation may take a long time."
+#~ msgstr ""
+#~ "コピー操作は長い時間を必要とするかもしれないことに注意してください。"
+
+#, fuzzy
+#~ msgid "Write previous changes to disk and continue?"
+#~ msgstr "ディスクへの変更を書き込み、LVM を設定しますか?"
+
+#, fuzzy
+#~ msgid ""
+#~ "Before you can select a new partition size, any previous changes have to "
+#~ "be written to disk."
+#~ msgstr ""
+#~ "サイズ変更操作を行う前に、変更をディスクに書き込んでおく必要があります。"
+
+#, fuzzy
+#~ msgid "Please note that the resize operation may take a long time."
+#~ msgstr ""
+#~ "サイズ変更操作は長い時間を必要とするかもしれないことに注意してください。"
 
 #~ msgid "Resize the partition (currently ${SIZE})"
 #~ msgstr "パーティションのリサイズ (現在 ${SIZE})"
@@ -10323,9 +10355,8 @@ msgstr "パーティションの設定とマウント"
 #~ msgid "Configuring apt"
 #~ msgstr "apt を設定しています"
 
-#, fuzzy
 #~ msgid "Scanning local repositories..."
-#~ msgstr "セキュリティアップデートリポジトリを検査しています..."
+#~ msgstr "ローカルリポジトリを検査しています..."
 
 #~ msgid "Scanning the security updates repository..."
 #~ msgstr "セキュリティアップデートリポジトリを検査しています..."
@@ -11215,9 +11246,23 @@ msgstr "パーティションの設定とマウント"
 #~ "これは、選択されたレシピが LVM ボリュームとして作成できるパーティションを"
 #~ "含んでいないために起きました。"
 
-#, fuzzy
 #~ msgid "Continue installation without /boot partition?"
-#~ msgstr "パーティショニングを続けますか?"
+#~ msgstr "/boot パーティションなしにインストールを続けますか?"
+
+#~ msgid ""
+#~ "The recipe you selected does not contain a separate partition for /boot. "
+#~ "This is normally needed to allow you to boot the system when using LVM."
+#~ msgstr ""
+#~ "選択したレシピには、/boot 用に分けられたパーティションが含まれていません。"
+#~ "これは通常、LVM を使っているときには、システムをブートすることができるよう"
+#~ "にするのに必要となります。"
+
+#~ msgid ""
+#~ "You can choose to ignore this warning, but that may result in failure to "
+#~ "reboot the system after the installation is completed."
+#~ msgstr ""
+#~ "この警告を無視して選ぶことができますが、インストール完了後、システムの再起"
+#~ "動に失敗することになるかもしれません。"
 
 #~ msgid "Existing physical volume on the selected device"
 #~ msgstr "選択されたデバイスに物理ボリュームがすでに存在します"
@@ -11285,9 +11330,10 @@ msgstr "パーティションの設定とマウント"
 #~ msgid "Required programs missing"
 #~ msgstr "必要なプログラムが見つかりません"
 
+#, fuzzy
 #~ msgid ""
 #~ "This build of debian-installer does not include one or more programs that "
-#~ "are required for partman-crypt to function correctly."
+#~ "are required for partman-crypto to function correctly."
 #~ msgstr ""
 #~ "この debian-installer ビルドでは、partman-crypt が正しく機能するのに必要"
 #~ "な 1 つ以上のプログラムが含まれていません。"
@@ -11458,21 +11504,6 @@ msgstr "パーティションの設定とマウント"
 #~ "${MINIMUM} 文字より少ないパスフレーズで構成されたパスフレーズを入力しまし"
 #~ "たが、これは非常に脆弱と思われます。より強固なパスフレーズを選ぶべきです。"
 
-#~ msgid "Enter random characters to continue"
-#~ msgstr "続けるには 適当な文字を押してください"
-
-#~ msgid "The encryption key for ${DEVICE} is now being created. (${PROGRESS})"
-#~ msgstr "${DEVICE} の暗号化鍵を作成しています。(${PROGRESS})"
-
-#~ msgid ""
-#~ "You can help speed up the process by entering random data on the keyboard "
-#~ "to fill the randomness pool and continuing once in a while. This dialog "
-#~ "will recur until enough keydata has been collected."
-#~ msgstr ""
-#~ "乱数プールを満たすためにキーボードで適当なデータを入れ、一度で済むようにす"
-#~ "ることで、処理速度を上げるのを手伝うことができます。このダイアログは十分な"
-#~ "鍵データが集められるまで再び出現します。"
-
 #~ msgid "Enter random characters"
 #~ msgstr "適当な文字を入力してください"
 
@@ -11549,6 +11580,21 @@ msgstr "パーティションの設定とマウント"
 #~ msgid ""
 #~ "iucv: Inter-User Communication Vehicle - available for VM guests only"
 #~ msgstr "iucv: VM ゲストのみ利用できる Inter-User Communication Vehicle"
+
+#~ msgid "Enter random characters to continue"
+#~ msgstr "続けるには 適当な文字を押してください"
+
+#~ msgid "The encryption key for ${DEVICE} is now being created. (${PROGRESS})"
+#~ msgstr "${DEVICE} の暗号化鍵を作成しています。(${PROGRESS})"
+
+#~ msgid ""
+#~ "You can help speed up the process by entering random data on the keyboard "
+#~ "to fill the randomness pool and continuing once in a while. This dialog "
+#~ "will recur until enough keydata has been collected."
+#~ msgstr ""
+#~ "乱数プールを満たすためにキーボードで適当なデータを入れ、一度で済むようにす"
+#~ "ることで、処理速度を上げるのを手伝うことができます。このダイアログは十分な"
+#~ "鍵データが集められるまで再び出現します。"
 
 #~ msgid "-- ${SHORTLIST} --"
 #~ msgstr "-- ${SHORTLIST} --"
@@ -12187,6 +12233,13 @@ msgstr "パーティションの設定とマウント"
 
 #~ msgid "Enter the full name of the new user."
 #~ msgstr "新しいユーザの本名 (フルネーム) を入力してください。"
+
+#~ msgid ""
+#~ "This build of debian-installer does not include one or more programs that "
+#~ "are required for partman-crypt to function correctly."
+#~ msgstr ""
+#~ "この debian-installer ビルドでは、partman-crypt が正しく機能するのに必要"
+#~ "な 1 つ以上のプログラムが含まれていません。"
 
 #~ msgid ""
 #~ "United States [ Translators: put here the ISO-3166 ENGLISH NAME of the "

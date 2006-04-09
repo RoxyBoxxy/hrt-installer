@@ -15,7 +15,7 @@ msgstr ""
 "Project-Id-Version: debian-installer\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2004-07-19 11:39+0200\n"
-"PO-Revision-Date: 2006-01-09 17:15+0700\n"
+"PO-Revision-Date: 2006-04-07 11:15+0700\n"
 "Last-Translator: Parlin Imanuel Toh <pt@samip-online.com>\n"
 "Language-Team: Debian Indonesia Team <debian-l10n-id@gurame.fisika.ui.ac."
 "id>\n"
@@ -9797,13 +9797,15 @@ msgstr "Mengonfigurasi dan mengaitkan partisi"
 #~ "kecuali Anda memiliki CD-ROM Debian resmi pertama (#1), CD-ROM 'Netinst', "
 #~ "atau paket-paket instalasi tersedia pada jaringan lokal."
 
-#, fuzzy
+#~ msgid "Architecture not supported"
+#~ msgstr "Arsitektur tidak didukung"
+
 #~ msgid ""
 #~ "The specified Debian archive mirror does not seem to support your "
 #~ "architecture. Please try a different mirror."
 #~ msgstr ""
-#~ "Arsip mirror Debian yang Anda berikan tidak tersedia atau tidak memiliki "
-#~ "berkas Release yang sah. Silakan menggunakan mirror yang lain."
+#~ "Arsip mirror Debian yang Anda berikan tidak mendukung arsitektur  "
+#~ "komputer anda. Silakan pilih mirror yang lain."
 
 #~ msgid ""
 #~ "An alternate port can be specified using the standard [hostname]:[port] "
@@ -9868,6 +9870,10 @@ msgstr "Mengonfigurasi dan mengaitkan partisi"
 #~ "Jika Anda melanjutkan, perubahan yang tertulis di bawah ini akan ditulis "
 #~ "ke hard disk., Bila tidak, anda dapat melakukan perubahan secara manual."
 
+#, fuzzy
+#~ msgid "Encrypted volume (%s)"
+#~ msgstr "Mengonfigurasi volum enkripsi"
+
 #~ msgid "Loopback (loop%s)"
 #~ msgstr "Loopback (loop%s)"
 
@@ -9879,6 +9885,34 @@ msgstr "Mengonfigurasi dan mengaitkan partisi"
 
 #~ msgid "Small-disk (< 1GB) partitioning scheme"
 #~ msgstr "Pola partisi hard disk kecil (< 1GB)"
+
+#, fuzzy
+#~ msgid ""
+#~ "Before you can select a partition to copy, any previous changes have to "
+#~ "be written to disk."
+#~ msgstr ""
+#~ "Sebelum pengubahan ulang ukuran partisi berjalan, perubahan-perubahan "
+#~ "yang terjadi harus ditulis ke disk."
+
+#, fuzzy
+#~ msgid "Please note that the copy operation may take a long time."
+#~ msgstr "Perhatikan bahwa operasi penyalinan memakan waktu."
+
+#, fuzzy
+#~ msgid "Write previous changes to disk and continue?"
+#~ msgstr "Tulis perubahan ke hard disk dan konfigurasikan LVM?"
+
+#, fuzzy
+#~ msgid ""
+#~ "Before you can select a new partition size, any previous changes have to "
+#~ "be written to disk."
+#~ msgstr ""
+#~ "Sebelum pengubahan ulang ukuran partisi berjalan, perubahan-perubahan "
+#~ "yang terjadi harus ditulis ke disk."
+
+#, fuzzy
+#~ msgid "Please note that the resize operation may take a long time."
+#~ msgstr "Perhatikan bahwa operasi pengubahan ukuran memakan waktu."
 
 #~ msgid "Resize the partition (currently ${SIZE})"
 #~ msgstr "Ubah ukuran partisi (saat ${SIZE})"
@@ -10325,9 +10359,8 @@ msgstr "Mengonfigurasi dan mengaitkan partisi"
 #~ msgid "Configuring apt"
 #~ msgstr "Sedang mengonfigurasi apt..."
 
-#, fuzzy
 #~ msgid "Scanning local repositories..."
-#~ msgstr "Memindai repositori update keamanan..."
+#~ msgstr "Memindai repositori lokal..."
 
 #~ msgid "Scanning the security updates repository..."
 #~ msgstr "Memindai repositori update keamanan..."
@@ -11088,13 +11121,12 @@ msgstr "Mengonfigurasi dan mengaitkan partisi"
 #~ "Penggerak disket tidak ditemukan, atau disket terformat tak ada dalam "
 #~ "penggerak"
 
-#, fuzzy
 #~ msgid ""
 #~ "To continue the installation, please use an SSH client to connect to the "
 #~ "IP address ${ip} and log in as the \"installer\" user."
 #~ msgstr ""
-#~ "Untuk melanjutkan instalasi, silakan gunakan klien SSH dan login sebagai "
-#~ "pengguna \"installer\"."
+#~ "Untuk melanjutkan instalasi, silakan gunakan klien SSH untuk melakukan "
+#~ "koneksi ke alamat IP ${ip} dan login sebagai pengguna \"installer\"."
 
 #~ msgid "No PALO partition was found."
 #~ msgstr "Partisi PALO tidak ditemukan."
@@ -11218,17 +11250,52 @@ msgstr "Mengonfigurasi dan mengaitkan partisi"
 #~ "Ini terjadi karena resep yang dipilih tidak berisi partisi yang dapat "
 #~ "dibuat pada volum LVM."
 
-#, fuzzy
 #~ msgid "Continue installation without /boot partition?"
-#~ msgstr "Melanjutkan proses partisi?"
+#~ msgstr "Melanjutkan instalasi tanpa partisi /boot?"
 
-#, fuzzy
+#~ msgid ""
+#~ "The recipe you selected does not contain a separate partition for /boot. "
+#~ "This is normally needed to allow you to boot the system when using LVM."
+#~ msgstr ""
+#~ "Aturan partisi yang anda buat tidak memiliki partisi terpisah untuk /"
+#~ "boot. Normalnya ini dibutuhkan agar anda dapat melakukan booting sistem "
+#~ "bila menggunakan LVM."
+
+#~ msgid ""
+#~ "You can choose to ignore this warning, but that may result in failure to "
+#~ "reboot the system after the installation is completed."
+#~ msgstr ""
+#~ "Anda dapat mengabaikan peringatan ini, tetapi itu dapat menyebabkan "
+#~ "kegagalan saat reboots etelah instalasi selesai."
+
 #~ msgid "Existing physical volume on the selected device"
-#~ msgstr "Belum ada Volum Fisik yang dipilih"
+#~ msgstr "Volum Fisik sudah ada pada piranti yang dipilih"
 
-#, fuzzy
+#~ msgid ""
+#~ "The device you selected already contains one or more physical volumes. It "
+#~ "is not possible to automatically partition this device using LVM."
+#~ msgstr ""
+#~ "Piranti yang ada pilih telah berisi satu atau lebih volum fisik.Tak "
+#~ "mungkin untuk melakukan partisi LVM otomatis pada piranti ini."
+
+#~ msgid ""
+#~ "The volume group name used to automatically partition using LVM is "
+#~ "already in use. Lowering the priority for configuration questions will "
+#~ "allow you to specify an alternative name."
+#~ msgstr ""
+#~ "Nama Grup Volum yang digunakan untuk melakukan partisi LVM secara "
+#~ "otomatis telah digunakan. Menurunkan prioritas pertanyaan konfigurasi "
+#~ "akan membolehkan anda memberi nama alternatif."
+
 #~ msgid "Unexpected error while creating volume group"
-#~ msgstr "Terjadi kesalahan saat menghapus Grup Volum"
+#~ msgstr "Terjadi kesalahan tak terduga saat membuat Grup Volum"
+
+#~ msgid ""
+#~ "Autopartitioning using LVM failed because an error occurred while "
+#~ "creating the volume group."
+#~ msgstr ""
+#~ "Partisi otomatis menggunakan LVM gagal karena kesalahan saat membuat grup "
+#~ "volum."
 
 #~ msgid "not active"
 #~ msgstr "tak aktif"
@@ -11266,9 +11333,10 @@ msgstr "Mengonfigurasi dan mengaitkan partisi"
 #~ msgid "Required programs missing"
 #~ msgstr "Program yang diperlukan tak ada"
 
+#, fuzzy
 #~ msgid ""
 #~ "This build of debian-installer does not include one or more programs that "
-#~ "are required for partman-crypt to function correctly."
+#~ "are required for partman-crypto to function correctly."
 #~ msgstr ""
 #~ "Versi debian-installer ini tidak berisi program yang dibutukan agar "
 #~ "partman-crypt dapat berjalan dengan benar."
@@ -11440,21 +11508,6 @@ msgstr "Mengonfigurasi dan mengaitkan partisi"
 #~ "${MINIMUM}, yang dianggap terlalu lemah. Anda mesti memilih frase-masuk "
 #~ "yang lebih kuat."
 
-#~ msgid "Enter random characters to continue"
-#~ msgstr "Masukkan karakter-karakter random untuk melanjutkan"
-
-#~ msgid "The encryption key for ${DEVICE} is now being created. (${PROGRESS})"
-#~ msgstr "Kunci enkripsi untuk ${DEVICE} sedang dibuat (${PROGRESS})"
-
-#~ msgid ""
-#~ "You can help speed up the process by entering random data on the keyboard "
-#~ "to fill the randomness pool and continuing once in a while. This dialog "
-#~ "will recur until enough keydata has been collected."
-#~ msgstr ""
-#~ "Anda dapat membantu mempercepat proses dengan memasukkan data random pada "
-#~ "papan ketik untuk mengisi pool random dan melanjutkan sesekali. Dialog "
-#~ "ini akan muncul terus menerus sampai terdapat cukup data."
-
 #~ msgid "Enter random characters"
 #~ msgstr "Masukkan karakter-karakter random"
 
@@ -11533,6 +11586,21 @@ msgstr "Mengonfigurasi dan mengaitkan partisi"
 #~ msgstr ""
 #~ "iucv: Inter-User Communication Vehicle - hanya tersedia untuk tamu VM"
 
+#~ msgid "Enter random characters to continue"
+#~ msgstr "Masukkan karakter-karakter random untuk melanjutkan"
+
+#~ msgid "The encryption key for ${DEVICE} is now being created. (${PROGRESS})"
+#~ msgstr "Kunci enkripsi untuk ${DEVICE} sedang dibuat (${PROGRESS})"
+
+#~ msgid ""
+#~ "You can help speed up the process by entering random data on the keyboard "
+#~ "to fill the randomness pool and continuing once in a while. This dialog "
+#~ "will recur until enough keydata has been collected."
+#~ msgstr ""
+#~ "Anda dapat membantu mempercepat proses dengan memasukkan data random pada "
+#~ "papan ketik untuk mengisi pool random dan melanjutkan sesekali. Dialog "
+#~ "ini akan muncul terus menerus sampai terdapat cukup data."
+
 #~ msgid "-- ${SHORTLIST} --"
 #~ msgstr "-- ${SHORTLIST} --"
 
@@ -11595,6 +11663,13 @@ msgstr "Mengonfigurasi dan mengaitkan partisi"
 #~ msgstr ""
 #~ "Setelah reboot, tahap kedua instalasi akan dimulai pada console utama "
 #~ "(atau serial)."
+
+#~ msgid ""
+#~ "This build of debian-installer does not include one or more programs that "
+#~ "are required for partman-crypt to function correctly."
+#~ msgstr ""
+#~ "Versi debian-installer ini tidak berisi program yang dibutukan agar "
+#~ "partman-crypt dapat berjalan dengan benar."
 
 #~ msgid ""
 #~ "United States [ Translators: put here the ISO-3166 ENGLISH NAME of the "
