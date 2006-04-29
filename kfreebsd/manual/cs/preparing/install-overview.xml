@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="ISO-8859-2"?>
+<!-- $Id$ -->
+<!-- original version: 33719 -->
+
+ <sect1 id="install-overview">
+ <title>Přehled instalačního procesu</title>
+<para>
+
+Jenom na okraj bychom chtěli poznamenat, že kompletní reinstalace
+Debianu je velmi výjimečná událost, kterou má nejčastěji na svědomí
+mechanická závada pevného disku.
+
+</para><para>
+
+Na rozdíl od mnoha známých operačních systémů, které musíte při
+přechodu na novější verzi instalovat úplně znovu, nebo alespoň
+přeinstalovat aplikace, &debian; se umí aktualizovat za běhu.
+Pokud by nová verze programu vyžadovala nové verze ostatních balíků,
+nebo byla nějakým způsobem konfliktní s jiným programem, balíčkovací
+systém Debianu se o vše postará. Protože máte k dispozici mocné
+aktualizační nástroje, měli byste o kompletní reinstalaci uvažovat
+pouze jako o poslední možnosti.
+Instalační systém <emphasis>není</emphasis> navržen aktualizaci
+staršího systému.
+
+</para><para>
+
+Následuje stručný přehled instalačního procesu:
+
+</para>
+
+<orderedlist>
+<listitem><para>
+
+Nejprve si zazálohujete všechna důležitá data (hlavně dokumenty).
+
+</para></listitem>
+<listitem><para>
+
+Poté posbíráte co nejvíce informací o svém počítači a seženete si
+potřebnou dokumentaci (např. dokumenty odkazované z této příručky).
+
+</para></listitem>
+<listitem><para>
+
+Na pevném disku vytvoříte volné rozdělitelné místo (pro Debian).
+
+</para></listitem>
+<listitem><para>
+
+Stáhnete si soubory instalačního systému a všechny potřebné ovladače.
+(Pokud instalujete z CD, tento krok ignorujte).
+
+</para></listitem>
+<listitem><para>
+
+Připravíte si zaváděcí pásky/diskety/USB klíčenky, nebo na příslušná
+místa nakopírujete zaváděcí soubory. (Většina uživatelů může
+k zavedení použít některé z CD.)
+
+</para></listitem>
+<listitem><para>
+
+Zavedete instalační systém.
+
+</para></listitem>
+<listitem arch="not-s390"><para>
+
+Zvolíte jazyk pro instalaci.
+
+</para></listitem>
+<listitem arch="not-s390"><para>
+
+Nastavíte síťové připojení.
+
+</para></listitem>
+
+<listitem arch="s390"><para>
+
+Nastavíte síťové rozhraní.
+
+</para></listitem>
+<listitem arch="s390"><para>
+
+Otevřete ssh spojení na nový systém.
+
+</para></listitem>
+<listitem arch="s390"><para>
+
+Připojíte jedno nebo více DASD (Direct Access Storage Device).
+
+</para></listitem>
+
+<listitem><para>
+
+Vytvoříte a připojíte oblasti pro Debian.
+
+</para></listitem>
+<listitem><para>
+
+Můžete pozorovat automatické stažení, instalaci a nastavení
+<firstterm>základního systému</firstterm>.
+
+</para></listitem>
+<listitem><para>
+
+Volitelně můžete nainstalovat další software pomocí předpřipravených
+<firstterm>úloh</firstterm>.
+
+</para></listitem>
+<listitem><para>
+
+Nainstalujete <firstterm>zavaděč</firstterm>, kterým budete spouštět
+&debian; (případně i původní operační systém).
+
+</para></listitem>
+<listitem><para>
+
+Spustíte svůj nově nainstalovaný systém.
+
+</para></listitem>
+</orderedlist>
+
+<para>
+
+Pokud máte s některým instalačním krokem problémy, je dobré vědět,
+který balík je za danou situaci zodpovědný. Nuže, představujeme vám
+hlavní softwarové role v tomto instalačním dramatu:
+
+</para><para>
+
+<classname>debian-installer</classname> (instalační program) je hlavní
+náplní této příručky. Rozpoznává hardware a nahrává správné ovladače,
+rozděluje disky, instaluje linuxové jádro a dohlíží na programy
+<classname>dhcp-client</classname>, aby nastavil síťové připojení
+a <classname>debootstrap</classname>, aby nainstaloval balíky
+základního systému.  V této fázi instalace hraje své epizodní role
+mnohem více herců, ale úloha <classname>debian-installer</classname>u
+končí s prvním zavedením nového systému.
+
+</para><para>
+
+Díky programu <classname>tasksel</classname>, si můžete jednoduše
+doinstalovat celé skupiny programů jako <quote>webový server</quote>
+nebo <quote>desktopové prostředí</quote> a přizpůsobit si tak systém
+svým potřebám.
+
+</para><para>
+
+Až <classname>debian-installer</classname> skončí svou práci a systém
+se prvně zavádí, budete mít k dispozici systém ovládaný z příkazové
+řádky, protože grafické prostředí ještě nemuselo být nainstalováno
+(závisí na tom, zda jste je v <classname>tasksel</classname>u
+nainstalovali). Grafické prostředí je volitelné proto, protože hodně
+systémů &debian; slouží jako servery, a ty ke své činnosti grafické
+rozhraní nepotřebují.
+
+</para><para arch="not-s390">
+
+Vezměte, prosím, na vědomí, že X Window System je od instalačního
+systému úplně oddělen a protože je mnohem více komplikovaný,
+nezabýváme se jím ani v této příručce.
+
+</para>
+ </sect1>
+

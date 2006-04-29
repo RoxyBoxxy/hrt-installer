@@ -1,0 +1,60 @@
+Template: s390-dasd/choose_select
+Type: select
+# TRANSLATORS, please translate "Finish" after ${choices}
+# the same way you translate it in the
+# " Select "Finish" at the bottom of the list when you are done"
+# string
+#
+# Also DO NOT translate "${choices}" which is a variable and note that
+# THERE IS NO COMMA before "Finish"
+_Choices: ${choices} Finish
+_Description: Available disks:
+ The following disk access storage devices (DASD) are available. 
+ Please select each device you want to use one at a time.
+ .
+ Select "Finish" at the bottom of the list when you are done.
+
+Template: s390-dasd/choose
+Type: string
+_Description: Choose disk:
+ Please choose a disk. You have to specify the complete device number,
+ including leading zeros.
+
+Template: s390-dasd/choose_invalid
+Type: error
+_Description: Invalid disk
+ An invalid device number has been chosen.
+
+Template: s390-dasd/error
+Type: error
+_Description: Error: impossible to continue
+ An undefined error occurred. You may try to continue.
+
+Template: s390-dasd/format
+Type: boolean
+_Description: Format the disk?
+ The device ${device} seems to be a fresh disk not yet prepared for Linux. 
+ Such disk should be formatted before you can create partitions.
+
+Template: s390-dasd/formatting
+Type: text
+_Description: Formatting ${device}...
+
+Template: s390-dasd/format_unclean
+Type: boolean
+_Description: Format the disk?
+ The device ${device} seems to be an already low-level formatted disk. If the
+ disk has not been used for Linux 2.4 before, formatting it now is
+ recommended.
+ .
+ WARNING: All data on this disk will be IRREVERSIBLY LOST!
+
+Template: debian-installer/s390-dasd/title
+Type: text
+#  Main menu item. Keep translations below 55 columns
+_Description: Configure disk access storage devices (DASD)
+
+Template: debian-installer/kernel/commandline
+Type: string
+Default: ro vmpoff="LOGOFF"
+Description: installed kernel commandline

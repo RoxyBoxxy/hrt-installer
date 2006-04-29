@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="ISO-8859-2"?>
+<!-- $Id$ -->
+<!-- original version: 35612 -->
+
+  <sect2 arch="mipsel">
+  <title>Procesory, základní desky a grafické karty</title>
+<para>
+
+Debian na &arch-title; podporuje následující platformy:
+
+<itemizedlist>
+<listitem><para>
+
+DECstation: podporovány jsou různé modely DECstation.
+
+</para></listitem>
+<listitem><para>
+
+Cobalt Microserver: podporovány jsou počítače Cobalt založené na MIPS.
+To zahrnuje Cobalt Qube 2700 (Qube1), RaQ, Qube2, RaQ2 a Gateway
+Microserver.
+
+</para></listitem>
+<listitem><para>
+
+Broadcom BCM91250A (SWARM): jedná se o desku formátu ATX od firmy
+Broadcom založenou na dvoujádrovém procesoru SB1 1250.
+
+</para></listitem>
+<listitem><para>
+
+Broadcom BCM91480B (BigSur): opět to je deska formátu ATX od firmy
+Broadcom, tentokráte založená na čtyřjádrovém procesoru SB1A 1480.
+
+</para></listitem>
+</itemizedlist>
+
+Kompletní informace o podporovaných počítačích mips/mipsel najdete
+v <ulink url="&url-mips-howto;">Linux MIPS HOWTO</ulink>.  V této
+sekci popíšeme pouze systémy podporované instalačním systémem.
+Hledáte-li podporu pro ostatní podarchitektury, kontaktujte prosím
+diskusní list <ulink
+url="&url-list-subscribe;">debian-&arch-listname;</ulink>.
+
+</para>
+
+   <sect3><title>Procesory/typy počítačů</title>
+
+<para>
+
+Na MIPS s adresováním <quote>little endian</quote> podporuje
+instalační systém Debianu pouze počítače DECstation s procesory R3000
+a R4000/R4400, viz následující tabulka.
+
+</para><para>
+
+<informaltable>
+<tgroup cols="4">
+<thead>
+<row>
+  <entry>Systém</entry><entry>CPU</entry><entry>označení</entry>
+  <entry>podarchitektura</entry>
+</row>
+</thead>
+
+<tbody>
+<row>
+  <entry>DECstation 5000/1xx</entry>
+  <entry>R3000</entry>
+  <entry>3MIN</entry>
+  <entry>r3k-kn02</entry>
+</row><row>
+  <entry>DECstation 5000/150</entry>
+  <entry>R4000</entry>
+  <entry>3MIN</entry>
+  <entry>r4k-kn04</entry>
+</row><row>
+  <entry>DECstation 5000/200</entry>
+  <entry>R3000</entry>
+  <entry>3MAX</entry>
+  <entry>r3k-kn02</entry>
+</row><row>
+  <entry>DECstation 5000/240</entry>
+  <entry>R3000</entry>
+  <entry>3MAX+</entry>
+  <entry>r3k-kn02</entry>
+</row><row>
+  <entry>DECstation 5000/260</entry>
+  <entry>R4400</entry>
+  <entry>3MAX+</entry>
+  <entry>r4k-kn04</entry>
+</row><row>
+  <entry>Personal DECstation 5000/xx</entry>
+  <entry>R3000</entry>
+  <entry>Maxine</entry>
+  <entry>r3k-kn02</entry>
+</row><row>
+  <entry>Personal DECstation 5000/50</entry>
+  <entry>R4000</entry>
+  <entry>Maxine</entry>
+  <entry>r4k-kn04</entry>
+</row>
+</tbody></tgroup></informaltable>
+
+</para><para>
+
+Podporovány jsou všechny počítače Cobalt. Dříve byly podporovány pouze
+počítače se sériovou konzolí (tj. všechny kromě Qube 2700 alias
+Qube1), ovšem nyní je podporována i instalace přes SSH.
+
+</para><para>
+
+Broadcom BCM91250A obsahuje čip SB1 1250 se dvěma jádry, pro která má
+instalační program dokonce podporu SMP režimu. Obdobně je podporována
+i deska BCM91480B, která obsahuje čip SB1A 1480 se čtyřmi jádry.
+
+</para>
+   </sect3>
+
+   <sect3><title>Podporované parametry konzoly</title>
+<para>
+
+Sériová konzole je dostupná na všech podporovaných stanicích
+DECstation (9600 bps, 8N1). Abyste sériovou konzoli mohli využít,
+musíte zavést instalační systém s parametrem jádra
+<userinput>console=ttyS<replaceable>x</replaceable></userinput>, kde
+<replaceable>x</replaceable> je číslo sériového portu, ke kterému máte
+připojený terminál (obvykle <userinput>2</userinput>, ale pro Personal
+DECstation se používá <userinput>0</userinput>).  Na 3MIN a 3MAX+
+(DECstation 5000/1xx, 5000/240 a 5000/260) je lokální konzola dostupná
+přes grafické volby PMAG-BA a PMAGB-B.
+
+</para><para>
+
+Pokud máte linuxový systém a chcete jej použít jako sériový terminál,
+můžete zkusit příkaz <command>cu</command>.<footnote>
+<para>
+
+Ve Woodym byl součást balíku <classname>uucp</classname>, v novějších
+verzích již existuje jako samostatný balík.
+
+</para></footnote>Příklad:
+
+<informalexample><screen>
+<prompt>$</prompt> <userinput>cu -l /dev/ttyS1 -s 9600</userinput>
+</screen></informalexample>
+
+kde parametrem <userinput>-l</userinput> vyberete požadovaný sériový
+port a parametrem <userinput>-s</userinput> nastavíte rychlost spojení
+(9600 bitů za sekundu).
+
+</para><para>
+
+Cobalt i Broadcom BCM91250A/BCM91480B používají 115200 bps.
+
+</para>
+   </sect3>
+  </sect2>

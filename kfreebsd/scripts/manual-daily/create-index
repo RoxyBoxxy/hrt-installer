@@ -1,0 +1,154 @@
+#!/bin/bash
+ROOT=/home/fjp/projects/manual-build
+source=$ROOT/manual
+destination=$ROOT/build
+logdir=$ROOT/log
+
+mainlog=$logdir/main.log
+pagefile=$destination/index.html
+
+[ -f "$ROOT/bin/langlist" ] || exit 1
+[ -f "$ROOT/bin/archlist" ] || exit 1
+
+build_link_table () {
+    # Count languages
+    num_lang=0
+    for lang in $languages; do
+        num_lang=$(($num_lang + 1))
+    done
+
+    echo "<h2><a name=\"links\"></a>Links per architecture/language</h2>" >>$pagefile
+    echo "" >>$pagefile
+    echo "<table>" >>$pagefile
+    echo "  <tr>" >>$pagefile
+    echo "    <th class=\"col1\">Architecture</th>" >>$pagefile
+    for lang in $languages ; do
+        langname=`egrep "^$lang[[:space:]]" $ROOT/bin/langlist | cut -f 8`
+        echo "    <th class=\"t1\">$langname</th>" >>$pagefile
+    done
+
+    echo "  </tr>" >>$pagefile
+
+    for arch in $architectures ; do
+        archname=`egrep "^$arch[[:space:]]" $ROOT/bin/archlist | cut -f 2`
+        echo "" >>$pagefile
+        echo "  <tr>" >>$pagefile
+        echo "    <td class=\"col1\">$archname</td>" >>$pagefile
+
+        for lang in $languages ; do
+            langname=`egrep "^$lang[[:space:]]" $ROOT/bin/langlist | cut -f 8`
+            destsuffix="${lang}.${arch}"
+            echo "    <td>" >>$pagefile
+            echo "      <a href=\"$destsuffix/index.html\">html</a>" >>$pagefile
+            SEP="<br/>"
+            if [ "$(egrep "^$lang[[:space:]]" $ROOT/bin/langlist | cut -f 4)" = "Y" ] ; then
+                echo "      $SEP<a href=\"$destsuffix/install.${lang}.pdf\">pdf</a>" >>$pagefile
+                SEP=""
+            fi
+            if [ "$(egrep "^$lang[[:space:]]" $ROOT/bin/langlist | cut -f 6)" = "Y" ] ; then
+                echo "      $SEP<a href=\"$destsuffix/install.${lang}.txt\">text</a>" >>$pagefile
+            fi
+            echo "    </td>" >>$pagefile
+        done
+
+        echo "  </tr>" >>$pagefile
+    done
+
+    echo "" >>$pagefile
+    echo "</table>" >>$pagefile
+}
+
+# MAINLINE
+
+cat $ROOT/bin/index.head >$pagefile
+cat $ROOT/bin/index.changes >>$pagefile
+
+# First, we build the table for the languages that have all architectures built
+
+# Order of languages is alphabetic on name, but keep English first.
+languages=`egrep -v "^[[:space:]]*(|#.*)$" $ROOT/bin/langlist | sed "s/English/0English/" | \
+           sort -k 8,8 | cut -f 1,2 | egrep "Y$" | cut -f 1`
+
+# Order of architectures is alphabetic on name.
+architectures=`egrep -v "^[[:space:]]*(|#.*)$" $ROOT/bin/archlist | sort -k 2,2 | cut -f 1`
+
+build_link_table
+
+cat $ROOT/bin/index.single >>$pagefile
+
+# Next, we build the table for the languages that have only i386 built
+
+# Order of languages is alphabetic on name.
+languages=`egrep -v "^[[:space:]]*(|#.*)$" $ROOT/bin/langlist | sort -k 8,8 | cut -f 1,2 | \
+           egrep "S$" | cut -f 1`
+
+# Order of architectures is alphabetic on name.
+architectures="i386"
+
+build_link_table
+
+if [ -f $logdir/tr-stats ] ; then
+    cat $ROOT/bin/index.stats >>$pagefile
+    echo "" >>$pagefile
+
+    echo "<table>" >>$pagefile
+    echo "  <tr>" >>$pagefile
+    echo "    <th class=\"col1\">Language</th>" >>$pagefile
+    echo "    <th class=\"t2\">% complete</th>" >>$pagefile
+    echo "    <th class=\"t2\">Translated files</th>" >>$pagefile
+    echo "    <th class=\"t2\">Untranslated files</th>" >>$pagefile
+    echo "    <th class=\"t2\">Files needing update</th>" >>$pagefile
+    echo "    <th class=\"t2\">Missing files</th>" >>$pagefile
+    echo "  </tr>" >>$pagefile
+
+    for lang in `egrep -v "^en" $logdir/tr-stats | cut -f 1` ; do
+        # For languages that have XML translations
+        if [ -d "$source/$lang/.svn" ] ; then
+            langname=`egrep "^$lang[[:space:]]" $ROOT/bin/langlist | cut -f 8`
+            echo "  <tr>" >>$pagefile
+            echo "    <td class=\"col1\">$langname</td>" >>$pagefile
+
+            for col in 2 4 6 9 8 ; do
+                value=`egrep "^$lang[[:space:]]" $logdir/tr-stats | cut -f $col`
+                echo "    <td class=\"stats\">$value</td>" >>$pagefile
+            done
+            echo "  </tr>" >>$pagefile
+        fi
+    done
+
+    echo "" >>$pagefile
+    echo "</table>" >>$pagefile
+
+    echo "<p>" >>$pagefile
+    echo "For languages using PO files for their translation, please see the" >>$pagefile
+    echo "<a href=\"http://people.debian.org/~seppy/d-i/translation-status.html#manual\" target=\"_blank\">PO translation statistics</a>" >>$pagefile
+    echo "for an overview, or use the links in the table below for per language details." >>$pagefile
+    echo "</p>" >>$pagefile
+    echo "" >>$pagefile
+
+    echo "<table>" >>$pagefile
+    echo "  <tr>" >>$pagefile
+    echo "    <th class=\"col1\">Language</th>" >>$pagefile
+    echo "  </tr>" >>$pagefile
+
+    for lang in `egrep -v "^[[:space:]]*(|#.*)$" $ROOT/bin/langlist | sort -k 8,8 | cut -f 1` ; do
+        # For languages that have PO translations
+        if [ -d "$source/po/$lang/.svn" ] ; then
+            langname=`egrep "^$lang[[:space:]]" $ROOT/bin/langlist | cut -f 8`
+            echo "  <tr>" >>$pagefile
+            echo "    <td class=\"col1\"><a href=\"http://people.debian.org/~seppy/d-i/manual/$lang.txt\" target=\"_blank\">$langname</a></td>" >>$pagefile
+            echo "  </tr>" >>$pagefile
+        fi
+    done
+
+    echo "" >>$pagefile
+    echo "</table>" >>$pagefile
+    
+fi
+
+sed "s/%date%/`date -u`/" $ROOT/bin/index.tail >>$pagefile
+
+cp $ROOT/bin/translators.html $destination
+chmod 664 $destination/translators.html
+
+exit 0

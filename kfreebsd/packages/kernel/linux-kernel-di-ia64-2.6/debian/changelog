@@ -1,0 +1,125 @@
+linux-kernel-di-ia64-2.6 (1.7) UNRELEASED; urgency=low
+
+  * Switch nic-usb-modules to use the list in kernel-wedge 2.19, which
+    includes asix.
+  * Add crypto-modules.
+
+ -- Joey Hess <joeyh@debian.org>  Mon, 27 Mar 2006 18:49:15 -0500
+
+linux-kernel-di-ia64-2.6 (1.6) unstable; urgency=low
+
+  * Updated to 2.6.15 (2.6.15-7)
+
+ -- dann frazier <dannf@debian.org>  Fri, 24 Feb 2006 00:42:20 -0700
+
+linux-kernel-di-ia64-2.6 (1.5) unstable; urgency=low
+
+  * Updated to 2.6.15 (2.6.15-3)
+  * Module changes:
+    - Add qla2xxx drivers to scsi-modules
+    - Add cs5535 to ide-modules (though its not currently built on ia64, but
+      that's probably just an oversight)
+    - sata updates from kernel-wedge
+
+ -- dann frazier <dannf@debian.org>  Mon, 23 Jan 2006 22:06:20 -0700
+
+linux-kernel-di-ia64-2.6 (1.4) unstable; urgency=low
+
+  [ Joey Hess ]
+  * Codepage and charset modules for fat moved back to kernel-wedge.
+
+  [ dann frazier ]
+  * Switch to 2.6.14 kernel
+  * Build against linux-2.6 (2.6.14-5)
+
+ -- dann frazier <dannf@debian.org>  Tue, 29 Nov 2005 23:45:17 -0700
+
+linux-kernel-di-ia64-2.6 (1.3) unstable; urgency=low
+
+  [ Joey Hess ]
+  * Switch to kernel-wedge usb-modules list.
+  * Move usbserial to serial-modules.
+  * Moved code page and character set modules for fat to here since they're
+    only really needed on ia64 2.6, for elilo-installer to work.
+
+  [ dann frazier ]
+  * Rebuild against linux-2.6 (2.6.12-10)
+
+ -- dann frazier <dannf@debian.org>  Sat,  1 Oct 2005 23:12:22 -0600
+
+linux-kernel-di-ia64-2.6 (1.2) unstable; urgency=low
+
+  [ Joey Hess ]
+  * Update for kernel-wedge 2.0.
+
+  [ dann frazier ]
+  * Switch to 2.6.12 kernel.
+
+ -- dann frazier <dannf@debian.org>  Sat,  6 Aug 2005 23:29:37 -0600
+
+linux-kernel-di-ia64-2.6 (1.1) unstable; urgency=low
+
+  * Joey Hess
+    - Rebuilt against kernel-image-2.6.8-2-itanium-smp (2.6.8-11) for soname
+      bump and security fixes.
+    - Remove atkd and i8042 from input-modules as they're now linked in
+      statically.
+
+ -- Joey Hess <joeyh@debian.org>  Mon, 10 Jan 2005 15:20:59 -0500
+
+linux-kernel-di-ia64-2.6 (1.0) unstable; urgency=low
+
+  * Joey Hess
+    - Add atkd and i8042 to input-modules to support ps2 keyboards.
+    - Built against version 2.6.8-9 of the kernel-image.
+    - Gratuitous version number bump.
+    - Follow the lead of the i386 package in temporarily putting crc-ccitt
+      in the kernel-image package since it's needed by two modules in
+      different udebs now and there's no other more appropriate package and
+      this is a bad time to split out out.
+
+ -- Joey Hess <joeyh@debian.org>  Sat,  4 Dec 2004 16:16:06 -0500
+
+linux-kernel-di-ia64-2.6 (0.05) unstable; urgency=medium
+
+  * dann frazier
+    - rebuild against kernel-image 2.6.8-6 which sets the default
+      ramdisk size to 32K (the size of the d-i initrd)
+    - remove the inherited TODO file, since its contents have been done
+
+ -- dann frazier <dannf@debian.org>  Fri, 05 Nov 2004 12:29:27 -0700
+
+linux-kernel-di-ia64-2.6 (0.04) unstable; urgency=medium
+
+  * dann frazier
+    - rebuild against kernel-image 2.6.8-5
+
+ -- dann frazier <dannf@debian.org>  Tue, 19 Oct 2004 16:03:52 -0600
+
+linux-kernel-di-ia64-2.6 (0.03) unstable; urgency=high
+
+  * dann frazier
+    - rebuild against kernel-image 2.6.8-2, which now builds basic hid modules
+    - make the input modules non-optional (remove the prefixed -)
+    - override kernel-wedge's firmware modules w/ our own, which includes
+      efivars (needed for installing an efi boot manager entry)
+    - build dep on kernel-wedge 1.24, which includes the default code page
+      and io character sets for fat, needed by elilo for mounting the efi
+      partition
+
+ -- dann frazier <dannf@debian.org>  Fri, 27 Aug 2004 23:35:23 -0600
+
+linux-kernel-di-ia64-2.6 (0.02) unstable; urgency=high
+
+  * dann frazier
+    - Update to 2.6.8
+    - urgency set to high, since we want this in sarge ASAP
+
+ -- dann frazier <dannf@debian.org>  Thu, 26 Aug 2004 00:48:25 -0600
+
+linux-kernel-di-ia64-2.6 (0.01) unstable; urgency=low
+
+  * dann frazier
+    - Initial Build
+
+ -- dann frazier <dannf@debian.org>  Tue, 13 Jul 2004 16:43:36 -0600

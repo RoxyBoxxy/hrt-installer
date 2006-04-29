@@ -1,0 +1,14 @@
+#!/bin/sh
+if [ ! -e /var/lib/lowmem ]; then
+	exit 0
+fi
+
+for log in syslog messages; do
+	echo "Log file truncated to save memory." > /var/log/$log
+	pid=$(ps | grep [t]ail | grep /var/log/$log | sed 's/ root.*//')
+	if [ -n "$pid" ]; then
+		kill $pid || true
+	fi
+done
+
+rm -rf /usr/share/keymaps

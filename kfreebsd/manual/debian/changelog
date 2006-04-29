@@ -1,0 +1,132 @@
+installation-guide (2006xxxx) UNRELEASED; urgency=low
+
+  [ Joey Hess ]
+  * Update kernel building section to conditionalise some more 2.4 kernel
+    stuff.
+  * Suggest passing --initrd to make-kpkg since the docs say nothing about
+    compiling disk drivers into the kernel.
+
+  [ Frans Pop ]
+  * Various corrections suggested by Clytie Siddall.
+  * chroot-install:
+    - add /etc/hosts to be created for network configuration (closes: #364517)
+    - make kernel/linux-image variable (closes: #345482)
+  * Document -- command line option for passing parameters to boot loader
+    configuration (closes: #309889).
+
+ -- Frans Pop <fjp@debian.org>  Thu, 27 Apr 2006 22:24:08 +0200
+
+installation-guide (20060427) unstable; urgency=low
+
+  [ Joey Hess ]
+  * Update preseeding docs for base-config removal.
+  * Add documentation of how to change apt-setup security source with
+    preseeding.
+  * Remove the sarge preseeding docs.
+  * Remove mentions of base-config and move base-config stuff to elsewhere.
+  * Add documentation of apt-setup, user-setup, clock-setup, tzsetup, and
+    pkgsel.
+  * Change some references to tty3 (messages) to instead refer to tty4
+    (syslog).
+  * Change references to /var/log/debian-installer to just /var/log/installer.
+  * Remove docs for baseconfig-udeb; going away with base-config.
+  * Removed various bits of sarge cruft when it made things easier.
+
+  [ Frans Pop ]
+  * Change default build to Etch.
+  * Remove all Sarge specific content and make Etch specific content default.
+  * Delete some obsolete entities.
+  * Change references from package d-i-manual to package installation-guide.
+  * Explicitly specify XML declaration as required by openjade 1.4devel1-15
+    (closes: #360241).
+  * Update appendix on chroot installs:
+    - mention that debootstrap also requires basic Unix/Linux commands;
+    - comment out link to outdated rpm packages of debootstrap.
+
+  [ Colin Watson ]
+  * Add a few more supports-floppy-boot and bootable-usb conditionals to
+    make it easier to turn all this off in rebuilds of the manual.
+  * Etch uses X.Org 6.9, and xserver-xorg instead of xserver-xfree86.
+  * Document how to pick a particular interface with
+    netcfg/choose_interface, including how to do this before reading a
+    preseed file.
+  * Remove obsolete substvar.
+  * Build-depend on libhtml-parser-perl for build/preseed.pl.
+
+  [ Joey Hess ]
+  * Add docs about preseeding a fallback to a static IP if dhcp fails.
+  * Update copyright date.
+  * It's possible to use preseeding to set up LVM now, so remove stuff about
+    it not working.
+  * Document DHCP preseeding. Note that this documents it as of netcfg 1.24
+    and preseed 1.13.
+
+  [ Martin Michlmayr ]
+  * Bring ARM up to date with reality: remove unsupported flavours, add
+    NSLU2.
+  * Fix Netwinder/CATS download location.
+  * Improve the Netwinder TFTP boot instructions.
+  * The Netwinder firmware is no longer available due to license problems.
+  * Mention NSLU2 download location.
+  * Describe how to flash the installer image onto the NSLU2.
+  * Describe how to boot a Cobalt machine.
+
+  [ Frans Pop ]
+  * Document new option to preseed additional apt sources for target system.
+  * Document how to create a preconfiguration file.
+
+  [ Joey Hess ]
+  * Document new passwd/root-login setting.
+  * Booting a USB stick via a boot floppy is not supported by current
+    installer images.
+  * Update preseeding docs to use task names, not short descriptions, since
+    that will work now and is more convenient for preseeding.
+  * Document the kde-desktop and gnome-desktop subtasks.
+
+  [ Frans Pop ]
+  * Enable Catalan, Italian and Swedish translations for release.
+  * Disable Brazillian Portuguese translation as it is too incomplete.
+
+ -- Frans Pop <fjp@debian.org>  Thu, 27 Apr 2006 03:00:32 +0200
+
+installation-guide (20060102) unstable; urgency=low
+
+  [ Frans Pop ]
+  * Fix build error caused by description for s390. Closes: #337382.
+  * Update kernel package names and kernel versions per architecture.
+  * Move documentation on preseeding to separate appendix for etch.
+  * Use new, more flexible perl script to extract example preseed file from
+    new appendix.
+  * Set proper POT-Creation-Date when generating new POT files.
+  * New translations started: Polish, Swedish, Vietnamese.
+  * First release of Greek and Korean translations.
+  * Exclude Traditional Chinese translation as it was not updated.
+  * Switch release name to Etch (3.1+δ).
+
+  [ Joey Hess ]
+  * Update installation report template and instructions for etch.
+
+ -- Frans Pop <fjp@debian.org>  Mon,  2 Jan 2006 18:44:59 +0100
+
+installation-guide (20051025) unstable; urgency=low
+
+  * Mention in copyright that full GPL is included in the manual.
+    Closes: #334925
+  * Register installed documents with doc-base.
+  * Minor updates in English text and translations.
+
+ -- Frans Pop <fjp@debian.org>  Tue, 25 Oct 2005 17:37:25 +0200
+
+installation-guide (20051019) unstable; urgency=low
+
+  [ Joey Hess ]
+  * Split off from the debian-installer source package.
+    See the changelog for debian-installer for older changelog entries.
+
+  [ Frans Pop ]
+  * Change over to building arch all packages in section doc. Build separate
+    packages for each arch containing all translations.
+  * Change package name to installation-guide.
+  * Include translations already available on official website.
+
+ -- Frans Pop <fjp@debian.org>  Tue, 18 Oct 2005 17:12:35 +0200
