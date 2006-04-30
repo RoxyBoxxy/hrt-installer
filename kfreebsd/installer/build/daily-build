@@ -117,9 +117,9 @@ deps () {
 	packages=`echo $temp | sed -e 's%dpkg-checkbuilddeps: Unmet build dependencies: %%'`
 	apt-get update
 	if [ "$packages" ]; then
-		DEBCONF_PRIORITY=critical apt-get -y install $packages
+		DEBCONF_PRIORITY=critical apt-get -y --allow-unauthenticated install $packages
 	fi
-	DEBCONF_PRIORITY=critical apt-get -y upgrade
+	DEBCONF_PRIORITY=critical apt-get -y --allow-unauthenticated upgrade
 }
 
 usage () {
