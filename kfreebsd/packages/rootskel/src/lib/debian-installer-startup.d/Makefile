@@ -19,7 +19,6 @@ files = \
 	S02module-params \
 	S02udev-fixup \
 	S03hotplug \
-	S10syslog \
 	S20templates \
 	S35term
 
@@ -39,13 +38,19 @@ ifeq ($(DEB_HOST_ARCH_OS),linux)
   ifneq (,$(filter mips mipsel,$(DEB_HOST_ARCH_CPU)))
     files += \
 	S40framebuffer-module-linux-mips
-   endif
+  endif
 
   ifneq (,$(filter alpha,$(DEB_HOST_ARCH_CPU)))
     files += \
 	S40framebuffer-module-linux-alpha \
 	S04countcpus-linux-alpha
-   endif
+  endif
+
+  files += \
+	S10syslog:S10syslog-linux
+else
+  files += \
+	S10syslog:S10syslog-generic
 endif
 
 include ../../../Makefile.inc

@@ -1,10 +1,12 @@
+DEB_HOST_ARCH_OS ?= $(shell dpkg-architecture -qDEB_HOST_ARCH_OS 2>/dev/null)
+
 dir = etc
 
 # backward compatibility
 subdirs_empty = rcS.d
 
 files = \
-	fstab \
+	fstab:fstab-$(DEB_HOST_ARCH_OS) \
 	group \
 	inittab \
 	modules.conf \
