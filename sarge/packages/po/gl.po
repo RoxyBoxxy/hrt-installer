@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: debian-installer\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2004-07-19 11:39+0200\n"
-"PO-Revision-Date: 2006-05-04 08:56+0200\n"
+"PO-Revision-Date: 2006-05-14 17:29+0200\n"
 "Last-Translator: Jacobo Tarrio <jtarrio@debian.org>\n"
 "Language-Team: Galician <trasno@ceu.fi.udc.es>\n"
 "MIME-Version: 1.0\n"
@@ -4415,7 +4415,7 @@ msgstr "Non hai dispositivos multidisco dispoñibles para o borrado."
 #. Description
 #: ../mdcfg-utils.templates:139
 msgid "Really delete this multidisk device?"
-msgstr "¿Realmente desexa borrar este dispositivo multidisco?"
+msgstr "¿Está seguro de querer borrar este dispositivo multidisco?"
 
 #. Type: boolean
 #. Description
@@ -9703,6 +9703,12 @@ msgstr "Configurar e montar particións"
 #~ "Pode probar a repetir a detección do CD-ROM, pero, incluso se ten éxito a "
 #~ "segunda vez, pode ter problemas despois na instalación."
 
+#~ msgid "no ethernet card"
+#~ msgstr "ningunha tarxeta ethernet"
+
+#~ msgid "none of the above"
+#~ msgstr "ningunha das anteriores"
+
 #~ msgid "Do you intend to use FireWire Ethernet?"
 #~ msgstr "¿Pretende empregar Ethernet por FireWire?"
 
@@ -9718,8 +9724,8 @@ msgstr "Configurar e montar particións"
 #~ msgid "Detect disks"
 #~ msgstr "Detectar discos"
 
-#~ msgid "continue with no disk drive, ${CHOICES}, none of the above"
-#~ msgstr "continuar sen disco, ${CHOICES}, ningunha das anteriores"
+#~ msgid "continue with no disk drive"
+#~ msgstr "continuar sen disco"
 
 #~ msgid "Driver needed for your disk drive:"
 #~ msgstr "Módulo necesario para o seu disco duro:"
@@ -11000,6 +11006,16 @@ msgstr "Configurar e montar particións"
 #~ msgid "The kernel was properly copied to the PReP boot partition."
 #~ msgstr "Copiouse correctamente o núcleo na partición de inicio PReP."
 
+#~ msgid "Failed to process the preconfiguration file"
+#~ msgstr "Non se puido procesar o ficheiro de preconfiguración"
+
+#~ msgid ""
+#~ "The installer failed to process the preconfiguration file from "
+#~ "${LOCATION}. The file may be corrupt."
+#~ msgstr ""
+#~ "O instalador non puido procesar o ficheiro de preconfiguración de "
+#~ "${LOCATION}. O ficheiro pode estar corrompido."
+
 #~ msgid "Rescue mode"
 #~ msgstr "Modo de rescate"
 
@@ -11103,8 +11119,14 @@ msgstr "Configurar e montar particións"
 #~ "precisa de outros sistemas de ficheiros (coma un \"/usr\" separado), ha "
 #~ "ter que os montar vostede por si mesmo."
 
-#~ msgid "floppy, web, mounted file system"
-#~ msgstr "disquete, web, sistema de ficheiros montado"
+#~ msgid "floppy"
+#~ msgstr "disquete"
+
+#~ msgid "web"
+#~ msgstr "web"
+
+#~ msgid "mounted file system"
+#~ msgstr "sistema de ficheiros montado"
 
 #~ msgid "How should the debug logs be saved or transferred?"
 #~ msgstr "¿Como se deben gravar ou transferir os rexistros de depuración?"
@@ -11179,6 +11201,12 @@ msgstr "Configurar e montar particións"
 #~ msgstr ""
 #~ "Non se pode atopar a unidade de disquete, ou non hai un disquete "
 #~ "formatado na unidade."
+
+#~ msgid "Start menu"
+#~ msgstr "Iniciar menú"
+
+#~ msgid "Start shell"
+#~ msgstr "Iniciar intérprete de ordes"
 
 #~ msgid ""
 #~ "To continue the installation, please use an SSH client to connect to the "
@@ -11373,6 +11401,18 @@ msgstr "Configurar e montar particións"
 #~ "O autoparticionamento empregando LVM fallou porque houbo un erro ao crear "
 #~ "o grupo de volumes."
 
+#~ msgid "physical volume for encryption"
+#~ msgstr "volume físico para o cifrado"
+
+#~ msgid "crypto"
+#~ msgstr "cifrado"
+
+#~ msgid "Loopback (loop-AES)"
+#~ msgstr "Loopback (loop-AES)"
+
+#~ msgid "Device-mapper (dm-crypt)"
+#~ msgstr "Device-mapper (dm-crypt)"
+
 #~ msgid "not active"
 #~ msgstr "inactivo"
 
@@ -11394,11 +11434,78 @@ msgstr "Configurar e montar particións"
 #~ msgid "Key size for this partition:"
 #~ msgstr "Tamaño da clave para esta partición:"
 
+#~ msgid "IV algorithm:"
+#~ msgstr "Algoritmo do VI:"
+
+#~ msgid "Initialization vector generation algorithm for this partition:"
+#~ msgstr ""
+#~ "Algoritmo de xeración do vector de inicialización para esta partición:"
+
+#~ msgid ""
+#~ "Different algorithms exist to derive the initialization vector for each "
+#~ "sector. This choice influences the encryption security. Normally, there "
+#~ "is no reason to change this from the recommended default, except for "
+#~ "compatibility with older systems."
+#~ msgstr ""
+#~ "Existen distintos algoritmos para derivar o vector de inicialización de "
+#~ "cada sector. Esta selección inflúe na seguridade do cifrado. Normalmente "
+#~ "non hai motivo ningún para cambialo do valor por defecto recomendado, "
+#~ "agás por compatibilidade con outros sistemas máis antigos."
+
 #~ msgid "Encryption key:"
 #~ msgstr "Clave de cifrado:"
 
 #~ msgid "Type of encryption key for this partition:"
 #~ msgstr "Tipo de clave de cifrado para esta partición:"
+
+#~ msgid "Encryption key hash:"
+#~ msgstr "Función \"hash\" da clave de cifrado:"
+
+#~ msgid "Type of encryption key hash for this partition:"
+#~ msgstr ""
+#~ "Tipo de función \"hash\" para a clave de cifrado para esta partición:"
+
+#~ msgid ""
+#~ "The encryption key is derived from the passphrase by applying a one-way "
+#~ "hash function to it. Normally, there is no reason to change this from the "
+#~ "recommended default and doing so in the wrong way can reduce the "
+#~ "encryption strength."
+#~ msgstr ""
+#~ "A clave de cifrado derívase do contrasinal aplicándolle unha función "
+#~ "\"hash\" irreversible. Normalmente non hai motivo ningún para cambialo do "
+#~ "valor por defecto recomendado, e facelo dun xeito incorrecto pode reducir "
+#~ "a forza do cifrado."
+
+#~ msgid "Erase data:"
+#~ msgstr "Borrar datos:"
+
+#~ msgid "Erase data on this partition"
+#~ msgstr "Borrar os datos desta partición"
+
+#~ msgid "Really erase the data on ${DEVICE}?"
+#~ msgstr "¿Está seguro de querer borrar os datos de ${DEVICE}?"
+
+#~ msgid ""
+#~ "The data on ${DEVICE} will be overwritten with random data. It can no "
+#~ "longer be recovered after this step has completed. This is the last "
+#~ "opportunity to abort the erase."
+#~ msgstr ""
+#~ "Hanse sobrescribir os datos de ${DEVICE} con datos aleatorios. Xa non se "
+#~ "han poder recuperar despois de que se complete este paso. Esta é a "
+#~ "derradeira oportunidade que ten de abortar o borrado."
+
+#~ msgid "Erasing data on ${DEVICE}"
+#~ msgstr "A borrar os datos de ${DEVICE}"
+
+#~ msgid "Erasing data on ${DEVICE} failed"
+#~ msgstr "Fallou o borrado dos datos de ${DEVICE}"
+
+#~ msgid ""
+#~ "An error occured trying to erase the data on ${DEVICE}. The data has not "
+#~ "been erased."
+#~ msgstr ""
+#~ "Houbo un erro ao tentar borrar os datos de ${DEVICE}. Non se borraron os "
+#~ "datos."
 
 #~ msgid "Setting up encryption..."
 #~ msgstr "A preparar o cifrado..."
@@ -11440,21 +11547,21 @@ msgstr "Configurar e montar particións"
 
 #~ msgid ""
 #~ "The kernel module package ${PACKAGE} could not be found or an error "
-#~ "occurred during installation."
+#~ "occurred during its installation."
 #~ msgstr ""
-#~ "Non se puido atopar o paquete do módulo do núcleo ${PACKAGE}, ou ocorreu "
-#~ "un erro durante a instalación."
+#~ "Non se puido atopar o paquete do módulo do núcleo ${PACKAGE} ou houbo un "
+#~ "erro durante a instalación."
 
 #~ msgid ""
-#~ "There will likely be problems during boot when the system tries to setup "
-#~ "encrypted partitions. You can still correct them by installing the "
-#~ "required package later on."
+#~ "It is likely that there will be problems setting up encrypted partitions "
+#~ "when the system is rebooted. You may be able to correct this by "
+#~ "installing the required package(s) later on."
 #~ msgstr ""
-#~ "Seguramente haxa problemas durante o inicio cando o sistema trate de "
-#~ "configurar as particións cifradas. Pode corrixilos instalando despois o "
-#~ "paquete necesario."
+#~ "Seguramente haxa problemas durante a configuración das particións "
+#~ "cifradas ao reiniciar o sistema. Pode corrixilos instalando despois o(s) "
+#~ "paquete(s) necesario(s)."
 
-#~ msgid "Write the changes to disks and configure encrypted volumes?"
+#~ msgid "Write the changes to disk and configure encrypted volumes?"
 #~ msgstr "¿Gravar os cambios nos discos e configurar os volumes cifrados?"
 
 #~ msgid ""
@@ -11471,26 +11578,26 @@ msgstr "Configurar e montar particións"
 
 #~ msgid ""
 #~ "After the encrypted volumes have been configured, no additional changes "
-#~ "to the partitions in the disks containing encrypted volumes are allowed. "
+#~ "to the partitions on the disks containing encrypted volumes are allowed. "
 #~ "Please decide if you are satisfied with the current partitioning scheme "
-#~ "in these disks before continuing."
+#~ "for these disks before continuing."
 #~ msgstr ""
 #~ "Despois de configurar os volumes cifrados non se permiten máis cambios "
 #~ "nas particións dos discos que conteñen volumes cifrados. Decida se está "
 #~ "satisfeito co esquema de particionamento actual destes discos antes de "
 #~ "continuar."
 
-#~ msgid "Encrypted volumes configuration failure"
+#~ msgid "Configuration of encrypted volumes failed"
 #~ msgstr "Fallo na configuración dos volumes cifrados"
 
 #~ msgid "An error occurred while configuring encrypted volumes."
 #~ msgstr "Houbo un erro ao configurar os volumes cifrados."
 
-#~ msgid "The configuration is aborted."
+#~ msgid "The configuration has been aborted."
 #~ msgstr "Abortouse a configuración."
 
-#~ msgid "Encrypted volume initialisation failed"
-#~ msgstr "Fallou a inicialización dos volumes cifrados"
+#~ msgid "Initialisation of encrypted volume failed"
+#~ msgstr "Fallo na inicialización do volume cifrado"
 
 #~ msgid "An error occurred while setting up encrypted volumes."
 #~ msgstr "Houbo un erro ao configurar os volumes cifrados."
@@ -11611,9 +11718,6 @@ msgstr "Configurar e montar particións"
 #~ msgid "An error occurred while creating the keyfile."
 #~ msgstr "Houbo un erro ao crear o ficheiro de claves."
 
-#~ msgid "Encryption configuration failure"
-#~ msgstr "Fallo na configuración do cifrado"
-
 #~ msgid ""
 #~ "You have selected the root filesystem to be stored on an encrypted "
 #~ "partition. This feature is not available and continuing now would result "
@@ -11629,6 +11733,39 @@ msgstr "Configurar e montar particións"
 #~ msgstr ""
 #~ "Volte e escolla unha partición non cifrada para o sistema de ficheiros "
 #~ "raíz."
+
+#~ msgid ""
+#~ "You have selected the root filesystem to be stored on an encrypted "
+#~ "partition. This feature requires a separate /boot partition on which the "
+#~ "kernel and initrd can be stored."
+#~ msgstr ""
+#~ "Escolleu armacenar o sistema de ficheiros raíz nunha partición cifrada. "
+#~ "Esta característica precisa dunha partición /boot separada na que "
+#~ "armacenar o núcleo e o initrd."
+
+#~ msgid "You should go back and setup a /boot partition."
+#~ msgstr "Debería voltar e configurar unha partición /boot."
+
+#~ msgid "Encryption configuration failure"
+#~ msgstr "Fallo na configuración do cifrado"
+
+#~ msgid ""
+#~ "You have selected the /boot filesystem to be stored on an encrypted "
+#~ "partition. This is not possible because the bootloader would be unable to "
+#~ "load the kernel and initrd. Continuing now would result in an "
+#~ "installation that cannot be used."
+#~ msgstr ""
+#~ "Escolleu armacenar o sistema de ficheiros /boot nunha partición cifrada. "
+#~ "Isto non é posible porque o cargador de inicio non ha poder cargar o "
+#~ "núcleo e o initrd. Se continúa ha producir unha instalación que non se "
+#~ "pode empregar."
+
+#~ msgid ""
+#~ "You should go back and choose a non-encrypted partition for the /boot "
+#~ "filesystem."
+#~ msgstr ""
+#~ "Debería voltar e escoller unha partición non cifrada para o sistema de "
+#~ "ficheiros /boot."
 
 #~ msgid "Are you sure you want to use a random key?"
 #~ msgstr "¿Está seguro de querer empregar unha clave aleatoria?"
@@ -11648,6 +11785,36 @@ msgstr "Configurar e montar particións"
 #~ "destruídos en cada reinicio. Isto só se debería empregar en particións de "
 #~ "intercambio."
 
+#~ msgid "Really use block device encryption?"
+#~ msgstr "¿Está seguro de querer empregar cifrado de dispositivos de bloques?"
+
+#~ msgid ""
+#~ "The support for block device encryption is still experimental and not "
+#~ "considered ready for production. In particular it may result in setups "
+#~ "that are easy to break and so give a false sense of security. There are "
+#~ "no known encryption flaws, however, until the implementation is "
+#~ "thoroughly audited, this feature should not be used except for testing "
+#~ "purposes."
+#~ msgstr ""
+#~ "O soporte de cifrado de dispositivos de bloques aínda é experimental e "
+#~ "non se considera preparado para a posta en producción. En particular pode "
+#~ "producir configuracións doadas de romper e que, polo tanto, producen unha "
+#~ "falsa sensación de seguridade. Non hai ningún fallo de cifrado coñecido; "
+#~ "porén, ata que se faga unha auditoría a fondo da implementación, non se "
+#~ "debería empregar esta característica agás para probas."
+
+#~ msgid "Abort"
+#~ msgstr "Abortar"
+
+#~ msgid "Leave the file system intact"
+#~ msgstr "Deixar o sistema de ficheiros intacto"
+
+#~ msgid "Create swap space"
+#~ msgstr "Crear espazo de intercambio"
+
+#~ msgid "Don't mount it"
+#~ msgstr "Non montar"
+
 #~ msgid "Please choose one of the listed disks to create partitions on it."
 #~ msgstr "Escolla un dos discos da lista para crear particións nel."
 
@@ -11660,13 +11827,6 @@ msgstr "Configurar e montar particións"
 #~ msgid "ctc: Channel to Channel (CTC) or ESCON connection"
 #~ msgstr "ctc: Conexión canle a canle (CTC) ou ESCON"
 
-#~ msgid ""
-#~ "lcs: qeth: OSA-2 Token Ring/Ethernet or OSA-Express Fast Ethernet (non-"
-#~ "QDIO)"
-#~ msgstr ""
-#~ "lcs: qeath: OSA-2 Token Rin/Ethernet ou OSA-Express Fast Ethernet (non "
-#~ "QDIO)"
-
 #~ msgid "qeth: OSA-Express in QDIO mode / HiperSockets"
 #~ msgstr "qeth: OSA-Express en modo QDIO / HiperSockets"
 
@@ -11676,8 +11836,35 @@ msgstr "Configurar e montar particións"
 #~ "iucv: IUCV (vehículo de comunicación interusuario) - dispoñible só para "
 #~ "hóspedes VM"
 
-#~ msgid "${choices} Finish"
-#~ msgstr "${choices} Rematar"
+#~ msgid "CTC read device:"
+#~ msgstr "Dispositivo de lectura CTC:"
+
+#~ msgid "CTC write device:"
+#~ msgstr "Dispositivo de escritura CTC:"
+
+#~ msgid ""
+#~ "The following device numbers might belong to CTC or ESCON connections."
+#~ msgstr ""
+#~ "Os seguintes números de dispositivo poden pertencer a conexións CTC ou "
+#~ "ESCON."
+
+#~ msgid ""
+#~ "The configured parameters are:\n"
+#~ " channels = ${device0}, ${device1}, ${device2}\n"
+#~ " port     = ${port}\n"
+#~ " portname = ${portname}"
+#~ msgstr ""
+#~ "Os parámetros configurados son:\n"
+#~ " canles        = ${device0}, ${device1}, ${device2}\n"
+#~ " porto         = ${port}\n"
+#~ " nome de porto = ${portname}"
+
+#~ msgid ""
+#~ "No OSA-Express QDIO cards / HiperSockets were detected. If you are "
+#~ "running VM please make sure that your card is attached to this guest."
+#~ msgstr ""
+#~ "Non se detectaron tarxetas OSA-Express QDIO / HiperSockets. Se está a "
+#~ "executar VM asegúrese de que a súa tarxeta estea conectada a este hóspede."
 
 #~ msgid ""
 #~ "The following disk access storage devices (DASD) are available.  Please "
@@ -11686,23 +11873,25 @@ msgstr "Configurar e montar particións"
 #~ "Os seguintes DASD (dispositivos de armacenamento en disco) están "
 #~ "dispoñibles. Escolla os dispositivos que quere empregar de un en un."
 
-#~ msgid "no ethernet card"
-#~ msgstr "ningunha tarxeta ethernet"
+#~ msgid "Encrypted volume initialisation failed"
+#~ msgstr "Fallou a inicialización dos volumes cifrados"
 
-#~ msgid "none of the above"
-#~ msgstr "ningunha das anteriores"
+#, fuzzy
+#~ msgid "${choices}, Finish"
+#~ msgstr "${choices} Rematar"
 
-#~ msgid "continue with no disk drive"
-#~ msgstr "continuar sen disco"
+#~ msgid "continue with no disk drive, ${CHOICES}, none of the above"
+#~ msgstr "continuar sen disco, ${CHOICES}, ningunha das anteriores"
 
-#~ msgid "floppy"
-#~ msgstr "disquete"
+#~ msgid "floppy, web, mounted file system"
+#~ msgstr "disquete, web, sistema de ficheiros montado"
 
-#~ msgid "web"
-#~ msgstr "web"
-
-#~ msgid "mounted file system"
-#~ msgstr "sistema de ficheiros montado"
+#~ msgid ""
+#~ "lcs: qeth: OSA-2 Token Ring/Ethernet or OSA-Express Fast Ethernet (non-"
+#~ "QDIO)"
+#~ msgstr ""
+#~ "lcs: qeath: OSA-2 Token Rin/Ethernet ou OSA-Express Fast Ethernet (non "
+#~ "QDIO)"
 
 #~ msgid "${KERNELS}, none"
 #~ msgstr "${KERNELS}, ningún"
@@ -11785,23 +11974,11 @@ msgstr "Configurar e montar particións"
 #~ "aleatorios acumulados (entropía), dos que hai moi poucos neste punto da "
 #~ "instalación."
 
-#~ msgid "physical volume for encryption"
-#~ msgstr "volume físico para o cifrado"
-
-#~ msgid "crypto"
-#~ msgstr "cifrado"
-
 #~ msgid "Encryption type:"
 #~ msgstr "Tipo de cifrado:"
 
 #~ msgid "Encryption type for this partition:"
 #~ msgstr "Tipo de cifrado para esta partición:"
-
-#~ msgid "Loopback (loop-AES)"
-#~ msgstr "Loopback (loop-AES)"
-
-#~ msgid "Device-mapper (dm-crypt)"
-#~ msgstr "Device-mapper (dm-crypt)"
 
 #~ msgid "Device-mapper (LUKS)"
 #~ msgstr "Device-mapper (LUKS)"
@@ -12492,6 +12669,72 @@ msgstr "Configurar e montar particións"
 
 #~ msgid "${DEVS}"
 #~ msgstr "${DEVS}"
+
+#~ msgid "${PARTITIONS}"
+#~ msgstr "${PARTITIONS}"
+
+#~ msgid "${FSCHOICES}"
+#~ msgstr "${FSCHOICES}"
+
+#~ msgid "/"
+#~ msgstr "/"
+
+#~ msgid "/usr"
+#~ msgstr "/usr"
+
+#~ msgid "/boot"
+#~ msgstr "/boot"
+
+#~ msgid "/home"
+#~ msgstr "/home"
+
+#~ msgid "/var"
+#~ msgstr "/var"
+
+#~ msgid "/tmp"
+#~ msgstr "/tmp"
+
+#~ msgid "${DISCS}"
+#~ msgstr "${DISCS}"
+
+#~ msgid ""
+#~ "The kernel module package ${PACKAGE} could not be found or an error "
+#~ "occurred during installation."
+#~ msgstr ""
+#~ "Non se puido atopar o paquete do módulo do núcleo ${PACKAGE}, ou ocorreu "
+#~ "un erro durante a instalación."
+
+#~ msgid ""
+#~ "There will likely be problems during boot when the system tries to setup "
+#~ "encrypted partitions. You can still correct them by installing the "
+#~ "required package later on."
+#~ msgstr ""
+#~ "Seguramente haxa problemas durante o inicio cando o sistema trate de "
+#~ "configurar as particións cifradas. Pode corrixilos instalando despois o "
+#~ "paquete necesario."
+
+#~ msgid "Write the changes to disks and configure encrypted volumes?"
+#~ msgstr "¿Gravar os cambios nos discos e configurar os volumes cifrados?"
+
+#~ msgid ""
+#~ "After the encrypted volumes have been configured, no additional changes "
+#~ "to the partitions in the disks containing encrypted volumes are allowed. "
+#~ "Please decide if you are satisfied with the current partitioning scheme "
+#~ "in these disks before continuing."
+#~ msgstr ""
+#~ "Despois de configurar os volumes cifrados non se permiten máis cambios "
+#~ "nas particións dos discos que conteñen volumes cifrados. Decida se está "
+#~ "satisfeito co esquema de particionamento actual destes discos antes de "
+#~ "continuar."
+
+#~ msgid "Encrypted volumes configuration failure"
+#~ msgstr "Fallo na configuración dos volumes cifrados"
+
+#~ msgid "The configuration is aborted."
+#~ msgstr "Abortouse a configuración."
+
+#~ msgid "${choices} Finish"
+#~ msgstr "${choices} Rematar"
 
 #~ msgid ""
 #~ "You can choose to ignore this warning, but that may result in failure to "

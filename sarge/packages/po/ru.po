@@ -12,7 +12,7 @@ msgstr ""
 "Project-Id-Version: ru\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2004-07-19 11:39+0200\n"
-"PO-Revision-Date: 2006-05-05 20:33+0300\n"
+"PO-Revision-Date: 2006-05-13 18:47+0300\n"
 "Last-Translator: Yuri Kozlov <kozlov.y@gmail.com>\n"
 "Language-Team: Russian <debian-l10n-russian@lists.debian.org>\n"
 "MIME-Version: 1.0\n"
@@ -569,9 +569,9 @@ msgid ""
 "load them. If you're unsure, you should leave them all selected."
 msgstr ""
 "Программа установки определила, что для работы с вашим оборудованием "
-"потребуются нижеперечисленные модули. Если вы точно знаете, что некоторые из "
-"них не нужны или вызывают проблемы, то укажите, что их загружать не нужно. "
-"Если вы не уверены, то оставьте всё как есть."
+"потребуются перечисленные ниже модули. Если вы точно знаете, что некоторые "
+"из них не нужны или вызывают проблемы, то укажите, что их загружать не "
+"нужно. Если вы не уверены, то оставьте всё как есть."
 
 #. Type: boolean
 #. Description
@@ -6522,7 +6522,7 @@ msgstr ""
 "Текущие настройки:\n"
 " канал чтения = ${device_read}\n"
 " канал записи = ${device_write}\n"
-" протокол      = ${protocol}"
+" протокол     = ${protocol}"
 
 #. Type: error
 #. Description
@@ -9676,6 +9676,12 @@ msgstr "Настройка и монтирование разделов"
 #~ "даже если со второго раза она пройдёт успешно, у вас могут возникнуть "
 #~ "проблемы во время установки."
 
+#~ msgid "no ethernet card"
+#~ msgstr "нет сетевых карт"
+
+#~ msgid "none of the above"
+#~ msgstr "ни одно из перечисленных"
+
 #~ msgid "Do you intend to use FireWire Ethernet?"
 #~ msgstr "Хотите использовать FireWire Ethernet?"
 
@@ -9692,8 +9698,8 @@ msgstr "Настройка и монтирование разделов"
 #~ msgid "Detect disks"
 #~ msgstr "Определение дисков"
 
-#~ msgid "continue with no disk drive, ${CHOICES}, none of the above"
-#~ msgstr "продолжить без дисков, ${CHOICES}, ни одно из перечисленных"
+#~ msgid "continue with no disk drive"
+#~ msgstr "продолжить без дисков"
 
 #~ msgid "Driver needed for your disk drive:"
 #~ msgstr "Драйвер, необходимый для диска:"
@@ -10967,6 +10973,16 @@ msgstr "Настройка и монтирование разделов"
 #~ msgid "The kernel was properly copied to the PReP boot partition."
 #~ msgstr "Ядро было правильно скопировано на загрузочный раздел PReP."
 
+#~ msgid "Failed to process the preconfiguration file"
+#~ msgstr "Не удалось обработать файл предварительной конфигурации"
+
+#~ msgid ""
+#~ "The installer failed to process the preconfiguration file from "
+#~ "${LOCATION}. The file may be corrupt."
+#~ msgstr ""
+#~ "Программе установки не удалось обработать файл предварительной "
+#~ "конфигурации из ${LOCATION}. Файл может быть повреждён."
+
 #~ msgid "Rescue mode"
 #~ msgstr "Режим восстановления"
 
@@ -11073,8 +11089,14 @@ msgstr "Настройка и монтирование разделов"
 #~ "(например, у вас отдельный раздел \"/usr\"), то их придётся монтировать "
 #~ "вручную."
 
-#~ msgid "floppy, web, mounted file system"
-#~ msgstr "дискета, веб, смонтированная файловая система"
+#~ msgid "floppy"
+#~ msgstr "дискета"
+
+#~ msgid "web"
+#~ msgstr "веб"
+
+#~ msgid "mounted file system"
+#~ msgstr "смонтированная файловая система"
 
 #~ msgid "How should the debug logs be saved or transferred?"
 #~ msgstr ""
@@ -11151,6 +11173,12 @@ msgstr "Настройка и монтирование разделов"
 #~ msgstr ""
 #~ "Вероятно, не обнаружен дисковод или в дисководе нет отформатированной "
 #~ "дискеты."
+
+#~ msgid "Start menu"
+#~ msgstr "Вызвать меню"
+
+#~ msgid "Start shell"
+#~ msgstr "Запустить оболочку"
 
 #~ msgid ""
 #~ "To continue the installation, please use an SSH client to connect to the "
@@ -11340,6 +11368,18 @@ msgstr "Настройка и монтирование разделов"
 #~ "Авторазметку с помощью LVM произвести не удалось из-за ошибок при "
 #~ "создании группы томов."
 
+#~ msgid "physical volume for encryption"
+#~ msgstr "физический том для шифрования"
+
+#~ msgid "crypto"
+#~ msgstr "crypto"
+
+#~ msgid "Loopback (loop-AES)"
+#~ msgstr "Loopback (loop-AES)"
+
+#~ msgid "Device-mapper (dm-crypt)"
+#~ msgstr "Device-mapper (dm-crypt)"
+
 #~ msgid "not active"
 #~ msgstr "не активен"
 
@@ -11361,11 +11401,75 @@ msgstr "Настройка и монтирование разделов"
 #~ msgid "Key size for this partition:"
 #~ msgstr "Размер ключа для этого раздела:"
 
+#~ msgid "IV algorithm:"
+#~ msgstr "IV алгоритм:"
+
+#~ msgid "Initialization vector generation algorithm for this partition:"
+#~ msgstr "Алгоритм генерации инициализационного вектора для этого раздела:"
+
+#~ msgid ""
+#~ "Different algorithms exist to derive the initialization vector for each "
+#~ "sector. This choice influences the encryption security. Normally, there "
+#~ "is no reason to change this from the recommended default, except for "
+#~ "compatibility with older systems."
+#~ msgstr ""
+#~ "Существует несколько алгоритмов получения инициализационного вектора "
+#~ "каждого сектора. Этот выбор влияет на безопасность шифрования. Обычно, не "
+#~ "нужно изменять значения по умолчанию, кроме как для совместимости со "
+#~ "старыми системами."
+
 #~ msgid "Encryption key:"
 #~ msgstr "Ключ шифрования:"
 
 #~ msgid "Type of encryption key for this partition:"
 #~ msgstr "Тип ключа шифрования для этого раздела:"
+
+#~ msgid "Encryption key hash:"
+#~ msgstr "Хеш ключа шифрования:"
+
+#~ msgid "Type of encryption key hash for this partition:"
+#~ msgstr "Тип хеша ключа шифрования для этого раздела:"
+
+#~ msgid ""
+#~ "The encryption key is derived from the passphrase by applying a one-way "
+#~ "hash function to it. Normally, there is no reason to change this from the "
+#~ "recommended default and doing so in the wrong way can reduce the "
+#~ "encryption strength."
+#~ msgstr ""
+#~ "Ключ шифрования получается с помощью вычисления односторонней хеш функции "
+#~ "над ключевой фразой. Обычно, не нужно изменять значения по умолчанию и "
+#~ "изменение может понизить стойкость шифрования."
+
+#~ msgid "Erase data:"
+#~ msgstr "Стереть данные:"
+
+#~ msgid "Erase data on this partition"
+#~ msgstr "Стирание данных на этом разделе"
+
+#~ msgid "Really erase the data on ${DEVICE}?"
+#~ msgstr "Стереть данные на ${DEVICE}?"
+
+#~ msgid ""
+#~ "The data on ${DEVICE} will be overwritten with random data. It can no "
+#~ "longer be recovered after this step has completed. This is the last "
+#~ "opportunity to abort the erase."
+#~ msgstr ""
+#~ "Информация на ${DEVICE} будет затёрта произвольными данными. После "
+#~ "завершения этого шага их нельзя будет восстановить. Это последняя "
+#~ "возможность отменить уничтожение."
+
+#~ msgid "Erasing data on ${DEVICE}"
+#~ msgstr "Стирание данных на ${DEVICE}"
+
+#~ msgid "Erasing data on ${DEVICE} failed"
+#~ msgstr "Стирание данных на ${DEVICE} завершилось неудачно"
+
+#~ msgid ""
+#~ "An error occured trying to erase the data on ${DEVICE}. The data has not "
+#~ "been erased."
+#~ msgstr ""
+#~ "Во время стирания данных на ${DEVICE} произошла ошибка. Данные не были "
+#~ "уничтожены."
 
 #~ msgid "Setting up encryption..."
 #~ msgstr "Настройка шифрования..."
@@ -11407,21 +11511,21 @@ msgstr "Настройка и монтирование разделов"
 
 #~ msgid ""
 #~ "The kernel module package ${PACKAGE} could not be found or an error "
-#~ "occurred during installation."
+#~ "occurred during its installation."
 #~ msgstr ""
 #~ "Пакет ${PACKAGE} с модулями ядра не найден или произошла ошибка во время "
 #~ "установки."
 
 #~ msgid ""
-#~ "There will likely be problems during boot when the system tries to setup "
-#~ "encrypted partitions. You can still correct them by installing the "
-#~ "required package later on."
+#~ "It is likely that there will be problems setting up encrypted partitions "
+#~ "when the system is rebooted. You may be able to correct this by "
+#~ "installing the required package(s) later on."
 #~ msgstr ""
-#~ "Вероятно, возникнут проблемы при загрузке, когда система попытается "
+#~ "Вероятно возникновение проблем при перезагрузке, когда система попытается "
 #~ "настроить шифрованные разделы. Вы ещё можете исправить ситуацию установив "
-#~ "требуемый пакет позже."
+#~ "требуемый пакет(ы) позже."
 
-#~ msgid "Write the changes to disks and configure encrypted volumes?"
+#~ msgid "Write the changes to disk and configure encrypted volumes?"
 #~ msgstr "Записать изменения на диск и настроить шифрование томов?"
 
 #~ msgid ""
@@ -11436,25 +11540,25 @@ msgstr "Настройка и монтирование разделов"
 
 #~ msgid ""
 #~ "After the encrypted volumes have been configured, no additional changes "
-#~ "to the partitions in the disks containing encrypted volumes are allowed. "
+#~ "to the partitions on the disks containing encrypted volumes are allowed. "
 #~ "Please decide if you are satisfied with the current partitioning scheme "
-#~ "in these disks before continuing."
+#~ "for these disks before continuing."
 #~ msgstr ""
 #~ "После настройки шифрования томов больше нельзя изменять разметку диска, "
 #~ "содержащих шифрованные тома. Прежде чем продолжить настройку, убедитесь, "
 #~ "что вы довольны текущей разметкой дисков."
 
-#~ msgid "Encrypted volumes configuration failure"
+#~ msgid "Configuration of encrypted volumes failed"
 #~ msgstr "Не удалось настроить шифрование томов"
 
 #~ msgid "An error occurred while configuring encrypted volumes."
 #~ msgstr "Произошла ошибка при настройке шифрования томов."
 
-#~ msgid "The configuration is aborted."
-#~ msgstr "Настройка отменена."
+#~ msgid "The configuration has been aborted."
+#~ msgstr "Настройка была прервана."
 
-#~ msgid "Encrypted volume initialisation failed"
-#~ msgstr "Не удалось инициализировать шифрование тома"
+#~ msgid "Initialisation of encrypted volume failed"
+#~ msgstr "Не удалось инициализировать шифрованный том"
 
 #~ msgid "An error occurred while setting up encrypted volumes."
 #~ msgstr "Произошла ошибка при при настройке шифрования томов."
@@ -11577,9 +11681,6 @@ msgstr "Настройка и монтирование разделов"
 #~ msgid "An error occurred while creating the keyfile."
 #~ msgstr "Произошла ошибка при создании файла ключа."
 
-#~ msgid "Encryption configuration failure"
-#~ msgstr "Не удалось настроить шифрование"
-
 #~ msgid ""
 #~ "You have selected the root filesystem to be stored on an encrypted "
 #~ "partition. This feature is not available and continuing now would result "
@@ -11594,6 +11695,39 @@ msgstr "Настройка и монтирование разделов"
 #~ "filesystem."
 #~ msgstr ""
 #~ "Вернитесь и выберите для корневой файловой системы раздел без шифрования."
+
+#~ msgid ""
+#~ "You have selected the root filesystem to be stored on an encrypted "
+#~ "partition. This feature requires a separate /boot partition on which the "
+#~ "kernel and initrd can be stored."
+#~ msgstr ""
+#~ "Вы указали, что корневая файловая система будет располагаться на "
+#~ "шифрованном разделе. Для этого требуется отдельный раздел /boot, на "
+#~ "котором можно было бы хранить ядро и initrd."
+
+#~ msgid "You should go back and setup a /boot partition."
+#~ msgstr "Вы должны вернуться назад и настроить раздел /boot."
+
+#~ msgid "Encryption configuration failure"
+#~ msgstr "Отказ настройки шифрования"
+
+#~ msgid ""
+#~ "You have selected the /boot filesystem to be stored on an encrypted "
+#~ "partition. This is not possible because the bootloader would be unable to "
+#~ "load the kernel and initrd. Continuing now would result in an "
+#~ "installation that cannot be used."
+#~ msgstr ""
+#~ "Вы указали, что файловая система в разделе /boot будет располагаться на "
+#~ "шифрованном разделе. Это невозможно, так как системный загрузчик не "
+#~ "сможет загрузить ядро и initrd. Продолжение привело бы к "
+#~ "неработоспособной установленной системы."
+
+#~ msgid ""
+#~ "You should go back and choose a non-encrypted partition for the /boot "
+#~ "filesystem."
+#~ msgstr ""
+#~ "Вы должны вернуться и выбрать не шифрованный раздел для файловой системы /"
+#~ "boot."
 
 #~ msgid "Are you sure you want to use a random key?"
 #~ msgstr "Вы уверены, что хотите использовать произвольный ключ?"
@@ -11613,6 +11747,36 @@ msgstr "Настройка и монтирование разделов"
 #~ "уничтожаться при каждой перезагрузке. Данный тип должен использоваться "
 #~ "только для разделов подкачки."
 
+#~ msgid "Really use block device encryption?"
+#~ msgstr "Действительно использовать блочное шифрование устройства?"
+
+#~ msgid ""
+#~ "The support for block device encryption is still experimental and not "
+#~ "considered ready for production. In particular it may result in setups "
+#~ "that are easy to break and so give a false sense of security. There are "
+#~ "no known encryption flaws, however, until the implementation is "
+#~ "thoroughly audited, this feature should not be used except for testing "
+#~ "purposes."
+#~ msgstr ""
+#~ "Поддержка блочного шифрования устройства пока находится в фазе "
+#~ "тестирования и не рассматривания готовым к использованию. В частности, "
+#~ "оно может привести к установке, которую легко сломать и весь смысл "
+#~ "шифрования теряется. Неизвестны проблемы с шифрованием, однако, пока "
+#~ "реализация не будет тщательно проверена, не стоит его использовать кроме "
+#~ "как с целью тестирования."
+
+#~ msgid "Abort"
+#~ msgstr "Прервать"
+
+#~ msgid "Leave the file system intact"
+#~ msgstr "Оставить файловую систему без изменений"
+
+#~ msgid "Create swap space"
+#~ msgstr "Создать раздел подкачки"
+
+#~ msgid "Don't mount it"
+#~ msgstr "Не монтировать"
+
 #~ msgid "Please choose one of the listed disks to create partitions on it."
 #~ msgstr "Для создания разделов выберите один из этих дисков."
 
@@ -11625,13 +11789,6 @@ msgstr "Настройка и монтирование разделов"
 #~ msgid "ctc: Channel to Channel (CTC) or ESCON connection"
 #~ msgstr "ctc: соединение CTC (канал в канал) или ESCON"
 
-#~ msgid ""
-#~ "lcs: qeth: OSA-2 Token Ring/Ethernet or OSA-Express Fast Ethernet (non-"
-#~ "QDIO)"
-#~ msgstr ""
-#~ "lcs: qeth: OSA-2 Token Ring/Ethernet или OSA-Express Fast Ethernet (не-"
-#~ "QDIO)"
-
 #~ msgid "qeth: OSA-Express in QDIO mode / HiperSockets"
 #~ msgstr "qeth: OSA-Express в QDIO режиме / HiperSockets"
 
@@ -11640,8 +11797,34 @@ msgstr "Настройка и монтирование разделов"
 #~ msgstr ""
 #~ "iucv: Inter-User Communication Vehicle - доступен только для гостевых VM"
 
-#~ msgid "${choices} Finish"
-#~ msgstr "${choices} Завершить"
+#~ msgid "CTC read device:"
+#~ msgstr "Устройство чтения CTC:"
+
+#~ msgid "CTC write device:"
+#~ msgstr "Устройство записи CTC:"
+
+#~ msgid ""
+#~ "The following device numbers might belong to CTC or ESCON connections."
+#~ msgstr ""
+#~ "К соединениям CTC или ESCON могут применяться следующие номера устройств."
+
+#~ msgid ""
+#~ "The configured parameters are:\n"
+#~ " channels = ${device0}, ${device1}, ${device2}\n"
+#~ " port     = ${port}\n"
+#~ " portname = ${portname}"
+#~ msgstr ""
+#~ "Текущие настройки:\n"
+#~ " каналы    = ${device0}, ${device1}, ${device2}\n"
+#~ " порт      = ${port}\n"
+#~ " имя порта = ${portname}"
+
+#~ msgid ""
+#~ "No OSA-Express QDIO cards / HiperSockets were detected. If you are "
+#~ "running VM please make sure that your card is attached to this guest."
+#~ msgstr ""
+#~ "Не обнаружены карты OSA-Express QDIO / HiperSockets. Если вы работаете в "
+#~ "VM, то убедитесь, что ваша карта подключена к этой гостевой VM."
 
 #~ msgid ""
 #~ "The following disk access storage devices (DASD) are available.  Please "
@@ -11650,23 +11833,59 @@ msgstr "Настройка и монтирование разделов"
 #~ "Доступны следующие DASD (\"Disk Access Storage Device\") диски. Выберите "
 #~ "все устройства, которые будут использованы сразу."
 
-#~ msgid "no ethernet card"
-#~ msgstr "нет сетевых карт"
+#~ msgid "continue with no disk drive, ${CHOICES}, none of the above"
+#~ msgstr "продолжить без дисков, ${CHOICES}, ни одно из перечисленных"
 
-#~ msgid "none of the above"
-#~ msgstr "ни одно из перечисленных"
+#~ msgid "floppy, web, mounted file system"
+#~ msgstr "дискета, веб, смонтированная файловая система"
 
-#~ msgid "continue with no disk drive"
-#~ msgstr "продолжить без дисков"
+#~ msgid ""
+#~ "The kernel module package ${PACKAGE} could not be found or an error "
+#~ "occurred during installation."
+#~ msgstr ""
+#~ "Пакет ${PACKAGE} с модулями ядра не найден или произошла ошибка во время "
+#~ "установки."
 
-#~ msgid "floppy"
-#~ msgstr "дискета"
+#~ msgid ""
+#~ "There will likely be problems during boot when the system tries to setup "
+#~ "encrypted partitions. You can still correct them by installing the "
+#~ "required package later on."
+#~ msgstr ""
+#~ "Вероятно, возникнут проблемы при загрузке, когда система попытается "
+#~ "настроить шифрованные разделы. Вы ещё можете исправить ситуацию установив "
+#~ "требуемый пакет позже."
 
-#~ msgid "web"
-#~ msgstr "веб"
+#~ msgid "Write the changes to disks and configure encrypted volumes?"
+#~ msgstr "Записать изменения на диск и настроить шифрование томов?"
 
-#~ msgid "mounted file system"
-#~ msgstr "смонтированная файловая система"
+#~ msgid ""
+#~ "After the encrypted volumes have been configured, no additional changes "
+#~ "to the partitions in the disks containing encrypted volumes are allowed. "
+#~ "Please decide if you are satisfied with the current partitioning scheme "
+#~ "in these disks before continuing."
+#~ msgstr ""
+#~ "После настройки шифрования томов больше нельзя изменять разметку диска, "
+#~ "содержащих шифрованные тома. Прежде чем продолжить настройку, убедитесь, "
+#~ "что вы довольны текущей разметкой дисков."
+
+#~ msgid "Encrypted volumes configuration failure"
+#~ msgstr "Не удалось настроить шифрование томов"
+
+#~ msgid "The configuration is aborted."
+#~ msgstr "Настройка отменена."
+
+#~ msgid "Encrypted volume initialisation failed"
+#~ msgstr "Не удалось инициализировать шифрование тома"
+
+#~ msgid ""
+#~ "lcs: qeth: OSA-2 Token Ring/Ethernet or OSA-Express Fast Ethernet (non-"
+#~ "QDIO)"
+#~ msgstr ""
+#~ "lcs: qeth: OSA-2 Token Ring/Ethernet или OSA-Express Fast Ethernet (не-"
+#~ "QDIO)"
+
+#~ msgid "${choices} Finish"
+#~ msgstr "${choices} Завершить"
 
 #~ msgid "${KERNELS}, none"
 #~ msgstr "${KERNELS}, ни один из них"
@@ -11781,23 +12000,11 @@ msgstr "Настройка и монтирование разделов"
 #~ "произвольных процессов (\"энтропия\"), которых, вероятно, слишком мало на "
 #~ "этой стадии установки."
 
-#~ msgid "physical volume for encryption"
-#~ msgstr "физический том для шифрования"
-
-#~ msgid "crypto"
-#~ msgstr "crypto"
-
 #~ msgid "Encryption type:"
 #~ msgstr "Тип шифрования:"
 
 #~ msgid "Encryption type for this partition:"
 #~ msgstr "Тип шифрования для этого раздела:"
-
-#~ msgid "Loopback (loop-AES)"
-#~ msgstr "Файловое loopback устройство (loop-AES)"
-
-#~ msgid "Device-mapper (dm-crypt)"
-#~ msgstr "Device-mapper (dm-crypt)"
 
 #~ msgid "Device-mapper (LUKS)"
 #~ msgstr "Device-mapper (LUKS)"
