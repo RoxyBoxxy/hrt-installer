@@ -1,0 +1,34 @@
+#!/usr/bin/make -f
+
+# Uncomment this to turn on verbose mode.
+#export DH_VERBOSE=1
+
+build:
+
+clean:
+	dh_testdir
+	dh_clean
+
+install:
+	dh_testdir
+	dh_testroot
+	dh_clean -k
+
+	install -D debian/s390-sysconfig-writer.prebaseconfig debian/s390-sysconfig-writer/usr/lib/prebaseconfig.d/50sysconfig-writer
+
+# Build architecture-independent files here.
+binary-indep:
+
+# Build architecture-dependent files here.
+binary-arch: install
+	dh_testdir
+	dh_testroot
+	dh_installdirs
+	dh_installdeb 
+	dh_fixperms
+	dh_shlibdeps
+	dh_gencontrol
+	dh_builddeb
+
+binary: binary-indep binary-arch
+.PHONY: build clean binary-indep binary-arch binary install
