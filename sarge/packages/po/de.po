@@ -16,7 +16,7 @@ msgstr ""
 "Project-Id-Version: debian-installer\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2004-07-19 11:39+0200\n"
-"PO-Revision-Date: 2006-05-26 20:27+0200\n"
+"PO-Revision-Date: 2006-06-11 21:01+0200\n"
 "Last-Translator: Jens Seidel <jensseidel@users.sf.net>\n"
 "Language-Team: Debian German <debian-l10n-german@lists.debian.org>\n"
 "MIME-Version: 1.0\n"
@@ -547,6 +547,7 @@ msgstr ""
 "Die fehlenden Module und die Geräte, die diese benötigen, sind: "
 "${MISSING_MODULES_LIST}"
 
+# FIXME: die graphische Oberfläche verwendet 6 Punkte
 #. Type: text
 #. Description
 #: ../hw-detect.templates:13
@@ -636,11 +637,11 @@ msgid ""
 "manual or the PCMCIA HOWTO for more information."
 msgstr ""
 "Bei einiger PCMCIA-Hardware müssen spezielle Einstellungen für den Betrieb "
-"angegeben werden, können aber den Computer zum einfrieren bringen. "
+"angegeben werden, können aber den Computer zum Einfrieren bringen. "
 "Beispielsweise benötigen einige Dell-Laptops hier die Angabe von »exclude "
 "port 0x800-0x8ff«. Diese Einstellungen müssen zu /etc/pcmcia/config.opts "
-"hinzugefügt werden. Für mehr Informationen sehen Sie sich bitte das PCMCIA-"
-"HOWTO an."
+"hinzugefügt werden. Für weitere Informationen sehen Sie sich bitte das "
+"PCMCIA-HOWTO an."
 
 #. Type: string
 #. Description
@@ -861,6 +862,7 @@ msgstr "Rechnername:"
 msgid "Please enter the hostname for this system."
 msgstr "Bitte geben Sie den Namen dieses Rechners ein."
 
+# FIXME: der oder das?
 #. Type: string
 #. Description
 #: ../netcfg-common.templates:75
@@ -1597,7 +1599,7 @@ msgstr "Prüfe den Debian-Archiv-Spiegelserver"
 #. Description
 #: ../choose-mirror.templates:99
 msgid "Downloading the Release file..."
-msgstr "Lade Release-Datei herunter ..."
+msgstr "Lade die Release-Datei herunter ..."
 
 #. Type: error
 #. Description
@@ -1991,6 +1993,7 @@ msgstr "DE"
 msgid "Debian archive mirror country:"
 msgstr "Land des Debian-Archiv-Spiegelservers:"
 
+# FIXME en-dash statt --
 #. Type: select
 #. Description
 #: ../choose-mirror.templates:134
@@ -2091,7 +2094,7 @@ msgid ""
 msgstr ""
 "Das Partitionierungsprogramm hat nicht genug Informationen über den Standard-"
 "Typ der Partitionstabelle Ihrer Architektur. Bitte senden Sie eine E-Mail "
-"mit mehr Informationen an debian-boot@lists.debian.org."
+"mit weiteren Informationen an debian-boot@lists.debian.org."
 
 #. Type: boolean
 #. Description
@@ -9063,8 +9066,8 @@ msgstr "Bei der vorherigen Aktion ist ein Fehler aufgetreten"
 #: ../templates:33
 msgid "You may be able to continue. Here is some more information:"
 msgstr ""
-"Möglicherweise können Sie trotzdem fortfahren. Hier sind mehr Informationen "
-"dazu:"
+"Möglicherweise können Sie trotzdem fortfahren. Hier sind weitere "
+"Informationen dazu:"
 
 #. Type: error
 #. Description
@@ -9702,7 +9705,7 @@ msgid ""
 "Please check the error log on the third console or /var/log/messages for "
 "more information."
 msgstr ""
-"Für mehr Informationen überprüfen Sie bitte das Fehlerprotokoll auf der "
+"Für weitere Informationen überprüfen Sie bitte das Fehlerprotokoll auf der "
 "dritten Konsole oder sehen Sie in /var/log/messages nach."
 
 #. Type: text
@@ -9739,6 +9742,7 @@ msgstr "Partitionen konfigurieren und einbinden"
 #~ msgid "Loading additional components"
 #~ msgstr "Zusätzliche Komponenten laden"
 
+# FIXME: United States in Choose languages, other state is untranslated
 #~ msgid "United States"
 #~ msgstr "Germany"
 
@@ -10001,6 +10005,24 @@ msgstr "Partitionen konfigurieren und einbinden"
 #~ "es bitte aus der Liste. Beachten Sie, dass auch Geräte aufgelistet sein "
 #~ "können, die keine Diskettenlaufwerke sind."
 
+#~ msgid "Device in use"
+#~ msgstr "Gerät wird verwendet"
+
+#~ msgid ""
+#~ "No modifications can be made to the device ${DEVICE} for the following "
+#~ "reasons:"
+#~ msgstr "Das Gerät ${DEVICE} kann wegen Folgendem nicht modifiziert werden:"
+
+#~ msgid "Partition in use"
+#~ msgstr "Partition wird verwendet"
+
+#~ msgid ""
+#~ "No modifications can be made to the partition #${PARTITION} of device "
+#~ "${DEVICE} for the following reasons:"
+#~ msgstr ""
+#~ "Die Partition ${PARTITION} des Geräts ${DEVICE} kann wegen Folgendem "
+#~ "nicht modifiziert werden:"
+
 #~ msgid ""
 #~ "If you continue, the changes listed below will be written to the disks. "
 #~ "Otherwise, you will be able to make further changes manually."
@@ -10015,9 +10037,11 @@ msgstr "Partitionen konfigurieren und einbinden"
 #~ msgid "Loopback (loop%s)"
 #~ msgstr "Loopback (loop%s)"
 
-#, fuzzy
+#~ msgid "DASD %s (%s)"
+#~ msgstr "DASD %s (%s)"
+
 #~ msgid "DASD %s (%s), partition #%s"
-#~ msgstr "SCSI%s (%s,%s,%s), Partition #%s (%s)"
+#~ msgstr "DASD %s (%s), Partition #%s"
 
 #~ msgid ""
 #~ "This installer can guide you through partitioning a disk for use by "
@@ -11549,92 +11573,92 @@ msgstr "Partitionen konfigurieren und einbinden"
 #~ msgid "Configure NSLU2 firmware to boot the system"
 #~ msgstr "Konfiguriere die NSLU2-Firmware um das System zu booten"
 
-#, fuzzy
 #~ msgid "Unallocated physical volumes:"
-#~ msgstr "Logisches Volume:"
+#~ msgstr "Nichtzugewiesene physikalische Volumes:"
 
-#, fuzzy
 #~ msgid "Volume groups:"
-#~ msgstr "Volume-Gruppe:"
+#~ msgstr "Volume-Gruppen:"
 
-#, fuzzy
 #~ msgid "Uses physical volume:"
-#~ msgstr "Logisches Volume:"
+#~ msgstr "Verwendet physikalisches Volume:"
 
-#, fuzzy
 #~ msgid "Provides logical volume:"
-#~ msgstr "Logisches Volume:"
+#~ msgstr "Enthält logisches Volume:"
 
-#, fuzzy
+#~ msgid "PV"
+#~ msgstr "PV"
+
+#~ msgid "In use by LVM volume group ${VG}"
+#~ msgstr "Wird von LVM-Volume-Gruppe ${VG} verwendet"
+
 #~ msgid "Display configuration details"
-#~ msgstr "RAID-Konfiguration fehlgeschlagen"
+#~ msgstr "Konfigurationsdetails anzeigen"
 
-#, fuzzy
 #~ msgid "Create volume group"
-#~ msgstr "Volume-Gruppen erstellen"
+#~ msgstr "Volume-Gruppe erstellen"
 
-#, fuzzy
 #~ msgid "Delete volume group"
-#~ msgstr "Volume-Gruppen löschen"
+#~ msgstr "Volume-Gruppe löschen"
 
-#, fuzzy
 #~ msgid "Extend volume group"
-#~ msgstr "Volume-Gruppen erweitern"
+#~ msgstr "Volume-Gruppe erweitern"
 
-#, fuzzy
 #~ msgid "Reduce volume group"
-#~ msgstr "Volume-Gruppen verkleinern"
+#~ msgstr "Volume-Gruppe reduzieren"
 
-#, fuzzy
 #~ msgid "Create logical volume"
-#~ msgstr "Logische Volumes erstellen"
+#~ msgstr "Logisches Volume erstellen"
 
-#, fuzzy
 #~ msgid "Delete logical volume"
-#~ msgstr "Logische Volumes löschen"
+#~ msgstr "Logisches Volume löschen"
 
-#, fuzzy
 #~ msgid ""
 #~ "After the Logical Volume Manager is configured, no additional changes to "
-#~ "the partitions containing physical volumes are allowed. Please decide if "
-#~ "you are satisfied with the current partitioning scheme before continuing."
+#~ "the partitioning scheme of disks containing physical volumes are allowed "
+#~ "during the installation. Please decide if you are satisfied with the "
+#~ "current partitioning scheme before continuing."
 #~ msgstr ""
-#~ "Ist der Logical Volume Manager konfiguriert, können die Partitionen, die "
-#~ "sich auf der selben Festplatte wie die physikalischen Volumes befinden, "
-#~ "nicht mehr geändert werden. Bitte überzeugen Sie sich, ob die Einteilung "
-#~ "der Partitionen auf diesen Festplatten richtig ist."
+#~ "Nachdem der Logical Volume Manager konfiguriert ist, sind während der "
+#~ "Installation keine weiteren Änderungen an der Partitionierung der "
+#~ "Festplatten, die physikalische Volumes enthalten, erlaubt. Bitte "
+#~ "überzeugen Sie sich, dass die Einteilung der Partitionen auf diesen "
+#~ "Festplatten richtig ist, bevor Sie weitermachen."
 
-#, fuzzy
 #~ msgid "Summary of current LVM configuration:"
-#~ msgstr "Erzeugen der Quik-Konfiguration schlug fehl"
+#~ msgstr "Übersicht der aktuellen LVM-Konfiguration:"
 
-#, fuzzy
+#~ msgid ""
+#~ " Free Physical Volumes:  ${FREE_PVS}\n"
+#~ " Used Physical Volumes:  ${USED_PVS}\n"
+#~ " Volume Groups:          ${VGS}\n"
+#~ " Logical Volumes:        ${LVS}"
+#~ msgstr ""
+#~ " Freie physikalische Volumes:  ${FREE_PVS}\n"
+#~ " Verwendete physikale Volumes: ${USED_PVS}\n"
+#~ " Volume-Gruppen:               ${VGS}\n"
+#~ " Logische Volumes:             ${LVS}"
+
 #~ msgid "Current LVM configuration:"
-#~ msgstr "Erstelle CoLo-Konfiguration"
+#~ msgstr "Aktuelle LVM-Konfiguration"
 
-#, fuzzy
 #~ msgid "The volume group ${VG} could not be created."
-#~ msgstr "Das logische Volume ${LV} auf ${VG} konnte nicht gelöscht werden."
+#~ msgstr "Die Volume-Gruppe ${VG} konnte nicht erstellt werden."
 
-#, fuzzy
 #~ msgid "Devices to remove from the volume group:"
 #~ msgstr "Dieses Gerät aus der Volume-Gruppe entfernen:"
 
-#, fuzzy
 #~ msgid "Please select the devices you wish to remove from the volume group."
 #~ msgstr ""
-#~ "Bitte wählen Sie das Gerät, das aus der Volume-Gruppe herausgenommen "
-#~ "werden soll."
+#~ "Bitte wählen Sie die Geräte, die Sie aus der Volume-Gruppe entfernen "
+#~ "wollen."
 
-#, fuzzy
 #~ msgid ""
 #~ "No physical volumes were selected. Reduction of the volume group was "
 #~ "aborted."
 #~ msgstr ""
-#~ "Es wurden keine physikalischen Volumes ausgewählt. Die Erweiterung der "
+#~ "Es wurden keine physikalischen Volumes ausgewählt. Die Reduzierung der "
 #~ "Volume-Gruppe wurde abgebrochen."
 
-#, fuzzy
 #~ msgid ""
 #~ "The physical volume ${PARTITION} could not be removed from the selected "
 #~ "volume group."
@@ -11642,17 +11666,17 @@ msgstr "Partitionen konfigurieren und einbinden"
 #~ "Das physikalische Volume ${PARTITION} konnte nicht aus der ausgewählten "
 #~ "Volume-Gruppe entfernt werden."
 
-#, fuzzy
 #~ msgid "Please select the logical volume to delete."
-#~ msgstr "Bitte wählen Sie das zu löschende logische Volume auf ${VG}."
+#~ msgstr "Bitte wählen Sie das zu löschende logische Volume."
 
-#, fuzzy
+#~ msgid "in VG ${VG}"
+#~ msgstr "in VG ${VG}"
+
 #~ msgid "Error while initializing physical volume"
-#~ msgstr "Beim Löschen des logischen Volumes ist ein Fehler aufgetreten"
+#~ msgstr "Fehler bei Initialisierung des physikalischen Volumes"
 
-#, fuzzy
 #~ msgid "The physical volume ${PV} could not be initialized."
-#~ msgstr "Das logische Volume ${LV} auf ${VG} konnte nicht gelöscht werden."
+#~ msgstr "Das physikalische Volume ${PV} konnte nicht initialisiert werden."
 
 #~ msgid "Erase entire disk and use LVM: ${DEVICE}"
 #~ msgstr "Gesamtes Laufwerk löschen und LVM verwenden: ${DEVICE}"
@@ -11719,7 +11743,7 @@ msgstr "Partitionen konfigurieren und einbinden"
 #~ "Erzeugen der Volume-Gruppe auftrat."
 
 #~ msgid "physical volume for encryption"
-#~ msgstr "Physisches Volume für Verschlüsselung"
+#~ msgstr "Physikalisches Volume für Verschlüsselung"
 
 #~ msgid "crypto"
 #~ msgstr "crypto"
@@ -11860,6 +11884,11 @@ msgstr "Partitionen konfigurieren und einbinden"
 
 #~ msgid "missing"
 #~ msgstr "fehlt"
+
+#~ msgid "In use as physical volume for encrypted volume ${DEV}"
+#~ msgstr ""
+#~ "Wird als physikalisches Volume für verschlüsselten Datenträger ${DEV} "
+#~ "verwendet"
 
 #~ msgid "Encryption package installation failure"
 #~ msgstr "Installation des Verschlüsselungspakets ist fehlgeschlagen"
@@ -12214,6 +12243,10 @@ msgstr "Partitionen konfigurieren und einbinden"
 #~ msgstr ""
 #~ "Die folgenden Disk Access Storage Devices (DASD) sind verfügbar. Bitte "
 #~ "wählen Sie jedes Gerät, das Sie jeweils verwenden möchten."
+
+#, fuzzy
+#~ msgid "The partition is currently in use"
+#~ msgstr "Partitionsgröße ändern (zurzeit ${SIZE})"
 
 #~ msgid "${CHOICES}"
 #~ msgstr "${CHOICES}"
@@ -13282,6 +13315,17 @@ msgstr "Partitionen konfigurieren und einbinden"
 
 #~ msgid "${DISCS}"
 #~ msgstr "${DISCS}"
+
+#, fuzzy
+#~ msgid ""
+#~ "After the Logical Volume Manager is configured, no additional changes to "
+#~ "the partitions containing physical volumes are allowed. Please decide if "
+#~ "you are satisfied with the current partitioning scheme before continuing."
+#~ msgstr ""
+#~ "Ist der Logical Volume Manager konfiguriert, können die Partitionen, die "
+#~ "sich auf der selben Festplatte wie die physikalischen Volumes befinden, "
+#~ "nicht mehr geändert werden. Bitte überzeugen Sie sich, ob die Einteilung "
+#~ "der Partitionen auf diesen Festplatten richtig ist."
 
 #~ msgid "don't use a network mirror"
 #~ msgstr "keinen Netzwerkspiegel verwenden"
