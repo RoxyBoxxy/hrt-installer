@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: debian-installer\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2004-07-19 11:39+0200\n"
-"PO-Revision-Date: 2006-05-28 22:45+0200\n"
+"PO-Revision-Date: 2006-06-21 10:15+0200\n"
 "Last-Translator: Claus Hindsgaul <claus.hindsgaul@gmail.com>\n"
 "Language-Team: Danish\n"
 "MIME-Version: 1.0\n"
@@ -7404,7 +7404,7 @@ msgstr "Fejl under sletning af logisk bind"
 #. Description
 #: ../lvmcfg-utils.templates:242
 msgid "The logical volume (${LV}) on ${VG} could not be deleted."
-msgstr "Det logiske bin (${LV}) på ${VG} kunne ikke slettes."
+msgstr "Det logiske bind (${LV}) på ${VG} kunne ikke slettes."
 
 #. Type: error
 #. Description
@@ -9820,21 +9820,25 @@ msgstr "Sæt partitioner op og montér dem"
 #~ "fra listen. Bemærk at listen også kan indeholde drev, der ikke er "
 #~ "diskettedrev."
 
-#, fuzzy
 #~ msgid "Device in use"
-#~ msgstr "Enhed:"
+#~ msgstr "Enheden er i brug"
 
-#, fuzzy
+#~ msgid ""
+#~ "No modifications can be made to the device ${DEVICE} for the following "
+#~ "reasons:"
+#~ msgstr ""
+#~ "Der kan ikke gennemføres ændringer på enheden ${DEVICE} af følgende "
+#~ "årsager:"
+
 #~ msgid "Partition in use"
-#~ msgstr "Partitioneringsmetode:"
+#~ msgstr "Partitionen er i brug"
 
-#, fuzzy
 #~ msgid ""
 #~ "No modifications can be made to the partition #${PARTITION} of device "
 #~ "${DEVICE} for the following reasons:"
 #~ msgstr ""
-#~ "Oprettelsen af et swapområde på partition ${PARTITION} på ${DEVICE} "
-#~ "mislykkedes."
+#~ "Der kan ikke gennemføres ændringer på partition #${PARTITION} på enheden "
+#~ "${DEVICE} af følgende årsager:"
 
 #~ msgid ""
 #~ "If you continue, the changes listed below will be written to the disks. "
@@ -9849,9 +9853,11 @@ msgstr "Sæt partitioner op og montér dem"
 #~ msgid "Loopback (loop%s)"
 #~ msgstr "Loopback (loop%s)"
 
-#, fuzzy
+#~ msgid "DASD %s (%s)"
+#~ msgstr "DASD %s (%s)"
+
 #~ msgid "DASD %s (%s), partition #%s"
-#~ msgstr "SCSI%s (%s,%s,%s), partition #%s (%s)"
+#~ msgstr "DASD %s (%s), partition #%s"
 
 #~ msgid ""
 #~ "This installer can guide you through partitioning a disk for use by "
@@ -11333,51 +11339,45 @@ msgstr "Sæt partitioner op og montér dem"
 #~ msgid "Configure NSLU2 firmware to boot the system"
 #~ msgstr "Sætter NSLU2-firmwaren op til at starte systemet op"
 
-#, fuzzy
 #~ msgid "Unallocated physical volumes:"
-#~ msgstr "Logisk bind:"
+#~ msgstr "Ikke-inddraget fysisk bind:"
 
-#, fuzzy
 #~ msgid "Volume groups:"
-#~ msgstr "Bindgruppe:"
+#~ msgstr "Bindgrupper:"
 
-#, fuzzy
 #~ msgid "Uses physical volume:"
-#~ msgstr "Logisk bind:"
+#~ msgstr "Benytter fysisk bind:"
 
-#, fuzzy
 #~ msgid "Provides logical volume:"
-#~ msgstr "Logisk bind:"
+#~ msgstr "Tilbyder logiske bind:"
 
-#, fuzzy
+#~ msgid "PV"
+#~ msgstr "FB"
+
+#~ msgid "In use by LVM volume group ${VG}"
+#~ msgstr "I brug af LVM-bindgruppen ${VG}"
+
 #~ msgid "Display configuration details"
-#~ msgstr "RAID-opsætningsfejl"
+#~ msgstr "Vis opsætningsdetaljer"
 
-#, fuzzy
 #~ msgid "Create volume group"
-#~ msgstr "Opret bindgrupper"
+#~ msgstr "Opret bindgruppe"
 
-#, fuzzy
 #~ msgid "Delete volume group"
-#~ msgstr "Slet bindgrupper"
+#~ msgstr "Slet bindgruppe"
 
-#, fuzzy
 #~ msgid "Extend volume group"
-#~ msgstr "Udvid bindgrupper"
+#~ msgstr "Udvid bindgruppe"
 
-#, fuzzy
 #~ msgid "Reduce volume group"
-#~ msgstr "Reducér bindgrupper"
+#~ msgstr "Reducér bindgruppe"
 
-#, fuzzy
 #~ msgid "Create logical volume"
-#~ msgstr "Opret logiske bind"
+#~ msgstr "Opret logisk bind"
 
-#, fuzzy
 #~ msgid "Delete logical volume"
-#~ msgstr "Slet logiske bind"
+#~ msgstr "Slet logisk bind"
 
-#, fuzzy
 #~ msgid ""
 #~ "After the Logical Volume Manager is configured, no additional changes to "
 #~ "the partitioning scheme of disks containing physical volumes are allowed "
@@ -11385,39 +11385,43 @@ msgstr "Sæt partitioner op og montér dem"
 #~ "current partitioning scheme before continuing."
 #~ msgstr ""
 #~ "Når den logiske bindhåndtering er sat op, er det ikke tilladt at ændre "
-#~ "partitionerne på de diske, der indeholder benyttede fysiske bind. Vær "
-#~ "sikker på at du er tilfreds med det aktuelle partitionslayout på disse "
-#~ "diske inden du fortsætter."
+#~ "partitionerne på de diske, der indeholder fysiske bind under "
+#~ "installationen. Afgør med dig selv, om du er tilfreds med den aktuelle "
+#~ "partitionsudlægning, før du fortsætter."
 
-#, fuzzy
 #~ msgid "Summary of current LVM configuration:"
-#~ msgstr "Kunne ikke oprette quik-opsætning"
+#~ msgstr "Opsummering af den aktuelle LVM-opsætning:"
 
-#, fuzzy
+#~ msgid ""
+#~ " Free Physical Volumes:  ${FREE_PVS}\n"
+#~ " Used Physical Volumes:  ${USED_PVS}\n"
+#~ " Volume Groups:          ${VGS}\n"
+#~ " Logical Volumes:        ${LVS}"
+#~ msgstr ""
+#~ " Ledige fysisker bind:   ${FREE_PVS}\n"
+#~ " Benyttede fysiske bind: ${USED_PVS}\n"
+#~ " Bindgrupper:            ${VGS}\n"
+#~ " Logiske bind:           ${LVS}"
+
 #~ msgid "Current LVM configuration:"
-#~ msgstr "Opretter CoLo-opsætning"
+#~ msgstr "Aktuelle LVM-opsætning:"
 
-#, fuzzy
 #~ msgid "The volume group ${VG} could not be created."
-#~ msgstr "Det logiske bin (${LV}) på ${VG} kunne ikke slettes."
+#~ msgstr "Bindgruppen ${VG} kunne ikke oprettes."
 
-#, fuzzy
 #~ msgid "Devices to remove from the volume group:"
 #~ msgstr "Enheder at fjerne fra bindgruppen:"
 
-#, fuzzy
 #~ msgid "Please select the devices you wish to remove from the volume group."
-#~ msgstr "Vælg de enheder, du ønsker at fjerne fra bindgruppen."
+#~ msgstr "Vælg de enheder, du vil fjerne fra bindgruppen."
 
-#, fuzzy
 #~ msgid ""
 #~ "No physical volumes were selected. Reduction of the volume group was "
 #~ "aborted."
 #~ msgstr ""
-#~ "Der blev ikke valgt nogen fysiske bind. Afbryder udvidelsen af "
+#~ "Der blev ikke valgt nogen fysiske bind. Afbryder reduktionen af "
 #~ "bindgruppen."
 
-#, fuzzy
 #~ msgid ""
 #~ "The physical volume ${PARTITION} could not be removed from the selected "
 #~ "volume group."
@@ -11425,17 +11429,17 @@ msgstr "Sæt partitioner op og montér dem"
 #~ "Det fysiske bind ${PARTITION} kunne ikke fjernes fra den valgte "
 #~ "bindgruppe."
 
-#, fuzzy
 #~ msgid "Please select the logical volume to delete."
-#~ msgstr "Vælg det logiske bind, der skal slettes på ${VG}."
+#~ msgstr "Vælg det logiske bind, der skal slettes."
 
-#, fuzzy
+#~ msgid "in VG ${VG}"
+#~ msgstr "i BG ${VG}"
+
 #~ msgid "Error while initializing physical volume"
-#~ msgstr "Fejl under sletning af logisk bind"
+#~ msgstr "Fejl under initialisering af logisk bind"
 
-#, fuzzy
 #~ msgid "The physical volume ${PV} could not be initialized."
-#~ msgstr "Det logiske bin (${LV}) på ${VG} kunne ikke slettes."
+#~ msgstr "Det fysiske bind ${PV} kunne ikke initialiseres."
 
 #~ msgid "Erase entire disk and use LVM: ${DEVICE}"
 #~ msgstr "Slet hele disken og brug LVM: ${DEVICE}"
@@ -11637,9 +11641,8 @@ msgstr "Sæt partitioner op og montér dem"
 #~ msgid "missing"
 #~ msgstr "mangler"
 
-#, fuzzy
 #~ msgid "In use as physical volume for encrypted volume ${DEV}"
-#~ msgstr "fysisk bind til kryptering"
+#~ msgstr "I brug som fysisk bind for det krypterede bind ${DEV}"
 
 #~ msgid "Encryption package installation failure"
 #~ msgstr "Fejl under installation af krypteringspakke"
