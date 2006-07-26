@@ -1,0 +1,168 @@
+<!-- retain these comments for translator revision tracking -->
+<!-- original version: 35518 -->
+<!-- translated by Herbert Parentes  Fortes Neto (hpfn) 2006.02.05 -->
+<!-- reviewed by Felipe Augusto van de Wiel (faw) 2006.04.11 -->
+
+   <sect3 id="pkgsel">
+   <title>Selecionando e Instalando Programas</title>
+
+<para>
+
+Durante o processo de instalação, lhe será dada a oportunidade de selecionar
+programas adicionais para serem instalados. Ao invés de pegar pacotes
+individuais de programas em &num-of-distrib-pkgs; pacotes disponíveis, esse
+estágio do processo de instalação foca na seleção e instalação de coleções
+de programas pré-definidas para rapidamente configurar seu computador a 
+executar várias tarefas.
+
+</para><para>
+
+Então, você tem a habilidade de escolher <emphasis>tarefas
+(<quote>tasks</quote>)</emphasis> primeiro, e depois adicionar mais pacotes
+individuais.  Essas tarefas representam, de forma ampla, um número de
+diferentes serviços ou itens que você quer fazer com seu computador, como
+<quote>Ambiente Desktop</quote>, <quote>Servidor Web</quote>, ou
+<quote>Servidor de Impressão</quote><footnote>
+
+<para>
+
+Você deve ter isso definido no momento que esta lista for apresentada, o
+instalador está meramente invocando o programa <command>tasksel</command>. Ele
+pode ser executado em qualquer momento após a instalação para instalar (ou
+remover) mais pacotes, ou você pode usar uma ferramenta mais aprimorada
+como o <command>aptitude</command>.
+Se você estiver procurando por um pacote específico, após ter sido
+concluída a instalação, simplesmente execute 
+<userinput>aptitude install<replaceable>pacote</replaceable></userinput>, 
+onde <replaceable>pacote</replaceable> é o nome do pacote que você
+está procurando.
+
+</para>
+
+</footnote>. <xref linkend="tasksel-size-list"/> lista o espaço
+requerido para as tarefas disponíveis.
+
+</para><para>
+
+Uma vez que você tenha selecionado suas tarefas, selecione
+<guibutton>Ok</guibutton>. Neste momento, o
+<command>aptitude</command> irá instalar os pacotes que você escolheu.
+
+<note><para>
+
+Na interface de usuário padrão do instalador, você pode usar a barra de espaço
+para marcar/selecionar uma tarefa.
+
+</para></note>
+
+<note><para>
+
+Note que algumas tarefas podem estar pré-selecionadas, baseando-se nas
+características do computador em que está sendo feita a instalação. Se
+você discordar com essas seleções você pode desmarcar as tarefas. Você
+pode até mesmo optar por não instalar nenhuma tarefa neste momento.
+
+</para></note>
+
+</para><para>
+
+Cada pacote que você selecionar com o <command>tasksel</command> é baixado,
+desempacotado e então instalado pelos programas <command>apt-get</command> e
+<command>dpkg</command>. Caso um programa em particular necessite de mais
+informações do usuário, ele irá perguntar à você durante o processamento.
+
+</para>
+ <sect4 id="config-mta">
+ <title>Configurando Seu Agente de Transporte de Correio Eletrônico</title>
+
+<para>
+
+Hoje em dia, o email é parte muito importante da vida de várias pessoas, 
+então não é surpresa que o Debian deixe você configurar seu sistema de 
+correio eletrônico como sendo parte do processo de instalação. O agente de 
+transporte de correio eletrônico padrão no Debian é o <command>exim4</command>,
+o qual é relativamente pequeno, flexível, e fácil de aprender.
+
+</para><para>
+
+Você pode perguntar se isso é necessário mesmo que seu computador não 
+esteja conectado à nenhuma rede. Com uma resposta direta: Sim. E uma longa
+explicação: Algumas ferramentas do sistema (como o <command>cron</command>,
+<command>quota</command>, <command>aide</command>, &hellip;) podem enviar
+para você importantes notícias via correio eletrônico.
+
+</para><para>
+
+Assim, na primeira tela você terá uma lista de vários cenários comuns
+de um serviço de correio eletrônico. Escolha o que estiver mais de acordo
+com suas necessidades:
+
+</para>
+
+<variablelist>
+<varlistentry>
+<term>site internet</term>
+<listitem><para>
+
+Seu sistema está conectado a uma rede e seu email pode ser enviado e
+recebido diretamente usando o SMTP. Nas telas seguintes serão feitas perguntas
+básicas como o nome da sua máquina de correio eletrônico, ou uma lista de
+domínios para os quais você aceita ou transmite mensagens de correio eletrônico.
+
+</para></listitem>
+</varlistentry>
+
+<varlistentry>
+<term>mensagem de correio eletrônico enviada por <quote>smarthost</quote></term>
+<listitem><para>
+
+Neste cenário as mensagens de correio eletrônico enviadas são repassadas
+para outra máquina, chamada de <quote>smarthost</quote>, a qual faz
+o real trabalho para você. O smarthost geralmente também armazena mensagens de 
+correio eletrônico recebidas endereçadas ao seu computador, e assim você
+não precisa estar permanentemente online. Isso também significa que você tem
+que baixar seu email a partir do smarthost via um programa como o
+fetchmail. Essa opção é aconselhável para usuários de linha discada.
+
+</para></listitem>
+</varlistentry>
+
+<varlistentry>
+<term>apenas entrega local</term>
+<listitem><para>
+
+Seu sistema não faz parte de uma rede e as mensagens de correio eletrônico
+são enviadas e recebidas apenas entre usuários locais. Mesmo que você
+não planeje enviar nenhuma mensagem, essa opção é altamente recomendada,
+porque algumas ferramentas do sistema podem enviar para você vários alertas
+de tempos em tempos (e.g. como <quote>Cota de disco excedida</quote>). Essa
+opção também é conveniente para usuários novos, porque não faz mais perguntas.
+
+</para></listitem>
+</varlistentry>
+
+<varlistentry>
+<term>não configurar por enquanto</term>
+<listitem><para>
+
+Escolha essa opção se você está totalmente convencido de que sabe o que está
+fazendo. Isso irá deixar você com um sistema de correio eletrônico sem 
+configuração &mdash; até que você faça a configuração, você não 
+poderá enviar ou receber qualquer mensagem de correio eletrônico e assim 
+pode perder algumas mensagens importantes das ferramentas do sistema.
+
+</para></listitem>
+</varlistentry>
+</variablelist>
+
+<para>
+
+Se nenhum desses cenários satisfaz suas necessidades, ou se você precisa
+de uma configuração mais detalhada, será preciso editar os arquivos de
+configuração no diretório <filename>/etc/exim4</filename> após a completar
+a instalação. Mais informações sobre o <command>exim4</command> podem ser
+encontradas em <filename>/usr/share/doc/exim4</filename>.
+
+</para>
+ </sect4>
+   </sect3>

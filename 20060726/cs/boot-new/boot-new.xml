@@ -1,0 +1,395 @@
+<!-- $Id$ -->
+<!-- original version: 39380 -->
+
+<chapter id="boot-new">
+ <title>Zavedení vašeho nového systému</title>
+
+ <sect1 id="base-boot">
+ <title>Okamžik pravdy</title>
+<para>
+
+Teď přichází chvíle <emphasis>zahoření</emphasis> systému.
+
+</para><para>
+
+Jestliže Debian z disku nenaběhne, zkuste to znovu z původního
+instalačního média, nebo založte do mechaniky svou vlastní zaváděcí
+disketu (pokud nějakou máte) a restartujte počítač. Při startu budete
+pravděpodobně muset zadat nějaké parametry, například
+<userinput>root=<replaceable>kořen</replaceable></userinput>, kde
+<replaceable>kořen</replaceable> je vaše kořenová oblast
+(např. <filename>/dev/sda1</filename>). Alternativně si můžete
+přečíst část <xref linkend="rescue"/> a použít záchranný režim
+zabudovaný přímo v instalačním systému.
+
+</para>
+
+  <sect2 arch="m68k">
+  <title>Zavádění BVME6000</title>
+<para>
+
+Jestliže provádíte bezdiskovou instalaci na systémech BVM nebo
+Motorola VMEbus, měli byste po natažení programu
+<command>tftplilo</command> z TFTP serveru zadat v promptu
+<prompt>LILO Boot:</prompt> jedno z následujících:
+
+<itemizedlist>
+<listitem><para>
+
+<userinput>b6000</userinput> &enterkey; pro start BVME 4000/6000
+
+</para></listitem><listitem><para>
+
+<userinput>b162</userinput> &enterkey; pro start MVME162
+
+</para></listitem><listitem><para>
+
+<userinput>b167</userinput> &enterkey; pro start MVME166/167
+
+</para></listitem>
+</itemizedlist>
+
+</para>
+   </sect2>
+
+  <sect2 arch="m68k">
+  <title>Zavádění na Macintoshích</title>
+
+<para>
+
+Přejděte do adresáře kde jsou instalační soubory a za držení klávesy
+<keycap>Command</keycap> spusťte zavaděč <command>Penguin</command>.
+V dialogovém okně <userinput>Settings</userinput> (<keycombo>
+<keycap>Command</keycap> <keycap>T</keycap> </keycombo>) najděte řádku
+s volbami jádra, která by měla vypadat nějak takto:
+<userinput>root=/dev/ram video=font:VGA8x16</userinput>.
+
+</para><para>
+
+Tuto řádku změňte na
+<userinput>root=/dev/<replaceable>yyyy</replaceable></userinput>, kde
+<replaceable>yyyy</replaceable> je linuxový název oblasti, kam jste
+nainstalovali systém (např. <filename>/dev/sda1</filename>). Parametr
+<userinput>video=font:VGA8x8</userinput> je vhodný pro uživatele
+s malými obrazovkami. Jádro by sice zvolilo hezčí font (6x11), ale
+ovladač konzole by s ním mohl zaseknout počítač. Proto je bezpečnější
+použít font 8x16 nebo 8x8, což můžete kdykoliv změnit.
+
+</para><para>
+
+Pokud nechcete, aby se GNU/Linux zaváděl při každém startu počítače,
+zrušte zatržení u položky <userinput>Auto Boot</userinput>. Příkazem
+<userinput>Save Settings As Default</userinput> uložíte nové nastavení
+do souboru.
+
+</para><para>
+
+Nyní můžete příkazem <userinput>Boot Now</userinput> (<keycombo>
+<keycap>Command</keycap> <keycap>B</keycap> </keycombo>) nastartovat
+svůj čerstvě nainstalovaný systém GNU/Linux.
+
+</para><para>
+
+Při zavádění systému by se měly objevit stejné zprávy jako při
+zavedení instalačního systému následované nějakými novými zprávami.
+
+</para>
+   </sect2>
+
+  <sect2 arch="powerpc">
+  <title><quote>OldWorld</quote> PowerMacy</title>
+<para>
+
+Pokud se při prvním startu po instalaci zastaví zavádění na výzvě
+<prompt>boot:</prompt>, zkuste napsat <userinput>Linux</userinput>
+a stisknout &enterkey;.  (Standardní konfigurace v souboru
+<filename>quik.conf</filename> se nazývá Linux. Všechny názvy
+definované v tomto souboru můžete zobrazit klávesou
+<keycap>Tab</keycap>.) Také můžete zkusit znovu zavést instalátor
+a ručně upravit soubor <filename>/target/etc/quik.conf</filename>
+(vytvořený krokem <quote>Nainstalovat quik na
+pevný disk</quote>). Chytré nápady pro práci
+s <command>quik</command>em jsou v <ulink
+url="&url-powerpc-quik-faq;"></ulink>.
+
+</para><para>
+
+Abyste se dostali zpět do MacOS bez resetování nvram, napište do
+promptu OpenFirmwaru <userinput>bye</userinput>. (Za předpokladu, že
+jste si MacOS ponechali).  Prompt OpenFirmwaru získáte podržením
+kláves <keycombo> <keycap>Command</keycap> <keycap>Option</keycap>
+<keycap>o</keycap> <keycap>f</keycap> </keycombo> během studeného
+startu počítače.  Pokud byste pro přechod do MacOS museli resetovat
+nvram k původním hodnotám, zmáčkněte během studeného startu počítače
+kombinaci <keycombo> <keycap>Command</keycap> <keycap>Option</keycap>
+<keycap>p</keycap> <keycap>r</keycap> </keycombo>.
+
+</para><para>
+
+Pokud chcete pro zavedení Debianu použít <command>BootX</command>,
+vyberte si ve složce <filename>Linux Kernels</filename> oblíbené
+jádro, odvyberte volbu s ramdiskem a přidejte kořenové zařízení
+odpovídající vaší instalaci (například
+<userinput>/dev/hda8</userinput>).
+
+</para>
+  </sect2>
+
+  <sect2 arch="powerpc">
+  <title><quote>NewWorld</quote> PowerMacy</title>
+<para>
+
+Na počítačích G4 a iBook se můžete podržením <keycap>Option</keycap>
+klávesy dostat do grafické obrazovky s tlačítkem pro každý zaveditelný
+operační systém. &debian; bude mít ikonu s tučňákem.
+
+</para><para>
+
+Jestliže jste si nechali nainstalovaný MacOS, může se stát, že vám
+v OpenFirmwaru změní proměnnou <envar>boot-device</envar> (zařízení,
+ze kterého se zavádí systém).  V takovém případě resetujte
+OpenFirmware na standardní hodnoty, což provedete držením kláves
+<keycombo> <keycap>Command</keycap> <keycap>Option</keycap>
+<keycap>p</keycap> <keycap>r</keycap> </keycombo> během studeného
+startu.
+
+</para><para>
+
+Všechna návěští definovaná v souboru <filename>yaboot.conf</filename>
+můžete zobrazit, pokud ve výzvě <prompt>boot:</prompt> stisknete
+klávesu <keycap>Tab</keycap>.
+
+</para><para>
+
+Resetování OpenFirmwaru na počítačích G3 nebo G4 způsobí, že se
+implicitně bude spouštět &debian;.  (Pokud jste správně rozdělili disk
+a první oblast je <quote>Apple_Bootstrap</quote>).
+Toto nemusí fungovat pokud máte &debian; na SCSI disku a MacOS na
+disku IDE. Potom musíte vstoupit do OpenFirmwaru a nastavit proměnnou
+<envar>boot-device</envar> sami (<command>ybin</command> to dělá
+automaticky).
+
+</para><para>
+
+Po prvním úspěšném zavedení Debianu byste měli do souboru
+<filename>/etc/yaboot.conf</filename> přidat další parametry &mdash;
+jako třeba duální zavádění. Aby se změny přenesly do zaváděcí oblasti,
+musíte po každé změně tohoto souboru spustit program
+<command>ybin</command>.  Více informací najdete
+v <ulink url="&url-powerpc-yaboot-faq;">yaboot HOWTO</ulink>.
+
+</para>
+  </sect2>
+ </sect1>
+
+ <sect1 id="mount-encrypted-volumes">
+ <title>Připojení zašifrovaných svazků</title>
+
+<para>
+
+Jestliže jste při instalaci vytvořili nějaké šifrované svazky a
+přiřadili jim přípojné body, budete během zavádění dotázáni na
+přístupovou frázi ke každému takovému svazku. Samotný postup se mezi
+dm-crypt a loop-AES mírně liší.
+
+</para>
+
+  <sect2 id="mount-loop-aes">
+  <title>loop-AES</title>
+
+<para>
+
+Pro oblasti zašifrované pomocí loop-AES uvidíte při připojování výzvu
+podobnou této:
+
+<informalexample><screen>
+Checking loop-encrypted file systems.
+Setting up /dev/loop<replaceable>X</replaceable> (/<replaceable>mountpoint</replaceable>)
+mount: going to use loop device /dev/loop<replaceable>X</replaceable>
+Password:
+</screen></informalexample>
+
+kde <replaceable>X</replaceable> je číslo loopback zařízení. Možná
+nyní přemýšlíte, pro <emphasis>který svazek</emphasis> vlastně frázi
+zadáváte. <filename>/home</filename>? <filename>/var</filename>?
+Samozřejmě pokud máte jen jediný šifrovaný svazek, tyto pochyby vás
+trápit nemusí a stačí zadat frázi, kterou jste použili při vytváření
+svazku. Pro ostatní se nyní hodí poznámky, které jste si poznačili
+jako poslední krok <xref linkend="partman-crypto"/>. Pokud jste si
+nepoznačili dvojice
+<filename>loop<replaceable>X</replaceable></filename> a přípojný bod,
+můžete tuto informaci najít v souboru <filename>/etc/fstab</filename>
+ve svém novém systému.
+
+</para><para>
+
+Během zadávání přístupové fráze se nezobrazují žádné znaky (ani
+hvězdičky). Buďte opatrní, máte pouze <emphasis>jediný
+pokus</emphasis>. Zadáte-li chybovou frázi, zobrazí se chybová hláška,
+zaváděcí proces tento svazek přeskočí a bude pokračovat připojením
+dalšího souborového systému. Přeskočený svazek můžete připojit později
+ručně, viz část <xref linkend="crypto-troubleshooting"/>.
+
+</para><para>
+
+Po zadání všech přístupových frází by mělo zavádění pokračovat jako
+obvykle.
+
+</para>
+  </sect2>
+  <sect2 id="mount-dm-crypt" condition="FIXME">
+  <title>dm-crypt</title>
+
+<para>
+
+</para>
+  </sect2>
+
+  <sect2 id="crypto-troubleshooting">
+  <title>Řešení problémů</title>
+
+<para>
+
+Pokud se některé šifrované svazky nepodařilo připojit kvůli chybné
+přístupové frázi, budete je muset připojit po zavedení systému
+ručně. Existuje několik možností.
+
+</para>
+
+<itemizedlist>
+<listitem><para>
+
+První případ se zabývá kořenovou oblastí. Pokud se tato nepřipojí,
+zavádění se zastaví a pro další pokus budete muset počítač
+restartovat.
+
+</para></listitem>
+<listitem><para>
+
+Nejjednodušší případ se týká datových oblastí typu
+<filename>/home</filename> nebo <filename>/srv</filename>.
+Po zavedení je stačí ručně připojit. Pro loop-AES stačí jediný krok:
+
+<informalexample><screen>
+<prompt>#</prompt> <userinput>mount <replaceable>/pripojny_bod</replaceable></userinput>
+<prompt>Password:</prompt>
+</screen></informalexample>
+
+kde <replaceable>/pripojny_bod</replaceable> byste měli nahradit za
+konkrétní adresář (např. <filename>/home</filename>). Jediný rozdíl
+oproti připojení běžné oblasti je, že budete dotázáni na přístupovou
+frázi.
+
+</para><para>
+
+U dm-crypt je připojení trošku složitější. Nejprve musíte
+zaregistrovat svazky do části jádra nazvané <application>device
+mapper</application>. Slouží k tomu příkaz
+
+<informalexample><screen>
+<prompt>#</prompt> <userinput>/etc/init.d/cryptdisks start</userinput>
+</screen></informalexample>
+
+který prohledá všechny svazky zmíněné v souboru
+<filename>/etc/crypttab</filename> a po zadání správných přístupových
+frází vytvoří příslušná zařízení v adresáři <filename>/dev</filename>.
+(Již zaregistrované svazky budu přeskočeny, takže můžete příkaz
+spustit bez obav i několikrát po sobě.) Po úspěšné registraci můžete
+svazky připojit tradičním
+
+<informalexample><screen>
+<prompt>#</prompt> <userinput>mount <replaceable>/pripojny_bod</replaceable></userinput>
+</screen></informalexample>
+
+</para></listitem>
+<listitem><para>
+
+Pokud se nepodařilo připojit svazky obsahující nekritické části
+systému (např. <filename>/usr</filename>
+nebo <filename>/var</filename>), systém by se měl stále zavést a měli
+byste mít možnost připojit svazky ručně stejně jako v předchozím
+případě. Navíc byste ale měli nastartovat (resp. restartovat) služby,
+které se spouští ve vašem výchozím <firstterm>runlevel</firstterm>u,
+protože je velmi pravděpodobné, že se nespustily. Nejjednodušší cestou
+je asi přepnutí do prvního runlevelu a zpět příkazem
+
+<informalexample><screen>
+<prompt>#</prompt> <userinput>init 1</userinput>
+</screen></informalexample>
+
+Až budete požádáni o rootovo heslo do jednouživatelského režimu,
+stiskněte jen kombinaci
+<keycombo> <keycap>Control</keycap> <keycap>D</keycap> </keycombo>,
+což vás přepne zpět do výchozího runlevelu.
+
+</para></listitem>
+</itemizedlist>
+
+  </sect2>
+ </sect1>
+
+
+ <sect1 id="login">
+ <title>Přihlášení do systému</title>
+
+<para>
+
+Po zavedení Debianu se setkáte s výzvou k přihlášení do systému
+(tzv. <firstterm>login prompt</firstterm>). Přihlaste se pod svým
+osobním účtem, který jste si vytvořili během instalace. Systém je
+připraven k používání.
+
+</para><para>
+
+Pokud jste začínající uživatel, asi si budete chtít prohlédnout
+dokumentaci dostupnou v systému. V současné době existuje několik
+dokumentačních systémů, ale pracuje se na jejich sjednocení.
+
+</para><para>
+
+Dokumentace vztahující se k instalovaným programům je v adresáři
+<filename>/usr/share/doc/</filename> v podadresáři se jménem programu.
+Například příručka pro použití programu <command>apt</command> (APT
+User's Guide) je v souboru
+<filename>/usr/share/doc/apt/guide.html/index.html</filename>.
+
+</para><para>
+
+<filename>/usr/share/doc/</filename> navíc obsahuje několik
+speciálních adresářů. Například linuxové návody <quote>jak na
+to</quote> (HOWTO) jsou v adresáři
+<filename>/usr/share/doc/HOWTO/en-txt/</filename>.
+Nainstalujete-li balík <command>dhelp</command>, získáte soubor
+<filename>/usr/share/doc/HTML/index.html</filename>, který obsahuje
+seznam veškeré instalované dokumentace.
+
+</para><para>
+
+Tyto dokumenty můžete jednoduše prohlížet tak, že vstoupíte do
+adresáře s dokumentací (<userinput>cd /usr/share/doc/</userinput>)
+a napíšete <userinput>lynx .</userinput> (tečka znamená aktuální
+adresář).
+
+</para><para>
+
+Dokumentaci k příkazu můžete získat, když napíšete na příkazovém řádku
+<userinput>info <replaceable>prikaz</replaceable></userinput> nebo
+<userinput>man <replaceable>prikaz</replaceable></userinput>. Zkrácený
+návod k použití příkazu obvykle získáte, když za příkaz přidáte
+parametr <userinput>--help</userinput>. Jestliže je výstup delší než
+obrazovka, napište na konec příkazu ještě
+<userinput>| more</userinput> (výstup se pak zastaví po každé plné
+obrazovce). Všechny příkazy začínající určitým řetězcem zobrazíte tak,
+že napíšete řetězec a dvakrát stisknete klávesu <keycap>Tab</keycap>.
+Nápovědu k povelům shellu získáte příkazem
+<userinput>help</userinput>.
+
+</para><para>
+
+Obsáhlejší úvod do Debianu a GNU/Linuxu najdete (anglicky) v
+<filename>/usr/share/doc/debian-guide/html/noframes/index.html</filename>.
+
+</para>
+
+ </sect1>
+</chapter>

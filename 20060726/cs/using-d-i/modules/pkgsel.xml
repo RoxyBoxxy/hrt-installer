@@ -1,0 +1,160 @@
+<!-- $Id$ -->
+<!-- original version: 35518 -->
+
+  <sect3 id="pkgsel">
+  <title>Výběr a instalace softwaru</title>
+
+<para>
+
+Během instalace vám bude nabídnuta možnost nainstalovat si další
+software. V této fázi sice máte k dispozici &num-of-distrib-pkgs;
+dostupných balíků, ale protože jen jejich projití zabere hodně
+(tím myslíme opravdu hodně) času, nabízí &d-i; instalaci
+připravených softwarových úloh, které umožní rychlé přizpůsobení
+počítače pro danou úlohu.
+
+</para><para>
+
+Nejprve tedy můžete vybírat <emphasis>úlohy</emphasis> a teprve poté
+doinstalovat konkrétní balíky. <emphasis>Úlohy</emphasis> představují
+různé činnosti, které byste s počítačem mohli provádět. Například
+<quote>desktopové prostředí</quote>, <quote>webový server</quote> nebo
+<quote>tiskový server</quote>.<footnote><para>
+
+Protože je &d-i; velmi líný, tak si na pomoc volá jiné
+aplikace. Konkrétně pro zobrazení seznamu úloh spustí program
+<command>tasksel</command>, který můžete spustit i samostatně kdykoliv
+po instalaci a (od)instalovat si tak další balíky. Je-li pro vaše
+potřeby výběr úloh moc hrubý, pak poslouží program
+<command>aptitude</command>. Například pro instalaci konkrétního
+balíku stačí spustit příkaz <userinput>aptitude install
+<replaceable>balík</replaceable></userinput>, kde
+<replaceable>balík</replaceable> je jméno balíku, který chcete
+nainstalovat.
+
+</para></footnote>. Velikost jednotlivých úloh zmiňuje kapitola <xref
+linkend="tasksel-size-list"/>.
+
+</para><para>
+
+Až skončíte s výběrem, vyberte tlačítko <guibutton>Ok</guibutton>.
+Tím se na pozadí spustí <command>aptitude</command>, která nainstaluje
+vybrané balíky.
+
+<note><para>
+
+Ve výchozím prostředí instalátoru se úlohy (od)vybírají klávesou
+<keycap>mezera</keycap>.
+
+</para></note><note><para>
+
+Podle odhadnutého typu počítače mohou být některé úlohy
+předvybrány. (Např. pokud si &d-i; myslí, že instalujete notebook,
+předvybere úlohu <quote>notebook</quote>.) Nesouhlasíte-li s výběrem,
+můžete nechtěné úlohy zase odebrat. Dokonce nemusíte instalovat žádnou
+úlohu.
+
+</para></note></para><para>
+
+Programy <command>apt-get</command> a <command>dpkg</command> pak
+zajistí stažení, rozbalení a instalaci všech balíků obsažených ve
+zvolených úlohách. Pokud instalace balíku vyžaduje od uživatele nějaký
+vstup, budete dotázáni stejně jako třeba při vytváření nového
+uživatele.
+
+</para>
+
+   <sect4 id="config-mta">
+   <title>Nastavení poštovního serveru</title>
+
+<para>
+
+V dnešní době je elektronická pošta důležitou součástí našich životů,
+takže není žádným překvapením, že Debian vám nabídne nastavení
+poštovního serveru rovnou při instalaci systému. Standardním poštovním
+serverem v Debianu je <command>exim4</command>, protože je jednoduchý
+na pochopení a zároveň je dostatečně pružný, aby vyhověl i náročnějším
+požadavkům.
+
+</para><para>
+
+Pokud se ptáte, zda je poštovní server potřeba i pro nezasíťovaný
+počítač, odpověď zní <quote>ano</quote>. Některé systémové programy
+(třeba <command>cron</command>, <command>quota</command>,
+<command>aide</command>, &hellip;) totiž mohou elektronickou poštou
+zasílat uživatelům důležitá upozornění.
+
+</para><para>
+
+První obrazovka vám nabídne několik typických scénářů použití. Vyberte
+z nich ten, který nejvíce odpovídá zamýšlenému použití:
+
+</para>
+
+<variablelist>
+<varlistentry>
+<term>internetový počítač</term>
+<listitem><para>
+
+Váš systém je připojen k počítačové síti a pošta je odesílána/příjmána
+přímo protokolem SMTP. Na následujících obrazovkách budete dotázáni
+několik základních údajů, jako je poštovní jméno nebo seznam domén,
+pro které chcete přijímat nebo předávat poštu.
+
+</para></listitem>
+</varlistentry>
+
+<varlistentry>
+<term>odesílání pošty přes chytrý počítač</term>
+<listitem><para>
+
+Podle tohoto scénáře je veškerá odchozí pošta posílána
+<quote>chytrému</quote> počítači, který ji za vás rozešle. Chytrý
+počítač také často ukládá vaši příchozí poštu, tudíž nemusíte být
+neustále připojeni. To pak znamená, že poštu musíte číst na chytrém
+počítači, nebo ji z něj stahovat programem typu
+<command>fetchmail</command>. Tato volba je vhodná pro uživatele
+s vytáčeným připojením.
+
+</para></listitem>
+</varlistentry>
+
+<varlistentry>
+<term>pouze lokální pošta</term>
+<listitem><para>
+
+Systém není připojen k síti a pošta se rozesílá pouze mezi lokálními
+uživateli. Tato volba je důrazně doporučena i když neplánujete
+posílání žádných zpráv, protože různé systémové nástroje mohou
+elektronickou poštou zasílat nejrůznější výstrahy a varování
+(například oblíbené <quote>Překročili jste diskovou kvótu</quote>).
+Tato volba je také vhodná pro nové uživatele, protože se neptá žádné
+další otázky.
+
+</para></listitem>
+</varlistentry>
+
+<varlistentry>
+<term>žádné nastavení</term>
+<listitem><para>
+
+Tuto možnost vyberte jedině pokud přesně víte, co děláte, protože
+dokud poštovní systém nenastavíte, nebudete moci přijímat a odesílat
+žádnou poštu a můžete tak přijít o důležité zprávy od systémových
+programů.
+
+</para></listitem>
+</varlistentry>
+</variablelist>
+
+<para>
+
+Jestliže vám nevyhovuje žádný z nabízených scénářů, nebo pokud
+potřebujete jemnější nastavení, budete muset ručně upravit
+konfigurační soubory v adresáři <filename>/etc/exim4</filename>.
+Další informace o <command>exim4</command> naleznete v adresáři
+<filename>/usr/share/doc/exim4</filename>.
+
+</para>
+   </sect4>
+  </sect3>

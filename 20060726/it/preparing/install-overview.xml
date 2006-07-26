@@ -1,0 +1,306 @@
+<!-- retain these comments for translator revision tracking -->
+<!-- original version: 33719 -->
+
+
+ <sect1 id="install-overview">
+ <!-- <title>Overview of the Installation Process</title> -->
+ <title>Panoramica del processo d'installazione</title>
+<para>
+
+<!--
+First, just a note about re-installations. With Debian, a
+circumstance that will require a complete re-installation of your
+system is very rare; perhaps mechanical failure of the hard disk would
+be the most common case.
+-->
+
+Prima di tutto una nota sulle reinstallazioni. Con Debian, una circostanza
+in cui sia necessaria una completa reinstallazione del sistema è estremamente
+rara; forse un problema meccanico dei dischi è la causa più frequente.
+
+</para><para>
+
+<!--
+Many common operating systems may require a complete installation to
+be performed when critical failures take place or for upgrades to new
+OS versions. Even if a completely new installation isn't required,
+often the programs you use must be re-installed to operate properly in
+the new OS.
+-->
+
+Molti dei comuni sistemi operativi potrebbero richiedere la completa
+installazione quando si verificano dei problemi critici o per fare un
+aggiornamento a una nuova versione. A questo si deve aggiungere che si
+effettua una nuova installazione è necessario anche re-installare i
+programmi in modo che operino correttamente con il nuovo SO.
+
+</para><para>
+
+<!--
+Under &debian;, it is much more likely that your OS can be repaired
+rather than replaced if things go wrong. Upgrades never require a
+wholesale installation; you can always upgrade in-place. And the
+programs are almost always compatible with successive OS releases.  If
+a new program version requires newer supporting software, the Debian
+packaging system ensures that all the necessary software is
+automatically identified and installed. The point is, much effort has
+been put into avoiding the need for re-installation, so think of it as
+your very last option. The installer is <emphasis>not</emphasis>
+designed to re-install over an existing system.
+-->
+
+Con &debian; è molto più probabile che il SO possa essere riparato anziché
+essere reinstallato nel caso si verifichino dei problemi. Gli aggiornamenti
+non richiedono mai un'installazione completa, è sempre possibile effettuare
+l'aggiornamento senza toccare l'intera installazione. Quando un nuovo
+programma richiede delle versioni più recenti del software di supporto
+rispetto a quelle installate, il sistema Debian di gestione dei pacchetti
+assicura che tutto il software di supporto sia identificato e installato. È
+stato fatto molto lavoro per evitare la necessità di reinstallare il sistema
+quindi deve essere ritenuta come l'ultima risorsa disponibile. L'installatore
+<emphasis>non</emphasis> è stato progettato per la reinstallazione su un
+sistema esistente.
+
+</para><para>
+
+<!--
+Here's a road map for the steps you will take during the installation
+process.
+-->
+
+Ecco un sommario dei passi che saranno compiuti durante l'installazione.
+
+</para>
+
+<orderedlist>
+<listitem><para>
+
+<!--
+Back up any existing data or documents on the hard disk where you
+plan to install.
+-->
+
+Backup di tutti i dati e documenti presenti sul disco fisso su
+cui si vuole fare l'installazione.
+
+</para></listitem>
+<listitem><para>
+
+<!--
+Gather information about your computer and any needed documentation,
+before starting the installation.
+-->
+
+Raccolta delle informazioni sul proprio computer e di tutte le informazioni
+necessarie prima di iniziare l'installazione.
+
+</para></listitem>
+<listitem><para>
+
+<!--
+Create partition-able space for Debian on your hard disk.
+-->
+
+Creazione dello spazio partizionabile per Debian sul disco fisso.
+
+</para></listitem>
+<listitem><para>
+
+<!--
+Locate and/or download the installer software and any specialized
+driver files your machine requires (except Debian CD users).
+-->
+
+Localizzare e/o scaricare l'installatore e tutti driver speciali necessari
+per la propria macchina (tranne per coloro che usano i CD Debian).
+
+</para></listitem>
+<listitem><para>
+
+<!--
+Set up boot tapes/floppies/USB sticks, or place boot files (most Debian
+CD users can boot from one of the CDs).
+-->
+
+Preparazione di nastri/dischetti/penne USB per l'avvio, oppure copiare i file
+per l'avvio (la maggior parte degli utenti che usano i CD Debian può fare
+l'avvio da CD).
+
+</para></listitem>
+<listitem><para>
+
+<!--
+Boot the installation system.
+-->
+
+Avvio del sistema d'installazione.
+
+</para></listitem>
+<listitem arch="not-s390"><para>
+
+<!--
+Select installation language.
+-->
+
+Scelta della lingua dell'installazione.
+
+</para></listitem>
+<listitem arch="not-s390"><para>
+
+<!--
+Activate the ethernet network connection, if available.
+-->
+
+Se disponibile, attivazione della connessione alla rete ethernet.
+
+</para></listitem>
+
+<listitem arch="s390"><para>
+
+<!--
+Configure one network interface.
+-->
+
+Configurazione di un'interfaccia di rete.
+
+</para></listitem>
+<listitem arch="s390"><para>
+
+<!--
+Open a ssh connection to the new system.
+-->
+
+Apertura di una connessione ssh al nuovo sistema.
+
+</para></listitem>
+<listitem arch="s390"><para>
+
+<!--
+Attach one or more DASDs (Direct Access Storage Device).
+-->
+
+Collegamento di uno o più DASD (Direct Access Storage Device).
+
+</para></listitem>
+
+<listitem><para>
+
+<!--
+Create and mount the partitions on which Debian will be installed.
+-->
+
+Creazione e montaggio delle partizioni su cui si installerà Debian.
+
+</para></listitem>
+<listitem><para>
+
+<!--
+Watch the automatic download/install/setup of the
+<firstterm>base system</firstterm>.
+-->
+
+Attendere lo scaricamento, l'installazione e la configurazione del
+<firstterm>sistema di base</firstterm>.
+
+</para></listitem>
+<listitem><para>
+
+<!--
+Install a <firstterm>boot loader</firstterm>
+which can start up &debian; and/or your existing system.
+-->
+
+Installazione di un <firstterm>boot loader</firstterm> per avviare &debian; ed
+eventuali altri sistemi operativi.
+
+</para></listitem>
+<listitem><para>
+
+<!--
+Load the newly installed system for the first time.
+-->
+
+Avviare per la prima volta il sistema appena installato.
+
+</para></listitem>
+</orderedlist>
+
+<para>
+
+<!--
+If you have problems during the installation, it helps to know which
+packages are involved in which steps. Introducing the leading software
+actors in this installation drama:
+-->
+
+Nel caso si verifichino degli errori durante l'installazione è utile
+conoscere quali pacchetti sono coinvolti in ciascuna fase. Introduciamo
+gli attori principali dello spettacolo <quote>installazione</quote>:
+
+</para><para>
+
+<!--
+The installer software, <classname>debian-installer</classname>, is
+the primary concern of this manual. It detects hardware and loads
+appropriate drivers, uses <classname>dhcp-client</classname> to set up the
+network connection, and runs <classname>debootstrap</classname> to install
+the base system packages. Many more actors play smaller parts in this process,
+but <classname>debian-installer</classname> has completed its task when
+you load the new system for the first time.
+-->
+
+Il software d'installazione, <classname>debian-installer</classname>, è il
+protagonista principale di questo manuale. Si occupa del riconoscimento
+dell'hardware e del caricamento dei driver corretti, tramite
+<classname>dhcp-client</classname> configura la connessione di rete e infine
+esegue <classname>debootstrap</classname> per l'installazione del sistema di
+base. Al processo d'installazione partecipano molti altri attori ma hanno
+parti decisamente minori, il <classname>debian-installer</classname> finisce
+il suo lavoro quando il nuovo sistema viene riavviato per la prima volta.
+
+</para><para>
+
+<!--
+To tune the system to your needs, <classname>tasksel</classname> allows you
+to choose to install various predefined bundles of software like a Web
+server or a Desktop environment.
+-->
+
+Per adattare il sistema alle proprie necessità si può usare
+<classname>tasksel</classname> che permette di selezionare gruppi predefiniti
+di programmi da installare come un server web o un ambiente desktop.
+
+</para><para>
+
+<!--
+When <classname>debian-installer</classname> finishes, before the
+first system load, you have only a very basic command line driven
+system. The graphical interface which displays windows on your monitor
+will not be installed unless you select it with <classname>tasksel</classname>.
+It's optional because many &debian; systems are servers which don't really
+have any need for a graphical user interface to do their job.
+-->
+
+Quando il <classname>debian-installer</classname> finisce il proprio lavoro,
+prima del primo caricamento del sistema, è disponibile solo un sistema a
+riga di comando con funzioni molto limitate. L'interfaccia grafica, che
+mostra le finestre sul proprio monitor non viene installata a meno che non
+la si selezioni con <classname>tasksel</classname>. Deve essere considerata
+come un optional dato che molti dei sistemi &debian; sono dei server e non
+hanno bisogno di una interfaccia utente grafica per il proprio lavoro.
+
+</para><para arch="not-s390">
+
+<!--
+Just be aware that the X system is completely separate from
+<classname>debian-installer</classname>, and in fact is much more
+complicated. Installation and trouble shooting of the X window
+installation is not within the scope of this manual.
+-->
+
+Notare che il sistema X è completamente separato dal
+<classname>debian-installer</classname>, quindi l'installazione e la
+risoluzione dei problemi per X Window non sono trattati in questo manuale.
+
+</para>
+ </sect1>

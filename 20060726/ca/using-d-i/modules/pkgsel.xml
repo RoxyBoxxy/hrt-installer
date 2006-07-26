@@ -1,0 +1,161 @@
+<!-- retain these comments for translator revision tracking -->
+<!-- original version: 35518 -->
+
+   <sect3 id="pkgsel">
+   <title>Seleccionant i instal·lant programari</title>
+
+<para>
+
+Al llarg del procés d'instal·lació, tindreu l'oportunitat de seleccionar
+programari addicional per instal·lar. En comptes d'escollir paquets de
+programari individualment dels &num-of-distrib-pkgs; paquets disponibles,
+aquesta fase del procés d'instal·lació es centra en seleccionar i
+instal·lar col·leccions predefinides de programes per configurar de forma
+ràpida el vostre ordinador per fer tasques diverses.
+
+</para><para>
+
+Així, primer tindreu la possibilitat d'escollir les
+<emphasis>tasques</emphasis>, i afegir després més paquets de
+forma individual. Aquestes tasques representen de forma aproximada un
+nombre de feines o coses diferents que fer amb el vostre ordinador, com
+<quote>Entorn d'escriptori</quote>, <quote>Servidor Web</quote> o
+<quote>Servidor d'impressió</quote><footnote>
+
+<para>
+
+Hauríeu de saber que per mostrar aquesta llista, l'instal·lador tan
+sols executa el programa <command>tasksel</command>. Es pot executar
+en qualsevol moment desprès de la instal·lació per instal·lar (o esborrar)
+més paquets, o podeu utilitzar eines més fines com el
+<command>aptitude</command>. Si esteu buscant un paquet específic,
+senzillament executeu <userinput>aptitude install
+<replaceable>paquet</replaceable></userinput>, on
+<replaceable>paquet</replaceable> és el nom del paquet que esteu buscant.
+
+</para>
+
+</footnote>. <xref linkend="tasksel-size-list"/> llista els requeriments
+d'espai per les tasques disponibles.
+
+</para><para>
+
+Una vegada heu seleccionat les vostres tasques, pitgeu
+<guibutton>Ok</guibutton>. En aquest punt, l'<command>aptitude</command>
+instal·larà els paquets que heu seleccionat.
+
+<note><para>
+A la interfície d'usuari estàndard de l'instal·lador, podeu utilitzar la
+barra espaiadora per canviar la selecció d'una tasca.
+
+</para></note>
+
+<note><para>
+
+Adoneu-vos que algunes tasques poden estar preseleccionades basant-se en les
+característiques del ordinador on esteu instal·lant. Si no esteu d'acord amb
+aquestes seleccions, podeu deseleccionar les tasques. Podeu inclús optar per
+no instal·lar cap tasca en aquest punt.
+
+</para></note>
+
+</para><para>
+
+Cada paquet que seleccioneu amb el <command>tasksel</command> es descarregarà,
+descomprimirà i instal·larà per ordre amb l'<command>apt-get</command> i el
+<command>dpkg</command>. Si un programa en concret necessita més informació
+del usuari, la demanarà al llarg d'aquest procés.
+
+</para>
+ <sect4 id="config-mta">
+ <title>Configurant el vostre agent de transport de correu</title>
+
+<para>
+
+Avui, el correu és una part molt important de la vida de moltes persones, així
+que no es sorprenent que Debian permeta configurar el vostre sistema de correu
+correcte com a part del procés d'instal·lació. L'agent de transport de correu
+estàndard a Debian és <command>exim4</command>, que és relativament menut,
+flexible, i fàcil d'aprendre.
+
+</para><para>
+
+Podeu preguntar-vos si es necessita inclús, si el vostre ordinador no està
+connectat a cap xarxa. La resposta curta, és: Sí. La explicació llarga:
+algunes utilitats del sistema (com el <command>cron</command>,
+<command>quota</command>, <command>aide</command>, &hellip;) podrien
+enviar-vos avisos importants per correu.
+
+</para><para>
+
+Així a la primera pantalla se us presentarà amb alguns escenaris de correu
+comuns. Escolliu el que estigui més a prop de les vostre necessitats:
+
+</para>
+
+<variablelist>
+<varlistentry>
+<term>lloc Internet</term>
+<listitem><para>
+
+El vostre sistema està connectat a una xarxa i el vostre correu s'envia i
+rep directament utilitzant SMTP. A les pantalles següents se us demanarà
+algunes preguntes bàsiques, com el nom del correu de la màquina, o una
+llista dels dominis des dels quals accepteu o repetiu correu.
+
+</para></listitem>
+</varlistentry>
+
+<varlistentry>
+<term>enviament de correu a través d'un smarthost</term>
+<listitem><para>
+
+En aquesta situació el vostre correu sortint s'envia a un altra màquina,
+anomenada <quote>smarthost</quote>, que fa la feina per vosaltres.
+El smarthost també emmagatzema el vostre correu entrant dirigit al vostre
+ordinador, així que no heu d'estar permanentment connectats. Açò també
+significa que heu de descarregar el vostre correu des del smarthost amb
+programes com el fetchmail. Aquesta és una opció apropiada per usuaris
+de marcatge directe.
+
+</para></listitem>
+</varlistentry>
+
+<varlistentry>
+<term>repartiment de tan sols el correu local</term>
+<listitem><para>
+
+El vostre sistema no està a una xarxa i tan sols s'envia o rep correu
+entre usuaris locals. Inclús si no planegeu enviar cap missatge, aquesta
+opció és molt recomanada, ja que algunes utilitats del sistema podrien
+enviar-vos algunes alertes de tant en tant (p.e. el volgut <quote>Quota de
+Disc superada</quote>). Aquesta opció és també per nous usuaris, ja que no
+fa cap altra pregunta.
+
+</para></listitem>
+</varlistentry>
+
+<varlistentry>
+<term>no fer cap configuració en aquest moment</term>
+<listitem><para>
+
+Escolliu aquesta opció si esteu convençuts que sabeu el que esteu fent.
+Aquesta opció us deixarà amb el sistema de correu sense configurar &mdash;
+fins que el configureu, non podreu enviar ni rebre cap correu i podeu
+perdre missatges importants de les vostres utilitats del sistema.
+
+</para></listitem>
+</varlistentry>
+</variablelist>
+
+<para>
+
+Si cap dels escenaris s'adapta a les vostres necessitats, o si necessiteu
+una configuració més fina, necessitareu editar els fitxers de configuració
+que són al directori <filename>/etc/exim4</filename> desprès de completar
+la instal·lació. Podeu trobar més informació del <command>exim4</command> a
+<filename>/usr/share/doc/exim4</filename>.
+
+</para>
+ </sect4>
+   </sect3>

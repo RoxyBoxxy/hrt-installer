@@ -1,0 +1,282 @@
+<!-- $Id$ -->
+<!-- original version: 38231 -->
+
+ <sect1 id="boot-troubleshooting">
+ <title>Problémy s instalačním systémem</title>
+<para>
+</para>
+
+  <sect2 condition="supports-floppy-boot" id="unreliable-floppies">
+  <title>Spolehlivost disket</title>
+
+<para>
+
+Pro lidi, kteří instalují Debian z disket, bývá největším problémem
+spolehlivost těchto médií.
+
+</para><para>
+
+Nejhorší problémy bývají se zaváděcí disketou, poněvadž tuto disketu
+čte BIOS ještě před zavedením Linuxu. BIOS nedokáže číst disketu tak
+spolehlivě jako linuxový ovladač, a pokud dojde k chybnému načtení dat,
+může se čtení <quote>jen tak</quote> zastavit bez vypsání chybového
+hlášení. K chybnému čtení může samozřejmě dojít i u disket s ovladači
+a instalačním systémem, což se, na rozdíl od zaváděcí diskety, projeví
+záplavou hlášení o V/V chybách.
+
+</para><para>
+
+Pokud se vám instalace zasekne vždy na stejné disketě, první věc,
+kterou byste měli udělat, je znovu stáhnout obraz diskety a zapsat
+jej na <emphasis>jinou</emphasis> disketu. Přeformátování původní
+diskety nemusí vést k úspěchu, ani když se po formátování vypíše, že
+operace proběhla bez problémů. Někdy je užitečné zkusit nahrát
+diskety na jiném počítači.
+
+</para><para>
+
+Jeden z uživatelů napsal, že se mu podařilo vytvořit bezchybnou
+zaváděcí disketu až na <emphasis>třetí</emphasis> takový pokus.
+
+</para><para>
+
+Podle dalších uživatelů může systém úspěšně naběhnout až na několikátý
+pokus při čtení ze stejné diskety. Příčinou jsou nespolehlivé
+disketové jednotky nebo chyby ve firmwaru.
+
+</para>
+  </sect2>
+
+  <sect2><title>Zaváděcí konfigurace</title>
+
+<para>
+
+Pokud se jádro zasekne během zavádění, nerozezná připojená zařízení,
+nebo disky nejsou korektně rozpoznány, v prvé řadě zkontrolujte
+parametry jádra, kterými se zabývá <xref linkend="boot-parms"/>.
+
+</para><para>
+
+Jestliže používáte vlastní jádro, ujistěte se, že jste v nastavení
+jádra povolili možnost <userinput>CONFIG_DEVFS</userinput>.
+Instalační systém totiž tuto volbou vyžaduje.
+
+</para><para>
+
+Často pomůže, pokud z počítače vyjmete přídavná zařízení a
+znovu zkusíte zavést systém. <phrase arch="i386">Obzvláště
+problematické mohou být interní modemy, zvukové karty a zařízení
+Plug-n-Play.</phrase>
+
+</para><para>
+
+Pokud máte ve svém počítači více než 512MB paměti a instalační systém
+se v průběhu zavádění jádra zasekne, zkuste omezit viditelnou paměť
+zaváděcím parametrem <userinput>mem=512m</userinput>.
+
+</para>
+  </sect2>
+
+  <sect2 arch="i386" id="i386-boot-problems">
+  <title>Běžné instalační problémy na &arch-title;</title>
+<para>
+
+V praxi se můžete potkat s instalačními problémy, které lze vyřešit,
+nebo je aspoň obejít, zadáním určitých zaváděcích parametrů
+instalačnímu programu.
+
+</para><para>
+
+Některé systémy mají disketové mechaniky s invertovanými DCL. Pokud
+při čtení z mechaniky zaznamenáte chyby a přitom jste si jisti, že
+disketa je dobrá, zkuste parametr
+<userinput>floppy=thinkpad</userinput>.
+
+</para><para>
+
+Na některých systémech jako např. IBM PS/1 nebo ValuePoint, které
+používají řadiče disků ST-506, asi nebude řadič IDE rozpoznán
+korektně. Nejprve pokud možno vyzkoušejte zavést systém beze změny
+parametrů. Pokud nebude disk rozpoznán, zkuste zadat geometrii disku
+(počet cylindrů, hlav a sektorů) pomocí parametru:
+<userinput>hd=<replaceable>cylindry</replaceable>,<replaceable>hlavy</replaceable>,<replaceable>sektory</replaceable></userinput>.
+
+</para><para>
+
+Jestliže máte velmi starý počítač a jádro se zasekne po hlášce
+<computeroutput>Checking 'hlt' instruction...</computeroutput>, potom
+by mohl pomoci parametr <userinput>no-hlt</userinput>, kterým zakážete
+provádění tohoto testu.
+
+</para><para>
+
+Jestliže je obraz na obrazovce během zavádění jádra
+<quote>divný</quote>, jako třeba čistě bílý, naprosto černý, nebo se
+zobrazuje barevné <quote>smetí</quote>, máte problematickou grafickou
+kartu, která se neumí správně přepnout do grafického režimu. V takovém
+případě pomůže zaváděcí parametr
+<userinput>fb=false video=vga16:off</userinput>, kterým vypnete grafickou
+konzolu. Během instalace se však nezobrazí výzva pro výběr jazyka
+a celá instalace proběhne pouze v angličtině. Zaváděcí parametry
+popisuje <xref linkend="boot-parms"/>.
+
+</para>
+
+   <sect3>
+   <title>Systém zamrzne během konfigurování PCMCIA</title>
+<para>
+
+Některé modely notebooků firmy Dell jsou známé tím, že se zhroutí,
+když automatické rozpoznávání PCMCIA zařízení přistoupí na určité
+hardwarové adresy. Toto chování mohou vykazovat i některé notebooky
+jiných výrobců. Pokud se u vás tento problém projevuje a pro instalaci
+podporu PCMCIA nepotřebujete, můžete ji vypnout zaváděcím parametrem
+<userinput>hw-detect/start_pcmcia=false</userinput>. Služby PCMCIA
+můžete zprovoznit později po instalaci.
+
+</para><para>
+
+Alternativně můžete instalační program zavést v expertním režimu. Pak
+budete mimo jiné dotázáni na rozsah zdrojů, které váš hardware
+vyžaduje. Například pokud máte jeden z výše zmíněných Dellů, měli
+byste zde zadat <userinput>exclude port
+0x800-0x8ff</userinput>. Seznam obvyklých rozsahů se nachází například
+v <ulink
+url="http://pcmcia-cs.sourceforge.net/ftp/doc/PCMCIA-HOWTO-1.html#ss1.12">System
+resource settings section of the PCMCIA HOWTO</ulink>.
+Při zadávání rozsahů do instalačního programu vynechejte všechny
+čárky (pokud se v rozsazích nachází).
+
+</para>
+   </sect3>
+
+   <sect3 arch="i386">
+   <title>Systém zamrzne během nahrávání USB modulů</title>
+<para>
+
+Jádro se standardně snaží nahrát ovladače pro USB a konkrétně pro USB
+klávesnice, aby umožnilo instalaci uživatelům s nestandardními USB
+klávesnicemi. Bohužel existují porouchané USB systémy, na kterých se
+ovladač při nahrávání zasekne. Obejít je můžete tím, že problémový USB
+řadič deaktivujete v BIOSu základní desky. Jinou možností je zaváděcí
+parametr <userinput>debian-installer/probe/usb=false</userinput>,
+který zabrání zavedení USB modulů, i když je příslušný hardware
+nalezen.
+
+</para>
+   </sect3>
+  </sect2>
+
+  <sect2 id="kernel-msgs">
+  <title>Význam hlášek při zavádění jádra</title>
+
+<para>
+
+Během zavádění systému můžete vidět spoustu hlášení typu
+<computeroutput>can't find ...</computeroutput>,
+<computeroutput>... not present</computeroutput>,
+<computeroutput>can't initialize ...</computeroutput> nebo
+<computeroutput>this driver release depends on ...</computeroutput>.
+Většina těchto hlášení je neškodná.  Vy je vidíte proto, že jádro
+instalačního systému je přeloženo tak, aby mohlo běžet na počítačích s
+odlišnými hardwarovými konfiguracemi a mnoha různými periferními
+zařízeními. Samozřejmě že žádný počítač asi nebude mít všechna
+zařízení, tudíž systém nahlásí několik nenalezených zařízení. Také se
+může stát, že se zavádění na chvíli zastaví. To se stává při čekání na
+odpověď od zařízení, které v systému chybí. Pokud se vám zdá doba, za
+kterou systém naběhne, příliš dlouhá, můžete si později vytvořit
+vlastní jádro (viz <xref linkend="kernel-baking"/>).
+
+</para>
+  </sect2>
+
+
+  <sect2 id="problem-report">
+  <title><command>dbootstrap</command> &mdash; hlášení problému</title>
+<para>
+
+Jestliže se dostanete přes úvodní fázi zavedení systému, ale nemůžete
+instalaci dokončit, můžete použít menu <quote>Report a Problem</quote>
+(nahlášení chyby). Tato volba vám umožní uložit na disketu nebo
+zpřístupnit přes webové rozhraní chybové hlášky, stav systému a jiné
+užitečné informace, které vám mohou naznačit, v čem je problém a jak
+ho vyřešit. Tyto údaje nám také můžete poslat spolu s hlášením
+o chybě.
+
+</para><para>
+
+Další užitečné informace můžete najít během instalace v adresáři
+<filename>/var/log/</filename> a později v novém systému ve
+<filename>/var/log/installer/</filename>.
+
+</para>
+  </sect2>
+
+  <sect2 id="submit-bug">
+  <title>Pošlete nám zprávu o instalaci</title>
+<para>
+
+Pokud problém přetrvává, prosíme vás o zaslání zprávy o průběhu
+instalace. Zprávu o instalaci můžete zaslat i v případě, že vše
+proběhlo bez problémů &mdash; získáme tak přehled o nejrůznějších
+hardwarových konfiguracích.
+
+</para><para>
+
+Máte-li funkční systém s Debianem, je nejjednodušší zaslat zprávu
+pomocí balíčku <classname>reportbug</classname>. Nainstalujte si
+potřebné balíčky (<command>apt-get install installation-report
+reportbug</command>) a spusťte příkaz <command>reportbug
+installation-report</command>.
+
+</para><para>
+
+Při psaní, prosím, použijte následující
+šablonu, kterou pak zašlete jako hlášení o chybě vůči pseudobalíku
+<classname>installation-report</classname> na adresu
+<email>submit@bugs.debian.org</email>.
+
+<informalexample><screen>
+Package: installation-reports
+
+Boot method: <replaceable>&lt;Jak jste zavedli instalaci? CD? Disketa? Síť?&gt;</replaceable>
+Image version: <replaceable>&lt;Kdy a odkud jste stáhli obraz(y)&gt;</replaceable>
+Date: <replaceable>&lt;Datum a čas instalace&gt;</replaceable>
+
+Machine: <replaceable>&lt;Popis počítače (např. IBM Thinkpad T41)&gt;</replaceable>
+Processor:
+Memory:
+Partitions: <replaceable>&lt;Výstup příkazu df -Tl;&gt;</replaceable>
+
+Output of lspci and lspci -n:
+
+Base System Installation Checklist:
+[O] = OK, [E] = Error (please elaborate below), [ ] = didn't try it
+
+Initial boot worked:    [ ]
+Configure network HW:   [ ]
+Config network:         [ ]
+Detect CD:              [ ]
+Load installer modules: [ ]
+Detect hard drives:     [ ]
+Partition hard drives:  [ ]
+Create file systems:    [ ]
+Mount partitions:       [ ]
+Install base system:    [ ]
+Install boot loader:    [ ]
+Reboot:                 [ ]
+
+Comments/Problems:
+
+<replaceable>&lt;Zde se můžete rozepsat o způsobu instalace, zmínit nápady
+      a postřehy, které vás napadly během instalace.&gt;</replaceable>
+</screen></informalexample>
+
+V samotné zprávě podrobně popište problém, včetně posledních
+viditelných hlášek jádra v okamžiku zaseknutí počítače.
+Také nezapomeňte popsat kroky, kterými jste se do problémové
+části dostali.
+
+</para>
+  </sect2>
+ </sect1>

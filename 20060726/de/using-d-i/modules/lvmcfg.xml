@@ -1,0 +1,62 @@
+<!-- retain these comments for translator revision tracking -->
+<!-- original version: 33725 -->
+
+   <sect3 id="lvmcfg">
+   <title>Den <quote>Logical Volume Manager</quote> (LVM) konfigurieren (lvmcfg)</title>
+<para>
+
+Wenn Sie als Systemadministrator oder <quote>erfahrener</quote> Benutzer
+mit Computern zu tun haben, werden Sie bestimmt schon einmal die Situation
+erlebt haben, dass auf einigen Festplattenpartitionen (meistens auf den
+wichtigsten) der freie Platz knapp wurde, während einige andere Partitionen
+ziemlich ungenutzt waren, und Sie mussten diese Situation lösen,
+indem Sie einige Sachen umlagerten, symbolische Links verwendeten und so weiter.
+
+</para><para>
+
+Um die beschriebene Situation zu vermeiden, können Sie den <quote>Logical Volume Manager</quote>
+(LVM) verwenden. Einfach ausgedrückt: mit LVM können Sie ihre Partitionen
+(in der LVM-Sprache <firstterm>Physical Volumes</firstterm> genannt)
+zusammenfassen, um eine virtuelle Festplatte (eine so genannte
+<firstterm>Volume Group</firstterm>) zu erstellen, die dann wieder in
+virtuelle Partitionen (<firstterm>Logical Volumes</firstterm>) aufgeteilt
+wird. Der Trick dabei ist, dass sich die <quote>Logical Volumes</quote> (und natürlich
+auch die darunterliegenden <quote>Volume Groups</quote>) über mehrere physikalische
+Laufwerke verteilen können.
+
+</para><para>
+
+Wenn Sie sich jetzt vorstellen, dass Sie mehr Platz auf Ihrer alten
+160GB-<filename>/home</filename>-Partition brauchen, können Sie einfach
+eine neue 300GB Festplatte in Ihren Rechner einbauen, zu Ihrer vorhandenen
+<quote>Volume Group</quote> hinzufügen und dann das <quote>Logical Volume</quote>, das Ihr
+<filename>/home</filename> beherbergt, vergrößern und voilà &ndash; schon haben
+Ihre Nutzer wieder Platz auf Ihrer erneuerten 460GB-Partition. Dieses Beispiel
+ist natürlich etwas sehr stark vereinfacht. Falls noch nicht geschehen,
+sollten Sie auf jeden Fall das <ulink url="&url-lvm-howto;">LVM-HowTo</ulink>
+lesen.
+
+</para><para>
+
+LVM im &d-i; einzurichten, ist sehr einfach. Als erstes müssen Sie die
+Partitionen festlegen, die als <quote>Physical Volumes</quote> für LVM genutzt werden
+sollen. (Dies erledigen Sie in <command>partman</command> in den
+<guimenu>Partitionseinstellungen</guimenu> der entsprechenden Partition, wo Sie unter
+<menuchoice> <guimenu>Benutzen als:</guimenu> <guimenuitem>Physikalisches Volume für
+LVM</guimenuitem> </menuchoice> auswählen.) Starten Sie dann das
+<command>lvmcfg</command>-Modul (entweder direkt aus <command>partman</command>
+heraus oder aus dem Hauptmenü des &d-i;) und fassen Sie über den Menüeintrag
+<guimenuitem>Volume-Gruppen (VG) modifizieren</guimenuitem> die
+<quote>Physical Volumes</quote> zu <quote>Volume Groups</quote> zusammen.
+Danach erstellen Sie über
+den Menüpunkt <guimenuitem>Logische Volumes (LV) modifizieren</guimenuitem>
+Ihre <quote>Logical Volumes</quote>.
+
+</para><para>
+
+Wenn Sie von <command>lvmcfg</command> zu <command>partman</command>
+zurückkehren, erscheinen dort die erstellten <quote>Logical Volumes</quote> wie
+gewöhnliche Partitionen (und sollten auch als solche behandelt werden).
+
+</para>
+   </sect3>

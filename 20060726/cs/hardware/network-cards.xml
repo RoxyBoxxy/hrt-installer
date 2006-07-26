@@ -1,0 +1,179 @@
+<!-- $Id$ -->
+<!-- original version: 36732 -->
+
+ <sect1 id="network-cards">
+ <title>Hardware pro připojení k síti</title>
+
+<para arch="i386">
+
+<!-- last updated for kernel-image_2.0.36-2 -->
+
+Instalační systém podporuje naprostou většinu síťových karet pro
+sběrnice PCI a ISA, avšak některé síťové karty nejsou podporovány
+všemi instalačními sadami.  Jedná se o karty a protokoly AX.25,
+NI16510 EtherBlaster, Schneider &amp; Koch G16 a vestavěnou kartu
+Zenith Z-Note.  Rovněž nejsou podporovány síťové karty pro sběrnici
+MCA a karty a protokol FDDI. Nějaké (postarší) informace můžete najít
+v dokumentu <ulink url="&url-linux-mca;">Linux na MCA</ulink>.
+
+<!--
+Pokud instalační systém vaši síťovou kartu nepodporuje, můžete
+si sestavit vlastní jádro s příslušnou podporou a nahradit jím jádro
+instalační (viz <xref linkend="rescue-replace-kernel"/>).
+-->
+
+</para><para arch="i386">
+
+Z oblasti ISDN není v sadě zaváděcích médií zahrnuta podpora pro
+protokol D-channel německé sítě 1TR6 a karty Spellcaster BRI.
+
+</para><para arch="m68k">
+
+Libovolná síťová karta (NIC) podporovaná linuxovým jádrem by měla být
+podporována i zaváděcími médii. Možná budete muset zavést ovladač jako
+modul. Podrobnosti viz <ulink url="&url-m68k-faq;"></ulink>.
+
+</para><para arch="sparc">
+
+Následující síťové karty (NIC) jsou podporovány přímo v instalačním
+jádře:
+
+<itemizedlist>
+<listitem><para>
+
+Sun LANCE
+
+</para></listitem>
+<listitem><para>
+
+Sun Happy Meal
+
+</para></listitem>
+</itemizedlist>
+
+</para><para arch="sparc">
+
+Další ovladače síťových karet existují ve formě modulů. Tyto můžete
+použít až po instalaci ovladačů. Ovšem díky magii v OpenPROM je možné
+zavádět z těchto zařízení:
+
+<itemizedlist>
+<listitem><para>
+
+Sun BigMAC
+
+</para></listitem>
+<listitem><para>
+
+Sun QuadEthernet
+
+</para></listitem>
+ <listitem><para>
+
+MyriCOM Gigabit Ethernet
+
+</para></listitem>
+</itemizedlist>
+
+</para><para arch="alpha;powerpc;hppa;mips;ia64">
+
+Libovolná síťová karta (NIC) podporovaná linuxovým jádrem by měla být
+podporována i zaváděcími médii. Možná budete muset zavést ovladač jako
+modul.
+
+</para><para arch="mipsel">
+
+Kvůli omezení jádra jsou podporována pouze síťová rozhraní integrovaná
+ve stanicích DECstation. Volitelné síťové karty TurboChannel v
+současné době nefungují.
+
+</para><para arch="s390">
+
+Libovolná síťová karta (NIC) podporovaná linuxovým jádrem by měla být
+podporována i zaváděcími disky. Všechny ovladače síťových karet jsou
+sestaveny jako moduly, takže během úvodní fáze síťové instalace budete
+muset jeden z nich nahrát. Podporovaná zařízení jsou:
+
+<itemizedlist>
+<listitem><para>
+
+Channel to Channel (CTC) a ESCON spojení (reálné nebo emulované)
+
+</para></listitem>
+<listitem><para>
+
+OSA-2 Token Ring/Ethernet a OSA-Express Fast Ethernet (ne QDIO)
+
+</para></listitem>
+<listitem><para>
+
+Inter-User Communication Vehicle (IUCV) &mdash; dostupné pouze pro hosty
+systému VM
+
+</para></listitem>
+<listitem><para>
+
+OSA-Express v QDIO módu, HiperSockets a Guest-LAN
+
+</para></listitem>
+</itemizedlist>
+
+</para>
+
+
+<para arch="arm">
+
+Na počítačích NetWinder a CATS jsou následující síťová rozhraní
+podporována přímo zaváděcími disky:
+
+<itemizedlist>
+<listitem><para>
+
+PCI-based NE2000
+
+</para></listitem>
+<listitem><para>
+
+DECchip Tulip
+
+</para></listitem>
+</itemizedlist>
+
+</para><para arch="arm">
+
+Zaváděcí disky na počítačích RiscPC podporují tyto síťové karty:
+
+<itemizedlist>
+<listitem><para>
+
+Ether1
+
+</para></listitem>
+<listitem><para>
+
+Ether3
+
+</para></listitem>
+<listitem><para>
+
+EtherH
+
+</para></listitem>
+</itemizedlist>
+
+</para><para arch="arm">
+
+Jestliže je vaše karta zmíněna v předchozím seznamu, můžete provést
+celou instalaci ze sítě bez použití disket nebo CD.
+
+</para><para arch="arm">
+
+Všechny ostatní síťové karty (NIC) podporované linuxovým jádrem by
+měly být podporovány i zaváděcími disky.
+Možná budete muset zavést ovladač síťové karty jako modul &mdash; to
+znamená, že pro instalaci jádra a modulů budete muset použít jiné
+médium.
+
+</para>
+
+ </sect1>

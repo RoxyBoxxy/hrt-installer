@@ -1,0 +1,88 @@
+<!-- $Id$ -->
+<!-- original version: 28997 -->
+
+  <sect2 arch="sparc" id="boot-tftp"><title>Zavedení z TFTP</title>
+
+&boot-installer-intro-net.xml;
+
+<para>
+
+Na strojích s OpenBootem jednoduše vstupte do <quote>boot
+monitoru</quote> (viz <xref linkend="invoking-openboot"/>) a zadejte
+příkaz <userinput>boot net</userinput> pro zavedení z TFTP a RARP
+serveru nebo <userinput>boot net:bootp</userinput>
+(resp. <userinput>boot net:dhcp</userinput>) pro zavedení z TFTP
+a BOOTP (resp. DHCP) serveru. Některé starší revize OpenBootu vyžadují
+konkrétní jméno zařízení, například <userinput>boot le()</userinput>;
+tyto pravděpodobně nepodporují ani BOOTP ani DHCP.
+
+</para>
+  </sect2>
+
+
+  <sect2 arch="sparc"><title>Zavedení z CD-ROM</title>
+
+&boot-installer-intro-cd.xml;
+
+<para>
+
+Většina verzí OpenBootu podporuje příkaz <userinput>boot
+cdrom</userinput>, což je jednoduchý alias k zavedení ze SCSI zařízení
+s ID 6 (nebo ze sekundárního master zařízení na systémech IDE).
+Ve starších verzích OpenBootu, které tento alias nepodporují, musíte
+požít jméno konkrétního zařízení. Poznamenejme, že na systémech Sun4m
+(např. Sparc 10s a Sparc 20s) byly zaznamenány problémy se zaváděním
+z CD-ROM.
+
+</para>
+  </sect2>
+
+
+  <sect2 arch="sparc" condition="supports-floppy-boot">
+  <title>Zavedení z disket</title>
+<para>
+
+Pro zavedení z diskety použijte
+
+<informalexample><screen>
+Stop-A -&gt; OpenBoot: "boot floppy"
+</screen></informalexample>
+
+Bohužel to vypadá, že architektura Sun4u (ultra) nepodporuje zavádění
+z disket. Typická chybová hláška je <computeroutput>Bad magic number
+in disk label - Can't open disk label package</computeroutput>.
+Aby toho nebylo málo, některé modely Sun4c (jako třeba IPX)
+nepodporují komprimované obrazy, které se nachází na disketách, takže
+jsou také mimo hru.
+
+</para><para>
+
+Některé Sparky (třeba Ultra 10) mají takzvanou <quote>OBP</quote>
+chybu, která jim znemožňuje zavedení. Příslušnou opravu si můžete
+stáhnout z <ulink url="http://sunsolve.sun.com"></ulink> pod číslem
+106121.
+
+</para><para>
+
+Pokud při zavádění z disket uvidíte následující hlášku,
+
+<informalexample><screen>
+Fatal error: Cannot read partition
+Illegal or malformed device name
+</screen></informalexample>
+
+je možné, že zavádění z disket není na vašem počítači podporováno.
+
+</para>
+  </sect2>
+
+  <sect2 arch="sparc"><title>Chybová hláška <quote>IDPROM</quote></title>
+<para>
+
+Jestliže nemůžete zavést systém kvůli hlášce o problému s
+<quote>IDPROM</quote>, pak je pravděpodobné, že se vybila baterie
+NVRAM, která uchovává nastavení firmwaru. Více informací naleznete v
+dokumentu <ulink url="&url-sun-nvram-faq;">Sun NVRAM FAQ</ulink>.
+
+</para>
+  </sect2>

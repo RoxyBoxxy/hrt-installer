@@ -1,0 +1,183 @@
+<!-- $Id$ -->
+<!-- original version: 36732 -->
+
+ <sect1 id="supported-peripherals">
+ <title>Ostatní zařízení</title>
+<para arch="not-s390">
+
+V Linuxu můžete používat nejrůznější hardwarové vybavení jako myši,
+tiskárny, scannery, televizní karty a zařízení PCMCIA a USB.
+Většina z nich však není pro instalaci nutná.
+
+<phrase arch="i386">
+Některé USB klávesnice mohou vyžadovat speciální nastavení (viz
+<xref linkend="usb-keyboard-config"/>).
+</phrase>
+
+</para><para arch="i386">
+
+Znovu vás odkazujeme na <ulink url="&url-hardware-howto;">Linux
+Hardware Compatibility HOWTO</ulink>, kde zjistíte, zda pro
+vaše zařízení existuje linuxový ovladač.
+
+</para><para arch="s390">
+
+Instalace balíků z XPRAM a z pásky není tímto systémem podporována.
+Všechny balíky, které chcete instalovat, musí být dostupné na DASD
+nebo přes síť na NFS, HTTP nebo FTP.
+
+</para><para arch="mips">
+
+Deska Broadcom BCM91250A nabízí standardní 3.3v 32 bitové i 64 bitové
+PCI sloty a USB konektory. Deska Broadcom BCM91480B obsahuje čtyři 64
+bitové PCI sloty.
+
+</para><para arch="mipsel">
+
+Deska Broadcom BCM91250A nabízí standardní 3.3v 32 bitové i 64 bitové
+PCI sloty a USB konektory. Deska Broadcom BCM91480B obsahuje čtyři 64
+bitové PCI sloty. Cobalt RaQ bohužel nemá žádnou podporu pro přídavná
+zařízení, Qube má jeden PCI slot.
+
+</para>
+</sect1>
+
+ <sect1 arch="not-s390"><title>Hardware určený pro GNU/Linux</title>
+
+<para>
+
+V současnosti již někteří prodejci dodávají počítače s <ulink
+url="&url-pre-installed;">nainstalovaným</ulink> Debianem, případně
+jinou distribucí GNU/Linuxu. Patrně si za tuto výhodu něco připlatíte,
+ale zbavíte se starostí, poněvadž máte jistotu, že hardware počítače
+je se systémem GNU/Linux plně kompatibilní.
+
+</para><para arch="m68k">
+
+Bohužel je dnes těžké najít obchodníka prodávajícího vůbec nějaké
+novější modely &arch-title;.
+
+</para><para arch="i386">
+
+Budete-li nuceni zakoupit počítač se systémem Windows, přečtěte si
+pozorně jejich licenci, jestli můžete software odmítnout a zda vám
+budou vráceny peníze. Více najdete na Internetu, když budete hledat
+klíčová slova <quote>Windows refund</quote>.
+
+</para><para>
+
+Ať už zakoupíte počítač s instalací GNU/Linuxu nebo bez ní, je
+důležité se přesvědčit, že je hardware podporován jádrem operačního
+systému. Zkontrolujte si, jestli jsou všechna zařízení v počítači
+uvedena ve výše zmíněných odkazech jako podporovaná. Při nákupu se
+netajte tím, že kupujete počítač, na kterém poběží Linux.
+Dejte přednost zboží, jehož výrobci Linux podporují.
+
+</para>
+
+  <sect2><title>Vyvarujte se uzavřených technologií</title>
+<para>
+
+Někteří výrobci hardwaru nám neposkytují informace potřebné k napsání
+ovladačů pro Linux, případně požadují podepsat smlouvu o uchování
+těchto informací v tajnosti před třetími osobami, což znemožňuje
+uveřejnění zdrojového kódu pro takový ovladač.
+
+</para><para arch="m68k">
+
+Dalším příkladem je proprietární hardware ve starších Macintoshích.
+Ve skutečnosti vlastně nikdy nebyly uvolněny specifikace nebo
+dokumentace k libovolnému macintoshímu hardwaru. Za všechny
+jmenujme například řadič ADB, používaný klávesnicí a myší, řadič
+disketové mechaniky a veškerá akcelerace a CLUT manipulace grafiky
+(i když nyní již podporujeme CLUT manipulaci na téměř všech grafických
+čipech). To jednoduše vysvětluje zaostávání macintoshího portu Linuxu
+za ostatními architekturami.
+
+</para><para>
+
+Z důvodu nedostupnosti dokumentace pro ně neexistují ovladače pro
+Linux. Můžete výrobce požádat o uvolnění dokumentace a pokud se na něj
+obrátí více lidí, uvědomí si, že komunita okolo svobodného softwaru
+představuje důležitou skupinu zákazníků.
+
+</para>
+</sect2>
+
+
+  <sect2 arch="i386"><title>Zařízení určená speciálně pro Windows</title>
+<para>
+
+Znepokojivým trendem je rozšíření modemů a tiskáren určených pouze pro
+Windows. Takové periferie byly konstruovány speciálně pro používání
+s operačním systémem Microsoft Windows a nesou označení WinModem nebo
+<quote>Vyrobeno pro systémy s Windows</quote>. Obvykle tato zařízení
+postrádají vlastní procesor a jsou obsluhována ovladačem
+zaměstnávajícím hlavní procesor počítače.  Díky této strategii je
+jejich výroba levnější, ale tato úspora se <emphasis>nemusí</emphasis>
+projevit v koncové ceně zařízení, které může být dokonce dražší než
+obdobné řešení s vlastním procesorem.
+
+</para><para>
+
+Doporučujeme vyvarovat se těchto zařízení <quote>vyrobených pro
+Windows</quote> z následujících důvodů. Za prvé jejich výrobci
+zpravidla neposkytují informace pro napsání ovladače pro Linux -
+obecně hardware i software pro tato zařízení je vlastnictvím výrobce
+a dokumentace není dostupná bez uzavření dohody o jejím nezveřejnění,
+pokud tedy vůbec dostupná je. Takový přístup k dokumentaci je
+neslučitelný s vytvořením volně šiřitelného ovladače, poněvadž jeho
+autor dává k dispozici zdrojový kód. Dalším důvodem je, že práci
+chybějícího vloženého procesoru musí odvádět operační systém často
+s <emphasis>real-time</emphasis> prioritou a na úkor běhu vašich
+programů, když se věnuje obsluze těchto zařízení. Jelikož se ve
+Windows na rozdíl od Linuxu běžně nespouští více souběžných procesů,
+výrobci těchto zařízení doufají, že si uživatelé nevšimnou, jakou
+zátěž klade jejich hardware na systém.  To nic nemění na faktu, že
+když výrobce ošidí výkon periferií, je tím výkon libovolného
+víceúlohového operačního systému (včetně Windows 2000 a XP)
+degradován.
+
+</para><para>
+
+V takovém případě můžete pomoci pobídnout výrobce k uvolnění
+potřebných materiálů, abychom mohli pro jejich zařízení napsat
+ovladače. Nejlepší však je vyhnout se hardwaru, který
+není uveden jako funkční v
+<ulink url="&url-hardware-howto;">Linux Hardware Compatibility HOWTO</ulink>.
+
+</para>
+</sect2>
+
+
+  <sect2 id="Parity-RAM"><title>Falešná paritní paměť</title>
+<para>
+
+Pod označením paritní paměť se většinou prodávají tzv.
+<emphasis>virtuálně</emphasis> paritní paměťové moduly. Moduly SIMM s
+virtuální paritou se dají často (ale ne vždy) rozpoznat tak, že oproti
+neparitním pamětem mají navíc pouze jeden čip. (Ten je pak menší než
+zbývající čipy.)
+Paměti s virtuální paritou pracují stejně jako neparitní paměť a
+na rozdíl od skutečně paritních modulů SIMM na uzpůsobených základních
+deskách nedokáží rozpoznat jednobitovou paměťovou chybu.
+Za virtuálně paritní moduly SIMM nemá cenu platit víc než za obyčejné
+neparitní. Skutečně paritní moduly SIMM jsou dražší, neboť na každých
+8 bitů je potřeba jeden navíc.
+
+</para><para>
+
+Pokud vyžadujete vyčerpávající informace o pamětech pro &arch-title;
+a chcete doporučení, jakou paměť si koupit, podívejte se na
+<ulink url="&url-pc-hw-faq;">PC Hardware FAQ</ulink>.
+
+</para><para arch="alpha">
+
+Většina, pokud ne všechny, Alpha systémy požadují opravdovou
+paritní RAM.
+
+</para>
+
+  </sect2>
+
+ </sect1>
