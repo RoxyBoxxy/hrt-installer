@@ -432,7 +432,7 @@ get_arch_kernel () {
 		version=
 		case "$kernel_major" in
 		2.6)
-			version=2.6.8
+			version=$kernel_major
 		;;
 		*)
 			version=2.4.27
@@ -513,7 +513,7 @@ get_arch_kernel () {
 		trykernel=kernel-image-$version-$flavor
 	;;
 	alpha)
-		version=2.4.27-2
+		version=2.4.27-3
 		if dmesg | grep -q ^Processors:; then
 			CPUS=`dmesg | grep ^Processors: | cut -d: -f2`
 		else
