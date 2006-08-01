@@ -20,6 +20,14 @@ cleanup () {
 	done
 }
 
+# Temporary hack for Etch Beta 3 only
+# Suppress dialog warning about Xorg upgrade issues; not relevant for new installs
+template="x11-common/upgrade_issues"
+if ! db_get "$template"; then
+	db_register debian-installer/dummy "$template"
+fi
+db_fset "$template" seen true
+
 db_progress START 0 100 debian-installer/pkgsel/title
 db_progress INFO pkgsel/progress/init
 
