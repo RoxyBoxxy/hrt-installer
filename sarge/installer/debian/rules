@@ -55,6 +55,9 @@ install: build
 	install -d $(MANDIR)
 	cp -a $(MANTMP)/* $(MANDIR)
 	
+	# Inclusion of a sources.list.udeb.local is needed to build d-i for
+	# Sarge 3.1r3 including updated kernel udebs. This hack makes sure
+	# we also support AMD64 which uses a different mirror.
 	if [ $(ARCH) = amd64 ] && [ -f build/sources.list.udeb.local.amd64 ]; then \
 		cp build/sources.list.udeb.local.amd64 build/sources.list.udeb.local; \
 	fi
