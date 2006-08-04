@@ -4,6 +4,9 @@ ARCH=$(shell dpkg-architecture -qDEB_BUILD_ARCH)
 VERSION=$(shell LC_ALL=C dpkg-parsechangelog | grep ^Version: | cut -d ' ' -f 2)
 DATE=$(shell echo $(VERSION) | cut -d '.' -f 1)
 DISTRIBUTION=$(shell LC_ALL=C dpkg-parsechangelog | grep ^Distribution: | cut -d ' ' -f 2)
+ifeq (${DISTRIBUTION},stable)
+DISTRIBUTION=sarge
+endif
 ifeq (${DISTRIBUTION},unstable)
 DISTRIBUTION=sarge
 endif
@@ -52,6 +55,9 @@ install: build
 	install -d $(MANDIR)
 	cp -a $(MANTMP)/* $(MANDIR)
 	
+	if [ $(ARCH) = amd64 ] && [ -f build/sources.list.udeb.local.amd64 ]; then \
+		cp build/sources.list.udeb.local.amd64 build/sources.list.udeb.local; \
+	fi
 	debian/rules build-images
 
 	install -d $(IMAGEDIR)
