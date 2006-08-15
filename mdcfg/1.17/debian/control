@@ -1,0 +1,23 @@
+Source: mdcfg
+Section: debian-installer
+Priority: optional
+Maintainer: Debian Install System Team <debian-boot@lists.debian.org>
+Uploaders: Joey Hess <joeyh@debian.org>, Frans Pop <fjp@debian.org>
+Build-Depends: debhelper (>= 4.2)
+Build-Depends-Indep: po-debconf (>= 0.5.0)
+
+Package: mdcfg
+Architecture: all
+Depends: partitioned-harddrives
+XB-Installer-Menu-Item: 45
+XC-Package-Type: udeb
+Description: Configure MD devices
+ Use this module to configure the MD devices.
+
+Package: mdcfg-utils
+Architecture: all
+Depends: ${misc:Depends}, di-utils (>= 1.16), md-modules, mdadm-udeb (>=2.5.2), partconf-find-partitions
+XC-Package-Type: udeb
+Description: Configure MD devices
+ Use this module to configure the MD devices.
+
