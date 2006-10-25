@@ -1,0 +1,48 @@
+#!/bin/sh -e
+#
+# Report the detected HW. Note that this needs to run both inside d-i
+# and in a regular debian system, as well as behaving robustly if commands
+# are missing or broken.
+
+addinfo () {
+	sed "s%^%$1: %"
+}
+
+uname -a 2>&1 | addinfo "umame -a"
+
+if type lspci >/dev/null 2>&1; then
+	lspci -v -t 2>&1 | addinfo "lspci -v -t"
+	lspci -n 2>&1 | addinfo "lspci -n"
+	lspci -v 2>&1 | addinfo "lspci -v"
+	lspci -x 2>&1 | addinfo "lspci -x"
+elif /target/usr/bin/lspci >/dev/null; then
+	/target/usr/bin/lspci -v -t 2>&1 | addinfo "lspci -v -t"
+	/target/usr/bin/lspci -n 2>&1 | addinfo "lspci -n"
+	/target/usr/bin/lspci -v 2>&1 | addinfo "lspci -v"
+	/target/usr/bin/lspci -x 2>&1 | addinfo "lspci -x"
+else
+	cat /proc/pci 2>&1 | addinfo /proc/pci
+	cat /proc/bus/pci/devices 2>&1 | addinfo /proc/bus/pci/devices
+fi
+
+lsmod 2>&1 | addinfo lsmod
+df 2>&1 | addinfo df
+free 2>&1 | addinfo free
+
+pccardctl status 2>&1 | addinfo "cardctl status"
+pccardctl ident 2>&1 | addinfo "cardctl ident"
+cardctl status 2>&1 | addinfo "cardctl status"
+cardctl ident 2>&1 | addinfo "cardctl ident"
+
+for file in cpuinfo ioports iomem interrupts meminfo bus/usb/devices \
+	bus/input/devices; do
+	if [ -e /proc/$file ] ; then
+		cat /proc/$file 2>&1 | addinfo /proc/$file
+	fi
+done
+dmidecode 2>&1 | addinfo dmidecode
+
+if [ "$DEBIAN_FRONTEND" = gtk ] && \
+   [ -x /usr/lib/directfb-0.9.25/bin/dfbinfo ]; then
+	/usr/lib/directfb-0.9.25/bin/dfbinfo 2>&1 | addinfo dfbinfo
+fi
