@@ -1,0 +1,48 @@
+#!/bin/sh -e
+#
+# Report the detected HW. Note that this needs to run both inside d-i
+# and in a regular debian system, as well as behaving robustly if commands
+# are missing or broken.
+
+addinfo () {
+	sed "s%^%$1: %"
+}
+
+addfile () {
+	if [ -r "$1" ]; then
+		cat "$1" | addinfo "$1"
+	fi
+}
+
+uname -a 2>&1 | addinfo "umame -a"
+
+if type lspci >/dev/null 2>&1; then
+	lspci -nn  2>&1 | addinfo "lspci -nn"
+	lspci -vnn 2>&1 | addinfo "lspci -vnn"
+else
+	addfile /proc/pci
+	addfile /proc/bus/pci/devices
+fi
+
+lsmod 2>&1 | addinfo lsmod
+df 2>&1 | addinfo df
+free 2>&1 | addinfo free
+
+pccardctl status 2>&1 | addinfo "cardctl status"
+pccardctl ident 2>&1 | addinfo "cardctl ident"
+cardctl status 2>&1 | addinfo "cardctl status"
+cardctl ident 2>&1 | addinfo "cardctl ident"
+
+for file in cpuinfo ioports iomem interrupts meminfo bus/usb/devices \
+	bus/input/devices; do
+	addfile /proc/$file
+done
+dmidecode 2>&1 | addinfo dmidecode
+
+if [ "$DEBIAN_FRONTEND" = gtk ]; then
+	addfile /proc/fb
+	addfile /etc/directfbrc
+	if [ -x /usr/lib/directfb-0.9.25/bin/dfbinfo ]; then
+		/usr/lib/directfb-0.9.25/bin/dfbinfo 2>&1 | addinfo dfbinfo
+	fi
+fi
