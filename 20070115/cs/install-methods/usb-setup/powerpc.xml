@@ -1,0 +1,110 @@
+<!-- $Id$ -->
+<!-- original version: 33725 -->
+
+   <sect3 arch="powerpc">
+   <title>Rozdělení USB zařízení na &arch-title;</title>
+<para>
+
+Protože většina USB klíčenek nebývá připravena pro zavádění přes Open
+Firmware, musíte klíčenku přerozdělit. Na Macintoshi spusťte příkaz
+<userinput>mac-fdisk /dev/sda</userinput>, kde
+<userinput>/dev/sda</userinput> je USB klíčenka. Nejprve musíte
+inicializovat novou tabulku oblastí příkazem <userinput>i</userinput>
+a pak můžete vytvořit novou oblast typu Apple_Bootstrap příkazem
+<userinput>C</userinput>. (Poznámka: první <quote>oblast</quote> bude
+vždy samotná tabulka oblastí.) Poté zadejte:
+
+<informalexample><screen>
+<prompt>$</prompt> <userinput>hformat /dev/<replaceable>sda2</replaceable></userinput>
+</screen></informalexample>
+
+Příkaz <command>hformat</command> je obsažen v balíku
+<classname>hfsutils</classname>. Pozorně se přesvědčete, že používáte
+správný název zařízení!
+
+</para><para>
+
+Aby se po zavedení z USB klíčenky spustilo jádro, nainstalujeme na
+klíčenku zavaděč <command>yaboot</command>, který se umí nainstalovat
+na HFS oblast. Zavaděč můžete jednoduše konfigurovat úpravou textového
+souboru, což lze provést z libovolného operačního sytému, který
+podporuje souborový systém HFS.
+
+</para><para>
+
+Obvyklý nástroj <command>ybin</command>, jež je součástí
+<command>yaboot</command>u, zatím nepodporuje USB zařízení, takže
+budete muset <command>yaboot</command> nainstalovat ručně pomocí
+nástrojů z balíku <classname>hfsutils</classname>. Za předpokladu, že
+je vaše zvolená oblast <replaceable>/dev/sda2</replaceable>, zadejte:
+
+<informalexample><screen>
+<prompt>$</prompt> <userinput>hmount /dev/sda2</userinput>
+<prompt>$</prompt> <userinput>hcopy -r /usr/lib/yaboot/yaboot :</userinput>
+<prompt>$</prompt> <userinput>hattrib -c UNIX -t tbxi :yaboot</userinput>
+<prompt>$</prompt> <userinput>hattrib -b :</userinput>
+<prompt>$</prompt> <userinput>humount</userinput>
+</screen></informalexample>
+
+Tímto zapíšete zavaděč do dané oblasti a pomocí HFS nástrojů ji
+označíte tak, že z ní bude Open Firmware schopný zavádět. Během
+procedury nesmí být oblast připojená jiným způsobem. Poté můžete
+připravit zbytek klíčenky běžnými unixovými utilitami.
+
+</para><para>
+
+Připojte oblast (<userinput>mount /dev/sda2 /mnt</userinput>)
+a nakopírujte na ni následující soubory:
+
+<itemizedlist>
+<listitem><para>
+
+<filename>vmlinux</filename> (jádro)
+
+</para></listitem>
+<listitem><para>
+
+<filename>initrd.gz</filename> (obraz ramdisku)
+
+</para></listitem>
+<listitem><para>
+
+<filename>yaboot.conf</filename> (konfigurační soubor yabootu)
+
+</para></listitem>
+<listitem><para>
+
+<filename>boot.msg</filename> (volitelná zaváděcí hláška)
+
+</para></listitem>
+<listitem><para>
+
+volitelné jaderné moduly
+
+</para></listitem>
+</itemizedlist>
+
+</para><para>
+
+Konfigurační soubor <filename>yaboot.conf</filename> by měl obsahovat
+následující řádky:
+
+<informalexample><screen>
+default=install
+root=/dev/ram
+
+message=/boot.msg
+
+image=/vmlinux
+        label=install
+        initrd=/initrd.gz
+        initrd-size=10000
+        read-only
+</screen></informalexample>
+
+Možná budete muset zvýšit hodnotu u parametru
+<userinput>initrd-size</userinput>, protože tato se mění v závislosti
+na obrazu, který zavádíte.
+
+</para>
+   </sect3>
