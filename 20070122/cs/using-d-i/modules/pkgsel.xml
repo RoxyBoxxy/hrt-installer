@@ -1,0 +1,114 @@
+<!-- $Id$ -->
+<!-- original version: 43734 -->
+
+  <sect3 id="pkgsel">
+  <title>Výběr a instalace softwaru</title>
+
+<para>
+
+Během instalace vám bude nabídnuta možnost nainstalovat si další
+software. V této fázi sice máte k dispozici &num-of-distrib-pkgs;
+dostupných balíků, ale protože jen jejich projití zabere hodně
+(tím myslíme opravdu hodně) času, nabízí &d-i; instalaci
+připravených softwarových úloh, které umožní rychlé přizpůsobení
+počítače pro danou úlohu.
+
+</para><para>
+
+Nejprve tedy můžete vybírat <emphasis>úlohy</emphasis> a teprve poté
+doinstalovat konkrétní balíky. <emphasis>Úlohy</emphasis> představují
+různé činnosti, které byste s počítačem mohli provádět. Například
+<quote>desktopové prostředí</quote>, <quote>webový server</quote> nebo
+<quote>tiskový server</quote>.<footnote><para>
+
+Protože je &d-i; velmi líný, tak si na pomoc volá jiné
+aplikace. Konkrétně pro zobrazení seznamu úloh spustí program
+<command>tasksel</command>, který můžete spustit i samostatně kdykoliv
+po instalaci a (od)instalovat si tak další balíky. Je-li pro vaše
+potřeby výběr úloh moc hrubý, pak poslouží program
+<command>aptitude</command>. Například pro instalaci konkrétního
+balíku stačí spustit příkaz <userinput>aptitude install
+<replaceable>balík</replaceable></userinput>, kde
+<replaceable>balík</replaceable> je jméno balíku, který chcete
+nainstalovat.
+
+</para></footnote>. Velikost jednotlivých úloh zmiňuje kapitola <xref
+linkend="tasksel-size-list"/>.
+
+</para><para>
+
+Podle odhadnutého typu počítače mohou být některé úlohy
+předvybrány. (Např. pokud si &d-i; myslí, že instalujete notebook,
+předvybere úlohu <quote>Notebook</quote>.) Nesouhlasíte-li s výběrem,
+můžete nechtěné úlohy zase odebrat. Dokonce nemusíte instalovat žádnou
+úlohu.
+
+</para><note><para>
+
+Úloha <quote>Stolní počítač</quote> nainstaluje desktopové prostředí
+GNOME. Současné možnosti nabízené instalačním systémem neumožňují
+výběr jiného desktopového prostředí, například KDE.
+
+</para><para>
+
+Nezoufejte, naštěstí existuje způsob, jak instalační systém donutit k
+instalaci KDE, a tím je přednastavení (viz <xref
+linkend="preseed-pkgsel"/>), nebo přidání parametru
+<literal>tasks="standard, kde-desktop"</literal> při zavádění
+instalačního systému. To samozřejmě bude fungovat pouze v případě, že
+jsou balíky tvořící KDE k dispozici. Naznačujeme tím, že pokud k
+instalaci používáte pouze první CD, musí se tyto balíky stáhnout ze
+síťového zrcadla. U všech ostatních typů instalace (z DVD nebo rovnou
+ze sítě) by se mělo KDE nainstalovat bez problémů.
+
+</para><para>
+
+Různé serverové úlohy nainstalují zhruba následující software.
+
+DNS server: <classname>bind9</classname>;
+Souborový server: <classname>samba</classname>,
+<classname>nfs</classname>;
+Poštovní server: <classname>exim4</classname>,
+<classname>spamassassin</classname>, <classname>uw-imap</classname>;
+Tiskový server: <classname>cups</classname>;
+SQL server: <classname>postgresql</classname>;
+Webový server: <classname>apache</classname>.
+
+</para></note><para>
+
+Až skončíte s výběrem, vyberte tlačítko <guibutton>Ok</guibutton>.
+Tím se na pozadí spustí <command>aptitude</command>, která nainstaluje
+vybrané balíky.
+
+</para><note><para>
+
+Ve výchozím prostředí instalátoru se úlohy (od)vybírají klávesou
+<keycap>mezera</keycap>.
+
+</para></note><para>
+
+Programy <command>apt-get</command> a <command>dpkg</command> pak
+zajistí stažení, rozbalení a instalaci všech balíků obsažených ve
+zvolených úlohách. Pokud instalace balíku vyžaduje od uživatele nějaký
+vstup, budete dotázáni stejně jako třeba při vytváření nového
+uživatele.
+
+</para><para>
+
+Měli byste mít na paměti, že úloha Stolní počítač je opravdu velká.
+Pocítíte to obzvláště v případě, kdy instalujete z běžného CD v
+kombinaci se síťovým zrcadlem, což může při pomalém připojení trvat
+poměrně dlouho. Po zahájení instalace neexistuje žádná uživatelsky
+jednoduchá možnost, jak instalaci přerušit.
+
+</para><para>
+
+Instalační systém může některé balíky stahovat ze sítě i v případě, že
+se balíky nachází na CD. To se stává tehdy, když se na síťovém zrcadle
+nachází novější verze balíků, než na CD. U stabilní distribuce to
+znamená po vydání nové revize (po &release;r0 vyjde &release;r1,
+&release;r2, &hellip;), u testovací distribuce se s tímto potkáte již
+několik dnů až týdnů po stažení obrazu CD.
+
+</para>
+  </sect3>

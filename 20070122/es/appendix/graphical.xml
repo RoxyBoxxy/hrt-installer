@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!-- original version: 44192  -->
+<!-- traducido por jfs, 19 enero 2007 -->
+
+ <sect1 condition="gtk" id="graphical">
+ <title>El instalador gráfico</title>
+<para>
+
+    La versión gráfica del instalador sólo está disponible para un
+    conjunto limitado de arquitecturas, incluyendo &arch-title;. El instalador
+    gráfico tiene esencialmente las mismas funcionalidades que el instalador
+    normal, ya que utiliza los mismos programas pero con una interfaz
+    diferente.
+
+</para><para>
+
+El instalador gráfico tiene algunas ventajas significativas aunque
+tenga idéntica funcionalidad. La ventaja principal es que ofrece soporte
+de muchos más idiomas. Específicamente de aquellos cuyo conjunto
+de caracteres no puede mostrarse con la interfaz normal de <quote>newt</quote>.
+También tiene alguna ventaja con relación a la usabilidad ya que se puede
+utilizar un ratón y en algunos casos las preguntas se mostrarán en
+una sola pantalla.
+
+</para><para arch="x86">
+
+El instalador gráfico está disponible en todas las imágenes de CD con el
+mecanismo de instalación hd-media. El instalador debe arrancarse con
+<userinput>installgui</userinput> en lugar de con
+<userinput>install</userinput> ya que utiliza una versión distinta (y más
+grande) del initrd. El arranque se realiza con «Analogous». Para arrancar el
+modo experto y de rescate se debe utilizar <userinput>expertgui</userinput> y
+<userinput>rescuegui</userinput> respectivamente.
+
+</para><para arch="x86">
+
+También puede utilizar una <quote>mini</quote> ISO 
+especial<footnote id="gtk-miniiso">
+
+<para>
+La imagen mini ISO puede descargarse de una réplica de Debian tal y
+como se describe en <xref linkend="downloading-files"/>. 
+Buque <quote>gtk-miniiso</quote>.
+</para>
+
+</footnote>, que se utiliza principalmente para pruebas. En
+esta imagen el instalador se carga simplemente utilizando
+<userinput>install</userinput>. No hay ninguna imagen del instalador gráfico
+que pueda utilizar el arranque via red.
+
+</para><para arch="powerpc">
+
+Solamente se disponible de una <quote>mini</quote> imagen ISO
+en el caso de &arch-title;<footnote id="gtk-miniiso">
+
+<para>
+La imagen mini ISO puede descargarse de una réplica de Debian tal y
+como se describe en <xref linkend="downloading-files"/>. 
+Buque <quote>gtk-miniiso</quote>.
+</para>
+
+</footnote>. Esta imagen debería funcionar correctamente en casi cualquier
+sistema PowerPC con una tarjeta gráfica ATI, pero es probable que no funcione
+en otros sistemas.
+
+</para><para>
+
+El instalador gráfico necesita de una cantidad de memoria significativamente
+mayor que el instalador normal: &minimum-memory-gtk;.  Si no dispone de
+suficiente memoria se utilizar el interfaz habitual basado en
+<quote>newt</quote>.
+
+</para><para>
+
+Puede añadir parámetros al arranque cuando inicie el instalador gráfico tal y
+como lo hace con el instalador normal. Uno de los parámetros que puede añadir
+sirve para configurar el ratón para que lo utilizen personas zurdas. Los
+parámetros necesarios están definidos en <xref linkend="boot-parms"/>.
+
+</para>
+
+  <sect2 id="gtk-using">
+  <title>Utilizar el instalador gráfico</title>
+<para>
+
+    El instalador gráfico funciona básicamente como el instalador normal por lo
+    que puede utilizar las demás partes de este manual para guiarse durante el
+    proceso de instalación.
+
+</para><para>
+
+Si desea utilizar el teclado antes que el ratón debería tener en cuenta
+dos cosas. Para expandir una lista colapsada (como la que se utiliza, por
+ejemplo, para la selección de los países dentro de los contintentes), puede
+utilizar las teclas <keycap>+</keycap> y <keycap>-</keycap>.  En aquellas
+preguntas en las que puede seleccionar más de un elemento (por ejemplo, en la
+selección de tareas), debe pulsar el tabulador para llegar al botón
+<guibutton>Continuar</guibutton> después seleccionar los elementos que desee,
+si pulsa la tecla «Enter» se marcará (o desmarcará) una selección pero no
+activará el botón <guibutton>Continuar</guibutton>.
+
+</para><para>
+
+Tiene que utilizar la tecla <keycap>Ctrl</keycap> para cambiar a otra consola,
+al igual que lo hace en sistema X Window. Por ejemplo, para cabmiar a la
+consola VT1 debe utilizar: <keycombo> <keycap>Ctrl</keycap> <keycap>Alt
+izquierdo</keycap> <keycap>F1</keycap> </keycombo>.
+
+</para>
+  </sect2>
+
+  <sect2 id="gtk-issues">
+  <title>Problemas conocidos</title>
+<para>
+
+«Etch» es la primera versión que incluye el instalador gráfico y utiliza una
+tecnología relativamente nueva para ello. Pueden producirse algunos problemas
+conocidos durante la instalación. Esperamos poder resolverlos para la próxima
+versión de Etch is the first release that includes the graphical installer and
+usefor the &debian;.
+
+</para>
+
+<itemizedlist>
+<listitem><para>
+
+La información en algunas pantallas no está dividida en columnas como debería
+estar. El ejemplo más evidente es la primera pantalla donde selecciona el
+idioma. Otro ejemplo es la pantalla principal de «partman».
+
+</para></listitem>
+<listitem><para>
+
+Puede que si teclea algunos caracteres éstos no se representen correctamente,
+pudiéndose incluso escribir un caracter distinto. No funciona, por ejemplo, la
+«composición» de un caractere pulsando primero la tecla del acento y luego la
+letra que debería utilizar el acento.
+
+</para></listitem>
+<listitem><para>
+
+El soporte para «touchpads» aún no funciona correctamente.
+
+</para></listitem>
+<listitem><para>
+
+No debería cambiar a una consola distinta mientras el instalador está haciendo
+cosas porque podría hacer que la interfaz muriera. Aunque la interfaz se
+reinicia automáticamente se podrían producir problemas con la instalación. El
+cambiar de consola mientras el instalador está esperando recibir una entrada sí
+funciona sin problemas.
+
+</para></listitem>
+<listitem><para>
+
+No es posible generar la contraseña de cifrado aleatoria por lo que el soporte
+de particiones cifradas es aún limitado. Es posible configurar una partición de
+cifrado utilizando una frase de paso como clave de cifrado.
+
+</para></listitem>
+</itemizedlist>
+
+  </sect2>
+ </sect1>

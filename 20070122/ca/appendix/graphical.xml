@@ -1,0 +1,164 @@
+<!-- retain these comments for translator revision tracking -->
+<!-- original version: 44192 -->
+
+ <sect1 condition="gtk" id="graphical">
+ <title>L'instal·lador gràfic</title>
+<para>
+
+La versió gràfica de l'instal·lador només està disponible per a un
+nombre limitat d'arquitectures, incloent &arch-title;. La funcionalitat
+de l'instal·lador gràfic és essencialment la mateixa que la de
+l'instal·lador regular, però amb un aspecte diferent; en el fons
+utilitza els mateixos programes.
+
+</para><para>
+
+Encara que la funcionalitat sigui idèntica, l'instal·lador gràfic té
+alguns avantatges significatius. La millora principal és que suporta més
+idiomes, concretament aquells que utilitzen jocs de caràcters que no es
+poden mostrar amb la interfície <quote>newt</quote>. També incorpora
+certes millores relacionades amb la usabilitat com l'opció d'utilitzar
+el ratolí, i en alguns casos també es poden veure diverses preguntes
+alhora en una mateixa pantalla.
+
+</para><para arch="x86">
+
+L'instal·lador gràfic està disponible en totes les imatges de CD i
+amb el mètode d'instal·lació hd-media. Com l'instal·lador gràfic
+utilitza un initrd diferent (i molt més gran) que l'instal·lador
+normal, s'ha d'arrencar utilitzant <userinput>installgui</userinput>
+en lloc de <userinput>install</userinput>. Anàlogament, el mode expert
+i el mode rescat s'arrenquen utilitzant <userinput>expertgui</userinput>
+i <userinput>rescuegui</userinput> respectivament.
+
+</para><para arch="x86">
+
+També està disponible com a imatge ISO <quote>mini</quote>
+especial<footnote id="gtk-miniiso">
+
+<para>
+La imatge ISO mini es pot descarregar des d'una de les rèpliques de
+Debian tal i com es descriu a <xref linkend="downloading-files"/>. Busqueu
+<quote>gtk-miniiso</quote>.
+</para>
+
+</footnote>, que és útil sobretot per a fer proves; en
+aquest cas la imatge s'ha de carregar utilitzant simplement
+<userinput>install</userinput>. No hi ha cap instal·lador gràfic que
+es pugui arrencar per xarxa.
+
+</para><para arch="powerpc">
+
+Per a &arch-title;, actualment només hi ha disponible una imatge ISO
+<quote>mini</quote> experimental<footnote id="gtk-miniiso">
+
+<para>
+La imatge ISO mini es pot descarregar des d'una de les rèpliques de
+Debian tal i com es descriu a <xref linkend="downloading-files"/>. Busqueu
+<quote>gtk-miniiso</quote>.
+</para>
+
+</footnote>. Hauria de funcionar en pràcticament qualsevol dels sistemes
+PowerPC que disposin d'una targeta gràfica ATI, però és possible que
+falli en altres sistemes.
+
+</para><para>
+
+L'instal·lador gràfic requereix més memòria que l'instal·lador
+normal: &minimum-memory-gtk;. Si no hi ha prou memòria, passarà
+a utilitzar la interfície <quote>newt</quote> automàticament com
+a alternativa.
+
+</para><para>
+
+Podeu especificar paràmetres d'arrencada en iniciar l'instal·lador
+gràfic tal i com ho faríeu amb l'instal·lador regular. Un d'aquests
+paràmetres us permetrà configurar el ratolí per a esquerrans. Teniu
+un llistat dels paràmetres vàlids a <xref linkend="boot-parms"/>.
+
+</para>
+
+  <sect2 id="gtk-using">
+  <title>Utilitzar l'instal·lador gràfic</title>
+<para>
+
+Tal i com ja s'ha dit anteriorment, l'instal·lador gràfic funciona ben
+bé de la mateixa manera que l'instal·lador regular, i per tant la resta
+del manual es igualment vàlid com a guia del procés d'instal·lació.
+
+</para><para>
+
+Si preferiu utilitzar el teclat en comptes del ratolí, hi ha un parell
+de coses que hauríeu de saber. Per expandir una llista (s'utilitza per
+exemple en la selecció de països dins dels continents), podeu utilitzar
+les tecles <keycap>+</keycap> i <keycap>-</keycap>. Per a preguntes en que
+hi ha més d'un element seleccionable (p.ex. la selecció de tasques),
+després de realitzar la selecció oportuna, haureu de tabular fins
+al botó <guibutton>Continua</guibutton>; prémer la tecla de retorn
+directament no activarà <guibutton>Continua</guibutton> sinó que
+commutarà la selecció.
+
+</para><para>
+
+Per canviar a una altra consola, també necessitareu utilitzar
+la tecla <keycap>Ctrl</keycap>, tal i com es fa a l'«X Window
+System». Per exemple, per canviar a VT1 haureu d'utilitzar <keycombo>
+<keycap>Ctrl</keycap> <keycap>Alt Esquerre</keycap> <keycap>F1</keycap>
+</keycombo>.
+
+</para>
+  </sect2>
+
+  <sect2 id="gtk-issues">
+  <title>Problemes coneguts</title>
+<para>
+
+Etch és la primera versió que inclou l'instal·lador gràfic i utilitza
+tecnologia relativament nova. Us podeu trobar amb una sèrie de problemes
+coneguts durant la instal·lació. Esperem que aquests problemes estiguin
+solucionats de cara al proper llançament de &debian;.
+
+</para>
+
+<itemizedlist>
+<listitem><para>
+
+En algunes pantalles la informació no queda formatada correctament
+en columnes. L'exemple més obvi és la primera pregunta on heu de
+seleccionar l'idioma. Un altre exemple és la pantalla principal del
+partman.
+
+</para></listitem>
+<listitem><para>
+
+La introducció de certs caràcters pot no funcionar, i en alguns casos
+es mostrarà un caràcter incorrecte. Per exemple, formar un caràcter
+prement primer l'accent i després la lletra no funciona.
+
+</para></listitem>
+<listitem><para>
+
+El suport per a dispositius «touchpad» encara no és òptim.
+
+</para></listitem>
+<listitem><para>
+
+No hauríeu de canviar a una consola diferent mentre l'instal·lador
+està ocupat; això pot provocar de la interfície falli. En cas que
+això passi es tornarà a iniciar automàticament, però tot i així
+és possible que tingueu problemes amb la instal·lació. Canviar a
+una altra consola mentre l'instal·lador està en espera que introduïu
+dades hauria de funcionar sense cap problema.
+
+</para></listitem>
+<listitem><para>
+
+El suport per a crear particions xifrades està limitat ja que no és
+possible generar una clau de xifrat aleatòria. És possible establir
+una partició xifrada utilitzant una contrasenya com a clau de xifrat.
+
+</para></listitem>
+</itemizedlist>
+
+  </sect2>
+ </sect1>
