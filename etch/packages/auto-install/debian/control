@@ -1,0 +1,21 @@
+Source: auto-install
+Section: debian-installer
+Priority: optional
+Maintainer: Debian Install System Team <debian-boot@lists.debian.org>
+Uploaders: Philip Hands <phil@hands.com>
+Build-Depends: debhelper (>= 4.2), dpkg-dev (>= 1.9)
+
+Package: ai-choosers
+Architecture: all
+Priority: extra
+Depends: ${shlibs:Depends}, kbd-chooser (>= 1.30), localechooser (>= 1.23)
+Description: Delayed configuration of locale and keyboard for auto-install
+XC-Package-Type: udeb
+XB-installer-menu-item: 22
+
+Package: auto-install
+Architecture: all
+Depends: netcfg, preseed-common (>= 1.18)
+XC-Package-Type: udeb
+XB-installer-menu-item: 19
+Description: Support for automatic installs

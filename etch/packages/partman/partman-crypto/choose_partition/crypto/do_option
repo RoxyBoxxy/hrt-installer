@@ -1,0 +1,20 @@
+#!/bin/sh
+
+# "Setup encrypted volumes" in the main menu.
+#  1. Checks required tools
+#  2. Checks for valid cipher options
+#  3. Commits partman changes
+#  4. Checks for safe swap 
+#  5. Creates keyfiles
+#  6. Erases to-be-encrypted partitions
+#  7. Does losetup/dmsetup
+#  8. Restarts partman
+
+. /lib/partman/definitions.sh
+. /lib/partman/crypto_tools.sh
+
+crypto_check_setup || exit 1
+
+confirm_changes "partman-crypto" || exit 0
+
+crypto_setup yes || exit 1
