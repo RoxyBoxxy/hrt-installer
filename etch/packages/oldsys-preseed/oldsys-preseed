@@ -25,7 +25,7 @@ NONINTERACTIVE="yes"
 FILE=/preseed.cfg
 
 case "`archdetect`" in
-	arm/ixp4xx | armeb/ixp4xx | arm/nslu2 | armeb/nslu2)
+	arm*/ixp4xx | arm*/nslu2 )
 		machine=$(grep "^Hardware" /proc/cpuinfo | sed 's/Hardware\s*:\s*//')
 		if echo "$machine" | grep -q "^Linksys NSLU2"; then
 			check_file /proc/mtd
@@ -55,7 +55,7 @@ case "`archdetect`" in
 			fi
 		fi
 	;;
-	arm/iop32x | armeb/iop32x)
+	arm*/iop32x)
 		machine=$(grep "^Hardware" /proc/cpuinfo | sed 's/Hardware\s*:\s*//')
 		if echo "$machine" | grep -q "^Thecus"; then
 			check_file /proc/mtd
@@ -161,9 +161,12 @@ esac
 
 if [ "$NONINTERACTIVE" = "yes" ]; then
 	# localechooser yet needs a way to run after network-console;
-	# in the meantime, preseed this information.
+	# in the meantime, preseed this information. However, don't preseed
+	# countrychooser/country-name in order to force the installer to
+	# prompt the user for a country when configuring the clock. Note
+	# that for this method to work, localechooser must not be included
+	# in the installer image.
 	add "$FILE" "debian-installer/locale" "string" "C"
-	add "$FILE" "countrychooser/country-name" "select" "United States"
 	# Just continue if d-i enters lowmem mode
 	add "$FILE" "lowmem/low" "note"
 	# Any hostname and domain names assigned from DHCP take precedence
