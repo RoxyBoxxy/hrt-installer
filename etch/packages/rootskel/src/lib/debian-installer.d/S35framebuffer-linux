@@ -1,0 +1,5 @@
+if [ -n "$TERM_FRAMEBUFFER_TRY" ] && \
+   ([ -e /dev/fb/0 ] || [ -e /dev/fb0 ]) && \
+   [ "`debconf-get debian-installer/framebuffer`" = true ]; then
+	TERM_FRAMEBUFFER=yes
+fi

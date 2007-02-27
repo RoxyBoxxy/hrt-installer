@@ -1,0 +1,149 @@
+flash-kernel (1.1) UNRELEASED; urgency=low
+
+  * Add armel and armeb architectures.
+
+ -- Joey Hess <joeyh@debian.org>  Wed, 14 Feb 2007 14:10:17 -0500
+
+flash-kernel (1.0) unstable; urgency=low
+
+  * Fix comment about the Sercomm header.  Closes: #402142.
+
+  [ Updated translations ]
+  * Arabic (ar.po) by Ossama M. Khayat
+  * Danish (da.po) by Claus Hindsgaul
+  * Esperanto (eo.po) by Serge Leblanc
+  * Kurdish (ku.po) by rizoye-xerzi
+  * Latvian (lv.po) by Aigars Mahinovs
+  * Malayalam (ml.po) by Praveen A
+  * Norwegian Nynorsk (nn.po) by Håvard Korsvoll
+  * Panjabi (pa.po) by A S Alam
+  * Romanian (ro.po) by Eddy Petrișor
+  * Slovenian (sl.po) by Matej Kovačič
+
+ -- Martin Michlmayr <tbm@cyrius.com>  Thu, 01 Feb 2007 16:28:02 +0100
+
+flash-kernel (0.8) unstable; urgency=low
+
+  [ Martin Michlmayr ]
+  * Speed up flash-kernel on NSLU2 by reading the second part of the
+    kernel in one go rather than byte by byte.
+  * Write the kernel first, followed by the initramfs on Thecus N2100
+    (for comsmetics reasons only).
+
+  [ Updated translations ]
+  * Bulgarian (bg.po) by Damyan Ivanov
+  * Bosnian (bs.po) by Safir Secerovic
+  * Polish (pl.po) by Bartosz Fenski
+
+ -- Martin Michlmayr <tbm@cyrius.com>  Fri, 10 Nov 2006 08:15:06 +0000
+
+flash-kernel (0.7) unstable; urgency=high
+
+  * Copy the ixp400 modules to target if they exist.  This code got lost
+    in the transition from nslu2-firmware-installer to this package.
+
+ -- Martin Michlmayr <tbm@cyrius.com>  Sun, 29 Oct 2006 11:41:34 +0100
+
+flash-kernel (0.6) unstable; urgency=low
+
+  * Provide an initramfs-tools hook for Thecus N2100/N4100 so the
+    right root paramater is given to the kernel.
+
+ -- Martin Michlmayr <tbm@cyrius.com>  Mon, 23 Oct 2006 22:49:32 +0100
+
+flash-kernel (0.5) unstable; urgency=low
+
+  * Install the NSLU2 microcode to the target if it's found on the d-i
+    image.
+  * Changed the priority of flash-kernel-installer to standard so d-i will
+    load it by default.
+
+ -- Martin Michlmayr <tbm@cyrius.com>  Mon, 23 Oct 2006 12:03:41 +0100
+
+flash-kernel (0.4) unstable; urgency=low
+
+  * Add ixp4xx to XB-Subarchitecture.
+
+ -- Martin Michlmayr <tbm@cyrius.com>  Wed, 18 Oct 2006 10:59:25 +0100
+
+flash-kernel (0.3) unstable; urgency=low
+
+  * Install nslu2-utils and apex-nslu2 on NSLU2 devices.
+  * Update flash-kernel-installer.isinstallable to list NSLU2.
+
+  [ Updated translations ]
+  * Bengali (bn.po) by Mahay Alam Khan (মাহে আলম)
+  * Catalan (ca.po) by Jordi Mallach
+  * Czech (cs.po) by Miroslav Kure
+  * Danish (da.po) by Claus Hindsgaul
+  * Esperanto (eo.po) by Serge Leblanc
+  * Spanish (es.po) by Javier Fernández-Sanguino Peña
+  * Estonian (et.po) by Siim Põder
+  * Basque (eu.po) by Piarres Beobide
+  * Finnish (fi.po) by Tapio Lehtonen
+  * French (fr.po) by Christian Perrier
+  * Galician (gl.po) by Jacobo Tarrio
+  * Hebrew (he.po) by Lior Kaplan
+  * Hindi (hi.po) by Nishant Sharma
+  * Hungarian (hu.po) by SZERVÁC Attila
+  * Italian (it.po) by Stefano Canepa
+  * Japanese (ja.po) by Kenshi Muto
+  * Khmer (km.po) by Khoem Sokhem
+  * Portuguese (pt.po) by Miguel Figueiredo
+  * Portuguese (Brazil) (pt_BR.po) by André Luís Lopes
+  * Romanian (ro.po) by Eddy Petrişor
+  * Russian (ru.po) by Yuri Kozlov
+  * Slovak (sk.po) by Peter Mann
+  * Swedish (sv.po) by Daniel Nylander
+  * Turkish (tr.po) by Recai Oktaş
+  * Ukrainian (uk.po) by Eugeniy Meshcheryakov
+
+ -- Martin Michlmayr <tbm@cyrius.com>  Fri, 06 Oct 2006 10:17:27 +0100
+
+flash-kernel (0.2) unstable; urgency=low
+
+  [ Martin Michlmayr ]
+  * Make the isinstallable script of flash-kernel-installer executable.
+  * Add support for Linksys NSLU2.
+
+  [ Christian Perrier ]
+  * Correct debconf templates to fit the D-I writing style and add i18n stuff
+
+  [ Joey Hess ]
+  * Only build the deb for the architectures that it supports (currently only
+    arm).
+
+  [ Updated translations ]
+  * Czech (cs.po) by Miroslav Kure
+  * Danish (da.po) by Claus Hindsgaul
+  * Greek (el.po) by quad-nrg.net
+  * Spanish (es.po) by Javier Fernández-Sanguino Peña
+  * Basque (eu.po) by Piarres Beobide
+  * Finnish (fi.po) by Tapio Lehtonen
+  * French (fr.po) by Christian Perrier
+  * Galician (gl.po) by Jacobo Tarrio
+  * Hebrew (he.po) by Lior Kaplan
+  * Hindi (hi.po) by Nishant Sharma
+  * Lithuanian (lt.po) by Kęstutis Biliūnas
+  * Dutch (nl.po) by Bart Cornelis
+  * Portuguese (pt.po) by Miguel Figueiredo
+  * Romanian (ro.po) by Eddy Petrişor
+  * Russian (ru.po) by Yuri Kozlov
+  * Swedish (sv.po) by Daniel Nylander
+  * Thai (th.po) by Theppitak Karoonboonyanan
+  * Tagalog (tl.po) by Eric Pareja
+
+ -- Martin Michlmayr <tbm@cyrius.com>  Sat, 30 Sep 2006 16:26:00 +0200
+
+flash-kernel (0.1) unstable; urgency=low
+
+  [ Martin Michlmayr ]
+  * Initial release.
+  * Add support for Thecus N2100.
+
+  [ Joey Hess ]
+  * Remove hardcoded path from kernel-image.conf, should not be necessary.
+  * Fix i386 build issue.
+
+ -- Martin Michlmayr <tbm@cyrius.com>  Tue, 26 Sep 2006 15:14:51 +0200
+
