@@ -1,0 +1,16 @@
+Source: base-installer
+Section: debian-installer
+Priority: required
+Maintainer: Debian Install System Team <debian-boot@lists.debian.org>
+Uploaders: Petter Reinholdtsen <pere@debian.org>, Joey Hess <joeyh@debian.org>, Colin Watson <cjwatson@debian.org>, Sven Luther <luther@debian.org>, dann frazier <dannf@debian.org>, Bdale Garbee <bdale@gag.com>, Frans Pop <fjp@debian.org>
+Build-Depends: debhelper (>= 4.2), libdebconfclient0-dev (>= 0.46), libdebian-installer4-dev
+
+Package: base-installer
+XC-Package-Type: udeb
+Architecture: any
+Depends: ${shlibs:Depends}, mounted-partitions, debootstrap-udeb, created-fstab, archdetect, di-utils-mapdevfs
+Provides: kernel-installer
+XB-Installer-Menu-Item: 65
+Description: Install the base system
+ This udeb is responsible for calling debootstrap and installing the
+ base system.

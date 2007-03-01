@@ -1,0 +1,856 @@
+#! /bin/sh
+set -e
+
+. /usr/share/debconf/confmodule
+db_capb backup
+
+LOGFILE=/var/log/messages
+ETCDIR=/target/etc
+ARCH=`udpkg --print-architecture`
+PROTOCOL=
+MIRROR=
+DIRECTORY=
+COMPONENTS=
+DISTRIBUTION=
+INCLUDES=
+EXCLUDES=
+KERNEL=
+KERNEL_LIST=/tmp/available_kernels.txt
+
+# Avoid debconf sending email during the base install process.
+DEBCONF_ADMIN_EMAIL=""
+export DEBCONF_ADMIN_EMAIL
+
+# Variables used to set the progress bar
+PB_POSITION=0
+PB_WAYPOINT_LENGTH=0
+
+db_get debian-installer/kernel/subarchitecture
+SUBARCH="$RET"
+
+log() {
+	logger -t base-installer "$@"
+}
+error() {
+	log "error: $*"
+}
+warning() {
+	log "warning: $*"
+}
+info() {
+	log "info: $*"
+}
+
+exit_error() {
+	error "exiting on error $1"
+	db_progress stop
+	db_input critical $1 || [ $? -eq 30 ]
+	db_go
+	exit 1
+}
+
+update_progress () {
+	# Updates the progress bar to a new position within the space allocated
+	# for the current waypoint. 
+	NW_POS=$(($PB_POSITION + $PB_WAYPOINT_LENGTH * $1 / $2))
+	db_progress SET $NW_POS
+}
+
+check_target () {
+	# Make sure something is mounted on the target.
+	# Partconf causes the latter format.
+	if ! grep -q '/target ' /proc/mounts && \
+			! grep -q '/target/ ' /proc/mounts; then
+		exit_error base-installer/no_target_mounted
+	fi
+	
+	# debootstrap has issues with awk already existing, and is not
+	# idempotent in general. Detect and abort.
+	if [ -e /target/usr/bin/awk -o -L /target/usr/bin/awk ] || \
+	   [ -e /target/bin/sh -o -L /target/bin/sh ]; then
+		db_capb ""
+		db_input medium base-installer/use_unclean_target || true
+		db_go || exit 10
+		db_capb backup
+		db_get base-installer/use_unclean_target
+		if [ "$RET" = false ]; then
+			db_reset base-installer/use_unclean_target
+			exit_error base-installer/unclean_target_cancel
+		fi
+		db_reset base-installer/use_unclean_target
+	fi
+}
+
+get_mirror_info () {
+	if [ -f /cdrom/.disk/base_installable ]; then
+		PROTOCOL=file
+		MIRROR=""
+		DIRECTORY="/cdrom/"
+		if [ -s /cdrom/.disk/base_components ]; then
+			COMPONENTS=`grep -v '^#' /cdrom/.disk/base_components | tr '\n' , | sed 's/,$//'`
+		else
+			COMPONENTS="*"
+		fi
+		if [ -s /cdrom/.disk/base_include ]; then
+			INCLUDES=`grep -v '^#' /cdrom/.disk/base_include | tr '\n' , | sed 's/,$//'`
+		fi
+			
+		if [ -s /cdrom/.disk/base_exclude ]; then
+			EXCLUDES=`grep -v '^#' /cdrom/.disk/base_exclude | tr '\n' , | sed 's/,$//'`
+		fi
+
+		# Sanity check: an error reading /cdrom/.disk/base_components can cause
+		# ugly errors in debootstrap because $COMPONENTS will be empty.
+		if [ -z "$COMPONENTS" ]; then
+			exit_error base-installer/cannot_install
+		fi
+	else
+		mirror_error=""
+		
+		db_get mirror/protocol || mirror_error=1
+		PROTOCOL="$RET"
+
+		db_get mirror/$PROTOCOL/hostname || mirror_error=1
+		MIRROR="$RET"
+
+		db_get mirror/$PROTOCOL/directory || mirror_error=1
+		DIRECTORY="$RET"
+
+		COMPONENTS="main"
+
+		if [ "$mirror_error" = 1 ] || [ -z "$PROTOCOL" ] || [ -z "$MIRROR" ]; then
+			exit_error base-installer/cannot_install
+		fi
+	fi
+
+	if db_get mirror/suite && [ "$RET" ] ; then
+		SUITE=$RET
+	fi
+
+	# Find the distribution codename
+	APTLISTDIR=/target/var/lib/apt/lists
+	mkdir -p $APTLISTDIR
+	if [ file = "$PROTOCOL" ]; then
+		cp /cdrom/dists/$SUITE/Release $APTLISTDIR/tmp || nogetrel="/cdrom/dists/$SUITE/Release"
+	else
+		if [ "$PROTOCOL" = "http" ]; then
+			db_get mirror/http/proxy
+			http_proxy="$RET" || true
+			if [ "$http_proxy" ]; then
+				export http_proxy
+			fi
+		fi
+
+		wget "$PROTOCOL://$MIRROR$DIRECTORY/dists/$SUITE/Release" -O $APTLISTDIR/tmp || nogetrel="$PROTOCOL://$MIRROR$DIRECTORY/dists/$SUITE/Release"
+	fi
+
+	if [ "$nogetrel" != "" ]; then
+		db_subst base-installer/debootstrap/error/nogetrel SUBST0 "$nogetrel"
+		exit_error base-installer/debootstrap/error/nogetrel
+	fi
+
+	DISTRIBUTION=`grep ^Codename: $APTLISTDIR/tmp | cut -d' ' -f 2`
+	DEBOOTSTRAPLIST="$APTLISTDIR/debootstrap.invalid_dists_${DISTRIBUTION}"
+	mv $APTLISTDIR/tmp ${DEBOOTSTRAPLIST}_Release
+}
+	
+install_base_system () {
+	db_progress INFO base-installer/progress/preparing
+
+	if [ "${INCLUDES}" ]; then
+		include="--include=${INCLUDES}"
+	fi
+	if [ "${EXCLUDES}" ]; then
+		exclude="--exclude=${EXCLUDES}"
+	fi
+
+	test -d $ETCDIR || mkdir -p $ETCDIR
+
+	if [ -f /target/etc/fstab ] ; then
+		# programs in debootstrap may scrawl on the fstab,
+		# so make a backup to be restored later
+		copied_fstab=true
+		cp /target/etc/fstab /target/etc/fstab.orig
+		echo "# UNCONFIGURED FSTAB FOR BASE SYSTEM" >> /target/etc/fstab
+	fi
+
+	if [ "$PROTOCOL" = "http" ]; then
+		db_get mirror/http/proxy
+		http_proxy="$RET" || true
+		if [ "$http_proxy" ]; then
+			export http_proxy
+		fi
+	fi
+	
+	# run the scripts found in hook directory before debootstrap
+	partsdir="/usr/lib/base-installer.d"
+	if [ -d "$partsdir" ]; then
+		tmpfile=/tmp/base-installer-hook.log
+		info "Execution hook before debootstrap"
+		for script in `ls "$partsdir"/*`; do
+			base=$(basename $script | sed 's/[0-9]*//')
+			if ! db_progress INFO base-installer/progress/$base; then
+				db_subst base-installer/progress/fallback SCRIPT "$base"
+				db_progress INFO base-installer/progress/fallback
+		    	fi
+	
+		    	if [ -x "$script" ] ; then
+				info "Running $script"
+				if ! "$script" 2>&1 $tmpfile ; then
+			    		log "warning: $script returned error code $?"
+				fi
+		    	else
+				error "Unable to execute $script"
+		    	fi
+		    	if [ -s "$tmpfile" ] ; then
+				logger -t base-installer < "$tmpfile"
+				rm -f "$tmpfile"
+		    	fi
+		done
+	fi
+
+	if [ -e /usr/bin/cdebootstrap ]; then
+		/usr/bin/cdebootstrap || debootstrap_failed=$?
+	else
+		/usr/sbin/run-debootstrap \
+		        --components="${COMPONENTS}" \
+		        --debian-installer \
+		        ${include} ${exclude} \
+		        ${DISTRIBUTION} /target \
+		        "$PROTOCOL://$MIRROR$DIRECTORY" \
+		        2>> $LOGFILE || debootstrap_failed=$?
+	fi
+
+	if [ true = "$copied_fstab" ] ; then
+		mv /target/etc/fstab.orig /target/etc/fstab
+	fi
+
+	if [ "$debootstrap_failed" ] ; then
+		exit_error base-installer/debootstrap-failed
+	fi
+
+	# Progress bar is now stepped to 100.
+}
+
+configure_apt () {
+	# let apt inside the chroot see the cdrom
+	if [ "$PROTOCOL" = file ] ; then
+		if [ -n "$DIRECTORY" ]; then
+			umount /target$DIRECTORY 2>/dev/null || true
+			if [ ! -e /target/$DIRECTORY ]; then
+				mkdir -p /target/$DIRECTORY
+			fi
+		fi
+		if [ "`uname -r | grep '^2.2.'`" != "" ]; then
+			CDDEV=`grep -i /cdrom /proc/mounts | cut -d' ' -f 1 | grep loop || true`
+			if [ "" != "$CDDEV" ]  && \
+				db_get iso-scan/filename && [ "$RET" ] ; then
+				mount -r -o loop /hd-media/$RET /target/$DIRECTORY
+			elif db_get cdrom-detect/cdrom_device && [ -n "$RET" ]; then
+				umount $RET
+				mount -r -t iso9660 $RET /target/$DIRECTORY
+			else
+				warning "kernel 2.2.x failed to bind mount /target$DIRECTORY"
+			fi
+		elif ! mount -o bind $DIRECTORY /target$DIRECTORY; then
+			warning "failed to bind mount /target$DIRECTORY"
+		fi
+		# The bind mount is left mounted after this postinst exits,
+		# for future apt-install calls to use.
+	fi
+
+	# Move files to where apt expects them to avoid another download or copy.
+	APTLISTDIR=/target/var/lib/apt/lists
+	APTDIR=`echo $DIRECTORY | tr "/" "_"`
+	DEBOOTSTRAPLIST="$APTLISTDIR/debootstrap.invalid_dists_${DISTRIBUTION}"
+	APTLIST="$APTLISTDIR/${MIRROR}${APTDIR}_dists_${DISTRIBUTION}"
+	mv ${DEBOOTSTRAPLIST}_Release ${APTLIST}_Release
+	mv ${DEBOOTSTRAPLIST}_main_binary-${ARCH}_Packages ${APTLIST}_main_binary-${ARCH}_Packages
+
+	# sources.list uses space to separate the components, not comma
+	COMPONENTS=`echo $COMPONENTS | tr , " "`
+	APTSOURCE="$PROTOCOL://$MIRROR$DIRECTORY"
+
+	[ ! -d /target/etc/apt ] && mkdir -p /target/etc/apt
+	echo "deb $APTSOURCE $DISTRIBUTION $COMPONENTS" > /target/etc/apt/sources.list
+}
+
+create_devices () {
+	# RAID
+	if [ -e /proc/mdstat ] && grep -q ^md /proc/mdstat ; then
+		apt-install mdadm
+	fi
+	# LVM: create VG and LV devices
+	if pvdisplay | grep -iq "physical volume ---" && grep -q " device-mapper$" /proc/misc; then
+		apt-install lvm2
+		mount -t proc proc /target/proc
+		mkdir -p /target/dev/mapper
+		if [ ! -e /target/dev/mapper/control ] ; then
+			major=$(grep "[0-9] misc$" /proc/devices | sed 's/[ ]\+misc//')
+			minor=$(grep "[0-9] device-mapper$" /proc/misc | sed 's/[ ]\+device-mapper//')
+			mknod /target/dev/mapper/control c $major $minor
+		fi
+		chroot /target vgscan --mknodes || true
+		umount /target/proc
+	fi
+}
+
+kernel_update_list () {
+	# Using 'uniq' to avoid listing the same kernel more then once.
+	chroot /target apt-cache search kernel-image | grep ^kernel-image | \
+	cut -d" " -f1 | uniq > $KERNEL_LIST
+}
+
+kernel_present () {
+	grep -q "^$1\$" $KERNEL_LIST
+}
+
+# Returns a kernel that seems appropriate for the machine.
+get_arch_kernel () {
+	trykernel=
+	case "$ARCH" in
+	i386*)
+		version=$(uname -r | cut -d . -f 1,2) # 2.4 or 2.6
+		VENDOR=`grep '^vendor_id' /proc/cpuinfo | cut -d: -f2`
+		FAMILY=`grep '^cpu family' /proc/cpuinfo | cut -d: -f2`
+		if dmesg | grep -q ^Processors:; then
+			SMP=yes
+		else
+			SMP=no
+		fi
+
+		case "$VENDOR" in
+		" AuthenticAMD"*)
+			case "$FAMILY" in
+			" 6")
+				if test $SMP = no; then
+				        trykernel=kernel-image-$version-k7
+				else
+				        trykernel=kernel-image-$version-k7-smp
+				fi
+			;;
+		        " 5")
+				if test $version = "2.4"; then
+					trykernel=kernel-image-$version-k6
+				else
+					trykernel=kernel-image-$version-386
+				fi
+			;;
+			*)
+				trykernel=kernel-image-$version-386
+			;;
+			esac
+		;;
+		" GenuineIntel"*)
+			case "$FAMILY" in
+			" 6"|" 15")
+				if test $SMP = no; then
+				        trykernel=kernel-image-$version-686
+				else
+				        trykernel=kernel-image-$version-686-smp
+				fi
+			;;
+			" 5")
+				if test $version = "2.4"; then
+					trykernel=kernel-image-$version-586tsc
+				else
+					trykernel=kernel-image-$version-386
+				fi
+			;;
+			*)
+				trykernel=kernel-image-$version-386
+			;;
+			esac
+		;;
+		*)
+			trykernel=kernel-image-$version-386
+		;;
+		esac
+		
+		if [ -e /proc/speakup ]; then
+			# Override and use speakup kernel. There's only one.
+			# Note: 'uname -r' already contains the -speakup extension.
+			trykernel=kernel-image-$(uname -r)
+		fi
+	;;
+	amd64)
+		version=2.6
+		VENDOR=`grep '^vendor_id' /proc/cpuinfo | cut -d: -f2`
+		if dmesg | grep -q "WARNING: NR_CPUS limit of 1 reached." ; then
+			SMP=yes
+		else
+			SMP=no
+		fi
+		case "$VENDOR" in
+		" AuthenticAMD"*)
+			if test "$SMP" = no; then
+				trykernel=kernel-image-$version-amd64-k8
+			else
+				trykernel=kernel-image-$version-amd64-k8-smp
+			fi
+		;;
+		" GenuineIntel"*)
+			if test "$SMP" = no; then
+				trykernel=kernel-image-$version-em64t-p4
+			else
+				trykernel=kernel-image-$version-em64t-p4-smp
+			fi
+		;;
+		*)
+			trykernel=kernel-image-$version-amd64-generic
+		;;
+		esac
+	;;
+	sparc)
+		version=$(uname -r | cut -d . -f 1,2)
+		MODEL=`uname -m`
+		CPUS=`grep 'ncpus probed' /proc/cpuinfo | cut -d: -f2`
+		case "$MODEL" in
+		sparc)
+			if [ "$CPUS" -eq 1 ]; then
+				trykernel=kernel-image-$version-sparc32
+			else
+				# No working SMP yet
+				if [ "$version" = "2.6" ]; then
+					trykernel=kernel-image-$version-sparc32
+				else
+					trykernel=kernel-image-$version-sparc32-smp
+				fi
+			fi
+		;;
+		sparc64)
+			if [ "$CPUS" -eq 1 ]; then
+				trykernel=kernel-image-$version-sparc64
+			else
+				trykernel=kernel-image-$version-sparc64-smp
+			fi
+		;;
+		esac
+	;;
+	powerpc)
+		kernel_major="$(uname -r | cut -d . -f 1,2)" # 2.4 or 2.6
+		version=
+		case "$kernel_major" in
+		2.6)
+			version=$kernel_major
+		;;
+		*)
+			version=2.4.27
+		;;
+		esac
+		# The APUS kernels are in a separate source package, so may
+		# sometimes have a different version number.
+		apusversion=2.4.27
+		CPU=`grep '^cpu[[:space:]]*:' /proc/cpuinfo | head -n1 | cut -d: -f2 | sed 's/^ *//; s/[, ].*//' | tr A-Z a-z`
+		case "$CPU" in
+		power3|i-star|s-star)
+			family=power3
+			;;
+		power4|power4+|ppc970|ppc970fx)
+			family=power4
+			;;
+		*)
+			family=powerpc
+			;;
+		esac
+		case "$SUBARCH" in
+		amiga)	trykernel=kernel-image-$apusversion-apus ;;
+		*)	trykernel=kernel-image-$version-$family ;;
+		esac
+	;;
+	mips)
+		# big endian MIPS
+		kernel_major=$(uname -r | cut -d . -f 1,2)
+		# use the more generic package versioning for 2.6 ff.
+		case "$kernel_major" in
+		2.4) version=$(uname -r | cut -d - -f 1) ;;
+		*) version=$kernel_major ;;
+		esac
+		case "$SUBARCH" in
+		r4k-ip22) trykernel=kernel-image-$version-r4k-ip22 ;;
+		r5k-ip22) trykernel=kernel-image-$version-r5k-ip22 ;;
+		sb1-swarm-bn) trykernel=kernel-image-$version-sb1-swarm-bn ;;
+
+		# NOTE: the following kernel is not in Debian (sarge), but
+		# make it easier to offer unofficial support from a private
+		# apt-archive.
+		r5k-ip32) trykernel=kernel-image-$version-r5k-ip32 ;;
+
+		*) warning "Unknown $ARCH subarchitecture '$SUBARCH'." ;;
+		esac
+	;;
+	mipsel)
+		# little endian MIPS
+		kernel_major=$(uname -r | cut -d . -f 1,2)
+		# use the more generic package versioning for 2.6 ff.
+		case "$kernel_major" in
+		2.4) version=$(uname -r | cut -d - -f 1) ;;
+		*) version=$kernel_major ;;
+		esac
+		case "$SUBARCH" in
+		r3k-kn02) trykernel=kernel-image-$version-r3k-kn02 ;;
+		r4k-kn04) trykernel=kernel-image-$version-r4k-kn04 ;;
+		cobalt) trykernel=kernel-image-$version-r5k-cobalt ;;
+		lasat) trykernel=kernel-image-$version-r5k-lasat ;;
+		sb1-swarm-bn) trykernel=kernel-image-$version-sb1-swarm-bn ;;
+
+		*) warning "Unknown $ARCH subarchitecture '$SUBARCH'." ;;
+		esac
+	;;
+	ia64)
+		version=$(uname -r | cut -d . -f 1,2) # 2.4 or 2.6
+		if grep -q 'Itanium 2' /proc/cpuinfo; then
+			family=mckinley
+		else
+			family=itanium
+		fi
+		CPUS=$(grep ^processor /proc/cpuinfo | tail -1 | cut -d':' -f2)
+		if [ -z $CPUS ] || [ $CPUS -ne 0 ]; then
+			flavor=$family-smp
+		else
+			flavor=$family
+		fi
+		trykernel=kernel-image-$version-$flavor
+	;;
+	alpha)
+		version=2.4.27-3
+		if dmesg | grep -q ^Processors:; then
+			CPUS=`dmesg | grep ^Processors: | cut -d: -f2`
+		else
+			CPUS=1
+		fi
+		if test $CPUS -eq 1; then
+			trykernel=kernel-image-$version-generic
+		else
+			trykernel=kernel-image-$version-smp
+		fi
+	;;
+	m68k)
+		case "$SUBARCH" in
+		amiga|atari|mac|bvme6000|mvme147|mvme16x|q40|sun3|sun3x)
+			trykernel=$SUBARCH ;;
+		*) warning "Unknown $ARCH subarchitecture '$SUBARCH'." ;;
+		esac
+	;;
+	arm)
+		# ARM
+		version=$(uname -r | cut -d - -f 1)
+		case "$SUBARCH" in
+		netwinder|bast|riscpc|riscstation|lart)
+			trykernel=kernel-image-$version-$SUBARCH ;;
+		*) warning "Unknown $ARCH subarchitecture '$SUBARCH'." ;;
+		esac
+	;;
+	hppa)
+		kernel_major=$(uname -r | cut -d . -f 1,2)
+		case "$kernel_major" in
+		2.4) version=$(uname -r | cut -d - -f 1) ;;
+		2.6) version=$(uname -r | cut -d - -f 1,2) ;;
+		esac
+		MODEL=`uname -m`
+		# Don't know how to detect whether SMP is needed, but
+		# apparently it's OK to assume SMP.
+		case "$MODEL" in
+		parisc)
+			trykernel=kernel-image-$version-32-smp
+		;;
+		parisc64)
+			trykernel=kernel-image-$version-64-smp
+		;;
+		esac
+	;;
+	s390)
+		version=$(uname -r)
+		trykernel=kernel-image-$version
+	;;
+	*)
+	warning "Unknown architecture '$ARCH'."
+	;;
+	esac
+
+	echo $trykernel
+}
+
+correct_kernel_abi () {
+	echo $1 | sed 's/2\.4\.27-2-/2.4.27-3-/;s/2\.6\.8-2-/2.6.8-3-/'
+}
+
+pick_kernel () {
+	# Fetch the current default
+	kernel_major="$(uname -r | cut -d . -f 1,2)"
+	if db_get debian-installer/kernel/image-$kernel_major && [ "$RET" ]; then
+		KERNEL="$RET"
+	elif db_get debian-installer/kernel/image && [ "$RET" ]; then
+		KERNEL="$RET"
+	fi
+
+	# HACK for Sarge 3.1r5
+	# Update ABI. Should really have been done in rootskel
+	KERNEL=$(correct_kernel_abi $KERNEL)
+
+	# Using 'sort -r' to get the newest kernel version at the start of the
+	# list (ie 2.4.20 above 2.2.20).  This is in conflict with getting the
+	# most generic architecture first (386 above 686).
+	kernel_update_list
+	kernels=`sort -r $KERNEL_LIST| tr '\n' ',' | sed -e 's/,$//'`
+
+	info "Found kernels '$kernels'"
+
+	if [ "$kernels" ] ; then
+		db_subst base-installer/kernel/which-kernel KERNELS "$kernels"
+	else
+		db_subst base-installer/kernel/no-kernels-found KERNEL "$KERNEL"
+		exit_error base-installer/kernel/no-kernels-found
+	fi
+
+	# Try to make current rootskel setting the default, make sure it is
+	# available first.
+	if kernel_present "$KERNEL" ; then
+		# Current selection is available, nothing to do
+		:
+	else
+		# If possible, find one with at least the same major number
+		# as the currently running kernel.
+		version=$(uname -r | cut -d . -f 1,2) # 2.4 or 2.6
+		KERNEL=$(echo "$kernels" | sed 's/,/\n/g' | grep -- "-$version" | head -n 1)
+		if [ -z "$KERNEL" ]; then
+			# Take the first on the list.
+			KERNEL=$(echo "$kernels" | cut -d, -f1)
+		fi
+	fi
+
+	arch_kernel=$(get_arch_kernel)
+	if kernel_present $arch_kernel ; then
+		KERNEL=$arch_kernel
+	elif [ "" != "$arch_kernel" ] ; then
+		kernels=`grep $arch_kernel $KERNEL_LIST | sort -r | tr '\n' ',' | sed -e 's/,$//'`
+		if [ "$kernels" ]; then
+			db_subst base-installer/kernel/which-kernel KERNELS "$kernels"
+
+			# Try to default to running kernel version.
+			KVERS=`uname -r | cut -d'-' -f 1`
+			if [ "$KVERS" != "" ]; then
+				kernellist=`grep $arch_kernel $KERNEL_LIST | sort -r | tr '\n' ' '` 
+				for akernel in $kernellist; do
+					if [ "" != "`echo $akernel | grep '^kernel-image-'$KVERS`" ]; then
+						KERNEL=$akernel
+						break
+					fi
+				done
+			fi
+		fi
+	fi
+
+	if [ "$KERNEL" ] ; then
+		db_set base-installer/kernel/which-kernel "$KERNEL"
+	fi
+
+	db_input medium base-installer/kernel/which-kernel || [ $? -eq 30 ]
+	if ! db_go; then
+		db_progress stop
+		exit 10
+	fi
+
+	db_get base-installer/kernel/which-kernel
+	KERNEL=$RET
+
+	info "Using kernel '$KERNEL'"
+
+	# Pass the kernel name on
+	db_set debian-installer/kernel/image "$KERNEL"
+}
+
+install_kernel () {
+	kernel_major="$(echo "$KERNEL" | sed 's/^kernel-image-//; s/-.*//' | cut -d . -f 1,2)"
+	case $kernel_major in
+		2.?)	;;
+		*)
+			# something went wrong; use major version of
+			# installation kernel
+			kernel_major="$(uname -r | cut -d . -f 1,2)"
+			;;
+	esac
+	if db_get "debian-installer/kernel/linux/initrd-$kernel_major" ; then
+		if [ "$RET" = true ]; then
+			do_initrd=yes
+		else
+			do_initrd=no
+		fi
+	elif db_get debian-installer/kernel/linux/initrd ; then
+		if [ "$RET" = "true" ]; then
+			do_initrd=yes
+		else
+			do_initrd=no
+		fi
+	else
+		warning "Failed to get debconf answer 'debian-installer/kernel/linux/initrd'."
+		do_initrd=yes
+	fi
+
+	if db_get debian-installer/kernel/linux/link_in_boot ; then
+		if [ "$RET" = "true" ]; then
+			link_in_boot=yes
+		else
+			link_in_boot=no
+		fi
+	else
+		warning "Failed to get debconf answer 'debian-installer/kernel/linux/link_in_boot'."
+		link_in_boot=no
+	fi
+
+	info "Setting do_initrd='$do_initrd'."
+	info "Setting link_in_boot='$link_in_boot'."
+
+	if [ -f /target/etc/kernel-img.conf ]; then
+		# Backup old kernel-img.conf
+		mv /target/etc/kernel-img.conf /target/etc/kernel-img.conf.$$
+	fi
+
+	cat > /target/etc/kernel-img.conf <<EOF
+do_symlinks = yes
+relative_links = yes
+do_bootloader = no
+do_bootfloppy = no
+do_initrd = $do_initrd
+link_in_boot = $link_in_boot
+EOF
+
+	if [ yes = "$do_initrd" ] ; then
+		info "Installing initrd-tools."
+
+		# Make sure initrd-tools is installed before we change its
+		# configuration
+		db_subst base-installer/section/install_kernel_package SUBST0 "initrd-tools"
+		db_progress INFO base-installer/section/install_kernel_package
+		if ! apt-install initrd-tools 2>> $LOGFILE ; then
+			exit_error base-installer/kernel/failed-initrd-tools-install
+		fi
+
+		rootpart_devfs=$(mount | grep "on /target " | cut -d' ' -f1)
+		rootpartfs=$(mount | grep "on /target " | cut -d' ' -f5)
+		rootpart=$(mapdevfs $rootpart_devfs)
+
+		# Avoid possible root shell without giving passord while
+		# booting the 2.4 kernel
+		# This is here for back-compatability with woody's 
+		# initrd-tools; it's fixed in more recent versions
+		mkinitrdconf=/target/etc/mkinitrd/mkinitrd.conf
+		if [ -f $mkinitrdconf ] ; then
+			sed -e 's/^DELAY=.*/DELAY=0/' -e "s#^ROOT=.*#ROOT='$rootpart $rootpartfs'#" < $mkinitrdconf > $mkinitrdconf.new &&
+				mv $mkinitrdconf.new  $mkinitrdconf
+		else
+			echo 'DELAY=0' >> $mkinitrdconf
+			echo "ROOT='$rootpart $rootpartfs'" >> $mkinitrdconf
+		fi
+	else
+		info "Not installing initrd-tools."
+	fi
+
+	# Advance progress bar to 30% of allocated space for install_kernel
+	update_progress 30 100
+
+	# Install the kernel
+	info "Installing kernel '$KERNEL'."
+	db_subst base-installer/section/install_kernel_package SUBST0 "$KERNEL"
+	db_progress INFO base-installer/section/install_kernel_package
+	apt-install "$KERNEL" 2>> $LOGFILE || kernel_install_failed=$?
+
+	# Advance progress bar to 90% of allocated space for install_kernel
+	update_progress 90 100
+
+	# /proc/filesystems will accomodate this past the second bootup.
+	if [ "$do_initrd" = yes ]; then
+		sed -e 's/^ROOT=.*/ROOT=probe/' $mkinitrdconf > $mkinitrdconf.new && mv $mkinitrdconf.new $mkinitrdconf
+	fi
+
+	if [ -f /target/etc/kernel-img.conf.$$ ]; then
+		# Revert old kernel-img.conf
+		mv /target/etc/kernel-img.conf.$$ /target/etc/kernel-img.conf
+	fi
+
+	if [ "$kernel_install_failed" ]; then
+		db_subst base-installer/kernel/failed-install KERNEL "$KERNEL"
+		exit_error base-installer/kernel/failed-install
+	fi
+}
+
+install_pcmcia_modules () {
+	pcmcia_package=$(echo "$KERNEL" | sed 's/^kernel-image/kernel-pcmcia-modules/')
+	info "Installing pcmcia modules package '$pcmcia_package'."
+	apt-install "$pcmcia_package" 2>> $LOGFILE || true
+}
+
+apt_update () {
+	chroot /target apt-get update >> $LOGFILE 2>&1 || apt_update_failed=$?
+	
+	if [ "$apt_update_failed" ]; then
+		warning "apt update failed: $apt_update_failed"
+	fi
+}
+
+install_extra () {
+	info "Installing extra packages into /target/."
+	
+	if [ -f /var/lib/apt-install/queue ] ; then
+		# We need to install these one by one in case one fails.
+		PKG_COUNT=`cat /var/lib/apt-install/queue | wc -w`
+		CURR_PKG=0
+		for PKG in `cat /var/lib/apt-install/queue`; do
+			db_subst base-installer/section/install_extra_package SUBST0 "$PKG"
+			db_progress INFO base-installer/section/install_extra_package
+
+			if apt-install $PKG >> $LOGFILE 2>&1 ; then
+				info "Installed $PKG successfully into /target/"
+			else
+				warning "Failed to install $PKG into /target/: $?"
+			fi
+
+			# Advance progress bar within space allocated for install_extra
+			CURR_PKG=$(($CURR_PKG + 1))
+			update_progress $CURR_PKG $PKG_COUNT
+		done
+	fi
+}
+
+cleanup () {
+	info "Cleaning up"
+	rm -f $KERNEL_LIST
+}
+
+WAYPOINTS=""
+NUM_STEPS=0
+waypoint () {
+	WAYPOINTS="$WAYPOINTS $1:$2"
+	NUM_STEPS=$(($NUM_STEPS + $1)) || true
+}
+
+waypoint 1	check_target
+waypoint 1	get_mirror_info
+waypoint 100	install_base_system
+waypoint 1	configure_apt
+waypoint 3	apt_update
+waypoint 2	create_devices
+waypoint 1	pick_kernel
+waypoint 20	install_kernel
+case "$ARCH" in
+	i386*)
+		if [ -e /proc/bus/pccard/drivers ]; then
+			waypoint 1	install_pcmcia_modules
+		fi
+	;;
+esac
+waypoint 10	install_extra
+waypoint 0	cleanup
+
+db_progress START 0 $NUM_STEPS base-installer/progress/installing-debian
+for item in $WAYPOINTS; do
+	PB_WAYPOINT_LENGTH=$(echo $item | cut -d: -f 1)
+	WAYPOINT=$(echo $item | cut -d: -f 2)
+	# Not all of the section headers need exist.
+	db_progress INFO "base-installer/section/$WAYPOINT" || true
+	eval $WAYPOINT
+	PB_POSITION=$(($PB_POSITION + $PB_WAYPOINT_LENGTH)) || true
+	db_progress SET $PB_POSITION
+done
+db_progress STOP
+exit 0
