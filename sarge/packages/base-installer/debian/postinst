@@ -571,6 +571,10 @@ get_arch_kernel () {
 	echo $trykernel
 }
 
+correct_kernel_abi () {
+	echo $1 | sed 's/2\.4\.27-2/2.4.27-3/;s/2\.6\.8-2/2.6.8-3/'
+}
+
 pick_kernel () {
 	# Fetch the current default
 	kernel_major="$(uname -r | cut -d . -f 1,2)"
@@ -579,6 +583,10 @@ pick_kernel () {
 	elif db_get debian-installer/kernel/image && [ "$RET" ]; then
 		KERNEL="$RET"
 	fi
+
+	# HACK for Sarge 3.1r5
+	# Update ABI. Should really have been done in rootskel
+	KERNEL=$(correct_kernel_abi $KERNEL)
 
 	# Using 'sort -r' to get the newest kernel version at the start of the
 	# list (ie 2.4.20 above 2.2.20).  This is in conflict with getting the

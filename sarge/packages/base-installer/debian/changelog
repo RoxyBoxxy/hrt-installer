@@ -1,3 +1,15 @@
+base-installer (1.13.4sarge2) stable; urgency=high
+
+  * For the kernel ABI change in Sarge 3.1r3 we should also have updated the
+    default values for debian-installer/kernel/image* in rootskel. Because
+    this was missed, incorrect kernels are now being selected on some
+    architectures. Correcting this in rootskel would mean rebuilding D-I,
+    which we'd like to avoid. As an alternative solution we correct the
+    default in base-installer after reading it. Closes: #412909.
+  * Add myself to uploaders.
+
+ -- Frans Pop <fjp@debian.org>  Thu,  1 Mar 2007 15:14:08 +0100
+
 base-installer (1.13.4sarge1) stable; urgency=low
 
   * Changes needed for ABI change in kernel image packages for Sarge 3.1r3.
