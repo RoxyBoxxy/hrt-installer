@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<!-- original version: 35395 -->
+<!-- original version: 43965 -->
 
  <sect1 id="module-details">
  <title>Utilisation des composants</title>
 <para>
 
 Dans cette section, nous décrirons en détail chaque composant de 
-l'installateur. Ces composants sont groupés en étapes reconnaissables par les
-utilisateurs. Ils sont présentés selon l'ordre d'apparition dans le 
+l'installateur. Ces composants, groupés en étapes facilement identifiables,
+sont présentés selon leur ordre d'apparition dans le 
 processus d'installation. Notez que les modules ne sont pas tous utilisés dans
 toutes les installations. Leur utilisation dépend du matériel et du 
 type d'installation choisi.
@@ -31,11 +31,10 @@ doivent lui être données.
 
 <para>
 Il faut noter que l'installateur procède à plusieurs détections de matériel 
-pendant
-cette étape. La première recherche particulièrement le matériel nécessaire à
+pendant cette étape. La première recherche particulièrement le matériel nécessaire à
 l'installation des composants de l'installateur (le lecteur de cédérom ou la 
 carte réseau par exemple). Comme tous les pilotes ne sont pas disponibles
-lors de cette première recherche, d'autres détections de matériel seront
+lors de cette première recherche, d'autres détections de matériel sont
 nécessaires.
 </para>
 
@@ -71,16 +70,18 @@ périphériques LVM ou RAID, peuvent aussi être menées à bien.
 &module-autopartkit.xml;
 &module-partitioner.xml;
 &module-partconf.xml;
-&module-lvmcfg.xml;
 &module-mdcfg.xml;
+&module-partman-lvm.xml;
+&module-partman-crypto.xml;
+
   </sect2>
 
 
   <sect2 id="di-system-setup">
-  <title>Setting up the System</title>
+  <title>Configuration du système</title>
 <para>
 
-Après le partitionnement, l'installateur pose d'autres questions qui serviront
+Après le partitionnement, l'installateur pose d'autres questions qui servent
 à définir le système qu'il va installer.
 
 </para>
@@ -95,9 +96,9 @@ Après le partitionnement, l'installateur pose d'autres questions qui serviront
   <title>L'installation du système de base</title>
 <para>
 
-Quoique cette étape de l'installation soit la moins problématique, elle
-consomme une grande partie du temps de l'installation&nbsp;; elle
-télécharge, vérifie et installe tous les paquets du système de base. Si
+Quoique cette étape de l'installation soit la moins compliquée, elle
+consomme une grande partie du temps de l'installation&nbsp;; c'est pendant cette étape
+que sont téléchargés, vérifiés et installés tous les paquets du système de base. Si
 votre ordinateur est lent ou si vous utilisez une connexion réseau, cela peut
 prendre du temps.
 
@@ -129,24 +130,16 @@ sur des ordinateurs lents.
 <para condition="supports-nfsroot">
 
 Si vous installez Debian sur un poste de travail sans disque, amorcer le
-disque n'est pas une option valable et cette étape sera évitée.
+disque est une option sans intérêt et cette étape sera évitée.
 <phrase arch="sparc">Il est possible de régler l'<quote>OpenBoot</quote> pour
 qu'il s'amorce sur le réseau&nbsp;: voyez <xref linkend="boot-dev-select-sun"/>.</phrase>
-</para>
-
-<para>
-Il faut remarquer que la possibilité d'amorcer différents systèmes sur une
-seule machine relève encore de la magie noire. Ce document ne se veut pas
-une information sur les programmes d'amorçage qui sont différents d'une
-architecture à l'autre. Voyez la documentation propre à votre programme 
-d'amorçage.
 </para>
 
 &module-os-prober.xml;
 &module-alpha-aboot-installer.xml;
 &module-hppa-palo-installer.xml;
-&module-i386-grub-installer.xml;
-&module-i386-lilo-installer.xml;
+&module-x86-grub-installer.xml;
+&module-x86-lilo-installer.xml;
 &module-ia64-elilo-installer.xml;
 &module-mips-arcboot-installer.xml;
 &module-mipsel-colo-installer.xml;
@@ -162,13 +155,12 @@ d'amorçage.
   <title>Comment terminer l'installation ?</title>
 <para>
 
-Voici les dernières choses à faire avant de relancer la machine pour amorcer
-votre système. Cela consiste essentiellement à faire un nettoyage 
-après le travail de l'installateur.
+Avant de relancer la machine pour amorcer le système, il reste un nettoyage 
+à faire après le travail de l'installateur.
 
 </para>
 
-&module-prebaseconfig.xml;
+&module-finish-install.xml;
   </sect2>
 
   <sect2 id="di-miscellaneous">

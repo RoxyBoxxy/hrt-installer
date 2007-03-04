@@ -10,84 +10,721 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: debian-installer\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-08-31 13:17-0400\n"
-"PO-Revision-Date: 2006-04-17 17:19+0700\n"
+"Report-Msgid-Bugs-To: debian-boot@lists.debian.org\n"
+"POT-Creation-Date: 2007-01-06 22:48+0100\n"
+"PO-Revision-Date: 2006-10-15 12:29+0700\n"
 "Last-Translator: Theppitak Karoonboonyanan <thep@linux.thai.net>\n"
 "Language-Team: Thai <l10n@opentle.org>\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=utf-8\n"
+"Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
 #. Type: text
 #. Description
 #: ../partman-lvm.templates:3
-msgid "Configure the Logical Volume Manager"
-msgstr ""
+msgid "Unallocated physical volumes:"
+msgstr "physical volume ที่ยังไม่จัดสรร:"
+
+#. Type: text
+#. Description
+#: ../partman-lvm.templates:7
+msgid "Volume groups:"
+msgstr "กลุ่มโวลุม:"
+
+#. Type: text
+#. Description
+#: ../partman-lvm.templates:11
+msgid "Uses physical volume:"
+msgstr "ใช้ physical volume:"
+
+#. Type: text
+#. Description
+#: ../partman-lvm.templates:15
+msgid "Provides logical volume:"
+msgstr "มี logical volume:"
+
+#. Type: text
+#. Description
+#. "none" here == "No Physical Volumes"
+#: ../partman-lvm.templates:20
+msgid ""
+"none[ Do not translate what's inside the brackets and just put the "
+"translation for the word \"none\" in your language without any brackets. "
+"This \"none\" relates to \"Physical Volumes:\" ]"
+msgstr "ไม่มี"
+
+#. Type: text
+#. Description
+#. "none" here == "No Volume Groups"
+#: ../partman-lvm.templates:25
+msgid ""
+"none[ Do not translate what's inside the brackets and just put the "
+"translation for the word \"none\" in your language without any brackets. "
+"This \"none\" relates to \"Volume Groups:\" ]"
+msgstr "ไม่มี"
+
+#. Type: text
+#. Description
+#. Translators: use the acronym for "Physical Volume" in your language here
+#: ../partman-lvm.templates:34
+msgid "PV"
+msgstr "PV"
+
+#. Type: text
+#. Description
+#. What is "in use" is a partition
+#: ../partman-lvm.templates:39
+msgid "In use by LVM volume group ${VG}"
+msgstr "กำลังใช้งานโดยกลุ่มโวลุม LVM ${VG}"
+
+#. Type: text
+#. Description
+#. Menu entry
+#. Use infinitive form
+#: ../partman-lvm.templates:45
+msgid "Display configuration details"
+msgstr "แสดงรายละเอียดค่าตั้ง"
+
+#. Type: text
+#. Description
+#. Menu entry
+#. Use infinitive form
+#: ../partman-lvm.templates:51
+msgid "Create volume group"
+msgstr "สร้างกลุ่มโวลุม"
+
+#. Type: text
+#. Description
+#. Menu entry
+#. Use infinitive form
+#: ../partman-lvm.templates:57
+msgid "Delete volume group"
+msgstr "ลบกลุ่มโวลุม"
+
+#. Type: text
+#. Description
+#. Menu entry
+#. Use infinitive form
+#: ../partman-lvm.templates:63
+msgid "Extend volume group"
+msgstr "ขยายกลุ่มโวลุม"
+
+#. Type: text
+#. Description
+#. Menu entry
+#. Use infinitive form
+#: ../partman-lvm.templates:69
+msgid "Reduce volume group"
+msgstr "หดกลุ่มโวลุม"
+
+#. Type: text
+#. Description
+#. Menu entry
+#. Use infinitive form
+#: ../partman-lvm.templates:75
+msgid "Create logical volume"
+msgstr "สร้าง logical volume"
+
+#. Type: text
+#. Description
+#. Menu entry
+#. Use infinitive form
+#: ../partman-lvm.templates:81
+msgid "Delete logical volume"
+msgstr "ลบ logical volume"
+
+#. Type: text
+#. Description
+#. Menu entry
+#. Use infinitive form
+#: ../partman-lvm.templates:87
+msgid "Finish"
+msgstr "เสร็จสิ้น"
 
 #. Type: boolean
 #. Description
-#: ../partman-lvm.templates:8
+#: ../partman-lvm.templates:93
 msgid "Write the changes to disks and configure LVM?"
-msgstr ""
+msgstr "จะบันทึกการเปลี่ยนแปลงทั้งหมดลงดิสก์ แล้วตั้งค่า LVM หรือไม่?"
 
 #. Type: boolean
 #. Description
-#: ../partman-lvm.templates:8
+#: ../partman-lvm.templates:93
 msgid ""
 "Before the Logical Volume Manager can be configured, the current "
 "partitioning scheme has to be written to disk.  These changes cannot be "
 "undone."
 msgstr ""
+"ก่อนที่จะตั้งค่า Logical Volume Manager ได้ จะต้องบันทึกการแบ่งพาร์ทิชันปัจจุบันลงในดิสก์เสียก่อน "
+"ซึ่งการเปลี่ยนแปลงเหล่านี้ ไม่สามารถเรียกคืนได้อีก"
 
 #. Type: boolean
 #. Description
-#: ../partman-lvm.templates:8
-msgid "${ITEMS}"
-msgstr "${ITEMS}"
-
-#. Type: boolean
-#. Description
-#: ../partman-lvm.templates:23
-msgid "Keep current partition layout and configure LVM?"
+#: ../partman-lvm.templates:93
+msgid ""
+"After the Logical Volume Manager is configured, no additional changes to the "
+"partitioning scheme of disks containing physical volumes are allowed during "
+"the installation. Please decide if you are satisfied with the current "
+"partitioning scheme before continuing."
 msgstr ""
+"เมื่อตั้งค่า Logical Volume Manager แล้ว จะไม่สามารถเปลี่ยนแปลงการแบ่งพาร์ทิชันในดิสก์ที่มี "
+"physical volume ได้อีกในระหว่างการติดตั้ง กรุณาตัดสินใจ "
+"ว่าคุณพอใจกับการแบ่งพาร์ทิชันปัจจุบันในดิสก์เหล่านี้แล้วหรือยัง ก่อนที่จะดำเนินการต่อไป"
 
 #. Type: boolean
 #. Description
-#: ../partman-lvm.templates:23
+#: ../partman-lvm.templates:108
+msgid "Keep current partition layout and configure LVM?"
+msgstr "จะคงโครงสร้างพาร์ทิชันปัจจุบันไว้ แล้วตั้งค่า LVM หรือไม่?"
+
+#. Type: boolean
+#. Description
+#: ../partman-lvm.templates:108
 msgid ""
 "After the Logical Volume Manager is configured, no additional changes to the "
 "partitions in the disks containing physical volumes are allowed. Please "
 "decide if you are satisfied with the current partitioning scheme in these "
 "disks before continuing."
 msgstr ""
+"เมื่อตั้งค่า Logical Volume Manager แล้ว จะไม่สามารถเปลี่ยนแปลงพาร์ทิชันต่างๆ ในดิสก์ที่มี "
+"physical volume ได้อีก กรุณาตัดสินใจ ว่าคุณพอใจกับการแบ่งพาร์ทิชันปัจจุบันในดิสก์เหล่านี้แล้ว "
+"ก่อนที่จะดำเนินการต่อไป"
 
 #. Type: error
 #. Description
-#: ../partman-lvm.templates:31
+#: ../partman-lvm.templates:116
 msgid "LVM configuration failure"
-msgstr ""
+msgstr "ตั้งค่า LVM ไม่สำเร็จ"
 
 #. Type: error
 #. Description
-#: ../partman-lvm.templates:31
+#: ../partman-lvm.templates:116
 msgid "An error occurred while writing the changes to the disks."
-msgstr ""
+msgstr "เกิดข้อผิดพลาดขณะบันทึกการเปลี่ยนแปลงลงดิสก์"
 
 #. Type: error
 #. Description
-#: ../partman-lvm.templates:31
+#: ../partman-lvm.templates:116
 msgid "The configuration of the Logical Volume Manager is aborted."
-msgstr ""
+msgstr "การตั้งค่า Logical Volume Manager ถูกยกเลิก"
 
 #. Type: text
 #. Description
-#: ../partman-lvm.templates:38
+#: ../partman-lvm.templates:123
 msgid "physical volume for LVM"
-msgstr ""
+msgstr "physical volume สำหรับ LVM"
 
 #. Type: text
 #. Description
-#: ../partman-lvm.templates:42
+#. keep it short (ideally a 3-letter acronym)
+#: ../partman-lvm.templates:128
 msgid "lvm"
+msgstr "lvm"
+
+#. Type: text
+#. Description
+#. Main menu item
+#. Use infinitive form
+#: ../partman-lvm.templates:134
+msgid "Configure the Logical Volume Manager"
+msgstr "ตั้งค่า Logical Volume Manager"
+
+#. Type: boolean
+#. Description
+#: ../partman-lvm.templates:139
+msgid "Activate existing volume groups?"
+msgstr "เปิดใช้กลุ่มโวลุมเดิมที่มีอยู่หรือไม่?"
+
+#. Type: boolean
+#. Description
+#: ../partman-lvm.templates:139
+msgid ""
+"${COUNT} existing volume groups have been found. Please indicate whether you "
+"want to activate them."
+msgstr "พบกลุ่มโวลุมเดิม ${COUNT} กลุ่ม กรุณาระบุว่าคุณต้องการเปิดใช้กลุ่มต่างๆ ดังกล่าวหรือไม่"
+
+#. Type: select
+#. Description
+#: ../partman-lvm.templates:146
+msgid "LVM configuration action:"
+msgstr "การดำเนินการตั้งค่า LVM:"
+
+#. Type: select
+#. Description
+#: ../partman-lvm.templates:146
+msgid "Summary of current LVM configuration:"
+msgstr "สรุปค่าตั้ง LVM ล่าสุด:"
+
+#. Type: select
+#. Description
+#: ../partman-lvm.templates:146
+msgid ""
+" Free Physical Volumes:  ${FREE_PVS}\n"
+" Used Physical Volumes:  ${USED_PVS}\n"
+" Volume Groups:          ${VGS}\n"
+" Logical Volumes:        ${LVS}"
 msgstr ""
+" Physical Volume ที่ว่าง:   ${FREE_PVS}\n"
+" Physical Volume ที่ใช้:    ${USED_PVS}\n"
+" กลุ่มโวลุม:                ${VGS}\n"
+" Logical Volume:         ${LVS}"
+
+#. Type: note
+#. Description
+#: ../partman-lvm.templates:157
+msgid "Current LVM configuration:"
+msgstr "ค่าตั้ง LVM ล่าสุด:"
+
+#. Type: multiselect
+#. Description
+#: ../partman-lvm.templates:163
+msgid "Devices for the new volume group:"
+msgstr "อุปกรณ์สำหรับกลุ่มโวลุมใหม่:"
+
+#. Type: multiselect
+#. Description
+#: ../partman-lvm.templates:163
+msgid "Please select the devices for the new volume group."
+msgstr "กรุณาเลือกอุปกรณ์สำหรับกลุ่มโวลุมใหม่"
+
+#. Type: string
+#. Description
+#: ../partman-lvm.templates:170
+msgid "Volume group name:"
+msgstr "ชื่อกลุ่มโวลุม:"
+
+#. Type: string
+#. Description
+#: ../partman-lvm.templates:170
+msgid "Please enter the name you would like to use for the new volume group."
+msgstr "กรุณาป้อนชื่อที่จะใช้เรียกกลุ่มโวลุมใหม่นี้"
+
+#. Type: error
+#. Description
+#: ../partman-lvm.templates:175
+msgid ""
+"No physical volumes were selected. The creation of a new volume group was "
+"aborted."
+msgstr "คุณไม่ได้เลือก physical volume  ขอยกเลิกการสร้างกลุ่มโวลุมใหม่"
+
+#. Type: error
+#. Description
+#: ../partman-lvm.templates:181
+msgid "No volume group name entered"
+msgstr "ไม่มีชื่อกลุ่มโวลุม"
+
+#. Type: error
+#. Description
+#: ../partman-lvm.templates:181
+msgid "No name for the volume group has been entered.  Please enter a name."
+msgstr "คุณไม่ได้ป้อนชื่อกลุ่มโวลุม กรุณาป้อนชื่อด้วย"
+
+#. Type: error
+#. Description
+#: ../partman-lvm.templates:187
+msgid "Volume group name already in use"
+msgstr "ชื่อกลุ่มโวลุมถูกใช้ไปแล้ว"
+
+#. Type: error
+#. Description
+#: ../partman-lvm.templates:187
+msgid ""
+"The selected volume group name is already in use. Please choose another name."
+msgstr "ชื่อกลุ่มโวลุมที่คุณตั้ง ถูกใช้ไปแล้ว กรุณาตั้งเป็นชื่ออื่น"
+
+#. Type: error
+#. Description
+#: ../partman-lvm.templates:193
+msgid "Volume group name overlaps with device name"
+msgstr "ชื่อกลุ่มโวลุมทับซ้อนกับชื่ออุปกรณ์"
+
+#. Type: error
+#. Description
+#: ../partman-lvm.templates:193
+msgid ""
+"The selected volume group name overlaps with an existing device name. Please "
+"choose another name."
+msgstr "ชื่อกลุ่มโวลุมที่คุณตั้ง ทับซ้อนกับชื่ออุปกรณ์ที่มีอยู่ กรุณาตั้งเป็นชื่ออื่น"
+
+#. Type: error
+#. Description
+#: ../partman-lvm.templates:199
+msgid "The volume group ${VG} could not be created."
+msgstr "ไม่สามารถสร้างกลุ่มโวลุม ${VG} ได้"
+
+#. Type: select
+#. Description
+#: ../partman-lvm.templates:207
+msgid "Volume group to delete:"
+msgstr "กลุ่มโวลุมที่จะลบ:"
+
+#. Type: select
+#. Description
+#: ../partman-lvm.templates:207
+msgid "Please select the volume group you wish to delete."
+msgstr "กรุณาเลือกกลุ่มโวลุมที่คุณต้องการลบ"
+
+#. Type: error
+#. Description
+#: ../partman-lvm.templates:212
+msgid "The volume group may have already been deleted."
+msgstr "กลุ่มโวลุมดังกล่าวอาจถูกลบไปแล้ว"
+
+#. Type: boolean
+#. Description
+#: ../partman-lvm.templates:220
+msgid "Really delete the volume group?"
+msgstr "จะลบกลุ่มโวลุมจริงหรือไม่?"
+
+#. Type: boolean
+#. Description
+#: ../partman-lvm.templates:220
+msgid "Please confirm the ${VG} volume group removal."
+msgstr "กรุณายืนยันการลบกลุ่มโวลุม ${VG}"
+
+#. Type: error
+#. Description
+#: ../partman-lvm.templates:225
+msgid "Error while deleting volume group"
+msgstr "เกิดข้อผิดพลาดขณะลบกลุ่มโวลุม"
+
+#. Type: error
+#. Description
+#: ../partman-lvm.templates:225
+msgid ""
+"The selected volume group could not be deleted. One or more logical volumes "
+"may currently be in use."
+msgstr "กลุ่มโวลุมที่คุณเลือก ไม่สามารถลบได้ เป็นไปได้ว่า logical volume ในนั้นอาจถูกใช้งานอยู่"
+
+#. Type: error
+#. Description
+#: ../partman-lvm.templates:231
+msgid "No volume group can be deleted."
+msgstr "ไม่สามารถลบกลุ่มโวลุมใดๆ ได้"
+
+#. Type: select
+#. Description
+#: ../partman-lvm.templates:239
+msgid "Volume group to extend:"
+msgstr "กลุ่มโวลุมที่จะขยาย:"
+
+#. Type: select
+#. Description
+#: ../partman-lvm.templates:239
+msgid "Please select the volume group you wish to extend."
+msgstr "กรุณาเลือกกลุ่มโวลุมที่คุณต้องการขยาย"
+
+#. Type: multiselect
+#. Description
+#: ../partman-lvm.templates:245
+msgid "Devices to add to the volume group:"
+msgstr "อุปกรณ์ที่จะเพิ่มเข้าในกลุ่มโวลุม:"
+
+#. Type: multiselect
+#. Description
+#: ../partman-lvm.templates:245
+msgid "Please select the devices you wish to add to the volume group."
+msgstr "กรุณาเลือกอุปกรณ์ที่คุณต้องการเพิ่มเข้าในกลุ่มโวลุม"
+
+#. Type: error
+#. Description
+#: ../partman-lvm.templates:252
+msgid ""
+"No physical volumes were selected. Extension of the volume group was aborted."
+msgstr "คุณไม่ได้เลือก physical volume  ขอยกเลิกการขยายกลุ่มโวลุม"
+
+#. Type: error
+#. Description
+#: ../partman-lvm.templates:258
+msgid "Error while extending volume group"
+msgstr "เกิดข้อผิดพลาดขณะขยายกลุ่มโวลุม"
+
+#. Type: error
+#. Description
+#: ../partman-lvm.templates:258
+msgid ""
+"The physical volume ${PARTITION} could not be added to the selected volume "
+"group."
+msgstr "ไม่สามารถเพิ่ม physical volume ${PARTITION} เข้าในกลุ่มโวลุมที่เลือก"
+
+#. Type: error
+#. Description
+#: ../partman-lvm.templates:264
+msgid "No volume group has been found."
+msgstr "ไม่พบกลุ่มโวลุมใดๆ"
+
+#. Type: error
+#. Description
+#: ../partman-lvm.templates:264
+msgid "No volume group can be reduced."
+msgstr "ไม่สามารถหดกลุ่มโวลุมใดๆ ได้"
+
+#. Type: select
+#. Description
+#: ../partman-lvm.templates:272
+msgid "Volume group to reduce:"
+msgstr "กลุ่มโวลุมที่จะหด:"
+
+#. Type: select
+#. Description
+#: ../partman-lvm.templates:272
+msgid "Please select the volume group you wish to reduce."
+msgstr "กรุณาเลือกกลุ่มโวลุมที่คุณต้องการหด"
+
+#. Type: multiselect
+#. Description
+#: ../partman-lvm.templates:278
+msgid "Devices to remove from the volume group:"
+msgstr "อุปกรณ์ที่จะลบออกจากกลุ่มโวลุม:"
+
+#. Type: multiselect
+#. Description
+#: ../partman-lvm.templates:278
+msgid "Please select the devices you wish to remove from the volume group."
+msgstr "กรุณาเลือกอุปกรณ์ที่คุณต้องการลบออกจากกลุ่มโวลุม"
+
+#. Type: multiselect
+#. Description
+#: ../partman-lvm.templates:278
+msgid "You can select one or more devices."
+msgstr "คุณสามารถเลือกอุปกรณ์ได้มากกว่าหนึ่งชิ้น"
+
+#. Type: error
+#. Description
+#: ../partman-lvm.templates:285
+msgid "No physical volumes selected"
+msgstr "ไม่ได้เลือก physical volume"
+
+#. Type: error
+#. Description
+#: ../partman-lvm.templates:285
+msgid ""
+"No physical volumes were selected. Reduction of the volume group was aborted."
+msgstr "คุณไม่ได้เลือก physical volume ขอยกเลิกการหดกลุ่มโวลุม"
+
+#. Type: error
+#. Description
+#: ../partman-lvm.templates:291
+msgid "Error while reducing volume group"
+msgstr "เกิดข้อผิดพลาดขณะหดกลุ่มโวลุม"
+
+#. Type: error
+#. Description
+#: ../partman-lvm.templates:291
+msgid ""
+"The physical volume ${PARTITION} could not be removed from the selected "
+"volume group."
+msgstr "ไม่สามารถเพิ่ม physical volume ${PARTITION} เข้าในกลุ่มโวลุมที่เลือก"
+
+#. Type: error
+#. Description
+#: ../partman-lvm.templates:299
+msgid "No volume group found"
+msgstr "ไม่พบกลุ่มโวลุม"
+
+#. Type: error
+#. Description
+#: ../partman-lvm.templates:299
+msgid ""
+"No free volume groups were found for creating a new logical volume. Please "
+"create more physical volumes and volume groups, or reduce an existing volume "
+"group."
+msgstr ""
+"ไม่พบกลุ่มโวลุมที่ว่างอยู่สำหรับใช้สร้าง logical volume ใหม่ กรุณาสร้าง physical volume "
+"และกลุ่มโวลุมเพิ่ม หรือหดกลุ่มโวลุมที่มีอยู่"
+
+#. Type: string
+#. Description
+#: ../partman-lvm.templates:306
+msgid "Logical volume name:"
+msgstr "ชื่อ logical volume:"
+
+#. Type: string
+#. Description
+#: ../partman-lvm.templates:306
+msgid "Please enter the name you would like to use for the new logical volume."
+msgstr "กรุณาตั้งชื่อ logical volume ใหม่ที่จะสร้าง"
+
+#. Type: select
+#. Description
+#: ../partman-lvm.templates:312
+msgid "Volume group:"
+msgstr "กลุ่มโวลุม:"
+
+#. Type: select
+#. Description
+#: ../partman-lvm.templates:312
+msgid ""
+"Please select the volume group where the new logical volume should be "
+"created."
+msgstr "กรุณาเลือกกลุ่มโวลุมที่จะใช้สร้าง logical volume ใหม่"
+
+#. Type: error
+#. Description
+#: ../partman-lvm.templates:318
+msgid "No logical volume name entered"
+msgstr "ไม่ได้ป้อนชื่อ logical volume"
+
+#. Type: error
+#. Description
+#: ../partman-lvm.templates:318
+msgid "No name for the logical volume has been entered.  Please enter a name."
+msgstr "คุณไม่ได้ป้อนชื่อ logical volume กรุณาป้อนชื่อด้วย"
+
+#. Type: error
+#. Description
+#: ../partman-lvm.templates:324
+msgid ""
+"The name ${LV} is already in use by another logical volume on the same "
+"volume group (${VG})."
+msgstr "ชื่อ ${LV} ถูกใช้ไปแล้ว โดย logical volume อื่นในกลุ่มโวลุม (${VG}) เดียวกัน"
+
+#. Type: string
+#. Description
+#: ../partman-lvm.templates:330
+msgid "Logical volume size:"
+msgstr "ขนาด logical volume:"
+
+#. Type: string
+#. Description
+#: ../partman-lvm.templates:330
+msgid ""
+"Please enter the size of the new logical volume. The size may be entered in "
+"the following formats: 10K (Kilobytes), 10M (Megabytes), 10G (Gigabytes), "
+"10T (Terabytes). The default unit is Megabytes."
+msgstr ""
+"กรุณาป้อนขนาดของ logical volume ใหม่ที่จะสร้าง คุณอาจป้อนขนาดในรูปแบบต่อไปนี้ได้: 10K "
+"(กิโลไบต์), 10M (เมกะไบต์), 10G (กิกะไบต์), 10T (เทราไบต์) หน่วยโดยปริยายคือเมกะไบต์"
+
+#. Type: error
+#. Description
+#: ../partman-lvm.templates:337
+msgid "Error while creating a new logical volume"
+msgstr "เกิดข้อผิดพลาดระหว่างสร้าง logical volume ใหม่"
+
+#. Type: error
+#. Description
+#: ../partman-lvm.templates:337
+msgid ""
+"Unable to create a new logical volume (${LV}) on ${VG} with the new size "
+"${SIZE}."
+msgstr "ไม่สามารถสร้าง logical volume (${LV}) ใหม่ใน ${VG} ด้วยขนาด ${SIZE} ที่กำหนด"
+
+#. Type: error
+#. Description
+#: ../partman-lvm.templates:345
+msgid "No logical volume found"
+msgstr "ไม่พบ logical volume"
+
+#. Type: error
+#. Description
+#: ../partman-lvm.templates:345
+msgid ""
+"No logical volume has been found.  Please create a logical volume first."
+msgstr "ไม่พบ logical volume  กรุณาสร้าง logical volume ก่อน"
+
+#. Type: select
+#. Description
+#: ../partman-lvm.templates:351
+msgid "Logical volume:"
+msgstr "Logical volume:"
+
+#. Type: select
+#. Description
+#: ../partman-lvm.templates:351
+msgid "Please select the logical volume to delete."
+msgstr "กรุณาเลือก logical volume ที่จะลบ"
+
+#. Type: text
+#. Description
+#: ../partman-lvm.templates:356
+msgid "in VG ${VG}"
+msgstr "ในกลุ่มโวลุม ${VG}"
+
+#. Type: error
+#. Description
+#: ../partman-lvm.templates:360
+msgid "Error while deleting the logical volume"
+msgstr "เกิดข้อผิดพลาดขณะลบ logical volume"
+
+#. Type: error
+#. Description
+#: ../partman-lvm.templates:360
+msgid "The logical volume (${LV}) on ${VG} could not be deleted."
+msgstr "ไม่สามารถลบ logical volume (${LV}) ใน ${VG} ได้"
+
+#. Type: error
+#. Description
+#: ../partman-lvm.templates:367
+msgid "No usable physical volumes found"
+msgstr "ไม่พบ physical volume ที่ใช้การได้"
+
+#. Type: error
+#. Description
+#: ../partman-lvm.templates:367
+msgid ""
+"No physical volumes (i.e. partitions) were found in your system. All "
+"physical volumes may already be in use. You may also need to load some "
+"required kernel modules or re-partition the hard drives."
+msgstr ""
+"ไม่พบ physical volume (กล่าวคือ พาร์ทิชัน) ในระบบของคุณ  physical volume "
+"ทั้งหมดอาจจะถูกใช้งานอยู่ หรือมิฉะนั้น คุณก็อาจต้องโหลดมอดูลของเคอร์เนลที่ต้องใช้ "
+"หรือแบ่งพาร์ทิชันในฮาร์ดดิสก์ใหม่"
+
+#. Type: error
+#. Description
+#: ../partman-lvm.templates:374
+msgid "Logical Volume Manager not available"
+msgstr "ไม่มี Logical Volume Manager"
+
+#. Type: error
+#. Description
+#: ../partman-lvm.templates:374
+msgid ""
+"The current kernel doesn't support the Logical Volume Manager. You may need "
+"to load the lvm-mod module."
+msgstr "เคอร์เนลที่ใช้อยู่ไม่สนับสนุน Logical Volume Manager คุณอาจต้องโหลดมอดูล lvm-mod"
+
+#. Type: error
+#. Description
+#: ../partman-lvm.templates:380
+msgid "Error while initializing physical volume"
+msgstr "เกิดข้อผิดพลาดขณะเตรียม physical volume"
+
+#. Type: error
+#. Description
+#: ../partman-lvm.templates:380
+msgid "The physical volume ${PV} could not be initialized."
+msgstr "ไม่สามารถเตรียม physical volume ${PV} ได้"
+
+#. Type: error
+#. Description
+#: ../partman-lvm.templates:380
+msgid "Check /var/log/syslog or see virtual console 4 for the details."
+msgstr "กรุณาตรวจสอบ /var/log/syslog หรือดูที่คอนโซลเสมือนที่ 4 เพื่อดูรายละเอียด"
+
+#. Type: error
+#. Description
+#: ../partman-lvm.templates:387
+msgid "Invalid logical volume or volume group name"
+msgstr "ชื่อ logical volume หรือกลุ่มโวลุมใช้ไม่ได้"
+
+#. Type: error
+#. Description
+#: ../partman-lvm.templates:387
+msgid ""
+"Logical volume or volume group names may only contain alphanumeric "
+"characters, hyphen, plus, period and underscore. They must be 128 characters "
+"or less and may not begin with a hyphen. The names \".\" and \"..\" are not "
+"allowed. In addition, logical volume names may not begin with \"snapshot\"."
+msgstr ""
+"ชื่อ logical volume หรือกลุ่มโวลุม ต้องประกอบด้วยตัวอักษร ตัวเลข ยัติภังค์ เครื่องหมายบวก "
+"หรือขีดล่างเท่านั้น ความยาวต้องไม่เกิน 128 ตัวอักษร และไม่สามารถขึ้นต้นด้วยยัติภังค์ได้ นอกจากนี้ "
+"ยังห้ามใช้ชื่อ \".\" และ \"..\" และห้ามขึ้นต้นชื่อ logical volume ด้วยคำว่า \"snapshot\" "
+"อีกด้วย"
+
+#. Type: error
+#. Description
+#: ../partman-lvm.templates:387
+msgid "Please choose another name."
+msgstr "กรุณาตั้งชื่อใหม่"

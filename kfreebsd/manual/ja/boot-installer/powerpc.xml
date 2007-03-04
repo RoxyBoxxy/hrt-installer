@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="EUC-JP"?>
 <!-- retain these comments for translator revision tracking -->
-<!-- original version: 33886 -->
+<!-- original version: 43923 -->
 
   <sect2 arch="powerpc" id="boot-cd"><title>CD-ROM からの起動</title>
 
@@ -10,15 +10,15 @@
 
 <!--
 Currently, the only &arch-title; subarchitectures that support CD-ROM
-booting are PReP and New World PowerMacs. On PowerMacs, hold the
-<keycap>c</keycap> key, or else the combination of
+booting are PReP (though not all systems) and New World PowerMacs.
+On PowerMacs, hold the <keycap>c</keycap> key, or else the combination of
 <keycap>Command</keycap>, <keycap>Option</keycap>,
 <keycap>Shift</keycap>, and <keycap>Delete</keycap>
 keys together while booting to boot from the CD-ROM.
 -->
 今のところ、CD-ROM からの起動をサポートしている
 &arch-title; のサブアーキテクチャは
-PReP と New World PowerMac だけです。
+PReP (でもすべてのシステムではありません) と New World PowerMac だけです。
 PowerMac では、<keycap>c</keycap> キーを押しっぱなしにするか、
 または <keycap>Command</keycap>, <keycap>Option</keycap>,
 <keycap>Shift</keycap>, <keycap>Delete</keycap> キーを起動時に同時に押せば、
@@ -57,13 +57,13 @@ NewWorld では、OpenFirmware のコマンドを用いて、
 手動で CD-ROM から起動させることもできます。
 ハードディスクから起動させる場合は
 <xref linkend="boot-newworld"/> の指示に従ってください。
-ただし OF プロンプトで与える CD の <command>yaboot</command> へのパスとしては、
+ただし OF プロンプトで与える CD の <command>yaboot</command> へのパスは、
+以下のようにしてください。
 
 <informalexample><screen>
 0 &gt; boot cd:,\install\yaboot
 </screen></informalexample>
 
-のようなものを用いてください。
 </para>
   </sect2>
 
@@ -186,7 +186,7 @@ Yaboot の <prompt>boot:</prompt> プロンプトで、
   </sect2>
 
   <sect2 arch="powerpc" condition="bootable-usb" id="usb-boot">
-  <title>USB メモリスティックからの起動</title>
+  <title>USB メモリからの起動</title>
 <para>
 
 <!--
@@ -212,7 +212,7 @@ booting (see <xref linkend="invoking-openfirmware"/>).
 -->
 すでに <xref linkend="boot-usb-files"/> にあるすべての準備が、
 終わっていることと思います。
-USB スティックから Macintosh システムを起動するには、
+USB メモリから Macintosh システムを起動するには、
 Open Firmware は標準で USB ストレージデバイスを検索しませんので、
 Open Firmware プロンプトを使う必要があります。
 <!-- TODO: 書きましたが、確認してください (訳注 必要ないかな) -->
@@ -240,7 +240,7 @@ with various types of USB stick, paths such as
 Open Firmware プロンプトで、
 <userinput>dev / ls</userinput> や <userinput>devalias</userinput> と入力し、
 認識しているすべてのデバイスとデバイスエイリアスを取得してください。
-筆者のシステムでは、いろいろな USB スティックが
+筆者のシステムでは、いろいろな USB メモリが
 <filename>usb0/disk</filename>, <filename>usb0/hub/disk</filename>,
 <filename>/pci@f2000000/usb@1b,1/disk@1</filename>,
 <filename>/pci@f2000000/usb@1b,1/hub@1/disk@1</filename>
@@ -318,7 +318,10 @@ boot monitor (see <xref linkend="invoking-openfirmware"/>) and
 use the command <command>boot enet:0</command>.  PReP and CHRP boxes
 may have different ways of addressing the network.  On a PReP machine,
 you should try
-<userinput>boot <replaceable>server_ipaddr</replaceable>,<replaceable>file</replaceable>,<replaceable>client_ipaddr</replaceable></userinput>.
+<userinput>boot net:<replaceable>server_ipaddr</replaceable>,<replaceable>file</replaceable>,<replaceable>client_ipaddr</replaceable></userinput>.
+On some PReP systems (e.g. Motorola PowerStack machines) the command
+<userinput>help boot</userinput> may give a description of syntax and
+available options.
 -->
 NewWorld Power Mac のような OpenFirmware のマシンでは、
 ブートモニタに入り
@@ -326,8 +329,11 @@ NewWorld Power Mac のような OpenFirmware のマシンでは、
 <command>boot enet:0</command> というコマンドを使います。
 PReP や CHRP のマシンでは、ネットワークの指定が異なるかもしれません。
 PReP マシンでは、
-<userinput>boot <replaceable>server_ipaddr</replaceable>,<replaceable>file</replaceable>,<replaceable>client_ipaddr</replaceable></userinput>
+<userinput>boot net:<replaceable>server_ipaddr</replaceable>,<replaceable>file</replaceable>,<replaceable>client_ipaddr</replaceable></userinput>
 を試してみてください。
+いくつかの PReP システム (例: Motorola PowerStack マシン) では、
+<userinput>help boot</userinput> コマンドで、
+文法と有効なオプションの説明が得られます。
 
 </para>
   </sect2>
@@ -354,7 +360,7 @@ NewWorld システムには、フロッピードライブがついておらず、
 You will have already downloaded the floppy images you needed and
 created floppies from the images in <xref linkend="create-floppy"/>.
 -->
-おそらく <xref linkend="create-floppy"/> で
+おそらく <xref linkend="create-floppy"/> において
 必要なフロッピーイメージは既にダウンロードし、
 それらのイメージからフロッピーは作成済みかと思います。
 

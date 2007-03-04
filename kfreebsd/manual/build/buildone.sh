@@ -42,7 +42,7 @@ dynamic="${tempdir}/dynamic.ent"
 
 create_profiled () {
 
-    [ -x /usr/bin/xsltproc ] || return 9
+    [ -x "`which xsltproc 2>/dev/null`" ] || return 9
 
     echo "Info: creating temporary profiled .xml file..."
 
@@ -66,8 +66,15 @@ create_profiled () {
     }
     . arch-options/$arch
 
+    # Now we source the profiling information for the current language
+    if [ -f "lang-options/${language}" ]; then
+	. lang-options/$language
+    fi
+
     # Join all architecture options into one big variable
-    condition="$kernelpackage;$fdisk;$network;$boot;$smp;$other;$goodies;$unofficial_build;$status;$manual_release"
+    condition="$fdisk;$network;$boot;$smp;$frontend;$other;$goodies;$unofficial_build;$status;$manual_release"
+    # Add language options
+    condition="$condition;$optional_paras"
     # Add build options for the manual
     condition="$condition;$unofficial_build;$status;$manual_release;$manual_target"
 
@@ -80,6 +87,9 @@ create_profiled () {
     echo "<!ENTITY altkernelversion \"${altkernelversion}\">" >> $dynamic
     echo "<!ENTITY smp-config-section \"${smp_config_section}\">" >> $dynamic
     echo "<!ENTITY smp-config-option \"${smp_config_option}\">" >> $dynamic
+    echo "<!ENTITY minimum-memory \"${minimum_memory}&notation-megabytes;\">" >> $dynamic
+    echo "<!ENTITY minimum-memory-gtk \"${minimum_memory_gtk}&notation-megabytes;\">" >> $dynamic
+
     sed "s:##SRCPATH##:$source_path:" templates/docstruct.ent >> $dynamic
 
     sed "s:##LANG##:$language:g" templates/install.xml.template | \
@@ -88,7 +98,7 @@ create_profiled () {
         sed "s:##SRCPATH##:$source_path:" > $tempdir/install.${language}.xml
 
     # Create the profiled xml file
-    /usr/bin/xsltproc \
+    xsltproc \
         --xinclude \
         --stringparam profile.arch "$archspec" \
         --stringparam profile.condition "$condition" \
@@ -104,7 +114,7 @@ create_html () {
 
     echo "Info: creating .html files..."
 
-    /usr/bin/xsltproc \
+    xsltproc \
         --xinclude \
         --stringparam base.dir $destdir/html/ \
         $stylesheet_html \
@@ -119,11 +129,11 @@ create_html () {
 
 create_text () {
 
-    [ -x /usr/bin/w3m ] || return 9
+    [ -x "`which w3m 2>/dev/null`" ] || return 9
 
     echo "Info: creating temporary .html file..."
 
-    /usr/bin/xsltproc \
+    xsltproc \
         --xinclude \
         --output $tempdir/install.${language}.html \
         $stylesheet_html_single \
@@ -151,13 +161,13 @@ create_text () {
             CHARSET=EUC-KR ;;
         ru)
             CHARSET=KOI8-R ;;
-        cs|el|ro|zh_CN|zh_TW)
+        cs|el|hu|ro|zh_CN|zh_TW)
             CHARSET=UTF-8 ;;
         *)
             CHARSET=ISO-8859-1 ;;
     esac
     
-    /usr/bin/w3m -dump $tempdir/install.${language}.corr.html \
+    HOME=$tempdir w3m -dump $tempdir/install.${language}.corr.html \
         -o display_charset=$CHARSET \
         >$destdir/install.${language}.txt
     RET=$?; [ $RET -ne 0 ] && return $RET
@@ -167,8 +177,8 @@ create_text () {
 
 create_dvi () {
     
-    [ -x /usr/bin/openjade ] || return 9
-    [ -x /usr/bin/jadetex ] || return 9
+    [ -x "`which openjade 2>/dev/null`" ] || return 9
+    [ -x "`which jadetex 2>/dev/null`" ] || return 9
 
     # Skip this step if the .dvi file already exists
     [ -f "$tempdir/install.${language}.dvi" ] && return
@@ -177,7 +187,7 @@ create_dvi () {
 
     # And use openjade to generate a .tex file
     export SP_ENCODING="utf-8"
-    /usr/bin/openjade -t tex \
+    openjade -t tex \
         -b utf-8 \
         -o $tempdir/install.${language}.tex \
         -d $stylesheet_dsssl \
@@ -185,13 +195,25 @@ create_dvi () {
         $tempdir/install.${language}.profiled.xml
     RET=$?; [ $RET -ne 0 ] && return $RET
 
+    # some languages need additional macro
+    case "$language" in
+        ko)
+            mv $tempdir/install.${language}.tex \
+                $tempdir/install.${language}.orig.tex
+            cat templates/header.${language}.tex \
+                $tempdir/install.${language}.orig.tex \
+                > $tempdir/install.${language}.tex
+            rm $tempdir/install.${language}.orig.tex
+            ;;
+    esac
+
     echo "Info: creating temporary .dvi file..."
 
-    # Next we use jadetext to generate a .dvi file
+    # Next we use jadetex to generate a .dvi file
     # This needs three passes to properly generate the index (page numbering)
     cd $tempdir
     for PASS in 1 2 3 ; do
-        /usr/bin/jadetex install.${language}.tex >/dev/null
+        jadetex install.${language}.tex >/dev/null
         RET=$?; [ $RET -ne 0 ] && break
     done
     cd ..
@@ -202,14 +224,14 @@ create_dvi () {
 
 create_pdf() {
     
-    [ -x /usr/bin/dvipdf ] || return 9
+    [ -x "`which dvipdf 2>/dev/null`" ] || return 9
 
     create_dvi
     RET=$?; [ $RET -ne 0 ] && return $RET
 
     echo "Info: creating .pdf file..."
 
-    /usr/bin/dvipdf $tempdir/install.${language}.dvi
+    dvipdf $tempdir/install.${language}.dvi
     RET=$?; [ $RET -ne 0 ] && return $RET
     mv install.${language}.pdf $destdir/
 
@@ -218,14 +240,14 @@ create_pdf() {
 
 create_ps() {
     
-    [ -x /usr/bin/dvips ] || return 9
+    [ -x "`which dvips 2>/dev/null`" ] || return 9
 
     create_dvi
     RET=$?; [ $RET -ne 0 ] && return $RET
 
     echo "Info: creating .ps file..."
 
-    /usr/bin/dvips -q $tempdir/install.${language}.dvi
+    dvips -q $tempdir/install.${language}.dvi
     RET=$?; [ $RET -ne 0 ] && return $RET
     mv install.${language}.ps $destdir/
 
@@ -254,9 +276,16 @@ BUILD_OK=""
 BUILD_FAIL=""
 for format in $formats ; do
     case "$language" in
-        el|ja|ko|vi|zh_CN|zh_TW)
+        el|ja|vi|zh_CN|zh_TW)
             if [ "$format" = "pdf" -o "$format" = "ps" ] ; then
-                echo "Warning: pdf and ps formats are currently not supported for Chinese, Greek, Japanese, Korean and Vietnamese"
+                echo "Warning: pdf and ps formats are currently not supported for Chinese, Greek, Japanese and Vietnamese"
+                BUILD_SKIP="$BUILD_SKIP $format"
+                continue
+            fi
+            ;;
+        ko)
+            if [ "$web_build" ] && [ "$format" = "pdf" -o "$format" = "ps" ] ; then
+                echo "Warning: pdf and ps formats are currently not supported for Korean for the website"
                 BUILD_SKIP="$BUILD_SKIP $format"
                 continue
             fi

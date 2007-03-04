@@ -15,6 +15,8 @@ tasks.
 
 </para><para>
 
+<!-- TODO: Should explain popcon first -->
+
 So, you have the ability to choose <emphasis>tasks</emphasis> first,
 and then add on more individual packages later.  These tasks loosely
 represent a number of different jobs or things you want to do with
@@ -24,9 +26,9 @@ your computer, such as <quote>Desktop environment</quote>,
 <para>
 
 You should know that to present this list, the installer is merely
-invoking the <command>tasksel</command> program. It can be
-run at any time after installation to install (or remove) more
-packages, or you can use a more fine-grained tool such as <command>aptitude</command>.
+invoking the <command>tasksel</command> program. It can be run at any
+time after installation to install more packages (or remove them), or
+you can use a more fine-grained tool such as <command>aptitude</command>.
 If you are looking for a specific single package, after
 installation is complete, simply run <userinput>aptitude install
 <replaceable>package</replaceable></userinput>, where
@@ -40,25 +42,72 @@ requirements for the available tasks.
 
 </para><para>
 
-Once you've selected your tasks, select
-<guibutton>Ok</guibutton>. At this point,
-<command>aptitude</command> will install the packages you've
-selected.
+Some tasks may be pre-selected based on the characteristics of the
+computer you are installing. If you disagree with these selections you can
+un-select the tasks. You can even opt to install no tasks at all at this point.
 
+</para>
+<note><para>
+
+<!-- TODO: Explain the "Standard system" task first -->
+
+The <quote>Desktop environment</quote> task will install the GNOME desktop
+environment. The options offered by the installer currently do not allow to
+select a different desktop environment such as for example KDE.
+
+</para><para>
+
+It is possible to get the installer to install KDE by using preseeding
+(see <xref linkend="preseed-pkgsel"/>) or by adding
+<literal>tasks="standard, kde-desktop"</literal> at the boot prompt
+when starting the installer. However, this will only work if the packages
+needed for KDE are actually available. If you are installing using a full
+CD image, they will need to be downloaded from a mirror as KDE packages are
+not included on the first full CD; installing KDE this way should work fine
+if you are using a DVD image or any other installation method.
+
+</para><para>
+
+The various server tasks will install software roughly as follows.
+DNS server: <classname>bind9</classname>;
+File server: <classname>samba</classname>, <classname>nfs</classname>;
+Mail server: <classname>exim4</classname>, <classname>spamassassin</classname>,
+<classname>uw-imap</classname>;
+Print server: <classname>cups</classname>;
+SQL database: <classname>postgresql</classname>;
+Web server: <classname>apache</classname>.
+
+</para></note>
+<para>
+
+Once you've selected your tasks, select <guibutton>OK</guibutton>. At this
+point, <command>aptitude</command> will install the packages that are part
+of the tasks you've selected.
+
+</para>
 <note><para>
 
 In the standard user interface of the installer, you can use the space bar
 to toggle selection of a task.
 
 </para></note>
+<para>
 
-<note><para>
+You should be aware that especially the Desktop task is very large.
+Especially when installing from a normal CD-ROM in combination with a
+mirror for packages not on the CD-ROM, the installer may want to retrieve
+a lot of packages over the network. If you have a relatively slow
+Internet connection, this can take a long time. There is no option to
+cancel the installation of packages once it has started.
 
-Note that some tasks may be pre-selected based on the characteristics of the
-computer you are installing. If you disagree with these selections you can
-un-select the tasks. You can even opt to install no tasks at all at this point.
+</para><para>
 
-</para></note>
+Even when packages are included on the CD-ROM, the installer may still
+retrieve them from the mirror if the version available on the mirror is
+more recent than the one included on the CD-ROM. If you are installing
+the stable distribution, this can happen after a point release (an update
+of the original stable release); if you are installing the testing
+distribution this will happen if you are using an older image.
 
 </para><para>
 
@@ -68,94 +117,4 @@ unpacked and then installed in turn by the <command>apt-get</command> and
 information from the user, it will prompt you during this process.
 
 </para>
- <sect4 id="config-mta">
- <title>Configuring Your Mail Transport Agent</title>
-
-<para>
-
-Today, email is a very important part of many people's life, so it's
-no surprise Debian lets you configure your mail system right as a part
-of the installation process. The standard mail transport agent in
-Debian is <command>exim4</command>, which is relatively small,
-flexible, and easy to learn.
-
-</para><para>
-
-You may ask if this is needed even if your computer is not connected
-to any network. The short answer is: Yes. The longer explanation: Some
-system utilities (like <command>cron</command>,
-<command>quota</command>, <command>aide</command>, &hellip;) may send
-you important notices via email.
-
-</para><para>
-
-So on the first screen you will be presented with several common mail
-scenarios. Choose the one that most closely resembles your needs:
-
-</para>
-
-<variablelist>
-<varlistentry>
-<term>internet site</term>
-<listitem><para>
-
-Your system is connected to a network and your mail is sent and
-received directly using SMTP. On the following screens you will be
-asked a few basic questions, like your machine's mail name, or a list of
-domains for which you accept or relay mail.
-
-</para></listitem>
-</varlistentry>
-
-<varlistentry>
-<term>mail sent by smarthost</term>
-<listitem><para>
-
-In this scenario is your outgoing mail forwarded to another machine,
-called a <quote>smarthost</quote>, which does the actual job for
-you. Smarthost also usually stores incoming mail addressed to your
-computer, so you don't need to be permanently online. That also means
-you have to download your mail from the smarthost via programs like
-fetchmail. This option is suitable for dial-up users.
-
-</para></listitem>
-</varlistentry>
-
-<varlistentry>
-<term>local delivery only</term>
-<listitem><para>
-
-Your system is not on a network and mail is sent or received only
-between local users. Even if you don't plan to send any messages, this
-option is highly recommended, because some system utilities may send
-you various alerts from time to time (e.g. beloved <quote>Disk quota
-exceeded</quote>). This option is also convenient for new users,
-because it doesn't ask any further questions.
-
-</para></listitem>
-</varlistentry>
-
-<varlistentry>
-<term>no configuration at this time</term>
-<listitem><para>
-
-Choose this if you are absolutely convinced you know what you are
-doing. This will leave you with an unconfigured mail system &mdash;
-until you configure it, you won't be able to send or receive any mail
-and you may miss some important messages from your system utilities.
-
-</para></listitem>
-</varlistentry>
-</variablelist>
-
-<para>
-
-If none of these scenarios suits your needs, or if you need a finer
-setup, you will need to edit configuration files under the
-<filename>/etc/exim4</filename> directory after the installation is
-complete. More information about <command>exim4</command> may be found
-under <filename>/usr/share/doc/exim4</filename>.
-
-</para>
- </sect4>
    </sect3>

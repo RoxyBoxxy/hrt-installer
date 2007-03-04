@@ -1,11 +1,84 @@
-lowmem (1.18) UNRELEASED; urgency=low
+lowmem (1.25) unstable; urgency=low
+
+  [ Joey Hess ]
+  * Add armel lowmem level. Should be close to the same as arm.
+
+  [ Steve Langasek ]
+  * Add alpha lowmem level.  Closes: #410596.
+
+ -- Frans Pop <fjp@debian.org>  Wed, 21 Feb 2007 10:10:38 +0100
+
+lowmem (1.24) unstable; urgency=low
+
+  [ Martin Michlmayr ]
+  * Make sure that SGI machines with 64 MB of RAM don't run in lowmem
+    mode. Closes: #405971.
+
+  [ Frans Pop ]
+  * Update lowmem levels for x86 for Etch RC2 as tested in VMware.
+
+ -- Frans Pop <fjp@debian.org>  Wed, 24 Jan 2007 02:20:24 +0100
+
+lowmem (1.23) unstable; urgency=low
+
+  * trimtemplates: don't remove "Choices-C" from templates. Closes: #400263.
+  * Add myself to uploaders.
+
+ -- Frans Pop <fjp@debian.org>  Sun, 10 Dec 2006 03:23:38 +0100
+
+lowmem (1.22) unstable; urgency=low
+
+  * Installations on ARM and MIPS with 32 MB require lowmem level 2.
+  * Installations on ARM and MIPS with 64 MB should not need lowmem.
+
+ -- Martin Michlmayr <tbm@cyrius.com>  Sun, 26 Nov 2006 11:44:34 +0100
+
+lowmem (1.21) unstable; urgency=low
+
+  [ Colin Watson ]
+  * Use list-devices to discover whether any discs have been found. Requires
+    di-utils 1.33.
+
+  [ Frans Pop ]
+  * Remove standards-version and add Lintian override for it. 
+
+ -- Frans Pop <fjp@debian.org>  Sat, 16 Sep 2006 11:42:29 +0200
+
+lowmem (1.20) unstable; urgency=low
+
+  [ Martin Michlmayr ]
+  * Level1 installations work again on ARM with 32 MB RAM thanks to the
+    temporary removal of crypto modules.
+
+  [ Frans Pop ]
+  * Assume amd64 needs similar limits as i386.
+  * Update lowmem settings for Etch Beta 3; settings are somewhat conservative
+    and can hopefully be lowered again in the future. Main culprit for
+    increased memory usage is the number of supported languages which also
+    explains the large differences between level 1 and 2 limits.
+
+ -- Frans Pop <fjp@debian.org>  Mon, 31 Jul 2006 13:33:05 +0200
+
+lowmem (1.19) unstable; urgency=low
+
+  [ Philip Hands ]
+  * get rid of a couple of redundant greps from the postinst
+  * don't bother "truncating" already empty log files
+
+  [ Martin Michlmayr ]
+  * Increase level2 on ARM.
+
+ -- Martin Michlmayr <tbm@cyrius.com>  Wed, 12 Jul 2006 21:45:28 +0200
+
+lowmem (1.18) unstable; urgency=low
 
   * Do not delete modules when partman is started if no discs have been found
     yet. This allows the user to go back to anna to load additional module
     udebs and run hw-detect again without having to find out that core modules
     have already been deleted.
+  * Standards-version is not required for udebs.
 
- -- Frans Pop <fjp@debian.org>  Sun, 19 Mar 2006 21:53:56 +0100
+ -- Frans Pop <fjp@debian.org>  Wed, 21 Jun 2006 13:41:21 +0200
 
 lowmem (1.17) unstable; urgency=low
 

@@ -1,22 +1,21 @@
 <?xml version="1.0" encoding="EUC-JP"?>
 <!-- retain these comments for translator revision tracking -->
-<!-- original version: 28672 -->
+<!-- original version: 43254 -->
 
 
 <!--
   <sect2 arch="ia64"><title>Partitioning for &arch-title;</title>
 -->
   <sect2 arch="ia64"><title>&arch-title; でのパーティション分割</title>
-
 <para>
 
 <!--
 The <command>partman</command> disk partitioner is the default
 partitioning tool for the installer.
 It manages the set of partitions and their mount points to ensure
-that the disks and filesystems is properly configured for a successful
-installation.  It actually uses the <command>parted</command> to
-do the on-disk partitioning.
+that the disks and filesystems are properly configured for a successful
+installation.  It actually uses <command>parted</command> to do the
+on-disk partitioning.
 -->
 <command>partman</command> ディスクパーティショナーは、インストーラ用の
 デフォルトのパーティション分割ツールです。
@@ -35,17 +34,17 @@ do the on-disk partitioning.
 <para>
 
 <!--
-The IA64 EFI firmware supports two partition table (or disk label)
+The IA-64 EFI firmware supports two partition table (or disk label)
 formats, GPT and MS-DOS.  MS-DOS, the format typically used on i386
-PCs, is no longer recommended for IA64 systems.  Although
-the installer also provides the <command>cfdisk</command>,
-you should only use the <ulink url="parted.txt">
+PCs, is no longer recommended for IA-64 systems.  Although
+the installer also provides <command>cfdisk</command>,
+you should only use <ulink url="parted.txt">
 <command>parted</command></ulink> because only it can manage both GPT
 and MS-DOS tables correctly.
 -->
-IA64 EFIファームウェアは、GPT および MS-DOS の 2 つのパーティションテーブル
+IA-64 EFIファームウェアは、GPT および MS-DOS の 2 つのパーティションテーブル
 (あるいはディスクラベル) フォーマットをサポートします。MS-DOS
-(i386 PC 上で一般的に使用されるフォーマット) は、IA64 システムでは
+(i386 PC 上で一般的に使用されるフォーマット) は、IA-64 システムでは
 もはや推奨されません。インストーラはさらに <command>cfdisk</command>
 を提供しますが、GPT および MS-DOS テーブルの両方を唯一正確に
 管理することができる <ulink url="parted.txt">
@@ -65,8 +64,9 @@ setting up a <emphasis>swap</emphasis> partition.
 <command>partman</command> の自動のパーティション分割レシピは、
 ディスク上の第 1 パーティションとして EFI パーティションを割り当てます。
 また、<emphasis>swap</emphasis> パーティションをセットアップするのに
-幾分似通った、メインメニューからの <guimenuitem>Guided
-partitioning</guimenuitem> 中でパーティションをセットアップできます。
+幾分似通った、メインメニューからの 
+<guimenuitem>ガイドによるパーティショニング</guimenuitem>
+でパーティションをセットアップできます。
 
 </para><para>
 
@@ -129,18 +129,17 @@ complete, as it scans the partition for bad blocks.
   <sect2 arch="ia64"><title>Boot Loader Partition Requirements</title>
 -->
   <sect2 arch="ia64"><title>ブートローダパーティションの必要条件</title>
-
 <para>
 
 <!--
-ELILO, the ia64 boot loader, requires a partition containing a FAT
+ELILO, the IA-64 boot loader, requires a partition containing a FAT
 file system with the <userinput>boot</userinput> flag set.
 The partition must be big enough to hold the boot loader and any
 kernels or RAMdisks you may wish to boot.  A minimum size would be
 about 20MB, but if you expect to run with multiple kernels, then
 128MB might be a better size.
 -->
-ELILO (ia64 ブートローダ) は、<userinput>boot</userinput> フラグが
+ELILO (IA-64 ブートローダ) は、<userinput>boot</userinput> フラグが
 セットされた FAT ファイルシステムのパーティションを必要とします。
 このパーティションは、ブートローダ、カーネル全部、RAM ディスクなど、
 起動に必要なものを収めなければなりません。最小サイズはおよそ 20MB
@@ -186,14 +185,12 @@ on the same disk as the <emphasis>root</emphasis> filesystem.
 EFI ブートパーティションを割り当てることを強くお勧めします。
 
 </para>
-
   </sect2>
 
 <!--
   <sect2 arch="ia64"><title>EFI Diagnostic Partitions</title>
 -->
   <sect2 arch="ia64"><title>EFI のパーティション診断</title>
-
 <para>
 
 <!--
@@ -220,5 +217,4 @@ EFI ファームウェアは、ほとんどの x86 PC 上で見られた通常の BIOS より
 EFI ブートパーティションと同時にセットアップすることです。
 
 </para>
-
-   </sect2>
+  </sect2>

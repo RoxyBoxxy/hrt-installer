@@ -15,7 +15,7 @@ NEWLINE="
 MISSING_MODULES_LIST=""
 SUBARCH="$(archdetect)"
 
-prebaseconfig=/usr/lib/prebaseconfig.d/30hw-detect
+finish_install=/usr/lib/finish-install.d/30hw-detect
 
 if [ -x /sbin/depmod ]; then
 	depmod -a > /dev/null 2>&1 || true
@@ -43,7 +43,6 @@ is_available () {
 
 # Module as first parameter, description of device the second.
 missing_module () {
-	log "Missing module '$module'."
 	if ! in_list "$1" "$MISSING_MODULES_LIST"; then
 		if [ -n "$MISSING_MODULES_LIST" ]; then
 			MISSING_MODULES_LIST="$MISSING_MODULES_LIST, "
@@ -124,7 +123,7 @@ load_sr_mod () {
 }
 
 blacklist_de4x5 () {
-	cat << EOF >> $prebaseconfig
+	cat << EOF >> $finish_install
 if [ -e /target/etc/discover.conf ]; then
 	touch /target/etc/discover-autoskip.conf
 	(echo "# blacklisted since tulip is used instead"; echo skip de4x5 ) >> /target/etc/discover-autoskip.conf
@@ -145,7 +144,6 @@ discover_version () {
 			DISCOVER_VERSION=1
 		fi
 	else
-		log "No discover available. Maybe using hotplug instead?"
 		DISCOVER_VERSION=
 	fi
 }
@@ -188,19 +186,19 @@ discover_hw () {
 
 hotplug_type () {
 	if [ -f /proc/sys/kernel/hotplug ]; then
-		if [ -d /etc/hotplug ]; then
-			HOTPLUG_TYPE=real
-		else
-			HOTPLUG_HANDLER="$(cat /proc/sys/kernel/hotplug)"
-			case $HOTPLUG_HANDLER in
-				''|/sbin/udevsend)
-					HOTPLUG_TYPE=udev
-					;;
-				*)
+		HOTPLUG_HANDLER="$(cat /proc/sys/kernel/hotplug)"
+		case $HOTPLUG_HANDLER in
+			''|/sbin/udevsend)
+				HOTPLUG_TYPE=udev
+				;;
+			*)
+				if [ -d /etc/hotplug ]; then
+					HOTPLUG_TYPE=real
+				else
 					HOTPLUG_TYPE=fake
-					;;
-			esac
-		fi
+				fi
+				;;
+		esac
 	else
 		HOTPLUG_TYPE=
 	fi
@@ -301,9 +299,9 @@ get_manual_hw_info() {
 		echo "lasi_82596:LASI Ethernet"
 		register-module lasi_82596
 		echo "lasi700:LASI SCSI"
-		register-module lasi700
+		register-module -i lasi700
 		echo "zalon7xx:Zalon SCSI"
-		register-module zalon7xx
+		register-module -i zalon7xx
 	fi
 }
 
@@ -338,7 +336,6 @@ if [ -f /etc/pcmcia/cb_mod_queue ]; then
 	fi
 fi
 
-log "Detecting hardware..."
 db_progress INFO hw-detect/detect_progress_step
 
 # Load yenta_socket on 2.6 kernels, if hardware is available, so that
@@ -431,7 +428,6 @@ if [ "$LIST" ]; then
 	MODULE_STEPSIZE=$(expr $MODULE_STEPS / $(list_to_lines | wc -l))
 fi
 
-log "Loading modules..."
 IFS="$NEWLINE"
 
 for device in $(list_to_lines); do
@@ -449,7 +445,6 @@ for device in $(list_to_lines); do
 		db_subst hw-detect/load_progress_step CARDNAME "$cardname"
 		db_subst hw-detect/load_progress_step MODULE "$module"
 		db_progress INFO hw-detect/load_progress_step
-		log "Trying to load module '$module'"
 		if [ "$cardname" = "[Unknown]" ]; then
 			load_module "$module"
 		else
@@ -598,7 +593,13 @@ apply_pcmcia_resource_opts() {
 }
 
 # get pcmcia running if possible
-if [ -x /etc/init.d/pcmcia ]; then
+PCMCIA_INIT=
+if [ -x /etc/init.d/pcmciautils ]; then
+	PCMCIA_INIT=/etc/init.d/pcmciautils
+elif [ -x /etc/init.d/pcmcia ]; then
+	PCMCIA_INIT=/etc/init.d/pcmcia
+fi
+if [ "$PCMCIA_INIT" ]; then
 	if ! [ -e /var/run/cardmgr.pid ]; then
 		db_input medium hw-detect/start_pcmcia || true
 	fi
@@ -613,7 +614,7 @@ if [ -x /etc/init.d/pcmcia ]; then
 		db_progress INFO hw-detect/pcmcia_step
 		
 		if [ -e /var/run/cardmgr.pid ]; then
-			# Not using /etc/init.d/pcmcia stop as it
+			# Not using $PCMCIA_INIT stop as it
 			# uses sleep which is not available and is racey.
 			kill -9 $(cat /var/run/cardmgr.pid) 2>/dev/null || true
 			rm -f /var/run/cardmgr.pid
@@ -651,7 +652,7 @@ if [ -x /etc/init.d/pcmcia ]; then
 			echo /bin/hotplug-pcmcia >/proc/sys/kernel/hotplug
 		fi
 	    
-		CARDMGR_OPTS="-f" /etc/init.d/pcmcia start </dev/null 3<&0 2>&1 \
+		CARDMGR_OPTS="-f" $PCMCIA_INIT start </dev/null 3<&0 2>&1 \
 			| logger -t hw-detect
 	    
 		if [ "$HOTPLUG_TYPE" = fake ]; then
@@ -729,15 +730,15 @@ fi
 if [ "$have_pcmcia" -eq 1 ] && ! grep -q pcmcia-cs /var/lib/apt-install/queue 2>/dev/null; then
 	log "Detected PCMCIA, installing pcmcia-cs."
 	apt-install pcmcia-cs || true
-	if expr "$(uname -r)" : 2.6 >/dev/null && ! type cardmgr >/dev/null 2>&1; then
-		log "Detected PCMCIA and no cardmgr, installing pcmciautils."
+	if expr "$(uname -r)" : 2.6 >/dev/null; then
+		log "Detected PCMCIA, installing pcmciautils."
 		apt-install pcmciautils || true
 	fi
 
 	echo "mkdir /target/etc/pcmcia 2>/dev/null || true" \
-		>>$prebaseconfig
+		>>$finish_install
 	echo "cp /etc/pcmcia/config.opts /target/etc/pcmcia/config.opts" \
-		>>$prebaseconfig
+		>>$finish_install
 
 	# Determine devnames.
 	if [ -f /var/run/stab ]; then
@@ -746,47 +747,60 @@ if [ "$have_pcmcia" -eq 1 ] && ! grep -q pcmcia-cs /var/lib/apt-install/queue 2>
 	fi
 fi
 
-# Ask for discover to be installed into /target/, to make sure the
-# required drivers are loaded. We need to do this even if d-i isn't using
-# discover, since X's maintainer scripts use discover to find out what
-# video hardware is in use.
-case "$DISCOVER_VERSION" in
-	2)
-		log "Detected discover version 2, installing discover."
-		apt-install discover || true
-		;;
-	1|'')
-		# This will break woody install, as discover1 is
-		# missing in woody.  We should try to find out which
-		# packages are available when selecting it for
-		# installation. [pere 2004-04-23]
-
-		log "Detected discover version 1, installing discover1."
-		apt-install discover1 || true
-		;;
-esac
-
-# Install udev/hotplug as well, as appropriate.
+# Install appropriate hardware detection tool into target.
 if type udevd >/dev/null 2>&1; then
-	log "Detected udev support, installing udev."
 	apt-install udev || true
-elif [ -f /proc/sys/kernel/hotplug ]; then 
-	log "Detected hotplug support (and no udev), installing hotplug."
-	apt-install hotplug || true
+else
+	case "$DISCOVER_VERSION" in
+		2)
+			apt-install discover || true
+			;;
+		1|'')
+			apt-install discover1 || true
+			;;
+	esac
+	if [ -f /proc/sys/kernel/hotplug ]; then
+		apt-install hotplug || true
+	fi
 fi
 
 # TODO: should this really be conditional on hotplug support?
 if [ -f /proc/sys/kernel/hotplug ]; then
-	log "Detected hotplug support, installing usbutils."
 	apt-install usbutils || true
 fi
 
 # Install acpi (works only for 2.6 kernels)
 if [ -d /proc/acpi ]; then
-	log "Detected acpi support, installing acpi/acpid."
 	apt-install acpi || true
 	apt-install acpid || true
 fi
+
+# If hardware has support for pmu, install pbbuttonsd
+if [ -d /sys/class/misc/pmu/ ]; then
+	apt-install pbbuttonsd || true
+fi
+
+# Install optimised libc based on CPU type.
+case "$(udpkg --print-architecture)" in
+	i386)
+		case "$(grep '^cpu family' /proc/cpuinfo | cut -d: -f2)" in
+			" 6"|" 15")
+				# intel 686 or Amd k6.
+				apt-install libc6-i686 || true
+	                ;;
+		esac
+	;;
+	sparc)
+		if grep -q '^type.*: sun4u' /proc/cpuinfo ; then
+			# sparc v9 or v9b
+			if grep -q '^cpu.*: .*UltraSparc III' /proc/cpuinfo; then
+				apt-install libc6-sparcv9b || true
+			else
+				apt-install libc6-sparcv9 || true
+			fi
+		fi
+	;;
+esac
 
 db_progress SET $MAX_STEPS
 db_progress STOP

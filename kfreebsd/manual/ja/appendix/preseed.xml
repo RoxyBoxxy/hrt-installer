@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="EUC-JP"?>
 <!-- retain these comments for translator revision tracking -->
-<!-- original version: 36269 -->
+<!-- original version: 45355 -->
 
 <!--
-Be carefull with the format of this file as it is parsed to generate
+Be careful with the format of this file as it is parsed to generate
 the example preconfiguration file.
 このファイルをパースしてサンプル事前設定ファイルを生成するので、
 形式に注意してください。
@@ -26,14 +26,13 @@ Currently only a single variant of the example file is generated (for i386).
 <title>Automating the installation using preseeding</title>
 -->
 <title>preseed を利用したインストールの自動化</title>
-
 <para>
 
 <!--
-This appendix explains the intricacies of preseeding answers to questions in
-&d-i; to automate your installation.
+This appendix explains how to preseed answers to questions in &d-i; to
+automate your installation.
 -->
-本付録は preseed の説明を行います。
+本付録は preseed の方法を説明します。
 これは &d-i; の質問に回答しておきインストールを自動化するものです。
 
 </para><para>
@@ -42,8 +41,8 @@ This appendix explains the intricacies of preseeding answers to questions in
 The configuration fragments used in this appendix are also available as an
 example preconfiguration file from &urlset-example-preseed;.
 -->
-本付録で使用した設定の断片は、
-&urlset-example-preseed; にある事前設定ファイルのサンプルで利用できます。
+本付録で使用する設定の断片は、
+&urlset-example-preseed; のサンプル事前設定ファイルでも利用できます。
 
 </para>
 
@@ -81,9 +80,7 @@ There are three methods that can be used for preseeding:
 <firstterm>network</firstterm>. Initrd preseeding will work with any
 installation method and supports preseeding of more things, but it requires
 the most preparation. File and network preseeding each can be used with
-different installation methods. With file and network preseeding the first
-few installer questions cannot be preseeded because the preconfiguration
-file is only loaded after they have been asked.
+different installation methods.
 -->
 preseed を利用するには、
 <firstterm>initrd</firstterm>, <firstterm>ファイル</firstterm>,
@@ -92,9 +89,6 @@ initrd preseed は、いずれのインストール方法でも動作し、
 より多くの preseed をサポートしますが、大量の準備が必要です。
 ファイル preseed やネットワーク preseed は、
 それぞれインストール方法が異なる場合に使用されます。
-ファイル preseed やネットワーク preseed では、
-事前設定ファイルが読み込まれる前にいくつか質問されてしまうため、
-その質問を preseed に含めることができません。
 
 </para><para>
 
@@ -122,7 +116,18 @@ installation methods.
   <entry>CD/DVD</entry>
   <entry>yes</entry>
   <entry>yes</entry>
-  <entry>no</entry>
+  <entry>yes<footnote id='apx-ps-net'>
+
+  <para>
+<!--
+  but only if you have network access, and set <literal>preseed/url</literal>
+  appropriately
+-->
+  ネットワークアクセスを行う場合だけでなく、
+  適切な <literal>preseed/url</literal> を設定する場合。
+  </para>
+
+  </footnote></entry>
 </row><row>
   <entry>netboot</entry>
   <entry>yes</entry>
@@ -132,10 +137,10 @@ installation methods.
 <!--
   <entry>hd-media <phrase condition="bootable-usb">(including usb-stick)</phrase></entry>
 -->
-  <entry>hd-media <phrase condition="bootable-usb">(USB スティックを含む)</phrase></entry>
+  <entry>hd-media <phrase condition="bootable-usb">(USB メモリを含む)</phrase></entry>
   <entry>yes</entry>
   <entry>yes</entry>
-  <entry>no</entry>
+  <entry>yes<footnoteref linkend='apx-ps-net'/></entry>
 </row><row condition="supports-floppy-boot">
 <!--
   <entry>floppy based (cd-drivers)</entry>
@@ -143,7 +148,7 @@ installation methods.
   <entry>フロッピーベース (CD ドライバ)</entry>
   <entry>yes</entry>
   <entry>yes</entry>
-  <entry>no</entry>
+  <entry>yes<footnoteref linkend='apx-ps-net'/></entry>
 </row><row condition="supports-floppy-boot">
 <!--
   <entry>floppy based (net-drivers)</entry>
@@ -153,9 +158,6 @@ installation methods.
   <entry>no</entry>
   <entry>yes</entry>
 </row><row arch="s390">
-<!--
-  <entry>generic/tape</entry>
--->
   <entry>generic/tape</entry>
   <entry>yes</entry>
   <entry>no</entry>
@@ -183,31 +185,37 @@ initrd preseed では、インストールの始め (最初の質問が行われる前) に読み込まれま�
 </para><para>
 
 <!--
-In practical terms this means for file and network preseeding that the
-questions about language, country and keyboard selection will already have
-been asked. For network preseeding add to that any questions related to
-network configuration. Some other questions that are only displayed
-at medium or low priority (like the first hardware detection run) will
-also already have been processed.
+Obviously, any questions that have been processed before the
+preconfiguration file is loaded cannot be preseeded (this will include
+questions that are only displayed at medium or low priority, like the
+first hardware detection run). <xref linkend="preseed-bootparms"/>
+offers a way to avoid these questions being asked.
 -->
-実際の話をすると、ファイル preseed やネットワーク preseed では、
-言語、国、キーボードの選択について質問は、既にされてしまっています。
-ネットワーク preseed では、そこにネットワークの設定についても加えてください。
-その他、優先度が「中」や「低」でしか表示されない質問
-(はじめのハードウェア検出など) は、既に処理されてしまっています。
+言うまでもなく、事前設定ファイルが読み込まれる前に処理される質問は、
+preseed できません。
+(最初のハードウェア検出のように、
+優先度が中や低でしか表示されない質問も含んでいます)
+<xref linkend="preseed-bootparms"/> では、
+そういった質問が出ないようにする方法を提供しています。
 
 </para><para>
 
 <!--
-Obviously, any questions that have been processed before the
-preconfiguration file is loaded cannot be preseeded.
-<xref linkend="preseed-bootparms"/> offers a way to avoid these
-questions being asked.
+In order to avoid the questions that would normally appear before the
+preseeding occurs, you can start the installer in <quote>auto</quote>
+mode. This delays questions that would normally be asked too early for
+preseeding (i.e. language, country and keyboard selection) until after
+the network comes up, thus allowing them to be preseeded. It also runs
+the installation at critical priority, which avoids many unimportant
+questions. See <xref linkend="preseed-auto"/> for details.
 -->
-言うまでもなく、事前設定ファイルが読み込まれる前に処理される質問は、
-preseed できません。
-<xref linkend="preseed-bootparms"/> では、
-そういった質問が出ないようにする方法を提供しています。
+preseed が起動する前に、通常現れる質問を回避するのに、
+<quote>自動</quote> モードでインストーラを起動できます。
+これによりネットワークの設定が終わるまで、preseed の前に行われる質問 
+(言語、国、キーボード選択など) を遅らせ、preseed にその質問を含められます。
+また、インストールの優先度を最重要で行うため、
+大量にある重要でない質問を回避できます。
+詳細は <xref linkend="preseed-auto"/> をご覧ください。
 
 </para>
   </sect2>
@@ -223,14 +231,13 @@ preseed できません。
 Although most questions used by &d-i; can be preseeded using this method,
 there are some notable exceptions. You must (re)partition an entire disk
 or use available free space on a disk; it is not possible to use existing
-partitions. You currently cannot use preseeding to set up RAID.
+partitions.
 -->
 &d-i; で行われる質問のほとんどはこの方法で preseed できますが、
 いくつか注目すべき例外があります。
 ディスク全体を (再度) パーティション分割するか、
 ディスクの空き領域を利用しなければなりません。
 つまり既存のパーティションを利用できないと言うことです。
-また現在、RAID のセットアップに preseed を利用できません。
 
 </para>
   </sect2>
@@ -257,7 +264,7 @@ The following types of templates are relevant for preseeding.
 
 </para>
 
-<itemizedlist>
+<itemizedlist spacing="compact">
 <listitem><para>
   string: allows the user to type any value
 </para></listitem>
@@ -291,81 +298,14 @@ runtime.
 Another readable file <filename>/var/cache/debconf/questions.dat</filename>
 is used to store the values for variables and the answers given to questions.
 A question always refers to the template used to ask it. For obvious
-security reasons the values for templates of type <quote>password</quote>
+security reasons the values for questions of type <quote>password</quote>
 are stored in a separate, non-readable file in the same directory.
 
 </para>
   </sect2>
 -->
-
-  <sect2 id="preseed-hooks">
-<!--
-  <title>Running custom commands during the installation</title>
--->
-  <title>インストール中でのカスタムコマンドの実行</title>
-<para>
-
-<!--
-A very powerful and flexible option offered by the preconfiguration tools
-is the ability to run commands or scripts at certain points in the
-installation. See <xref linkend="preseed-shell"/> for details.
--->
-事前設定ツールで提供される、とても強力で柔軟なオプションに、
-インストールの決まった場所でコマンドやスクリプトを実行する機能があります。
-詳細は <xref linkend="preseed-shell"/> をご覧ください。
-
-</para>
-
-<itemizedlist>
-<listitem><para>
-<!--
-  <userinput>preseed/early_command</userinput>: is run as soon as the
-  preconfiguration file has been loaded
--->
-  <userinput>preseed/early_command</userinput>: は、
-  事前設定ファイルが読み込まれるとすぐに実行します。
-</para></listitem>
-<listitem><para>
-<!--
-  <userinput>preseed/late_command</userinput>: is run just before the reboot
-  at the end of the install, but before the <filename>/target</filename>
-  filesystem has been unmounted
--->
-  <userinput>preseed/late_command</userinput>: は、
-  インストールが終わって再起動する直前、
-  <filename>/target</filename> ファイルシステムをアンマウントする前に実行します。
-</para></listitem>
-</itemizedlist>
-
-  </sect2>
-
-  <sect2 id="preseed-seenflag">
-<!--
-  <title>Using preseeding to change default values</title>
--->
-  <title>デフォルト値の変更に関する preseed の利用</title>
-<para>
-
-<!--
-It is possible to use preseeding to change the default answer for a
-question, but still have the question asked. To do this the
-<firstterm>seen</firstterm> flag must be reset to <quote>false</quote> after
-setting the value for a template.
--->
-訊かれる質問に対するデフォルトの回答を変更するのに preseed を利用できます。
-これには、テンプレートに値を設定した後で、
-<firstterm>seen</firstterm> フラグを <quote>false</quote>
-に設定しなければなりません。
-
-</para>
-
-<informalexample><screen>
-d-i foo/bar string value
-d-i foo/bar seen false
-</screen></informalexample>
-
-  </sect2>
  </sect1>
+
 
  <sect1 id="preseed-using">
 <!--
@@ -375,19 +315,19 @@ d-i foo/bar seen false
 <para>
 
 <!--
-Of course you will first need to create a preconfiguration file and place it in
+You will first need to create a preconfiguration file and place it in
 the location from where you want to use it. Creating the preconfiguration file
 is covered later in this appendix. Putting it in the correct location is fairly
 straightforward for network preseeding or if you want to read the file off
 a floppy or usb-stick. If you want to include the file on a CD or DVD, you
 will have to remaster the ISO image. How to get the preconfiguration file
 included in the initrd is outside the scope of this document; please consult
-the developers documentation for &d-i;.
+the developers' documentation for &d-i;.
 -->
-もちろん事前設定ファイルを最初に作成し、使用する場所に配置する必要があります。
+事前設定ファイルを最初に作成し、使用する場所に配置する必要があります。
 事前設定ファイルの作成は本付録で後ほど扱います。
 ネットワーク preseed の場合や、
-ファイルをフロッピーや USB スティックから読み込む場合、
+ファイルをフロッピーや USB メモリから読み込む場合、
 簡単に正しい位置に事前設定ファイルを配置できます。
 CD や DVD にファイルを含めたければ、
 ISO イメージを再度マスタリングする必要があります。
@@ -433,7 +373,7 @@ parameter, either manually at boot time or by editing the bootloader
 configuration file (e.g. <filename>syslinux.cfg</filename>) and adding the
 parameter to the end of the append line(s) for the kernel.
 -->
-他の preseed 方法では、ブート時にどのファイルを読み込むか、
+他の preseed 方法では、起動時にどのファイルを読み込むか、
 インストーラに指定する必要があります。
 通常、カーネルのブートパラメータで渡して行います。
 これは起動時に手動で与えるか、
@@ -496,7 +436,7 @@ Boot parameters to specify:
   preseed/file=/cdrom/preseed.cfg
   preseed/file/checksum=5da499872becccfeda2c4872f9171c3d
 
-- USB メディアで起動する場合 (事前設定ファイルを USB スティックの
+- USB メディアで起動する場合 (事前設定ファイルを USB メモリの
   トップレベルディレクトリに置くこと):
   preseed/file=/hd-media/preseed.cfg
   preseed/file/checksum=5da499872becccfeda2c4872f9171c3d
@@ -505,16 +445,427 @@ Boot parameters to specify:
 <para>
 
 <!--
-While you're at it, you may want to add a boot parameter
-<userinput>debconf/priority=critical</userinput>. This will avoid most
-questions even if the preseeding below misses some.
+Note that <filename>preseed/url</filename> can be shortened to just
+<filename>url</filename> and <filename>preseed/file</filename> to just
+<filename>file</filename> when they are passed as boot parameters.
 -->
-実行するにあたり、ブートパラメータに
-<userinput>debconf/priority=critical</userinput> を追加したいかもしれません。
-preseed でいくつか以下の設定を漏らしても、
-ほとんどの質問が表示されなくなります。
+ブートパラメータに渡す際に、
+<filename>preseed/url</filename> は <filename>url</filename> に、
+<filename>preseed/file</filename> は <filename>file</filename> に
+短縮できることに注意してください。
 
 </para>
+  </sect2>
+  
+  <sect2 id="preseed-bootparms">
+<!--
+  <title>Using boot parameters to preseed questions</title>
+-->
+  <title>preseed が質問するブートパラメータの利用</title>
+<para>
+
+<!--
+If a preconfiguration file cannot be used to preseed some steps, the
+install can still be fully automated, since you can pass preseed values on
+the command line when booting the installer.
+-->
+事前設定ファイルを preseed の各段階で使用できない場合でも、
+preseed の値をインストーラ起動時のコマンドラインに与えることで、
+インストールを自動で行えます。
+
+</para><para>
+
+<!--
+Boot parameters can also be used if you do not really want to use preseeding,
+but just want to provide an answer for a specific question. Some examples where
+this can be useful are documented elsewhere in this manual.
+-->
+preseed を使用せず指定した質問への答を設定したい場合にも、
+ブートパラメータを使用します。
+有用な使用法のサンプルが、このマニュアルの別の場所にあります。
+
+</para><para>
+
+<!--
+To set a value to be used inside &d-i;, just pass
+<userinput><replaceable>path/to/variable</replaceable>=<replaceable>value</replaceable></userinput>
+for any of the preseed variables listed in the examples in this appendix.
+If a value is to be used to configure packages for the target system, you
+will need to prepend the <firstterm>owner</firstterm><footnote>
+
+<para>
+The owner of a debconf variable (or template) is normally the name of the
+package that contains the corresponding debconf template. For variables
+used in the installer itself the owner is <quote>d-i</quote>.
+Templates and variables can have more than one owner which helps to
+determine whether they can be removed from the debconf database if the
+package is purged.
+</para>
+
+</footnote> of the variable as in
+<userinput><replaceable>owner</replaceable>:<replaceable>path/to/variable</replaceable>=<replaceable>value</replaceable></userinput>.
+If you don't specify the owner, the value for the variable will not be
+copied to the debconf database in the target system and thus remain unused
+during the configuration of the relevant package.
+-->
+&d-i; 内部で使用する値をセットするには、
+<userinput><replaceable>path/to/variable</replaceable>=<replaceable>value</replaceable></userinput>
+のように本付録の例にある preseed 変数を渡すだけです。
+値がターゲットシステムのパッケージを設定することがある場合、
+<firstterm>owner</firstterm><footnote>
+
+<para>
+debconf 変数 (やテンプレート) の所有者 (owner) は、
+debconf テンプレートに含まれるように、通常パッケージ名です。
+インストーラ自体が使用する値は、<quote>d-i</quote> になっています。
+テンプレートや変数は、複数の owner を持て、パッケージを完全削除する際に 
+debconf データベースから削除できるかどうかを決定するのに利用されます。
+</para>
+
+</footnote> 変数を、あらかじめ用意し、
+<userinput><replaceable>owner</replaceable>:<replaceable>path/to/variable</replaceable>=<replaceable>value</replaceable></userinput>
+で使用する必要があります。
+owner を指定しない場合、
+変数の値はターゲットシステムの debconf データベースにコピーされず、
+関連パッケージの設定中使用されません。
+
+</para><para>
+
+<!--
+Note that some variables that are frequently set at the boot prompt
+have a shorter alias. If an alias is available, it is used in the
+examples in this appendix instead of the full variable.  In
+particular, the <literal>preseed/url</literal> variable has been
+aliased as <literal>url</literal> and has some extra magic to allow
+shortened urls to be used. Another example is the <literal>tasks</literal>
+alias, which translates to <literal>tasksel:tasksel/first</literal>.
+-->
+ブートプロンプトによく使用される変数には、
+短いエイリアスがあることに注意してください。
+有効なエイリアスは、本サンプル内で完全な変数名の代わりに使用しています。
+特に、<literal>preseed/url</literal> 変数には <literal>url</literal> 
+というエイリアスがあり、短い URL が使えることによる技がいくつかあります。
+もう一つ、<literal>tasks</literal> というエイリアスがあり、
+これは <literal>tasksel:tasksel/first</literal> に変換されます。
+
+</para><para>
+
+<!--
+A <quote>-\-</quote> in the boot options has special meaning. Kernel
+parameters that appear after the last <quote>-\-</quote> may be copied
+into the bootloader configuration for the installed system (if supported by
+the installer for the bootloader). The installer will automatically filter
+out any options (like preconfiguration options) that it recognizes.
+-->
+ブートオプションの <quote>--</quote> は特別な意味を持ちます。
+最後の <quote>--</quote> に続きカーネルパラメータがあると、
+(インストーラがサポートするブートローダの場合) 
+インストール済みのブートローダの設定にコピーされます。
+インストーラは、(事前設定オプションのような) オプションを認識すると、
+自動的にフィルタをかけます。
+
+</para>
+<note><para>
+
+<!--
+Current linux kernels (2.6.9 and later) accept a maximum of 32 command line
+options and 32 environment options, including any options added by default
+for the installer. If these numbers are exceeded, the kernel will panic
+(crash). (For earlier kernels, these numbers were lower.)
+-->
+現在の Linux カーネル (2.6.9 以降) では、
+最大 (インストーラがデフォルトで指定するオプションを含め) 
+コマンドラインオプションを 32 個、環境オプションを 32 個受け取れます。
+この数を超えると、カーネルはパニック (クラッシュ) してしまいます。
+(初期のカーネルではこの数字がもっと少ないです)
+
+</para></note>
+<para>
+
+<!--
+For most installations some of the default options in your bootloader
+configuration file, like <literal>vga=normal</literal>, may be safely
+removed which may allow you to add more options for preseeding.
+-->
+ほとんどのインストールでは、ブートローダ設定ファイルにある
+(<literal>vga=normal</literal> のような) 
+デフォルトオプションを安全に削除できるかもしれません。
+これにより preseed 用にもっとオプションを追加できます。
+
+</para>
+<note><para>
+
+<!--
+It may not always be possible to specify values with spaces for boot
+parameters, even if you delimit them with quotes.
+-->
+ブートパラメータに空白を含んだ値を設定するのは、
+引用符で囲んだとしてもいつもうまくいくとは限りません。
+
+</para></note>
+  </sect2>
+  
+  <sect2 id="preseed-auto">
+<!--
+  <title>Auto mode</title>
+-->
+  <title>自動モード</title>
+<para>
+
+<!--
+There are several features of Debian Installer that combine to allow
+fairly simple command lines at the boot prompt to result in
+arbitrarily complex customized automatic installs.  To illustrate
+this, here are some examples that can be used at the boot prompt:
+-->
+かなりシンプルなコマンドラインをブートプロンプトに与え、
+任意の複雑なカスタマイズを自動インストールに対して行う 
+Debian Installer の機能があります。
+これを説明するため、以下にブートプロンプトで使用できる例を示します。
+
+<informalexample><screen>
+auto url=autoserver
+</screen></informalexample>
+
+<!--
+This relies on there being a DHCP server that will get the machine to
+the point where <literal>autoserver</literal> can be resolved by DNS,
+perhaps after adding the local domain if that was provided by DHCP.
+If this was done at a site where the domain is
+<literal>example.com</literal>, and they have a reasonably sane DHCP
+setup, it would result in the preseed file being retrieved from
+<literal>http://autoserver.example.com/d-i/etch/./preseed.cfg</literal>.
+-->
+これは、DNS で <literal>autoserver</literal> の名前解決ができ 
+(おそらく DHCP でローカルドメイン追加後)、
+そのマシンが DHCP サーバであることを前提にしています。
+<literal>example.com</literal> というドメインのサイトが、
+普通のまともな DHCP を設定していれば、
+<literal>http://autoserver.example.com/d-i/etch/./preseed.cfg</literal>
+から、preseed ファイルを取得するようになります。
+
+</para><para>
+
+<!--
+The last part of that url (<literal>d-i/etch/./preseed.cfg</literal>)
+is taken from <literal>auto-install/defaultroot</literal>. By default
+this includes the directory <literal>etch</literal> to allow future versions
+to specify their own codename and let people migrate forwards in a
+controlled manner.  The <literal>/./</literal> bit is used to indicate
+a root, relative to which subsequent paths can be anchored (for use in
+preseed/include and preseed/run).  This allows files to be specified
+either as full URLs, paths starting with / that are thus anchored, or
+even paths relative to the location where the last preseed file was
+found.  This can be used to construct more portable scripts where an
+entire hierarchy of scripts can be moved to a new location without
+breaking it, for example copying the files onto a USB stick when they
+started out on a web server.  In this example, if the preseed file
+sets <literal>preseed/run</literal> to
+<literal>/scripts/late_command.sh</literal> then the file will be
+fetched from
+<literal>http://autoserver.example.com/d-i/etch/./scripts/late_command.sh</literal>.
+-->
+URL (<literal>d-i/etch/./preseed.cfg</literal>) の最後の部分は、
+<literal>auto-install/defaultroot</literal> から取られています。
+デフォルトでは、将来のバージョンでコードネームを指定して移行していけるように、
+<literal>etch</literal> ディレクトリが含まれています。
+<literal>/./</literal> は、その後に続くパスが確定するように、
+ルートからの相対パスを示します (preseed/include や preseed/run で使用)。
+これにより、完全な URLや / で始まるパス、
+前回 preseed が見つかった場所からの相対パスでファイルを指定できます。
+スクリプトの階層構造を壊さずに新しい場所に移動できる 
+(例えば ウェブサーバで開始し、USB メモリにコピーする)、
+よりポータブルなスクリプトを構成するのに便利です。
+このサンプルでは、preseed ファイルの <literal>preseed/run</literal> に 
+<literal>/scripts/late_command.sh</literal> が設定されている場合、
+<literal>http://autoserver.example.com/d-i/etch/./scripts/late_command.sh</literal>
+からファイルを取得します。
+
+</para><para>
+
+<!--
+If there is no local DHCP or DNS infrastructure, or if you do not want to
+use the default path to <filename>preseed.cfg</filename>, you can still
+use an explicit url, and if you don't use the <literal>/./</literal>
+element it will be anchored to the start of the path (i.e. the third
+<literal>/</literal> in the URL).  Here is an example that requires minimal
+support from the local network infrastructure:
+-->
+手元に DHCP や DNS のインフラがない場合や、
+<filename>preseed.cfg</filename> のデフォルトパスを使用したくない場合でも、
+きちんとした URL を使用でき、<literal>/./</literal> 要素を使用しない場合は、
+パスの開始点を決定できます (例えば URL の 3 つ目の <literal>/</literal>)。
+以下は、手元のネットワークインフラから最低限必要な物のサンプルです。
+
+<informalexample><screen>
+auto url=<replaceable>http://192.168.1.2/path/to/mypreseed.file</replaceable>
+</screen></informalexample>
+
+<!--
+The way this works is that:
+-->
+この方法は次のように動作します。
+<itemizedlist spacing="compact">
+<listitem><para>
+<!--
+if the URL is missing a protocol, http is assumed,
+-->
+URL が見つからない場合、http だと仮定します。
+</para></listitem>
+<listitem><para>
+<!--
+if the hostname section contains no periods, it has the domain derived
+from DHCP appended to it, and
+-->
+ホスト名セクションにピリオドがなければ、DHCP から引き出して追加します。
+</para></listitem>
+<listitem><para>
+<!--
+if there's no <literal>/</literal>'s after the hostname, then the default
+path is added.
+-->
+ホスト名の後に <literal>/</literal> がなければ、デフォルトパスを追加します。
+</para></listitem>
+</itemizedlist>
+
+</para><para>
+
+<!--
+In addition to specifying the url, you can also specify settings that
+do not directly affect the behavior of &d-i; itself, but can be passed
+through to scripts specified using <literal>preseed/run</literal>
+in the loaded preseed file.  At present, the only example of
+this is <literal>auto-install/classes</literal>, which has an alias
+<literal>classes</literal>.  This can be used thus:
+-->
+URL を指定するのに加えて、
+&d-i; 自身の振る舞いには直接影響しない設定も追加できますが、
+読み込んだ preseed ファイルの <literal>preseed/run</literal> で指定した、
+スクリプトに渡すことができます。
+現在のところ、<literal>classes</literal> というエイリアスを持つ、
+<literal>auto-install/classes</literal> のサンプルのみです。
+以下のように使用します。
+
+<informalexample><screen>
+auto url=<replaceable>example.com</replaceable> classes=<replaceable>class_A;class_B</replaceable>
+</screen></informalexample>
+
+<!--
+The classes could for example denote the type of system to be installed,
+or the localization to be used.
+-->
+classes にはこのサンプルでは、インストールするシステムのタイプや、
+地域化を指定するのに使用できます。
+
+</para><para>
+
+<!--
+It is of course possible to extend this concept, and if you do, it is
+reasonable to use the auto-install namespace for this. So one might have
+something like <literal>auto-install/style</literal> which is then used
+in your scripts.  If you feel the need to do this, please mention it on
+the <email>debian-boot@lists.debian.org</email> mailing list so that we
+can avoid namespace conflicts, and perhaps add an alias for the parameter
+for you.
+-->
+この概念はもちろん拡張でき、もしそうする場合、
+auto-install 名前空間を使用するのが妥当です。
+ですから、次にあなたのスクリプトで使用する 
+<literal>auto-install/style</literal> のような物かもしれません。
+これが必要だと思うのなら、名前空間の衝突を避けるために
+<email>debian-boot@lists.debian.org</email> メーリングリストで提案してください。
+おそらくパラメータのエイリアスが追加されます。
+
+</para><para>
+
+<!--
+The <literal>auto</literal> boot label is not yet defined on all
+architectures. The same effect may be achieved by simply adding the two
+parameters <literal>auto=true priority=critical</literal> to the kernel
+command line.  The <literal>auto</literal> parameter is an alias for
+<literal>auto-install/enable</literal> and controls the delay of the
+locale and keyboard questions until after there has been a chance to
+preseed them, while <literal>priority</literal> is an alias for
+<literal>debconf/priority</literal> and setting it to
+<literal>critical</literal> stops any questions with a lower priority
+from being asked.
+-->
+<literal>auto</literal> ブートラベルは、
+どのアーキテクチャでもまだ定義されていません。
+カーネルのコマンドラインに、単にパラメータを 2 つ 
+<literal>auto=true priority=critical</literal> を追加すると、
+同じ効果を得られます。
+<literal>auto</literal> パラメータは <literal>auto-install/enable</literal> 
+のエイリアスで、ロケールやキーボードの質問を preseed で行えるよう遅らせます。
+また、<literal>priority</literal> は <literal>debconf/priority</literal> 
+のエイリアスで、<literal>critical</literal> に設定すると、
+優先度の低い質問を抑制するようになります。
+
+</para><para>
+
+<!--
+Additional options that may be of interest while attempting to
+automate an install while using DHCP are: <literal>interface=auto
+netcfg/dhcp_timeout=60</literal> which makes the machine choose the
+first viable NIC and be more patient about getting a reply to its
+DHCP query.
+-->
+DHCP を使用してインストールの自動化を行う際に、
+関連する追加オプションは以下の通りです。<literal>interface=auto
+netcfg/dhcp_timeout=60</literal> これはマシンが最初の使用可能 NIC を選択し、
+DHCP 問い合わせに対する返答をもっと我慢強く待つようになります。
+
+</para>
+<tip><para>
+
+<!--
+An extensive example of how to use this framework, including example scripts
+and classes, can be found on the <ulink url="http://hands.com/d-i/">website
+of its developer</ulink>. The examples available there also show many other
+nice effects that can be achieved by creative use of preconfiguration.
+-->
+スクリプトやクラスのサンプルを含む、
+フレームワークの使用法についての大規模なサンプルが、
+<ulink url="http://hands.com/d-i/">開発者のウェブサイト</ulink>にあります。
+そこで得られるサンプルでも、事前設定の独創的な使用を成し遂げる、
+たくさんのすばらしい効果があります。
+
+</para></tip>
+  </sect2>
+
+  <sect2 id="preseed-aliases">
+<!--
+  <title>Aliases useful with preseeding</title>
+-->
+  <title>preseed で利用できるエイリアス</title>
+<para>
+
+<!--
+The following aliases can be useful when using (auto mode) preseeding.
+-->
+以下のエイリアスが (自動モード) preseed を使用する際に利用できます。
+
+</para>
+
+<!-- Setting column width does not seem to work; use non-breaking spaces
+     to separate columns a bit -->
+<informaltable frame="none">
+<tgroup cols="2"><tbody>
+<row><entry>auto</entry><entry>auto-install/enable</entry></row>
+<row><entry>classes</entry><entry>auto-install/classes</entry></row>
+<row><entry>fb</entry><entry>debian-installer/framebuffer</entry></row>
+<row><entry>locale</entry><entry>debian-installer/locale</entry></row>
+<row><entry>priority</entry><entry>debconf/priority</entry></row>
+<row><entry>file</entry><entry>preseed/file</entry></row>
+<row><entry>url</entry><entry>preseed/url</entry></row>
+<row><entry>interface</entry><entry>netcfg/choose_interface</entry></row>
+<row><entry>hostname&nbsp;&nbsp;&nbsp;</entry><entry>netcfg/get_hostname</entry></row>
+<row><entry>domain</entry><entry>netcfg/get_domain</entry></row>
+<row><entry>protocol</entry><entry>mirror/protocol</entry></row>
+<row><entry>suite</entry><entry>mirror/suite</entry></row>
+</tbody></tgroup>
+</informaltable>
+
   </sect2>
   
   <sect2 id="preseed-dhcp">
@@ -523,7 +874,7 @@ preseed でいくつか以下の設定を漏らしても、
 -->
   <title>事前設定ファイルを指定するための DHCP の利用方法</title>
 <para>
- 
+
 <!--
 It's also possible to use DHCP to specify a preconfiguration file to download
 from the network. DHCP allows specifying a filename. Normally this is a file
@@ -577,90 +928,12 @@ Debian ミラーサイトのような preseed の値のみ指定することです。
 選択したよいミラーサイトから自動で取得しますが、
 インストールの残りのプロセスはインタラクティブに行われます。
 DHCP preseed を用いた Debian の完全自動インストールは、
-十分注意しなければ行うべきではありません。
+充分注意しなければ行うべきではありません。
 
 </para>
-  </sect2>
-
-  <sect2 id="preseed-bootparms">
-<!--
-  <title>Using boot parameters to supplement preseeding</title>
--->
-  <title>preseed を補足するブートパラメータの利用</title>
-<para>
-
-<!--
-Some parts of the installation process cannot be automated using some forms
-of preseeding because the questions are asked before the preconfiguration
-file is loaded. For example, if the preconfiguration file is downloaded over
-the network, the network setup must be done first. One reason to use initrd
-preseeding is that it allows preseeding of even these early steps of the
-installation process.
--->
-インストールプロセスのうちのある部分の質問は、
-事前設定ファイルが読み込まれる前になされるため自動化できません。
-例えば、事前設定ファイルをネットワークからダウンロードする場合、
-まずネットワークの設定が完了していなければなりません。
-インストールプロセスの早い段階から preseed できるというのが、
-initrd preseed を使用する理由のひとつです。
-
-</para><para>
-
-<!--
-If a preconfiguration file cannot be used to preseed some steps, the install
-can still be fully automated, since you can pass preseed values to the kernel
-on the command line. Just pass <userinput>path/to/var=value</userinput>
-for any of the preseed variables listed in the examples.
--->
-事前設定ファイルを preseed に使用できないステップがあっても、
-コマンドラインから preseed の値をカーネルに渡せるので、
-まだ完全に自動化できます。
-<userinput>path/to/var=value</userinput> というように、
-サンプルにある preseed 変数を渡してください。
-
-</para>
-<note><para>
-
-<!--
-The 2.4 kernel accepts a maximum of 8 command line options and
-8 environment options (including any options added by default for the
-installer). If these numbers are exceeded, 2.4 kernels will drop any
-excess options and 2.6 kernels will panic. For kernel 2.6.9 and later,
-you can use 32 command line options and 32 environment options.
--->
-カーネル 2.4 では最大 (インストーラがデフォルトで指定するオプションを含め) 
-コマンドラインオプションを 8 個、環境オプションを 8 個受け取れます。
-この数を超えると、カーネル 2.4 では超過したオプションを取りこぼしてしまい、
-カーネル 2.6 ではパニックしてしまいます。
-カーネル 2.6.9 以降では、コマンドラインオプションを 32 個、
-環境オプションを 32 個受け取れます。
-
-</para></note>
-<para>
-
-<!--
-For most installations some of the default options in your bootloader
-configuration file, like <literal>vga=normal</literal>, may be safely
-removed which may allow you to add more options for preseeding.
--->
-ほとんどのインストールでは、ブートローダ設定ファイルにある
-(<literal>vga=normal</literal> のような) 
-デフォルトオプションを安全に削除できるかもしれません。
-これにより preseed 用にもっとオプションを追加できます。
-
-</para>
-<note><para>
-
-<!--
-It may not always be possible to specify values with spaces for boot
-parameters, even if you delimit them with quotes.
--->
-ブートパラメータに空白を含んだ値を設定するのは、
-引用符で区切ったとしてもいつもうまくいくとは限りません。
-
-</para></note>
   </sect2>
  </sect1>
+
 
  <sect1 id="preseed-creating">
 <!--
@@ -678,8 +951,13 @@ a line in a preconfiguration file is:
 コマンドで使用されるものと同じです。
 事前設定ファイルの行の一般的なフォーマットは以下のようになります。
 
+<!--
 <informalexample><screen>
-&lt;所有者&gt; &lt;テンプレート名&gt; &lt;テンプレート型&gt; &lt;値&gt;
+&lt;owner&gt; &lt;question name&gt; &lt;question type&gt; &lt;value&gt;
+</screen></informalexample>
+-->
+<informalexample><screen>
+&lt;所有者&gt; &lt;質問名&gt; &lt;質問タイプ&gt; &lt;値&gt;
 </screen></informalexample>
 
 </para><para>
@@ -705,32 +983,31 @@ There are a few rules to keep in mind when writing a preconfiguration file.
 <!--
   A line can be split into multiple lines by appending a backslash
   (<quote><literal>\</literal></quote>) as the line continuation character.
-  A good place to split a line is after the template name; a bad place is
+  A good place to split a line is after the question name; a bad place is
   between type and value.
 -->
   行継続文字としてバックスラッシュ (<quote><literal>\</literal></quote>) 
   を付けて複数行に分割できます。
-  テンプレート名の後で分割するのが適当でしょう。
+  質問名の後で分割するのが適当でしょう。
   型と値の間はよくありません。
 </para></listitem>
 <listitem><para>
 <!--
-  Most templates need to be preseeded using the values valid in English and
-  not the translated values. However, there are some templates (for example
-  in <classname>partman</classname> where the translated values need to be
+  Most questions need to be preseeded using the values valid in English and
+  not the translated values. However, there are some questions (for example
+  in <classname>partman</classname>) where the translated values need to be
   used.
 -->
-  ほとんどのテンプレートでは、
-  訳した値ではなく英語の値を指定する必要がありますが、
+  ほとんどの質問では、訳した値ではなく英語の値を指定する必要がありますが、
   (<classname>partman</classname> など) 
-  訳した値を使用できるテンプレートもあります。
+  訳した値を使用できる質問もあります。
 </para></listitem>
 <listitem><para>
 <!--
-  Some templates take a code as value instead of the English text that is
+  Some questions take a code as value instead of the English text that is
   shown during installation.
 -->
-  テンプレートの中には、インストール中に表示される英語のテキストの代わりに、
+  質問の中には、インストール中に表示される英語のテキストの代わりに、
   コードを取るものがあります。
 </para></listitem>
 </itemizedlist>
@@ -806,13 +1083,13 @@ will be deleted from your system if you purge the package
 <para>
 
 <!--
-To check possible values for templates, you can use <command>nano</command>
+To check possible values for questions, you can use <command>nano</command>
 to examine the files in <filename>/var/lib/cdebconf</filename> while an
 installation is in progress. View <filename>templates.dat</filename> for
 the raw templates and <filename>questions.dat</filename> for the current
 values and for the values assigned to variables.
 -->
-有効なテンプレートの値をチェックするのに、
+有効な質問の値をチェックするのに、
 インストール中に <filename>/var/lib/cdebconf</filename> のファイルを、
 <command>nano</command> を使用して確認できます。
 生のテンプレートは <filename>templates.dat</filename> を、
@@ -833,6 +1110,7 @@ an install, you can use the command <command>debconf-set-selections -c
 
 </para>
  </sect1>
+
 
  <sect1 id="preseed-contents">
 <!--
@@ -887,11 +1165,11 @@ these questions have been asked.
 <!--
 The locale can be used to specify both language and country.
 To specify the locale as a boot parameter, use
-<userinput>debian-installer/locale=<replaceable>en_US</replaceable></userinput>.
+<userinput>locale=<replaceable>en_US</replaceable></userinput>.
 -->
 ロケールは言語と国を両方指定します。
 ブートパラメータでロケールを指定するには、
-<userinput>debian-installer/locale=<replaceable>en_US</replaceable></userinput>
+<userinput>locale=<replaceable>en_US</replaceable></userinput>
 としてください。
 
 <informalexample role="example"><screen>
@@ -967,7 +1245,7 @@ kernel boot parameters.
 -->
 もちろん、ネットワークから事前設定ファイルを読み込む場合、
 preseed のネットワーク設定は動作しません。
-しかし、CD や USB スティックから起動するときには重要です。
+しかし、CD や USB メモリから起動するときには重要です。
 ネットワークから事前設定ファイルを読み込む場合、
 ネットワーク設定パラメータは、カーネルブートパラメータで渡すことになります。
 
@@ -976,13 +1254,36 @@ preseed のネットワーク設定は動作しません。
 <!--
 If you need to pick a particular interface when netbooting before loading
 a preconfiguration file from the network, use a boot parameter such as
-<userinput>netcfg/choose_interface=<replaceable>eth1</replaceable></userinput>.
+<userinput>interface=<replaceable>eth1</replaceable></userinput>.
 -->
 ネットワークから事前設定ファイルを読み込む前に netboot するとき、
 特定のインターフェースを選ぶ必要があるなら、
-<userinput>netcfg/choose_interface=<replaceable>eth1</replaceable></userinput>
+<userinput>interface=<replaceable>eth1</replaceable></userinput>
 のようにブートパラメータを使用してください。
 
+</para><para>
+
+<!--
+Although preseeding the network configuration is normally not possible when
+using network preseeding (using <quote>preseed/url</quote>), you can use
+the following hack to work around that, for example if you'd like to set a
+static address for the network interface. The hack is to force the network
+configuration to run again after the preconfiguration file has been loaded
+by creating a <quote>preseed/run</quote> script containing the following
+lines:
+-->
+<quote>preseed/url</quote> でネットワーク preseed を使用する際、
+ネットワーク設定の preseed は通常不可能ですが、
+例えば、ネットワークインターフェースに静的アドレスを設定するといった、
+以下のハックを利用して動作させることができます。
+このハックは、以下の行を含む <quote>preseed/run</quote> スクリプトを作成し、
+事前設定ファイルを読み込んだ後でネットワークの設定を強制的に再度行う、
+というものです。
+
+<informalexample><screen>
+killall.sh dhclient
+netcfg
+</screen></informalexample>
 
 </para>
 
@@ -1033,19 +1334,19 @@ d-i netcfg/wireless_wep string
 <!--
   <title>Mirror settings</title>
 -->
-  <title>ミラー設定</title>
+  <title>ミラーサイト設定</title>
 <para>
 
 <!--
-Depending on the installation method you use, a mirror may be used both to
-download additional components of the installer, the base system and to
-set up the <filename>/etc/apt/sources.list</filename> for the installed
+Depending on the installation method you use, a mirror may be used to
+download additional components of the installer, to install the base system,
+and to set up the <filename>/etc/apt/sources.list</filename> for the installed
 system.
 -->
 使用するインストール方法に依存しますが、
-インストーラの追加コンポーネントのダウンロードや、基本システム、
+インストーラの追加コンポーネントのダウンロードや、基本システムのインストール、
 インストールしたシステムの <filename>/etc/apt/sources.list</filename> の
-セットアップにミラーを使用できます。
+セットアップにミラーサイトを使用できます。
 
 </para><para>
 
@@ -1079,7 +1380,7 @@ same as <classname>mirror/suite</classname>.
 
 <informalexample role="example"><screen>
 d-i mirror/country string enter information manually
-d-i mirror/http/hostname string http.us.debian.org
+d-i mirror/http/hostname string &archive-mirror;
 d-i mirror/http/directory string /debian
 d-i mirror/http/proxy string
 
@@ -1100,12 +1401,11 @@ d-i mirror/http/proxy string
 
 <!--
 Using preseeding to partition the harddisk is very much limited to what is
-supported by <classname>partman-auto</classname>. You can choose to either
-partition existing free space on a disk or a whole disk. The layout of the
+supported by <classname>partman-auto</classname>. You can choose to partition
+either existing free space on a disk or a whole disk. The layout of the
 disk can be determined by using a predefined recipe, a custom recipe from
 a recipe file or a recipe included in the preconfiguration file. It is
-currently not possible to partition multiple disks using preseeding nor to
-set up RAID.
+currently not possible to partition multiple disks using preseeding.
 -->
 ハードディスクのパーティション分割に preseed を使用するのは、
 <classname>partman-auto</classname> でサポートしている機能に限定されています。
@@ -1113,8 +1413,8 @@ set up RAID.
 ディスクレイアウトは、あらかじめ定義したレシピ、
 レシピファイルによるカスタムレシピ、
 事前設定ファイルに書いたレシピから選択できます。
-現在のところ、パーティションに preseed を用いて複数のディスクを割り当ることや、
-RAID の設定することはできません。
+現在のところ、パーティションに preseed 
+を用いて複数のディスクを割り当てることはできません。
 
 </para>
 
@@ -1133,17 +1433,27 @@ correct one will be selected before using preseeding.
 
 <informalexample role="example"><screen>
 # If the system has free space you can choose to only partition that space.
-# Note: this template must be preseeded with a localized (translated) value.
+# Note: this must be preseeded with a localized (translated) value.
 #d-i partman-auto/init_automatically_partition \
-#      select Use the largest continuous free space
+#      select Guided - use the largest continuous free space
 
-# Alternatively, you can specify a disk to partition. The device name can
-# be given in either devfs or traditional non-devfs format.
-# For example, to use the first disk devfs knows of:
+# Alternatively, you can specify a disk to partition. The device name
+# can be given in either devfs or traditional non-devfs format.
+# For example, to use the first disk:
 d-i partman-auto/disk string /dev/discs/disc0/disc
+# In addition, you'll need to specify the method to use.
+# The presently available methods are: "regular", "lvm" and "crypto"
+d-i partman-auto/method string lvm
+
+# If one of the disks that are going to be automatically partitioned
+# contains an old LVM configuration, the user will normally receive a
+# warning. This can be preseeded away...
+d-i partman-auto/purge_lvm_from_device boolean true
+# And the same goes for the confirmation to write the lvm partitions.
+d-i partman-lvm/confirm boolean true
 
 # You can choose from any of the predefined partitioning recipes.
-# Note: this template must be preseeded with a localized (translated) value.
+# Note: this must be preseeded with a localized (translated) value.
 d-i partman-auto/choose_recipe \
        select All files in one partition (recommended for new users)
 #d-i partman-auto/choose_recipe \
@@ -1157,7 +1467,7 @@ d-i partman-auto/choose_recipe \
 # just point at it.
 #d-i partman-auto/expert_recipe_file string /hd-media/recipe
 
-# If not, you can put an entire recipe the preconfiguration file in one
+# If not, you can put an entire recipe into the preconfiguration file in one
 # (logical) line. This example creates a small /boot partition, suitable
 # swap, and uses the rest of the space for the root partition:
 #d-i partman-auto/expert_recipe string                         \
@@ -1178,6 +1488,109 @@ d-i partman-auto/choose_recipe \
 #              .
 
 # This makes partman automatically partition without confirmation.
+d-i partman/confirm_write_new_label boolean true
+d-i partman/choose_partition \
+       select Finish partitioning and write changes to disk
+d-i partman/confirm boolean true
+</screen></informalexample>
+
+  </sect2>
+
+  <sect2 id="preseed-partman-raid">
+<!--
+  <title>Partitioning using RAID</title>
+-->
+  <title>RAID を用いたパーティション分割</title>
+<para>
+
+<!--
+You can also use preseeding to set up partitions on software RAID arrays.
+Supported are RAID levels 0, 1 and 5, creating degraded arrays and
+specifying spare devices.
+If you are using RAID 1, you can preseed grub to install to all devices
+used in the array; see <xref linkend="preseed-bootloader"/>.
+-->
+ソフトウェア RAID アレイにパーティションをセットアップすることも、
+preseed を使用してできます。
+サポートしているのは、RAID 0, 1, 5、や縮退アレイの作成、
+スペアデバイスの指定です。
+RAID 1 を使用する際には、アレイで使用する全デバイスへインストールするよう、
+preseed で探せます。<xref linkend="preseed-bootloader"/> をご覧ください。
+
+</para>
+
+<warning><para>
+
+<!--
+This type of automated partitioning is easy to get wrong. It is also a
+very new component that may still have some bugs or missing error
+handling. The responsibility to get the various recipes right (so they
+make sense and don't conflict) lies with the user.
+Check <filename>/var/log/syslog</filename> if you run into problems.
+-->
+自動パーティション分割でのこの形式は、誤動作をしやすいです。
+また、とても新しいコンポーネントで、まだバグやエラー処理漏れがあるはずです。
+様々な条件で正しく動作するかの責任 (理解でき衝突しない限り) は、
+ユーザの側にあります。
+問題が発生したら、<filename>/var/log/syslog</filename> をチェックしてください。
+
+</para><para>
+
+<!--
+Note that only RAID 0 and RAID 1 have been tested by the developers of the
+component. RAID 5 is untested. Advanced RAID setup with degraded arrays or
+spare devices has only been tested lightly.
+-->
+コンポーネントの開発者によってテストされているのは、
+RAID 0 と RAID 1 のみであることに注意してください。
+RAID 5 はテストされていません。
+縮退アレイやスペアデバイスを使用した、
+拡張 RAID セットアップは軽くテストしただけです。
+
+</para></warning>
+
+<informalexample><screen>
+# NOTE: this option is of beta release quality and should be used carefully
+
+# The method should be set to "raid".
+#d-i partman-auto/method string raid
+# Specify the disks to be partitioned. They will all get the same layout,
+# so this will only work if the disks are the same size.
+#d-i partman-auto/disk string /dev/discs/disc0/disc /dev/discs/disc1/disc
+
+# Next you need to specify the physical partitions that will be used. 
+#d-i partman-auto/expert_recipe string \
+#      multiraid ::                                         \
+#              1000 5000 4000 raid                          \
+#                      $primary{ } method{ raid }           \
+#              .                                            \
+#              64 512 300% raid                             \
+#                      method{ raid }                       \
+#              .                                            \
+#              500 10000 1000000000 raid                    \
+#                      method{ raid }                       \
+#              .
+
+# Last you need to specify how the previously defined partitions will be
+# used in the RAID setup. Remember to use the correct partition numbers
+# for logical partitions.
+# Parameters are:
+# &lt;raidtype&gt; &lt;devcount&gt; &lt;sparecount&gt; &lt;fstype&gt; &lt;mountpoint&gt; \
+#          &lt;devices&gt; &lt;sparedevices&gt;
+# RAID levels 0, 1 and 5 are supported; devices are separated using "#"
+#d-i partman-auto-raid/recipe string \
+#    1 2 0 ext3 /                                           \
+#          /dev/discs/disc0/part1#/dev/discs/disc1/part1    \
+#    .                                                      \
+#    1 2 0 swap -                                           \
+#          /dev/discs/disc0/part5#/dev/discs/disc1/part5    \
+#    .                                                      \
+#    0 2 0 ext3 /home                                       \
+#          /dev/discs/disc0/part6#/dev/discs/disc1/part6    \
+#    .
+
+# This makes partman automatically partition without confirmation.
+d-i partman-md/confirm boolean true
 d-i partman/confirm_write_new_label boolean true
 d-i partman/choose_partition \
        select Finish partitioning and write changes to disk
@@ -1207,7 +1620,7 @@ d-i time/zone string US/Eastern
 <!--
   <title>Apt setup</title>
 -->
-  <title>Apt 設定</title>
+  <title>apt 設定</title>
 <para>
 
 <!--
@@ -1231,11 +1644,20 @@ earlier questions. You can optionally add other (local) repositories.
 #d-i apt-setup/security_host string
 
 # Additional repositories, local[0-9] available
-#d-i apt-setup/local0/comment string local server
 #d-i apt-setup/local0/repository string \
 #       deb http://local.server/debian stable main
-# URL to the public key of the local repository
+#d-i apt-setup/local0/comment string local server
+# Enable deb-src lines
+#d-i apt-setup/local0/source boolean true
+# URL to the public key of the local repository; you must provide a key or
+# apt will complain about the unauthenticated repository and so the
+# sources.list line will be left commented out
 #d-i apt-setup/local0/key string http://local.server/key
+
+# By default the installer requires that repositories be authenticated
+# using a known gpg key. This setting can be used to disable that
+# authentication. Warning: Insecure, not recommended.
+#d-i debian-installer/allow_unauthenticated string true
 </screen></informalexample>
 
   </sect2>
@@ -1269,10 +1691,10 @@ MD5 hash allows for brute force attacks.
 -->
 preseed のパスワードは、
 パスワードを知っている事前設定ファイルが誰でもアクセスできるために、
-完全に安全でないことを知っておいてください。
+完全に安全というわけではないことを知っておいてください。
 MD5 ハッシュを使えば、セキュリティ的には多少ましと言えますが、
 MD5 ハッシュは総当たり攻撃にかけられることを考えると、
-誤った感覚を与えるかもしれません。
+セキュリティ的に誤解を与えるかもしれません。
 
 </para></warning>
 
@@ -1370,15 +1792,17 @@ installation. The only questions asked concern the installation of the kernel.
 # if no other operating system is detected on the machine.
 d-i grub-installer/only_debian boolean true
 
-# This one makes grub-installer install to the MBR if if finds some other OS
-# too, which is less safe as it might not be able to boot that other OS.
+# This one makes grub-installer install to the MBR if it also finds some other
+# OS, which is less safe as it might not be able to boot that other OS.
 d-i grub-installer/with_other_os boolean true
 
 # Alternatively, if you want to install to a location other than the mbr,
 # uncomment and edit these lines:
-#d-i grub-installer/bootdev  string (hd0,0)
 #d-i grub-installer/only_debian boolean false
 #d-i grub-installer/with_other_os boolean false
+#d-i grub-installer/bootdev  string (hd0,0)
+# To install grub to multiple disks:
+#d-i grub-installer/bootdev  string (hd0,0) (hd1,0) (hd2,0)
 </screen></informalexample>
 
   </sect2>
@@ -1401,58 +1825,37 @@ Available tasks as of this writing include:
 
 <itemizedlist>
 <listitem><para>
-<!--
-  <userinput>Standard system</userinput>
--->
-  <userinput>Standard system (標準システム)</userinput>
+  <userinput>standard</userinput>
 </para></listitem>
 <listitem><para>
-<!--
-  <userinput>Desktop environment</userinput>
--->
-  <userinput>Desktop environment (デスクトップ環境)</userinput>
+  <userinput>desktop</userinput>
 </para></listitem>
 <listitem><para>
-<!--
-  <userinput>Web server</userinput>
--->
-  <userinput>Web server (Web サーバ)</userinput>
+  <userinput>gnome-desktop</userinput>
 </para></listitem>
 <listitem><para>
-<!--
-  <userinput>Print server</userinput>
--->
-  <userinput>Print server (印刷サーバ)</userinput>
+  <userinput>kde-desktop</userinput>
 </para></listitem>
 <listitem><para>
-<!--
-  <userinput>DNS server</userinput>
--->
-  <userinput>DNS server (DNS サーバ)</userinput>
+  <userinput>web-server</userinput>
 </para></listitem>
 <listitem><para>
-<!--
-  <userinput>File server</userinput>
--->
-  <userinput>File server (ファイルサーバ)</userinput>
+  <userinput>print-server</userinput>
 </para></listitem>
 <listitem><para>
-<!--
-  <userinput>Mail server</userinput>
--->
-  <userinput>Mail server (メールサーバ)</userinput>
+  <userinput>dns-server</userinput>
 </para></listitem>
 <listitem><para>
-<!--
-  <userinput>SQL database</userinput>
--->
-  <userinput>SQL database (SQL サーバ)</userinput>
+  <userinput>file-server</userinput>
 </para></listitem>
 <listitem><para>
-<!--
-  <userinput>Laptop</userinput>
--->
-  <userinput>Laptop (ラップトップ)</userinput>
+  <userinput>mail-server</userinput>
+</para></listitem>
+<listitem><para>
+  <userinput>sql-database</userinput>
+</para></listitem>
+<listitem><para>
+  <userinput>laptop</userinput>
 </para></listitem>
 </itemizedlist>
 
@@ -1461,17 +1864,36 @@ Available tasks as of this writing include:
 <!--
 You can also choose to install no tasks, and force the installation of a
 set of packages in some other way. We recommend always including the
-<userinput>Standard system</userinput> task.
+<userinput>standard</userinput> task.
 -->
 タスクをインストールしないこともできますし、
 他の方法でパッケージのセットが強制的にインストールされることもあります。
-<userinput>Standard system</userinput> タスクは常に含めるのをお奨めします。
+<userinput>standard</userinput> タスクは常に含めるのをお奨めします。
+
+</para><para>
+
+<!--
+If you want to install some individual packages in addition to packages
+installed by tasks, you can use the parameter
+<classname>pkgsel/include</classname>. The value of this parameter can be
+a list of packages separated by either commas or spaces, which allows it
+to be used easily on the kernel command line as well.
+-->
+タスクでインストールするパッケージに加えて、
+特定のパッケージをインストールする場合、
+<classname>pkgsel/include</classname> パラメータを使用できます。
+このパラメータの値は、カーネルコマンドラインにそのまま渡されるので、
+カンマか空白で区切ったパッケージのリストを取れます。
 
 </para>
 
 <informalexample role="example"><screen>
-tasksel tasksel/first multiselect Standard system, Desktop environment
-#tasksel tasksel/first multiselect Standard system, Web server
+tasksel tasksel/first multiselect standard, desktop
+#tasksel tasksel/first multiselect standard, web-server
+#tasksel tasksel/first multiselect standard, kde-desktop
+
+# Individual additional packages to install
+#d-i pkgsel/include string openssh-server build-essential
 
 # Some versions of the installer can report back on what software you have
 # installed, and what software you use. The default is not to report back,
@@ -1490,7 +1912,7 @@ tasksel tasksel/first multiselect Standard system, Desktop environment
 
 <informalexample role="example"><screen>
 # Avoid that last message about the install being complete.
-d-i prebaseconfig/reboot_in_progress note
+d-i finish-install/reboot_in_progress note
 
 # This will prevent the installer from ejecting the CD during the reboot,
 # which is useful in some situations.
@@ -1499,38 +1921,11 @@ d-i prebaseconfig/reboot_in_progress note
 
   </sect2>
 
-  <sect2 id="preseed-mailer">
-<!--
-  <title>Mailer configuration</title>
--->
-  <title>メール設定</title>
-<para>
-
-<!--
-During a normal install, exim asks only a few questions. Here's how to
-avoid even those. More complicated preseeding is possible.
--->
-通常のインストールでは、exim は少々質問しますが、
-さらにこれを避ける方法もあります。
-もっと複雑な preseed も可能です。
-
-</para>
-
-<informalexample role="example"><screen>
-exim4-config exim4/dc_eximconfig_configtype \
-       select no configuration at this time
-exim4-config exim4/no_config boolean true
-exim4-config exim4/no_config boolean true
-exim4-config exim4/dc_postmaster string
-</screen></informalexample>
-
-  </sect2>
-
   <sect2 id="preseed-X">
 <!--
   <title>X configuration</title>
 -->
-  <title>X 設定</title>
+  <title>X の設定</title>
 <para>
 
 <!--
@@ -1589,17 +1984,30 @@ xserver-xorg xserver-xorg/config/monitor/mode-list \
   </sect2>
  </sect1>
 
+
  <sect1 id="preseed-advanced">
 <!--
  <title>Advanced options</title>
 -->
  <title>高度なオプション</title>
 
-  <sect2 id="preseed-shell">
+  <sect2 id="preseed-hooks">
 <!--
-  <title>Shell commands</title>
+  <title>Running custom commands during the installation</title>
 -->
-  <title>シェルコマンド</title>
+  <title>インストール中のカスタムコマンド実行</title>
+<para>
+
+<!--
+A very powerful and flexible option offered by the preconfiguration tools
+is the ability to run commands or scripts at certain points in the
+installation.
+-->
+事前設定ツールには、
+インストール中の一定の箇所でコマンドやスクリプトを実行するといった、
+とても強力で柔軟なオプションが存在します。
+
+</para>
 
 <informalexample role="example"><screen>
 # d-i preseeding is inherently not secure. Nothing in the installer checks
@@ -1621,19 +2029,73 @@ xserver-xorg xserver-xorg/config/monitor/mode-list \
 </screen></informalexample>
 
   </sect2>
+  
+  <sect2 id="preseed-seenflag">
+<!--
+  <title>Using preseeding to change default values</title>
+-->
+  <title>preseed を用いたデフォルト値変更</title>
+<para>
+
+<!--
+It is possible to use preseeding to change the default answer for a
+question, but still have the question asked. To do this the
+<firstterm>seen</firstterm> flag must be reset to <quote>false</quote> after
+setting the value for a question.
+-->
+preseed を用いて、質問へのデフォルトの回答を変更できます。
+この場合でも質問は行われます。
+これには、質問への回答を設定した後で、
+<firstterm>seen</firstterm> フラグを <quote>false</quote> 
+にリセットしなければなりません。
+
+<informalexample><screen>
+d-i foo/bar string value
+d-i foo/bar seen false
+</screen></informalexample>
+
+<!--
+The same effect can be achieved for <emphasis>all</emphasis> questions by
+setting the parameter <classname>preseed/interactive=true</classname> at
+the boot prompt. This can also be useful for testing or debugging your
+preconfiguration file.
+-->
+ブートプロンプトで <classname>preseed/interactive=true</classname> 
+パラメータを設定し、<emphasis>すべて</emphasis> 
+の質問に対して同じ効果を及ぼすこともできます。
+これは事前設定ファイルのテストやデバッグにも便利です。
+
+<!--
+If you are preseeding using boot parameters, you can make the installer ask
+the corresponding question by using the <quote>?=</quote> operator, i.e.
+<userinput><replaceable>foo</replaceable>/<replaceable>bar</replaceable>?=<replaceable>value</replaceable></userinput>.
+-->
+ブートパラメータを利用して preseed を行う場合、
+質問に対して <quote>?=</quote> 演算子を使用して回答できます。
+例: <userinput><replaceable>foo</replaceable>/<replaceable>bar</replaceable>?=<replaceable>value</replaceable></userinput>
+
+<!--
+This will of course only have effect for parameters that correspond to
+questions that are actually displayed during an installation and not for
+<quote>internal</quote> parameters.
+-->
+これはもちろん、
+インストール中に実際に表示される質問に対応するパラメータにのみ効果を及ぼし、
+<quote>内部</quote>パラメータには効果を及ぼしません。
+
+</para><para>
+
+</para>
+  </sect2>
 
   <sect2 id="preseed-chainload">
 <!--
   <title>Chainloading preconfiguration files</title>
 -->
-  <title>事前設定ファイルの連鎖読み込み</title>
+  <title>事前設定ファイルの多重読み込み</title>
 <para>
 
 <!--
-It is possible to include other preseed files from a preseed file. Any
-settings in those files will override pre-existing settings from files
-loaded earlier. This makes it possible to put, for example, general
-
 It is possible to include other preconfiguration files from a preconfiguration
 file. Any settings in those files will override pre-existing settings from
 files loaded earlier. This makes it possible to put, for example, general
@@ -1649,7 +2111,7 @@ settings for certain configurations in other files.
 </para>
 
 <informalexample><screen>
-# More that one file can be listed, separated by spaces; all will be
+# More than one file can be listed, separated by spaces; all will be
 # loaded. The included files can have preseed/include directives of their
 # own as well. Note that if the filenames are relative, they are taken from
 # the same directory as the preconfiguration file that includes them.
@@ -1664,7 +2126,35 @@ settings for certain configurations in other files.
 # preconfiguration files, includes those files. 
 #d-i preseed/include_command \
 #      string echo if [ "`hostname`" = bob ]; then echo bob.cfg; fi
+
+# Most flexibly of all, this downloads a program and runs it. The program
+# can use commands such as debconf-set to manipulate the debconf database.
+# More than one script can be listed, separated by spaces.
+# Note that if the filenames are relative, they are taken from the same
+# directory as the preconfiguration file that runs them.
+#d-i preseed/run string foo.sh
 </screen></informalexample>
+
+<para>
+
+<!--
+It is also possible to chainload from the initrd or file preseeding phase,
+into network preseeding by setting preseed/url in the earlier files.
+This will cause network preseeding to be performed when the network comes
+up.  You need to be careful when doing this, since there will be two
+distinct runs at preseeding, meaning for example that you get another
+chance to run the preseed/early command, the second one happening after the
+network comes up.
+-->
+また、
+あらかじめ用意したファイルの preseed/url で設定したネットワーク preseed  へ、
+initrd やファイル preseed の段階で、多重読み込みを行うことができます。
+これにより、ネットワークに接続した時点でネットワーク preseed を行えます。
+この場合、2 種類の異なる preseed が実行されることに注意してください。
+例えば、preseed/early コマンドを実行する機会が 2 度あり、
+2 回目はネットワークに接続した時に発生するということです。
+
+</para>
 
   </sect2>
  </sect1>

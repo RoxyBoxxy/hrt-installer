@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<!-- original version:  36732 -->
+<!-- original version: 42302 -->
 
  <sect1 id="partition-programs">
- <title>Programmes de partitionnement de Debian</title>
+ <title>Programmes de partitionnement</title>
 <para>
 
-Plusieurs sortes d'utilitaires de partitionnement ont été adaptés par
-les développeurs Debian pour tourner sur différents types de disques
+De nombreux utilitaires de partitionnement ont été adaptés par
+les développeurs Debian pour fonctionner sur différents types de disques
 et d'architectures matérielles.
 Voici les programmes qui sont disponibles sur votre architecture&nbsp;:
 
@@ -20,7 +20,7 @@ Voici les programmes qui sont disponibles sur votre architecture&nbsp;:
 
 C'est le partitionneur que recommande Debian. Ce <quote>couteau suisse</quote>
 sait aussi redimensionner des partitions et monter des systèmes de fichiers
-<phrase arch="i386"> (<quote>formater</quote> en langage Windows)</phrase>
+<phrase arch="x86"> (<quote>formater</quote> en langage Windows)</phrase>
 sur des points de montage.
 
 </para></listitem>
@@ -38,7 +38,7 @@ Faites attention si vous avez des partitions FreeBSD sur votre machine. Les
 noyaux d'installation reconnaissent ces partitions, mais la façon
 dont <command>fdisk</command> les représente (ou pas) peut faire varier les 
 noms des périphériques. Lisez attentivement le
-<ulink url="&url-linux-freebsd;">Linux+FreeBSD HOWTO</ulink>
+<ulink url="&url-linux-freebsd;">Linux+FreeBSD HOWTO</ulink>.
 
 </para></listitem>
 </varlistentry>
@@ -114,39 +114,12 @@ L'un de ces programmes sera lancé par défaut quand vous sélectionnerez&nbsp;:
 <guimenuitem>Partitionner un disque dur</guimenuitem>. Il est possible d'utiliser
 un autre partitionneur sur la console VT2 mais cela n'est pas recommandé.
 
-</para><para>
-
-Si vous souhaitez que cela fonctionne avec plus de 20 partitions sur votre
-disque ide, vous devrez créer vous-même les périphériques à partir de la
-partition n°&nbsp;21. L'étape suivante d'initialisation de la partition
-échouera sauf si le bon périphérique est présent. Comme exemple, voici
-les commandes que vous pouvez utiliser dans <userinput>tty2</userinput> ou sous
-<guimenuitem>Exécuter un shell</guimenuitem>, pour ajouter le périphérique nécessaire à la
-la partition 21&nbsp;:
-
-<informalexample><screen>
-# cd /dev
-# mknod hda21 b 3 21 
-# chgrp disk hda21
-# chmod 660 hda21
-</screen></informalexample>
-
-Le démarrage sur le nouveau système échouera sauf si les bons périphériques
-sont présents sur le système en question. Après avoir installé le noyau et les
-modules, exécutez&nbsp;:
-
-<informalexample><screen>
-# cd /target/dev
-# mknod hda21 b 3 21 
-# chgrp disk hda21
-# chmod 660 hda21
-</screen></informalexample>
-
-<phrase arch="i386">
+</para>
+<para arch="x86">
 N'oubliez pas de rendre amorçable votre partition racine. 
-</phrase>
+</para>
 
-</para><para condition="mac-fdisk.txt">
+<para condition="mac-fdisk.txt">
 
 Un point important est que la partition d'échange (<emphasis>swap</emphasis>) 
 est identifiée par son nom sur les disques de type Mac&nbsp;: ce doit être <quote>swap</quote>. 
@@ -160,7 +133,7 @@ suivre si vous voulez partager votre disque avec MacOS.
 
 &partition-alpha.xml;
 &partition-hppa.xml;
-&partition-i386.xml;
+&partition-x86.xml;
 &partition-ia64.xml;
 &partition-mips.xml;
 &partition-powerpc.xml;

@@ -1,22 +1,22 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<!-- original version: 33725 -->
+<!-- original version: 44026 -->
 
 <sect3 id="mdcfg">
- <title>Configuration d'un périphérique à plusieurs disques (RAID logiciel)</title>
+ <title>Configuration d'un périphérique multidisque (RAID logiciel)</title>
 <para>
 Si vous avez plusieurs disques durs <footnote><para>
 
-Pour être honnête, on peut construire un périphérique à plusieurs disques
+Pour être honnête, on peut construire un périphérique multidisque
 même avec les partitions d'un seul disque, mais ça n'apporte pas grand chose.
 </para></footnote>
 
 sur votre machine, vous pouvez utiliser <command>mdcfg</command> pour
 obtenir de vos disques de meilleures performances et une meilleure fiabilité de
-vos données. Le résultat est un périphérique à plusieurs disques, 
+vos données. Le résultat est un périphérique multidisque, 
 <firstterm>Multidisk Device</firstterm>, ou <firstterm>RAID logiciel</firstterm>.
 </para>
 <para>
-Un périphérique à plusieurs disques n'est qu'un ensemble de partitions
+Un périphérique multidisque n'est qu'un ensemble de partitions
 situées sur différents disques mais réunies pour former un périphérique
 <emphasis>logique</emphasis>. Ce périphérique peut alors être utilisé comme
 une simple partition, c'est-à-dire une partition qu'on peut monter et 
@@ -38,7 +38,7 @@ les disques sains, mais l'autre <emphasis>était</emphasis> sur le disque
 défectueux.
 </para>
 <para>
-L'usage standard de RAID0 est une partition pour du travail vidéo.
+L'utilisation standard de RAID0 est une partition pour du travail vidéo.
 </para></listitem>
 </varlistentry>
 
@@ -56,8 +56,8 @@ serveur, notamment les serveurs de fichiers où les lectures sont
 plus nombreuses que les écritures de fichiers. 
 </para>
 <para>
-Vous pouvez aussi avoir un disque de rechange qui prendra la place du disque
-défectueux en cas de problème.  
+Vous pouvez aussi inclure dans un tel ensemble un disque de rechange qui prendra
+la place du disque défectueux en cas de problème.  
   </para></listitem>
 </varlistentry>
 <varlistentry>
@@ -71,11 +71,11 @@ sur le disque restant. Le disque de parité n'est pas fixe (ce serait RAID4), il
 change périodiquement et ainsi l'information de parité est distribuée également
 sur tous les disques. Quand l'un des disques s'arrête, la partie manquante des
 données peut être calculée avec les données restantes et la parité. RAID5 doit
-comporter au moins trois partitions actives. Vous pouvez aussi avoir un disque
+comporter au moins trois partitions actives. Vous pouvez aussi inclure un disque
 de rechange qui prendra la place du disque défectueux en cas de problème.
 </para>
 <para>
-Comme vous le voyez, RAID5 est aussi fiable que RAID1 tout en évitant de la
+Comme on le voit, RAID5 est aussi fiable que RAID1 tout en évitant de la
 redondance. D'un autre côté, il sera un tout petit peu moins rapide dans les
 opérations d'écriture que RAID0, à cause du calcul de l'information de
 parité.
@@ -103,7 +103,7 @@ Pour résumer&nbsp;:
   <entry> 2</entry>
   <entry>non</entry>
   <entry>non</entry>
-  <entry>Taille de la plus petite partition multipliée par le nombre des périphériques dans le RAID</entry>
+  <entry>Taille de la plus petite partition multipliée par le nombre des périphériques dans l'ensemble</entry>
 </row>
 
 <row>
@@ -111,7 +111,7 @@ Pour résumer&nbsp;:
   <entry> 2</entry>
   <entry>facultatif</entry>
   <entry>oui</entry>
-  <entry>Taille de la plus petite partition dans le RAID</entry>
+  <entry>Taille de la plus petite partition dans l'ensemble</entry>
 </row>
 
 <row>
@@ -121,7 +121,7 @@ Pour résumer&nbsp;:
   <entry>oui</entry>
   <entry>
     Taille de la plus petite partition multipliée par le nombre des 
-périphériques dans le RAID moins un.
+périphériques dans l'ensemble moins un.
   </entry>
 </row>
 
@@ -135,9 +135,9 @@ Si vous voulez tout savoir sur le RAID logiciel, lisez le
 </para>
 
 <para>
-Pour créer un périphérique à plusieurs disques, vous devez préparer les 
+Pour créer un périphérique multidisque, vous devez préparer les 
 partitions nécessaires. Vous pouvez le faire avec <command>partman</command>,
-dans le menu <guimenu>Définitions des partitions</guimenu> où vous
+dans le menu <guimenu>Caractéristiques de la partition</guimenu> où vous
 choisirez <menuchoice><guimenu>Utiliser comme :</guimenu> 
 <guimenuitem>volume physique pour RAID</guimenuitem>
 </menuchoice>
@@ -152,9 +152,11 @@ configuration ou d'installation dans un shell.
 </para></warning>
 <para>
 Ensuite, vous choisissez <guimenuitem>Configurer le RAID logiciel</guimenuitem>
-dans le menu principal de <command>partman</command>. Dans le premier écran
-de <command>mdcfg</command>, sélectionnez 
-<guimenuitem>Créer un périphérique à plusieurs disques</guimenuitem>. Une liste
+dans le menu principal de <command>partman</command>. 
+Le menu n'apparaît que si vous avez sélectionné au moins une partition à
+utiliser comme <guimenuitem>volume physique pour RAID</guimenuitem>.
+Dans le premier écran de <command>mdcfg</command>, sélectionnez 
+<guimenuitem>Créer un périphérique multidisque</guimenuitem>. Une liste
 des types acceptés pour ces périphériques est affichée et vous pouvez en
 choisir un, par exemple RAID1. La suite dépend du type que vous avez choisi.
 </para>
@@ -171,7 +173,7 @@ de périphériques actifs et le nombre de périphériques de rechange qui
 composeront le périphérique. Ensuite vous devrez choisir dans la liste des
 partitions RAID celles qui seront actives et celles qui resteront en réserve.
 Le nombre de ces partitions devra être égal à celui donné l'instant d'avant.
-Mais, si vous n'indiquez pas le même chiffre, l'installateur ne vous laissera 
+Si vous n'indiquez pas la même valeur, l'installateur ne vous laissera 
 pas continuer et vous demandera une correction.
 </para></listitem>
 <listitem><para>

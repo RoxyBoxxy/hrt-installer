@@ -8,7 +8,8 @@
 
 Each distinct ARM architecture requires its own kernel. Because of
 this the standard Debian distribution only supports installation on
-a number of the most common systems. The Debian userland however may be used by <emphasis>any</emphasis> ARM CPU including xscale.
+a number of the most common platforms. The Debian userland however may be
+used by <emphasis>any</emphasis> ARM CPU.
 
 </para>
 
@@ -22,7 +23,7 @@ Debian currently only supports little-endian ARM systems.
 
 <para>
 
-The supported systems are:
+The supported platforms are:
 
 <variablelist>
 
@@ -41,13 +42,30 @@ personal server (cps, aka skiff).
 </varlistentry>
 
 <varlistentry>
-<term>NSLU2</term>
+<term>IOP32x</term>
 <listitem><para>
 
+Intel's I/O Processor (IOP) line is found in a number of products related
+to data storage and processing.  Debian currently supports the IOP32x
+platform, featuring the IOP 80219 and 32x chips commonly found in Network
+Attached Storage (NAS) devices.  Debian explicitly supports two such
+devices: the <ulink url="&url-arm-cyrius-glantank;">GLAN Tank</ulink> from
+IO-Data and the <ulink url="&url-arm-cyrius-n2100;">Thecus N2100</ulink>.
+
+</para></listitem>
+</varlistentry>
+
+<varlistentry>
+<term>IXP4xx</term>
+<listitem><para>
+
+The IXP4xx platform is based on Intel's XScale ARM core.  Currently, only
+one IXP4xx based system is supported, the Linksys NSLU2.
 The Linksys NSLU2 (Network Storage Link for USB 2.0 Disk Drives) is a small
 device which allows you to easily provide storage via the network.  It
 comes with an Ethernet connection and two USB ports to which hard drives
-can be connected.
+can be connected.  There is an external site with <ulink
+url="&url-arm-cyrius-nslu2;">installation instructions</ulink>.
 
 </para></listitem>
 </varlistentry>
@@ -56,27 +74,15 @@ can be connected.
 <term>RiscPC</term>
 <listitem><para>
 
-This machine is the oldest supported hardware: it was released
-in 1994. It has RISC OS in ROM, Linux can be booted from that OS using
+This machine is the oldest supported hardware but support for it in
+our new installer is incomplete.
+It has RISC OS in ROM, Linux can be booted from that OS using
 linloader. The RiscPC has a modular CPU card and typically has a 30MHz
 610, 40MHz 710 or 233MHz Strongarm 110 CPU fitted. The mainboard has
 integrated IDE, SVGA video, parallel port, single serial port, PS/2
 keyboard and proprietary mouse port. The proprietary module expansion
 bus allows for up to eight expansion cards to be fitted depending on
 configuration, several of these modules have Linux drivers.
-
-</para></listitem>
-</varlistentry>
-
-<varlistentry>
-<term>Riscstation</term>
-<listitem><para>
-
-This is an inexpensive 56MHz 7500FE based machine with
-integrated video, IDE, PS/2 keyboard and mouse and two serial
-ports. Its lack of processing power was made up for by its price. It
-may be found in two configurations one with RISC OS and one with a
-simple bootloader.
 
 </para></listitem>
 </varlistentry>

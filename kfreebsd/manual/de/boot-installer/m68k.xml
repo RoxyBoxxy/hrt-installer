@@ -1,7 +1,7 @@
 <!-- retain these comments for translator revision tracking -->
-<!-- original version: 33725 -->
+<!-- original version: 45435 -->
 
-  <sect2 arch="m68k"><title>Eine Installations-Methode auswählen</title>
+  <sect2 arch="m68k"><title>Eine Installationsmethode auswählen</title>
 
 <para>
 
@@ -49,8 +49,8 @@ Festplatte (siehe auch <xref linkend="m68k-boot-hd"/>).
 
 
 Amiga arbeitet derzeit nicht mit bogl, wenn Sie also diesbezügliche
-Fehlermeldungen erhalten, müssen Sie den Kernelparameter
-<userinput>debian-installer/framebuffer=false</userinput> verwenden.
+Fehlermeldungen erhalten, müssen Sie den Bootparameter
+<userinput>fb=false</userinput> verwenden.
 
 </para>
     </sect3>
@@ -66,9 +66,9 @@ Auf Atari-Systemen kann der Installer entweder von Festplatte
 </para><para>
 
 Atari arbeitet derzeit nicht mit bogl, wenn Sie also diesbezügliche
-Fehlermeldungen erhalten, müssen Sie den Kernelparameter
-<userinput>debian-installer/framebuffer=false</userinput> verwenden.
-	
+Fehlermeldungen erhalten, müssen Sie den Bootparameter
+<userinput>fb=false</userinput> verwenden.
+
 </para>
     </sect3>
 
@@ -96,7 +96,7 @@ Für Mac gibt es keinen funktionierenden 2.4.x-Kernel.
 Wenn Ihre Hardware einen 53c9x-basierten SCSI-Bus benutzt, müssen
 Sie möglicherweise den Kernelparameter <userinput>mac53c9x=1,0</userinput>
 anhängen. Systeme mit zwei solchen SCSI-Bus-Systemen, wie der Quadra 950,
-brauchen stattdessen das <userinput>mac53c9x=2,0</userinput>-Argument.
+benötigen stattdessen das Argument <userinput>mac53c9x=2,0</userinput>.
 Alternativ kann der Parameter auch als <userinput>mac53c9x=-1,0</userinput>
 angeben werden; dies läßt die Autoerkennung eingeschaltet, jedoch sind
 keine SCSI-Abschaltungen möglich. Beachten Sie, dass es nur nötig ist,
@@ -224,12 +224,16 @@ mit dem laufenden Linux-Kernel verursachen.
 
 </para><para>
 
-Macs erfordern den <command>Penguin</command>-Bootloader.
-Wenn Sie nicht die erforderlichen Programme haben, ein
-<command>Stuffit</command>-Archiv zu handhaben, gibt es mit
-&penguin19.hfs; ein hfs-Disk-Image, das <command>Penguin</command>
-ungepackt enthält. <xref linkend="create-floppy"/> beschreibt, wie
-man dieses Image auf eine Floppy-Disk kopiert.
+Macs erfordern den <command>Penguin</command>-Bootloader, den Sie von
+der Seite des <ulink url="&url-m68k-mac;">Linux/mac68k
+Sourceforge.net - Projekts</ulink> herunterladen können.
+Wenn Sie nicht die erforderlichen Programme haben, mit einem
+<command>Stuffit</command>-Archiv umzugehen, können Sie es auch auf
+eine MacOS-formatierte Floppy bekommen, indem Sie einen zweiten
+GNU/Linux-Rechner jeglicher Architektur benutzen, der
+<command>hmount</command>,
+<command>hcopy</command> und <command>humount</command> aus der
+<classname>hfsutils</classname>-Suite enthält.
 
 </para><para>
 
@@ -239,7 +243,7 @@ auf das <guiicon>Penguin Prefs</guiicon>-Icon im
 <command>Penguin</command>-Booter startet. Wählen Sie
 <guimenuitem>Settings</guimenuitem> im <guimenu>File</guimenu>-Menü,
 klicken Sie dann auf den Reiter <guilabel>Kernel</guilabel>. In der
-rechten oberen Ecke gibt es Buttons für <quote>Kernel</quote> und
+rechten oberen Ecke gibt es Knöpfe für <quote>Kernel</quote> und
 <quote>RAM-Disk</quote>. Wählen
 Sie dort über den Dateiauswahl-Dialog für den Kernel <filename>vmlinuz</filename>
 und für die RAM-Disk <filename>initrd.gz</filename> (jeweils aus dem

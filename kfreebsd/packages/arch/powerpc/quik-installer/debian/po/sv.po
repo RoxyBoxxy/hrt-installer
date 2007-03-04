@@ -14,14 +14,14 @@
 #
 # Swedish translation by:
 # Per Olofsson <pelle@debian.org>
-# Daniel Nylander <po@danielnylander.se>, 2005
+# Daniel Nylander <po@danielnylander.se>, 2006.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: debian-installer\n"
 "Report-Msgid-Bugs-To: debian-boot@lists.debian.org\n"
-"POT-Creation-Date: 2006-04-22 23:51-0600\n"
-"PO-Revision-Date: 2006-02-25 00:50+0100\n"
+"POT-Creation-Date: 2007-01-06 22:48+0100\n"
+"PO-Revision-Date: 2007-02-06 18:30+0100\n"
 "Last-Translator: Daniel Nylander <po@danielnylander.se>\n"
 "Language-Team: Swedish <debian-boot@lists.debian.org>\n"
 "MIME-Version: 1.0\n"
@@ -54,15 +54,15 @@ msgid ""
 "loader is a required step.  The install problem might however be unrelated "
 "to quik, so continuing the installation may be possible."
 msgstr ""
-"Misslyckades att installera paketet quik i /target/. Att installera quik som "
-"starthanterare är ett obligatoriskt steg. Installationsproblemet behöver "
+"Misslyckades med att installera paketet quik i /target/. Att installera quik "
+"som starthanterare är ett obligatoriskt steg. Installationsproblemet behöver "
 "inte vara relaterat till quik så det kan ändå vara möjligt att fortsätta."
 
 #. Type: text
 #. Description
 #: ../quik-installer.templates:19
 msgid "Checking partitions"
-msgstr "Kollar partitioner"
+msgstr "Kontrollerar partitioner"
 
 #. Type: error
 #. Description
@@ -99,34 +99,34 @@ msgstr ""
 #. Type: error
 #. Description
 #: ../quik-installer.templates:35
-msgid "/boot cannot be a separate partition"
-msgstr "/boot kan inte vara en separat partition"
+msgid "Boot partition not on first disk"
+msgstr "Uppstartspartitionen finns inte på första disken"
 
 #. Type: error
 #. Description
 #: ../quik-installer.templates:35
 msgid ""
-"The quik boot loader requires /boot to be on the same partition as /. Please "
-"return to the partitioning step."
+"The quik boot loader requires the boot partition to be on the first disk. "
+"Please return to the partitioning step."
 msgstr ""
-"Starthanteraren quick kräver att /boot är på samma partition som /. Gå "
-"tillbaka till partitioneringssteget."
+"Starthanteraren quik kräver att uppstartspartitionen finns på den första "
+"disken. Gå tillbaka till partitioneringssteget."
 
 #. Type: error
 #. Description
 #: ../quik-installer.templates:41
-msgid "Root partition must be ext2"
-msgstr "Rotpartitionen måste vara ext2"
+msgid "Boot partition must be on ext2"
+msgstr "Uppstartspartitionen måste vara ext2"
 
 #. Type: error
 #. Description
 #: ../quik-installer.templates:41
 msgid ""
-"The quik boot loader requires the root partition to be formatted using the "
-"ext2 file system. Please return to the partitioning step."
+"The quik boot loader requires the partition that holds /boot to be formatted "
+"using the ext2 file system. Please return to the partitioning step."
 msgstr ""
-"Starthanteraren quik kräver att rotpartitionen är formaterad med ext2-"
-"filsystemet. Gå tillbaka till partitioneringssteget."
+"Starthanteraren quik kräver att partitionen som innehåller /boot formateras "
+"med ext2-filsystemet. Gå tillbaka till partitioneringssteget."
 
 #. Type: boolean
 #. Description
@@ -142,7 +142,7 @@ msgstr ""
 "starta något annat operativsystem från den här disken. Vidare är det inte "
 "säkert att din maskin är startbar på något sätt efter att den här processen "
 "är klar. Om det slutar med en blank skärm kan du behöva göra en kallstart "
-"och hålla nere Kommando-Alternativ-P-R."
+"och hålla nere Command-Option-P-R."
 
 #. Type: boolean
 #. Description
@@ -189,12 +189,6 @@ msgstr "Skapandet av huvudkonfigurationsfilen för quik misslyckades."
 
 #. Type: error
 #. Description
-#: ../quik-installer.templates:73
-msgid "Please check the syslog for more information."
-msgstr "Kontrollera systemloggen för mer information."
-
-#. Type: error
-#. Description
 #: ../quik-installer.templates:82
 msgid "Failed to resolve kernel symlink"
 msgstr "Lyckades inte läsa av symbolisk länk för kärnan"
@@ -213,7 +207,7 @@ msgstr ""
 #. Description
 #: ../quik-installer.templates:88
 msgid "Failed to resolve initrd symlink"
-msgstr "Misslyckades att läsa av initrd symbolisk länk"
+msgstr "Misslyckades med att läsa av symbolisk länk för initrd"
 
 #. Type: error
 #. Description
@@ -236,7 +230,7 @@ msgstr "Installerar quik på bootstrap-partitionen"
 #. Description
 #: ../quik-installer.templates:98
 msgid "Failed to install boot loader"
-msgstr "Misslyckades att installera starthanteraren"
+msgstr "Misslyckades med att installera starthanteraren"
 
 #. Type: error
 #. Description
@@ -260,7 +254,7 @@ msgstr "Ställer in OpenFirmware"
 #. Description
 #: ../quik-installer.templates:111
 msgid "Unable to configure OpenFirmware"
-msgstr "Lyckades inte konfigurera OpenFirmware"
+msgstr "Kunde inte konfigurera OpenFirmware"
 
 #. Type: error
 #. Description
@@ -269,9 +263,8 @@ msgid ""
 "Setting the OpenFirmware boot-device variable failed. You will have to "
 "configure OpenFirmware yourself to boot."
 msgstr ""
-"Aktiveringen av OpenFirmware-startenhetsvariabeln misslyckades. Du kommer "
-"att bli tvungen att konfigurera OpenFirmware själv för att kunna starta "
-"systemet."
+"Inställning av OpenFirmware-variabeln boot-device misslyckades. Du kommer "
+"måste konfigurera OpenFirmware själv för att kunna starta systemet."
 
 #. Type: error
 #. Description
@@ -288,8 +281,8 @@ msgid ""
 "Setting the OpenFirmware boot-command variable failed. You may have "
 "intermittent boot failures."
 msgstr ""
-"Lyckades inte ställa in OpenFirmware-startkommandot. Du kan få oregelbundna "
-"fel vid start av systemet."
+"Misslyckades med att ställa in boot-command för OpenFirmware. Du kan få "
+"oregelbundna fel vid start av systemet."
 
 #. Type: note
 #. Description
@@ -314,7 +307,7 @@ msgstr ""
 #. Description
 #: ../quik-installer.templates:131
 msgid "Failed to mount /target/proc"
-msgstr "Misslyckades att montera /target/proc"
+msgstr "Misslyckades med att montera /target/proc"
 
 #. Type: error
 #. Description
@@ -325,9 +318,10 @@ msgstr "Monteringen av proc-filsystemet i /target/proc misslyckades."
 #. Type: error
 #. Description
 #: ../quik-installer.templates:131
-msgid "Please check the system log or the output on the third console (tty3)."
+msgid "Check /var/log/syslog or see virtual console 4 for the details."
 msgstr ""
-"Kontrollera systemloggen eller utmatningen på den tredje konsollen (tty3)."
+"Kontrollera /var/log/syslog eller se på den virtuella konsollen 4 för mer "
+"detaljer."
 
 #. Type: error
 #. Description

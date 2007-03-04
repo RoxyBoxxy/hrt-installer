@@ -95,7 +95,7 @@ while read LANG_FILE; do
 
 	        # Level-specific check (only for po files)
 		if [ -f ${SPECIFIC_CHECK} ] ; then
-		    ${SPECIFIC_CHECK} ${LANG_FILE} >> ${LANG_SPECIFIC}
+		    ${SPECIFIC_CHECK} ${LANG_FILE} ${LANG} >> ${LANG_SPECIFIC}
 		fi
 	    fi
 	    extract_msg.pl -msgstr ${LANG_FILE} >> ${ALL_STRINGS}
@@ -105,7 +105,7 @@ while read LANG_FILE; do
 
 	        # Level-specific check (only for po files)
 		if [ -f ${SPECIFIC_CHECK} ] ; then
-		    ${SPECIFIC_CHECK} ${LANG_FILE} | iconv --from ${ENC} --to utf-8 >> ${LANG_SPECIFIC}
+		    ${SPECIFIC_CHECK} ${LANG_FILE} ${LANG} | iconv --from ${ENC} --to utf-8 >> ${LANG_SPECIFIC}
 		fi
 	    fi
 	    extract_msg.pl -msgstr ${LANG_FILE} | iconv --from ${ENC} --to utf-8 >> ${ALL_STRINGS}
@@ -125,27 +125,25 @@ find ${DEST_DIR} -empty -exec rm '{}' ';'
 if [ ${HANDLE_SUSPECT_VARS} = "yes" ] ; then
     if [ -f ${SUSPECT_VARS} ]; then
 	FILES_TO_KEEP="${SUSPECT_VARS} ${FILES_TO_KEEP}" 
-	SUSPECT_EXIST=1
+	NUM_SUSPECT=$(msgfmt -o /dev/null --statistics ${SUSPECT_VARS} 2>&1 | sed -e "s|^\([0-9]*\) .*|\1|")
     else
-	SUSPECT_EXIST=0
+	NUM_SUSPECT=0
     fi
 fi
 
 if [ -f ${LANG_SPECIFIC} ]; then
     FILES_TO_KEEP="${LANG_SPECIFIC} ${FILES_TO_KEEP}" 
-    SPECIFIC_EXIST=1
+    NUM_SPECIFIC=$(msgfmt -o /dev/null --statistics ${LANG_SPECIFIC} 2>&1 | sed -e "s|^\([0-9]*\) .*|\1|")
 else
-    SPECIFIC_EXIST=0
+    NUM_SPECIFIC=0
 fi
 
 # remove ${ALL_THESE_VARIABLES} if they do not need to be spell checked
 # remove %s, %c, %d (to get better count of unicode points)
-# ${KBD-ARCHS-L10N} is a particular case which has to be treated as a variable
 if [ ${REMOVE_VARS} = "yes" ] ; then
     NEEDS_RM="${NO_VARS} ${NEEDS_RM}"
     grep -e "^-" ${ALL_STRINGS} | \
-    sed -e s/\$\{[a-zA-Z0-9_]*\}//g \
-	-e "s|\${KBD-ARCHS-L10N}||" > ${NO_VARS}
+    sed -e s/\$\{[a-zA-Z0-9_]*\}//g > ${NO_VARS}
 
     FILE_TO_CHECK=${NO_VARS}
 else
@@ -164,7 +162,8 @@ fi
     sed -e "s|^- \"\(.*\)\"$|\1|" \
 	-e "s|\$TCPIP|TCPIP|" \
 	-e "s/%l*[scdbniuBFNS]//g" \
-	-e "s|\\\\\"|\"|g" ${FILE_CODEPOINTS} > ${DEST_DIR}/fully_stripped.txt
+	-e "s|\\\\\"|\"|g" \
+	-e "s|\\\n||g" ${FILE_CODEPOINTS} > ${DEST_DIR}/fully_stripped.txt
 
     iconv -f utf8 -t ucs-4le ${DEST_DIR}/fully_stripped.txt | \
 	od -v -tx2 -An -w2 | \
@@ -208,17 +207,17 @@ if [ ${DICT} != "null" ] ; then
 
 # if we're *not* handling suspecet vars (i.e. d-i manual), make this an empty string
     if [ ${HANDLE_SUSPECT_VARS} = "no" ] ; then
-	SUSPECT_EXIST=
+	NUM_SUSPECT=-1
     fi
 
 # build the entry of stats.txt for the current language (i.e "395 it 1 134 0")
-    echo `wc -l ${UNKN} | awk '{print $1}'` ${LANG} ${SUSPECT_EXIST} ${CODEPOINTS} ${SPECIFIC_EXIST} >> ${DEST_DIR}/stats.txt
+    echo ${LANG} $(wc -l ${UNKN} | awk '{print $1}') ${NUM_SUSPECT} ${CODEPOINTS} ${NUM_SPECIFIC} >> ${DEST_DIR}/stats.txt
 else
     if [ ${HANDLE_SUSPECT_VARS} = "no" ] ; then
-	SUSPECT_EXIST=
+	NUM_SUSPECT=-1
     fi
 
-    echo "-1 ${LANG} ${SUSPECT_EXIST} ${CODEPOINTS}" ${SPECIFIC_EXIST} >> ${DEST_DIR}/stats.txt
+    echo "${LANG} -1 ${NUM_SUSPECT} ${CODEPOINTS} ${NUM_SPECIFIC}" >> ${DEST_DIR}/stats.txt
 
     NEEDS_RM=`echo ${NEEDS_RM} | sed "s:${ALL_UNKNOWN}::"`
     FILES_TO_KEEP=`echo ${FILES_TO_KEEP} | sed "s:${UNKN}::"`

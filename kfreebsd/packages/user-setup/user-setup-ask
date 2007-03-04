@@ -13,6 +13,20 @@ export ROOT
 
 . /usr/lib/user-setup/functions.sh
 
+# For the convenience of heavy testers
+set_special_users() {
+	local realname
+	case "$fullname" in
+	    fjp)	realname="Frans Pop" ;;
+	    tbm)	realname="Martin Michlmayr" ;;
+	    *)		return 1 ;;
+	esac
+	db_set passwd/user-fullname "$realname"
+	userdefault=$fullname
+	db_fset passwd/username seen true
+	return 0
+}
+
 # Main loop starts here. Use a state machine to allow jumping back to
 # previous questions.
 STATE=0
@@ -31,18 +45,15 @@ while :; do
 			db_set passwd/root-password ""
 			db_set passwd/root-password-crypted "!"
 		elif ! root_password; then
-			# First check whether the root password was preseeded crypted
+			# First check whether the root password was preseeded
+			# crypted to an actual password (not locked)
 			db_get passwd/root-password-crypted || true
-			if ! test "$RET" ; then
+			if ! test "$RET" || [ "x$RET" = "x!" ]; then
 				# No preseed of the root password hash
 				# we will prompt the user
+				db_set passwd/root-password-crypted ""
 				db_input critical passwd/root-password || true
-				# Note that this runs at a slightly lower
-				# priority, so it may not always be seen. If
-				# it isn't, don't compare passwords.
-				COMPARE_PW=''
-				db_input critical passwd/root-password-again \
-				&& COMPARE_PW=1 || true
+				db_input critical passwd/root-password-again || true
 			fi
 		fi
 	;;
@@ -68,7 +79,7 @@ while :; do
 					continue
 				fi
 				db_get passwd/root-password-again
-				if [ "$COMPARE_PW" ] && [ "$ROOT_PW" != "$RET" ]; then
+				if [ "$ROOT_PW" != "$RET" ]; then
 					db_fset user-setup/password-mismatch seen false
 					db_input critical user-setup/password-mismatch
 					db_fset passwd/root-password seen false
@@ -107,13 +118,10 @@ while :; do
 			db_get passwd/username
 			if [ -z "$RET" ]; then
 				db_get passwd/user-fullname
-				case "$RET" in
-					"Frans Pop")	userdefault="fjp";;
-					"Martin Michlmayr")	userdefault="tbm";;
-					*)
-						userdefault=`echo $RET | sed 's/ .*//' | LC_ALL=C tr A-Z a-z`
-					;;
-				esac
+				fullname=$RET
+				if ! set_special_users; then
+					userdefault=$(echo "$fullname" | sed 's/ .*//' | LC_ALL=C tr A-Z a-z)
+				fi
 				if test -n "$userdefault" && \
 					LC_ALL=C expr "$userdefault" : '[a-z][-a-z0-9]*$' >/dev/null; then
 					db_set passwd/username "$userdefault"
@@ -137,12 +145,20 @@ while :; do
 				continue
 			fi
 			
+			if grep -v '^#' /usr/lib/user-setup/reserved-usernames | \
+			   grep -q "^$USER\$"; then
+				db_fset passwd/username seen false
+				db_fset passwd/username-reserved seen false
+				db_subst passwd/username-reserved USERNAME "$USER"
+				db_input critical passwd/username-reserved
+				STATE=3
+				continue
+			fi
+
 			db_get passwd/user-password-crypted || true
 			if ! test "$RET" ; then
 				db_input critical passwd/user-password || true
-				COMPARE_PW=''
-				db_input critical passwd/user-password-again \
-				&& COMPARE_PW=1 || true
+				db_input critical passwd/user-password-again || true
 			fi
 		fi
 	;;
@@ -156,7 +172,7 @@ while :; do
 				db_get passwd/user-password
 				USER_PW="$RET"
 				db_get passwd/user-password-again
-				if [ "$COMPARE_PW" ] && [ "$USER_PW" != "$RET" ]; then
+				if [ "$USER_PW" != "$RET" ]; then
 					db_set passwd/user-password ""
 					db_set passwd/user-password-again ""
 					db_fset user-setup/password-mismatch seen false
@@ -189,7 +205,7 @@ while :; do
 	else
 		STATE=$(($STATE - 1))
 	fi
-	echo "ON STATE: $STATE"
+	#echo "ON STATE: $STATE"
 done
 
 if test "$STATE" = -1 

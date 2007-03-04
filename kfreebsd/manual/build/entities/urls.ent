@@ -13,7 +13,11 @@
 <!ENTITY url-debian-home "http://&www-debian-org;/">
 
 <!ENTITY ftp-debian-org "ftp.debian.org">
+<!-- The entity below is deprecated -->
 <!ENTITY url-debian-ftp "ftp://&ftp-debian-org;/">
+<!-- Use http.us.debian.org as ftp.debian.org does not have all arches -->
+<!ENTITY archive-mirror "http.us.debian.org">
+<!ENTITY url-archive "http://&archive-mirror;/">
 
 <!ENTITY url-d-i "http://&www-debian-org;/devel/debian-installer/">
 
@@ -39,11 +43,11 @@
 <!ENTITY email-debian-boot-list "debian-boot@lists.debian.org">
 
 <!-- base for the current distribution -->
-<!ENTITY disturlftp "ftp://&ftp-debian-org;/debian/dists/&releasename;/">
-<!ENTITY disturl    "http://http.us.debian.org/debian/dists/&releasename;/">
+<!ENTITY disturlftp "&url-debian-ftp;debian/dists/&releasename;/">
+<!ENTITY disturl    "&url-archive;debian/dists/&releasename;/">
 
 <!-- base for unstable -->
-<!ENTITY url-dist-unstable "ftp://ftp.debian.org/debian/dists/unstable/">
+<!ENTITY url-dist-unstable "&url-archive;debian/dists/unstable/">
 
 <!-- where to get the current debian-installer -->
 <!ENTITY url-debian-installer "&disturl;main/installer-&architecture;/current/">
@@ -158,7 +162,10 @@
 <!ENTITY url-linux-history "http://www.li.org/linuxhistory.php">
 
 <!-- Introductions to the FSF and GNU Project -->
+<!ENTITY url-fsf "http://www.fsf.org/">
+<!-- This second entity is being phased out -->
 <!ENTITY url-fsf-intro "http://www.fsf.org/">
+<!ENTITY url-gnu "http://www.gnu.org/">
 <!ENTITY url-gnu-intro "http://www.gnu.org/gnu/the-gnu-project.html">
 
 <!-- Kernel archives -->
@@ -173,6 +180,9 @@
 <!-- OPN -->
 <!ENTITY url-opn "http://www.openprojects.net/">
 <!ENTITY opn-irc-server "irc.openprojects.net">
+
+<!-- LUKS -->
+<!ENTITY url-luks "http://luks.endorphin.org/">
 
 
 <!-- ******************************************
@@ -201,13 +211,6 @@
 
 <!ENTITY url-scsi-faq
   "http://www.cis.ohio-state.edu/hypertext/faq/usenet/scsi-faq/top.html">
-
-<!ENTITY url-removed-packages
-  "http://ftp-master.debian.org/removals.txt">
-
-<!ENTITY url-removed-nonus
-  "http://non-us.debian.org/~troup/removals.txt">
-
 
 <!ENTITY url-linux-org-help "http://www.linux.org/help/">
 
@@ -250,8 +253,7 @@
 <!-- this link is bad and not sure how to replace it! -->
 <!ENTITY url-linux-mca "http://www.dgmicro.com/mca/general-goods.html">
 
-<!-- "the link is valid but information is stale. The archive has been
-removed and text documention at link directs one to a URL that is broken." -->
+<!-- URL is no longer used and can be removed after translations are updated -->
 <!ENTITY url-pc-hw-faq
   "http://www.faqs.org/faqs/pc-hardware-faq/part1/">
 
@@ -263,11 +265,6 @@ removed and text documention at link directs one to a URL that is broken." -->
      http://metalab.unc.edu/LDP/HOWTO/Loadlin+Win95.html
      http://metalab.unc.edu/LDP/HOWTO/Multiboot-with-LILO.html
   -->     
-
-<!ENTITY url-xfree86 "http://www.xfree86.org/">
-<!ENTITY url-xfree "&url-xfree86;">
-
-<!ENTITY url-xfree86-cardlist "&url-xfree86;cardlist.html">
 
 <!ENTITY url-xorg "http://xorg.freedesktop.org/">
 
@@ -296,14 +293,13 @@ removed and text documention at link directs one to a URL that is broken." -->
 
 <!ENTITY url-m68k-faq "http://www.linux-m68k.org/faq/faq.html">
 
-<!ENTITY url-m68k-mac "http://www.mac.linux-m68k.org/"> 
+<!ENTITY url-m68k-mac "http://sourceforge.net/projects/linux-mac68k"> 
 
 <!ENTITY url-m68k-install-guide
   "http://www.informatik.uni-oldenburg.de/~amigo/InstGuide/">
 
 <!-- old amiga install guide, for credits only -->
 <!ENTITY url-m68k-old-amiga-install "http://www.informatik.uni-oldenburg.de/~amigo/debian_inst.html">
-
 
 <!-- ****************************************** alpha links -->
 <!--
@@ -336,6 +332,18 @@ removed and text documention at link directs one to a URL that is broken." -->
 <!ENTITY url-lightweight-rtc-patch
   "ftp://genie.ucd.ie/pub/alpha/patches-2.2.x/rtclight-2.2.12.diff">
 
+
+<!-- ******************************************  arm links -->
+
+<!ENTITY url-slug-firmware "http://www.slug-firmware.net/">
+
+<!ENTITY url-arm-cyrius-glantank "http://www.cyrius.com/debian/iop/glantank/">
+
+<!ENTITY url-arm-cyrius-n2100 "http://www.cyrius.com/debian/iop/n2100/">
+
+<!ENTITY url-arm-cyrius-nslu2 "http://www.cyrius.com/debian/nslu2/">
+
+
 <!-- ******************************************  sparc links -->
 <!--
   http://www.netbsd.org/Documentation/network/netboot/index.html -
@@ -350,7 +358,7 @@ removed and text documention at link directs one to a URL that is broken." -->
 
 <!ENTITY url-sun-faqs "http://metalab.unc.edu/pub/sun-info/sun-faq/FAQs/">
 
-<!ENTITY url-openboot "http://docs.sun.com/?p=/coll/216.2">
+<!ENTITY url-openboot "http://docs.sun.com/app/docs/doc/805-4436">
 
 <!ENTITY url-sun-nvram-faq "http://www.squirrel.com/sun-nvram-hostid.faq.html">
 

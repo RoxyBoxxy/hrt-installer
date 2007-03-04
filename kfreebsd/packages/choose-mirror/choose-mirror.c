@@ -11,13 +11,18 @@
 #ifdef WITH_FTP
 #include "mirrors_ftp.h"
 #endif
+
 #if ! defined (WITH_HTTP) && ! defined (WITH_FTP)
 #error Must compile with at least one of FTP or HTTP
+#endif
+#if defined (WITH_FTP) && defined (WITH_FTP_MANUAL)
+#error Only one of WITH_FTP and WITH_FTP_MANUAL can be defined
 #endif
 
 static struct debconfclient *debconf;
 static char *protocol = NULL;
 static char *country  = NULL;
+int show_progress = 1;
 
 /*
  * Returns a string on the form "DEBCONF_BASE/protocol/supplied". The
@@ -94,7 +99,7 @@ static char **mirrors_in(char *country) {
 	return ret;
 }
 
-/* returns true if there is a mirror in the specificed country */
+/* returns true if there is a mirror in the specified country */
 static inline int has_mirror(char *country) {
 	char **mirrors;
 	if (strcmp(country, MANUAL_ENTRY) == 0)
@@ -134,10 +139,12 @@ int find_suite (void) {
 	int i;
 	int ret = 0;
 
-	debconf_progress_start(debconf, 0, 1,
-			       DEBCONF_BASE "checking_title");
-	debconf_progress_info(debconf,
-			      DEBCONF_BASE "checking_download");
+	if (show_progress) {
+		debconf_progress_start(debconf, 0, 1,
+				       DEBCONF_BASE "checking_title");
+		debconf_progress_info(debconf,
+				      DEBCONF_BASE "checking_download");
+	}
 
 	hostname = add_protocol("hostname");
 	debconf_get(debconf, hostname);
@@ -189,8 +196,10 @@ int find_suite (void) {
 	free(hostname);
 	free(directory);
 
-	debconf_progress_step(debconf, 1);
-	debconf_progress_stop(debconf);
+	if (show_progress) {
+		debconf_progress_step(debconf, 1);
+		debconf_progress_stop(debconf);
+	}
 
 	return ret;
 }
@@ -211,6 +220,12 @@ static int choose_country(void) {
 	if (country)
 		free(country);
 	country = NULL;
+
+#if defined (WITH_FTP_MANUAL)
+	assert(protocol != NULL);
+	if (strcasecmp(protocol,"ftp") == 0)
+		return 0;
+#endif
 
 	debconf_get(debconf, DEBCONF_BASE "country");
 	if (! strlen(debconf->value)) {
@@ -245,6 +260,13 @@ static int choose_country(void) {
 
 static int set_country(void) {
 	char *countries;
+
+#if defined (WITH_FTP_MANUAL)
+	assert(protocol != NULL);
+	if (strcasecmp(protocol,"ftp") == 0)
+		return 0;
+#endif
+
 	countries = add_protocol("countries");
 	debconf_get(debconf, countries);
 	country = strdup(debconf->value);
@@ -255,7 +277,7 @@ static int set_country(void) {
 }
 
 static int choose_protocol(void) {
-#if defined (WITH_HTTP) && defined (WITH_FTP)
+#if defined (WITH_HTTP) && (defined (WITH_FTP) || defined (WITH_FTP_MANUAL))
 	/* Both are supported, so ask. */
 	debconf_subst(debconf, DEBCONF_BASE "protocol", "protocols", "http, ftp");
 	debconf_input(debconf, "medium", DEBCONF_BASE "protocol");
@@ -264,7 +286,7 @@ static int choose_protocol(void) {
 }
 
 static int get_protocol(void) {
-#if defined (WITH_HTTP) && defined (WITH_FTP)
+#if defined (WITH_HTTP) && (defined (WITH_FTP) || defined (WITH_FTP_MANUAL))
 	debconf_get(debconf, DEBCONF_BASE "protocol");
 	protocol = strdup(debconf->value);
 #else
@@ -295,7 +317,15 @@ static int choose_mirror(void) {
 	char *list;
 
 	debconf_get(debconf, DEBCONF_BASE "country");
+#ifndef WITH_FTP_MANUAL
 	manual_entry = ! strcmp(debconf->value, MANUAL_ENTRY);
+#else
+	if (! strcasecmp(protocol,"ftp") == 0)
+		manual_entry = ! strcmp(debconf->value, MANUAL_ENTRY);
+	else
+		manual_entry = 1;
+#endif
+
 	if (! manual_entry) {
 		char *mir = add_protocol("mirror");
 
@@ -519,7 +549,7 @@ int check_arch (void) {
 	}
 }
 
-int main (void) {
+int main (int argc, char **argv) {
 	/* Use a state machine with a function to run in each state */
 	int state = 0;
 	int (*states[])() = {
@@ -537,6 +567,9 @@ int main (void) {
 		check_arch,
 		NULL,
 	};
+
+	if (argc > 1 && strcmp(argv[1], "-n") == 0)
+		show_progress=0;
 
 	debconf = debconfclient_new();
 	debconf_capb(debconf, "backup");

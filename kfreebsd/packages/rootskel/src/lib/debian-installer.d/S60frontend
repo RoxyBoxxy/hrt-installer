@@ -1,6 +1,6 @@
 get_mem () {
-	ram=$(grep ^MemTotal: /proc/meminfo | { read x y z; echo $y; }) || true # in kilobytes
-	if [ "$ram" = "" ]; then
+	local ram=$(grep ^MemTotal: /proc/meminfo | { read x y z; echo $y; }) || true # in kilobytes
+	if [ -z "$ram" ]; then
 		echo "Cannot determine system memory" >&2
         	ram=0
 	else
@@ -14,8 +14,19 @@ check_gtk () {
 		echo "Framebuffer not available; disabling graphical frontend" >&2
 		return 1
 	fi
-	# 88MB = 92MiB
-	if [ $(get_mem) -lt 88 ] ; then
+	if [ "$GTK_NOVESA" ]; then
+		echo "No VESA framebuffer available; disabling graphical frontend" >&2
+		return 1
+	fi
+
+	case "$(archdetect)" in
+	    powerpc/*)
+		local MEMLIMIT=122 ;;	# is 128 MiB
+	    *)
+		local MEMLIMIT=88 ;;	# is 92 MiB
+	esac
+
+	if [ $(get_mem) -lt $MEMLIMIT ] ; then
 		echo "Insufficient memory for graphical frontend; disabling" >&2
 		return 1
 	fi

@@ -1,8 +1,8 @@
 <!-- retain these comments for translator revision tracking -->
-<!-- original version: 28997 -->
+<!-- original version: 43641 -->
 
 
-  <sect2 arch="sparc" id="invoking-openboot"><title>Invocant OpenBoot</title>
+  <sect2 arch="sparc" id="invoking-openboot"><title>Invocació d'OpenBoot</title>
 
 <para>
 
@@ -10,7 +10,7 @@ OpenBoot ens ofereix les funcions bàsiques necessàries per arrencar
 l'arquitectura &arch-title;. És bastant similar en quan a funció a la BIOS
 a l'arquitectura x86, tot i que més polit. Les PROM d'arrencada de Sun
 tenen un interpret incorporat de «forth» el qual permet fer força
-coses amb la màquina, com ara diagnòstics, guions simples, etc.
+coses amb la màquina, com ara diagnòstics i guions simples.
 
 </para><para>
 
@@ -25,7 +25,7 @@ tecla <keycap>n</keycap> per obtenir l'indicador actual.
 
 </para><para>
 
-Si esteu usant una consola serie, envieu una interrupció a la màquina.
+Si esteu usant una consola sèrie, envieu una interrupció a la màquina.
 Amb Minicom, useu <keycap>Ctrl-A F</keycap>, amb cu, premeu
 <keycap>Enter</keycap>, després premeu <userinput>%~break</userinput>.
 Consulteu la documentació del vostre emulador de terminal si esteu usant
@@ -41,7 +41,7 @@ un programa diferent.
 
 Podeu usar OpenBoot per arrencar des d'un dispositiu específic, i també
 per canviar el dispositiu d'arrencada predeterminat. Tot i això, necessiteu
-saber alguns detalls sobre com OpenBoot anomena als dispositius; és molt
+saber alguns detalls sobre com OpenBoot anomena als dispositius; és prou
 diferent de com ho fa Linux, descrit a <xref linkend="device-names"/>.
 L'ordre pot variar una mica, depenent de quina versió d'OpenBoot
 tingueu. Podeu trobar més informació sobre OpenBoot a
@@ -55,14 +55,14 @@ Amb les noves versions, podeu usar dispositius OpenBoot com
 obvi; el dispositiu <quote>net</quote> és per arrencar usant la xarxa.
 Addicionalment, el nom del dispositiu por especificar una determinada
 partició d'un disc, com <quote>disk2:a</quote> per arrencar disk2, primera
-partició. Tots els noms de dispositiu OpenBoot tenen la forma
+partició. Tots els noms de dispositiu OpenBoot tenen la forma:
 
 <informalexample>
 <screen>
 <replaceable>nom-del-controlador</replaceable>@
 <replaceable>adreça-d'unitat</replaceable>:
 <replaceable>arguments-del-dispositiu</replaceable>
-</screen></informalexample>.
+</screen></informalexample>
 
 A antigues revisions d'OpenBoot, la nomenclatura de dispositius és una
 mica diferent: el dispositiu «floppy» s'anomena <quote>/fd</quote>, i

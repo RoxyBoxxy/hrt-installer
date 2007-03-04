@@ -22,11 +22,12 @@ fi
 LOCAL_PATH=$HOME/.websec-txt
 # Config file. Must contain lines with "<language> address1,address2"
 LANG_MAIL_CFGFILE=${LOCAL_PATH}/lang-mail.cfg
+# Local path
+SCRIPT_PATH=`dirname $0`
 # Filter aimed to simplify the output
-FILTER=$HOME/bin/simplestats.pl
+FILTER=${SCRIPT_PATH}/simplestats.pl
 # Base URL for the stats file
-BASE_URL="http://people.debian.org/~seppy/d-i/level"
-
+BASE_URL="http://d-i.alioth.debian.org/l10n-stats/level"
 
 ACTUAL_DATE=`date +%Y.%m.%d__%H.%M.%S`
 ACTUAL_LANGUAGE="${1}"
@@ -51,10 +52,22 @@ for i in ${URL_SOURCES}; do
 	mv ${LOCAL_PATH_FILES}/$LOCAL_FILE ${LOCAL_PATH_FILES}/$LOCAL_FILE.old
 	wget --quiet $URL_SOURCE0 -O - | grep -v "Files fetched and report generated" > ${LOCAL_PATH_FILES}/$LOCAL_FILE
 
-	diff -u ${LOCAL_PATH_FILES}/$LOCAL_FILE.old ${LOCAL_PATH_FILES}/$LOCAL_FILE > ${LOCAL_PATH_FILES}/$LOCAL_FILE.diff
-	if test $? -ne 0;
+	DIFFFILE=${LOCAL_PATH_FILES}/$LOCAL_FILE.diff
+	diff -u ${LOCAL_PATH_FILES}/$LOCAL_FILE.old ${LOCAL_PATH_FILES}/$LOCAL_FILE > ${DIFFFILE}
+	DIFFRETURNED=$?
+	if test $DIFFRETURNED -ne 0;
 	then
-		cat ${LOCAL_PATH_FILES}/$LOCAL_FILE.diff | $FILTER | mutt -s "[WebSec-txt-${ACTUAL_LANGUAGE}] $URL_SOURCE0 - $ACTUAL_DATE" ${MAIL_ADDRESS}
+		if test -s ${DIFFFILE}; then
+			RPTFILE=${LOCAL_PATH_FILES}/$LOCAL_FILE.report
+			cat ${DIFFFILE} | $FILTER > ${RPTFILE}
+			if test -s ${RPTFILE}; then
+				echo "Mailing  ${MAIL_ADDRESS} for ${ACTUAL_LANGUAGE} with:"
+				cat ${RPTFILE}
+				cat ${RPTFILE} | mutt -s "[WebSec-txt-${ACTUAL_LANGUAGE}] $URL_SOURCE0 - $ACTUAL_DATE" ${MAIL_ADDRESS}
+			fi
+		else
+			echo "diff for ${URL_SOURCE0} returned ${DIFFRETURNED}, yet ${DIFFFILE} is empty\!"
+		fi
 #	else
 #		echo "$URL_SOURCE0 - no changes"
 	fi

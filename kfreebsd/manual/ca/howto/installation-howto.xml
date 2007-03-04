@@ -1,5 +1,5 @@
 <!-- retain these comments for translator revision tracking -->
-<!-- original version: 33725 -->
+<!-- original version: 44580 -->
 
 <appendix id="installation-howto">
 <title>Com Instal·lar</title>
@@ -10,9 +10,8 @@ Aquest document descriu com instal·lar &debian; &releasename; per
 &arch-title; (<quote>&architecture;</quote>) amb el nou &d-i;. És un passeig
 ràpid pel procés d'instal·lació el qual hauria de contenir tota la informació
 que necessiteu per la majoria d'instal·lacions. Quan sigui necessària mes
-informació us remetrem a explicacions més detallades a la
-<link linkend="debian_installation_guide">Guia d'Instal·lació de &debian;
-</link>.
+informació us remetrem a explicacions més detallades a altres parts
+d'aquest document.
 
 </para>
 
@@ -28,7 +27,7 @@ Si trobeu errors al llarg de la instal·lació per favor dirigiu-vos a la
 informar-ho. Si teniu preguntes les quals no estan respostes a aquest
 document, per favor informeu a la llista de correu debian-boot
 (&email-debian-boot-list;) o pregunteu al IRC (#debian-boot a la xarxa
-de freenode).
+de OFTC).
 
 </para>
  </sect1>
@@ -83,7 +82,7 @@ conjunt de CDs de Debian.
 </para><para>
 
 Descarregueu la que preferiu i graveu-la a un CD.
-<phrase arch="i386">Per arrencar el CD, necessiteu canviar la configuració de
+<phrase arch="x86">Per arrencar el CD, necessiteu canviar la configuració de
 la vostra BIOS, com s'explica a la <xref linkend="bios-setup" />.</phrase>
 <phrase arch="powerpc">
 Per arrencar un PowerMac des de CD, premeu la tecla <keycap>c</keycap> mentre
@@ -99,7 +98,7 @@ des de CD.</phrase>
 
 Si no podeu arrencar des de CD, podeu descarregar les imatges dels disquets
 Debian. Necessiteu les imatges <filename>floppy/boot.img</filename>,
-<filename>floppy/root.img</filename> i possiblement un dels disquets
+<filename>floppy/root.img</filename> i possiblement un o més dels disquets
 amb controladors.
 
 </para><para>
@@ -111,8 +110,9 @@ Quan arrenqueu aquest disquet, us suggerirà que inseriu un segon disquet
 </para><para>
 
 Si esteu planejant fer la instal·lació per xarxa, normalment necessitareu
-el disquet <filename>floppy/net-drivers.img</filename>, el qual conté
-controladors addicionals per moltes targes de xarxa i suport per PCMCIA.
+el disquet <filename>floppy/net-drivers-1.img</filename>. Per targes de
+xarxa PCMCIA o USB, i altres targes menys usuals, també necessitareu un
+segon disquet, <filename>floppy/net-drivers-2.img</filename>.
 
 </para><para>
 
@@ -144,9 +144,9 @@ per tot arreu.
 
 La forma més fàcil de preparar el vostre llapis de memòria USB és
 descarregar el fitxer <filename>hd-media/boot.img.gz</filename>, i
-utilitzar gunzip per extraure la imatge de 128 MB d'aquest fitxer.
+utilitzar gunzip per extraure la imatge de 256 MiB d'aquest fitxer.
 Escriviu aquesta imatge directament al vostre llapis de memòria, que ha de
-ser com a mínim de 128 mb de tamany. Per suposat, açò destruirà tot el que
+ser com a mínim de 256 MiB de tamany. Per suposat, açò destruirà tot el que
 hi havia al llapis de memòria. Després mounteu el llapis de memòria, que
 ara ha de tenir un sistema de fitxers FAT. Ara, descarregueu una imatge del
 CD netinst de Debian, i copieu el fitxer al llapis de memòria; qualsevol
@@ -158,13 +158,12 @@ Hi ha formes més flexibles per preparar un llapis de memòria per fer ús del
 debian-installer, i també és possible que funcioni amb llapis de memòria
 mes petits. Per més detalls, podeu mirar <xref linkend="boot-usb-files" />.
 
-</para><para arch="i386">
+</para><para arch="x86">
 
 Algunes BIOS poden arrencar directament de dispositius USB, i d'altres no.
 Heu de configurar la vostra BIOS per que arrenque des del «disc extraïble» o
-de «USB-ZIP» per fer que arrenque des del dispositiu USB. En cas contrari,
-podeu arrencar des d'un disquet i utilitzar el USB per acabar la resta de la
-instal·lació. Podeu trobar ajudes i detalls a <xref linkend="usb-boot" />.
+de <quote>USB-ZIP</quote> per fer que arrenque des del dispositiu USB. Podeu
+trobar ajudes i detalls a <xref linkend="usb-boot" />.
 
 </para><para arch="powerpc">
 
@@ -185,7 +184,7 @@ i configuració d'arrencada de xarxa. Els fitxers que podeu trobar a
 <filename>netboot/</filename> poden utilitzar-se per arrencar de la
 xarxa el &d-i;.
 
-</para><para arch="i386">
+</para><para arch="x86">
 
 La manera més fàcil per configurar-ho és probablement l'arrencada amb PXE.
 Desempaqueteu amb el tar el fitxer <filename>netboot/pxeboot.tar.gz</filename>
@@ -209,7 +208,7 @@ Descarregueu <filename>hd-media/initrd.gz</filename>,
 directori principal del vostre disc dur. Assegureu-vos de que la imatge del
 CD ha de tenir el nom acabat amb <literal>.iso</literal>. Ara tan sols us
 queda arrencar el linux amb el initrd.
-<phrase arch="i386">
+<phrase arch="x86">
 A la <xref linkend="boot-initrd" /> s'explica com fer-ho.
 </phrase>
 
@@ -225,16 +224,6 @@ A la <xref linkend="boot-initrd" /> s'explica com fer-ho.
 Una vegada l'instal·lador ha començat, voreu la pantalla de benvinguda.
 Premeu &enterkey; per arrencar, o llegiu les instruccions per seleccionar
 altres mètodes i paràmetres (vegeu la <xref linkend="boot-parms" />).
-<phrase arch="i386">
-Si voleu utilitzar el nucli 2.4, escriviu <userinput>install24</userinput>
-a la petició «<prompt>boot:</prompt>».
-<footnote><para>
-
-El nucli 2.6 és el predeterminat per la majoria dels mètodes d'arrencada,
-però no està disponible quan arrenqueu de disquet.
-
-</para></footnote>
-</phrase>
 
 </para><para>
 
@@ -264,10 +253,11 @@ DHCP, aleshores podreu configurar manualment la xarxa.
 
 Aquest és el moment de particionar els vostres discs. Primer tindreu
 l'oportunitat de triar si particionar automàticament el disc sencer, o
-l'espai buit. Es el que us recomaneu si sou nous usuaris o si teniu pressa,
-en altre cas, trieu «manual» des del menú.
+l'espai buit disponible (partició guiada). Recomenat si sou nous
+usuaris o si teniu pressa. Si no voleu particionar automàticament,
+trieu <guimenuitem>Manual</guimenuitem> des del menú.
 
-</para><para arch="i386">
+</para><para arch="x86">
 
 Si teniu una partició amb DOS o Windows que voleu conservar,
 aneu amb molt de compte amb la partició automàtica. Si seleccioneu
@@ -280,7 +270,8 @@ especificat el nou tamany.
 A la pròxima pantalla voreu la vostra taula de particions, com seran
 formatades les particions i on es muntaran. Seleccioneu una partició per
 modificar-la o esborrar-la. Si particioneu automàticament, tan sols podreu
-escollir <guimenuitem>Acabar el particionament</guimenuitem> al menú, per
+escollir <guimenuitem>Acabar el particionament i escriure els canvis al 
+disc</guimenuitem> al menú, per
 utilitzar les opcions que heu triat. Recordeu d'assignar al menys una
 partició d'intercanvi i muntar una partició a <filename>/</filename>. Podeu
 trobar més informació sobre particionat a <xref linkend="partitioning" />.
@@ -295,7 +286,7 @@ sistema base, la qual cosa tardarà una mica. Desprès s'instal·larà el nucli.
 L'últim pas és la instal·lació del gestor d'arrencada. Si l'instal·lador
 detecta altres sistemes operatius al vostre ordinador, els afegirà al menú
 d'arrencada i ho farà saber.
-<phrase arch="i386">Per defecte el GRUB s'instal·larà al sector d'arrencada
+<phrase arch="x86">Per defecte el GRUB s'instal·larà al sector d'arrencada
 del vostre primer disc dur, cosa que normalment serà una bona elecció.
 Podreu canviar-lo i instal·lar-lo a un altre lloc si ho desitgeu.
 </phrase>
@@ -322,8 +313,10 @@ Si necessiteu més informació del procés d'instal·lació, vegeu el
 Si heu fet la instal·lació amb èxit fent ús del &d-i;,
 preneu-vos una mica de temps per enviar-nos un informe.
 La manera més senzilla de fer-ho és instal·lant el paquet reportbug
-(<command>apt-get install reportbug</command>), i executar
-<command>reportbug installation-report</command>.
+(<command>aptitude install reportbug</command>), configurar el
+<classname>reportbug</classname> com s'explica a
+<xref linkend="mail-outgoing"/>, i executar
+<command>reportbug installation-reports</command>.
 
 </para><para>
 
@@ -338,7 +331,7 @@ mireu la <xref linkend="problem-report" />.
  </sect1>
 
  <sect1 id="howto-installation-finally">
- <title>I finalment...</title>
+ <title>I finalment&hellip;</title>
 <para>
 
 Esperem que la vostra instal·lació de Debian sigui satisfactòria i que

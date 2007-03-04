@@ -5,13 +5,17 @@ set -e
 [ -r ./po_functions ] || exit 1
 . ./po_functions
 
+manual_release=${manual_release:=etch}
+
 if [ -z "$languages" ]; then
-    # Buildlist of languages suitable for Etch
-    languages="en cs de es fr ja pt pt_BR ru zh_CN zh_TW"
+    # Buildlist of languages
+    # Note: this list is no longer being maintained; see debian/langlist instead
+    languages="en de fr ja pt"
 fi
 
 if [ -z "$architectures" ]; then
-    architectures="alpha arm hppa i386 ia64 m68k mips mipsel powerpc s390 sparc"
+    # Note: this list is no longer being maintained; see debian/archlist instead
+    architectures="alpha amd64 arm hppa i386 ia64 m68k mips mipsel powerpc s390 sparc"
 fi
 
 if [ -z "$destination" ]; then
@@ -30,6 +34,9 @@ if [ "$official_build" ]; then
     export official_build
 fi
 
+# Delete any old generated XML files
+clear_xml
+
 # We need to merge the XML files for English and update the POT files
 export PO_USEBUILD="1"
 update_templates
@@ -38,8 +45,7 @@ for lang in $languages; do
     echo "Language: $lang";
 
     # Update PO files and create XML files
-    check_po
-    if [ -n "$USES_PO" ] ; then
+    if [ ! -d ../$lang ] && uses_po; then
         generate_xml
     fi
     
@@ -63,9 +69,6 @@ for lang in $languages; do
 
         ./clear.sh
     done
-
-    # Delete generated XML files
-    [ -n "$USES_PO" ] && rm -r ../$lang || true
 done
 
 PRESEED="../en/appendix/preseed.xml"
@@ -73,4 +76,6 @@ if [ -f $PRESEED ] && [ -f preseed.pl ] ; then
     ./preseed.pl -r $manual_release $PRESEED >$destination/example-preseed.txt
 fi
 
+# Delete temporary PO files and generated XML files
 clear_po
+clear_xml

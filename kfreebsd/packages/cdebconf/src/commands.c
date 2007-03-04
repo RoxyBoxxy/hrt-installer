@@ -201,7 +201,7 @@ command_go(struct confmodule *mod, char *arg)
 
     q = mod->questions->methods.get(mod->questions, "debconf/frontend");
     if (q)
-	requested_frontend = question_getvalue(q, "");
+	requested_frontend = question_getvalue(q, "C");
     question_deref(q);
 
     running_frontend = getenv("DEBIAN_FRONTEND");
@@ -258,7 +258,7 @@ command_get(struct confmodule *mod, char *arg)
                 CMDSTATUS_BADQUESTION, argv[0]);
     else 
     {
-        const char *value = question_getvalue(q, NULL);
+        const char *value = question_getvalue(q, "C");
         asprintf(&out, "%u %s",
                 CMDSTATUS_SUCCESS, value ? value : "");
     }
@@ -571,12 +571,13 @@ command_x_loadtemplatefile(struct confmodule *mod, char *arg)
 {
     struct template *t = NULL;
     struct question *q = NULL;
-    char *argv[3];
+    char *argv[3] = { "", "", "" };
     int argc;
     char *out;
 
     argc = strcmdsplit(arg, argv, DIM(argv));
-    CHECKARGC(== 1);
+    CHECKARGC(>= 1);
+    CHECKARGC(<= 2);
     t = template_load(argv[0]);
     while (t)
     {
@@ -592,6 +593,8 @@ command_x_loadtemplatefile(struct confmodule *mod, char *arg)
             q->template = t;
             template_ref(t);
         }
+        if (*argv[1])
+            question_owner_add(q, argv[1]);
         mod->questions->methods.set(mod->questions, q);
         t = t->next;
     }

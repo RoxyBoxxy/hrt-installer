@@ -2,8 +2,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: d-i-manual\n"
-"Report-Msgid-Bugs-To: http://bugs.kde.org\n"
-"POT-Creation-Date: 2006-03-19 13:45+0000\n"
+"Report-Msgid-Bugs-To: debian-boot@lists.debian.org\n"
+"POT-Creation-Date: 2007-02-18 19:51+0000\n"
 "PO-Revision-Date: 2005-07-18 14:26+0800\n"
 "Last-Translator: Jhang, Jia-Wei <dreamcrer@gmail.com>\n"
 "Language-Team: debian-chinese-big5 <debian-chinese-big5@lists.debian.org>\n"
@@ -83,13 +83,12 @@ msgstr ""
 
 #. Tag: para
 #: using-d-i.xml:42
-#, no-c-format
+#, fuzzy, no-c-format
 msgid ""
 "Power users may be more comfortable with a menu-driven interface, where each "
 "step is controlled by the user rather than the installer performing each "
 "step automatically in sequence. To use the installer in a manual, menu-"
-"driven way, add the boot argument <userinput>debconf/priority=medium</"
-"userinput>."
+"driven way, add the boot argument <userinput>priority=medium</userinput>."
 msgstr ""
 "熟練的使用者也許更習慣以選單進行，安裝中的每一步都可以被使用者控制，而不是讓"
 "安裝程式自動依此執行。要使用選單驅動的手動安裝方式，添加啟動參數選項 "
@@ -97,13 +96,14 @@ msgstr ""
 
 #. Tag: para
 #: using-d-i.xml:50
-#, no-c-format
+#, fuzzy, no-c-format
 msgid ""
 "If your hardware requires you to pass options to kernel modules as they are "
 "installed, you will need to start the installer in <quote>expert</quote> "
 "mode. This can be done by either using the <command>expert</command> command "
-"to start the installer or by adding the boot argument <userinput>debconf/"
-"priority=low</userinput>. Expert mode gives you full control over &d-i;."
+"to start the installer or by adding the boot argument "
+"<userinput>priority=low</userinput>. Expert mode gives you full control over "
+"&d-i;."
 msgstr ""
 "如果您的硬體要求提供核心模組的設定選項才能安裝，您就需要使用 <quote>expert</"
 "quote> 模式啟動安裝程式。可以透過使用 <command>expert</command> 指令或者添加 "
@@ -337,9 +337,9 @@ msgstr "cdrom-checker"
 
 #. Tag: para
 #: using-d-i.xml:202
-#, no-c-format
+#, fuzzy, no-c-format
 msgid ""
-"Checks integrity of a CD-ROM. This way the user may assure him/herself that "
+"Checks integrity of a CD-ROM. This way, the user may assure him/herself that "
 "the installation CD-ROM was not corrupted."
 msgstr "檢驗光碟片。這種方法確保使用者使用的安裝光碟沒有損壞。"
 
@@ -675,8 +675,8 @@ msgstr ""
 
 #. Tag: title
 #: using-d-i.xml:432
-#, no-c-format
-msgid "Check available memory"
+#, fuzzy, no-c-format
+msgid "Check available memory / low memory mode"
 msgstr "檢測有效的記憶體"
 
 #. Tag: para
@@ -695,21 +695,65 @@ msgstr ""
 #: using-d-i.xml:441
 #, no-c-format
 msgid ""
-"During a low memory install, not all components will be available. One of "
-"the limitations is that you won't be able to choose a language for the "
-"installation."
+"The first measure taken to reduce memory consumption by the installer is to "
+"disable translations, which means that the installation can only be done in "
+"English. Of course, you can still localize the installed system after the "
+"installation has completed."
 msgstr ""
-"在小記憶體的安裝下，只有部分元件有效。其中的一個限制是您無法在安裝過程中選擇"
-"語言。"
+
+#. Tag: para
+#: using-d-i.xml:448
+#, no-c-format
+msgid ""
+"If that is not sufficient, the installer will further reduce memory "
+"consumption by loading only those components essential to complete a basic "
+"installation. This reduces the functionality of the installation system. You "
+"will be given the opportunity to load additional components manually, but "
+"you should be aware that each component you select will use additional "
+"memory and thus may cause the installation to fail."
+msgstr ""
+
+#. Tag: para
+#: using-d-i.xml:457
+#, no-c-format
+msgid ""
+"If the installer runs in low memory mode, it is recommended to create a "
+"relatively large swap partition (64&ndash;128MB). The swap partition will be "
+"used as virtual memory and thus increases the amount of memory available to "
+"the system. The installer will activate the swap partition as early as "
+"possible in the installation process. Note that heavy use of swap will "
+"reduce performance of your system and may lead to high disk activity."
+msgstr ""
+
+#. Tag: para
+#: using-d-i.xml:467
+#, no-c-format
+msgid ""
+"Despite these measures, it is still possible that your system freezes, that "
+"unexpected errors occur or that processes are killed by the kernel because "
+"the system runs out of memory (which will result in <quote>Out of memory</"
+"quote> messages on VT4 and in the syslog)."
+msgstr ""
+
+#. Tag: para
+#: using-d-i.xml:474
+#, no-c-format
+msgid ""
+"For example, it has been reported that creating a big ext3 file system fails "
+"in low memory mode when there is insufficient swap space. If a larger swap "
+"doesn't help, try creating the file system as ext2 (which is an essential "
+"component of the installer) instead. It is possible to change an ext2 "
+"partition to ext3 after the installation."
+msgstr ""
 
 #. Tag: title
-#: using-d-i.xml:456
+#: using-d-i.xml:491
 #, no-c-format
 msgid "Selecting Localization Options"
 msgstr "選擇區域化選項"
 
 #. Tag: para
-#: using-d-i.xml:458
+#: using-d-i.xml:493
 #, no-c-format
 msgid ""
 "In most cases the first questions you will be asked concern the selection of "
@@ -721,7 +765,7 @@ msgstr ""
 "本地化選項。選項包括了語言、國家以及地區設定。"
 
 #. Tag: para
-#: using-d-i.xml:465
+#: using-d-i.xml:500
 #, no-c-format
 msgid ""
 "The language you choose will be used for the rest of the installation "
@@ -734,7 +778,7 @@ msgstr ""
 "的鍵盤配置。"
 
 #. Tag: para
-#: using-d-i.xml:472
+#: using-d-i.xml:507
 #, no-c-format
 msgid ""
 "The selected country will be used later in the installation process to pick "
@@ -747,7 +791,7 @@ msgstr ""
 "言，都會影響您新 Debian 系統的本地化設置。"
 
 #. Tag: para
-#: using-d-i.xml:479
+#: using-d-i.xml:514
 #, no-c-format
 msgid ""
 "You will first be asked to select your preferred language. The language "
@@ -767,7 +811,7 @@ msgstr ""
 "統也不會支援任何地區設定。"
 
 #. Tag: para
-#: using-d-i.xml:491
+#: using-d-i.xml:526
 #, no-c-format
 msgid ""
 "If you selected a language that is recognized as an official language for "
@@ -784,7 +828,7 @@ msgstr ""
 "guimenuitem>，您將看到按大洲分組的全部國家。"
 
 #. Tag: para
-#: using-d-i.xml:509
+#: using-d-i.xml:544
 #, no-c-format
 msgid ""
 "A default locale will be selected based on the selected language and "
@@ -796,13 +840,13 @@ msgstr ""
 "統，您將可以選擇預設地區設定以外的設定，並且可以決定系統額外支援的地區設定。"
 
 #. Tag: title
-#: using-d-i.xml:524
+#: using-d-i.xml:559
 #, no-c-format
 msgid "Choosing a Keyboard"
 msgstr "選擇鍵盤"
 
 #. Tag: para
-#: using-d-i.xml:526
+#: using-d-i.xml:561
 #, no-c-format
 msgid ""
 "Keyboards are often tailored to the characters used in a language. Select a "
@@ -817,7 +861,7 @@ msgstr ""
 "盤配置 (在安裝完之後用 root 執行 <command>kbdconfig</command>)。"
 
 #. Tag: para
-#: using-d-i.xml:536
+#: using-d-i.xml:571
 #, no-c-format
 msgid ""
 "Move the highlight to the keyboard selection you desire and press "
@@ -831,7 +875,7 @@ msgstr ""
 "鍵盤上端有一排 <keycap>F1</keycap>到<keycap>F10</keycap> 按鍵。"
 
 #. Tag: para
-#: using-d-i.xml:545
+#: using-d-i.xml:580
 #, no-c-format
 msgid ""
 "On DECstations there is currently no loadable keymap available, so you have "
@@ -843,7 +887,7 @@ msgstr ""
 "核心 keymap (LK201 US)。隨著 Linux/MIPS 核心的開發，將來也許會改變。"
 
 #. Tag: para
-#: using-d-i.xml:552
+#: using-d-i.xml:587
 #, no-c-format
 msgid ""
 "There are two keyboard layouts for US keyboards; the qwerty/mac-usb-us "
@@ -860,55 +904,14 @@ msgstr ""
 "將 Alt 功能放在 <keycap>Option</keycap> 按鍵上 (在大多數 Mac 鍵盤上標明 "
 "'alt')。其餘地方這兩種配置相似。"
 
-#. Tag: para
-#: using-d-i.xml:564
-#, no-c-format
-msgid ""
-"If you are installing on a system that has a Sun USB keyboard and have "
-"booted the installer with the default 2.4 kernel, the keyboard will not be "
-"identified correctly by the installation system. The installer will show you "
-"a list of Sun type keymaps to choose from, but selecting one of these will "
-"result in a non-working keyboard. If you are installing with the 2.6 kernel, "
-"there is no problem."
-msgstr ""
-"如果您的系統上使用 Sun USB 鍵盤，並且使用預設的 2.4 核心啟動，該鍵盤將無法被"
-"安裝系統識別。\n"
-"安裝程式會提供 Sun 類型的 keymap 列表供選擇，但是選擇了其中一個會導致鍵盤無法"
-"使用。\n"
-"如果您使用 2.6 核心安裝，便不會有問題。"
-
-#. Tag: para
-#: using-d-i.xml:573
-#, no-c-format
-msgid ""
-"To get a working keyboard, you should boot the installer with parameter "
-"<userinput>debconf/priority=medium</userinput>. When you get to keyboard "
-"selection<footnote> <para> If you are installing at default priority you "
-"should use the <userinput>Go Back</userinput> button to return to the "
-"installer menu when you are shown the list of Sun type keymaps. </para> </"
-"footnote>, choose <quote>No keyboard to configure</quote> if you have a "
-"keyboard with an American (US) layout, or choose <quote>USB keyboard</quote> "
-"if you have a keyboard with a localized layout. Selecting <quote>No keyboard "
-"to configure</quote> will leave the kernel keymap in place, which is correct "
-"for US keyboards."
-msgstr ""
-"為了讓鍵盤可以工作，您應該為開機程式加上參數 <userinput>debconf/"
-"priority=medium</userinput>。\n"
-"當您看到鍵盤選擇項<footnote> <para> 如果您使用預設的優先級安裝，在顯示 Sun 類"
-"型 keymap 之後，您應該使用 <userinput>Go Back</userinput> 按鈕返回安裝選單。"
-"</para> </footnote>，如果您使用美式 (US) 鍵盤配置，請選 <quote>No keyboard "
-"to configure</quote>，如果您使用本地化鍵盤配置，請選 <quote>USB keyboard</"
-"quote>。選擇 <quote>No keyboard to configure</quote> 會使核心 keympa 放在合適"
-"的地方，這對美式鍵盤是正確的做法。"
-
 #. Tag: title
-#: using-d-i.xml:611
+#: using-d-i.xml:617
 #, no-c-format
 msgid "Looking for the Debian Installer ISO Image"
 msgstr "尋找 Debian 安裝程式 ISO 映像"
 
 #. Tag: para
-#: using-d-i.xml:612
+#: using-d-i.xml:618
 #, no-c-format
 msgid ""
 "When installing via the <emphasis>hd-media</emphasis> method, there will be "
@@ -921,7 +924,7 @@ msgstr ""
 "正是用來完成此任務。"
 
 #. Tag: para
-#: using-d-i.xml:619
+#: using-d-i.xml:625
 #, no-c-format
 msgid ""
 "At first, <command>iso-scan</command> automatically mounts all block devices "
@@ -948,7 +951,7 @@ msgstr ""
 "果是後者，<command>iso-scan</command> 會搜索其它的映像檔案。"
 
 #. Tag: para
-#: using-d-i.xml:636
+#: using-d-i.xml:642
 #, no-c-format
 msgid ""
 "In case the previous attempt to find an installer iso image fails, "
@@ -960,7 +963,7 @@ msgstr ""
 "行完整的搜索。這次不只查看最上級目錄，而是真正地搜尋整個檔案系統。"
 
 #. Tag: para
-#: using-d-i.xml:643
+#: using-d-i.xml:649
 #, no-c-format
 msgid ""
 "If <command>iso-scan</command> does not discover your installer iso image, "
@@ -976,13 +979,13 @@ msgstr ""
 "Unix 使用者可以在第二個控制台上完成這些動作，而毋須重新啟動。"
 
 #. Tag: title
-#: using-d-i.xml:664
+#: using-d-i.xml:670
 #, no-c-format
 msgid "Configuring Network"
 msgstr "設定網路"
 
 #. Tag: para
-#: using-d-i.xml:666
+#: using-d-i.xml:672
 #, no-c-format
 msgid ""
 "As you enter this step, if the system detects that you have more than one "
@@ -1000,17 +1003,18 @@ msgstr ""
 "citerefentry> man 頁。"
 
 #. Tag: para
-#: using-d-i.xml:677
-#, no-c-format
+#: using-d-i.xml:683
+#, fuzzy, no-c-format
 msgid ""
 "By default, &d-i; tries to configure your computer's network automatically "
 "via DHCP. If the DHCP probe succeeds, you are done. If the probe fails, it "
 "may be caused by many factors ranging from unplugged network cable, to a "
 "misconfigured DHCP setup. Or maybe you don't have a DHCP server in your "
-"local network at all. For further explanation check the error messages on "
-"the third console. In any case, you will be asked if you want to retry, or "
-"if you want to perform manual setup. DHCP servers are sometimes really slow "
-"in their responses, so if you are sure everything is in place, try again."
+"local network at all. For further explanation, check the error messages on "
+"the fourth console. In any case, you will be asked if you want to retry, or "
+"if you want to perform a manual setup. DHCP servers are sometimes really "
+"slow in their responses, so if you are sure everything is in place, try "
+"again."
 msgstr ""
 "預設情況下，&d-i; 會自動嘗試使用 DHCP 設定您的電腦網路。如果 DHCP 偵測成功，"
 "這一步就完成。如果失敗，造成的原因會有多種因素，從沒有接網線到錯誤設定的 "
@@ -1019,7 +1023,7 @@ msgstr ""
 "時候回應很慢，因此，如果您確定都正常，再試一次。"
 
 #. Tag: para
-#: using-d-i.xml:689
+#: using-d-i.xml:695
 #, no-c-format
 msgid ""
 "The manual network setup in turn asks you a number of questions about your "
@@ -1041,8 +1045,8 @@ msgstr ""
 "\"/> 中參考應回答的數值。"
 
 #. Tag: para
-#: using-d-i.xml:703
-#, no-c-format
+#: using-d-i.xml:709
+#, fuzzy, no-c-format
 msgid ""
 "Some technical details you might, or might not, find handy: the program "
 "assumes the network IP address is the bitwise-AND of your system's IP "
@@ -1051,8 +1055,7 @@ msgid ""
 "will also guess your gateway. If you can't find any of these answers, use "
 "the system's guesses &mdash; you can change them once the system has been "
 "installed, if necessary, by editing <filename>/etc/network/interfaces</"
-"filename>. Alternatively, you can install <classname>etherconf</classname>, "
-"which will step you through your network setup."
+"filename>."
 msgstr ""
 "您也許會覺得一些技術細節很有用：程式假定網路 IP 位址是與您的系統 IP 位址和網"
 "路遮罩取位元交集。它還會猜測廣播位址是您的系統 IP 位址和網路遮罩取反位元交"
@@ -1062,13 +1065,13 @@ msgstr ""
 "classname>，它用來一步步進行網路設定。"
 
 #. Tag: title
-#: using-d-i.xml:742
+#: using-d-i.xml:752
 #, no-c-format
 msgid "Partitioning and Mount Point Selection"
 msgstr "分割區與選擇掛載點"
 
 #. Tag: para
-#: using-d-i.xml:743
+#: using-d-i.xml:753
 #, no-c-format
 msgid ""
 "At this time, after hardware detection has been executed a final time, &d-i; "
@@ -1083,13 +1086,13 @@ msgstr ""
 "載點，並為近似選項進行設定，例如 LVM 或 RAID 設備。"
 
 #. Tag: title
-#: using-d-i.xml:765
+#: using-d-i.xml:775
 #, no-c-format
 msgid "Partitioning Your Disks"
 msgstr "硬碟的分割區"
 
 #. Tag: para
-#: using-d-i.xml:767
+#: using-d-i.xml:777
 #, no-c-format
 msgid ""
 "Now it is time to partition your disks. If you are uncomfortable with "
@@ -1100,29 +1103,118 @@ msgstr ""
 "的細節，請參閱 <xref linkend=\"partitioning\"/>。"
 
 #. Tag: para
-#: using-d-i.xml:773
+#: using-d-i.xml:784
 #, no-c-format
 msgid ""
+"If a hard disk has previously used under Solaris, the partitioner may not "
+"detect the size of the drive correctly. Creating a new partition table does "
+"not fix this issue. What does help, is to <quote>zero</quote> the first few "
+"sectors of the drive: <informalexample><screen>\n"
+"# dd if=/dev/zero of=/dev/hd<replaceable>X</replaceable> bs=512 count=2; "
+"sync\n"
+"</screen></informalexample> Note that this will make any existing data on "
+"that disk inaccessible."
+msgstr ""
+
+#. Tag: para
+#: using-d-i.xml:797
+#, fuzzy, no-c-format
+msgid ""
 "First you will be given the opportunity to automatically partition either an "
-"entire drive, or free space on a drive. This is also called <quote>guided</"
-"quote> partitioning. If you do not want to autopartition, choose "
-"<guimenuitem>Manually edit partition table</guimenuitem> from the menu."
+"entire drive, or available free space on a drive. This is also called "
+"<quote>guided</quote> partitioning. If you do not want to autopartition, "
+"choose <guimenuitem>Manual</guimenuitem> from the menu."
 msgstr ""
 "首先您可以選擇對整塊硬碟或是其上的未使用空間進行自動分割區。這也被稱為 "
 "<quote>嚮導式</quote> 分割區。倘若您不願自動分割區，那麼也可以選擇選單中的 "
 "<guimenuitem>手動編輯磁碟分割表</guimenuitem> 。"
 
 #. Tag: para
-#: using-d-i.xml:781
+#: using-d-i.xml:804
 #, no-c-format
 msgid ""
-"If you choose guided partitioning, you will be able to choose from the "
-"schemes listed in the table below. All schemes have their pros and cons, "
-"some of which are discussed in <xref linkend=\"partitioning\"/>. If you are "
-"unsure, choose the first one. Bear in mind, that guided partitioning needs "
-"certain minimal amount of free space to operate with. If you don't give it "
-"at least about 1GB of space (depends on chosen scheme), guided partitioning "
-"will fail."
+"If you choose guided partitioning, you may have three options: to create "
+"partitions directly on the hard disk (classic method), or to create them "
+"using Logical Volume Management (LVM), or to create them using encrypted "
+"LVM<footnote> <para> The installer will encrypt the LVM volume group using a "
+"256 bit AES key and makes use of the kernel's <quote>dm-crypt</quote> "
+"support. </para> </footnote>."
+msgstr ""
+
+#. Tag: para
+#: using-d-i.xml:819
+#, no-c-format
+msgid ""
+"The option to use (encrypted) LVM may not be available on all architectures."
+msgstr ""
+
+#. Tag: para
+#: using-d-i.xml:824
+#, no-c-format
+msgid ""
+"When using LVM or encrypted LVM, the installer will create most partitions "
+"inside one big partition; the advantage of this method is that partitions "
+"inside this big partition can be resized relatively easily later. In the "
+"case of encrypted LVM the big partition will not be readable without knowing "
+"a special key phrase, thus providing extra security of your (personal) data."
+msgstr ""
+
+#. Tag: para
+#: using-d-i.xml:833
+#, no-c-format
+msgid ""
+"When using encrypted LVM, the installer will also automatically erase the "
+"disk by writing random data to it. This further improves security (as it "
+"makes it impossible to tell which parts of the disk are in use and also "
+"makes sure that any traces of previous installations are erased), but may "
+"take some time depending on the size of your disk."
+msgstr ""
+
+#. Tag: para
+#: using-d-i.xml:842
+#, no-c-format
+msgid ""
+"If you choose guided partitioning using LVM or encrypted LVM, some changes "
+"in the partition table will need to be written to the selected disk while "
+"LVM is being set up. These changes effectively erase all data that is "
+"currently on the selected hard disk and you will not be able to undo them "
+"later. However, the installer will ask you to confirm these changes before "
+"they are written to disk."
+msgstr ""
+
+#. Tag: para
+#: using-d-i.xml:852
+#, no-c-format
+msgid ""
+"If you choose guided partitioning (either classic or using (encrypted) LVM) "
+"for a whole disk, you will first be asked to select the disk you want to "
+"use. Check that all your disks are listed and, if you have several disks, "
+"make sure you select the correct one. The order they are listed in may "
+"differ from what you are used to. The size of the disks may help to identify "
+"them."
+msgstr ""
+
+#. Tag: para
+#: using-d-i.xml:861
+#, no-c-format
+msgid ""
+"Any data on the disk you select will eventually be lost, but you will always "
+"be asked to confirm any changes before they are written to the disk. If you "
+"have selected the classic method of partitioning, you will be able to undo "
+"any changes right until the end; when using (encrypted) LVM this is not "
+"possible."
+msgstr ""
+
+#. Tag: para
+#: using-d-i.xml:869
+#, fuzzy, no-c-format
+msgid ""
+"Next, you will be able to choose from the schemes listed in the table below. "
+"All schemes have their pros and cons, some of which are discussed in <xref "
+"linkend=\"partitioning\"/>. If you are unsure, choose the first one. Bear in "
+"mind that guided partitioning needs a certain minimal amount of free space "
+"to operate with. If you don't give it at least about 1GB of space (depends "
+"on chosen scheme), guided partitioning will fail."
 msgstr ""
 "倘若您選擇了嚮導式分割，那麼就要從下表所列的幾個方式中選擇其一。每個方式都各"
 "有利弊。在 <xref linkend=\"partitioning\"/> 中對它們中的有這幾個方式的評價。"
@@ -1131,73 +1223,73 @@ msgstr ""
 "的方式而不同)，那麼嚮導式分割區將以失敗告終。"
 
 #. Tag: entry
-#: using-d-i.xml:797
+#: using-d-i.xml:885
 #, no-c-format
 msgid "Partitioning scheme"
 msgstr "分割區方式"
 
 #. Tag: entry
-#: using-d-i.xml:798
+#: using-d-i.xml:886
 #, no-c-format
 msgid "Minimum space"
 msgstr "所需最小空間"
 
 #. Tag: entry
-#: using-d-i.xml:799
+#: using-d-i.xml:887
 #, no-c-format
 msgid "Created partitions"
 msgstr "所新建的分割區"
 
 #. Tag: entry
-#: using-d-i.xml:805
+#: using-d-i.xml:893
 #, no-c-format
 msgid "All files in one partition"
 msgstr "所有檔案在同一分割區"
 
 #. Tag: entry
-#: using-d-i.xml:806
+#: using-d-i.xml:894
 #, no-c-format
 msgid "600MB"
 msgstr "600MB"
 
 #. Tag: entry
-#: using-d-i.xml:807
+#: using-d-i.xml:895
 #, no-c-format
 msgid "<filename>/</filename>, swap"
 msgstr "<filename>/</filename>, swap"
 
 #. Tag: entry
-#: using-d-i.xml:809
-#, no-c-format
-msgid "Desktop machine"
-msgstr "桌面電腦"
+#: using-d-i.xml:897
+#, fuzzy, no-c-format
+msgid "Separate /home partition"
+msgstr "所新建的分割區"
 
 #. Tag: entry
-#: using-d-i.xml:810
+#: using-d-i.xml:898
 #, no-c-format
 msgid "500MB"
 msgstr "500MB"
 
 #. Tag: entry
-#: using-d-i.xml:811
+#: using-d-i.xml:899
 #, no-c-format
 msgid "<filename>/</filename>, <filename>/home</filename>, swap"
 msgstr "<filename>/</filename>, <filename>/home</filename>, swap"
 
 #. Tag: entry
-#: using-d-i.xml:815
+#: using-d-i.xml:903
 #, no-c-format
-msgid "Multi-user workstation"
-msgstr "多使用者工作站"
+msgid "Separate /home, /usr, /var and /tmp partitions"
+msgstr ""
 
 #. Tag: entry
-#: using-d-i.xml:816
+#: using-d-i.xml:904
 #, no-c-format
 msgid "<entry>1GB</entry>"
 msgstr "<entry>1GB</entry>"
 
 #. Tag: entry
-#: using-d-i.xml:817
+#: using-d-i.xml:905
 #, no-c-format
 msgid ""
 "<filename>/</filename>, <filename>/home</filename>, <filename>/usr</"
@@ -1207,23 +1299,33 @@ msgstr ""
 "filename>, <filename>/var</filename>, <filename>/tmp</filename>, swap"
 
 #. Tag: para
-#: using-d-i.xml:826
+#: using-d-i.xml:914
 #, no-c-format
 msgid ""
-"If you chose an automatic partitioning for your IA64 system, there will be "
-"an additional partition, formatted as a FAT16 bootable filesystem, for the "
-"EFI boot loader. There is also an additional menu item in the formatting "
-"menu to manually set up a partition as an EFI boot partition."
+"If you choose guided partitioning using (encrypted) LVM, the installer will "
+"also create a separate <filename>/boot</filename> partition. The other "
+"partitions, including the swap partition, will be created inside the LVM "
+"partition."
+msgstr ""
+
+#. Tag: para
+#: using-d-i.xml:920
+#, fuzzy, no-c-format
+msgid ""
+"If you choose guided partitioning for your IA-64 system, there will be an "
+"additional partition, formatted as a FAT16 bootable filesystem, for the EFI "
+"boot loader. There is also an additional menu item in the formatting menu to "
+"manually set up a partition as an EFI boot partition."
 msgstr ""
 "倘若您為您的 IA64 系統選擇了自動分割區，那就會另外分出來一個分割區。這個分割"
 "區專門為 EFI bootloader 格式化成 FAT16 的可開機檔案系統。同時，選單裡也將有另"
 "外的一項，可以讓您手動把某個分割區作為 EFI 開機分割區。"
 
 #. Tag: para
-#: using-d-i.xml:834
-#, no-c-format
+#: using-d-i.xml:928
+#, fuzzy, no-c-format
 msgid ""
-"If you chose an automatic partitioning for your Alpha system, an additional, "
+"If you choose guided partitioning for your Alpha system, an additional, "
 "unformatted partition will be allocated at the beginning of your disk to "
 "reserve this space for the aboot boot loader."
 msgstr ""
@@ -1231,7 +1333,7 @@ msgstr ""
 "處，作為 aboot boot loader 的保留空間。"
 
 #. Tag: para
-#: using-d-i.xml:840
+#: using-d-i.xml:934
 #, no-c-format
 msgid ""
 "After selecting a scheme, the next screen will show your new partition "
@@ -1243,29 +1345,31 @@ msgstr ""
 "訊。"
 
 #. Tag: para
-#: using-d-i.xml:846
+#: using-d-i.xml:940
 #, fuzzy, no-c-format
 msgid ""
 "The list of partitions might look like this: <informalexample><screen>\n"
 "  IDE1 master (hda) - 6.4 GB WDC AC36400L\n"
-"        #1 primary   16.4 MB     ext2       /boot\n"
-"        #2 primary  551.0 MB     swap       swap\n"
-"        #3 primary    5.8 GB     ntfs\n"
-"           pri/log    8.2 MB     FREE SPACE\n"
+"        #1 primary   16.4 MB  B f ext2       /boot\n"
+"        #2 primary  551.0 MB      swap       swap\n"
+"        #3 primary    5.8 GB      ntfs\n"
+"           pri/log    8.2 MB      FREE SPACE\n"
 "\n"
 "  IDE1 slave (hdb) - 80.0 GB ST380021A\n"
-"        #1 primary   15.9 MB     ext3\n"
-"        #2 primary  996.0 MB     fat16\n"
-"        #3 primary    3.9 GB     xfs        /home\n"
-"        #5 logical    6.0 GB     ext3       /\n"
-"        #6 logical    1.0 GB     ext3       /var\n"
-"        #7 logical  498.8 MB     ext3\n"
-"        #8 logical  551.5 MB     swap       swap\n"
-"        #9 logical   65.8 GB     ext2\n"
+"        #1 primary   15.9 MB      ext3\n"
+"        #2 primary  996.0 MB      fat16\n"
+"        #3 primary    3.9 GB      xfs        /home\n"
+"        #5 logical    6.0 GB    f ext3       /\n"
+"        #6 logical    1.0 GB    f ext3       /var\n"
+"        #7 logical  498.8 MB      ext3\n"
+"        #8 logical  551.5 MB      swap       swap\n"
+"        #9 logical   65.8 GB      ext2\n"
 "</screen></informalexample> This example shows two IDE harddrives divided "
 "into several partitions; the first disk has some free space. Each partition "
 "line consists of the partition number, its type, size, optional flags, file "
-"system, and mountpoint (if any)."
+"system, and mountpoint (if any). Note: this particular setup cannot be "
+"created using guided partitioning but it does show possible variation that "
+"can be achieved using manual partitioning."
 msgstr ""
 "分割區表格的格式如下： <informalexample><screen>\n"
 "  IDE1 master (hda) - 6.4 GB WDC AC36400L\n"
@@ -1288,15 +1392,15 @@ msgstr ""
 "區大小、可選的旗標、採用的檔案系統，及其掛載點 (如果有的話)。"
 
 #. Tag: para
-#: using-d-i.xml:858
-#, no-c-format
+#: using-d-i.xml:953
+#, fuzzy, no-c-format
 msgid ""
 "This concludes the guided partitioning. If you are satisfied with the "
 "generated partition table, you can choose <guimenuitem>Finish partitioning "
 "and write changes to disk</guimenuitem> from the menu to implement the new "
 "partition table (as described at the end of this section). If you are not "
 "happy, you can choose to <guimenuitem>Undo changes to partitions</"
-"guimenuitem>, to run guided partitioning again or modify the proposed "
+"guimenuitem> and run guided partitioning again, or modify the proposed "
 "changes as described below for manual partitioning."
 msgstr ""
 "接下來，嚮導式分割區就要完成了。如果您對上面產生的分割區資訊表感到滿意，那麼"
@@ -1307,7 +1411,7 @@ msgstr ""
 "區的辦法來完成自己所設想的分割規劃。"
 
 #. Tag: para
-#: using-d-i.xml:868
+#: using-d-i.xml:963
 #, no-c-format
 msgid ""
 "A similar screen to the one shown just above will be displayed if you choose "
@@ -1322,35 +1426,39 @@ msgstr ""
 "內容將會在本節的後面談到。"
 
 #. Tag: para
-#: using-d-i.xml:876
-#, no-c-format
+#: using-d-i.xml:971
+#, fuzzy, no-c-format
 msgid ""
-"If you select a pristine disk which doesn't have neither partitions nor free "
-"space on it, you will be offered to create a new partition table (this is "
-"needed so you can create new partitions). After this a new line entitled "
-"<quote>FREE SPACE</quote> should appear under the selected disk."
+"If you select a pristine disk which has neither partitions nor free space on "
+"it, you will be asked if a new partition table should be created (this is "
+"needed so you can create new partitions). After this, a new line entitled "
+"<quote>FREE SPACE</quote> should appear in the table under the selected disk."
 msgstr ""
 "倘若您選用的是一塊全新的硬碟，它還沒有被分割過，上面也沒有未使用空間。那麼系"
 "統會要求您新建一個分割區表 (只有這樣，您才能建立新的分割區)。分割區表建好之"
 "後，在被選中的磁碟下會出現一個新行，上面寫著<quote>未使用空間</quote>。"
 
 #. Tag: para
-#: using-d-i.xml:884
-#, no-c-format
+#: using-d-i.xml:979
+#, fuzzy, no-c-format
 msgid ""
-"If you select some free space, you will be offered to create new partition. "
-"You will have to answer a quick series of questions about its size, type "
-"(primary or logical), and location (beginning or end of the free space). "
-"After this, you will be presented with detailed overview of your new "
-"partition. There are options like mountpoint, mount options, bootable flag, "
-"or way of usage. If you don't like the preselected defaults, feel free to "
-"change them to your liking. E.g. by selecting the option <guimenuitem>Use as:"
-"</guimenuitem>, you can choose different filesystem for this partition "
-"including the possibility to use the partition for swap, software RAID, LVM, "
-"or not use it at all. Other nice feature is the possibility to copy data "
-"from existing partition onto this one. When you are satisfied with your new "
-"partition, select <guimenuitem>Done setting up the partition</guimenuitem> "
-"and you will be thrown back to the <command>partman</command>'s main screen."
+"If you select some free space, you will have the opportunity to create a new "
+"partition. You will have to answer a quick series of questions about its "
+"size, type (primary or logical), and location (beginning or end of the free "
+"space). After this, you will be presented with a detailed overview of your "
+"new partition. The main setting is <guimenuitem>Use as:</guimenuitem>, which "
+"determines if the partition will have a file system on it, or be used for "
+"swap, software RAID, LVM, an encrypted file system, or not be used at all. "
+"Other settings include mountpoint, mount options, and bootable flag; which "
+"settings are shown depends on how the partition is to be used. If you don't "
+"like the preselected defaults, feel free to change them to your liking. E.g. "
+"by selecting the option <guimenuitem>Use as:</guimenuitem>, you can choose a "
+"different filesystem for this partition, including options to use the "
+"partition for swap, software RAID, LVM, or not use it at all. Another nice "
+"feature is the ability to copy data from an existing partition onto this "
+"one. When you are satisfied with your new partition, select "
+"<guimenuitem>Done setting up the partition</guimenuitem> and you will return "
+"to <command>partman</command>'s main screen."
 msgstr ""
 "如果您選中了某塊未使用空間，那麼就可以在上面新建分割區了。接著需要回答一系列"
 "簡短的問題，如分割區大小、類型 (主分割區還是邏輯分割區)、以及分割區的位置 (在"
@@ -1364,17 +1472,17 @@ msgstr ""
 "自動退回到 <command>partman</command> 的主畫面。"
 
 #. Tag: para
-#: using-d-i.xml:902
-#, no-c-format
+#: using-d-i.xml:1001
+#, fuzzy, no-c-format
 msgid ""
 "If you decide you want to change something about your partition, simply "
 "select the partition, which will bring you to the partition configuration "
-"menu. Because this is the same screen like when creating a new partition, "
-"you can change the same set of options. One thing which might not be very "
-"obvious at a first glance is that you can resize the partition by selecting "
-"the item displaying the size of the partition. Filesystems known to work are "
-"at least fat16, fat32, ext2, ext3 and swap. This menu also allows you to "
-"delete a partition."
+"menu. This is the same screen as is used when creating a new partition, so "
+"you can change the same settings. One thing that may not be very obvious at "
+"a first glance is that you can resize the partition by selecting the item "
+"displaying the size of the partition. Filesystems known to work are at least "
+"fat16, fat32, ext2, ext3 and swap. This menu also allows you to delete a "
+"partition."
 msgstr ""
 "若是您希望修改分割區的設置，只要選取該分割區，分割區的設定選單就會出現在您的"
 "面前。由於這個畫面和新建分割區時使用的畫面是相同的，所以您可以像以前那樣修改"
@@ -1383,7 +1491,7 @@ msgstr ""
 "swap。在這個選單中，您還可以刪除分割區。"
 
 #. Tag: para
-#: using-d-i.xml:913
+#: using-d-i.xml:1012
 #, no-c-format
 msgid ""
 "Be sure to create at least two partitions: one for the <emphasis>root</"
@@ -1398,10 +1506,10 @@ msgstr ""
 "下面的步驟，直到您改正了這個錯誤。"
 
 #. Tag: para
-#: using-d-i.xml:921
-#, no-c-format
+#: using-d-i.xml:1020
+#, fuzzy, no-c-format
 msgid ""
-"If you forget to select and format an EFI boot partition <command>partman</"
+"If you forget to select and format an EFI boot partition, <command>partman</"
 "command> will detect this and will not let you continue until you allocate "
 "one."
 msgstr ""
@@ -1409,7 +1517,7 @@ msgstr ""
 "一點，不讓您繼續操作，直到您劃分出這樣一個分割區。"
 
 #. Tag: para
-#: using-d-i.xml:927
+#: using-d-i.xml:1026
 #, no-c-format
 msgid ""
 "Capabilities of <command>partman</command> can be extended with installer "
@@ -1425,7 +1533,7 @@ msgstr ""
 "者 <filename>partman-lvm</filename>)。"
 
 #. Tag: para
-#: using-d-i.xml:935
+#: using-d-i.xml:1034
 #, no-c-format
 msgid ""
 "After you are satisfied with partitioning, select <guimenuitem>Finish "
@@ -1438,105 +1546,13 @@ msgstr ""
 "硬碟上進行的所有操作。此時，安裝程式會讓您確認是否就照此設定進行分割。"
 
 #. Tag: title
-#: using-d-i.xml:963
-#, no-c-format
-msgid "Configuring Logical Volume Manager (LVM)"
-msgstr "配置邏輯容量管理(LVM)"
-
-#. Tag: para
-#: using-d-i.xml:964
-#, no-c-format
-msgid ""
-"If you are working with computers at the level of system administrator or "
-"<quote>advanced</quote> user, you have surely seen the situation where some "
-"disk partition (usually the most important one) was short on space, while "
-"some other partition was grossly underused and you had to manage this "
-"situation with moving stuff around, symlinking, etc."
-msgstr ""
-"如果您做電腦系統管理員工作或者<quote>進階</quote>使用者，您一定遇過磁碟分區 "
-"(經常是最重要的那個) 空間不足，同時其他的分割區卻不能平衡使用，然後您不得不被"
-"移動檔案或符號鏈結等方法所困擾。"
-
-#. Tag: para
-#: using-d-i.xml:972
-#, no-c-format
-msgid ""
-"To avoid the described situation you can use Logical Volume Manager (LVM). "
-"Simply said, with LVM you can combine your partitions (<firstterm>physical "
-"volumes</firstterm> in LVM lingo) to form a virtual disc (so called "
-"<firstterm>volume group</firstterm>), which can then be divided into virtual "
-"partitions (<firstterm>logical volumes</firstterm>). The point is that "
-"logical volumes (and of course underlying volume groups) can span across "
-"several physical discs."
-msgstr ""
-"為了避免上面描述的情況，您可以採用邏輯容量管理(LVM)。簡而言之，使用 LVM 您可"
-"以組合您的分割區 (<firstterm>物理容量(physical volumes)</firstterm>，LVM 術"
-"語) 形成一個虛擬磁碟( 稱為 <firstterm>容量群組</firstterm>)，它可以被分割成虛"
-"擬分割區 (<firstterm>邏輯容量</firstterm>)。邏輯容量 (當然下面是容量群組) 的"
-"優點在於它可以跨越多個物理磁碟。"
-
-#. Tag: para
-#: using-d-i.xml:982
-#, no-c-format
-msgid ""
-"Now when you realize you need more space for your old 160GB <filename>/home</"
-"filename> partition, you can simply add a new 300GB disc to the computer, "
-"join it with your existing volume group and then resize the logical volume "
-"which holds your <filename>/home</filename> filesystem and voila &mdash; "
-"your users have some room again on their renewed 460GB partition. This "
-"example is of course a bit oversimplified. If you haven't read it yet, you "
-"should consult the <ulink url=\"&url-lvm-howto;\">LVM HOWTO</ulink>."
-msgstr ""
-"當您發現您需要給更多的空間給已有的 160 GB <filename>/home</filename> 分割區"
-"時，您只需加裝一個新的 300GB 磁碟到電腦，加入已經存在的容量組，然後為"
-"<filename>/home</filename> 分割區的邏輯容量重新設置大小，然後 voila &mdash; "
-"您的使用者在更新的 460GB 分割區上又有了更多可用空間。這個例子當然有點簡單。如"
-"果您還沒有讀過，您應該查閱 <ulink url=\"&url-lvm-howto;\">LVM HOWTO</ulink>。"
-
-#. Tag: para
-#: using-d-i.xml:993
-#, no-c-format
-msgid ""
-"LVM setup in &d-i; is quite simple. At first, you have to mark your "
-"partitions to be used as physical volumes for LVM. (This is done in "
-"<command>partman</command> in the <guimenu>Partition settings</guimenu> menu "
-"where you should select <menuchoice> <guimenu>Use as:</guimenu> "
-"<guimenuitem>physical volume for LVM</guimenuitem> </menuchoice>.) Then "
-"start the <command>lvmcfg</command> module (either directly from "
-"<command>partman</command> or from the &d-i;'s main menu) and combine "
-"physical volumes to volume group(s) under the <guimenuitem>Modify volume "
-"groups (VG)</guimenuitem> menu. After that, you should create logical "
-"volumes on the top of volume groups from the menu <guimenuitem>Modify "
-"logical volumes (LV)</guimenuitem>."
-msgstr ""
-"在 &d-i; 裡面設置 LVM 很簡單。首先，您必須為 LVM 標記您的分割區為物理容量。"
-"(這由 <command>partman</command> 在 <guimenu>分割區設定：</guimenu>選單完成，"
-"那裡您應該選擇 <menuchoice> <guimenu>用途：</guimenu> <guimenuitem>LVM 的物理"
-"容量</guimenuitem> </menuchoice>。)接著啟動 <command>lvmcfg</command> 模組 "
-"(可以直接從 <command>partman</command> 或從 &d-i; 的主選單啟動) 然後組合物理"
-"容量到容量群組，它位於<guimenuitem>修改容量群組 (VG) </guimenuitem>選單。之"
-"後，您應該為容量群組建立邏輯容量，這是從選單 <guimenuitem>修改邏輯容量 (LV) "
-"</guimenuitem>。"
-
-#. Tag: para
-#: using-d-i.xml:1008
-#, no-c-format
-msgid ""
-"After returning from <command>lvmcfg</command> back to <command>partman</"
-"command>, you will see any created logical volumes in the same way as "
-"ordinary partitions (and you should treat them like that)."
-msgstr ""
-"從 <command>lvmcfg</command> 返回 <command>partman</command>之後，您可以看到"
-"與其他普通分割區一樣的新建的邏輯容量 (您也應該這樣看待它們)。"
-
-#. Tag: title
-#: using-d-i.xml:1023
+#: using-d-i.xml:1062
 #, no-c-format
 msgid "Configuring Multidisk Device (Software RAID)"
 msgstr "配置多磁碟設備 (Software RAID)"
 
 #. Tag: para
-#: using-d-i.xml:1024
+#: using-d-i.xml:1063
 #, no-c-format
 msgid ""
 "If you have more than one harddrive<footnote><para> To be honest, you can "
@@ -1554,7 +1570,7 @@ msgstr ""
 "(或者更有名的 <firstterm>software RAID</firstterm>)。"
 
 #. Tag: para
-#: using-d-i.xml:1038
+#: using-d-i.xml:1077
 #, no-c-format
 msgid ""
 "MD is basically a bunch of partitions located on different disks and "
@@ -1567,43 +1583,43 @@ msgstr ""
 "<command>partman</command> 格式化，分配掛載點，等等)。"
 
 #. Tag: para
-#: using-d-i.xml:1046
-#, no-c-format
+#: using-d-i.xml:1085
+#, fuzzy, no-c-format
 msgid ""
-"The benefit you gain depends on a type of a MD device you are creating. "
+"What benefits this brings depends on the type of MD device you are creating. "
 "Currently supported are: <variablelist> <varlistentry> <term>RAID0</"
 "term><listitem><para> Is mainly aimed at performance. RAID0 splits all "
 "incoming data into <firstterm>stripes</firstterm> and distributes them "
 "equally over each disk in the array. This can increase the speed of read/"
-"write operations, but when one of the disks fails, you will loose "
+"write operations, but when one of the disks fails, you will lose "
 "<emphasis>everything</emphasis> (part of the information is still on the "
 "healthy disk(s), the other part <emphasis>was</emphasis> on the failed "
 "disk). </para><para> The typical use for RAID0 is a partition for video "
 "editing. </para></listitem> </varlistentry> <varlistentry> <term>RAID1</"
 "term><listitem><para> Is suitable for setups where reliability is the first "
-"concern. It consists of several (usually two) equally sized partitions where "
+"concern. It consists of several (usually two) equally-sized partitions where "
 "every partition contains exactly the same data. This essentially means three "
 "things. First, if one of your disks fails, you still have the data mirrored "
 "on the remaining disks. Second, you can use only a fraction of the available "
 "capacity (more precisely, it is the size of the smallest partition in the "
-"RAID). Third, file reads are load balanced among the disks, which can "
+"RAID). Third, file-reads are load-balanced among the disks, which can "
 "improve performance on a server, such as a file server, that tends to be "
 "loaded with more disk reads than writes. </para><para> Optionally you can "
 "have a spare disk in the array which will take the place of the failed disk "
 "in the case of failure. </para></listitem> </varlistentry> <varlistentry> "
 "<term>RAID5</term><listitem><para> Is a good compromise between speed, "
-"reliability and data redundancy. RAID5 splits all incomming data into "
-"stripes and distributes them equally on all but one disks (similar to "
-"RAID0). Unlike RAID0, RAID5 also computes <firstterm>parity</firstterm> "
-"information, which gets written on the remaining disk. The parity disk is "
-"not static (that would be called RAID4), but is changing periodically, so "
-"the parity information is distributed equally on all disks. When one of the "
-"disks fails, the missing part of information can be computed from remaining "
-"data and its parity. RAID5 must consist of at least three active partitions. "
+"reliability and data redundancy. RAID5 splits all incoming data into stripes "
+"and distributes them equally on all but one disk (similar to RAID0). Unlike "
+"RAID0, RAID5 also computes <firstterm>parity</firstterm> information, which "
+"gets written on the remaining disk. The parity disk is not static (that "
+"would be called RAID4), but is changing periodically, so the parity "
+"information is distributed equally on all disks. When one of the disks "
+"fails, the missing part of information can be computed from remaining data "
+"and its parity. RAID5 must consist of at least three active partitions. "
 "Optionally you can have a spare disk in the array which will take the place "
 "of the failed disk in the case of failure. </para><para> As you can see, "
-"RAID5 has similar degree of reliability like RAID1 while achieving less "
-"redundancy. On the other hand it might be a bit slower on write operation "
+"RAID5 has a similar degree of reliability to RAID1 while achieving less "
+"redundancy. On the other hand, it might be a bit slower on write operations "
 "than RAID0 due to computation of parity information. </para></listitem> </"
 "varlistentry> </variablelist> To sum it up:"
 msgstr ""
@@ -1632,101 +1648,101 @@ msgstr ""
 "訊。 </para></listitem> </varlistentry> </variablelist> 總結："
 
 #. Tag: entry
-#: using-d-i.xml:1124
+#: using-d-i.xml:1163
 #, no-c-format
 msgid "Type"
 msgstr "類型"
 
 #. Tag: entry
-#: using-d-i.xml:1125
+#: using-d-i.xml:1164
 #, no-c-format
 msgid "Minimum Devices"
 msgstr "最少設備"
 
 #. Tag: entry
-#: using-d-i.xml:1126
+#: using-d-i.xml:1165
 #, no-c-format
 msgid "Spare Device"
 msgstr "備用設備"
 
 #. Tag: entry
-#: using-d-i.xml:1127
+#: using-d-i.xml:1166
 #, no-c-format
 msgid "Survives disk failure?"
 msgstr "倖免於磁碟損壞？"
 
 #. Tag: entry
-#: using-d-i.xml:1128
+#: using-d-i.xml:1167
 #, no-c-format
 msgid "Available Space"
 msgstr "可用空間"
 
 #. Tag: entry
-#: using-d-i.xml:1134
+#: using-d-i.xml:1173
 #, no-c-format
 msgid "RAID0"
 msgstr "RAID0"
 
 # index.docbook:1105, index.docbook:1113
 #. Tag: entry
-#: using-d-i.xml:1135 using-d-i.xml:1143
+#: using-d-i.xml:1174 using-d-i.xml:1182
 #, no-c-format
 msgid "<entry>2</entry>"
 msgstr "<entry>2</entry>"
 
 # index.docbook:1106, index.docbook:1107
 #. Tag: entry
-#: using-d-i.xml:1136 using-d-i.xml:1137
+#: using-d-i.xml:1175 using-d-i.xml:1176
 #, no-c-format
 msgid "<entry>no</entry>"
 msgstr "<entry>否</entry>"
 
 #. Tag: entry
-#: using-d-i.xml:1138
+#: using-d-i.xml:1177
 #, no-c-format
 msgid "Size of the smallest partition multiplied by number of devices in RAID"
 msgstr "容量為最小分割區容量乘以 RAID 設備數"
 
 #. Tag: entry
-#: using-d-i.xml:1142
+#: using-d-i.xml:1181
 #, no-c-format
 msgid "RAID1"
 msgstr "RAID1"
 
 # index.docbook:1114, index.docbook:1122
 #. Tag: entry
-#: using-d-i.xml:1144 using-d-i.xml:1152
+#: using-d-i.xml:1183 using-d-i.xml:1191
 #, no-c-format
 msgid "optional"
 msgstr "可選"
 
 # index.docbook:1115, index.docbook:1123
 #. Tag: entry
-#: using-d-i.xml:1145 using-d-i.xml:1153
+#: using-d-i.xml:1184 using-d-i.xml:1192
 #, no-c-format
 msgid "<entry>yes</entry>"
 msgstr "<entry>是</entry>"
 
 #. Tag: entry
-#: using-d-i.xml:1146
+#: using-d-i.xml:1185
 #, no-c-format
 msgid "Size of the smallest partition in RAID"
 msgstr "容量為 RAID 中的最小分割區"
 
 #. Tag: entry
-#: using-d-i.xml:1150
+#: using-d-i.xml:1189
 #, no-c-format
 msgid "RAID5"
 msgstr "RAID5"
 
 #. Tag: entry
-#: using-d-i.xml:1151
+#: using-d-i.xml:1190
 #, no-c-format
 msgid "<entry>3</entry>"
 msgstr "<entry>3</entry>"
 
 #. Tag: entry
-#: using-d-i.xml:1154
+#: using-d-i.xml:1193
 #, no-c-format
 msgid ""
 "Size of the smallest partition multiplied by (number of devices in RAID "
@@ -1734,17 +1750,17 @@ msgid ""
 msgstr "容量為最小分割區乘以 (RAID 設備數量減一)"
 
 #. Tag: para
-#: using-d-i.xml:1162
-#, no-c-format
+#: using-d-i.xml:1201
+#, fuzzy, no-c-format
 msgid ""
-"If you want to know the whole truth about Software RAID, have a look at "
-"<ulink url=\"&url-software-raid-howto;\">Software RAID HOWTO</ulink>."
+"If you want to know more about Software RAID, have a look at <ulink url="
+"\"&url-software-raid-howto;\">Software RAID HOWTO</ulink>."
 msgstr ""
 "如果您想真正全面瞭解 Software RAID，請參閱 <ulink url=\"&url-software-raid-"
 "howto;\">Software RAID HOWTO</ulink>。"
 
 #. Tag: para
-#: using-d-i.xml:1167
+#: using-d-i.xml:1206
 #, no-c-format
 msgid ""
 "To create a MD device, you need to have the desired partitions it should "
@@ -1759,7 +1775,7 @@ msgstr ""
 "理容量 </guimenuitem> </menuchoice>。)"
 
 #. Tag: para
-#: using-d-i.xml:1176
+#: using-d-i.xml:1215
 #, no-c-format
 msgid ""
 "Support for MD is a relatively new addition to the installer. You may "
@@ -1774,15 +1790,17 @@ msgstr ""
 "於有經驗的使用者，從介殼手動地處理一些配置和安裝步驟，也許能避開這些問題"
 
 #. Tag: para
-#: using-d-i.xml:1185
-#, no-c-format
+#: using-d-i.xml:1224
+#, fuzzy, no-c-format
 msgid ""
 "Next, you should choose <guimenuitem>Configure software RAID</guimenuitem> "
-"from the main <command>partman</command> menu. On the first screen of "
-"<command>mdcfg</command> simply select <guimenuitem>Create MD device</"
-"guimenuitem>. You will be presented with a list of supported types of MD "
-"devices, from which you should choose one (e.g. RAID1). What follows depends "
-"on the type of MD you selected."
+"from the main <command>partman</command> menu. (The menu will only appear "
+"after you mark at least one partition for use as <guimenuitem>physical "
+"volume for RAID</guimenuitem>.) On the first screen of <command>mdcfg</"
+"command> simply select <guimenuitem>Create MD device</guimenuitem>. You will "
+"be presented with a list of supported types of MD devices, from which you "
+"should choose one (e.g. RAID1). What follows depends on the type of MD you "
+"selected."
 msgstr ""
 "下一步，您應該從 <command>partman</command> 主選單選擇 <guimenuitem>設定 "
 "software RAID</guimenuitem>。在 <command>mdcfg</command> 第一個畫面選擇 "
@@ -1790,7 +1808,7 @@ msgstr ""
 "從其中選擇一項 (如 RAID1)。後續操作會根據您選擇的 MD 類型而定。"
 
 #. Tag: para
-#: using-d-i.xml:1196
+#: using-d-i.xml:1237
 #, no-c-format
 msgid ""
 "RAID0 is simple &mdash; you will be issued with the list of available RAID "
@@ -1801,7 +1819,7 @@ msgstr ""
 "要組成 MD 的分割區。"
 
 #. Tag: para
-#: using-d-i.xml:1203
+#: using-d-i.xml:1244
 #, no-c-format
 msgid ""
 "RAID1 is a bit more tricky. First, you will be asked to enter the number of "
@@ -1818,23 +1836,23 @@ msgstr ""
 "&d-i; 將不會允許您繼續下去，直到錯誤被改正為止。"
 
 #. Tag: para
-#: using-d-i.xml:1215
-#, no-c-format
+#: using-d-i.xml:1256
+#, fuzzy, no-c-format
 msgid ""
-"RAID5 has similar setup procedure as RAID1 with the exception that you need "
-"to use at least <emphasis>three</emphasis> active partitions."
+"RAID5 has a similar setup procedure as RAID1 with the exception that you "
+"need to use at least <emphasis>three</emphasis> active partitions."
 msgstr ""
 "RAID5 的設定過程類似於 RAID1，只是您至少需要<emphasis>三個</emphasis>活動分"
 "區。"
 
 #. Tag: para
-#: using-d-i.xml:1223
-#, no-c-format
+#: using-d-i.xml:1264
+#, fuzzy, no-c-format
 msgid ""
-"It is perfectly possible to have several types of MD at once. For example if "
-"you have three 200 GB hard drives dedicated to MD, each containing two 100 "
-"GB partitions, you can combine first partitions on all three disk into the "
-"RAID0 (fast 300 GB video editing partition) and use the other three "
+"It is perfectly possible to have several types of MD at once. For example, "
+"if you have three 200 GB hard drives dedicated to MD, each containing two "
+"100 GB partitions, you can combine the first partitions on all three disks "
+"into the RAID0 (fast 300 GB video editing partition) and use the other three "
 "partitions (2 active and 1 spare) for RAID1 (quite reliable 100 GB partition "
 "for <filename>/home</filename>)."
 msgstr ""
@@ -1844,7 +1862,7 @@ msgstr ""
 "RAID1 (相當可靠的 100 GB 分割區用於 <filename>/home</filename>)。"
 
 #. Tag: para
-#: using-d-i.xml:1232
+#: using-d-i.xml:1273
 #, no-c-format
 msgid ""
 "After you setup MD devices to your liking, you can <guimenuitem>Finish</"
@@ -1857,13 +1875,561 @@ msgstr ""
 "案系統並分配掛載點。"
 
 #. Tag: title
-#: using-d-i.xml:1245
+#: using-d-i.xml:1288
+#, fuzzy, no-c-format
+msgid "Configuring the Logical Volume Manager (LVM)"
+msgstr "配置邏輯容量管理(LVM)"
+
+#. Tag: para
+#: using-d-i.xml:1289
+#, no-c-format
+msgid ""
+"If you are working with computers at the level of system administrator or "
+"<quote>advanced</quote> user, you have surely seen the situation where some "
+"disk partition (usually the most important one) was short on space, while "
+"some other partition was grossly underused and you had to manage this "
+"situation with moving stuff around, symlinking, etc."
+msgstr ""
+"如果您做電腦系統管理員工作或者<quote>進階</quote>使用者，您一定遇過磁碟分區 "
+"(經常是最重要的那個) 空間不足，同時其他的分割區卻不能平衡使用，然後您不得不被"
+"移動檔案或符號鏈結等方法所困擾。"
+
+#. Tag: para
+#: using-d-i.xml:1297
+#, fuzzy, no-c-format
+msgid ""
+"To avoid the described situation you can use Logical Volume Manager (LVM). "
+"Simply said, with LVM you can combine your partitions (<firstterm>physical "
+"volumes</firstterm> in LVM lingo) to form a virtual disk (so called "
+"<firstterm>volume group</firstterm>), which can then be divided into virtual "
+"partitions (<firstterm>logical volumes</firstterm>). The point is that "
+"logical volumes (and of course underlying volume groups) can span across "
+"several physical disks."
+msgstr ""
+"為了避免上面描述的情況，您可以採用邏輯容量管理(LVM)。簡而言之，使用 LVM 您可"
+"以組合您的分割區 (<firstterm>物理容量(physical volumes)</firstterm>，LVM 術"
+"語) 形成一個虛擬磁碟( 稱為 <firstterm>容量群組</firstterm>)，它可以被分割成虛"
+"擬分割區 (<firstterm>邏輯容量</firstterm>)。邏輯容量 (當然下面是容量群組) 的"
+"優點在於它可以跨越多個物理磁碟。"
+
+#. Tag: para
+#: using-d-i.xml:1307
+#, fuzzy, no-c-format
+msgid ""
+"Now when you realize you need more space for your old 160GB <filename>/home</"
+"filename> partition, you can simply add a new 300GB disk to the computer, "
+"join it with your existing volume group and then resize the logical volume "
+"which holds your <filename>/home</filename> filesystem and voila &mdash; "
+"your users have some room again on their renewed 460GB partition. This "
+"example is of course a bit oversimplified. If you haven't read it yet, you "
+"should consult the <ulink url=\"&url-lvm-howto;\">LVM HOWTO</ulink>."
+msgstr ""
+"當您發現您需要給更多的空間給已有的 160 GB <filename>/home</filename> 分割區"
+"時，您只需加裝一個新的 300GB 磁碟到電腦，加入已經存在的容量組，然後為"
+"<filename>/home</filename> 分割區的邏輯容量重新設置大小，然後 voila &mdash; "
+"您的使用者在更新的 460GB 分割區上又有了更多可用空間。這個例子當然有點簡單。如"
+"果您還沒有讀過，您應該查閱 <ulink url=\"&url-lvm-howto;\">LVM HOWTO</ulink>。"
+
+#. Tag: para
+#: using-d-i.xml:1318
+#, fuzzy, no-c-format
+msgid ""
+"LVM setup in &d-i; is quite simple and completely supported inside "
+"<command>partman</command>. First, you have to mark the partition(s) to be "
+"used as physical volumes for LVM. This is done in the <guimenu>Partition "
+"settings</guimenu> menu where you should select <menuchoice> <guimenu>Use as:"
+"</guimenu> <guimenuitem>physical volume for LVM</guimenuitem> </menuchoice>."
+msgstr ""
+"為了建立 MD 設備，您需要將欲參與陣列的分割區標記為供 RAID 使用。(透過 "
+"<command>partman</command> 命令中的 <guimenu>分割區設定：</guimenu> 選單完"
+"成，您應該選擇 <menuchoice> <guimenu>用途：</guimenu> <guimenuitem>RAID 的物"
+"理容量 </guimenuitem> </menuchoice>。)"
+
+#. Tag: para
+#: using-d-i.xml:1327
+#, no-c-format
+msgid ""
+"When you return to the main <command>partman</command> screen, you will see "
+"a new option <guimenuitem>Configure the Logical Volume Manager</"
+"guimenuitem>. When you select that, you will first be asked to confirm "
+"pending changes to the partition table (if any) and after that the LVM "
+"configuration menu will be shown. Above the menu a summary of the LVM "
+"configuration is shown. The menu itself is context sensitive and only shows "
+"valid actions. The possible actions are:"
+msgstr ""
+
+#. Tag: para
+#: using-d-i.xml:1338
+#, no-c-format
+msgid ""
+"<guimenuitem>Display configuration details</guimenuitem>: shows LVM device "
+"structure, names and sizes of logical volumes and more"
+msgstr ""
+
+#. Tag: guimenuitem
+#: using-d-i.xml:1343
+#, no-c-format
+msgid "Create volume group"
+msgstr ""
+
+#. Tag: guimenuitem
+#: using-d-i.xml:1346
+#, no-c-format
+msgid "Create logical volume"
+msgstr ""
+
+#. Tag: guimenuitem
+#: using-d-i.xml:1349
+#, no-c-format
+msgid "Delete volume group"
+msgstr ""
+
+#. Tag: guimenuitem
+#: using-d-i.xml:1352
+#, no-c-format
+msgid "Delete logical volume"
+msgstr ""
+
+#. Tag: guimenuitem
+#: using-d-i.xml:1355
+#, no-c-format
+msgid "Extend volume group"
+msgstr ""
+
+#. Tag: guimenuitem
+#: using-d-i.xml:1358
+#, no-c-format
+msgid "Reduce volume group"
+msgstr ""
+
+#. Tag: para
+#: using-d-i.xml:1360
+#, no-c-format
+msgid ""
+"<guimenuitem>Finish</guimenuitem>: return to the main <command>partman</"
+"command> screen"
+msgstr ""
+
+#. Tag: para
+#: using-d-i.xml:1366
+#, no-c-format
+msgid ""
+"Use the options in that menu to first create a volume group and then create "
+"your logical volumes inside it."
+msgstr ""
+
+#. Tag: para
+#: using-d-i.xml:1371
+#, fuzzy, no-c-format
+msgid ""
+"After you return to the main <command>partman</command> screen, any created "
+"logical volumes will be displayed in the same way as ordinary partitions "
+"(and you should treat them as such)."
+msgstr ""
+"從 <command>lvmcfg</command> 返回 <command>partman</command>之後，您可以看到"
+"與其他普通分割區一樣的新建的邏輯容量 (您也應該這樣看待它們)。"
+
+#. Tag: title
+#: using-d-i.xml:1385
+#, fuzzy, no-c-format
+msgid "Configuring Encrypted Volumes"
+msgstr "設定網路"
+
+#. Tag: para
+#: using-d-i.xml:1386
+#, no-c-format
+msgid ""
+"&d-i; allows you to set up encrypted partitions. Every file you write to "
+"such a partition is immediately saved to the device in encrypted form. "
+"Access to the encrypted data is granted only after entering the "
+"<firstterm>passphrase</firstterm> used when the encrypted partition was "
+"originally created. This feature is useful to protect sensitive data in case "
+"your laptop or hard drive gets stolen. The thief might get physical access "
+"to the hard drive, but without knowing the right passphrase, the data on the "
+"hard drive will look like random characters."
+msgstr ""
+
+#. Tag: para
+#: using-d-i.xml:1398
+#, no-c-format
+msgid ""
+"The two most important partitions to encrypt are: the home partition, where "
+"your private data resides, and the swap partition, where sensitive data "
+"might be stored temporarily during operation. Of course, nothing prevents "
+"you from encrypting any other partitions that might be of interest. For "
+"example <filename>/var</filename> where database servers, mail servers or "
+"print servers store their data, or <filename>/tmp</filename> which is used "
+"by various programs to store potentially interesting temporary files. Some "
+"people may even want to encrypt their whole system. The only exception is "
+"the <filename>/boot</filename> partition which must remain unencrypted, "
+"because currently there is no way to load the kernel from an encrypted "
+"partition."
+msgstr ""
+
+#. Tag: para
+#: using-d-i.xml:1413
+#, no-c-format
+msgid ""
+"Please note that the performance of encrypted partitions will be less than "
+"that of unencrypted ones because the data needs to be decrypted or encrypted "
+"for every read or write. The performance impact depends on your CPU speed, "
+"chosen cipher and a key length."
+msgstr ""
+
+#. Tag: para
+#: using-d-i.xml:1420
+#, no-c-format
+msgid ""
+"To use encryption, you have to create a new partition by selecting some free "
+"space in the main partitioning menu. Another option is to choose an existing "
+"partition (e.g. a regular partition, an LVM logical volume or a RAID "
+"volume). In the <guimenu>Partition settings</guimenu> menu, you need to "
+"select <guimenuitem>physical volume for encryption</guimenuitem> at the "
+"<menuchoice> <guimenu>Use as:</guimenu> </menuchoice> option. The menu will "
+"then change to include several cryptographic options for the partition."
+msgstr ""
+
+#. Tag: para
+#: using-d-i.xml:1431
+#, no-c-format
+msgid ""
+"&d-i; supports several encryption methods. The default method is "
+"<firstterm>dm-crypt</firstterm> (included in newer Linux kernels, able to "
+"host LVM physical volumes), the other is <firstterm>loop-AES</firstterm> "
+"(older, maintained separately from the Linux kernel tree). Unless you have "
+"compelling reasons to do otherwise, it is recommended to use the default."
+msgstr ""
+
+#. Tag: para
+#: using-d-i.xml:1443
+#, no-c-format
+msgid ""
+"First, let's have a look at the options available when you select "
+"<userinput>Device-mapper (dm-crypt)</userinput> as the encryption method. As "
+"always: when in doubt, use the defaults, because they have been carefully "
+"chosen with security in mind."
+msgstr ""
+
+#. Tag: term
+#: using-d-i.xml:1453
+#, no-c-format
+msgid "Encryption: <userinput>aes</userinput>"
+msgstr ""
+
+#. Tag: para
+#: using-d-i.xml:1455
+#, no-c-format
+msgid ""
+"This option lets you select the encryption algorithm (<firstterm>cipher</"
+"firstterm>) which will be used to encrypt the data on the partition. &d-i; "
+"currently supports the following block ciphers: <firstterm>aes</firstterm>, "
+"<firstterm>blowfish</firstterm>, <firstterm>serpent</firstterm>, and "
+"<firstterm>twofish</firstterm>. It is beyond the scope of this document to "
+"discuss the qualities of these different algorithms, however, it might help "
+"your decision to know that in 2000, <emphasis>AES</emphasis> was chosen by "
+"the American National Institute of Standards and Technology as the standard "
+"encryption algorithm for protecting sensitive information in the 21st "
+"century."
+msgstr ""
+
+#. Tag: term
+#: using-d-i.xml:1473
+#, no-c-format
+msgid "Key size: <userinput>256</userinput>"
+msgstr ""
+
+#. Tag: para
+#: using-d-i.xml:1475
+#, no-c-format
+msgid ""
+"Here you can specify the length of the encryption key. With a larger key "
+"size, the strength of the encryption is generally improved. On the other "
+"hand, increasing the length of the key usually has a negative impact on "
+"performance. Available key sizes vary depending on the cipher."
+msgstr ""
+
+#. Tag: term
+#: using-d-i.xml:1487
+#, no-c-format
+msgid "IV algorithm: <userinput>cbc-essiv:sha256</userinput>"
+msgstr ""
+
+#. Tag: para
+#: using-d-i.xml:1489
+#, no-c-format
+msgid ""
+"The <firstterm>Initialization Vector</firstterm> or <firstterm>IV</"
+"firstterm> algorithm is used in cryptography to ensure that applying the "
+"cipher on the same <firstterm>clear text</firstterm> data with the same key "
+"always produces a unique <firstterm>cipher text</firstterm>. The idea is to "
+"prevent the attacker from deducing information from repeated patterns in the "
+"encrypted data."
+msgstr ""
+
+#. Tag: para
+#: using-d-i.xml:1499
+#, no-c-format
+msgid ""
+"From the provided alternatives, the default <userinput>cbc-essiv:sha256</"
+"userinput> is currently the least vulnerable to known attacks. Use the other "
+"alternatives only when you need to ensure compatibility with some previously "
+"installed system that is not able to use newer algorithms."
+msgstr ""
+
+#. Tag: term
+#: using-d-i.xml:1511
+#, no-c-format
+msgid "Encryption key: <userinput>Passphrase</userinput>"
+msgstr ""
+
+#. Tag: para
+#: using-d-i.xml:1513
+#, no-c-format
+msgid "Here you can choose the type of the encryption key for this partition."
+msgstr ""
+
+#. Tag: term
+#: using-d-i.xml:1519
+#, no-c-format
+msgid "Passphrase"
+msgstr ""
+
+#. Tag: para
+#: using-d-i.xml:1520
+#, no-c-format
+msgid ""
+"The encryption key will be computed<footnote> <para> Using a passphrase as "
+"the key currently means that the partition will be set up using <ulink url="
+"\"&url-luks;\">LUKS</ulink>. </para></footnote> on the basis of a passphrase "
+"which you will be able to enter later in the process."
+msgstr ""
+
+#. Tag: term
+#: using-d-i.xml:1535 using-d-i.xml:1628
+#, no-c-format
+msgid "Random key"
+msgstr ""
+
+#. Tag: para
+#: using-d-i.xml:1536
+#, no-c-format
+msgid ""
+"A new encryption key will be generated from random data each time you try to "
+"bring up the encrypted partition. In other words: on every shutdown the "
+"content of the partition will be lost as the key is deleted from memory. (Of "
+"course, you could try to guess the key with a brute force attack, but unless "
+"there is an unknown weakness in the cipher algorithm, it is not achievable "
+"in our lifetime.)"
+msgstr ""
+
+#. Tag: para
+#: using-d-i.xml:1545
+#, no-c-format
+msgid ""
+"Random keys are useful for swap partitions because you do not need to bother "
+"yourself with remembering the passphrase or wiping sensitive information "
+"from the swap partition before shutting down your computer. However, it also "
+"means that you will <emphasis>not</emphasis> be able to use the "
+"<quote>suspend-to-disk</quote> functionality offered by newer Linux kernels "
+"as it will be impossible (during a subsequent boot) to recover the suspended "
+"data written to the swap partition."
+msgstr ""
+
+#. Tag: term
+#: using-d-i.xml:1564 using-d-i.xml:1641
+#, no-c-format
+msgid "Erase data: <userinput>yes</userinput>"
+msgstr ""
+
+#. Tag: para
+#: using-d-i.xml:1566
+#, no-c-format
+msgid ""
+"Determines whether the content of this partition should be overwritten with "
+"random data before setting up the encryption. This is recommended because it "
+"might otherwise be possible for an attacker to discern which parts of the "
+"partition are in use and which are not. In addition, this will make it "
+"harder to recover any leftover data from previous "
+"installations<footnote><para> It is believed that the guys from three-letter "
+"agencies can restore the data even after several rewrites of the "
+"magnetooptical media, though. </para></footnote>."
+msgstr ""
+
+#. Tag: para
+#: using-d-i.xml:1586
+#, no-c-format
+msgid ""
+"If you select <menuchoice> <guimenu>Encryption method:</guimenu> "
+"<guimenuitem>Loopback (loop-AES)</guimenuitem> </menuchoice>, the menu "
+"changes to provide the following options:"
+msgstr ""
+
+#. Tag: term
+#: using-d-i.xml:1595
+#, no-c-format
+msgid "Encryption: <userinput>AES256</userinput>"
+msgstr ""
+
+#. Tag: para
+#: using-d-i.xml:1597
+#, no-c-format
+msgid ""
+"For loop-AES, unlike dm-crypt, the options for cipher and key size are "
+"combined, so you can select both at the same time. Please see the above "
+"sections on ciphers and key sizes for further information."
+msgstr ""
+
+#. Tag: term
+#: using-d-i.xml:1607
+#, no-c-format
+msgid "Encryption key: <userinput>Keyfile (GnuPG)</userinput>"
+msgstr ""
+
+#. Tag: para
+#: using-d-i.xml:1609
+#, no-c-format
+msgid "Here you can select the type of the encryption key for this partition."
+msgstr ""
+
+#. Tag: term
+#: using-d-i.xml:1615
+#, no-c-format
+msgid "Keyfile (GnuPG)"
+msgstr ""
+
+#. Tag: para
+#: using-d-i.xml:1616
+#, no-c-format
+msgid ""
+"The encryption key will be generated from random data during the "
+"installation. Moreover this key will be encrypted with <application>GnuPG</"
+"application>, so to use it, you will need to enter the proper passphrase "
+"(you will be asked to provide one later in the process)."
+msgstr ""
+
+#. Tag: para
+#: using-d-i.xml:1629
+#, no-c-format
+msgid "Please see the section on random keys above."
+msgstr ""
+
+#. Tag: para
+#: using-d-i.xml:1643
+#, no-c-format
+msgid "Please see the the section on erasing data above."
+msgstr ""
+
+#. Tag: para
+#: using-d-i.xml:1653
+#, no-c-format
+msgid ""
+"Please note that the <emphasis>graphical</emphasis> version of the installer "
+"still has some limitations when compared to the textual one. For "
+"cryptography it means you can set up only volumes using a "
+"<emphasis>passphrase</emphasis> as the encryption key."
+msgstr ""
+
+#. Tag: para
+#: using-d-i.xml:1661
+#, no-c-format
+msgid ""
+"After you have selected the desired parameters for your encrypted "
+"partitions, return back to the main partitioning menu. There should now be a "
+"new menu item called <guimenu>Configure encrypted volumes</guimenu>. After "
+"you select it, you will be asked to confirm the deletion of data on "
+"partitions marked to be erased and possibly other actions such as writing a "
+"new partition table. For large partitions this might take some time."
+msgstr ""
+
+#. Tag: para
+#: using-d-i.xml:1671
+#, no-c-format
+msgid ""
+"Next you will be asked to enter a passphrase for partitions configured to "
+"use one. Good passphrases should be longer than 8 characters, should be a "
+"mixture of letters, numbers and other characters and should not contain "
+"common dictionary words or information easily associable with you (such as "
+"birthdates, hobbies, pet names, names of family members or relatives, etc.)."
+msgstr ""
+
+#. Tag: para
+#: using-d-i.xml:1680
+#, no-c-format
+msgid ""
+"Before you input any passphrases, you should have made sure that your "
+"keyboard is configured correctly and generates the expected characters. If "
+"you are unsure, you can switch to the second virtual console and type some "
+"text at the prompt. This ensures that you won't be surprised later, e.g. by "
+"trying to input a passphrase using a qwerty keyboard layout when you used an "
+"azerty layout during the installation. This situation can have several "
+"causes. Maybe you switched to another keyboard layout during the "
+"installation, or the selected keyboard layout might not have been set up yet "
+"when entering the passphrase for the root file system."
+msgstr ""
+
+#. Tag: para
+#: using-d-i.xml:1693
+#, no-c-format
+msgid ""
+"If you selected to use methods other than a passphrase to create encryption "
+"keys, they will be generated now. Because the kernel may not have gathered a "
+"sufficient amount of entropy at this early stage of the installation, the "
+"process may take a long time. You can help speed up the process by "
+"generating entropy: e.g. by pressing random keys, or by switching to the "
+"shell on the second virtual console and generating some network and disk "
+"traffic (downloading some files, feeding big files into <filename>/dev/null</"
+"filename>, etc.). This will be repeated for each partition to be encrypted."
+msgstr ""
+
+#. Tag: para
+#: using-d-i.xml:1709
+#, no-c-format
+msgid ""
+"After returning to the main partitioning menu, you will see all encrypted "
+"volumes as additional partitions which can be configured in the same way as "
+"ordinary partitions. The following example shows two different volumes. The "
+"first one is encrypted via dm-crypt, the second one via loop-AES. "
+"<informalexample><screen>\n"
+"Encrypted volume (<replaceable>sda2_crypt</replaceable>) - 115.1 GB Linux "
+"device-mapper\n"
+"     #1 115.1 GB  F ext3\n"
+"\n"
+"Loopback (<replaceable>loop0</replaceable>) - 515.2 MB AES256 keyfile\n"
+"     #1 515.2 MB  F ext3\n"
+"</screen></informalexample> Now is the time to assign mount points to the "
+"volumes and optionally change the file system types if the defaults do not "
+"suit you."
+msgstr ""
+
+#. Tag: para
+#: using-d-i.xml:1722
+#, no-c-format
+msgid ""
+"One thing to note here are the identifiers in parentheses "
+"(<replaceable>sda2_crypt</replaceable> and <replaceable>loop0</replaceable> "
+"in this case) and the mount points you assigned to each encrypted volume. "
+"You will need this information later when booting the new system. The "
+"differences between ordinary boot process and boot process with encryption "
+"involved will be covered later in <xref linkend=\"mount-encrypted-volumes\"/"
+">."
+msgstr ""
+
+#. Tag: para
+#: using-d-i.xml:1732
+#, no-c-format
+msgid ""
+"Once you are satisfied with the partitioning scheme, continue with the "
+"installation."
+msgstr ""
+
+#. Tag: title
+#: using-d-i.xml:1743
 #, fuzzy, no-c-format
 msgid "Setting up the System"
 msgstr "安裝基本系統"
 
 #. Tag: para
-#: using-d-i.xml:1246
+#: using-d-i.xml:1744
 #, no-c-format
 msgid ""
 "After partitioning the installer asks a few more questions that will be used "
@@ -1871,13 +2437,13 @@ msgid ""
 msgstr ""
 
 #. Tag: title
-#: using-d-i.xml:1258
+#: using-d-i.xml:1756
 #, no-c-format
 msgid "Configuring Your Time Zone"
 msgstr "設定您的時區"
 
 #. Tag: para
-#: using-d-i.xml:1260
+#: using-d-i.xml:1758
 #, no-c-format
 msgid ""
 "Depending on the location selected at the beginning of the installation "
@@ -1887,13 +2453,13 @@ msgid ""
 msgstr ""
 
 #. Tag: title
-#: using-d-i.xml:1276
+#: using-d-i.xml:1774
 #, fuzzy, no-c-format
 msgid "Configuring the Clock"
 msgstr "設定網路"
 
 #. Tag: para
-#: using-d-i.xml:1278
+#: using-d-i.xml:1776
 #, no-c-format
 msgid ""
 "The installer might ask you if the computer's clock is set to UTC. Normally "
@@ -1903,19 +2469,19 @@ msgid ""
 msgstr ""
 
 #. Tag: para
-#: using-d-i.xml:1285
+#: using-d-i.xml:1783
 #, no-c-format
 msgid ""
 "In expert mode you will always be able to choose whether or not the clock is "
 "set to UTC. <phrase arch=\"m68k;powerpc\">Macintosh hardware clocks are "
 "normally set to local time. If you want to dual-boot, select local time "
-"instead of GMT.</phrase> <phrase arch=\"i386\">Systems that (also) run Dos "
-"or Windows are normally set to local time. If you want to dual-boot, select "
+"instead of GMT.</phrase> <phrase arch=\"x86\">Systems that (also) run Dos or "
+"Windows are normally set to local time. If you want to dual-boot, select "
 "local time instead of GMT.</phrase>"
 msgstr ""
 
 #. Tag: para
-#: using-d-i.xml:1296
+#: using-d-i.xml:1794
 #, no-c-format
 msgid ""
 "Note that the installer does not currently allow you to actually set the "
@@ -1925,19 +2491,19 @@ msgid ""
 msgstr ""
 
 #. Tag: title
-#: using-d-i.xml:1312
+#: using-d-i.xml:1810
 #, no-c-format
 msgid "Setting Up Users And Passwords"
 msgstr "設定使用者和密碼"
 
 #. Tag: title
-#: using-d-i.xml:1315
+#: using-d-i.xml:1813
 #, no-c-format
 msgid "Set the Root Password"
 msgstr "設定 root 密碼"
 
 #. Tag: para
-#: using-d-i.xml:1317
+#: using-d-i.xml:1817
 #, no-c-format
 msgid ""
 "The <emphasis>root</emphasis> account is also called the <emphasis>super-"
@@ -1950,7 +2516,7 @@ msgstr ""
 "系統管理，而且使用時間應該盡可能短。"
 
 #. Tag: para
-#: using-d-i.xml:1325
+#: using-d-i.xml:1825
 #, no-c-format
 msgid ""
 "Any password you create should contain at least 6 characters, and should "
@@ -1964,7 +2530,7 @@ msgstr ""
 "小心。請避免採用能夠在字典中查到的單詞或者很容易猜測的個人資訊。"
 
 #. Tag: para
-#: using-d-i.xml:1333
+#: using-d-i.xml:1833
 #, no-c-format
 msgid ""
 "If anyone ever tells you they need your root password, be extremely wary. "
@@ -1975,13 +2541,13 @@ msgstr ""
 "理員，否則您通常不應該將超級使用者密碼交給別人。"
 
 #. Tag: title
-#: using-d-i.xml:1343
+#: using-d-i.xml:1843
 #, no-c-format
 msgid "Create an Ordinary User"
 msgstr "建立一個普通使用者"
 
 #. Tag: para
-#: using-d-i.xml:1345
+#: using-d-i.xml:1845
 #, no-c-format
 msgid ""
 "The system will ask you whether you wish to create an ordinary user account "
@@ -1993,7 +2559,7 @@ msgstr ""
 "記，平時<emphasis>不要</emphasis>使用 root 帳戶登陸或者將其作為個人帳號使用。"
 
 #. Tag: para
-#: using-d-i.xml:1352
+#: using-d-i.xml:1854
 #, no-c-format
 msgid ""
 "Why not? Well, one reason to avoid using root's privileges is that it is "
@@ -2011,7 +2577,7 @@ msgstr ""
 "容，建議您找一本書進行學習。"
 
 #. Tag: para
-#: using-d-i.xml:1362
+#: using-d-i.xml:1864
 #, no-c-format
 msgid ""
 "You will first be prompted for the user's full name. Then you'll be asked "
@@ -2023,7 +2589,7 @@ msgstr ""
 "可，並且會成為預設值。最後，您將要求輸入該帳號的密碼。"
 
 #. Tag: para
-#: using-d-i.xml:1369
+#: using-d-i.xml:1871
 #, no-c-format
 msgid ""
 "If at any point after installation you would like to create another account, "
@@ -2033,13 +2599,13 @@ msgstr ""
 "令。"
 
 #. Tag: title
-#: using-d-i.xml:1381
+#: using-d-i.xml:1883
 #, no-c-format
 msgid "Installing the Base System"
 msgstr "安裝基本系統"
 
 #. Tag: para
-#: using-d-i.xml:1382
+#: using-d-i.xml:1884
 #, fuzzy, no-c-format
 msgid ""
 "Although this stage is the least problematic, it consumes a significant "
@@ -2050,21 +2616,15 @@ msgstr ""
 "儘管這一階段少有問題，但卻需要大量時間用於整個基本系統的下載、檢驗和解開套"
 "件。如果您用較慢的電腦或網路連接，這要花費好一會兒時間。"
 
-#. Tag: title
-#: using-d-i.xml:1396
-#, no-c-format
-msgid "Base System Installation"
-msgstr "基本系統安裝"
-
 #. Tag: para
-#: using-d-i.xml:1398
+#: using-d-i.xml:1897
 #, fuzzy, no-c-format
 msgid ""
-"During the Base installation, package unpacking and setup messages are "
-"redirected to <userinput>tty4</userinput>. You can access this terminal by "
-"pressing <keycombo><keycap>Left Alt</keycap><keycap>F4</keycap></keycombo>; "
-"get back to the main installer process with <keycombo><keycap>Left Alt</"
-"keycap><keycap>F1</keycap></keycombo>."
+"During installation of the base system, package unpacking and setup messages "
+"are redirected to <userinput>tty4</userinput>. You can access this terminal "
+"by pressing <keycombo><keycap>Left Alt</keycap><keycap>F4</keycap></"
+"keycombo>; get back to the main installer process with "
+"<keycombo><keycap>Left Alt</keycap><keycap>F1</keycap></keycombo>."
 msgstr ""
 "在基本系統安裝期間，解開軟體套件和安裝的資訊被重新導向到 <userinput>tty3</"
 "userinput>。您可以透過按下 <keycombo><keycap>左 Alt</keycap><keycap>F3</"
@@ -2072,18 +2632,18 @@ msgstr ""
 "左 Alt</keycap><keycap>F1</keycap></keycombo>。"
 
 #. Tag: para
-#: using-d-i.xml:1408
+#: using-d-i.xml:1906
 #, fuzzy, no-c-format
 msgid ""
-"The unpack/setup messages generated by the base installation are saved in "
-"<filename>/var/log/syslog</filename> when the installation is performed over "
-"a serial console."
+"The unpack/setup messages generated during this phase are also saved in "
+"<filename>/var/log/syslog</filename>. You can check them there if the "
+"installation is performed over a serial console."
 msgstr ""
 "當安裝程式透過序列埠控制台執行時，基本到建的解開套件/安裝訊息儲存在 "
 "<filename>/var/log/messages</filename>。"
 
 #. Tag: para
-#: using-d-i.xml:1414
+#: using-d-i.xml:1912
 #, no-c-format
 msgid ""
 "As part of the installation, a Linux kernel will be installed. At the "
@@ -2095,50 +2655,51 @@ msgstr ""
 "個與您硬體最匹配的核心。在較低的優先級下，您可以從列表中選擇一個有效的核心。"
 
 #. Tag: title
-#: using-d-i.xml:1427
+#: using-d-i.xml:1924
 #, fuzzy, no-c-format
 msgid "Installing Additional Software"
 msgstr "安裝基本系統"
 
 #. Tag: para
-#: using-d-i.xml:1428
+#: using-d-i.xml:1925
 #, no-c-format
 msgid ""
 "After the base system is installed, you have a usable but limited system. "
-"Most users will want to add additional software to the system to tune it to "
-"their needs, and the installer lets you do so. This step can take even "
+"Most users will want to install additional software on the system to tune it "
+"to their needs, and the installer allows you do so. This step can take even "
 "longer than installing the base system if you have a slow computer or "
 "network."
 msgstr ""
 
 #. Tag: title
-#: using-d-i.xml:1442
+#: using-d-i.xml:1939
 #, fuzzy, no-c-format
 msgid "Configuring apt"
 msgstr "設定網路"
 
 #. Tag: para
-#: using-d-i.xml:1444
+#: using-d-i.xml:1941
 #, no-c-format
 msgid ""
-"The main means that people use to install packages on their system is via a "
-"program called <command>apt-get</command>, from the <classname>apt</"
-"classname> package.<footnote> <para> Note that the actual program that "
-"installs packages is called <command>dpkg</command>. However, this program "
-"is more of a low-level tool. <command>apt-get</command> is a higher-level "
-"tool as it will invoke <command>dpkg</command> as appropriate and also "
-"because it knows to install other packages which are required for the "
-"package you're trying to install, as well as how to retrieve the package "
-"from your CD, the network, or wherever. </para> </footnote> Other front-ends "
-"for package management, like <command>aptitude</command> and "
-"<command>synaptic</command> are also in use and depend on <command>apt-get</"
-"command>. These front-ends are recommended for new users, since they "
-"integrate some additional features (package searching and status checks) in "
-"a nice user interface."
+"One of the tools used to install packages on a &debian; system is a program "
+"called <command>apt-get</command>, from the <classname>apt</classname> "
+"package<footnote> <para> Note that the program which actually installs the "
+"packages is called <command>dpkg</command>. However, this program is more of "
+"a low-level tool. <command>apt-get</command> is a higher-level tool, which "
+"will invoke <command>dpkg</command> as appropriate. It knows how to retrieve "
+"packages from your CD, the network, or wherever. It is also able to "
+"automatically install other packages which are required to make the package "
+"you're trying to install work correctly. </para> </footnote>. Other front-"
+"ends for package management, like <command>aptitude</command> and "
+"<command>synaptic</command>, are also in use. These front-ends are "
+"recommended for new users, since they integrate some additional features "
+"(package searching and status checks) in a nice user interface. In fact, "
+"<command>aptitude</command> is now the recommended utility for package "
+"management."
 msgstr ""
 
 #. Tag: para
-#: using-d-i.xml:1468
+#: using-d-i.xml:1967
 #, no-c-format
 msgid ""
 "<command>apt</command> must be configured so that it knows where to retrieve "
@@ -2150,13 +2711,13 @@ msgid ""
 msgstr ""
 
 #. Tag: title
-#: using-d-i.xml:1484
+#: using-d-i.xml:1983
 #, no-c-format
 msgid "Selecting and Installing Software"
 msgstr ""
 
 #. Tag: para
-#: using-d-i.xml:1486
+#: using-d-i.xml:1985
 #, no-c-format
 msgid ""
 "During the installation process, you are given the opportunity to select "
@@ -2168,7 +2729,7 @@ msgid ""
 msgstr ""
 
 #. Tag: para
-#: using-d-i.xml:1495
+#: using-d-i.xml:1994
 #, no-c-format
 msgid ""
 "So, you have the ability to choose <emphasis>tasks</emphasis> first, and "
@@ -2177,8 +2738,8 @@ msgid ""
 "as <quote>Desktop environment</quote>, <quote>Web server</quote>, or "
 "<quote>Print server</quote><footnote> <para> You should know that to present "
 "this list, the installer is merely invoking the <command>tasksel</command> "
-"program. It can be run at any time after installation to install (or remove) "
-"more packages, or you can use a more fine-grained tool such as "
+"program. It can be run at any time after installation to install more "
+"packages (or remove them), or you can use a more fine-grained tool such as "
 "<command>aptitude</command>. If you are looking for a specific single "
 "package, after installation is complete, simply run <userinput>aptitude "
 "install <replaceable>package</replaceable></userinput>, where "
@@ -2188,17 +2749,62 @@ msgid ""
 msgstr ""
 
 #. Tag: para
-#: using-d-i.xml:1520
+#: using-d-i.xml:2021
 #, no-c-format
 msgid ""
-"Once you've selected your tasks, select <guibutton>Ok</guibutton>. At this "
-"point, <command>aptitude</command> will install the packages you've selected."
+"Some tasks may be pre-selected based on the characteristics of the computer "
+"you are installing. If you disagree with these selections you can un-select "
+"the tasks. You can even opt to install no tasks at all at this point."
+msgstr ""
+
+#. Tag: para
+#: using-d-i.xml:2028
+#, no-c-format
+msgid ""
+"The <quote>Desktop environment</quote> task will install the GNOME desktop "
+"environment. The options offered by the installer currently do not allow to "
+"select a different desktop environment such as for example KDE."
+msgstr ""
+
+#. Tag: para
+#: using-d-i.xml:2036
+#, no-c-format
+msgid ""
+"It is possible to get the installer to install KDE by using preseeding (see "
+"<xref linkend=\"preseed-pkgsel\"/>) or by adding <literal>tasks=\"standard, "
+"kde-desktop\"</literal> at the boot prompt when starting the installer. "
+"However, this will only work if the packages needed for KDE are actually "
+"available. If you are installing using a full CD image, they will need to be "
+"downloaded from a mirror as KDE packages are not included on the first full "
+"CD; installing KDE this way should work fine if you are using a DVD image or "
+"any other installation method."
+msgstr ""
+
+#. Tag: para
+#: using-d-i.xml:2047
+#, no-c-format
+msgid ""
+"The various server tasks will install software roughly as follows. DNS "
+"server: <classname>bind9</classname>; File server: <classname>samba</"
+"classname>, <classname>nfs</classname>; Mail server: <classname>exim4</"
+"classname>, <classname>spamassassin</classname>, <classname>uw-imap</"
+"classname>; Print server: <classname>cups</classname>; SQL database: "
+"<classname>postgresql</classname>; Web server: <classname>apache</classname>."
+msgstr ""
+
+#. Tag: para
+#: using-d-i.xml:2059
+#, fuzzy, no-c-format
+msgid ""
+"Once you've selected your tasks, select <guibutton>OK</guibutton>. At this "
+"point, <command>aptitude</command> will install the packages that are part "
+"of the tasks you've selected."
 msgstr ""
 "當您選擇了軟體集之後，選擇 <guibutton>確定</guibutton>。此時，"
 "<command>aptitude</command> 將安裝您選中的軟體套件。"
 
 #. Tag: para
-#: using-d-i.xml:1527
+#: using-d-i.xml:2066
 #, no-c-format
 msgid ""
 "In the standard user interface of the installer, you can use the space bar "
@@ -2206,17 +2812,31 @@ msgid ""
 msgstr ""
 
 #. Tag: para
-#: using-d-i.xml:1534
+#: using-d-i.xml:2072
 #, no-c-format
 msgid ""
-"Note that some tasks may be pre-selected based on the characteristics of the "
-"computer you are installing. If you disagree with these selections you can "
-"un-select the tasks. You can even opt to install no tasks at all at this "
-"point."
+"You should be aware that especially the Desktop task is very large. "
+"Especially when installing from a normal CD-ROM in combination with a mirror "
+"for packages not on the CD-ROM, the installer may want to retrieve a lot of "
+"packages over the network. If you have a relatively slow Internet "
+"connection, this can take a long time. There is no option to cancel the "
+"installation of packages once it has started."
 msgstr ""
 
 #. Tag: para
-#: using-d-i.xml:1542
+#: using-d-i.xml:2081
+#, no-c-format
+msgid ""
+"Even when packages are included on the CD-ROM, the installer may still "
+"retrieve them from the mirror if the version available on the mirror is more "
+"recent than the one included on the CD-ROM. If you are installing the stable "
+"distribution, this can happen after a point release (an update of the "
+"original stable release); if you are installing the testing distribution "
+"this will happen if you are using an older image."
+msgstr ""
+
+#. Tag: para
+#: using-d-i.xml:2090
 #, no-c-format
 msgid ""
 "Each package you selected with <command>tasksel</command> is downloaded, "
@@ -2226,185 +2846,32 @@ msgid ""
 msgstr ""
 
 #. Tag: title
-#: using-d-i.xml:1551
-#, no-c-format
-msgid "Configuring Your Mail Transport Agent"
-msgstr "設定您的郵件傳輸代理 (MTA)"
-
-#. Tag: para
-#: using-d-i.xml:1553
-#, no-c-format
-msgid ""
-"Today, email is a very important part of many people's life, so it's no "
-"surprise Debian lets you configure your mail system right as a part of the "
-"installation process. The standard mail transport agent in Debian is "
-"<command>exim4</command>, which is relatively small, flexible, and easy to "
-"learn."
-msgstr ""
-"今天，電子郵件已經成為很多人生活中不可或缺的部份，所以，Debian 讓您在安裝過程"
-"中設定郵件傳輸代理，並不是件奇怪的事。Debian 中的標準郵件傳輸代理是 "
-"<command>exim4</command>。這是一個非常小巧、靈活並且容易理解的工具。"
-
-#. Tag: para
-#: using-d-i.xml:1561
-#, no-c-format
-msgid ""
-"You may ask if this is needed even if your computer is not connected to any "
-"network. The short answer is: Yes. The longer explanation: Some system "
-"utilities (like <command>cron</command>, <command>quota</command>, "
-"<command>aide</command>, &hellip;) may send you important notices via email."
-msgstr ""
-"您可能會問，我的電腦並沒有連接到網路上，是否也需要這一步呢？答案是：是的。稍"
-"長一點的解釋是：部份系統工具 (例如 <command>cron</command>, <command>quota</"
-"command>, <command>aide</command> 等) 的重要通知都是透過郵件發送的。"
-
-#. Tag: para
-#: using-d-i.xml:1569
-#, no-c-format
-msgid ""
-"So on the first screen you will be presented with several common mail "
-"scenarios. Choose the one that most closely resembles your needs:"
-msgstr ""
-"所以，在第一個螢幕上您可以看到幾個常見的郵件設定方案。請選擇一個最適合您需求"
-"的。"
-
-#. Tag: term
-#: using-d-i.xml:1578
-#, no-c-format
-msgid "internet site"
-msgstr "網際網路站"
-
-#. Tag: para
-#: using-d-i.xml:1579
-#, no-c-format
-msgid ""
-"Your system is connected to a network and your mail is sent and received "
-"directly using SMTP. On the following screens you will be asked a few basic "
-"questions, like your machine's mail name, or a list of domains for which you "
-"accept or relay mail."
-msgstr ""
-"您的系統連接到網路上，並且您透過 SMTP 直接收發郵件。在接下來的幾頁中，程式會"
-"詢問您一些基本問題，如：您的機器的郵件名稱、您接受或轉發郵件的網域名稱等等。"
-
-#. Tag: term
-#: using-d-i.xml:1590
-#, no-c-format
-msgid "mail sent by smarthost"
-msgstr "用 smarthost 發信"
-
-#. Tag: para
-#: using-d-i.xml:1591
-#, no-c-format
-msgid ""
-"In this scenario is your outgoing mail forwarded to another machine, called "
-"a <quote>smarthost</quote>, which does the actual job for you. Smarthost "
-"also usually stores incoming mail addressed to your computer, so you don't "
-"need to be permanently online. That also means you have to download your "
-"mail from the smarthost via programs like fetchmail. This option is suitable "
-"for dial-up users."
-msgstr ""
-"在這個方案中，您的外送郵件將被另一台我們稱之為 <quote>smarthost</quote> 的主"
-"機轉發，由它來完成實際的郵件發送工作。Smarthost 通常也能存放將要投遞到您的電"
-"腦上的郵件，因此您並不需要永遠連線。也就是說，您必須透過諸如 fetchmail 之類的"
-"程式將郵件從 smarthost 下載回來。這一選項通常適合撥號使用者。"
-
-#. Tag: term
-#: using-d-i.xml:1604
-#, no-c-format
-msgid "local delivery only"
-msgstr "僅在本地發送"
-
-#. Tag: para
-#: using-d-i.xml:1605
-#, no-c-format
-msgid ""
-"Your system is not on a network and mail is sent or received only between "
-"local users. Even if you don't plan to send any messages, this option is "
-"highly recommended, because some system utilities may send you various "
-"alerts from time to time (e.g. beloved <quote>Disk quota exceeded</quote>). "
-"This option is also convenient for new users, because it doesn't ask any "
-"further questions."
-msgstr ""
-"您的系統並未連接網路，則郵件僅僅在本地使用者間傳遞。即使您不打算發送任何郵"
-"件，我們也建議您選擇此選項，因為部份系統工具可能隨時會發送一些警告資訊 (例"
-"如：可愛的 <quote>Disk quota exceeded</quote>)。由於選擇此項後不需要回答任何"
-"問題，因此這一選項也非常適合新手。"
-
-#. Tag: term
-#: using-d-i.xml:1618
-#, no-c-format
-msgid "no configuration at this time"
-msgstr "現在不進行設定"
-
-#. Tag: para
-#: using-d-i.xml:1619
-#, no-c-format
-msgid ""
-"Choose this if you are absolutely convinced you know what you are doing. "
-"This will leave you with an unconfigured mail system &mdash; until you "
-"configure it, you won't be able to send or receive any mail and you may miss "
-"some important messages from your system utilities."
-msgstr ""
-"除非您真的知道您在做什麼，否則請不要選擇這一選項。這會留下一個未設定的郵件系"
-"統 &mdash; 在您再次設定它之前，您都無法收發任何郵件，並且可能會錯過一些系統工"
-"具發出的重要資訊。"
-
-#. Tag: para
-#: using-d-i.xml:1630
-#, no-c-format
-msgid ""
-"If none of these scenarios suits your needs, or if you need a finer setup, "
-"you will need to edit configuration files under the <filename>/etc/exim4</"
-"filename> directory after the installation is complete. More information "
-"about <command>exim4</command> may be found under <filename>/usr/share/doc/"
-"exim4</filename>."
-msgstr ""
-"如果以上的方案都不適合您的需求，或者您需要一個更好的設定，在安裝完畢後，您可"
-"以編輯 <filename>/etc/exim4</filename> 目錄下的設定檔。您還可以在 <filename>/"
-"usr/share/doc/exim4</filename> 下找到更多關於 <command>exim4</command> 的資"
-"料。"
-
-#. Tag: title
-#: using-d-i.xml:1645
+#: using-d-i.xml:2103
 #, no-c-format
 msgid "Making Your System Bootable"
 msgstr "使系統可開機"
 
 #. Tag: para
-#: using-d-i.xml:1647
-#, no-c-format
+#: using-d-i.xml:2105
+#, fuzzy, no-c-format
 msgid ""
 "If you are installing a diskless workstation, obviously, booting off the "
 "local disk isn't a meaningful option, and this step will be skipped. <phrase "
-"arch=\"sparc\">You may wish to set the OpenBoot to boot from the network by "
+"arch=\"sparc\">You may wish to set OpenBoot to boot from the network by "
 "default; see <xref linkend=\"boot-dev-select-sun\"/>.</phrase>"
 msgstr ""
 "如果您是安裝無磁碟工作站，從本機啟動顯然是沒有意義的選項，這一步可以跳過。"
 "<phrase arch=\"sparc\">您也許希望預設 OpenBoot 為網路啟動﹔請參閱 <xref "
 "linkend=\"boot-dev-select-sun\"/>。</phrase>"
 
-#. Tag: para
-#: using-d-i.xml:1655
-#, no-c-format
-msgid ""
-"Note that multiple operating systems booting on a single machine is still "
-"something of a black art. This document does not even attempt to document "
-"the various boot managers, which vary by architecture and even by "
-"subarchitecture. You should see your boot manager's documentation for more "
-"information."
-msgstr ""
-"注意，從單機上啟動多個作業系統仍然是種魔術。本文件無意描寫各種 boot-loader， "
-"它們會依硬體架構甚至是子架構而變化。您應該參考 boot-loader 的文件以瞭解更多資"
-"訊。"
-
 #. Tag: title
-#: using-d-i.xml:1670
+#: using-d-i.xml:2120
 #, no-c-format
 msgid "Detecting other operating systems"
 msgstr "偵測其他的作業系統"
 
 #. Tag: para
-#: using-d-i.xml:1672
+#: using-d-i.xml:2122
 #, no-c-format
 msgid ""
 "Before a boot loader is installed, the installer will attempt to probe for "
@@ -2418,7 +2885,7 @@ msgstr ""
 "腦也將設定為可以啟動其他作業系統。"
 
 #. Tag: para
-#: using-d-i.xml:1680
+#: using-d-i.xml:2130
 #, no-c-format
 msgid ""
 "Note that multiple operating systems booting on a single machine is still "
@@ -2432,16 +2899,16 @@ msgstr ""
 "boot-loader 的文件以瞭解更多資訊。"
 
 #. Tag: title
-#: using-d-i.xml:1698
+#: using-d-i.xml:2148
 #, no-c-format
 msgid "Install <command>aboot</command> on a Hard Disk"
 msgstr "安裝 <command>aboot</command> 到硬碟上"
 
 #. Tag: para
-#: using-d-i.xml:1699
-#, no-c-format
+#: using-d-i.xml:2149
+#, fuzzy, no-c-format
 msgid ""
-"If you have booted from SRM, if you select this option, the installer will "
+"If you have booted from SRM and you select this option, the installer will "
 "write <command>aboot</command> to the first sector of the disk on which you "
 "installed Debian. Be <emphasis>very</emphasis> careful &mdash; it is "
 "<emphasis>not</emphasis> possible to boot multiple operating systems (e.g. "
@@ -2457,13 +2924,13 @@ msgstr ""
 "您在安裝 Debian 的磁碟上裝有不同的作業系統，您將不得不從軟碟啟動 GNU/Linux。"
 
 #. Tag: title
-#: using-d-i.xml:1719
+#: using-d-i.xml:2169
 #, no-c-format
 msgid "<command>palo</command>-installer"
 msgstr "<command>palo</command>-installer"
 
 #. Tag: para
-#: using-d-i.xml:1720
+#: using-d-i.xml:2170
 #, no-c-format
 msgid ""
 "The bootloader on PA-RISC is <quote>palo</quote>. <command>PALO</command> is "
@@ -2478,19 +2945,19 @@ msgstr ""
 "<command>PALO</command> 能真正地讀 Linux 分割區。"
 
 #. Tag: para
-#: using-d-i.xml:1729
+#: using-d-i.xml:2179
 #, no-c-format
 msgid "hppa FIXME ( need more info )"
 msgstr "hppa FIXME ( need more info )"
 
 #. Tag: title
-#: using-d-i.xml:1741
+#: using-d-i.xml:2191
 #, no-c-format
 msgid "Install the <command>Grub</command> Boot Loader on a Hard Disk"
 msgstr "安裝 <command>Grub</command> Boot Loader 到硬碟上"
 
 #. Tag: para
-#: using-d-i.xml:1743
+#: using-d-i.xml:2193
 #, no-c-format
 msgid ""
 "The main &architecture; boot loader is called <quote>grub</quote>. Grub is a "
@@ -2501,7 +2968,7 @@ msgstr ""
 "定的 boot-loader，它對新手來說是個不錯的預設選擇。對老鳥來說，它也同樣適合。"
 
 #. Tag: para
-#: using-d-i.xml:1749
+#: using-d-i.xml:2199
 #, no-c-format
 msgid ""
 "By default, grub will be installed into the Master Boot Record (MBR), where "
@@ -2513,7 +2980,7 @@ msgstr ""
 "訊，請參閱 grub 的手冊。"
 
 #. Tag: para
-#: using-d-i.xml:1755
+#: using-d-i.xml:2205
 #, no-c-format
 msgid ""
 "If you do not want to install grub at all, use the Back button to get to the "
@@ -2524,13 +2991,13 @@ msgstr ""
 "請參閱 grub 的手冊。"
 
 #. Tag: title
-#: using-d-i.xml:1769
+#: using-d-i.xml:2219
 #, no-c-format
 msgid "Install the <command>LILO</command> Boot Loader on a Hard Disk"
 msgstr "安裝 <command>LILO</command> Boot Loader 到硬碟上"
 
 #. Tag: para
-#: using-d-i.xml:1771
+#: using-d-i.xml:2221
 #, no-c-format
 msgid ""
 "The second &architecture; boot loader is called <quote>LILO</quote>. It is "
@@ -2546,7 +3013,7 @@ msgstr ""
 "ulink>。"
 
 #. Tag: para
-#: using-d-i.xml:1781
+#: using-d-i.xml:2231
 #, no-c-format
 msgid ""
 "Currently the LILO installation will only create menu entries for other "
@@ -2559,21 +3026,21 @@ msgstr ""
 "統。"
 
 #. Tag: para
-#: using-d-i.xml:1789
-#, no-c-format
+#: using-d-i.xml:2239
+#, fuzzy, no-c-format
 msgid ""
-"&d-i; presents you three choices where to install the <command>LILO</"
+"&d-i; offers you three choices on where to install the <command>LILO</"
 "command> boot loader:"
 msgstr "&d-i; 提供給您三種選擇來安裝 <command>LILO</command> boot-loader："
 
 #. Tag: term
-#: using-d-i.xml:1796
+#: using-d-i.xml:2246
 #, no-c-format
 msgid "Master Boot Record (MBR)"
 msgstr "主開機區 (MBR)"
 
 #. Tag: para
-#: using-d-i.xml:1796
+#: using-d-i.xml:2246
 #, no-c-format
 msgid ""
 "This way the <command>LILO</command> will take complete control of the boot "
@@ -2581,13 +3048,13 @@ msgid ""
 msgstr "這種方式 <command>LILO</command> 將完全控制開機過程。"
 
 #. Tag: term
-#: using-d-i.xml:1803
+#: using-d-i.xml:2253
 #, no-c-format
 msgid "new Debian partition"
 msgstr "新 Debian 分割區"
 
 #. Tag: para
-#: using-d-i.xml:1803
+#: using-d-i.xml:2253
 #, no-c-format
 msgid ""
 "Choose this if you want to use another boot manager. <command>LILO</command> "
@@ -2598,13 +3065,13 @@ msgstr ""
 "Debian 分割區的起始位置，並能作為第二 boot loader。"
 
 #. Tag: term
-#: using-d-i.xml:1812
+#: using-d-i.xml:2262
 #, no-c-format
 msgid "Other choice"
 msgstr "其它選擇"
 
 #. Tag: para
-#: using-d-i.xml:1812
+#: using-d-i.xml:2262
 #, no-c-format
 msgid ""
 "Useful for advanced users who want to install <command>LILO</command> "
@@ -2621,15 +3088,14 @@ msgstr ""
 "或 <filename>/dev/sda</filename>。"
 
 #. Tag: para
-#: using-d-i.xml:1824
-#, no-c-format
+#: using-d-i.xml:2274
+#, fuzzy, no-c-format
 msgid ""
 "If you can no longer boot into Windows 9x (or DOS) after this step, you'll "
 "need to use a Windows 9x (MS-DOS) boot disk and use the <userinput>fdisk /"
 "mbr</userinput> command to reinstall the MS-DOS master boot record &mdash; "
 "however, this means that you'll need to use some other way to get back into "
-"Debian! For more information on this please read <xref linkend="
-"\"reactivating-win\"/>."
+"Debian!"
 msgstr ""
 "如果您在此步之後無法啟動 Windows 9x (或 DOS)，您需要使用 Windows 9x (MS-DOS) "
 "開機磁片，並用 <userinput>fdisk /mbr</userinput> 指令重新安裝 MS-DOS 開機檔"
@@ -2637,14 +3103,14 @@ msgstr ""
 "<xref linkend=\"reactivating-win\"/>。"
 
 #. Tag: title
-#: using-d-i.xml:1841
+#: using-d-i.xml:2290
 #, no-c-format
 msgid "Install the <command>ELILO</command> Boot Loader on a Hard Disk"
 msgstr "安裝 <command>ELILO</command> Boot Loader 到硬碟"
 
 #. Tag: para
-#: using-d-i.xml:1843
-#, no-c-format
+#: using-d-i.xml:2292
+#, fuzzy, no-c-format
 msgid ""
 "The &architecture; boot loader is called <quote>elilo</quote>. It is modeled "
 "on the <quote>lilo</quote> boot loader for the x86 architecture and uses a "
@@ -2654,9 +3120,9 @@ msgid ""
 "guimenuitem> menu in the firmware to point to the files in the EFI "
 "partition. The <command>elilo</command> boot loader is really in two parts. "
 "The <filename>/usr/sbin/elilo</filename> command manages the partition and "
-"copies file into it. The <filename>elilo.efi</filename> program is copied "
+"copies files into it. The <filename>elilo.efi</filename> program is copied "
 "into the EFI partition and then run by the <quote>EFI Boot Manager</quote> "
-"to actually do the work of loading and starting the Linux kernel."
+"to do the actual work of loading and starting the Linux kernel."
 msgstr ""
 "&architecture; boot loader 稱為 <quote>elilo</quote>。 它模仿 x86 架構上的 "
 "<quote>lilo</quote> boot loader 並使用類似的設定檔。然而，不同於寫入 MBR 或分"
@@ -2668,7 +3134,7 @@ msgstr ""
 "行以掛載和啟動 Linux 核心。"
 
 #. Tag: para
-#: using-d-i.xml:1859
+#: using-d-i.xml:2308
 #, no-c-format
 msgid ""
 "The <quote>elilo</quote> configuration and installation is done as the last "
@@ -2683,20 +3149,20 @@ msgstr ""
 "是與 <emphasis>root</emphasis> 檔案系統相同的磁碟。"
 
 #. Tag: title
-#: using-d-i.xml:1871
+#: using-d-i.xml:2320
 #, no-c-format
 msgid "Choose the correct partition!"
 msgstr "選擇正確的分割區！"
 
 #. Tag: para
-#: using-d-i.xml:1873
-#, no-c-format
+#: using-d-i.xml:2322
+#, fuzzy, no-c-format
 msgid ""
 "The criteria for selecting a partition is that it is FAT format filesystem "
 "with its <emphasis>boot</emphasis> flag set. &d-i; may show multiple choices "
 "depending on what it finds from scanning all of the disks of the system "
 "including EFI partitions of other system disks and EFI diagnostic "
-"partitions. Remember, the <command>elilo</command> may format the partition "
+"partitions. Remember, <command>elilo</command> may format the partition "
 "during the installation, erasing any previous contents!"
 msgstr ""
 "選擇分割區的準則是格式化為 FAT 的檔案系統並有 <emphasis>boot</emphasis> 旗"
@@ -2705,13 +3171,13 @@ msgstr ""
 "割區，這將清除以前的所有內容！"
 
 #. Tag: title
-#: using-d-i.xml:1888
+#: using-d-i.xml:2337
 #, no-c-format
 msgid "EFI Partition Contents"
 msgstr "EFI 分割區內容"
 
 #. Tag: para
-#: using-d-i.xml:1890
+#: using-d-i.xml:2339
 #, no-c-format
 msgid ""
 "The EFI partition is a FAT filesystem format partition on one of the hard "
@@ -2737,13 +3203,13 @@ msgstr ""
 "間，系統更新或重新設定，檔案系統中也許會有其他檔案。"
 
 #. Tag: filename
-#: using-d-i.xml:1912
+#: using-d-i.xml:2361
 #, no-c-format
 msgid "elilo.conf"
 msgstr "elilo.conf"
 
 #. Tag: para
-#: using-d-i.xml:1913
+#: using-d-i.xml:2362
 #, no-c-format
 msgid ""
 "This is the configuration file read by the boot loader when it starts. It is "
@@ -2754,13 +3220,13 @@ msgstr ""
 "filename> 以同檔名複製到 EFI 分割區的檔案。"
 
 #. Tag: filename
-#: using-d-i.xml:1922
+#: using-d-i.xml:2371
 #, no-c-format
 msgid "elilo.efi"
 msgstr "elilo.efi"
 
 #. Tag: para
-#: using-d-i.xml:1923
+#: using-d-i.xml:2372
 #, no-c-format
 msgid ""
 "This is the boot loader program that the <quote>EFI Boot Manager</quote> "
@@ -2773,13 +3239,13 @@ msgstr ""
 "<quote>EFI Boot Manager</quote> 指令選單。"
 
 #. Tag: filename
-#: using-d-i.xml:1933
+#: using-d-i.xml:2382
 #, no-c-format
 msgid "initrd.img"
 msgstr "initrd.img"
 
 #. Tag: para
-#: using-d-i.xml:1934
+#: using-d-i.xml:2383
 #, no-c-format
 msgid ""
 "This is the initial root filesystem used to boot the kernel. It is a copy of "
@@ -2792,13 +3258,13 @@ msgstr ""
 "filename> 符號鏈結 <filename>/initrd.img</filename> 指向的檔案。"
 
 #. Tag: filename
-#: using-d-i.xml:1946
+#: using-d-i.xml:2395
 #, no-c-format
 msgid "readme.txt"
 msgstr "readme.txt"
 
 #. Tag: para
-#: using-d-i.xml:1947
+#: using-d-i.xml:2396
 #, no-c-format
 msgid ""
 "This is a small text file warning you that the contents of the directory are "
@@ -2809,13 +3275,13 @@ msgstr ""
 "本地修改在下次 <filename>/usr/sbin/elilo</filename> 執行時將丟失。"
 
 #. Tag: filename
-#: using-d-i.xml:1957
+#: using-d-i.xml:2406
 #, no-c-format
 msgid "vmlinuz"
 msgstr "vmlinuz"
 
 #. Tag: para
-#: using-d-i.xml:1958
+#: using-d-i.xml:2407
 #, no-c-format
 msgid ""
 "This is the compressed kernel itself. It is a copy of the file referenced in "
@@ -2828,13 +3294,13 @@ msgstr ""
 "<filename>/vmlinuz</filename> 指向的檔案。"
 
 #. Tag: title
-#: using-d-i.xml:1978
+#: using-d-i.xml:2427
 #, no-c-format
 msgid "<command>arcboot</command>-installer"
 msgstr "<command>arcboot</command>-installer"
 
 #. Tag: para
-#: using-d-i.xml:1979
+#: using-d-i.xml:2428
 #, fuzzy, no-c-format
 msgid ""
 "The boot loader on SGI machines is <command>arcboot</command>. It has to be "
@@ -2874,13 +3340,13 @@ msgstr ""
 "</screen></informalexample> ，然後鍵入 <command>boot</command>。"
 
 #. Tag: replaceable
-#: using-d-i.xml:1998
+#: using-d-i.xml:2447
 #, no-c-format
 msgid "scsi"
 msgstr "scsi"
 
 #. Tag: para
-#: using-d-i.xml:1999
+#: using-d-i.xml:2448
 #, no-c-format
 msgid ""
 "is the SCSI bus to be booted from, this is <userinput>0</userinput> for the "
@@ -2888,13 +3354,13 @@ msgid ""
 msgstr "是啟動的 SCSI 匯流排， <userinput>0</userinput> 為主機板內建控制器"
 
 #. Tag: replaceable
-#: using-d-i.xml:2007
+#: using-d-i.xml:2456
 #, no-c-format
 msgid "disk"
 msgstr "disk"
 
 #. Tag: para
-#: using-d-i.xml:2008
+#: using-d-i.xml:2457
 #, no-c-format
 msgid ""
 "is the SCSI ID of the hard disk on which <command>arcboot</command> is "
@@ -2903,13 +3369,13 @@ msgstr "是硬碟的 SCSI ID，<command>arcboot</command> 安裝在其上"
 
 # index.docbook:1643, index.docbook:1712
 #. Tag: replaceable
-#: using-d-i.xml:2016 using-d-i.xml:2085
+#: using-d-i.xml:2465 using-d-i.xml:2534
 #, no-c-format
 msgid "partnr"
 msgstr "partnr"
 
 #. Tag: para
-#: using-d-i.xml:2017
+#: using-d-i.xml:2466
 #, no-c-format
 msgid ""
 "is the number of the partition on which <filename>/etc/arcboot.conf</"
@@ -2917,13 +3383,13 @@ msgid ""
 msgstr "<filename>/etc/arcboot.conf</filename> 所處分割區編號。"
 
 #. Tag: replaceable
-#: using-d-i.xml:2025
+#: using-d-i.xml:2474
 #, no-c-format
 msgid "config"
 msgstr "config"
 
 #. Tag: para
-#: using-d-i.xml:2026
+#: using-d-i.xml:2475
 #, no-c-format
 msgid ""
 "is the name of the configuration entry in <filename>/etc/arcboot.conf</"
@@ -2933,13 +3399,13 @@ msgstr ""
 "<quote>linux</quote> 。"
 
 #. Tag: title
-#: using-d-i.xml:2047
+#: using-d-i.xml:2496
 #, no-c-format
 msgid "<command>delo</command>-installer"
 msgstr "<command>delo</command>-installer"
 
 #. Tag: para
-#: using-d-i.xml:2048
+#: using-d-i.xml:2497
 #, no-c-format
 msgid ""
 "The boot loader on DECstations is <command>DELO</command>. It has to be "
@@ -2965,13 +3431,13 @@ msgstr ""
 "</screen></informalexample> 。"
 
 #. Tag: replaceable
-#: using-d-i.xml:2067
+#: using-d-i.xml:2516
 #, no-c-format
 msgid "<replaceable>#</replaceable>"
 msgstr "<replaceable>#</replaceable>"
 
 #. Tag: para
-#: using-d-i.xml:2068
+#: using-d-i.xml:2517
 #, no-c-format
 msgid ""
 "is the TurboChannel device to be booted from, on most DECstations this is "
@@ -2981,20 +3447,20 @@ msgstr ""
 "<userinput>3</userinput>"
 
 #. Tag: replaceable
-#: using-d-i.xml:2076
+#: using-d-i.xml:2525
 #, no-c-format
 msgid "<replaceable>id</replaceable>"
 msgstr "<replaceable>id</replaceable>"
 
 #. Tag: para
-#: using-d-i.xml:2077
+#: using-d-i.xml:2526
 #, no-c-format
 msgid ""
 "is the SCSI ID of the hard disk on which <command>DELO</command> is installed"
 msgstr "<command>DELO</command> 所處的硬碟的 SCSI ID。"
 
 #. Tag: para
-#: using-d-i.xml:2086
+#: using-d-i.xml:2535
 #, no-c-format
 msgid ""
 "is the number of the partition on which <filename>/etc/delo.conf</filename> "
@@ -3002,13 +3468,13 @@ msgid ""
 msgstr "<filename>/etc/delo.conf</filename> 所處的分割區號。"
 
 #. Tag: replaceable
-#: using-d-i.xml:2094
+#: using-d-i.xml:2543
 #, no-c-format
 msgid "name"
 msgstr "name"
 
 #. Tag: para
-#: using-d-i.xml:2095
+#: using-d-i.xml:2544
 #, no-c-format
 msgid ""
 "is the name of the configuration entry in <filename>/etc/delo.conf</"
@@ -3018,7 +3484,7 @@ msgstr ""
 "quote>"
 
 #. Tag: para
-#: using-d-i.xml:2105
+#: using-d-i.xml:2554
 #, no-c-format
 msgid ""
 "In case <filename>/etc/delo.conf</filename> is on the first partition on the "
@@ -3028,19 +3494,19 @@ msgstr ""
 "預設的開機設定，但也可以用"
 
 #. Tag: screen
-#: using-d-i.xml:2111
+#: using-d-i.xml:2560
 #, no-c-format
 msgid "<userinput>boot #/rz<replaceable>id</replaceable></userinput>"
 msgstr "<userinput>boot #/rz<replaceable>id</replaceable></userinput>"
 
 #. Tag: title
-#: using-d-i.xml:2121
+#: using-d-i.xml:2570
 #, no-c-format
 msgid "Install <command>Yaboot</command> on a Hard Disk"
 msgstr "安裝 <command>Yaboot</command> 至硬碟"
 
 #. Tag: para
-#: using-d-i.xml:2122
+#: using-d-i.xml:2571
 #, no-c-format
 msgid ""
 "Newer (mid 1998 and on) PowerMacs use <command>yaboot</command> as their "
@@ -3058,13 +3524,13 @@ msgstr ""
 "將設為啟動 &debian;。"
 
 #. Tag: title
-#: using-d-i.xml:2140
+#: using-d-i.xml:2589
 #, no-c-format
 msgid "Install <command>Quik</command> on a Hard Disk"
 msgstr "安裝 <command>Quik</command> 至硬碟"
 
 #. Tag: para
-#: using-d-i.xml:2141
+#: using-d-i.xml:2590
 #, no-c-format
 msgid ""
 "The boot loader for OldWorld Power Macintosh machines is <command>quik</"
@@ -3078,13 +3544,13 @@ msgstr ""
 "作。"
 
 #. Tag: title
-#: using-d-i.xml:2157
+#: using-d-i.xml:2606
 #, no-c-format
 msgid "<command>zipl</command>-installer"
 msgstr "<command>zipl</command>-installer"
 
 #. Tag: para
-#: using-d-i.xml:2158
+#: using-d-i.xml:2607
 #, no-c-format
 msgid ""
 "The boot loader on &arch-title; is <quote>zipl</quote>. <command>ZIPL</"
@@ -3099,13 +3565,13 @@ msgstr ""
 "Commands</quote>，它位於 IBM 的 developerWorks 網站 <command>ZIPL</command>。"
 
 #. Tag: title
-#: using-d-i.xml:2175
+#: using-d-i.xml:2624
 #, no-c-format
 msgid "Install the <command>SILO</command> Boot Loader on a Hard Disk"
 msgstr "安裝 <command>SILO</command> Boot Loader 到硬碟"
 
 #. Tag: para
-#: using-d-i.xml:2177
+#: using-d-i.xml:2626
 #, no-c-format
 msgid ""
 "The standard &architecture; boot loader is called <quote>silo</quote>. It is "
@@ -3133,13 +3599,13 @@ msgstr ""
 "SunOS/Solaris 的系統很有用。"
 
 #. Tag: title
-#: using-d-i.xml:2202
+#: using-d-i.xml:2651
 #, no-c-format
 msgid "Continue Without Boot Loader"
 msgstr "不使用 boot-loader 繼續進行"
 
 #. Tag: para
-#: using-d-i.xml:2204
+#: using-d-i.xml:2653
 #, no-c-format
 msgid ""
 "This option can be used to complete the installation even when no boot "
@@ -3155,7 +3621,7 @@ msgstr ""
 "存在於機器上，以用於啟動 GNU/Linux。</phrase>"
 
 #. Tag: para
-#: using-d-i.xml:2213
+#: using-d-i.xml:2662
 #, no-c-format
 msgid ""
 "If you plan to manually configure your bootloader, you should check the name "
@@ -3174,13 +3640,13 @@ msgstr ""
 "filename> 到一個獨立的分割區，還需要 <filename>/boot</filename> 檔案系統。"
 
 #. Tag: title
-#: using-d-i.xml:2230
+#: using-d-i.xml:2679
 #, fuzzy, no-c-format
 msgid "Finishing the Installation"
 msgstr "完成安裝並重開機"
 
 #. Tag: para
-#: using-d-i.xml:2231
+#: using-d-i.xml:2680
 #, fuzzy, no-c-format
 msgid ""
 "These are the last bits to do before rebooting to your new system. It mostly "
@@ -3188,13 +3654,13 @@ msgid ""
 msgstr "在啟動新 Debian 之前還有一些最後工作，主要是 &d-i; 之後的整理。"
 
 #. Tag: title
-#: using-d-i.xml:2243
+#: using-d-i.xml:2692
 #, no-c-format
 msgid "Finish the Installation and Reboot"
 msgstr "完成安裝並重開機"
 
 #. Tag: para
-#: using-d-i.xml:2245
+#: using-d-i.xml:2694
 #, no-c-format
 msgid ""
 "This is the last step in the initial Debian installation process. You will "
@@ -3206,7 +3672,7 @@ msgstr ""
 "碟等)。安裝程式將完成最後的工作，然後啟動您的新 Debian 系統。"
 
 #. Tag: para
-#: using-d-i.xml:2252
+#: using-d-i.xml:2701
 #, no-c-format
 msgid ""
 "Select the <guimenuitem>Finish the installation</guimenuitem> menu item "
@@ -3219,13 +3685,13 @@ msgstr ""
 "Linux，它在安裝步驟第一步裡被選做根檔案系統。"
 
 #. Tag: title
-#: using-d-i.xml:2266
+#: using-d-i.xml:2715
 #, no-c-format
 msgid "Miscellaneous"
 msgstr "雜項"
 
 #. Tag: para
-#: using-d-i.xml:2267
+#: using-d-i.xml:2716
 #, no-c-format
 msgid ""
 "The components listed in this section are usually not involved in the "
@@ -3236,13 +3702,13 @@ msgstr ""
 "題。"
 
 #. Tag: title
-#: using-d-i.xml:2280
+#: using-d-i.xml:2729
 #, no-c-format
 msgid "Saving the installation logs"
 msgstr "保存安裝記錄"
 
 #. Tag: para
-#: using-d-i.xml:2282
+#: using-d-i.xml:2731
 #, fuzzy, no-c-format
 msgid ""
 "If the installation is successful, the logfiles created during the "
@@ -3253,7 +3719,7 @@ msgstr ""
 "<filename>/var/log/debian-installer/</filename>。"
 
 #. Tag: para
-#: using-d-i.xml:2289
+#: using-d-i.xml:2738
 #, fuzzy, no-c-format
 msgid ""
 "Choosing <guimenuitem>Save debug logs</guimenuitem> from the main menu "
@@ -3267,41 +3733,46 @@ msgstr ""
 "用於報告的附件。"
 
 #. Tag: title
-#: using-d-i.xml:2309
+#: using-d-i.xml:2758
 #, no-c-format
 msgid "Using the Shell and Viewing the Logs"
 msgstr "使用 Shell 查看記錄"
 
 #. Tag: para
-#: using-d-i.xml:2312
+#: using-d-i.xml:2760
 #, no-c-format
 msgid ""
-"There is an <guimenuitem>Execute a Shell</guimenuitem> item on the menu. If "
-"the menu is not available when you need to use the shell, press "
-"<keycombo><keycap>Left Alt</keycap> <keycap>F2</keycap></keycombo> (on a Mac "
-"keyboard, <keycombo><keycap>Option</keycap> <keycap>F2</keycap> </keycombo>) "
-"to switch to the second <emphasis>virtual console</emphasis>. That's the "
+"There are several methods you can use to get a shell while running an "
+"installation. On most systems, and if you are not installing over serial "
+"console, the easiest method is to switch to the second <emphasis>virtual "
+"console</emphasis> by pressing <keycombo><keycap>Left Alt</keycap> "
+"<keycap>F2</keycap></keycombo><footnote> <para> That is: press the "
 "<keycap>Alt</keycap> key on the left-hand side of the <keycap>space bar</"
-"keycap>, and the <keycap>F2</keycap> function key, at the same time. This is "
-"a separate window running a Bourne shell clone called <command>ash</command>."
+"keycap> and the <keycap>F2</keycap> function key at the same time. </para> </"
+"footnote> (on a Mac keyboard, <keycombo><keycap>Option</keycap> <keycap>F2</"
+"keycap></keycombo>). Use <keycombo><keycap>Left Alt</keycap> <keycap>F1</"
+"keycap></keycombo> to switch back to installer itself."
 msgstr ""
-"選單上有個<guimenuitem>呼叫 shell</guimenuitem> 選單項。如果沒有選單，想使用"
-"介殼請按 <keycombo><keycap>左 Alt</keycap> <keycap>F2</keycap></keycombo> "
-"(在 Mac 鍵盤上，<keycombo><keycap>Option</keycap> <keycap>F2</keycap> </"
-"keycombo>) 以切換到第二個<emphasis>虛擬控制台</emphasis>。就是同時按下 "
-"<keycap>Alt</keycap> 鍵，它位於 <keycap>空格鍵</keycap>的左邊，和 "
-"<keycap>F2</keycap> 功能鍵。這個獨立視窗執行 Bourne shell 的複製版 "
-"<command>ash</command>。"
 
 #. Tag: para
-#: using-d-i.xml:2324
+#: using-d-i.xml:2778
 #, no-c-format
+msgid ""
+"If you cannot switch consoles, there is also an <guimenuitem>Execute a "
+"Shell</guimenuitem> item on the main menu that can be used to start a shell. "
+"To get back to the installer itself, type <userinput>exit</userinput> to "
+"close the shell."
+msgstr ""
+
+#. Tag: para
+#: using-d-i.xml:2785
+#, fuzzy, no-c-format
 msgid ""
 "At this point you are booted from the RAM disk, and there is a limited set "
 "of Unix utilities available for your use. You can see what programs are "
 "available with the command <command>ls /bin /sbin /usr/bin /usr/sbin</"
-"command> and by typing <command>help</command>. The text editor is "
-"<command>nano</command>. The shell has some nice features like "
+"command> and by typing <command>help</command>. The shell is a Bourne shell "
+"clone called <command>ash</command> and has some nice features like "
 "autocompletion and history."
 msgstr ""
 "因為這時您是從 RAM 磁碟啟動，只有有限的 Unix 工具可以使用。您可以透過指令 "
@@ -3310,31 +3781,41 @@ msgstr ""
 "shell 有一些好用的特性，如自動完成與歷史紀錄。"
 
 #. Tag: para
-#: using-d-i.xml:2333
+#: using-d-i.xml:2794
 #, no-c-format
 msgid ""
-"Use the menus to perform any task that they are able to do &mdash; the shell "
-"and commands are only there in case something goes wrong. In particular, you "
-"should always use the menus, not the shell, to activate your swap partition, "
-"because the menu software can't detect that you've done this from the shell. "
-"Press <keycombo><keycap>Left Alt</keycap> <keycap>F1</keycap></keycombo> to "
-"get back to menus, or type <command>exit</command> if you used a menu item "
-"to open the shell."
+"To edit and view files, use the text editor <command>nano</command>. Log "
+"files for the installation system can be found in the <filename>/var/log</"
+"filename> directory."
 msgstr ""
-"使用選單完成它們能完成的工作 &mdash; shell 和指令只在出錯的時候使用。尤其要使"
-"用選單，而不是 shell 去啟動您的置換分割區，因為選單軟體無法偵測到您在介殼下做"
-"的工作。按下 <keycombo><keycap>左 Alt</keycap> <keycap>F1</keycap></"
-"keycombo> 返回選單，或者您是在從選單打開的介殼下，鍵入 <command>exit</"
-"command> 指令。"
+
+#. Tag: para
+#: using-d-i.xml:2801
+#, no-c-format
+msgid ""
+"Although you can do basically anything in a shell that the available "
+"commands allow you to do, the option to use a shell is really only there in "
+"case something goes wrong and for debugging."
+msgstr ""
+
+#. Tag: para
+#: using-d-i.xml:2807
+#, no-c-format
+msgid ""
+"Doing things manually from the shell may interfere with the installation "
+"process and result in errors or an incomplete installation. In particular, "
+"you should always use let the installer activate your swap partition and not "
+"do this yourself from a shell."
+msgstr ""
 
 #. Tag: title
-#: using-d-i.xml:2352
+#: using-d-i.xml:2822
 #, no-c-format
 msgid "Installation Over the Network"
 msgstr ""
 
 #. Tag: para
-#: using-d-i.xml:2354
+#: using-d-i.xml:2824
 #, no-c-format
 msgid ""
 "One of the more interesting components is <firstterm>network-console</"
@@ -3346,7 +3827,7 @@ msgid ""
 msgstr ""
 
 #. Tag: para
-#: using-d-i.xml:2364
+#: using-d-i.xml:2834
 #, no-c-format
 msgid ""
 "This component is not loaded into the main installation menu by default, so "
@@ -3360,7 +3841,7 @@ msgid ""
 msgstr ""
 
 #. Tag: para
-#: using-d-i.xml:2377
+#: using-d-i.xml:2847
 #, no-c-format
 msgid ""
 "For installations on &arch-title;, this is the default method after setting "
@@ -3368,7 +3849,7 @@ msgid ""
 msgstr ""
 
 #. Tag: para
-#: using-d-i.xml:2382
+#: using-d-i.xml:2852
 #, no-c-format
 msgid ""
 "<phrase arch=\"not-s390\">After selecting this new entry, you</phrase> "
@@ -3382,7 +3863,7 @@ msgid ""
 msgstr ""
 
 #. Tag: para
-#: using-d-i.xml:2394
+#: using-d-i.xml:2864
 #, no-c-format
 msgid ""
 "Should you decide to continue with the installation locally, you can always "
@@ -3391,7 +3872,7 @@ msgid ""
 msgstr ""
 
 #. Tag: para
-#: using-d-i.xml:2400
+#: using-d-i.xml:2870
 #, no-c-format
 msgid ""
 "Now let's switch to the other side of the wire. As a prerequisite, you need "
@@ -3410,7 +3891,7 @@ msgid ""
 msgstr ""
 
 #. Tag: para
-#: using-d-i.xml:2417
+#: using-d-i.xml:2887
 #, no-c-format
 msgid ""
 "If you install several computers in turn and they happen to have the same IP "
@@ -3422,7 +3903,7 @@ msgid ""
 msgstr ""
 
 #. Tag: para
-#: using-d-i.xml:2426
+#: using-d-i.xml:2896
 #, no-c-format
 msgid ""
 "After the login you will be presented with an initial screen where you have "
@@ -3435,7 +3916,7 @@ msgid ""
 msgstr ""
 
 #. Tag: para
-#: using-d-i.xml:2436
+#: using-d-i.xml:2906
 #, no-c-format
 msgid ""
 "After you have started the installation remotely over SSH, you should not go "
@@ -3446,12 +3927,236 @@ msgid ""
 msgstr ""
 
 #. Tag: para
-#: using-d-i.xml:2444
+#: using-d-i.xml:2914
 #, no-c-format
 msgid ""
 "Also, if you are running the SSH session from an X terminal, you should not "
 "resize the window as that will result in the connection being terminated."
 msgstr ""
+
+#~ msgid "Configuring Your Mail Transport Agent"
+#~ msgstr "設定您的郵件傳輸代理 (MTA)"
+
+#~ msgid ""
+#~ "Today, email is a very important part of many people's life, so it's no "
+#~ "surprise Debian lets you configure your mail system right as a part of "
+#~ "the installation process. The standard mail transport agent in Debian is "
+#~ "<command>exim4</command>, which is relatively small, flexible, and easy "
+#~ "to learn."
+#~ msgstr ""
+#~ "今天，電子郵件已經成為很多人生活中不可或缺的部份，所以，Debian 讓您在安裝"
+#~ "過程中設定郵件傳輸代理，並不是件奇怪的事。Debian 中的標準郵件傳輸代理是 "
+#~ "<command>exim4</command>。這是一個非常小巧、靈活並且容易理解的工具。"
+
+#~ msgid ""
+#~ "You may ask if this is needed even if your computer is not connected to "
+#~ "any network. The short answer is: Yes. The longer explanation: Some "
+#~ "system utilities (like <command>cron</command>, <command>quota</command>, "
+#~ "<command>aide</command>, &hellip;) may send you important notices via "
+#~ "email."
+#~ msgstr ""
+#~ "您可能會問，我的電腦並沒有連接到網路上，是否也需要這一步呢？答案是：是的。"
+#~ "稍長一點的解釋是：部份系統工具 (例如 <command>cron</command>, "
+#~ "<command>quota</command>, <command>aide</command> 等) 的重要通知都是透過郵"
+#~ "件發送的。"
+
+#~ msgid ""
+#~ "So on the first screen you will be presented with several common mail "
+#~ "scenarios. Choose the one that most closely resembles your needs:"
+#~ msgstr ""
+#~ "所以，在第一個螢幕上您可以看到幾個常見的郵件設定方案。請選擇一個最適合您需"
+#~ "求的。"
+
+#~ msgid "internet site"
+#~ msgstr "網際網路站"
+
+#~ msgid ""
+#~ "Your system is connected to a network and your mail is sent and received "
+#~ "directly using SMTP. On the following screens you will be asked a few "
+#~ "basic questions, like your machine's mail name, or a list of domains for "
+#~ "which you accept or relay mail."
+#~ msgstr ""
+#~ "您的系統連接到網路上，並且您透過 SMTP 直接收發郵件。在接下來的幾頁中，程式"
+#~ "會詢問您一些基本問題，如：您的機器的郵件名稱、您接受或轉發郵件的網域名稱等"
+#~ "等。"
+
+#~ msgid "mail sent by smarthost"
+#~ msgstr "用 smarthost 發信"
+
+#~ msgid ""
+#~ "In this scenario is your outgoing mail forwarded to another machine, "
+#~ "called a <quote>smarthost</quote>, which does the actual job for you. "
+#~ "Smarthost also usually stores incoming mail addressed to your computer, "
+#~ "so you don't need to be permanently online. That also means you have to "
+#~ "download your mail from the smarthost via programs like fetchmail. This "
+#~ "option is suitable for dial-up users."
+#~ msgstr ""
+#~ "在這個方案中，您的外送郵件將被另一台我們稱之為 <quote>smarthost</quote> 的"
+#~ "主機轉發，由它來完成實際的郵件發送工作。Smarthost 通常也能存放將要投遞到您"
+#~ "的電腦上的郵件，因此您並不需要永遠連線。也就是說，您必須透過諸如 "
+#~ "fetchmail 之類的程式將郵件從 smarthost 下載回來。這一選項通常適合撥號使用"
+#~ "者。"
+
+#~ msgid "local delivery only"
+#~ msgstr "僅在本地發送"
+
+#~ msgid ""
+#~ "Your system is not on a network and mail is sent or received only between "
+#~ "local users. Even if you don't plan to send any messages, this option is "
+#~ "highly recommended, because some system utilities may send you various "
+#~ "alerts from time to time (e.g. beloved <quote>Disk quota exceeded</"
+#~ "quote>). This option is also convenient for new users, because it doesn't "
+#~ "ask any further questions."
+#~ msgstr ""
+#~ "您的系統並未連接網路，則郵件僅僅在本地使用者間傳遞。即使您不打算發送任何郵"
+#~ "件，我們也建議您選擇此選項，因為部份系統工具可能隨時會發送一些警告資訊 (例"
+#~ "如：可愛的 <quote>Disk quota exceeded</quote>)。由於選擇此項後不需要回答任"
+#~ "何問題，因此這一選項也非常適合新手。"
+
+#~ msgid "no configuration at this time"
+#~ msgstr "現在不進行設定"
+
+#~ msgid ""
+#~ "Choose this if you are absolutely convinced you know what you are doing. "
+#~ "This will leave you with an unconfigured mail system &mdash; until you "
+#~ "configure it, you won't be able to send or receive any mail and you may "
+#~ "miss some important messages from your system utilities."
+#~ msgstr ""
+#~ "除非您真的知道您在做什麼，否則請不要選擇這一選項。這會留下一個未設定的郵件"
+#~ "系統 &mdash; 在您再次設定它之前，您都無法收發任何郵件，並且可能會錯過一些"
+#~ "系統工具發出的重要資訊。"
+
+#~ msgid ""
+#~ "If none of these scenarios suits your needs, or if you need a finer "
+#~ "setup, you will need to edit configuration files under the <filename>/etc/"
+#~ "exim4</filename> directory after the installation is complete. More "
+#~ "information about <command>exim4</command> may be found under <filename>/"
+#~ "usr/share/doc/exim4</filename>."
+#~ msgstr ""
+#~ "如果以上的方案都不適合您的需求，或者您需要一個更好的設定，在安裝完畢後，您"
+#~ "可以編輯 <filename>/etc/exim4</filename> 目錄下的設定檔。您還可以在 "
+#~ "<filename>/usr/share/doc/exim4</filename> 下找到更多關於 <command>exim4</"
+#~ "command> 的資料。"
+
+#~ msgid ""
+#~ "During a low memory install, not all components will be available. One of "
+#~ "the limitations is that you won't be able to choose a language for the "
+#~ "installation."
+#~ msgstr ""
+#~ "在小記憶體的安裝下，只有部分元件有效。其中的一個限制是您無法在安裝過程中選"
+#~ "擇語言。"
+
+#~ msgid "Base System Installation"
+#~ msgstr "基本系統安裝"
+
+#~ msgid ""
+#~ "Note that multiple operating systems booting on a single machine is still "
+#~ "something of a black art. This document does not even attempt to document "
+#~ "the various boot managers, which vary by architecture and even by "
+#~ "subarchitecture. You should see your boot manager's documentation for "
+#~ "more information."
+#~ msgstr ""
+#~ "注意，從單機上啟動多個作業系統仍然是種魔術。本文件無意描寫各種 boot-"
+#~ "loader， 它們會依硬體架構甚至是子架構而變化。您應該參考 boot-loader 的文件"
+#~ "以瞭解更多資訊。"
+
+#~ msgid ""
+#~ "There is an <guimenuitem>Execute a Shell</guimenuitem> item on the menu. "
+#~ "If the menu is not available when you need to use the shell, press "
+#~ "<keycombo><keycap>Left Alt</keycap> <keycap>F2</keycap></keycombo> (on a "
+#~ "Mac keyboard, <keycombo><keycap>Option</keycap> <keycap>F2</keycap> </"
+#~ "keycombo>) to switch to the second <emphasis>virtual console</emphasis>. "
+#~ "That's the <keycap>Alt</keycap> key on the left-hand side of the "
+#~ "<keycap>space bar</keycap>, and the <keycap>F2</keycap> function key, at "
+#~ "the same time. This is a separate window running a Bourne shell clone "
+#~ "called <command>ash</command>."
+#~ msgstr ""
+#~ "選單上有個<guimenuitem>呼叫 shell</guimenuitem> 選單項。如果沒有選單，想使"
+#~ "用介殼請按 <keycombo><keycap>左 Alt</keycap> <keycap>F2</keycap></"
+#~ "keycombo> (在 Mac 鍵盤上，<keycombo><keycap>Option</keycap> <keycap>F2</"
+#~ "keycap> </keycombo>) 以切換到第二個<emphasis>虛擬控制台</emphasis>。就是同"
+#~ "時按下 <keycap>Alt</keycap> 鍵，它位於 <keycap>空格鍵</keycap>的左邊，和 "
+#~ "<keycap>F2</keycap> 功能鍵。這個獨立視窗執行 Bourne shell 的複製版 "
+#~ "<command>ash</command>。"
+
+#~ msgid ""
+#~ "Use the menus to perform any task that they are able to do &mdash; the "
+#~ "shell and commands are only there in case something goes wrong. In "
+#~ "particular, you should always use the menus, not the shell, to activate "
+#~ "your swap partition, because the menu software can't detect that you've "
+#~ "done this from the shell. Press <keycombo><keycap>Left Alt</keycap> "
+#~ "<keycap>F1</keycap></keycombo> to get back to menus, or type "
+#~ "<command>exit</command> if you used a menu item to open the shell."
+#~ msgstr ""
+#~ "使用選單完成它們能完成的工作 &mdash; shell 和指令只在出錯的時候使用。尤其"
+#~ "要使用選單，而不是 shell 去啟動您的置換分割區，因為選單軟體無法偵測到您在"
+#~ "介殼下做的工作。按下 <keycombo><keycap>左 Alt</keycap> <keycap>F1</"
+#~ "keycap></keycombo> 返回選單，或者您是在從選單打開的介殼下，鍵入 "
+#~ "<command>exit</command> 指令。"
+
+#~ msgid ""
+#~ "If you are installing on a system that has a Sun USB keyboard and have "
+#~ "booted the installer with the default 2.4 kernel, the keyboard will not "
+#~ "be identified correctly by the installation system. The installer will "
+#~ "show you a list of Sun type keymaps to choose from, but selecting one of "
+#~ "these will result in a non-working keyboard. If you are installing with "
+#~ "the 2.6 kernel, there is no problem."
+#~ msgstr ""
+#~ "如果您的系統上使用 Sun USB 鍵盤，並且使用預設的 2.4 核心啟動，該鍵盤將無法"
+#~ "被安裝系統識別。\n"
+#~ "安裝程式會提供 Sun 類型的 keymap 列表供選擇，但是選擇了其中一個會導致鍵盤"
+#~ "無法使用。\n"
+#~ "如果您使用 2.6 核心安裝，便不會有問題。"
+
+#, fuzzy
+#~ msgid ""
+#~ "To get a working keyboard, you should boot the installer with parameter "
+#~ "<userinput>priority=medium</userinput>. When you get to keyboard "
+#~ "selection<footnote> <para> If you are installing at default priority you "
+#~ "should use the <userinput>Go Back</userinput> button to return to the "
+#~ "installer menu when you are shown the list of Sun type keymaps. </para> </"
+#~ "footnote>, choose <quote>No keyboard to configure</quote> if you have a "
+#~ "keyboard with an American (US) layout, or choose <quote>USB keyboard</"
+#~ "quote> if you have a keyboard with a localized layout. Selecting "
+#~ "<quote>No keyboard to configure</quote> will leave the kernel keymap in "
+#~ "place, which is correct for US keyboards."
+#~ msgstr ""
+#~ "為了讓鍵盤可以工作，您應該為開機程式加上參數 <userinput>debconf/"
+#~ "priority=medium</userinput>。\n"
+#~ "當您看到鍵盤選擇項<footnote> <para> 如果您使用預設的優先級安裝，在顯示 "
+#~ "Sun 類型 keymap 之後，您應該使用 <userinput>Go Back</userinput> 按鈕返回安"
+#~ "裝選單。</para> </footnote>，如果您使用美式 (US) 鍵盤配置，請選 <quote>No "
+#~ "keyboard to configure</quote>，如果您使用本地化鍵盤配置，請選 <quote>USB "
+#~ "keyboard</quote>。選擇 <quote>No keyboard to configure</quote> 會使核心 "
+#~ "keympa 放在合適的地方，這對美式鍵盤是正確的做法。"
+
+#~ msgid ""
+#~ "LVM setup in &d-i; is quite simple. At first, you have to mark your "
+#~ "partitions to be used as physical volumes for LVM. (This is done in "
+#~ "<command>partman</command> in the <guimenu>Partition settings</guimenu> "
+#~ "menu where you should select <menuchoice> <guimenu>Use as:</guimenu> "
+#~ "<guimenuitem>physical volume for LVM</guimenuitem> </menuchoice>.) Then "
+#~ "start the <command>lvmcfg</command> module (either directly from "
+#~ "<command>partman</command> or from the &d-i;'s main menu) and combine "
+#~ "physical volumes to volume group(s) under the <guimenuitem>Modify volume "
+#~ "groups (VG)</guimenuitem> menu. After that, you should create logical "
+#~ "volumes on the top of volume groups from the menu <guimenuitem>Modify "
+#~ "logical volumes (LV)</guimenuitem>."
+#~ msgstr ""
+#~ "在 &d-i; 裡面設置 LVM 很簡單。首先，您必須為 LVM 標記您的分割區為物理容"
+#~ "量。(這由 <command>partman</command> 在 <guimenu>分割區設定：</guimenu>選"
+#~ "單完成，那裡您應該選擇 <menuchoice> <guimenu>用途：</guimenu> "
+#~ "<guimenuitem>LVM 的物理容量</guimenuitem> </menuchoice>。)接著啟動 "
+#~ "<command>lvmcfg</command> 模組 (可以直接從 <command>partman</command> 或"
+#~ "從 &d-i; 的主選單啟動) 然後組合物理容量到容量群組，它位於<guimenuitem>修改"
+#~ "容量群組 (VG) </guimenuitem>選單。之後，您應該為容量群組建立邏輯容量，這是"
+#~ "從選單 <guimenuitem>修改邏輯容量 (LV) </guimenuitem>。"
+
+#~ msgid "Desktop machine"
+#~ msgstr "桌面電腦"
+
+#~ msgid "Multi-user workstation"
+#~ msgstr "多使用者工作站"
 
 #~ msgid "Running <command>base-config</command> From Within &d-i;"
 #~ msgstr "在 &d-i; 下執行 <command>base-config</command>"

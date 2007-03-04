@@ -1,3 +1,204 @@
+autopartkit (1.24) unstable; urgency=low
+
+  [ Updated translations ]
+  * German (de.po) by Jens Seidel
+  * Malayalam (ml.po) by Praveen A
+  * Swedish (sv.po) by Daniel Nylander
+
+ -- Frans Pop <fjp@debian.org>  Tue, 27 Feb 2007 16:39:03 +0100
+
+autopartkit (1.23) unstable; urgency=low
+
+  [ Updated translations ]
+  * Arabic (ar.po) by Ossama M. Khayat
+  * Belarusian (be.po) by Pavel Piatruk
+  * Danish (da.po) by Claus Hindsgaul
+  * Esperanto (eo.po) by Serge Leblanc
+  * Basque (eu.po) by Piarres Beobide
+  * Kurdish (ku.po) by Amed Çeko Jiyan
+  * Latvian (lv.po) by Aigars Mahinovs
+  * Malayalam (ml.po) by Praveen A
+  * Panjabi (pa.po) by A S Alam
+  * Portuguese (Brazil) (pt_BR.po) by Felipe Augusto van de Wiel (faw)
+  * Romanian (ro.po) by Eddy Petrișor
+  * Slovenian (sl.po) by Matej Kovačič
+
+ -- Frans Pop <fjp@debian.org>  Wed, 31 Jan 2007 11:22:54 +0100
+
+autopartkit (1.22) unstable; urgency=low
+
+  * acinclude.m4: properly quote definition of JAPHAR_GREP_CFLAGS.
+  * Run commands as documented in HACKING to fix FTBFS.
+
+ -- Frans Pop <fjp@debian.org>  Wed, 22 Nov 2006 20:54:28 +0100
+
+autopartkit (1.21) unstable; urgency=low
+
+  [ Frans Pop ]
+  * Drop support for lvm10 as it was removed from the archive.
+
+  [ Colin Watson ]
+  * Use update-dev rather than the sleep() hack to wait for udev. Requires
+    di-utils 1.19.
+  * Replace hardcoded ISO-8859-1 non-breaking space character with a numeric
+    #define, since I keep accidentally losing this in UTF-8 editors.
+  * Squash several (though not all) unused variable warnings.
+
+  [ Updated translations ]
+  * Bulgarian (bg.po) by Damyan Ivaniv
+  * Bosnian (bs.po) by Safir Secerovic
+  * Georgian (ka.po) by Aiet Kolkhi
+  * Kurdish (ku.po) by rizoye-xerzi
+  * Norwegian Bokmål (nb.po) by Bjørn Steensrud
+  * Polish (pl.po) by Bartosz Fenski
+
+ -- Frans Pop <fjp@debian.org>  Wed, 22 Nov 2006 15:03:02 +0100
+
+autopartkit (1.20) unstable; urgency=low
+
+  [ Updated translations ]
+  * Belarusian (be.po) by Andrei Darashenka
+  * Catalan (ca.po) by Jordi Mallach
+  * Esperanto (eo.po) by Serge Leblanc
+  * Estonian (et.po) by Siim Põder
+  * Basque (eu.po) by Piarres Beobide
+  * Galician (gl.po) by Jacobo Tarrio
+  * Hebrew (he.po) by Lior Kaplan
+  * Hindi (hi.po) by Nishant Sharma
+  * Croatian (hr.po) by Josip Rodin
+  * Kurdish (ku.po) by Erdal Ronahi
+  * Latvian (lv.po) by Aigars Mahinovs
+  * Norwegian Bokmal (nb.po) by Bjørn Steensrud
+  * Romanian (ro.po) by Eddy Petrișor
+  * Tamil (ta.po) by Damodharan Rajalingam
+  * Vietnamese (vi.po) by Clytie Siddall
+  * Wolof (wo.po) by Mouhamadou Mamoune Mbacke
+
+ -- Frans Pop <fjp@debian.org>  Tue, 24 Oct 2006 13:49:48 +0200
+
+autopartkit (1.19) unstable; urgency=low
+
+  [ Colin Watson ]
+  * Use devfs mapping function from libdebian-installer rather than our own.
+
+  [ Petter Reinholdtse ]
+  * Increase the magic sleep() value from 2 to 3 to increase the
+    chance that udev and the kernel create the needed devices in time
+
+  [ Updated translations ]
+  * Hebrew by Lior Kaplan
+
+ -- Petter Reinholdtsen <pere@debian.org>  Sat,  2 Sep 2006 10:01:03 +0200
+
+autopartkit (1.18) unstable; urgency=low
+
+  * Add more log output.
+  * Rewrite to make sure all places using ped_device_get_next() uses
+    my_ped_device_get_next_rw() instead, to avoid CD-ROMs and
+    read-only devices.  (Closes: #374874)
+  * Add some sleeps around the code to give the kernel time to create
+    the needed device files.
+  * Fix typo in postinst.  Make sure to modprobe the required modules,
+    not call their name as if they are programs.
+  * Autopartkit always ask before erasing hard drives. (Closes: #217503)
+  * Now work with udev.  (Closes: #358834)
+  * Only modprobe kernel modules if they are not loaded already. Based
+    on patch from Sylvain Ferriol. (Closes: #247590)
+
+ -- Petter Reinholdtsen <pere@debian.org>  Mon, 21 Aug 2006 13:26:41 +0200
+
+autopartkit (1.17) unstable; urgency=low
+
+  [ Colin Watson ]
+  * Exclude read-only devices and CD drives from the list of devices
+    presented to the user (closes: #373629).
+  * Make sure there is always a sentinel NULL mountpoint at the end of
+    lvm_reqs (may close #374874).
+
+  [ Frans Pop ]
+  * Remove duplicate depends for libuuid1-udeb.
+  * Add myself to uploaders.
+
+  [ Updated translations ]
+  * Arabic (ar.po) by Ossama M. Khayat
+  * Catalan (ca.po) by Jordi Mallach
+  * Czech (cs.po) by Miroslav Kure
+  * Danish (da.po) by Claus Hindsgaul
+  * German (de.po) by Jens Seidel
+  * Dzongkha (dz.po) by Jurmey Rabgay
+  * Esperanto (eo.po) by Serge Leblanc
+  * Spanish (es.po) by Javier Fernández-Sanguino Peña
+  * Estonian (et.po) by Siim Põder
+  * Basque (eu.po) by Piarres Beobide
+  * French (fr.po) by Christian Perrier
+  * Galician (gl.po) by Jacobo Tarrio
+  * Hungarian (hu.po) by SZERVÑC Attila
+  * Italian (it.po) by Stefano Canepa
+  * Japanese (ja.po) by Kenshi Muto
+  * Georgian (ka.po) by Aiet Kolkhi
+  * Khmer (km.po) by Khoem Sokhem
+  * Korean (ko.po) by Sunjae park
+  * Lithuanian (lt.po) by Kęstutis Biliūnas
+  * Macedonian (mk.po) by Georgi Stanojevski
+  * Bokmål, Norwegian (nb.po) by Bjørn Steensrud
+  * Dutch (nl.po) by Bart Cornelis
+  * Norwegian Nynorsk (nn.po) by Håvard Korsvoll
+  * Polish (pl.po) by Bartosz Fenski
+  * Portuguese (pt.po) by Miguel Figueiredo
+  * Portuguese (Brazil) (pt_BR.po) by André Luís Lopes
+  * Romanian (ro.po) by Eddy Petrişor
+  * Russian (ru.po) by Yuri Kozlov
+  * Slovak (sk.po) by Peter Mann
+  * Swedish (sv.po) by Daniel Nylander
+  * Thai (th.po) by Theppitak Karoonboonyanan
+  * Turkish (tr.po) by Recai Oktaş
+  * Ukrainian (uk.po) by Eugeniy Meshcheryakov
+  * Vietnamese (vi.po) by Clytie Siddall
+  * Simplified Chinese (zh_CN.po) by Carlos Z.F. Liu
+
+ -- Frans Pop <fjp@debian.org>  Wed, 12 Jul 2006 01:00:54 +0200
+
+autopartkit (1.16) unstable; urgency=low
+
+  * parted 1.7.1 will be a new soname, need to rebuild with it.
+
+ -- Joey Hess <joeyh@debian.org>  Wed, 31 May 2006 15:48:19 -0400
+
+autopartkit (1.15) unstable; urgency=low
+
+  [ Christian Perrier ]
+  * Mark some parts of templates, containing only variables, as
+    untranslatable, using new po-debconf features
+  * Comment a tricky part in one template
+
+  [ Joey Hess ]
+  * Fixes to build with parted 1.7.
+  * Fixed up deps.
+  * Remove standards-version.
+
+  [ Updated translations ]
+  * Arabic (ar.po) by Ossama M. Khayat
+  * Bosnian (bs.po) by Safir Secerovic
+  * Catalan (ca.po) by Jordi Mallach
+  * Danish (da.po) by Claus Hindsgaul
+  * Dzongkha (dz.po) by Jurmey Rabgay
+  * Esperanto (eo.po) by Serge Leblanc
+  * Hungarian (hu.po) by SZERVÑC Attila
+  * Italian (it.po) by Giuseppe Sacco
+  * Georgian (ka.po) by Aiet Kolkhi
+  * Khmer (km.po) by Leang Chumsoben
+  * Kurdish (ku.po) by Erdal Ronahi
+  * Malagasy (mg.po) by Jaonary Rabarisoa
+  * Nepali (ne.po) by Shiva Pokharel
+  * Norwegian Nynorsk (nn.po) by Håvard Korsvoll
+  * Northern Sami (se.po) by Børre Gaup
+  * Slovenian (sl.po) by Jure Čuhalev
+  * Tamil (ta.po) by Damodharan Rajalingam
+  * Thai (th.po) by Theppitak Karoonboonyanan
+  * Vietnamese (vi.po) by Clytie Siddall
+
+ -- Joey Hess <joeyh@debian.org>  Mon, 29 May 2006 19:05:33 -0400
+
 autopartkit (1.14) unstable; urgency=low
 
   * Add -O resize_inode as an option when running mkfs.ext3, to make
@@ -9,7 +210,6 @@ autopartkit (1.14) unstable; urgency=low
     prototype of make_path().
   * Use 'long long' to print sector sizes, to avoid overflowing 'long'.
   * Update Standards-Version to 3.6.2.  No change needed.
-
 
   [ Updated translations ]
   * German (de.po) by Jens Seidel

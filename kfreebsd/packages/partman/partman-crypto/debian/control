@@ -4,11 +4,24 @@ Priority: standard
 Maintainer: Debian Install System Team <debian-boot@lists.debian.org>
 Uploaders: Max Vozeler <xam@debian.org>
 Build-Depends: debhelper (>= 5.0.25), po-debconf (>= 0.5.0)
-Standards-Version: 3.6.2
+XS-Vcs-Svn: svn://svn.debian.org/d-i/trunk/packages/partman/partman-crypto
 
 Package: partman-crypto
 XC-Package-Type: udeb
 Architecture: any
-Depends: partman-base (>= 73), mount-aes-udeb, cdebconf-newt-entropy, ${shlibs:Depends}, ${misc:Depends}
-Description: Add to partman support for loop-AES and dm-crypt crypto
+Depends: partman-base (>= 87), ${shlibs:Depends}, ${misc:Depends}
+Description: Add to partman support for block device encryption
 
+Package: partman-crypto-dm
+XC-Package-Type: udeb
+Architecture: all
+Priority: optional
+Depends: partman-crypto, crypto-modules, cryptsetup-udeb, cdebconf-newt-entropy (>= 0.3)
+Description: Add to partman support for dm-crypt encryption
+
+Package: partman-crypto-loop
+XC-Package-Type: udeb
+Architecture: all
+Priority: optional
+Depends: partman-crypto, loop-aes-modules, mount-aes-udeb, gnupg-udeb, cdebconf-newt-entropy (>= 0.3)
+Description: Add to partman support for loop-AES encryption

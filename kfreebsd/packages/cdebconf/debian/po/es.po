@@ -9,20 +9,19 @@
 #
 # Contributors to the translation of debian-installer:
 # Teófilo Ruiz Suárez <teo@debian.org>, 2003.
-# Javier Fernández-Sanguino <jfs@debian.org>, 2003.
 # David Martínez Moreno <ender@debian.org>, 2003, 2005.
 # Carlos Alberto Martín Edo <carlos@dat.etsit.upm.es>, 2003
 # Carlos Valdivia Yagüe <valyag@dat.etsit.upm.es>, 2003
-# Rudy Godoy <rudy@kernel-panik.org>, 2003
+# Rudy Godoy <rudy@kernel-panik.org>, 2003-2006
 # Steve Langasek <vorlon@debian.org>, 2004
 # Enrique Matias Sanchez (aka Quique) <cronopios@gmail.com>, 2005
-# Javier Fernández-Sanguino <jfs@debian.org>, 2004-2005
 # Rubén Porras Campo <nahoo@inicia.es>, 2005
+# Javier Fernández-Sanguino <jfs@debian.org>, 2003-2006
 #
 # Equipo de traducción al español, por favor lean antes de traducir
 # los siguientes documentos:
 #
-# - El proyecto de traducción de Debian al españl
+# - El proyecto de traducción de Debian al español
 #   http://www.debian.org/intl/spanish/
 #   especialmente las notas de traducción en
 #   http://www.debian.org/intl/spanish/notas
@@ -34,12 +33,23 @@
 # Si tiene dudas o consultas sobre esta traducción consulte con el último
 # traductor (campo Last-Translator) y ponga en copia a la lista de
 # traducción de Debian al español (debian-l10n-spanish@lists.debian.org)
+#
+# NOTAS: 
+#
+# - Se ha traducido en este fichero 'boot loader' de forma homogénea por
+# 'cargador de arranque' aunque en el manual se utiliza éste término y
+# también 'gestor de arranque'
+#
+# - 'array' no está traducido aún. La traducción como 'arreglo' suena
+# fatal (y es poco conocida)
+#
+#  
 msgid ""
 msgstr ""
 "Project-Id-Version: debian-installer\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-01-13 18:33-0700\n"
-"PO-Revision-Date: 2006-01-02 22:42+0100\n"
+"Report-Msgid-Bugs-To: debian-boot@lists.debian.org\n"
+"POT-Creation-Date: 2007-01-06 22:47+0100\n"
+"PO-Revision-Date: 2006-10-15 23:14-0500\n"
 "Last-Translator: Javier Fernández-Sanguino Peña <jfs@debian.org>\n"
 "Language-Team:  Debian Spanish <debian-l10n-spanish@lists.debian.org>\n"
 "MIME-Version: 1.0\n"
@@ -48,31 +58,50 @@ msgstr ""
 
 #. Type: select
 #. Choices
-#: ../cdebconf-udeb.templates:3
-msgid "critical, high, medium, low"
-msgstr "crítica, alta, media, baja"
+#: ../cdebconf-udeb.templates:9
+msgid "critical"
+msgstr "crítica"
+
+#. Type: select
+#. Choices
+#: ../cdebconf-udeb.templates:9
+msgid "high"
+msgstr "alta"
+
+#. Type: select
+#. Choices
+#: ../cdebconf-udeb.templates:9
+msgid "medium"
+msgstr "media"
+
+#. Type: select
+#. Choices
+#: ../cdebconf-udeb.templates:9
+msgid "low"
+msgstr "baja"
 
 #. Type: select
 #. Description
-#: ../cdebconf-udeb.templates:5
-msgid "Ignore questions with a priority less than..."
-msgstr "Ignorar preguntas con una prioridad menor que..."
+#: ../cdebconf-udeb.templates:11
+msgid "Ignore questions with a priority less than:"
+msgstr "Ignorar preguntas con una prioridad menor que:"
 
 #. Type: select
 #. Description
-#: ../cdebconf-udeb.templates:5
+#: ../cdebconf-udeb.templates:11
 msgid ""
 "Packages that use debconf for configuration prioritize the questions they "
 "might ask you. Only questions with a certain priority or higher are actually "
 "shown to you; all less important questions are skipped."
 msgstr ""
-"Los paquetes que usan debconf para la configuración priorizan las preguntas "
-"que le vayan a preguntar. Sólo se le mostrarán preguntas con un cierto grado "
-"de prioridad, o mayor, se obviarán todas las preguntas menos importantes."
+"Los paquetes que usan debconf para la configuración dan prioridad a las "
+"preguntas que le vayan a formular. Sólo se le mostrarán preguntas con un "
+"cierto grado de prioridad, o mayor, se obviarán todas las preguntas menos "
+"importantes."
 
 #. Type: select
 #. Description
-#: ../cdebconf-udeb.templates:5
+#: ../cdebconf-udeb.templates:11
 msgid ""
 "You can select the lowest priority of question you want to see:\n"
 " - 'critical' is for items that will probably break the system\n"
@@ -83,24 +112,24 @@ msgid ""
 "   the vast majority of cases."
 msgstr ""
 "Puede seleccionar la prioridad más baja de las preguntas que quiera ver:  \n"
-" - 'crítica' es para elementos que podrían romper el sistema si el usuario "
+" - «crítica» es para elementos que podrían romper el sistema si el usuario "
 "no interviene.\n"
-" - 'alta' es para elementos de los que no hay opciones predeterminadas "
+" - «alta» es para elementos de los que no hay opciones predeterminadas "
 "razonables.\n"
-" - 'media' es para preguntas corrientes, que tienen opciones predeterminadas "
+" - «media» es para preguntas corrientes, que tienen opciones predeterminadas "
 "razonables.\n"
-" - 'baja' es para preguntas triviales que probablemente funcionen con las "
+" - «baja» es para preguntas triviales que probablemente funcionen con las "
 "opciones predeterminadas en la inmensa mayoría de los casos."
 
 #. Type: select
 #. Description
-#: ../cdebconf-udeb.templates:5
+#: ../cdebconf-udeb.templates:11
 msgid ""
 "For example, this question is of medium priority, and if your priority were "
 "already 'high' or 'critical', you wouldn't see this question."
 msgstr ""
 "Por ejemplo, esta pregunta es de prioridad media, y si su prioridad fuera ya "
-"'alta' o 'crítica', no vería esta pregunta."
+"«alta» o «crítica», no vería esta pregunta."
 
 #. Type: text
 #. Description
@@ -176,7 +205,7 @@ msgstr "LTR"
 #. of the screen
 #: ../cdebconf-gtk-udeb.templates:35
 msgid "Screenshot"
-msgstr "Captura pantalla"
+msgstr "Capturar la pantalla"
 
 #. Type: text
 #. Description
@@ -223,21 +252,21 @@ msgstr "Elegir una cadena vacía"
 #: ../cdebconf-text-udeb.templates:31
 #, no-c-format
 msgid "Prompt: '%c' for help, default=%d> "
-msgstr "Indicador: '%c' para obtener ayuda, por omisión=%d> "
+msgstr "Indicador: «%c» para obtener ayuda, por omisión=%d> "
 
 #. Type: text
 #. Description
 #: ../cdebconf-text-udeb.templates:35
 #, no-c-format
 msgid "Prompt: '%c' for help> "
-msgstr "Indicador: '%c' para obtener ayuda> "
+msgstr "Indicador: «%c» para obtener ayuda> "
 
 #. Type: text
 #. Description
 #: ../cdebconf-text-udeb.templates:39
 #, no-c-format
 msgid "Prompt: '%c' for help, default=%s> "
-msgstr "Indicador: '%c' para obtener ayuda, por omisión=%s> "
+msgstr "Indicador: «%c» para obtener ayuda, por omisión=%s> "
 
 #. Type: text
 #. Description

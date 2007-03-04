@@ -9,12 +9,13 @@ log() {
 }
 
 fail () {
-	log "CDROM-detect failed."
+	log "CDROM-detect failed; unmounting CD just to be sure"
+	umount /cdrom 2>/dev/null || true
 	exit 1
 }
 
 # Is a cdrom already mounted?  If so, assume it's the right one..
-mount | grep -q ^/dev/cdroms/ && exit 0
+mount | grep -q 'on /cdrom' && exit 0
 if [ -e /cdrom/.disk/info ] ; then
 	CDNAME=`cat /cdrom/.disk/info`
 	log "Detected CD '$CDNAME'"
@@ -31,32 +32,15 @@ while true
 do
 	mounted=0
 
-	if [ -d /dev/cdroms ]; then
-		devices="`echo /dev/cdroms/*`"
-	else
-		devices=""
-	fi
+	devices="$(list-devices cd)"
 	for device in $devices; do
 		if mount -t iso9660 -o ro,exec $device /cdrom; then
-			log "CDROM-mount succeeded: device=$device"
+			log "CD-ROM mount succeeded: device=$device"
 			mounted=1
 			db_set cdrom-detect/cdrom_device $device
 			break
 		else
-			log "CDROM-mount failed (error=$?): device=$device"
-			log "Unmounting CD just to be sure."
-			umount /cdrom 2>/dev/null || true
-			log "Trying it again."
-			if mount -t iso9660 -o ro,exec $device /cdrom; then
-				log "CDROM-mount succeeded: device=$device"
-				mounted=1
-				db_set cdrom-detect/cdrom_device $device
-				break
-			else
-				log "CDROM-mount failed again (error=$?): device=$device"
-				log "Unmounting CD just to be sure and giving it up."
-				umount /cdrom 2>/dev/null || true
-			fi
+			log "CD-ROM mount failed: device=$device"
 		fi
 	done
 
@@ -70,6 +54,8 @@ do
 		db_go
 		db_get cdrom-detect/retry
 		if [ "$RET" = "true" ]; then
+			log "Unmounting CD just to be sure"
+			umount /cdrom 2>/dev/null || true
 			continue
 		else
 			fail
@@ -116,13 +102,12 @@ do
 			modprobe $module
 		fi
 		if mount -t iso9660 -o ro,exec $device /cdrom; then
-			log "CDROM-mount succeeded: device=$device"
+			log "CD-ROM mount succeeded: device=$device"
 			mounted=1
 			break
 		else
-			log "CDROM-mount failed (error=$?): device=$device"
-			log "Unmounting CD just to be sure and giving it up."
-			umount /cdrom 2>/dev/null || true
+			log "CD-ROM mount failed: device=$device"
+			fail
 		fi
 	else
 		fail
@@ -134,10 +119,9 @@ if [ -e /cdrom/.disk/info ] ; then
 	log "Detected CD '$CDNAME'"
 else
 	log "The available CD is not a Debian CD!"
-	umount /cdrom
 	db_input critical cdrom-detect/wrong-cd || [ $? -eq 30 ]
 	db_go
-	exit 1 
+	fail 
 fi
 
 # Get all the pool directories into the dentry cache, to cut down on seek
@@ -177,12 +161,11 @@ if [ -z "$suite" ] ; then
 	log "Error reading Release file; unable to determine distribution"
 	db_input critical cdrom-detect/no-release || [ $? -eq 30 ]
 	db_go
-	umount /cdrom
 	fail
 fi
 
 # Ask for eject to be installed into /target/, to be able to use it in
-# the prebaseconfig script.
+# the finish-install script.
 apt-install eject || true
 
 # Hey, we're done
@@ -190,10 +173,12 @@ db_subst cdrom-detect/success cdname "$CDNAME"
 db_input low cdrom-detect/success || [ $? -eq 30 ]
 db_go
 
-anna-install apt-cdrom-setup || true
+anna-install apt-mirror-setup || true
 if [ ! -e /cdrom/.disk/base_installable ]; then
 	log "Base system not installable from CD, requesting choose-mirror"
 	anna-install choose-mirror || true
+else
+	anna-install apt-cdrom-setup || true
 fi
 
 exit 0

@@ -36,7 +36,9 @@ parse_unix_tree() {
 		parse_network_interfaces $ETC/network/interfaces "eth0"
 	fi
 	if [ -e $ETC/resolv.conf ]; then
-		var_add NAMESERVERS "$(grep "^nameserver" $ETC/resolv.conf | sed 's/^.* //')"
+		for i in $(grep "^nameserver" $ETC/resolv.conf | sed 's/^.* //'); do
+			var_add NAMESERVERS "$i"
+		done
 	fi
 	if [ -e $ETC/hostname ]; then
 		HOSTNAME=$(cat $ETC/hostname | cut -d . -f 1)
@@ -83,6 +85,15 @@ parse_network_interfaces() {
 		IPADDRESS=$(echo "$stanza" | grep "address" | sed 's/.*address //')
 		GATEWAY=$(echo "$stanza" | grep "gateway" | sed 's/.*gateway //')
 	fi
+}
+
+# Parse a set of ifconfig/route/etc commands
+# $1 = ifconfig et al. commands
+parse_ifconfig() {
+	# UGH!
+	IPADDRESS=$(grep "ifconfig [-[:alpha:][:digit:]]* [[:digit:].]" $1 | sed 's/.*ifconfig [-[:alpha:][:digit:]]* \([.[:digit:]]*\) .*/\1/')
+	NETMASK=$(grep '\bnetmask\b' $1 | sed 's/.*netmask\s*//' | sed 's/\s.*//')
+	GATEWAY=$(grep "route add default gw" $1 | sed 's/.*gw\s*//')
 }
 
 # Get the value from a string in the form of var=value
@@ -223,7 +234,9 @@ generate_preseed_file() {
 		add "$1" "netcfg/use_dhcp" "boolean" "true"
 	fi
 	if [ "$NONINTERACTIVE" = "yes" -o "$HOSTNAME" != "$DEFAULT_HOSTNAME" ]; then
-		add "$1" "netcfg/get_hostname" "string" "$HOSTNAME"
+		if verify_hostname "$HOSTNAME"; then
+			add "$1" "netcfg/get_hostname" "string" "$HOSTNAME"
+		fi
 	fi
 	add "$1" "netcfg/get_domain" "string" "$DOMAIN"
 }
@@ -238,5 +251,25 @@ unset_matching_var() {
 	if [ "$(eval echo $`echo $1`)" = "$2" ]; then
 		unset $1
 	fi
+}
+
+
+# Check the hostname for RFC 1123 compliance.
+verify_hostname() {
+	t=$(echo "$1" | tr -d 'a-zA-Z0-9.-')
+	if [ -n "$t" ]; then
+		return 1
+	fi
+	if echo "$1" | grep -q "^-"; then
+		return 1
+	fi
+	if echo "$1" | grep -q -- "-$"; then
+		return 1
+	fi
+	l=$(($(echo "$1" | wc -c) - 1))
+	if [ $l -lt 2 -o $l -gt 63 ]; then
+		return 1
+	fi
+	return 0
 }
 

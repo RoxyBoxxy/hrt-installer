@@ -1,17 +1,18 @@
 <!-- retain these comments for translator revision tracking -->
-<!-- original version: 35612 -->
+<!-- original version: 43773 -->
 
  <sect1 id="installation-media">
  <title>Installationsmedien</title>
 
 <para>
 
-Dieses Kapitel wird Ihnen helfen, festzustellen, welche unterschiedlichen Medientypen Sie
-nutzen können, um Debian zu installieren. Wenn Sie beispielsweise ein Diskettenlaufwerk
-in Ihrem Rechner haben, können Sie es benutzen, um Debian zu installieren. Den
-Installationsmedien ist ein eigenes Kapitel gewidmet, siehe <xref linkend="install-methods"/>,
-das die Vor- und Nachteile jedes Medientyps auflistet. Sie können noch einmal hierher
-zurückblättern, wenn Sie das Kapitel gelesen haben.
+Dieses Kapitel wird Ihnen helfen, festzustellen, welche unterschiedlichen
+Medientypen Sie nutzen können, um Debian zu installieren. Wenn Sie beispielsweise
+ein Diskettenlaufwerk in Ihrem Rechner haben, können Sie es benutzen, um Debian
+zu installieren. Den Installationsmedien ist ein eigenes Kapitel gewidmet
+(<xref linkend="install-methods"/>), das die Vor- und Nachteile jedes Medientyps
+auflistet. Sie können noch einmal hierher zurückblättern, wenn Sie das Kapitel
+gelesen haben.
 
 </para>
 
@@ -51,7 +52,7 @@ unterstützt, können Sie die CD-ROM in Kombination mit den anderen
 Techniken verwenden, um Ihr System zu installieren, sobald Sie auf
 anderem Wege gebootet haben; siehe <xref linkend="boot-installer"/>.
 
-</para><para arch="i386"> 
+</para><para arch="x86"> 
 
 Sowohl SCSI- als auch IDE/ATAPI-CD-ROMs werden unterstützt. Zusätzlich
 werden alle nicht-standardkonformen CD-Anschlüsse, die von Linux unterstützt
@@ -62,10 +63,10 @@ zu bringen, und das Booten von diesen Nicht-Standard-Anschlüssen
 ist eher unwahrscheinlich. Das <ulink url="&url-cd-howto;">Linux-CD-ROM-HowTo</ulink>
 enthält ausführliche Informationen über die Verwendung von CD-ROMs unter Linux.
 
-</para><para arch="i386"> 
+</para><para arch="x86"> 
 
-Es können auch externe USB-CD-ROM-Geräte verwendet werden, genauso wie FireWire-Geräte,
-die von den ohci1394 und sbp2-Treibern unterstützt werden.
+Es können auch externe USB-CD-ROM-Geräte verwendet werden, genauso wie
+FireWire-Geräte, die von den ohci1394 und sbp2-Treibern unterstützt werden.
 
 </para><para arch="alpha">
 
@@ -93,9 +94,9 @@ bzw. <quote>512</quote>.
 Um die Installation zu starten, wählen Sie einfach den Eintrag
 <quote>System-Installation</quote> in der Firmware. Das Broadcom BCM91250A
 unterstützt Standard-IDE-Geräte inklusive CD-ROMs, aber momentan werden keine
-CD-Images für diese Plattform angeboten, da die Firmware keine CD-Laufwerke erkennt.
-Um Debian auf einem Broadcom BCM91480B-Evaluation-Board zu installieren,
-benötigen Sie eine PCI IDE-, SATA- oder SCSI-Karte.
+CD-Images für diese Plattform angeboten, da die Firmware keine CD-Laufwerke
+erkennt. Um Debian auf einem Broadcom BCM91480B-Evaluation-Board zu
+installieren, benötigen Sie eine PCI IDE-, SATA- oder SCSI-Karte.
 
 </para><para arch="mipsel"> 
 
@@ -120,8 +121,8 @@ Um von CD zu starten, geben Sie das Kommando <userinput>boot
 <replaceable>#</replaceable>/rz<replaceable>id</replaceable></userinput>
 an der Kommandozeile der Firmware an, wobei <replaceable>#</replaceable>
 die Nummer des TurboChannel-Gerätes ist, von dem gestartet werden soll (auf
-den meisten DECstations ist dies 3) und <replaceable>id</replaceable> die SCSI-ID des
-CD-ROM-Laufwerks. Wenn noch weitere Parameter angegeben werden
+den meisten DECstations ist dies 3) und <replaceable>id</replaceable> die
+SCSI-ID des CD-ROM-Laufwerks. Wenn noch weitere Parameter angegeben werden
 müssen, können sie optional mit der folgenden Syntax angehängt werden:
 
 </para><para arch="mipsel">
@@ -163,31 +164,37 @@ Viele Debian-Geräte benötigen ihre Disketten- und/oder CD-ROM Laufwerke
 nur für die Installation und für Rettungsfälle. Wenn Sie einige
 Server betreiben, haben Sie wahrscheinlich schon daran gedacht, diese
 Laufwerke wegzulassen und einen USB-Memory-Stick für die Installation
-und (wenn nötig) zum Wiederherstellen des Systems zu verwenden. Das ist auch
-für kleine Systeme sinnvoll, die keinen Platz für überflüssige Laufwerke haben.
+und (wenn nötig) zum Wiederherstellen des Systems zu verwenden. Das ist
+auch für kleine Systeme sinnvoll, die keinen Platz für überflüssige Laufwerke
+haben.
 
 </para>
   </sect2>
 
   <sect2><title>Netzwerk</title>
 
-<para condition="supports-tftp">
+<para>
+
+Das Netzwerk kann während der Installation verwendet werden, um für die
+Installation benötigte Dateien zu beziehen. Ob das Netzwerk genutzt wird oder
+nicht, hängt von der gewählten Installationsmethode ab sowie Ihren Antworten
+auf gewisse Fragen, die während der Installation gestellt werden. Das
+Installationssystem unterstützt die meisten Arten von Netzwerkverbindungen
+(inklusive PPPoE, allerdings nicht ISDN oder PPP), entweder über HTTP oder
+FTP. Nachdem die Installation abgeschlossen ist, können Sie Ihr System
+konfigurieren, ISDN oder PPP zu verwenden.
+
+</para><para condition="supports-tftp">
 
 Sie können Ihr System auch über das Netzwerk <emphasis>booten</emphasis>.
 <phrase arch="mips">Dies ist die bevorzugte Installationsmethode für
-Mips.</phrase>
+&arch-title;.</phrase>
 
 </para><para condition="supports-nfsroot">
 
 Die diskettenlose Installation per Netzwerk-Boot von einem Local Area Network
-(LAN-Netzwerk) incl. Einhängen aller lokalen Dateisystemen per NFS ist eine weitere
-Möglichkeit.
-
-</para><para>
-
-Nachdem der Betriebssystem-Kernel installiert ist, können Sie den Rest
-des Systems über eine beliebige Netzwerkverbindung (auch PPP, wenn das
-Basissystem installiert ist) mittels FTP oder HTTP installieren.
+(LAN-Netzwerk) incl. dem Einbinden aller lokalen Dateisystemen per NFS ist eine
+weitere Möglichkeit.
 
 </para>
   </sect2>
@@ -197,7 +204,7 @@ Basissystem installiert ist) mittels FTP oder HTTP installieren.
 <para>
 
 Wenn Sie ein anderes Unix-ähnliches System laufen haben, könnten Sie dieses
-zur Installation von &debian; verwenden, ohne den &d-i;, wie er im Rest des
+zur Installation von &debian; verwenden, ohne den &d-i;, der im Rest dieses
 Handbuches beschrieben ist, zu verwenden. Diese Installationsmethode ist
 sinnvoll für Benutzer mit ansonsten nicht unterstützter Hardware oder auf
 Servern, die sich keine Abschaltung des Systems leisten können.
@@ -220,20 +227,21 @@ Grundsätzlich ist Unterstützung für möglichst viele Geräte wünschenswert, 
 sicherzustellen, dass Debian auf einer umfangreichen Palette von Hardware
 installiert werden kann.
 
-</para><para arch="i386">
+</para><para arch="x86">
 
 Grundsätzlich beinhaltet das Debian-Installationssystem Unterstützung für
 Disketten, IDE-Laufwerke, IDE-Disketten, Parallel-Port-IDE-Geräte,
-SCSI-Controller und -Laufwerke, USB und FireWire. Die unterstützten Dateisysteme
-beinhalten FAT, Win-32 FAT-Erweiterungen (VFAT) und NTFS sowie viele weitere.
+SCSI-Controller und -Laufwerke, USB und FireWire. Zu den unterstützten
+Dateisystemen gehören FAT, Win-32 FAT-Erweiterungen (VFAT) und NTFS.
 
 </para><para arch="i386">
 
 Die Festplatten-Schnittstellen, die das <quote>AT</quote>-Festplatten-Interface
-emulieren (oft auch MFM, RLL, IDE oder ATA genannt), werden unterstützt.
-Sehr alte 8-Bit-Festplatten-Controller, wie sie in IBM-XT-Computern verwendet
-werden, werden nur als Kernelmodul unterstützt. SCSI-Disk-Controller von vielen
-verschiedenen Herstellern werden unterstützt. Lesen Sie das
+emulieren &ndash; oft auch MFM, RLL, IDE oder ATA genannt &ndash; werden
+unterstützt. Sehr alte 8&ndash;Bit Festplatten-Controller, wie sie in
+IBM-XT-Computern verwendet werden, werden nur als Kernelmodul unterstützt.
+SCSI-Disk-Controller von vielen verschiedenen Herstellern werden unterstützt.
+Lesen Sie das
 <ulink url="&url-hardware-howto;">Linux-Hardware-Kompatibilitäts-HowTo</ulink>
 für weitere Informationen.
 
@@ -277,7 +285,7 @@ NCR und Symbios 53C8XX
 </itemizedlist>
 
 IDE-Systeme (wie der UltraSPARC 5) werden auch unterstützt. Siehe die
-<ulink url="&url-sparc-linux-faq;">Linux for SPARC Processors FAQ</ulink>
+<ulink url="&url-sparc-linux-faq;">Linux for SPARC Processors F.A.Q.</ulink>
 für weitere Informationen über vom Linux-Kernel unterstützte SPARC-Hardware.
 
 </para><para arch="alpha">

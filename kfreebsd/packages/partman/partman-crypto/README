@@ -6,26 +6,20 @@
 
 ------------------------------------------------------------------------
  STATUS:
-  See http://wiki.debian.org/DebianInstallerCrypto
- 
+  See http://wiki.debian.org/DebianInstaller/PartmanCrypto
+  and also TODO and BUGS in the source tree
+
 ------------------------------------------------------------------------
 The scripts do stuff more or less in the following order:
 
- 1. init.d/crypto_modules
- 2. choose_method/crypto
- 3. active_partition/*
- 4. choose_partition/crypto
- 5. init.d/crypto
- 6. blockdev-keygen
- 7. update.d/crypto_visuals
- 8. finish.d/check_randomfskey, aptinstall_crypto, fstab_loop
+ 1. choose_method/crypto
+ 2. active_partition/*
+ 3. choose_partition/crypto
+ 4. init.d/crypto
+ 5. blockdev-keygen
+ 6. update.d/crypto_visuals
+ 7. finish.d/check_randomfskey, aptinstall_crypto, fstab_loop
 
-init.d/
-  crypto_modules
-
-    Loads kernel modules required for loop-AES ("loop-aes.ko") and
-    required for dm-crypt (TODO).
-  
 choose_method/
   crypto
 
@@ -59,7 +53,7 @@ update.d/
     they have been setup.
 
 finish.d/
-  check_randomfskey
+  crypto_check_mountpoints
 
     Shows a warning if user chose to create a filesystem on a crypt disk
     with keytype random. User can force to continue, maybe that should 
@@ -67,7 +61,7 @@ finish.d/
     /tmp partition, but actually requires random/1777 keytype.
    
 finish.d/
-  fstab_loop
+  crypto_config
     
     Replaces loop devices in fstab with corresponding real devices and 
     adds crypto mount options. This is a bit of a hack used because we 
@@ -78,7 +72,7 @@ finish.d/
     d on the encrypted partition, so this seems necessary.
 
 finish.d/
-  aptinstall_crypto
+  crypto_aptinstall
 
     Installs userspace tools and helper packages for encryption. This 
     is responsible for installing loop-aes-utils and loop-aes-rootfs (TODO)
@@ -97,9 +91,10 @@ blockdev-keygen
     cdebconf plugin "entropy" if available. See notes at the beginning
     of the script for important steps for the caller.
 
-crypto_modules
+finish-install.d/
+  05crypto
 
-    Run by prebaseconfig.d hook; Checks for loop-AES partitions,
+    Run by finish-install.d hook; Checks for loop-AES partitions,
     determines target kernel version from base-installer/kernel/image
     and installs a corresponding loop-aes-$KVERS package into /target.
 

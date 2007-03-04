@@ -1,17 +1,18 @@
 # Debian Installation Manual - preseed
+# Sunjae Park <darehanl@gmail.com>, 2006.
 # Seok-moon Jang <drssay97@gmail.com>, 2005.
-# Changwoo Ryu <cwryu@debian.org>, 2005.
+# Changwoo Ryu <cwryu@debian.org>, 2005, 2006, 2007.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: preseed.xml\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-04-28 19:33+0000\n"
-"PO-Revision-Date: 2006-04-29 10:18+0900\n"
-"Last-Translator: Jang Seok-moon <drssay97@gmail.com>\n"
+"Report-Msgid-Bugs-To: debian-boot@lists.debian.org\n"
+"POT-Creation-Date: 2007-02-28 20:57+0000\n"
+"PO-Revision-Date: 2007-01-23 23:41+0900\n"
+"Last-Translator: Changwoo Ryu <cwryu@debian.org>\n"
 "Language-Team: Korean <debian-i10n-korean@lists.debian.org>\n"
 "MIME-Version: 1.0\n"
-"Content-Type: application/x-xml2pot; charset=UTF-8\n"
+"Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
 #. Tag: title
@@ -24,14 +25,14 @@ msgstr "미리 설정하기를 이용한 설치 자동화"
 #: preseed.xml:18
 #, no-c-format
 msgid ""
-"This appendix explains the intricacies of preseeding answers to questions in "
-"&d-i; to automate your installation."
+"This appendix explains how to preseed answers to questions in &d-i; to "
+"automate your installation."
 msgstr ""
-"이 부록에서는 설치를 자동화하는 방법으로 &d-i;의 질문에 대한 대답들을 미리 설"
-"정하는 복잡한 사항들을 설명합니다."
+"이 부록에서는 &d-i;의 질문에 대한 대답들을 미리 설정해서 설치를 자동화하는 방"
+"법을 설명합니다."
 
 #. Tag: para
-#: preseed.xml:23 preseed.xml:492
+#: preseed.xml:23 preseed.xml:641
 #, no-c-format
 msgid ""
 "The configuration fragments used in this appendix are also available as an "
@@ -75,21 +76,15 @@ msgid ""
 "firstterm>, <firstterm>file</firstterm> and <firstterm>network</firstterm>. "
 "Initrd preseeding will work with any installation method and supports "
 "preseeding of more things, but it requires the most preparation. File and "
-"network preseeding each can be used with different installation methods. "
-"With file and network preseeding the first few installer questions cannot be "
-"preseeded because the preconfiguration file is only loaded after they have "
-"been asked."
+"network preseeding each can be used with different installation methods."
 msgstr ""
 "미리 설정에 사용할 수 있는 세 가지 방법이 있습니다: <firstterm>initrd</"
 "firstterm>, <firstterm>파일</firstterm> 그리고 <firstterm>네트워크</"
 "firstterm>입니다. initrd 미리 설정은 어떤 설치 방법과 사용해도 동작하고 더 많"
-"은 부분을 미리 설정할 수 있지만, 준비를 가장 많이 해야 합니다. 파일과 네트워"
-"크 미리 설정은 각각 다른 설치 방법에 사용할 수 있습니다. 파일과 네트워크 미"
-"리 설정을 사용하면 맨 처음의 몇 가지 질문에 대해서는 미리 설정할 수 없습니"
-"다. 그 질문에 대답해야만 미리 설정 파일을 읽어들일 수 있기 때문입니다."
+"은 부분을 미리 설정할 수 있지만, 준비를 가장 많이 해야 합니다."
 
 #. Tag: para
-#: preseed.xml:55
+#: preseed.xml:53
 #, no-c-format
 msgid ""
 "The following table shows which preseeding methods can be used with which "
@@ -99,83 +94,93 @@ msgstr ""
 "니다."
 
 #. Tag: entry
-#: preseed.xml:64
+#: preseed.xml:62
 #, no-c-format
 msgid "Installation method"
 msgstr "설치 방법"
 
 #. Tag: entry
-#: preseed.xml:64
+#: preseed.xml:62
 #, no-c-format
 msgid "initrd"
 msgstr "initrd"
 
 #. Tag: entry
-#: preseed.xml:65
+#: preseed.xml:63 preseed.xml:497
 #, no-c-format
 msgid "file"
 msgstr "파일"
 
 #. Tag: entry
-#: preseed.xml:65
+#: preseed.xml:63
 #, no-c-format
 msgid "network"
 msgstr "네트워크"
 
 #. Tag: entry
-#: preseed.xml:71
+#: preseed.xml:69
 #, no-c-format
 msgid "CD/DVD"
 msgstr "CD/DVD"
 
 #. Tag: entry
-#: preseed.xml:72 preseed.xml:73 preseed.xml:77 preseed.xml:79 preseed.xml:82
-#: preseed.xml:83 preseed.xml:87 preseed.xml:88 preseed.xml:92 preseed.xml:94
-#: preseed.xml:97 preseed.xml:99
+#: preseed.xml:70 preseed.xml:71 preseed.xml:72 preseed.xml:82 preseed.xml:84
+#: preseed.xml:87 preseed.xml:88 preseed.xml:89 preseed.xml:92 preseed.xml:93
+#: preseed.xml:94 preseed.xml:97 preseed.xml:99 preseed.xml:102
+#: preseed.xml:104
 #, no-c-format
 msgid "<entry>yes</entry>"
 msgstr "<entry>예</entry>"
 
-#. Tag: entry
-#: preseed.xml:74 preseed.xml:78 preseed.xml:84 preseed.xml:89 preseed.xml:93
-#: preseed.xml:98
+#. Tag: para
+#: preseed.xml:74
 #, no-c-format
-msgid "<entry>no</entry>"
-msgstr "<entry>아니오</entry>"
+msgid ""
+"but only if you have network access, and set <literal>preseed/url</literal> "
+"appropriately"
+msgstr ""
+"하지만 네트워크에 연결된 경우에만 그렇게 해야 하고, <literal>preseed/url</"
+"literal>을 적절히 설정합니다"
 
 #. Tag: entry
-#: preseed.xml:76
+#: preseed.xml:81
 #, no-c-format
 msgid "netboot"
 msgstr "netboot"
 
 #. Tag: entry
-#: preseed.xml:81
+#: preseed.xml:83 preseed.xml:98 preseed.xml:103
+#, no-c-format
+msgid "<entry>no</entry>"
+msgstr "<entry>아니오</entry>"
+
+#. Tag: entry
+#: preseed.xml:86
 #, no-c-format
 msgid ""
 "hd-media <phrase condition=\"bootable-usb\">(including usb-stick)</phrase>"
 msgstr "hd-media <phrase condition=\"bootable-usb\">(usb-stick 포함)</phrase>"
 
 #. Tag: entry
-#: preseed.xml:86
+#: preseed.xml:91
 #, no-c-format
 msgid "floppy based (cd-drivers)"
 msgstr "플로피 기반 (cd-drivers)"
 
 #. Tag: entry
-#: preseed.xml:91
+#: preseed.xml:96
 #, no-c-format
 msgid "floppy based (net-drivers)"
 msgstr "플로피 기반 (net-drivers)"
 
 #. Tag: entry
-#: preseed.xml:96
+#: preseed.xml:101
 #, no-c-format
 msgid "generic/tape"
 msgstr "generic/tape"
 
 #. Tag: para
-#: preseed.xml:105
+#: preseed.xml:110
 #, no-c-format
 msgid ""
 "An important difference between the preseeding methods is the point at which "
@@ -191,150 +196,86 @@ msgstr ""
 "어들인 후입니다. 네트워크 미리 설정의 경우 네트워크를 설정한 다음입니다."
 
 #. Tag: para
-#: preseed.xml:114
-#, no-c-format
-msgid ""
-"In practical terms this means for file and network preseeding that the "
-"questions about language, country and keyboard selection will already have "
-"been asked. For network preseeding add to that any questions related to "
-"network configuration. Some other questions that are only displayed at "
-"medium or low priority (like the first hardware detection run) will also "
-"already have been processed."
-msgstr ""
-"다시 말해 파일 및 네트워크 미리 설정의 경우는 언어, 국가, 키보드 선택에 관한 "
-"질문은 이미 지나간 일입니다. 네트워크 미리 설정의 경우 네트워크 설정에 관한 "
-"질문도 지나간 상태입니다. 중간이나 낮음 우선순위에 따라 표시된 (최초 하드웨"
-"어 검색을 하는 것과 같은) 일부 질문들도 이미 처리된 상태입니다."
-
-#. Tag: para
-#: preseed.xml:123
+#: preseed.xml:119
 #, no-c-format
 msgid ""
 "Obviously, any questions that have been processed before the "
-"preconfiguration file is loaded cannot be preseeded. <xref linkend=\"preseed-"
-"bootparms\"/> offers a way to avoid these questions being asked."
+"preconfiguration file is loaded cannot be preseeded (this will include "
+"questions that are only displayed at medium or low priority, like the first "
+"hardware detection run). <xref linkend=\"preseed-bootparms\"/> offers a way "
+"to avoid these questions being asked."
 msgstr ""
 "당연히 미리 설정 파일을 읽어들이기도 전에 처리한 질문들은 미리 설정할 수 없습"
-"니다. <xref linkend=\"preseed-bootparms\"/> 부분을 읽어보면 이 질문을 피하는 "
-"방법을 알 수 있습니다."
+"니다. (여기에는 중간 혹은 낮은 우선순위에서만 표시되는 질문들까지 포함합니"
+"다. 예를 들어 첫번째 하드웨어 검색이 그렇습니다.) <xref linkend=\"preseed-"
+"bootparms\"/> 부분을 읽어보면 이 질문을 피하는 방법을 알 수 있습니다."
+
+#. Tag: para
+#: preseed.xml:127
+#, fuzzy, no-c-format
+msgid ""
+"In order to avoid the questions that would normally appear before the "
+"preseeding occurs, you can start the installer in <quote>auto</quote> mode. "
+"This delays questions that would normally be asked too early for preseeding "
+"(i.e. language, country and keyboard selection) until after the network "
+"comes up, thus allowing them to be preseeded. It also runs the installation "
+"at critical priority, which avoids many unimportant questions. See <xref "
+"linkend=\"preseed-auto\"/> for details."
+msgstr ""
+"미리 설정 기능이 시작하기 전에 나타나는 질문들을 피하려면, 설치 프로그램을 "
+"<quote>자동</quote> 모드로 시작하면 됩니다. 이렇게 하면 미리 설정하기 전에 물"
+"어보는 질문들을 네트워크 연결한 다음으로 늦춰서 미리 설정을 가능하게 만듭니"
+"다. 자동 모드에서는 설치를 필수 우선순위로 진행해서 중요하지 않은 많은 질문들"
+"을 건너 뜁니다. 자세한 정보는 <xref linkend=\"preseed-auto\"/> 부분을 참고하"
+"십시오."
 
 #. Tag: title
-#: preseed.xml:134
+#: preseed.xml:141
 #, no-c-format
 msgid "Limitations"
 msgstr "한계"
 
 #. Tag: para
-#: preseed.xml:135
+#: preseed.xml:142
 #, no-c-format
 msgid ""
 "Although most questions used by &d-i; can be preseeded using this method, "
 "there are some notable exceptions. You must (re)partition an entire disk or "
 "use available free space on a disk; it is not possible to use existing "
-"partitions. You currently cannot use preseeding to set up RAID."
+"partitions."
 msgstr ""
 "&d-i;에서 사용하는 대부분의 질문들을 이 방법으로 미리 설정할 수 있지만, 몇 가"
 "지 알아둬야 할 예외가 있습니다. 전체 디스크를 다시 파티션하거나, 디스크의 빈 "
-"공간을 사용해야 합니다. 기존의 파티션을 이용할 수 없습니다. RAID를 미리 설정"
-"할 수 없습니다."
+"공간을 사용해야 합니다. 기존의 파티션을 이용할 수 없습니다."
 
 #. Tag: title
-#: preseed.xml:207
-#, no-c-format
-msgid "Running custom commands during the installation"
-msgstr "설치 중에 임의의 명령어 실행하기"
-
-#. Tag: para
-#: preseed.xml:208
-#, no-c-format
-msgid ""
-"A very powerful and flexible option offered by the preconfiguration tools is "
-"the ability to run commands or scripts at certain points in the "
-"installation. See <xref linkend=\"preseed-shell\"/> for details."
-msgstr ""
-"미리 설정도구가 제공하는 매우 강력하고도 유연한 옵션은 설치 특정 시점에서 명"
-"령어와 스크립트를 실행하는 옵션입니다. 자세한 설명은 <xref linkend=\"preseed-"
-"shell\"/> 부분을 참고하십시오."
-
-#. Tag: para
-#: preseed.xml:217
-#, no-c-format
-msgid ""
-"<userinput>preseed/early_command</userinput>: is run as soon as the "
-"preconfiguration file has been loaded"
-msgstr ""
-"<userinput>preseed/early_command</userinput>: 미리 설정 파일을 읽어들인 직후"
-"에 실행"
-
-#. Tag: para
-#: preseed.xml:221
-#, no-c-format
-msgid ""
-"<userinput>preseed/late_command</userinput>: is run just before the reboot "
-"at the end of the install, but before the <filename>/target</filename> "
-"filesystem has been unmounted"
-msgstr ""
-"<userinput>preseed/late_command</userinput>: 설치 첫 번째 단계가 끝나고 시스"
-"템을 다시 시작하기 전에, <filename>/target</filename> 파일시스템을 마운트 해"
-"제하기 전에 실행"
-
-#. Tag: title
-#: preseed.xml:231
-#, no-c-format
-msgid "Using preseeding to change default values"
-msgstr "미리 설정을 이용해 기본값 바꾸기"
-
-#. Tag: para
-#: preseed.xml:232
-#, no-c-format
-msgid ""
-"It is possible to use preseeding to change the default answer for a "
-"question, but still have the question asked. To do this the <firstterm>seen</"
-"firstterm> flag must be reset to <quote>false</quote> after setting the "
-"value for a template."
-msgstr ""
-"미리 설정으로 질문에 대한 기본값을 바꾸면서, 그래도 그 질문을 받도록 만들 수 "
-"있습니다. 이렇게 하려면 해당 템플리트에 대한 값을 설정한 다음에 "
-"<firstterm>seen</firstterm> 플래그를 <quote>false</quote>로 놓으면 됩니다."
-
-#. Tag: screen
-#: preseed.xml:241
-#, no-c-format
-msgid ""
-"d-i foo/bar string value\n"
-"d-i foo/bar seen false"
-msgstr ""
-"d-i foo/bar string value\n"
-"d-i foo/bar seen false"
-
-#. Tag: title
-#: preseed.xml:247
+#: preseed.xml:216
 #, no-c-format
 msgid "Using preseeding"
 msgstr "미리 설정 사용하기"
 
 #. Tag: para
-#: preseed.xml:248
+#: preseed.xml:217
 #, no-c-format
 msgid ""
-"Of course you will first need to create a preconfiguration file and place it "
-"in the location from where you want to use it. Creating the preconfiguration "
-"file is covered later in this appendix. Putting it in the correct location "
-"is fairly straightforward for network preseeding or if you want to read the "
+"You will first need to create a preconfiguration file and place it in the "
+"location from where you want to use it. Creating the preconfiguration file "
+"is covered later in this appendix. Putting it in the correct location is "
+"fairly straightforward for network preseeding or if you want to read the "
 "file off a floppy or usb-stick. If you want to include the file on a CD or "
 "DVD, you will have to remaster the ISO image. How to get the "
 "preconfiguration file included in the initrd is outside the scope of this "
-"document; please consult the developers documentation for &d-i;."
+"document; please consult the developers' documentation for &d-i;."
 msgstr ""
-"물론 미리 설정 파일을 만들고 그 파일을 사용하려는 위치에 놓아야 합니다. 미리 "
-"설정 파일을 만드는 일은 이 부록의 뒤부분에서 설명합니다. 네트워크 미리 설정이"
-"나 플로피 혹은 USB 스틱에서 파일을 읽어들이는 경우 미리 설정 파일을 적당한 위"
-"치에 놓는 일도 명백합니다. CD나 DVD에 파일을 포함하려면 ISO 이미지를 다시 만"
-"들어야 합니다. 미리 설정 파일을 initrd에 포함하는 일은 이 문서의 범위를 벗어"
-"납니다. &d-i; 개발자 문서를 참고하십시오."
+"미리 설정 파일을 만들고 그 파일을 사용하려는 위치에 놓아야 합니다. 미리 설정 "
+"파일을 만드는 일은 이 부록의 뒤부분에서 설명합니다. 네트워크 미리 설정이나 플"
+"로피 혹은 USB 스틱에서 파일을 읽어들이는 경우 미리 설정 파일을 적당한 위치에 "
+"놓는 일도 명백합니다. CD나 DVD에 파일을 포함하려면 ISO 이미지를 다시 만들어"
+"야 합니다. 미리 설정 파일을 initrd에 포함하는 일은 이 문서의 범위를 벗어납니"
+"다. &d-i; 개발자 문서를 참고하십시오."
 
 #. Tag: para
-#: preseed.xml:259
+#: preseed.xml:228
 #, no-c-format
 msgid ""
 "An example preconfiguration file that you can use as basis for your own "
@@ -345,13 +286,13 @@ msgstr ""
 "에 있습니다. 이 파일은 이 부록에 포함된 부분들을 기반으로 만들어졌습니다."
 
 #. Tag: title
-#: preseed.xml:268
+#: preseed.xml:237
 #, no-c-format
 msgid "Loading the preconfiguration file"
 msgstr "미리 설정 파일 읽어들이기"
 
 #. Tag: para
-#: preseed.xml:269
+#: preseed.xml:238
 #, no-c-format
 msgid ""
 "If you are using initrd preseeding, you only have to make sure a file named "
@@ -364,7 +305,7 @@ msgstr ""
 "있는 지 검사한 다음 읽어들입니다."
 
 #. Tag: para
-#: preseed.xml:276
+#: preseed.xml:245
 #, no-c-format
 msgid ""
 "For the other preseeding methods you need to tell the installer what file to "
@@ -379,7 +320,7 @@ msgstr ""
 "편집해서 커널의 append 줄의 끝에 파라미터를 추가하면 됩니다."
 
 #. Tag: para
-#: preseed.xml:284
+#: preseed.xml:253
 #, no-c-format
 msgid ""
 "If you do specify the preconfiguration file in the bootloader configuration, "
@@ -393,7 +334,7 @@ msgstr ""
 "하면 됩니다."
 
 #. Tag: para
-#: preseed.xml:291
+#: preseed.xml:260
 #, no-c-format
 msgid ""
 "To make sure the installer gets the right preconfiguration file, you can "
@@ -402,11 +343,12 @@ msgid ""
 "installer will refuse to use it."
 msgstr ""
 "설치 프로그램이 올바른 미리 설정 파일을 읽어들이도록 확인하려면, 파일의 체크"
-"섬을 지정할수도 있습니다. 현재는 md5sum만 사용 가능하고, md5sum을 지정하면 읽"
-"어들인 미리 설정 파일의 체크섬이 맞지 않는 경우 그 파일을 사용하지 않습니다."
+"섬을 지정할 수도 있습니다. 현재는 md5sum만 사용 가능하고, md5sum을 지정하면 "
+"읽어들인 미리 설정 파일의 체크섬이 맞지 않는 경우 그 파일을 사용하지 않습니"
+"다."
 
 #. Tag: screen
-#: preseed.xml:300
+#: preseed.xml:269
 #, no-c-format
 msgid ""
 "Boot parameters to specify:\n"
@@ -438,135 +380,132 @@ msgstr ""
 "  preseed/file/checksum=5da499872becccfeda2c4872f9171c3d"
 
 #. Tag: para
-#: preseed.xml:302
+#: preseed.xml:271
 #, no-c-format
 msgid ""
-"While you're at it, you may want to add a boot parameter <userinput>debconf/"
-"priority=critical</userinput>. This will avoid most questions even if the "
-"preseeding below misses some."
+"Note that <filename>preseed/url</filename> can be shortened to just "
+"<filename>url</filename> and <filename>preseed/file</filename> to just "
+"<filename>file</filename> when they are passed as boot parameters."
 msgstr ""
-"여기까지 왔으면, <userinput>debconf/priority=critical</userinput> 부팅 파라미"
-"터를 추가하는 게 좋을 것입니다. 이 파라미터가 있으면 미리 설정에서 빠뜨린 게 "
-"있더라도 대부분의 질문을 하지 않게 됩니다."
+"<filename>preseed/url</filename>은 간단히 <filename>url</filename>로 줄여 쓸 "
+"수 있고 <filename>preseed/file</filename>은 <filename>file</filename>로 줄여"
+"서 부팅 파라미터로 쓸 수 있습니다."
 
 #. Tag: title
-#: preseed.xml:312
+#: preseed.xml:281
 #, no-c-format
-msgid "Using a DHCP server to specify preconfiguration files"
-msgstr "미리설정파일을 지정하기 위해 DHCP 서버를 사용하기"
+msgid "Using boot parameters to preseed questions"
+msgstr "부팅 파라미터로 미리 설정하기"
 
 #. Tag: para
-#: preseed.xml:313
-#, no-c-format
-msgid ""
-"It's also possible to use DHCP to specify a preconfiguration file to "
-"download from the network. DHCP allows specifying a filename. Normally this "
-"is a file to netboot, but if it appears to be an URL then installation media "
-"that support network preseeding will download the file from the URL and use "
-"it as a preconfiguration file. Here is an example of how to set it up in the "
-"dhcpd.conf for version 3 of the ISC DHCP server (the dhcp3-server Debian "
-"package)."
-msgstr ""
-
-#. Tag: screen
-#: preseed.xml:324
-#, no-c-format
-msgid ""
-"if substring (option vendor-class-identifier, 0, 3) = \"d-i\" {\n"
-"    filename \"http://host/preseed.cfg\";\n"
-"}"
-msgstr ""
-"if substring (option vendor-class-identifier, 0, 3) = \"d-i\" {\n"
-"    filename \"http://host/preseed.cfg\";\n"
-"}"
-
-#. Tag: para
-#: preseed.xml:326
-#, no-c-format
-msgid ""
-"Note that the above example limits this filename to DHCP clients that "
-"identify themselves as \"d-i\", so it will not affect regular DHCP clients, "
-"but only the installer. You can also put the text in a stanza for only one "
-"particular host to avoid preseeding all installs on your network."
-msgstr ""
-
-#. Tag: para
-#: preseed.xml:333
-#, no-c-format
-msgid ""
-"A good way to use the DHCP preseeding is to only preseed values specific to "
-"your network, such as the Debian mirror to use. This way installs on your "
-"network will automatically get a good mirror selected, but the rest of the "
-"installation can be performed interactively. Using DHCP preseeding to fully "
-"automate Debian installs should only be done with care."
-msgstr ""
-
-#. Tag: title
-#: preseed.xml:345
-#, no-c-format
-msgid "Using boot parameters to supplement preseeding"
-msgstr "부팅 파라미터에 미리 설정 넣기"
-
-#. Tag: para
-#: preseed.xml:346
-#, no-c-format
-msgid ""
-"Some parts of the installation process cannot be automated using some forms "
-"of preseeding because the questions are asked before the preconfiguration "
-"file is loaded. For example, if the preconfiguration file is downloaded over "
-"the network, the network setup must be done first. One reason to use initrd "
-"preseeding is that it allows preseeding of even these early steps of the "
-"installation process."
-msgstr ""
-"설치 과정의 일부분은 미리 설정을 통해 자동화할 수 없습니다. 미리 설정 파일을 "
-"읽어들이기도 전에 응답해야 하는 질문들 때문입니다. 예를 들어 미리 설정 파일"
-"을 네트워크를 통해 내려받는 경우, 네트워크 설정을 먼저 해야 합니다. initrd 미"
-"리 설정을 하는 한 가지 이유는 앞 단계에서도 미리 설치 과정에 대해 미리 설정"
-"을 할 수 있기 때문입니다."
-
-#. Tag: para
-#: preseed.xml:355
+#: preseed.xml:282
 #, no-c-format
 msgid ""
 "If a preconfiguration file cannot be used to preseed some steps, the install "
-"can still be fully automated, since you can pass preseed values to the "
-"kernel on the command line. Just pass <userinput>path/to/var=value</"
-"userinput> for any of the preseed variables listed in the examples."
+"can still be fully automated, since you can pass preseed values on the "
+"command line when booting the installer."
 msgstr ""
 "미리설정 파일을 일부 단계에 대해서 사용할 수 없다고 하더라도, 그래도 설치를 "
-"자동화할 수 있습니다. 각각의 미리 설정 값을 커널 파라미터로 넘길 수 있습니"
-"다. <userinput>변수/경로=값</userinput> 식으로 예제에 나온 미리 설정 값을 넘"
-"길 수 있습니다."
+"자동화할 수 있습니다. 각각의 미리 설정할 값을 설치 프로그램이 부팅할 때 파라"
+"미터로 넘길 수 있습니다."
 
 #. Tag: para
-#: preseed.xml:362
+#: preseed.xml:288
 #, no-c-format
 msgid ""
-"A <quote>&ndash;&ndash;</quote> in the boot options has special meaning. "
-"Kernel parameters that appear after it will be copied into the installed "
-"bootloader configuration (if supported by the installer for the bootloader). "
-"Note that the <quote>&ndash;&ndash;</quote> may already be present in the "
-"default boot parameters."
+"Boot parameters can also be used if you do not really want to use "
+"preseeding, but just want to provide an answer for a specific question. Some "
+"examples where this can be useful are documented elsewhere in this manual."
 msgstr ""
+"미리 설정 기능을 사용하려는 게 아니더라도 특정 질문에 대한 답을 지정하고 싶"
+"은 경우라면, 부팅 파라미터를 이용할 수도 있습니다. 이 안내서에는 부팅 파라미"
+"터가 유용한 몇 가지 예제가 다른 곳에 쓰여 있습니다."
 
 #. Tag: para
-#: preseed.xml:371
+#: preseed.xml:294
 #, no-c-format
 msgid ""
-"The 2.4 kernel accepts a maximum of 8 command line options and 8 environment "
-"options (including any options added by default for the installer). If these "
-"numbers are exceeded, 2.4 kernels will drop any excess options and 2.6 "
-"kernels will panic. For kernel 2.6.9 and later, you can use 32 command line "
-"options and 32 environment options."
+"To set a value to be used inside &d-i;, just pass "
+"<userinput><replaceable>path/to/variable</replaceable>=<replaceable>value</"
+"replaceable></userinput> for any of the preseed variables listed in the "
+"examples in this appendix. If a value is to be used to configure packages "
+"for the target system, you will need to prepend the <firstterm>owner</"
+"firstterm><footnote> <para> The owner of a debconf variable (or template) is "
+"normally the name of the package that contains the corresponding debconf "
+"template. For variables used in the installer itself the owner is <quote>d-"
+"i</quote>. Templates and variables can have more than one owner which helps "
+"to determine whether they can be removed from the debconf database if the "
+"package is purged. </para> </footnote> of the variable as in "
+"<userinput><replaceable>owner</replaceable>:<replaceable>path/to/variable</"
+"replaceable>=<replaceable>value</replaceable></userinput>. If you don't "
+"specify the owner, the value for the variable will not be copied to the "
+"debconf database in the target system and thus remain unused during the "
+"configuration of the relevant package."
 msgstr ""
-"2.4 커널은 최대 8개까지의 명령행 파라미터와 8개까지의 환경 파라미터만 받아들"
-"일 수 있습니다. (설치 프로그램에서 기본으로 추가하는 파라미터 포함) 그 개수"
-"가 넘어가면, 2.4 커널은 넘어가는 옵션을 버리고 2.6 커널은 멎어버립니다. 버전 "
-"2.6.9 커널 및 그 이후의 커널에서는 32개까지의 명령행 파라미터와 32개까지의 환"
-"경 파라미터를 받아들입니다."
+"&d-i;에서 사용하는 값들을 설정하려면, 이 부록에 있는 예제에 들어 있는 미리 설"
+"정 변수들에 대해 <userinput><replaceable>변수에/대한/경로</"
+"replaceable>=<replaceable>값</replaceable></userinput> 형식으로 넘깁니다. 어"
+"떤 값을 설치할 시스템의 꾸러미를 설정하는 데 사용한다면, 그 변수의 "
+"<firstterm>소유자</firstterm><footnote> <para> 어떤 debconf 변수(혹은 템플리"
+"트)의 소유자는 보통 해당 debconf 템플리트가 들어 있는 꾸러미의 이름을 말합니"
+"다. 템플리트와 변수는 소유자가 여러 개일 수도 있습니다. 그래서 꾸러미의 설정"
+"까지 지워버릴 때 소유자 정보를 이용해 해당 템플리트와 변수까지 지워질지 여부"
+"가 결정됩니다. </para> </footnote>를 <userinput><replaceable>소유자</"
+"replaceable>:<replaceable>변수에/대한/경로</replaceable>=<replaceable>값</"
+"replaceable></userinput> 형식으로 씁니다. 소유자를 지정하지 않으면 해당 변수"
+"의 값은 설치한 시스템의 debconf 데이터베이스에는 들어가지 않으므로 해당 꾸러"
+"미의 설정에 사용하지 않게 됩니다."
 
 #. Tag: para
-#: preseed.xml:380
+#: preseed.xml:317
+#, no-c-format
+msgid ""
+"Note that some variables that are frequently set at the boot prompt have a "
+"shorter alias. If an alias is available, it is used in the examples in this "
+"appendix instead of the full variable. In particular, the <literal>preseed/"
+"url</literal> variable has been aliased as <literal>url</literal> and has "
+"some extra magic to allow shortened urls to be used. Another example is the "
+"<literal>tasks</literal> alias, which translates to <literal>tasksel:tasksel/"
+"first</literal>."
+msgstr ""
+"부팅 파라미터에서 자주 사용하는 변수 몇개는 짧게 쓸 수 있습니다. 부록에서는 "
+"그렇게 짧게 형식이 있으면 완전한 변수명 대신에 짧은 형식을 사용합니다. 특히, "
+"<literal>preseed/url</literal> 변수는 <literal>url</literal>로 쓸 수 있고 URL"
+"도 줄여 쓰는 특별한 방법이 있습니다. 또 <literal>tasks</literal>라고 쓰면 "
+"<literal>tasksel:tasksel/first</literal>에 해당합니다."
+
+#. Tag: para
+#: preseed.xml:327
+#, no-c-format
+msgid ""
+"A <quote>--</quote> in the boot options has special meaning. Kernel "
+"parameters that appear after the last <quote>--</quote> may be copied into "
+"the bootloader configuration for the installed system (if supported by the "
+"installer for the bootloader). The installer will automatically filter out "
+"any options (like preconfiguration options) that it recognizes."
+msgstr ""
+"부팅 옵션의 <quote>--</quote>는 특별한 의미가 있습니다. 마지막 <quote>--</"
+"quote> 뒤에 오는 커널 파라미터는 설치된 시스템의 부트로더 설정으로 복사되어 "
+"들어갈 수 있습니다. (설치 프로그램이 설치하는 부트로더가 지원하는 경우) 설치 "
+"프로그램은 (미리 설정 옵션과 같이) 설치 프로그램에서 인식하는 옵션만 모두 걸"
+"러냅니다."
+
+#. Tag: para
+#: preseed.xml:336
+#, no-c-format
+msgid ""
+"Current linux kernels (2.6.9 and later) accept a maximum of 32 command line "
+"options and 32 environment options, including any options added by default "
+"for the installer. If these numbers are exceeded, the kernel will panic "
+"(crash). (For earlier kernels, these numbers were lower.)"
+msgstr ""
+"현재 리눅스 커널은 (2.6.9 이후) 최대 32개까지의 명령행 파라미터와 32개까지의 "
+"환경 파라미터만 받아들일 수 있습니다. (설치 프로그램에서 기본으로 추가하는 파"
+"라미터 포함) 그 개수가 넘어가면, 커널은 멎어 버립니다. (이상 종료합니다.) (이"
+"보다 오래된 버전의 커널에서는 최대 파라미터 개수가 더 적습니다.)"
+
+#. Tag: para
+#: preseed.xml:344
 #, no-c-format
 msgid ""
 "For most installations some of the default options in your bootloader "
@@ -577,7 +516,7 @@ msgstr ""
 "안 써도 상관없습니다. 그러면 미리 설정 옵션을 몇 개 더 쓸 수 있습니다."
 
 #. Tag: para
-#: preseed.xml:387
+#: preseed.xml:351
 #, no-c-format
 msgid ""
 "It may not always be possible to specify values with spaces for boot "
@@ -587,14 +526,440 @@ msgstr ""
 "할 수 없습니다."
 
 #. Tag: title
-#: preseed.xml:397
+#: preseed.xml:360
+#, no-c-format
+msgid "Auto mode"
+msgstr "자동 모드"
+
+#. Tag: para
+#: preseed.xml:361
+#, no-c-format
+msgid ""
+"There are several features of Debian Installer that combine to allow fairly "
+"simple command lines at the boot prompt to result in arbitrarily complex "
+"customized automatic installs. To illustrate this, here are some examples "
+"that can be used at the boot prompt: <informalexample><screen>\n"
+"auto url=autoserver\n"
+"</screen></informalexample> This relies on there being a DHCP server that "
+"will get the machine to the point where <literal>autoserver</literal> can be "
+"resolved by DNS, perhaps after adding the local domain if that was provided "
+"by DHCP. If this was done at a site where the domain is <literal>example."
+"com</literal>, and they have a reasonably sane DHCP setup, it would result "
+"in the preseed file being retrieved from <literal>http://autoserver.example."
+"com/d-i/etch/./preseed.cfg</literal>."
+msgstr ""
+"데비안 설치 프로그램의 몇몇 기능을 이용하면 부팅 프롬프트에서 간단한 명령행으"
+"로 임의의 복잡한 입맛에 맞는 자동 설치를 할 수 있습니다. 부팅 프롬프트에서 사"
+"용할 수 있는 몇몇 예제를 통해 이 기능을 설명합니다. "
+"<informalexample><screen>\n"
+"auto url=autoserver\n"
+"</screen></informalexample> 이렇게 하면 DHCP 서버가 있어서 DHCP 서버에서 "
+"<literal>autoserver</literal>의 IP 주소를 받아옵니다. DHCP가 보내주는 로컬 도"
+"메인을 뒤에 붙일 수도 있습니다. 도메인이 <literal>example.com</literal>인 사"
+"이트에서 위와 같이 하고 DHCP 설정이 올바르다면, 미리 설정 파일을 "
+"<literal>http://autoserver.example.com/d-i/etch/./preseed.cfg</literal> 위치"
+"에서 가져 옵니다."
+
+#. Tag: para
+#: preseed.xml:378
+#, no-c-format
+msgid ""
+"The last part of that url (<literal>d-i/etch/./preseed.cfg</literal>) is "
+"taken from <literal>auto-install/defaultroot</literal>. By default this "
+"includes the directory <literal>etch</literal> to allow future versions to "
+"specify their own codename and let people migrate forwards in a controlled "
+"manner. The <literal>/./</literal> bit is used to indicate a root, relative "
+"to which subsequent paths can be anchored (for use in preseed/include and "
+"preseed/run). This allows files to be specified either as full URLs, paths "
+"starting with / that are thus anchored, or even paths relative to the "
+"location where the last preseed file was found. This can be used to "
+"construct more portable scripts where an entire hierarchy of scripts can be "
+"moved to a new location without breaking it, for example copying the files "
+"onto a USB stick when they started out on a web server. In this example, if "
+"the preseed file sets <literal>preseed/run</literal> to <literal>/scripts/"
+"late_command.sh</literal> then the file will be fetched from <literal>http://"
+"autoserver.example.com/d-i/etch/./scripts/late_command.sh</literal>."
+msgstr ""
+"URL의 마지막 부분은 (<literal>d-i/etch/./preseed.cfg</literal>) "
+"<literal>auto-install/defaultroot</literal>에서 가져옵니다. 기본값으로 여기에"
+"는 <literal>etch</literal> 디렉토리가 들어 있습니다. 이를 이용해 앞으로의 버"
+"전에서는 그 버전에 해당되는 코드네임을 쓸 수 있고, 또 사람들이 정해진 방법을 "
+"통해 앞으로의 버전으로 업그레이드할 수 있습니다. <literal>/./</literal> 부분"
+"은 맨 상위 디렉토리를 가리키는 것으로, 지정된 해당 경로에 (preseed/include "
+"및 preseed/run에서 사용) 대한 상대값입니다. 이를 이용해 파일을 완전한 URL로 "
+"지정할 수도 있고, /로 시작하는 경로로 지정할 수도 있고, 마지막 미리 지정 파일"
+"이 있던 위치에 대한 상대 경로로 지정할 수도 있습니다. 이 점을 이용하면 전체 "
+"스크립트들을 완전히 새로운 위치에 옮겨도 문제가 없는 포터블한 스크립트를 구성"
+"할 수 있습니다. 예를 들어 웹서버에 있던 파일을 USB 스틱에 옮겨도 문제가 없게 "
+"됩니다. 이 예제에서 미리 지정 파일에서 <literal>preseed/run</literal> 값을 "
+"<literal>/scripts/late_command.sh</literal>라고 지정하면 <literal>http://"
+"autoserver.example.com/d-i/etch/./scripts/late_command.sh</literal>에서 파일"
+"을 가져옵니다."
+
+#. Tag: para
+#: preseed.xml:398
+#, no-c-format
+msgid ""
+"If there is no local DHCP or DNS infrastructure, or if you do not want to "
+"use the default path to <filename>preseed.cfg</filename>, you can still use "
+"an explicit url, and if you don't use the <literal>/./</literal> element it "
+"will be anchored to the start of the path (i.e. the third <literal>/</"
+"literal> in the URL). Here is an example that requires minimal support from "
+"the local network infrastructure: <informalexample><screen>\n"
+"auto url=<replaceable>http://192.168.1.2/path/to/mypreseed.file</"
+"replaceable>\n"
+"</screen></informalexample> The way this works is that:"
+msgstr ""
+"로컬에 DHCP 혹은 DNS와 같은 장치가 없거나 <filename>preseed.cfg</filename>에 "
+"대한 기본값 경로를 바꾸고 싶으면, 명시적인 URL을 사용할 수도 있습니다. "
+"<literal>/./</literal> 부분을 사용하지 않으면 경로의 첫 부분에 대한 (즉 URL에"
+"서 세번째 <literal>/</literal>) 경로가 됩니다. 다음은 로컬 네트워크에서 약간 "
+"지원이 필요한 예제입니다: <informalexample><screen>\n"
+"auto url=<replaceable>http://192.168.1.2/path/to/mypreseed.file</"
+"replaceable>\n"
+"</screen></informalexample> 위와 같이 하면 다음과 같이 동작합니다:"
+
+#. Tag: para
+#: preseed.xml:411
+#, no-c-format
+msgid "if the URL is missing a protocol, http is assumed,"
+msgstr "URL의 프로토콜 부분을 생략하면 HTTP라고 가정합니다."
+
+#. Tag: para
+#: preseed.xml:414
+#, no-c-format
+msgid ""
+"if the hostname section contains no periods, it has the domain derived from "
+"DHCP appended to it, and"
+msgstr "호스트 이름에 점이 없으면, DHCP에서 넘겨준 도메인을 뒤에 붙입니다."
+
+#. Tag: para
+#: preseed.xml:418
+#, no-c-format
+msgid ""
+"if there's no <literal>/</literal>'s after the hostname, then the default "
+"path is added."
+msgstr ""
+"호스트 이름 뒤에 <literal>/</literal>가 없으면 기본 경로를 뒤에 붙입니다."
+
+#. Tag: para
+#: preseed.xml:424
+#, no-c-format
+msgid ""
+"In addition to specifying the url, you can also specify settings that do not "
+"directly affect the behavior of &d-i; itself, but can be passed through to "
+"scripts specified using <literal>preseed/run</literal> in the loaded preseed "
+"file. At present, the only example of this is <literal>auto-install/classes</"
+"literal>, which has an alias <literal>classes</literal>. This can be used "
+"thus: <informalexample><screen>\n"
+"auto url=<replaceable>example.com</replaceable> classes=<replaceable>class_A;"
+"class_B</replaceable>\n"
+"</screen></informalexample> The classes could for example denote the type of "
+"system to be installed, or the localization to be used."
+msgstr ""
+"URL을 지정하는 것 외에, &d-i;의 동작과 직접 관계없지만 미리 설정 파일의 "
+"<literal>preseed/run</literal>에서 지정한 스크립트로 넘길 사항들을 지정할 수"
+"도 있습니다. 현재 관련 예제는 <literal>auto-install/classes</literal>로 "
+"<literal>classes</literal>라고 줄여 쓸 수 있습니다. 다음과 같이 사용합니다: "
+"<informalexample><screen>\n"
+"auto url=<replaceable>example.com</replaceable> classes=<replaceable>클래스"
+"_A;클래스_B</replaceable>\n"
+"</screen></informalexample> 클래스는 설치하려는 시스템의 종류를 지정하거나, "
+"지역화를 지정합니다."
+
+#. Tag: para
+#: preseed.xml:438
+#, no-c-format
+msgid ""
+"It is of course possible to extend this concept, and if you do, it is "
+"reasonable to use the auto-install namespace for this. So one might have "
+"something like <literal>auto-install/style</literal> which is then used in "
+"your scripts. If you feel the need to do this, please mention it on the "
+"<email>debian-boot@lists.debian.org</email> mailing list so that we can "
+"avoid namespace conflicts, and perhaps add an alias for the parameter for "
+"you."
+msgstr ""
+"이 개념을 확장하는 것도 가능하고, 확장하는 경우 auto-install 네임스페이스를 "
+"사용하는 게 보기 좋습니다. 즉 <literal>auto-install/style</literal>과 같이 스"
+"크립트에서 사용할 수 있을 것입니다. 이렇게 하는 게 좋겠다는 생각이 들면, "
+"<email>debian-boot@lists.debian.org</email> 메일링 리스트에 알려 주십시오. 그"
+"래야 네임스페이스 충돌을 피하고, 여러분의 파라미터에 해당하는 줄임말을 추가"
+"할 수도 있을 것입니다."
+
+#. Tag: para
+#: preseed.xml:448
+#, no-c-format
+msgid ""
+"The <literal>auto</literal> boot label is not yet defined on all "
+"architectures. The same effect may be achieved by simply adding the two "
+"parameters <literal>auto=true priority=critical</literal> to the kernel "
+"command line. The <literal>auto</literal> parameter is an alias for "
+"<literal>auto-install/enable</literal> and controls the delay of the locale "
+"and keyboard questions until after there has been a chance to preseed them, "
+"while <literal>priority</literal> is an alias for <literal>debconf/priority</"
+"literal> and setting it to <literal>critical</literal> stops any questions "
+"with a lower priority from being asked."
+msgstr ""
+"<literal>auto</literal> 부팅 레이블은 아직 정의되지 않은 아키텍쳐가 있습니"
+"다. 커널 명령행에 파라미터 두 개, <literal>auto=true priority=critical</"
+"literal>이라고 추가하기만 하면 같은 효과를 거둘 수 있습니다. <literal>auto</"
+"literal> 파라미터는 <literal>auto-install/enable</literal>의 줄임말이고 미리 "
+"설정할 수 있도록 로케일 및 키보드 질문을 뒤로 늦춥니다. 또 "
+"<literal>priority</literal>는 <literal>debconf/priority</literal>의 줄임말이"
+"고 <literal>critical</literal>로 설정하면 필수 우선순위보다 낮은 우선순위의 "
+"질문들을 하지 않게 됩니다."
+
+#. Tag: para
+#: preseed.xml:461
+#, no-c-format
+msgid ""
+"Additional options that may be of interest while attempting to automate an "
+"install while using DHCP are: <literal>interface=auto netcfg/"
+"dhcp_timeout=60</literal> which makes the machine choose the first viable "
+"NIC and be more patient about getting a reply to its DHCP query."
+msgstr ""
+"그 외에 DHCP를 사용할 때 설치를 자동화하면서 관심 가질만한 옵션은 다음과 같습"
+"니다: <literal>interface=auto netcfg/dhcp_timeout=60</literal>이라고 하면 처"
+"음 발견한 네트워크 인터페이스를 이용하고 DHCP 요청에 대한 응답을 좀 더 오래 "
+"기다립니다."
+
+#. Tag: para
+#: preseed.xml:470
+#, no-c-format
+msgid ""
+"An extensive example of how to use this framework, including example scripts "
+"and classes, can be found on the <ulink url=\"http://hands.com/d-i/"
+"\">website of its developer</ulink>. The examples available there also show "
+"many other nice effects that can be achieved by creative use of "
+"preconfiguration."
+msgstr ""
+
+#. Tag: title
+#: preseed.xml:481
+#, no-c-format
+msgid "Aliases useful with preseeding"
+msgstr "미리 설정할 때 쓸모 있는 줄임말"
+
+#. Tag: para
+#: preseed.xml:482
+#, no-c-format
+msgid "The following aliases can be useful when using (auto mode) preseeding."
+msgstr "(자동 모드) 미리 설정을 사용할 경우 다음 줄임말이 쓸모가 많습니다."
+
+#. Tag: entry
+#: preseed.xml:492
+#, no-c-format
+msgid "auto"
+msgstr "auto"
+
+#. Tag: entry
+#: preseed.xml:492
+#, no-c-format
+msgid "auto-install/enable"
+msgstr "auto-install/enable"
+
+#. Tag: entry
+#: preseed.xml:493
+#, no-c-format
+msgid "classes"
+msgstr "classes"
+
+#. Tag: entry
+#: preseed.xml:493
+#, no-c-format
+msgid "auto-install/classes"
+msgstr "auto-install/classes"
+
+#. Tag: entry
+#: preseed.xml:494
+#, no-c-format
+msgid "<entry>fb</entry>"
+msgstr "<entry>fb</entry>"
+
+#. Tag: entry
+#: preseed.xml:494
+#, no-c-format
+msgid "debian-installer/framebuffer"
+msgstr "debian-installer/framebuffer"
+
+#. Tag: entry
+#: preseed.xml:495
+#, no-c-format
+msgid "locale"
+msgstr "locale"
+
+#. Tag: entry
+#: preseed.xml:495
+#, no-c-format
+msgid "debian-installer/locale"
+msgstr "debian-installer/locale"
+
+#. Tag: entry
+#: preseed.xml:496
+#, no-c-format
+msgid "priority"
+msgstr "priority"
+
+#. Tag: entry
+#: preseed.xml:496
+#, no-c-format
+msgid "debconf/priority"
+msgstr "debconf/priority"
+
+#. Tag: entry
+#: preseed.xml:497
+#, no-c-format
+msgid "preseed/file"
+msgstr "preseed/file"
+
+#. Tag: entry
+#: preseed.xml:498
+#, no-c-format
+msgid "<entry>url</entry>"
+msgstr "<entry>url</entry>"
+
+#. Tag: entry
+#: preseed.xml:498
+#, no-c-format
+msgid "preseed/url"
+msgstr "preseed/url"
+
+#. Tag: entry
+#: preseed.xml:499
+#, no-c-format
+msgid "interface"
+msgstr "interface"
+
+#. Tag: entry
+#: preseed.xml:499
+#, no-c-format
+msgid "netcfg/choose_interface"
+msgstr "netcfg/choose_interface"
+
+#. Tag: entry
+#: preseed.xml:500
+#, no-c-format
+msgid "hostname&nbsp;&nbsp;&nbsp;"
+msgstr "hostname&nbsp;&nbsp;&nbsp;"
+
+#. Tag: entry
+#: preseed.xml:500
+#, no-c-format
+msgid "netcfg/get_hostname"
+msgstr "netcfg/get_hostname"
+
+#. Tag: entry
+#: preseed.xml:501
+#, no-c-format
+msgid "domain"
+msgstr "domain"
+
+#. Tag: entry
+#: preseed.xml:501
+#, no-c-format
+msgid "netcfg/get_domain"
+msgstr "netcfg/get_domain"
+
+#. Tag: entry
+#: preseed.xml:502
+#, no-c-format
+msgid "protocol"
+msgstr "protocol"
+
+#. Tag: entry
+#: preseed.xml:502
+#, no-c-format
+msgid "mirror/protocol"
+msgstr "mirror/protocol"
+
+#. Tag: entry
+#: preseed.xml:503
+#, no-c-format
+msgid "suite"
+msgstr "suite"
+
+#. Tag: entry
+#: preseed.xml:503
+#, no-c-format
+msgid "mirror/suite"
+msgstr "mirror/suite"
+
+#. Tag: title
+#: preseed.xml:510
+#, no-c-format
+msgid "Using a DHCP server to specify preconfiguration files"
+msgstr "미리설정파일을 지정하기 위해 DHCP 서버를 사용하기"
+
+#. Tag: para
+#: preseed.xml:511
+#, no-c-format
+msgid ""
+"It's also possible to use DHCP to specify a preconfiguration file to "
+"download from the network. DHCP allows specifying a filename. Normally this "
+"is a file to netboot, but if it appears to be an URL then installation media "
+"that support network preseeding will download the file from the URL and use "
+"it as a preconfiguration file. Here is an example of how to set it up in the "
+"dhcpd.conf for version 3 of the ISC DHCP server (the dhcp3-server Debian "
+"package)."
+msgstr ""
+"DHCP를 이용하여 설정사항을 미리 기록한 파일을 네트워크에서 내려받을 수 있도"
+"록 할 수도 있습니다. DHCP는 파일명을 인자로 받을 수 있습니다. 이 파일은 대부"
+"분 netboot를 하기 위한 파일이지만, URL인 경우이라면 network preseeding을지원"
+"하는 설치 방식은 그 URL에서 파일을 내려받은 다음 설정파일로 사용합니다. 데비"
+"안의 dhcp3-server 꾸러미에 해당하는 ISC DHCP 버전 3 서버에서 이 방식을 사용하"
+"기 위한 dhcpd.conf 파일의 예는 아래와 같습니다."
+
+#. Tag: screen
+#: preseed.xml:522
+#, no-c-format
+msgid ""
+"if substring (option vendor-class-identifier, 0, 3) = \"d-i\" {\n"
+"    filename \"http://host/preseed.cfg\";\n"
+"}"
+msgstr ""
+"if substring (option vendor-class-identifier, 0, 3) = \"d-i\" {\n"
+"    filename \"http://host/preseed.cfg\";\n"
+"}"
+
+#. Tag: para
+#: preseed.xml:524
+#, no-c-format
+msgid ""
+"Note that the above example limits this filename to DHCP clients that "
+"identify themselves as \"d-i\", so it will not affect regular DHCP clients, "
+"but only the installer. You can also put the text in a stanza for only one "
+"particular host to avoid preseeding all installs on your network."
+msgstr ""
+"참고로 위의 예에서 자신을 \"d-i\"로 식별하는 DHCP 클라이언트에만 이 파일을 한"
+"정하므로 일반 DHCP 클라이언트에는 아무런 영향을 주지 않습니다. 특정 호스트만 "
+"지원하도록 하여 네트워크 내의 시스템 전부 preseeding되는 것을 방지할 수도 있"
+"습니다."
+
+#. Tag: para
+#: preseed.xml:531
+#, no-c-format
+msgid ""
+"A good way to use the DHCP preseeding is to only preseed values specific to "
+"your network, such as the Debian mirror to use. This way installs on your "
+"network will automatically get a good mirror selected, but the rest of the "
+"installation can be performed interactively. Using DHCP preseeding to fully "
+"automate Debian installs should only be done with care."
+msgstr ""
+"사용할 데비안 미러 등 해당 네트워크에만 적용되는 값만 preseed(미리 설정)하게 "
+"하는 것도 DHCP preseeding을 이용하는 좋은 예입니다. 이렇게 하면 네트워크 내"
+"에 있는 시스템 적당한 미러를 자동으로 선택하면서도 설치의 다른 단계는 관리자"
+"가 직접 입력할 수 있게 됩니다. DHCP preseeding을 이용하여 데비안 설치를 완전 "
+"자동화하는 작업은 꼭 필요할 때 조심히 해야 합니다."
+
+#. Tag: title
+#: preseed.xml:545
 #, no-c-format
 msgid "Creating a preconfiguration file"
 msgstr "미리 설정 파일 만들기"
 
 #. Tag: para
-#: preseed.xml:398
-#, fuzzy, no-c-format
+#: preseed.xml:546
+#, no-c-format
 msgid ""
 "The preconfiguration file is in the format used by the <command>debconf-set-"
 "selections</command> command. The general format of a line in a "
@@ -604,63 +969,74 @@ msgstr ""
 "는 형식으로 되어 있습니다. 미리 설정 파일의 일반적인 형식은:"
 
 #. Tag: screen
-#: preseed.xml:404
+#: preseed.xml:552
 #, no-c-format
-msgid "&lt;owner&gt; &lt;template name&gt; &lt;template type&gt; &lt;value&gt;"
-msgstr "&lt;주인&gt; &lt;템플릿 이름&gt; &lt;템플릿 형식&gt; &lt;값&gt;"
+msgid "&lt;owner&gt; &lt;question name&gt; &lt;question type&gt; &lt;value&gt;"
+msgstr "&lt;주인&gt; &lt;질문 이름&gt; &lt;질문 형식&gt; &lt;값&gt;"
 
 #. Tag: para
-#: preseed.xml:406
+#: preseed.xml:554
 #, no-c-format
 msgid ""
 "There are a few rules to keep in mind when writing a preconfiguration file."
-msgstr "미리 설정 파일을 작성할때 지켜야할 몇가지 규칙이 있습니다."
+msgstr "미리 설정 파일을 작성할 때 지켜야 할 몇가지 규칙이 있습니다."
 
 #. Tag: para
-#: preseed.xml:413
+#: preseed.xml:561
 #, no-c-format
 msgid ""
 "Put only a single space or tab between type and value: any additional "
 "whitespace will be interpreted as belonging to the value."
 msgstr ""
+"형식과 값 사이에 하나의 공백이나 탭을 넣으십시오. 추가적인 공백이나 탭은 값"
+"에 속한 것으로 인식합니다."
 
 #. Tag: para
-#: preseed.xml:417
+#: preseed.xml:565
 #, no-c-format
 msgid ""
 "A line can be split into multiple lines by appending a backslash "
 "(<quote><literal>\\</literal></quote>) as the line continuation character. A "
-"good place to split a line is after the template name; a bad place is "
+"good place to split a line is after the question name; a bad place is "
 "between type and value."
 msgstr ""
+"각 줄은 줄 이음 문자로 백슬래시(<quote><literal>\\</literal></quote>)를 추가"
+"하여 여러 줄로 나눌 수 있습니다. 줄을 나누는 가장 좋은 위치는 질문 이름뒤 입"
+"니다.가장 나쁜 위치는 형식과 값 사이입니다."
 
 #. Tag: para
-#: preseed.xml:423
+#: preseed.xml:571
 #, no-c-format
 msgid ""
-"Most templates need to be preseeded using the values valid in English and "
-"not the translated values. However, there are some templates (for example in "
-"<classname>partman</classname> where the translated values need to be used."
+"Most questions need to be preseeded using the values valid in English and "
+"not the translated values. However, there are some questions (for example in "
+"<classname>partman</classname>) where the translated values need to be used."
 msgstr ""
+"대부분의 질문들은 미리 설정할 때 번역된 값이 아니라 영어로 된 올바른 값을 사"
+"용해야 합니다. 하지만, 일부 질문의 경우 번역된 값을 사용해야 합니다. (예를 들"
+"어 <classname>partman</classname>에서)"
 
 #. Tag: para
-#: preseed.xml:429
+#: preseed.xml:577
 #, no-c-format
 msgid ""
-"Some templates take a code as value instead of the English text that is "
+"Some questions take a code as value instead of the English text that is "
 "shown during installation."
 msgstr ""
+"일부 질문은 설치할 때 표시하는 영어 텍스트가 아니라 코드를 값으로 받습니다."
 
 #. Tag: para
-#: preseed.xml:435
+#: preseed.xml:583
 #, no-c-format
 msgid ""
 "The easiest way to create a preconfiguration file is to use the example file "
 "linked in <xref linkend=\"preseed-contents\"/> as basis and work from there."
 msgstr ""
+"미리 설정 파일을 만드는 가장 쉬운 방법은 <xref linkend=\"preseed-contents\"/>"
+"에 들어 있는 예제 파일을 기초로 시작하는 방법입니다."
 
 #. Tag: para
-#: preseed.xml:440
+#: preseed.xml:588
 #, no-c-format
 msgid ""
 "An alternative method is to do a manual installation and then, after "
@@ -668,26 +1044,34 @@ msgid ""
 "<classname>debconf-utils</classname> package to dump both the debconf "
 "database and the installer's cdebconf database to a single file:"
 msgstr ""
+"다른 방법은 수동으로 설치를 하고, 다시 부팅한 다음에, <classname>debconf-"
+"utils</classname> 꾸러미에서 <command>debconf-get-selections</command> 명령으"
+"로 debconf 데이터베이스 및 설치 프로그램의 cdebconf 데이터베이스를 한 파일로 "
+"만드는 방법입니다:"
 
 #. Tag: screen
-#: preseed.xml:447
+#: preseed.xml:595
 #, no-c-format
 msgid ""
 "$ debconf-get-selections --installer &gt; <replaceable>file</replaceable>\n"
 "$ debconf-get-selections &gt;&gt; <replaceable>file</replaceable>"
 msgstr ""
+"$ debconf-get-selections --installer &gt; <replaceable>file</replaceable>\n"
+"$ debconf-get-selections &gt;&gt; <replaceable>file</replaceable>"
 
 #. Tag: para
-#: preseed.xml:449
+#: preseed.xml:597
 #, no-c-format
 msgid ""
 "However, a file generated in this manner will have some items that should "
 "not be preseeded, and the example file is a better starting place for most "
 "users."
 msgstr ""
+"하지만, 이런 방법으로 만든 파일에는 미리 설정하면 안 되는 항목이 들어 있으므"
+"로, 대부분의 사람들에게는 예제 파일에서 시작하는 방법이 더 좋습니다."
 
 #. Tag: para
-#: preseed.xml:457
+#: preseed.xml:605
 #, no-c-format
 msgid ""
 "This method relies on the fact that, at the end of the installation, the "
@@ -696,29 +1080,40 @@ msgid ""
 "contain sensitive information, by default the files are only readable by "
 "root."
 msgstr ""
+"이 방법은 설치가 끝났을 때 설치 프로그램의 cdebconf 데이터베이스가 설치한 시"
+"스템의 <filename>/var/log/installer/cdebconf</filename>에 들어 있다는 점을 이"
+"용한 것입니다. 하지만 이 데이터베이스에는 비밀 정보가 들어 있을 수도 있기 때"
+"문에 루트만 이 파일을 읽을 수 있게 되어 있습니다."
 
 #. Tag: para
-#: preseed.xml:465
+#: preseed.xml:613
 #, no-c-format
 msgid ""
 "The directory <filename>/var/log/installer</filename> and all files in it "
 "will be deleted from your system if you purge the package "
 "<classname>installation-report</classname>."
 msgstr ""
+"<classname>installation-report</classname> 꾸러미를 지우면 <filename>/var/"
+"log/installer</filename> 디렉토리 및 그 안의 모든 파일을 시스템에서 지웁니다."
 
 #. Tag: para
-#: preseed.xml:473
+#: preseed.xml:621
 #, no-c-format
 msgid ""
-"To check possible values for templates, you can use <command>nano</command> "
+"To check possible values for questions, you can use <command>nano</command> "
 "to examine the files in <filename>/var/lib/cdebconf</filename> while an "
 "installation is in progress. View <filename>templates.dat</filename> for the "
 "raw templates and <filename>questions.dat</filename> for the current values "
 "and for the values assigned to variables."
 msgstr ""
+"각 질문에 대해 올바른 값이 무엇인지 알려면, 설치할 때 <command>nano</command>"
+"로 <filename>/var/lib/cdebconf</filename> 파일의 내용을 보면 됩니다. 원본 템"
+"플리트를 보려면 <filename>templates.dat</filename> 파일을 보고, 현재 값과 각 "
+"변수에 할당된 값을 보려면 <filename>questions.dat</filename> 파일을 보면 됩니"
+"다."
 
 #. Tag: para
-#: preseed.xml:481
+#: preseed.xml:629
 #, no-c-format
 msgid ""
 "To check if the format of your preconfiguration file is valid before "
@@ -730,13 +1125,13 @@ msgstr ""
 "command> 명령을 사용할 수 있습니다."
 
 #. Tag: title
-#: preseed.xml:491
+#: preseed.xml:640
 #, no-c-format
 msgid "Contents of the preconfiguration file"
 msgstr "미리 설정 파일의 내용"
 
 #. Tag: para
-#: preseed.xml:497
+#: preseed.xml:646
 #, no-c-format
 msgid ""
 "Note that this example is based on an installation for the Intel x86 "
@@ -751,13 +1146,13 @@ msgstr ""
 "도 있습니다."
 
 #. Tag: title
-#: preseed.xml:508
+#: preseed.xml:657
 #, no-c-format
 msgid "Localization"
 msgstr "지역화"
 
 #. Tag: para
-#: preseed.xml:509
+#: preseed.xml:658
 #, no-c-format
 msgid ""
 "Setting localization values will only work if you are using initrd "
@@ -768,19 +1163,19 @@ msgstr ""
 "하면 지역화 설정 질문을 한 다음에 미리 설정 파일을 읽어들입니다."
 
 #. Tag: para
-#: preseed.xml:515
+#: preseed.xml:664
 #, no-c-format
 msgid ""
 "The locale can be used to specify both language and country. To specify the "
-"locale as a boot parameter, use <userinput>debian-installer/"
-"locale=<replaceable>en_US</replaceable></userinput>."
+"locale as a boot parameter, use <userinput>locale=<replaceable>en_US</"
+"replaceable></userinput>."
 msgstr ""
 "로케일은 언어와 국가를 지정합니다. 부팅 파라미터로 로케일을 지정하려면, "
-"<userinput>debian-installer/locale=<replaceable>en_US</replaceable></"
-"userinput>와 같이 사용하십시오."
+"<userinput>locale=<replaceable>en_US</replaceable></userinput>와 같이 사용하"
+"십시오."
 
 #. Tag: screen
-#: preseed.xml:521
+#: preseed.xml:670
 #, no-c-format
 msgid ""
 "# Locale sets language and country.\n"
@@ -790,7 +1185,7 @@ msgstr ""
 "d-i debian-installer/locale string en_US"
 
 #. Tag: para
-#: preseed.xml:523
+#: preseed.xml:672
 #, no-c-format
 msgid ""
 "Keyboard configuration consists of selecting a keyboard architecture and a "
@@ -803,7 +1198,7 @@ msgstr ""
 "없습니다. 선택한 키보드 아키텍처에 대해 키맵을 올바르게 지정해야 합니다."
 
 #. Tag: screen
-#: preseed.xml:530
+#: preseed.xml:679
 #, no-c-format
 msgid ""
 "# Keyboard selection.\n"
@@ -819,7 +1214,7 @@ msgstr ""
 "#d-i console-keymaps-usb/keymap select mac-usb-us"
 
 #. Tag: para
-#: preseed.xml:532
+#: preseed.xml:681
 #, no-c-format
 msgid ""
 "To skip keyboard configuration, preseed <classname>console-tools/archs</"
@@ -831,7 +1226,7 @@ msgstr ""
 "게 됩니다."
 
 #. Tag: para
-#: preseed.xml:541
+#: preseed.xml:690
 #, no-c-format
 msgid ""
 "The changes in the input layer for 2.6 kernels have made the keyboard "
@@ -843,13 +1238,13 @@ msgstr ""
 "야 합니다."
 
 #. Tag: title
-#: preseed.xml:551
+#: preseed.xml:700
 #, no-c-format
 msgid "Network configuration"
 msgstr "네트워크 설정"
 
 #. Tag: para
-#: preseed.xml:552
+#: preseed.xml:701
 #, no-c-format
 msgid ""
 "Of course, preseeding the network configuration won't work if you're loading "
@@ -864,21 +1259,48 @@ msgstr ""
 "라미터로 네트워크 설정을 건너 뛸 수 있습니다."
 
 #. Tag: para
-#: preseed.xml:560
-#, fuzzy, no-c-format
+#: preseed.xml:709
+#, no-c-format
 msgid ""
 "If you need to pick a particular interface when netbooting before loading a "
 "preconfiguration file from the network, use a boot parameter such as "
-"<userinput>netcfg/choose_interface=<replaceable>eth1</replaceable></"
-"userinput>."
+"<userinput>interface=<replaceable>eth1</replaceable></userinput>."
 msgstr ""
-"로케일은 언어와 국가를 지정합니다. 부팅 파라미터로 로케일을 지정하려면, "
-"<userinput>debian-installer/locale=<replaceable>en_US</replaceable></"
-"userinput>와 같이 사용하십시오."
+"미리 설정 파일을 네트워크에서 읽어들이기 전에 특정 인터페이스에서 네트워크 부"
+"팅하려면, <userinput>interface=<replaceable>eth1</replaceable></userinput>와 "
+"같이 부팅 파라미터를 사용하십시오."
+
+#. Tag: para
+#: preseed.xml:715
+#, no-c-format
+msgid ""
+"Although preseeding the network configuration is normally not possible when "
+"using network preseeding (using <quote>preseed/url</quote>), you can use the "
+"following hack to work around that, for example if you'd like to set a "
+"static address for the network interface. The hack is to force the network "
+"configuration to run again after the preconfiguration file has been loaded "
+"by creating a <quote>preseed/run</quote> script containing the following "
+"lines:"
+msgstr ""
+"네트워크를 통해 미리 설정을 하는 경우에는 (<quote>preseed/url</quote> 사용) "
+"네트워크 설정을 미리 설정하는 게 보통 불가능하지만, 다음 방법을 이용해 피해"
+"갈 수 있습니다. 예를 들어 네트워크 인터페이스에 고정 주소를 부여하는 방법입니"
+"다. 다음 라인에 들어 있는 <quote>preseed/run</quote> 스크립트를 만들어서 미"
+"리 설정 파일을 읽어들인 후에 네트워크 설정을 다시 실행합니다:"
 
 #. Tag: screen
-#: preseed.xml:568
-#, fuzzy, no-c-format
+#: preseed.xml:725
+#, no-c-format
+msgid ""
+"killall.sh dhclient\n"
+"netcfg"
+msgstr ""
+"killall.sh dhclient\n"
+"netcfg"
+
+#. Tag: screen
+#: preseed.xml:729
+#, no-c-format
 msgid ""
 "# netcfg will choose an interface that has link if possible. This makes it\n"
 "# skip displaying a list if there is more than one interface.\n"
@@ -923,9 +1345,22 @@ msgstr ""
 "# 여러 개 있는 경우 목록을 건너 뜁니다.\n"
 "d-i netcfg/choose_interface select auto\n"
 "\n"
+"# 특정 인터페이스를 선택할 경우:\n"
+"#d-i netcfg/choose_interface select eth1\n"
+"\n"
 "# DHCP 서버가 느려서 응답을 기다리다가 시간이 초과되는 경우\n"
 "# 다음 설정을 쓰면 됩니다.\n"
 "#d-i netcfg/dhcp_timeout string 60\n"
+"\n"
+"# If you prefer to configure the network manually, uncomment this line and\n"
+"# the static network configuration below.\n"
+"#d-i netcfg/disable_dhcp boolean true\n"
+"\n"
+"# If you want the preconfiguration file to work on systems both with and\n"
+"# without a dhcp server, uncomment these lines and the static network\n"
+"# configuration below.\n"
+"#d-i netcfg/dhcp_failed note\n"
+"#d-i netcfg/dhcp_options select Configure network manually\n"
 "\n"
 "# 수동으로 네트워크를 설정하려면, 다음과 같이 합니다:\n"
 "#d-i netcfg/disable_dhcp boolean true\n"
@@ -947,26 +1382,27 @@ msgstr ""
 "#d-i netcfg/dhcp_hostname string radish"
 
 #. Tag: title
-#: preseed.xml:573
+#: preseed.xml:734
 #, no-c-format
 msgid "Mirror settings"
 msgstr "미러 사이트 설정"
 
 #. Tag: para
-#: preseed.xml:574
+#: preseed.xml:735
 #, no-c-format
 msgid ""
-"Depending on the installation method you use, a mirror may be used both to "
-"download additional components of the installer, the base system and to set "
-"up the <filename>/etc/apt/sources.list</filename> for the installed system."
+"Depending on the installation method you use, a mirror may be used to "
+"download additional components of the installer, to install the base system, "
+"and to set up the <filename>/etc/apt/sources.list</filename> for the "
+"installed system."
 msgstr ""
 "사용하는 설치 방법에 따라서, 미러 사이트는 설치 프로그램의 추가 구성 요소, 베"
-"이스 시스템을 내려받는 데 이용할 수도 있고, 설치를 끝낸 시스템에서 "
-"<filename>/etc/apt/sources.list</filename> 파일을 설정하는 데 이용할 수도 있"
-"습니다."
+"이스 시스템을 내려받는 데 이용할 수 있고, 또 설치를 끝낸 시스템에서 "
+"<filename>/etc/apt/sources.list</filename> 파일을 설정하는 데 이용할 수 있습"
+"니다."
 
 #. Tag: para
-#: preseed.xml:581
+#: preseed.xml:742
 #, no-c-format
 msgid ""
 "The parameter <classname>mirror/suite</classname> determines the suite for "
@@ -976,7 +1412,7 @@ msgstr ""
 "니다."
 
 #. Tag: para
-#: preseed.xml:586
+#: preseed.xml:747
 #, no-c-format
 msgid ""
 "The parameter <classname>mirror/udeb/suite</classname> determines the suite "
@@ -993,11 +1429,13 @@ msgstr ""
 "classname>와 같습니다."
 
 #. Tag: screen
-#: preseed.xml:598
-#, no-c-format
+#: preseed.xml:759
+#, fuzzy, no-c-format
 msgid ""
+"# If you select ftp, the mirror/country string does not need to be set.\n"
+"#d-i mirror/protocol string ftp\n"
 "d-i mirror/country string enter information manually\n"
-"d-i mirror/http/hostname string http.us.debian.org\n"
+"d-i mirror/http/hostname string &archive-mirror;\n"
 "d-i mirror/http/directory string /debian\n"
 "d-i mirror/http/proxy string\n"
 "\n"
@@ -1006,8 +1444,8 @@ msgid ""
 "# Suite to use for loading installer components (optional).\n"
 "#d-i mirror/udeb/suite string testing"
 msgstr ""
-"d-i mirror/country string enter information manually\n"
-"d-i mirror/http/hostname string http.us.debian.org\n"
+"d-i mirror/country string 수동으로 정보 입력\n"
+"d-i mirror/http/hostname string &archive-mirror;\n"
 "d-i mirror/http/directory string /debian\n"
 "d-i mirror/http/proxy string\n"
 "\n"
@@ -1017,32 +1455,31 @@ msgstr ""
 "#d-i mirror/udeb/suite string testing"
 
 #. Tag: title
-#: preseed.xml:603
+#: preseed.xml:764
 #, no-c-format
 msgid "Partitioning"
 msgstr "파티션하기"
 
 #. Tag: para
-#: preseed.xml:604
+#: preseed.xml:765
 #, no-c-format
 msgid ""
 "Using preseeding to partition the harddisk is very much limited to what is "
-"supported by <classname>partman-auto</classname>. You can choose to either "
-"partition existing free space on a disk or a whole disk. The layout of the "
-"disk can be determined by using a predefined recipe, a custom recipe from a "
-"recipe file or a recipe included in the preconfiguration file. It is "
-"currently not possible to partition multiple disks using preseeding nor to "
-"set up RAID."
+"supported by <classname>partman-auto</classname>. You can choose to "
+"partition either existing free space on a disk or a whole disk. The layout "
+"of the disk can be determined by using a predefined recipe, a custom recipe "
+"from a recipe file or a recipe included in the preconfiguration file. It is "
+"currently not possible to partition multiple disks using preseeding."
 msgstr ""
 "하드디스크 파티션에 사용하는 미리 설정은 <classname>partman-auto</classname>"
 "에서 지원하는 방식으로 제한되어 있습니다. 디스크의 빈 공간을 파티션하거나, 전"
 "체 디스크를 파티션하거나 둘 중의 하나를 선택해야 합니다. 디스크의 구성은 미"
 "리 정의된 방식에 따라 할 수 있고, 특별히 설정한 방식을 파일로 사용할 수도 있"
 "고 미리 설정 파일에 포함할 수도 있습니다. 현재는 미리 설정으로 여러 개의 디스"
-"크를 파티션할 수 없고 RAID를 설정할 수도 없습니다."
+"크를 파티션할 수 없습니다."
 
 #. Tag: para
-#: preseed.xml:616
+#: preseed.xml:776
 #, no-c-format
 msgid ""
 "The identification of disks is dependent on the order in which their drivers "
@@ -1054,23 +1491,31 @@ msgstr ""
 "록 하십시오."
 
 #. Tag: screen
-#: preseed.xml:624
-#, fuzzy, no-c-format
+#: preseed.xml:784
+#, no-c-format
 msgid ""
 "# If the system has free space you can choose to only partition that space.\n"
-"# Note: this template must be preseeded with a localized (translated) "
-"value.\n"
+"# Note: this must be preseeded with a localized (translated) value.\n"
 "#d-i partman-auto/init_automatically_partition \\\n"
-"#      select Use the largest continuous free space\n"
+"#      select Guided - use the largest continuous free space\n"
 "\n"
-"# Alternatively, you can specify a disk to partition. The device name can\n"
-"# be given in either devfs or traditional non-devfs format.\n"
-"# For example, to use the first disk devfs knows of:\n"
+"# Alternatively, you can specify a disk to partition. The device name\n"
+"# can be given in either devfs or traditional non-devfs format.\n"
+"# For example, to use the first disk:\n"
 "d-i partman-auto/disk string /dev/discs/disc0/disc\n"
+"# In addition, you'll need to specify the method to use.\n"
+"# The presently available methods are: \"regular\", \"lvm\" and \"crypto\"\n"
+"d-i partman-auto/method string lvm\n"
+"\n"
+"# If one of the disks that are going to be automatically partitioned\n"
+"# contains an old LVM configuration, the user will normally receive a\n"
+"# warning. This can be preseeded away...\n"
+"d-i partman-auto/purge_lvm_from_device boolean true\n"
+"# And the same goes for the confirmation to write the lvm partitions.\n"
+"d-i partman-lvm/confirm boolean true\n"
 "\n"
 "# You can choose from any of the predefined partitioning recipes.\n"
-"# Note: this template must be preseeded with a localized (translated) "
-"value.\n"
+"# Note: this must be preseeded with a localized (translated) value.\n"
 "d-i partman-auto/choose_recipe \\\n"
 "       select All files in one partition (recommended for new users)\n"
 "#d-i partman-auto/choose_recipe \\\n"
@@ -1085,7 +1530,8 @@ msgid ""
 "# just point at it.\n"
 "#d-i partman-auto/expert_recipe_file string /hd-media/recipe\n"
 "\n"
-"# If not, you can put an entire recipe the preconfiguration file in one\n"
+"# If not, you can put an entire recipe into the preconfiguration file in "
+"one\n"
 "# (logical) line. This example creates a small /boot partition, suitable\n"
 "# swap, and uses the rest of the space for the root partition:\n"
 "#d-i partman-auto/expert_recipe string                         \\\n"
@@ -1112,15 +1558,27 @@ msgid ""
 "d-i partman/confirm boolean true"
 msgstr ""
 "# 시스템에 빈 공간이 있으면 거기에 한 개의 파티션을 만들 수 있습니다.\n"
+"# Note: 이 템플릿은 지역화된(번역된) 값으로 미리 설정되어야 합니다.\n"
 "#d-i partman-auto/init_automatically_partition \\\n"
-"#      select Use the largest continuous free space\n"
+"#      가장 큰 빈 공간을 사용합니다\n"
 "\n"
 "# 다른 방법으로, 파티션할 디스크를 지정할 수 있습니다. 장치 이름은\n"
 "# DEVFS 방식이나 전통적인 DEVFS가 아닌 형식으로 지정할 수 있습니다.\n"
-"# 예를 들어 DEVFS에서 첫번째 디스크를 사용하려면:\n"
+"# 예를 들어 첫번째 디스크를 사용하려면:\n"
 "d-i partman-auto/disk string /dev/discs/disc0/disc\n"
+"# 또 어떤 방법을 사용할 지 지정해야 합니다.\n"
+"# 현재 가능한 방법은: \"regular\", \"lvm\", \"crypto\"입니다.\n"
+"d-i partman-auto/method string lvm\n"
+"\n"
+"# 만약 자동으로 파티션하려는 디스크에 예전의 LVM 설정이 남아 있다면,\n"
+"# 사용자에게 경고 메세지를 보여줍니다. 이 경고도 미리 설정해서\n"
+"# 없앨 수 있습니다...\n"
+"d-i partman-auto/purge_lvm_from_device boolean true\n"
+"# 그리고 LVM 파티션을 쓰는 순간에 확인 질문도 미리 설정합니다.\n"
+"d-i partman-lvm/confirm boolean true\n"
 "\n"
 "# 미리 정의한 파티션 방식 중의 하나를 선택할 수 있습니다.\n"
+"# Note: 이 템플릿은 지역화된(번역된) 값으로 미리 설정되어야 합니다.\n"
 "d-i partman-auto/choose_recipe \\\n"
 "       select All files in one partition (recommended for new users)\n"
 "#d-i partman-auto/choose_recipe \\\n"
@@ -1161,13 +1619,159 @@ msgstr ""
 "d-i partman/confirm boolean true"
 
 #. Tag: title
-#: preseed.xml:629
+#: preseed.xml:789
+#, no-c-format
+msgid "Partitioning using RAID"
+msgstr "RAID를 사용해 파티션하기"
+
+#. Tag: para
+#: preseed.xml:790
+#, no-c-format
+msgid ""
+"You can also use preseeding to set up partitions on software RAID arrays. "
+"Supported are RAID levels 0, 1 and 5, creating degraded arrays and "
+"specifying spare devices. If you are using RAID 1, you can preseed grub to "
+"install to all devices used in the array; see <xref linkend=\"preseed-"
+"bootloader\"/>."
+msgstr ""
+"소프트웨어 RAID를 설정할 때 미리 설정을 이용할 수 있습니다. RAID 레벨 0, 1, 5"
+"를 지원하고, degraded 어레이를 만들고 비상용 어레이 및 예비 장치를 지정합니"
+"다. RAID 1을 사용한다면 GRUB을 미리 설정해서 어레이 안의 모든 장치에 GRUB을 "
+"설치할 수 있습니다. <xref linkend=\"preseed-bootloader\"/> 부분을 참고하십시"
+"오."
+
+#. Tag: para
+#: preseed.xml:800
+#, no-c-format
+msgid ""
+"This type of automated partitioning is easy to get wrong. It is also a very "
+"new component that may still have some bugs or missing error handling. The "
+"responsibility to get the various recipes right (so they make sense and "
+"don't conflict) lies with the user. Check <filename>/var/log/syslog</"
+"filename> if you run into problems."
+msgstr ""
+"이런 방식의 자동 파티션은 잘못되기 쉽습니다. 또 버그가 있거나 오류 처리가 빠"
+"져 있을 수도 있습니다. 여러가지 방식을 올바르게 (규칙에 맞으면서 충돌하지 않"
+"게) 설정하는 책임은 사용자에게 있습니다. 문제가 발생하면 <filename>/var/log/"
+"syslog</filename> 파일을 확인하십시오."
+
+#. Tag: para
+#: preseed.xml:808
+#, no-c-format
+msgid ""
+"Note that only RAID 0 and RAID 1 have been tested by the developers of the "
+"component. RAID 5 is untested. Advanced RAID setup with degraded arrays or "
+"spare devices has only been tested lightly."
+msgstr ""
+"RAID 0 및 RAID 1은 해당 구성 요소의 개발자가 테스트했습니다. RAID 5는 테스트"
+"하지 않았습니다. 비상용 어레이 및 예비 장치가 있는 고급 RAID 설정은 약간밖에 "
+"테스트하지 않았습니다."
+
+#. Tag: screen
+#: preseed.xml:816
+#, no-c-format
+msgid ""
+"# NOTE: this option is of beta release quality and should be used carefully\n"
+"\n"
+"# The method should be set to \"raid\".\n"
+"#d-i partman-auto/method string raid\n"
+"# Specify the disks to be partitioned. They will all get the same layout,\n"
+"# so this will only work if the disks are the same size.\n"
+"#d-i partman-auto/disk string /dev/discs/disc0/disc /dev/discs/disc1/disc\n"
+"\n"
+"# Next you need to specify the physical partitions that will be used. \n"
+"#d-i partman-auto/expert_recipe string \\\n"
+"#      multiraid ::                                         \\\n"
+"#              1000 5000 4000 raid                          \\\n"
+"#                      $primary{ } method{ raid }           \\\n"
+"#              .                                            \\\n"
+"#              64 512 300% raid                             \\\n"
+"#                      method{ raid }                       \\\n"
+"#              .                                            \\\n"
+"#              500 10000 1000000000 raid                    \\\n"
+"#                      method{ raid }                       \\\n"
+"#              .\n"
+"\n"
+"# Last you need to specify how the previously defined partitions will be\n"
+"# used in the RAID setup. Remember to use the correct partition numbers\n"
+"# for logical partitions.\n"
+"# Parameters are:\n"
+"# &lt;raidtype&gt; &lt;devcount&gt; &lt;sparecount&gt; &lt;fstype&gt; &lt;"
+"mountpoint&gt; \\\n"
+"#          &lt;devices&gt; &lt;sparedevices&gt;\n"
+"# RAID levels 0, 1 and 5 are supported; devices are separated using \"#\"\n"
+"#d-i partman-auto-raid/recipe string \\\n"
+"#    1 2 0 ext3 /                                           \\\n"
+"#          /dev/discs/disc0/part1#/dev/discs/disc1/part1    \\\n"
+"#    .                                                      \\\n"
+"#    1 2 0 swap -                                           \\\n"
+"#          /dev/discs/disc0/part5#/dev/discs/disc1/part5    \\\n"
+"#    .                                                      \\\n"
+"#    0 2 0 ext3 /home                                       \\\n"
+"#          /dev/discs/disc0/part6#/dev/discs/disc1/part6    \\\n"
+"#    .\n"
+"\n"
+"# This makes partman automatically partition without confirmation.\n"
+"d-i partman-md/confirm boolean true\n"
+"d-i partman/confirm_write_new_label boolean true\n"
+"d-i partman/choose_partition \\\n"
+"       select Finish partitioning and write changes to disk\n"
+"d-i partman/confirm boolean true"
+msgstr ""
+"# 주의: 이 옵션은 베타 상태이므로 주의해서 사용해야 합니다\n"
+"\n"
+"# 파티션 방법은 \"raid\"로 설정합니다.\n"
+"#d-i partman-auto/method string raid\n"
+"# 파티션할 디스크를 지정합니다. 디스크 모두 같은 레이아웃이므로\n"
+"# 디스크 크기가 동일할 때만 아래 설정이 동작합니다.\n"
+"#d-i partman-auto/disk string /dev/discs/disc0/disc /dev/discs/disc1/disc\n"
+"\n"
+"# 그 다음 사용할 물리적 파티션을 지정합니다.\n"
+"#d-i partman-auto/expert_recipe string \\\n"
+"#      multiraid ::                                         \\\n"
+"#              1000 5000 4000 raid                          \\\n"
+"#                      $primary{ } method{ raid }           \\\n"
+"#              .                                            \\\n"
+"#              64 512 300% raid                             \\\n"
+"#                      method{ raid }                       \\\n"
+"#              .                                            \\\n"
+"#              500 10000 1000000000 raid                    \\\n"
+"#                      method{ raid }                       \\\n"
+"#              .\n"
+"\n"
+"# 마지막으로 예전에 정의한 파티션을 RAID 설정에서 어떻게 사용할 지\n"
+"# 지정합니다. 논리 파티션에 대해 올바른 파티션 번호를 사용하도록 하십시오.\n"
+"# 파라미터는 다음과 같습니다:\n"
+"# &lt;raidtype&gt; &lt;devcount&gt; &lt;sparecount&gt; &lt;fstype&gt; &lt;"
+"mountpoint&gt; \\\n"
+"#          &lt;devices&gt; &lt;sparedevices&gt;\n"
+"# RAID 레벨 0, 1, 5를 지원합니다. 각 장치는 \"#\"으로 구분합니다.\n"
+"#d-i partman-auto-raid/recipe string \\\n"
+"#    1 2 0 ext3 /                                           \\\n"
+"#          /dev/discs/disc0/part1#/dev/discs/disc1/part1    \\\n"
+"#    .                                                      \\\n"
+"#    1 2 0 swap -                                           \\\n"
+"#          /dev/discs/disc0/part5#/dev/discs/disc1/part5    \\\n"
+"#    .                                                      \\\n"
+"#    0 2 0 ext3 /home                                       \\\n"
+"#          /dev/discs/disc0/part6#/dev/discs/disc1/part6    \\\n"
+"#    .\n"
+"\n"
+"# 다음과 같이 하면 파티션 프로그램에서 확인 질문을 하지 않고 파티션합니다.\n"
+"d-i partman-md/confirm boolean true\n"
+"d-i partman/confirm_write_new_label boolean true\n"
+"d-i partman/choose_partition \\\n"
+"       select Finish partitioning and write changes to disk\n"
+"d-i partman/confirm boolean true"
+
+#. Tag: title
+#: preseed.xml:821
 #, no-c-format
 msgid "Clock and time zone setup"
 msgstr "시계 및 시간대 설정"
 
 #. Tag: screen
-#: preseed.xml:631
+#: preseed.xml:823
 #, no-c-format
 msgid ""
 "# Controls whether or not the hardware clock is set to UTC.\n"
@@ -1185,14 +1789,14 @@ msgstr ""
 "d-i time/zone string US/Eastern"
 
 #. Tag: title
-#: preseed.xml:636
+#: preseed.xml:828
 #, no-c-format
 msgid "Apt setup"
 msgstr "APT 설정"
 
 #. Tag: para
-#: preseed.xml:637
-#, fuzzy, no-c-format
+#: preseed.xml:829
+#, no-c-format
 msgid ""
 "Setup of the <filename>/etc/apt/sources.list</filename> and basic "
 "configuration options is fully automated based on your installation method "
@@ -1200,36 +1804,64 @@ msgid ""
 "repositories."
 msgstr ""
 "<filename>/etc/apt/sources.list</filename>의 설정과 기본 설정 옵션은 설치 방"
-"법과 그 이전의 질문에 대한 대답에 따라 완전히 자동화됩니다. 아래의 두 개의 변"
-"수만 미리 설정과 관계 있습니다."
+"법과 그 이전의 질문에 대한 대답에 따라 완전히 자동화됩니다. 추가적으로 다른 "
+"레파지토리를 지정할 수 있습니다."
 
 #. Tag: screen
-#: preseed.xml:645
-#, no-c-format
+#: preseed.xml:837
+#, fuzzy, no-c-format
 msgid ""
 "# You can choose to install non-free and contrib software.\n"
 "#d-i apt-setup/non-free boolean true\n"
 "#d-i apt-setup/contrib boolean true\n"
+"# Uncomment this if you don't want to use a network mirror.\n"
+"#d-i apt-setup/use_mirror boolean false\n"
 "# Uncomment this to avoid adding security sources, or\n"
 "# add a hostname to use a different server than security.debian.org.\n"
 "#d-i apt-setup/security_host string\n"
 "\n"
 "# Additional repositories, local[0-9] available\n"
-"#d-i apt-setup/local0/comment string local server\n"
 "#d-i apt-setup/local0/repository string \\\n"
 "#       deb http://local.server/debian stable main\n"
-"# URL to the public key of the local repository\n"
-"#d-i apt-setup/local0/key string http://local.server/key"
+"#d-i apt-setup/local0/comment string local server\n"
+"# Enable deb-src lines\n"
+"#d-i apt-setup/local0/source boolean true\n"
+"# URL to the public key of the local repository; you must provide a key or\n"
+"# apt will complain about the unauthenticated repository and so the\n"
+"# sources.list line will be left commented out\n"
+"#d-i apt-setup/local0/key string http://local.server/key\n"
+"\n"
+"# By default the installer requires that repositories be authenticated\n"
+"# using a known gpg key. This setting can be used to disable that\n"
+"# authentication. Warning: Insecure, not recommended.\n"
+"#d-i debian-installer/allow_unauthenticated string true"
 msgstr ""
+"# non-free와 contrib 소프트웨어를 설치할 수 있습니다.\n"
+"#d-i apt-setup/non-free boolean true\n"
+"#d-i apt-setup/contrib boolean true\n"
+"# 보안 소스를 설치하지 않으려면 아래의 주석을 지우고, security.debian.org가\n"
+"# 아닌 다른 서버를 사용하려면 호스트이름을 추가하십시오.\n"
+"#d-i apt-setup/security_host string\n"
+"\n"
+"# 추가 레파지토리, local[0-9] 사용가능\n"
+"#d-i apt-setup/local0/repository string \\\\\n"
+"#       deb http://local.server/debian stable main\n"
+"#d-i apt-setup/local0/comment string local server\n"
+"# deb-src 줄을 만듭니다\n"
+"#d-i apt-steup/local0/source boolean true\n"
+"# 가까운 저장소의 공개키 URL. 키를 제공하지 않으면 APT가 인증되지 않은\n"
+"# 저장소에 대해서 오류 메세지를 출력하고 관련 sources.list 줄을 주석\n"
+"# 처리합니다.\n"
+"#d-i apt-setup/local0/key string http://local.server/key"
 
 #. Tag: title
-#: preseed.xml:650
+#: preseed.xml:842
 #, no-c-format
 msgid "Account setup"
 msgstr "계정 설정"
 
 #. Tag: para
-#: preseed.xml:651
+#: preseed.xml:843
 #, no-c-format
 msgid ""
 "The password for the root account and name and password for a first regular "
@@ -1241,8 +1873,8 @@ msgstr ""
 "<emphasis>해시값</emphasis>을 쓸 수도 있습니다."
 
 #. Tag: para
-#: preseed.xml:658
-#, fuzzy, no-c-format
+#: preseed.xml:850
+#, no-c-format
 msgid ""
 "Be aware that preseeding passwords is not completely secure as everyone with "
 "access to the preconfiguration file will have the knowledge of these "
@@ -1256,8 +1888,8 @@ msgstr ""
 "로 된 보안이라고 할 수 없습니다."
 
 #. Tag: screen
-#: preseed.xml:668
-#, fuzzy, no-c-format
+#: preseed.xml:860
+#, no-c-format
 msgid ""
 "# Skip creation of a root account (normal user account will be able to\n"
 "# use sudo).\n"
@@ -1280,27 +1912,30 @@ msgid ""
 "# or encrypted using an MD5 hash.\n"
 "#d-i passwd/user-password-crypted password [MD5 hash]"
 msgstr ""
-"# 루트 열쇠글, 열쇠글 원문 텍스트를 직접 쓸 수도 있고\n"
-"#passwd passwd/root-password password r00tme\n"
-"#passwd passwd/root-password-again password r00tme\n"
-"# 아니면 MD5 해시로 암호화된 열쇠글을 쓸 수도 있습니다.\n"
-"#passwd passwd/root-password-crypted password [MD5 hash]\n"
+"# 루트 계정을 만들지 않고 넘어갑니다.  (일반 유저는 sudo를 사용할 \n"
+"# 수 있습니다.).\n"
+"#d-i passwd/root-login boolean false\n"
+"# 아니면 일반 사용자를 생성하지 않고 넘어갈 수 있습니다.\n"
+"#d-i passwd/make-user boolean false\n"
 "\n"
-"# 일반 사용자 계정 만들기를 건너 뜁니다\n"
-"#passwd passwd/make-user boolean false\n"
+"# 루트 열쇠글, 열쇠글 원문 텍스트를 직접 쓸 수도 있고\n"
+"#d-i passwd/root-password password r00tme\n"
+"#d-i passwd/root-password-again password r00tme\n"
+"# 아니면 MD5 해시로 암호화된 열쇠글을 쓸 수도 있습니다.\n"
+"#d-i passwd/root-password-crypted password [MD5 hash]\n"
 "\n"
 "# 아니면 일반 사용자 계정을 하나 만듭니다.\n"
-"#passwd passwd/user-fullname string Debian User\n"
-"#passwd passwd/username string debian\n"
+"#d-i passwd/user-fullname string Debian User\n"
+"#d-i passwd/username string debian\n"
 "# 일반 사용자 열쇠글, 열쇠글 원문 텍스트를 직접 쓸 수도 있고\n"
-"#passwd passwd/user-password password insecure\n"
-"#passwd passwd/user-password-again password insecure\n"
+"#d-i passwd/user-password password insecure\n"
+"#d-i passwd/user-password-again password insecure\n"
 "# 아니면 MD5 해시로 암호화된 열쇠글을 쓸 수도 있습니다.\n"
-"#passwd passwd/user-password-crypted password [MD5 hash]"
+"#d-i passwd/user-password-crypted password [MD5 hash]"
 
 #. Tag: para
-#: preseed.xml:670
-#, fuzzy, no-c-format
+#: preseed.xml:862
+#, no-c-format
 msgid ""
 "The <classname>passwd/root-password-crypted</classname> and "
 "<classname>passwd/user-password-crypted</classname> variables can also be "
@@ -1312,56 +1947,60 @@ msgid ""
 msgstr ""
 "<classname>passwd/root-password-crypted</classname> 및 <classname>passwd/"
 "user-password-crypted</classname> 변수도 그 값으로 <quote>!</quote>을 써서 미"
-"리 설정할 수 있습니다. 루트 계정의 경우 이렇게 하는 게 편리할 수도 있습니다. "
-"물론 이 경우 또 다른 방법으로 시스템 관리를할 수 있거나 루트 로그인을 할 수 "
-"있는 다른 방법이 있어야 합니다. (예를 들어 SSH 키 인증을 쓰거나 sudo를 사용하"
-"는 방법)"
+"리 설정할 수 있습니다. 이 경우 연관된 게정은 사용할 수 없습니다. 루트 계정의 "
+"경우 이렇게 하는 게 편리할 수도 있습니다. 물론 이 경우 또 다른 방법으로 시스"
+"템 관리를 할 수 있거나 루트 로그인을 할 수 있는 다른 방법이 있어야 합니다. "
+"(예를 들어 SSH 키 인증을 쓰거나 sudo를 사용하는 방법)"
 
 #. Tag: para
-#: preseed.xml:680
+#: preseed.xml:872
 #, no-c-format
 msgid ""
 "An MD5 hash for a password can be generated using the following command."
 msgstr "열쇠글의 MD5 해시는 다음 명령으로 만들 수 있습니다."
 
 #. Tag: screen
-#: preseed.xml:684
+#: preseed.xml:876
 #, no-c-format
 msgid "$ echo \"r00tme\" | mkpasswd -s -H MD5"
 msgstr "$ echo \"r00tme\" | mkpasswd -s -H MD5"
 
 #. Tag: title
-#: preseed.xml:690
+#: preseed.xml:882
 #, no-c-format
 msgid "Base system installation"
 msgstr "기본 시스템  설치"
 
 #. Tag: para
-#: preseed.xml:691
+#: preseed.xml:883
 #, no-c-format
 msgid ""
 "There is actually not very much that can be preseeded for this stage of the "
 "installation. The only questions asked concern the installation of the "
 "kernel."
 msgstr ""
+"이 상태에서는 미리 설정할 수 있는 부분이 별로 많지 않습니다. 유일하게 신경 "
+"쓸 부분은 커널 설치에 관한 질문입니다."
 
 #. Tag: screen
-#: preseed.xml:698
+#: preseed.xml:890
 #, no-c-format
 msgid ""
 "# Select the initramfs generator used to generate the initrd for 2.6 "
 "kernels.\n"
 "#d-i base-installer/kernel/linux/initramfs-generators string yaird"
 msgstr ""
+"# 2.6 커널의 initrd를 만드는 initramfs를 선택합니다\n"
+"#d-i base-installer/kernel/linux/initramfs-generators string yaird"
 
 #. Tag: title
-#: preseed.xml:703
+#: preseed.xml:895
 #, no-c-format
 msgid "Boot loader installation"
 msgstr "부트 로더 설치"
 
 #. Tag: screen
-#: preseed.xml:705
+#: preseed.xml:897
 #, no-c-format
 msgid ""
 "# Grub is the default boot loader (for x86). If you want lilo installed\n"
@@ -1373,23 +2012,25 @@ msgid ""
 "# if no other operating system is detected on the machine.\n"
 "d-i grub-installer/only_debian boolean true\n"
 "\n"
-"# This one makes grub-installer install to the MBR if if finds some other "
-"OS\n"
-"# too, which is less safe as it might not be able to boot that other OS.\n"
+"# This one makes grub-installer install to the MBR if it also finds some "
+"other\n"
+"# OS, which is less safe as it might not be able to boot that other OS.\n"
 "d-i grub-installer/with_other_os boolean true\n"
 "\n"
 "# Alternatively, if you want to install to a location other than the mbr,\n"
 "# uncomment and edit these lines:\n"
-"#d-i grub-installer/bootdev  string (hd0,0)\n"
 "#d-i grub-installer/only_debian boolean false\n"
-"#d-i grub-installer/with_other_os boolean false"
+"#d-i grub-installer/with_other_os boolean false\n"
+"#d-i grub-installer/bootdev  string (hd0,0)\n"
+"# To install grub to multiple disks:\n"
+"#d-i grub-installer/bootdev  string (hd0,0) (hd1,0) (hd2,0)"
 msgstr ""
-"# GRUB은 (x86용) 기본 부트로더입니다. GRUB 대신에 LILO를 설치하려면,\n"
+"# GRUB은 (x86용) 기본 부트로더입니다. GRUB이 아니라 LILO를 설치하려면,\n"
 "# 다음의 주석을 지우십시오:\n"
 "#d-i grub-installer/skip boolean true\n"
 "\n"
 "# 다음과 같이 설정하는 게 안전합니다. 다음과 같이 하면 컴퓨터에 다른 운영\n"
-"# 체제를 찾지 못한 경우에 자동으로 GRUB을 MBR에 설치합니다.\n"
+"# 체제를 찾지 못한 경우 자동으로 GRUB을 MBR에 설치합니다.\n"
 "d-i grub-installer/only_debian boolean true\n"
 "\n"
 "# 다음과 같이 하면 다른 운영 체제가 있더라도 GRUB을 MBR에 설치합니다.\n"
@@ -1398,110 +2039,129 @@ msgstr ""
 "\n"
 "# 다른 방법으로 MBR이 아닌 위치에 설치하려면, 다음 주석을 지우고\n"
 "# 편집하십시오.\n"
-"#d-i grub-installer/bootdev  string (hd0,0)\n"
 "#d-i grub-installer/only_debian boolean false\n"
-"#d-i grub-installer/with_other_os boolean false"
+"#d-i grub-installer/with_other_os boolean false\n"
+"#d-i grub-installer/bootdev  string (hd0,0)\n"
+"# GRUB을 여러 디스크에 설치하려면:\n"
+"#d-i grub-installer/bootdev  string (hd0,0) (hd1,0) (hd2,0)"
 
 #. Tag: title
-#: preseed.xml:710
+#: preseed.xml:902
 #, no-c-format
 msgid "Package selection"
 msgstr "꾸러미 선택"
 
 #. Tag: para
-#: preseed.xml:711
+#: preseed.xml:903
 #, no-c-format
 msgid ""
 "You can choose to install any combination of tasks that are available. "
 "Available tasks as of this writing include:"
 msgstr ""
-"사용할 수 있는 작업은 원하는 대로 설치할 수 있습니다. 현재 이 문서를 쓰는 시"
-"점에 사용할 수 있는 작업은 다음과 같습니다:"
+"사용할 수 있는 태스크는 원하는 대로 설치할 수 있습니다. 현재 이 문서를 쓰는 "
+"시점에 사용할 수 있는 태스크는 다음과 같습니다:"
 
 #. Tag: userinput
-#: preseed.xml:720
-#, fuzzy, no-c-format
+#: preseed.xml:912
+#, no-c-format
 msgid "standard"
 msgstr "표준 시스템"
 
 #. Tag: userinput
-#: preseed.xml:723
+#: preseed.xml:915
 #, no-c-format
 msgid "desktop"
-msgstr ""
+msgstr "데스크탑"
 
 #. Tag: userinput
-#: preseed.xml:726
+#: preseed.xml:918
 #, no-c-format
 msgid "gnome-desktop"
-msgstr ""
+msgstr "gnome-desktop"
 
 #. Tag: userinput
-#: preseed.xml:729
+#: preseed.xml:921
 #, no-c-format
 msgid "kde-desktop"
-msgstr ""
+msgstr "kde-desktop"
 
 #. Tag: userinput
-#: preseed.xml:732
-#, fuzzy, no-c-format
+#: preseed.xml:924
+#, no-c-format
 msgid "web-server"
 msgstr "웹 서버"
 
 #. Tag: userinput
-#: preseed.xml:735
-#, fuzzy, no-c-format
+#: preseed.xml:927
+#, no-c-format
 msgid "print-server"
 msgstr "인쇄 서버"
 
 #. Tag: userinput
-#: preseed.xml:738
-#, fuzzy, no-c-format
-msgid "server"
+#: preseed.xml:930
+#, no-c-format
+msgid "dns-server"
 msgstr "dns 서버"
 
 #. Tag: userinput
-#: preseed.xml:741
-#, fuzzy, no-c-format
+#: preseed.xml:933
+#, no-c-format
 msgid "file-server"
 msgstr "파일 서버"
 
 #. Tag: userinput
-#: preseed.xml:744
-#, fuzzy, no-c-format
+#: preseed.xml:936
+#, no-c-format
 msgid "mail-server"
 msgstr "메일 서버"
 
 #. Tag: userinput
-#: preseed.xml:747
-#, fuzzy, no-c-format
+#: preseed.xml:939
+#, no-c-format
 msgid "sql-database"
 msgstr "SQL 데이터베이스"
 
 #. Tag: userinput
-#: preseed.xml:750
-#, fuzzy, no-c-format
+#: preseed.xml:942
+#, no-c-format
 msgid "laptop"
 msgstr "노트북 컴퓨터"
 
 #. Tag: para
-#: preseed.xml:754
-#, fuzzy, no-c-format
+#: preseed.xml:946
+#, no-c-format
 msgid ""
 "You can also choose to install no tasks, and force the installation of a set "
 "of packages in some other way. We recommend always including the "
 "<userinput>standard</userinput> task."
 msgstr ""
 "태스크를 설치하지 않을 수도 있고, 다른 방법으로 꾸러미들을 설치할 수 있습니"
-"다. <userinput>표준 시스템</userinput> 작업은 항상 포함하시길 권장합니다."
+"다. <userinput>표준 시스템</userinput> 태스크는 항상 포함하시길 권장합니다."
+
+#. Tag: para
+#: preseed.xml:952
+#, no-c-format
+msgid ""
+"If you want to install some individual packages in addition to packages "
+"installed by tasks, you can use the parameter <classname>pkgsel/include</"
+"classname>. The value of this parameter can be a list of packages separated "
+"by either commas or spaces, which allows it to be used easily on the kernel "
+"command line as well."
+msgstr ""
+"태스크로 설치한 꾸러미 외에 꾸러미를 더 설치하려면, <classname>pkgsel/"
+"include</classname> 파라미터를 사용하면 됩니다. 이 파라미터의 값은 쉼표나 공"
+"백으로 구분할 수 있으므로, 커널 명령행에서도 쉽게 사용할 수 있습니다."
 
 #. Tag: screen
-#: preseed.xml:762
-#, fuzzy, no-c-format
+#: preseed.xml:962
+#, no-c-format
 msgid ""
 "tasksel tasksel/first multiselect standard, desktop\n"
 "#tasksel tasksel/first multiselect standard, web-server\n"
 "#tasksel tasksel/first multiselect standard, kde-desktop\n"
+"\n"
+"# Individual additional packages to install\n"
+"#d-i pkgsel/include string openssh-server build-essential\n"
 "\n"
 "# Some versions of the installer can report back on what software you have\n"
 "# installed, and what software you use. The default is not to report back,\n"
@@ -1513,6 +2173,9 @@ msgstr ""
 "#tasksel tasksel/first multiselect standard, web-server\n"
 "#tasksel tasksel/first multiselect standard, kde-desktop\n"
 "\n"
+"\"# 추가로 설치할 꾸러미들\n"
+"\"#d-i pkgsel/include string openssh-server build-essential\\n\"\n"
+"\"\\n\"\n"
 "# 설치 프로그램은 버전에 따라 무엇을 설치했는지 보고서를 보낼 수 있습니다.\n"
 "# 기본값은 보고하지 않는 것이지만, 보고서를 보내면 데비안 프로젝트에서\n"
 "# 어떤 소프트웨어가 유명하고 CD에 포함하는 게 좋을 지 결정하는 데 도움이\n"
@@ -1520,69 +2183,37 @@ msgstr ""
 "#popularity-contest popularity-contest/participate boolean false"
 
 #. Tag: title
-#: preseed.xml:767
+#: preseed.xml:967
 #, no-c-format
 msgid "Finishing up the first stage install"
 msgstr "첫번째 단계 설치 끝내기"
 
 #. Tag: screen
-#: preseed.xml:769
+#: preseed.xml:969
 #, no-c-format
 msgid ""
 "# Avoid that last message about the install being complete.\n"
-"d-i prebaseconfig/reboot_in_progress note\n"
+"d-i finish-install/reboot_in_progress note\n"
 "\n"
 "# This will prevent the installer from ejecting the CD during the reboot,\n"
 "# which is useful in some situations.\n"
 "#d-i cdrom-detect/eject boolean false"
 msgstr ""
 "# 설치가 끝났다는 마지막 메세지를 표시하지 않습니다.\n"
-"d-i prebaseconfig/reboot_in_progress note\n"
+"d-i finish-install/reboot_in_progress note\n"
 "\n"
 "# 다음과 같이 하면 다시 시작할 때 CD를 빼지 않습니다.\n"
 "# 경우에 따라서는 CD를 빼지 않는 게 좋을 수 있습니다.\n"
 "#d-i cdrom-detect/eject boolean false"
 
 #. Tag: title
-#: preseed.xml:774
-#, no-c-format
-msgid "Mailer configuration"
-msgstr "메일 프로그램 설정"
-
-#. Tag: para
-#: preseed.xml:775
-#, no-c-format
-msgid ""
-"During a normal install, exim asks only a few questions. Here's how to avoid "
-"even those. More complicated preseeding is possible."
-msgstr ""
-"보통 설치할 경우, exim은 아주 몇 개만 질문을 합니다. 이 질문마저 다음과 같이 "
-"하면 건너뜁니다. 더 복잡한 미리 설정도 가능합니다."
-
-#. Tag: screen
-#: preseed.xml:782
-#, no-c-format
-msgid ""
-"exim4-config exim4/dc_eximconfig_configtype \\\n"
-"       select no configuration at this time\n"
-"exim4-config exim4/no_config boolean true\n"
-"exim4-config exim4/no_config boolean true\n"
-"exim4-config exim4/dc_postmaster string"
-msgstr ""
-"exim4-config exim4/dc_eximconfig_configtype \\\n"
-"       select no configuration at this time\n"
-"exim4-config exim4/no_config boolean true\n"
-"exim4-config exim4/no_config boolean true\n"
-"exim4-config exim4/dc_postmaster string"
-
-#. Tag: title
-#: preseed.xml:787
+#: preseed.xml:974
 #, no-c-format
 msgid "X configuration"
 msgstr "X 설정"
 
 #. Tag: para
-#: preseed.xml:788
+#: preseed.xml:975
 #, no-c-format
 msgid ""
 "Preseeding Debian's X config is possible, but you probably need to know some "
@@ -1594,8 +2225,8 @@ msgstr ""
 "니다."
 
 #. Tag: screen
-#: preseed.xml:796
-#, fuzzy, no-c-format
+#: preseed.xml:983
+#, no-c-format
 msgid ""
 "# X can detect the right driver for some cards, but if you're preseeding,\n"
 "# you override whatever it chooses. Still, vesa will work most places.\n"
@@ -1619,40 +2250,36 @@ msgid ""
 "xserver-xorg xserver-xorg/config/monitor/mode-list \\\n"
 "       select 1024x768 @ 60 Hz"
 msgstr ""
-"# 데비안의 X 설정을 미리 설정하는 것도 가능하지만, 해당 컴퓨터의 비디오\n"
-"# 하드웨어에 대해 자세히 알아야 합니다. 데비안의 X 설정은 모든 설정을\n"
-"# 자동으로 하지 못하기 때문입니다.\n"
-"\n"
 "# X는 일부 카드에 대해서 올바른 드라이버를 자동 검색할 수 있지만, 미리 \n"
 "# 설정의 경우에는 자동 검색한 것보다 우선합니다. 아직도 vesa는 대부분의\n"
 "# 경우에 동작합니다.\n"
-"#xserver-xfree86 xserver-xfree86/config/device/driver select vesa\n"
+"#xserver-xorg xserver-xorg/config/device/driver select vesa\n"
 "\n"
 "# 마우스 자동 검색은 좀 위험한 부분이 있습니다. 실패하면 X가 계속해서\n"
 "# 다시 시도합니다. 그러므로 미리 설정을 하면 마우스를 검색하지 못했을\n"
 "# 때 무한루프테 빠질 가능성이 있습니다.\n"
-"#xserver-xfree86 xserver-xfree86/autodetect_mouse boolean true\n"
+"#xserver-xorg xserver-xorg/autodetect_mouse boolean true\n"
 "\n"
 "# 모니터 자동 검색을 하는 게 좋습니다.\n"
-"xserver-xfree86 xserver-xfree86/autodetect_monitor boolean true\n"
+"xserver-xorg xserver-xorg/autodetect_monitor boolean true\n"
 "# LCD 디스플레이라면 다음 줄의 주석을 없애십시오.\n"
-"#xserver-xfree86 xserver-xfree86/config/monitor/lcd boolean true\n"
+"#xserver-xorg xserver-xfree86/config/monitor/lcd boolean true\n"
 "# X의 모니터 설정은 세 가지 방법이 있습니다. 다음은 \"medium\"으로 미리\n"
 "# 설정하는 방법이고 언제나 사용할 수 있습니다. \"simple\"은 사용할 수\n"
 "# 없을 수도 있고, \"advanced\"는 너무 많이 물어봅니다.\n"
-"xserver-xfree86 xserver-xfree86/config/monitor/selection-method \\\n"
+"xserver-xorg xserver-xorg/config/monitor/selection-method \\\n"
 "       select medium\n"
-"xserver-xfree86 xserver-xfree86/config/monitor/mode-list \\\n"
+"xserver-xorg xserver-xorg/config/monitor/mode-list \\\n"
 "       select 1024x768 @ 60 Hz"
 
 #. Tag: title
-#: preseed.xml:801
+#: preseed.xml:988
 #, no-c-format
 msgid "Preseeding other packages"
 msgstr "기타 꾸러미 미리 설정"
 
 #. Tag: screen
-#: preseed.xml:803
+#: preseed.xml:990
 #, no-c-format
 msgid ""
 "# Depending on what software you choose to install, or if things go wrong\n"
@@ -1671,20 +2298,30 @@ msgstr ""
 "#   debconf-get-selections >> file"
 
 #. Tag: title
-#: preseed.xml:809
+#: preseed.xml:997
 #, no-c-format
 msgid "Advanced options"
 msgstr "고급 옵션"
 
 #. Tag: title
-#: preseed.xml:812
+#: preseed.xml:1000
 #, no-c-format
-msgid "Shell commands"
-msgstr "쉘 옵션"
+msgid "Running custom commands during the installation"
+msgstr "설치 중에 임의의 명령어 실행하기"
+
+#. Tag: para
+#: preseed.xml:1001
+#, no-c-format
+msgid ""
+"A very powerful and flexible option offered by the preconfiguration tools is "
+"the ability to run commands or scripts at certain points in the installation."
+msgstr ""
+"미리 설정도구가 제공하는 매우 강력하고도 유연한 옵션은 설치 특정 시점에서 명"
+"령어와 스크립트를 실행하는 옵션입니다."
 
 #. Tag: screen
-#: preseed.xml:814
-#, fuzzy, no-c-format
+#: preseed.xml:1009
+#, no-c-format
 msgid ""
 "# d-i preseeding is inherently not secure. Nothing in the installer checks\n"
 "# for attempts at buffer overflows or other exploits of the values of a\n"
@@ -1714,27 +2351,52 @@ msgstr ""
 "# 실행합니다. \n"
 "#d-i preseed/early_command string anna-install some-udeb\n"
 "\n"
-"# 다음 명령어는 설치가 끝나기 직전에, 하지만 /target 디렉토리가 아직\n"
-"# 마운트되어 있을 때 실행합니다.\n"
-"#d-i preseed/late_command string echo foo > /target/etc/bar\n"
-"\n"
-"# 다음 명령어는 base-config가 시작할 때 실행합니다.\n"
-"#base-config base-config/early_command string echo hi mom\n"
-"\n"
-"# 다음 명령어는 base-config가 끝난 다음에 login: 프롬프트 직전에\n"
-"# 실행합니다. 다음 명령어는 필요한 꾸러미를 설치하거나 시스템의 설정을\n"
-"# 조작할 때 유용합니다.\n"
-"#base-config base-config/late_command \\\n"
-"#      string apt-get install zsh; chsh -s /bin/zsh"
+"# 이 명령은 설치를 끝내기 직전에 실행됩니다. 그러나 /target디렉토리는 \n"
+"# 아직 사용할 수 있을 때입니다. /target디렉토리로 chroot해서 직접 사용할\n"
+"# 수 있고 꾸러미를 쉽게 설치하기 위해서 apt-install과 in-target명령을 사용\n"
+"#할 수 있습니다.#d-i preseed/late_command string apt-install zsh; in-target "
+"chsh -s /bin/zsh"
 
 #. Tag: title
-#: preseed.xml:819
-#, fuzzy, no-c-format
-msgid "Chainloading preconfiguration files"
-msgstr "다른 미리 설정 파일 이용하기"
+#: preseed.xml:1014
+#, no-c-format
+msgid "Using preseeding to change default values"
+msgstr "미리 설정을 이용해 기본값 바꾸기"
 
 #. Tag: para
-#: preseed.xml:820
+#: preseed.xml:1015
+#, fuzzy, no-c-format
+msgid ""
+"It is possible to use preseeding to change the default answer for a "
+"question, but still have the question asked. To do this the <firstterm>seen</"
+"firstterm> flag must be reset to <quote>false</quote> after setting the "
+"value for a question. <informalexample><screen>\n"
+"d-i foo/bar string value\n"
+"d-i foo/bar seen false\n"
+"</screen></informalexample> The same effect can be achieved for "
+"<emphasis>all</emphasis> questions by setting the parameter "
+"<classname>preseed/interactive=true</classname> at the boot prompt. This can "
+"also be useful for testing or debugging your preconfiguration file. If you "
+"are preseeding using boot parameters, you can make the installer ask the "
+"corresponding question by using the <quote>?=</quote> operator, i.e. "
+"<userinput><replaceable>foo</replaceable>/<replaceable>bar</replaceable>?"
+"=<replaceable>value</replaceable></userinput>. This will of course only have "
+"effect for parameters that correspond to questions that are actually "
+"displayed during an installation and not for <quote>internal</quote> "
+"parameters."
+msgstr ""
+"미리 설정으로 질문에 대한 기본값을 바꾸면서, 그래도 그 질문을 받도록 만들 수 "
+"있습니다. 이렇게 하려면 해당 템플리트에 대한 값을 설정한 다음에 "
+"<firstterm>seen</firstterm> 플래그를 <quote>false</quote>로 놓으면 됩니다."
+
+#. Tag: title
+#: preseed.xml:1043
+#, no-c-format
+msgid "Chainloading preconfiguration files"
+msgstr "미리설정 파일을 분리해서 사용하기"
+
+#. Tag: para
+#: preseed.xml:1044
 #, no-c-format
 msgid ""
 "It is possible to include other preconfiguration files from a "
@@ -1749,10 +2411,10 @@ msgstr ""
 "설정을 다른 파일에 집어 넣는 식으로 활용이 가능합니다."
 
 #. Tag: screen
-#: preseed.xml:830
+#: preseed.xml:1054
 #, no-c-format
 msgid ""
-"# More that one file can be listed, separated by spaces; all will be\n"
+"# More than one file can be listed, separated by spaces; all will be\n"
 "# loaded. The included files can have preseed/include directives of their\n"
 "# own as well. Note that if the filenames are relative, they are taken from\n"
 "# the same directory as the preconfiguration file that includes them.\n"
@@ -1766,7 +2428,14 @@ msgid ""
 "# More flexibly, this runs a shell command and if it outputs the names of\n"
 "# preconfiguration files, includes those files. \n"
 "#d-i preseed/include_command \\\n"
-"#      string echo if [ \"`hostname`\" = bob ]; then echo bob.cfg; fi"
+"#      string echo if [ \"`hostname`\" = bob ]; then echo bob.cfg; fi\n"
+"\n"
+"# Most flexibly of all, this downloads a program and runs it. The program\n"
+"# can use commands such as debconf-set to manipulate the debconf database.\n"
+"# More than one script can be listed, separated by spaces.\n"
+"# Note that if the filenames are relative, they are taken from the same\n"
+"# directory as the preconfiguration file that runs them.\n"
+"#d-i preseed/run string foo.sh"
 msgstr ""
 "# 여러 개 파일을 공백으로 구분해서 쓸 수도 있습니다. 그러면 모든\n"
 "# 파일을 읽어들입니다. 물론 포함한 파일은 그 안에 preseed/include가\n"
@@ -1782,5 +2451,59 @@ msgstr ""
 "# 좀 더 유연하게 하려면, 다음과 같이 하면 미리 설정 파일의 이름을\n"
 "# 출력하는 쉘 명령어를 출력하고, 그 파일을 포함합니다.\n"
 "#d-i preseed/include_command \\\n"
-"#      string echo if [ \"`hostname`\" = bob ]; then echo bob.cfg; fi"
+"#      string echo if [ \"`hostname`\" = bob ]; then echo bob.cfg; fi\n"
+"\n"
+"# 이 중에거 가장 유연한 것으로, 프로그램을 다운로드하고 이를 실행할 수 \n"
+"# 있습니다. 이 프로그램은 debconf 데이터베이스를 조작하기 위해 \n"
+"# debconf-set과 같은 명령을 사용할 수 있습니다. 여러 개의 스크립트를\n"
+"# 공백으로 구분해서 쓸 수도 있습니다. 파일명이 상대경로로 되어 있으면\n"
+"# 프로그램을 실행하는 미리 설정파일이 있는 디렉토리에서 파일들을 찾습니다.\n"
+"#d-i preseed/run string foo.sh"
 
+#. Tag: para
+#: preseed.xml:1056
+#, no-c-format
+msgid ""
+"It is also possible to chainload from the initrd or file preseeding phase, "
+"into network preseeding by setting preseed/url in the earlier files. This "
+"will cause network preseeding to be performed when the network comes up. You "
+"need to be careful when doing this, since there will be two distinct runs at "
+"preseeding, meaning for example that you get another chance to run the "
+"preseed/early command, the second one happening after the network comes up."
+msgstr ""
+"initrd 혹은 파일을 이용한 미리 설정 단계에서, 파일 안에 다시 preseed/url을 설"
+"정해서 네트워크 미리 설정을 겹쳐 넣을 수도 있습니다. 이렇게 하면 네트워크가 "
+"연결되었을 때 미리 설정을 읽어들이게 됩니다. 이와 같이 하는 경우에는 주의해"
+"야 합니다. 미리 설정을 실행하는 두 개의 별도의 단계가 있기 때문입니다. 예를 "
+"들어서 preseed/early 명령을 한 번 더 실행할 수 있고, 두 번째가 네트워크가 연"
+"결된 다음에 실행될 수 있습니다."
+
+#~ msgid "Mailer configuration"
+#~ msgstr "메일 프로그램 설정"
+
+#~ msgid ""
+#~ "During a normal install, exim asks only a few questions. Here's how to "
+#~ "avoid even those. More complicated preseeding is possible."
+#~ msgstr ""
+#~ "보통 설치할 경우, exim은 아주 몇 개만 질문을 합니다. 이 질문마저 다음과 같"
+#~ "이 하면 건너뜁니다. 더 복잡한 미리 설정도 가능합니다."
+
+#~ msgid ""
+#~ "exim4-config exim4/dc_eximconfig_configtype \\\n"
+#~ "       select no configuration at this time\n"
+#~ "exim4-config exim4/no_config boolean true\n"
+#~ "exim4-config exim4/no_config boolean true\n"
+#~ "exim4-config exim4/dc_postmaster string"
+#~ msgstr ""
+#~ "exim4-config exim4/dc_eximconfig_configtype \\\n"
+#~ "       select no configuration at this time\n"
+#~ "exim4-config exim4/no_config boolean true\n"
+#~ "exim4-config exim4/no_config boolean true\n"
+#~ "exim4-config exim4/dc_postmaster string"
+
+#~ msgid ""
+#~ "d-i foo/bar string value\n"
+#~ "d-i foo/bar seen false"
+#~ msgstr ""
+#~ "d-i foo/bar string value\n"
+#~ "d-i foo/bar seen false"

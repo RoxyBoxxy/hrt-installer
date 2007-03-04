@@ -2,8 +2,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: d-i-manual\n"
-"Report-Msgid-Bugs-To: http://bugs.kde.org\n"
-"POT-Creation-Date: 2006-04-28 19:34+0000\n"
+"Report-Msgid-Bugs-To: debian-boot@lists.debian.org\n"
+"POT-Creation-Date: 2007-01-06 19:06+0000\n"
 "PO-Revision-Date: 2005-07-18 13:49+0800\n"
 "Last-Translator: Jhang, Jia-Wei<dreamcryer@gmail.com>\n"
 "Language-Team: debian-chinese-big5 <debian-chinese-big5@lists.debian.org>\n"
@@ -137,8 +137,8 @@ msgstr "開機安裝系統﹔"
 
 #. Tag: para
 #: preparing.xml:90
-#, no-c-format
-msgid "Select installation language."
+#, fuzzy, no-c-format
+msgid "Select the installation language."
 msgstr "選擇要安裝的語言﹔"
 
 #. Tag: para
@@ -157,7 +157,7 @@ msgstr "設定一個網路介面﹔"
 #. Tag: para
 #: preparing.xml:106
 #, no-c-format
-msgid "Open a ssh connection to the new system."
+msgid "Open an ssh connection to the new system."
 msgstr "開啟新系統的 ssh 連線﹔"
 
 #. Tag: para
@@ -200,6 +200,16 @@ msgstr "第一次載入新安裝的系統，做一些系統初始設定﹔"
 #: preparing.xml:141
 #, no-c-format
 msgid ""
+"For &arch-title; you have the option of using <phrase arch=\"x86\">a</"
+"phrase> <phrase arch=\"powerpc\">an experimental</phrase> graphical version "
+"of the installation system. For more information about this graphical "
+"installer, see <xref linkend=\"graphical\"/>."
+msgstr ""
+
+#. Tag: para
+#: preparing.xml:149
+#, no-c-format
+msgid ""
 "If you have problems during the installation, it helps to know which "
 "packages are involved in which steps. Introducing the leading software "
 "actors in this installation drama:"
@@ -208,16 +218,17 @@ msgstr ""
 "件。有關這場安裝「戲劇」的「主角」的介紹："
 
 #. Tag: para
-#: preparing.xml:147
-#, no-c-format
+#: preparing.xml:155
+#, fuzzy, no-c-format
 msgid ""
 "The installer software, <classname>debian-installer</classname>, is the "
 "primary concern of this manual. It detects hardware and loads appropriate "
 "drivers, uses <classname>dhcp-client</classname> to set up the network "
-"connection, and runs <classname>debootstrap</classname> to install the base "
-"system packages. Many more actors play smaller parts in this process, but "
-"<classname>debian-installer</classname> has completed its task when you load "
-"the new system for the first time."
+"connection, runs <classname>debootstrap</classname> to install the base "
+"system packages, and runs <classname>tasksel</classname> to allow you to "
+"install certain additional software. Many more actors play smaller parts in "
+"this process, but <classname>debian-installer</classname> has completed its "
+"task when you load the new system for the first time."
 msgstr ""
 "安裝軟體，<classname>debian-installer</classname>，是本手冊的主要焦點。它將偵"
 "側硬體並掛載適當的驅動程式，使用 <classname>dhcp-client</classname>去設定網路"
@@ -226,7 +237,7 @@ msgstr ""
 "installer</classname> 將一直到您第一次開機新系統時才完成它的使命。"
 
 #. Tag: para
-#: preparing.xml:157
+#: preparing.xml:167
 #, no-c-format
 msgid ""
 "To tune the system to your needs, <classname>tasksel</classname> allows you "
@@ -235,53 +246,50 @@ msgid ""
 msgstr ""
 
 #. Tag: para
-#: preparing.xml:163
-#, fuzzy, no-c-format
-msgid ""
-"When <classname>debian-installer</classname> finishes, before the first "
-"system load, you have only a very basic command line driven system. The "
-"graphical interface which displays windows on your monitor will not be "
-"installed unless you select it with <classname>tasksel</classname>. It's "
-"optional because many &debian; systems are servers which don't really have "
-"any need for a graphical user interface to do their job."
-msgstr ""
-"當 <classname>debian-installer</classname> 程式執行結束、系統首次載入之前，您"
-"只有一個非常簡單的命令列系統。除非您在最後一個步驟裡用 <classname>tasksel</"
-"classname> 或 <classname>aptitude</classname> 選擇安裝了能在您的顯示器上顯示"
-"視窗的圖形界面，否則它將不會被自動安裝。因為許多 &debian; 系統是被用作伺服"
-"器，它們的工作根本不需要任何圖形化的使用者界面，所以它在這裡只是一個選項。"
-
-#. Tag: para
-#: preparing.xml:172
+#: preparing.xml:173
 #, no-c-format
 msgid ""
-"Just be aware that the X system is completely separate from "
+"One important option during the installation is whether or not to install a "
+"graphical desktop environment, consisting of the X Window System and one of "
+"the available graphical desktop environments. If you choose not to select "
+"the <quote>Desktop environment</quote> task, you will only have a relatively "
+"basic, command line driven system. Installing the Desktop environment task "
+"is optional because it requires a fairly large amount of disk space, and "
+"because many &debian; systems are servers which don't really have any need "
+"for a graphical user interface to do their job."
+msgstr ""
+
+#. Tag: para
+#: preparing.xml:185
+#, fuzzy, no-c-format
+msgid ""
+"Just be aware that the X Window System is completely separate from "
 "<classname>debian-installer</classname>, and in fact is much more "
-"complicated. Installation and trouble shooting of the X window installation "
-"is not within the scope of this manual."
+"complicated. Installation and troubleshooting of the X Window System is not "
+"within the scope of this manual."
 msgstr ""
 "X 系統是與 <classname>debian-installer</classname> 完全分開的，實際上它複雜的"
 "多了 X 視窗安裝系統的安裝和問題解答不在本手冊所關注的範圍之內。"
 
 #. Tag: title
-#: preparing.xml:188
+#: preparing.xml:200
 #, no-c-format
 msgid "Back Up Your Existing Data!"
 msgstr "備份您的所有資料！"
 
 #. Tag: para
-#: preparing.xml:189
-#, no-c-format
+#: preparing.xml:201
+#, fuzzy, no-c-format
 msgid ""
 "Before you start, make sure to back up every file that is now on your "
 "system. If this is the first time a non-native operating system has been "
 "installed on your computer, it's quite likely you will need to re-partition "
 "your disk to make room for &debian;. Anytime you partition your disk, you "
-"should count on losing everything on the disk, no matter what program you "
-"use to do it. The programs used in installation are quite reliable and most "
-"have seen years of use; but they are also quite powerful and a false move "
-"can cost you. Even after backing up be careful and think about your answers "
-"and actions. Two minutes of thinking can save hours of unnecessary work."
+"run a risk of losing everything on the disk, no matter what program you use "
+"to do it. The programs used in installation are quite reliable and most have "
+"seen years of use; but they are also quite powerful and a false move can "
+"cost you. Even after backing up, be careful and think about your answers and "
+"actions. Two minutes of thinking can save hours of unnecessary work."
 msgstr ""
 "開始安裝之前，請確定您已經對系統中所有資料都進行了備份。除了購買機器時預先安"
 "裝的作業系統以外，如果這是您電腦上的第一個非原始作業系統，很可能您得對硬碟進"
@@ -292,7 +300,7 @@ msgstr ""
 "您節省幾個小時的不必要恢復工作。"
 
 #. Tag: para
-#: preparing.xml:202
+#: preparing.xml:214
 #, no-c-format
 msgid ""
 "If you are creating a multi-boot system, make sure that you have the "
@@ -307,7 +315,7 @@ msgstr ""
 "檔案。"
 
 #. Tag: para
-#: preparing.xml:213
+#: preparing.xml:225
 #, no-c-format
 msgid ""
 "With the exception of the BVM and Motorola VMEbus computers, the only "
@@ -324,37 +332,37 @@ msgstr ""
 "quote> boot-loader 是必須的。"
 
 #. Tag: title
-#: preparing.xml:231
+#: preparing.xml:243
 #, no-c-format
 msgid "Information You Will Need"
 msgstr "一些有用的資料"
 
 #. Tag: title
-#: preparing.xml:234
+#: preparing.xml:246
 #, no-c-format
 msgid "Documentation"
 msgstr "文件"
 
 #. Tag: title
-#: preparing.xml:237
+#: preparing.xml:249
 #, no-c-format
 msgid "Installation Manual"
 msgstr "安裝手冊"
 
 #. Tag: para
-#: preparing.xml:239
+#: preparing.xml:251
 #, fuzzy, no-c-format
 msgid "This document you are now reading, in plain ASCII, HTML or PDF format."
 msgstr "這些文件以純文字、HTML 或者 PDF 格式發佈。"
 
 #. Tag: itemizedlist
-#: preparing.xml:245
+#: preparing.xml:257
 #, no-c-format
 msgid "&list-install-manual-files;"
 msgstr "&list-install-manual-files;"
 
 #. Tag: para
-#: preparing.xml:251
+#: preparing.xml:263
 #, no-c-format
 msgid ""
 "The document you are now reading, which is the official version of the "
@@ -364,7 +372,7 @@ msgid ""
 msgstr ""
 
 #. Tag: para
-#: preparing.xml:260
+#: preparing.xml:272
 #, no-c-format
 msgid ""
 "The document you are now reading, which is a development version of the "
@@ -373,56 +381,56 @@ msgid ""
 msgstr ""
 
 #. Tag: title
-#: preparing.xml:272
+#: preparing.xml:284
 #, no-c-format
 msgid "Hardware documentation"
 msgstr "硬體文件"
 
 #. Tag: para
-#: preparing.xml:273
+#: preparing.xml:285
 #, no-c-format
 msgid ""
 "Often contains useful information on configuring or using your hardware."
 msgstr "通常包含設置和使用您的硬體的實用資料。"
 
 #. Tag: ulink
-#: preparing.xml:284
+#: preparing.xml:296
 #, no-c-format
 msgid "Linux Hardware Compatibility HOWTO"
 msgstr "Linux 硬體相容指南"
 
 #. Tag: ulink
-#: preparing.xml:290
+#: preparing.xml:302
 #, no-c-format
 msgid "Linux/m68k FAQ"
 msgstr "Linux/m68k 常見問答集"
 
 #. Tag: ulink
-#: preparing.xml:296
+#: preparing.xml:308
 #, no-c-format
 msgid "Linux/Alpha FAQ"
 msgstr "Linux/Alpha 常見問答集"
 
 #. Tag: ulink
-#: preparing.xml:302
+#: preparing.xml:314
 #, no-c-format
 msgid "Linux for SPARC Processors FAQ"
 msgstr "Linux for SPARC Processors 常見問答集"
 
 #. Tag: ulink
-#: preparing.xml:308
+#: preparing.xml:320
 #, fuzzy, no-c-format
 msgid "Linux/Mips website"
 msgstr "Linux/Mips Howto"
 
 #. Tag: title
-#: preparing.xml:317
+#: preparing.xml:329
 #, no-c-format
 msgid "&arch-title; Hardware References"
 msgstr "&arch-title; Hardware References"
 
 #. Tag: para
-#: preparing.xml:318
+#: preparing.xml:330
 #, no-c-format
 msgid ""
 "Installation instructions and device drivers (DASD, XPRAM, Console, tape, "
@@ -432,13 +440,13 @@ msgstr ""
 "Console, tape, z90 crypto, chandev, network)"
 
 #. Tag: ulink
-#: preparing.xml:330
+#: preparing.xml:342
 #, no-c-format
 msgid "Device Drivers and Installation Commands"
 msgstr "設備驅動程式與安裝指令"
 
 #. Tag: para
-#: preparing.xml:335
+#: preparing.xml:347
 #, no-c-format
 msgid ""
 "IBM Redbook describing how Linux can be combined with z/VM on zSeries and "
@@ -447,13 +455,13 @@ msgstr ""
 "IBM Redbook 描述如何將 Linux 與 zSeries 的 z/VM 和 &arch-title; 硬體結合。"
 
 #. Tag: ulink
-#: preparing.xml:345
+#: preparing.xml:357
 #, no-c-format
 msgid "Linux for &arch-title;"
 msgstr "用於 &arch-title; 的 Linux"
 
 #. Tag: para
-#: preparing.xml:351
+#: preparing.xml:363
 #, no-c-format
 msgid ""
 "IBM Redbook describing the Linux distributions available for the mainframe. "
@@ -464,19 +472,19 @@ msgstr ""
 "但對於所有的 &arch-title; 發行套件，基本的安裝概念是相同的。"
 
 #. Tag: ulink
-#: preparing.xml:362
+#: preparing.xml:374
 #, no-c-format
 msgid "Linux for IBM eServer zSeries and &arch-title;: Distributions"
 msgstr "IBM eServer zSeries and &arch-title; 的發行套件："
 
 #. Tag: title
-#: preparing.xml:372
+#: preparing.xml:384
 #, no-c-format
 msgid "Finding Sources of Hardware Information"
 msgstr "尋找硬體資訊來源"
 
 #. Tag: para
-#: preparing.xml:373
+#: preparing.xml:385
 #, no-c-format
 msgid ""
 "In many cases, the installer will be able to automatically detect your "
@@ -487,19 +495,19 @@ msgstr ""
 "熟悉一下您的硬體比較好。"
 
 #. Tag: para
-#: preparing.xml:379
+#: preparing.xml:391
 #, no-c-format
 msgid "Hardware information can be gathered from:"
 msgstr "取得硬體資料的途徑有："
 
 #. Tag: para
-#: preparing.xml:386
+#: preparing.xml:398
 #, no-c-format
 msgid "The manuals that come with each piece of hardware."
 msgstr "每個硬體附帶的手冊。"
 
 #. Tag: para
-#: preparing.xml:391
+#: preparing.xml:403
 #, no-c-format
 msgid ""
 "The BIOS setup screens of your computer. You can view these screens when you "
@@ -510,19 +518,19 @@ msgstr ""
 "手冊確認按鍵。通常，它是 <keycap>Delete</keycap> 鍵。"
 
 #. Tag: para
-#: preparing.xml:398
+#: preparing.xml:410
 #, no-c-format
 msgid "The cases and boxes for each piece of hardware."
 msgstr "每個硬體的包裝盒。"
 
 #. Tag: para
-#: preparing.xml:404
+#: preparing.xml:416
 #, no-c-format
 msgid "The System window in the Windows Control Panel."
 msgstr "Windows 控制台裡面的系統視窗。"
 
 #. Tag: para
-#: preparing.xml:410
+#: preparing.xml:422
 #, no-c-format
 msgid ""
 "System commands or tools in another operating system, including file manager "
@@ -533,7 +541,7 @@ msgstr ""
 "記憶體和硬碟特別有用。"
 
 #. Tag: para
-#: preparing.xml:417
+#: preparing.xml:429
 #, no-c-format
 msgid ""
 "Your system administrator or Internet Service Provider. These sources can "
@@ -543,185 +551,185 @@ msgstr ""
 "的相關資料。"
 
 #. Tag: title
-#: preparing.xml:429
+#: preparing.xml:441
 #, no-c-format
 msgid "Hardware Information Needed for an Install"
 msgstr "安裝所需的硬體資料"
 
 #. Tag: entry
-#: preparing.xml:433
+#: preparing.xml:445
 #, no-c-format
 msgid "Hardware"
 msgstr "硬體"
 
 #. Tag: entry
-#: preparing.xml:433
+#: preparing.xml:445
 #, no-c-format
 msgid "Information You Might Need"
 msgstr "您需要瞭解的資料"
 
 #. Tag: entry
-#: preparing.xml:439
+#: preparing.xml:451
 #, no-c-format
 msgid "Hard Drives"
 msgstr "硬碟"
 
 #. Tag: entry
-#: preparing.xml:440
+#: preparing.xml:452
 #, no-c-format
 msgid "How many you have."
 msgstr "您擁有的容量"
 
 #. Tag: entry
-#: preparing.xml:442
+#: preparing.xml:454
 #, no-c-format
 msgid "Their order on the system."
 msgstr "它們在系統上的順序"
 
 #. Tag: entry
-#: preparing.xml:444
+#: preparing.xml:457
 #, no-c-format
 msgid "Whether IDE or SCSI (most computers are IDE)."
 msgstr "是 IDE 還是 SCSI(大多數電腦上是 IDE)"
 
 #. Tag: entry
-#: preparing.xml:447
+#: preparing.xml:460
 #, fuzzy, no-c-format
 msgid "Whether IDE or SCSI (most m68k computers are SCSI)."
 msgstr "是 IDE 還是 SCSI(大多數電腦上是 IDE)"
 
 # index.docbook:445, index.docbook:497
 #. Tag: entry
-#: preparing.xml:449 preparing.xml:501
+#: preparing.xml:462 preparing.xml:514
 #, no-c-format
 msgid "Available free space."
 msgstr "可用空間"
 
 #. Tag: entry
-#: preparing.xml:450
+#: preparing.xml:463
 #, no-c-format
 msgid "Partitions."
 msgstr "分割區。"
 
 #. Tag: entry
-#: preparing.xml:452
+#: preparing.xml:465
 #, no-c-format
 msgid "Partitions where other operating systems are installed."
 msgstr "安裝有其他作業系統的分割區。"
 
 #. Tag: entry
-#: preparing.xml:456
+#: preparing.xml:469
 #, no-c-format
 msgid "Monitor"
 msgstr "顯示器"
 
 # index.docbook:453, index.docbook:473, index.docbook:479, index.docbook:485
 #. Tag: entry
-#: preparing.xml:457 preparing.xml:477 preparing.xml:483 preparing.xml:489
+#: preparing.xml:470 preparing.xml:490 preparing.xml:496 preparing.xml:502
 #, no-c-format
 msgid "Model and manufacturer."
 msgstr "型號與製造商。"
 
 #. Tag: entry
-#: preparing.xml:459
+#: preparing.xml:472
 #, no-c-format
 msgid "Resolutions supported."
 msgstr "支援的解析度。"
 
 #. Tag: entry
-#: preparing.xml:460
+#: preparing.xml:473
 #, no-c-format
 msgid "Horizontal refresh rate."
 msgstr "水平掃瞄頻率。"
 
 #. Tag: entry
-#: preparing.xml:461
+#: preparing.xml:474
 #, no-c-format
 msgid "Vertical refresh rate."
 msgstr "垂直掃瞄頻率。"
 
 #. Tag: entry
-#: preparing.xml:463
+#: preparing.xml:476
 #, no-c-format
 msgid "Color depth (number of colors) supported."
 msgstr "支援的顏色深度(顏色數)"
 
 #. Tag: entry
-#: preparing.xml:465
+#: preparing.xml:478
 #, no-c-format
 msgid "Screen size."
 msgstr "螢幕大小。"
 
 #. Tag: entry
-#: preparing.xml:468
+#: preparing.xml:481
 #, no-c-format
 msgid "Mouse"
 msgstr "滑鼠"
 
 #. Tag: entry
-#: preparing.xml:469
+#: preparing.xml:482
 #, no-c-format
 msgid "Type: serial, PS/2, or USB."
 msgstr "類型：序列、PS/2 或 USB。"
 
 #. Tag: entry
-#: preparing.xml:471
+#: preparing.xml:484
 #, no-c-format
 msgid "Port."
 msgstr "埠。"
 
 #. Tag: entry
-#: preparing.xml:472
+#: preparing.xml:485
 #, no-c-format
 msgid "Manufacturer."
 msgstr "製造商。"
 
 #. Tag: entry
-#: preparing.xml:473
+#: preparing.xml:486
 #, no-c-format
 msgid "Number of buttons."
 msgstr "按鍵數。"
 
 # index.docbook:472, index.docbook:500
 #. Tag: entry
-#: preparing.xml:476 preparing.xml:504
+#: preparing.xml:489 preparing.xml:517
 #, no-c-format
 msgid "Network"
 msgstr "網路"
 
 # index.docbook:475, index.docbook:501
 #. Tag: entry
-#: preparing.xml:479 preparing.xml:505
+#: preparing.xml:492 preparing.xml:518
 #, no-c-format
 msgid "Type of adapter."
 msgstr "適配器類型。"
 
 #. Tag: entry
-#: preparing.xml:482
+#: preparing.xml:495
 #, no-c-format
 msgid "Printer"
 msgstr "印表機"
 
 #. Tag: entry
-#: preparing.xml:485
+#: preparing.xml:498
 #, no-c-format
 msgid "Printing resolutions supported."
 msgstr "支援的印表機解析度。"
 
 #. Tag: entry
-#: preparing.xml:488
+#: preparing.xml:501
 #, no-c-format
 msgid "Video Card"
 msgstr "顯示卡"
 
 #. Tag: entry
-#: preparing.xml:491
+#: preparing.xml:504
 #, no-c-format
 msgid "Video RAM available."
 msgstr "可用顯示記憶體"
 
 #. Tag: entry
-#: preparing.xml:493
+#: preparing.xml:506
 #, no-c-format
 msgid ""
 "Resolutions and color depths supported (these should be checked against your "
@@ -729,48 +737,48 @@ msgid ""
 msgstr "支援的解析度和顏色數 (還需檢驗您顯示器的能力)。"
 
 #. Tag: entry
-#: preparing.xml:498
+#: preparing.xml:511
 #, no-c-format
 msgid "DASD"
 msgstr "DASD"
 
 #. Tag: entry
-#: preparing.xml:499
+#: preparing.xml:512
 #, no-c-format
 msgid "Device number(s)."
 msgstr "設備編號。"
 
 #. Tag: entry
-#: preparing.xml:507
+#: preparing.xml:520
 #, no-c-format
 msgid "Device numbers."
 msgstr "設備編號。"
 
 #. Tag: entry
-#: preparing.xml:508
+#: preparing.xml:521
 #, no-c-format
 msgid "Relative adapter number for OSA cards."
 msgstr "OSA 卡的相對應適配器編號。"
 
 #. Tag: title
-#: preparing.xml:516
+#: preparing.xml:529
 #, no-c-format
 msgid "Hardware Compatibility"
 msgstr "硬體相容性"
 
 #. Tag: para
-#: preparing.xml:518
-#, no-c-format
+#: preparing.xml:531
+#, fuzzy, no-c-format
 msgid ""
 "Many brand name products work without trouble on Linux. Moreover, hardware "
-"for Linux is improving daily. However, Linux still does not run as many "
-"different types of hardware as some operating systems."
+"support in Linux is improving daily. However, Linux still does not run as "
+"many different types of hardware as some operating systems."
 msgstr ""
 "多數品牌的產品在 Linux 上運作不會遇到麻煩。而且，對 Linux 的硬體支援每天都在"
 "改善。 然而，Linux 仍然不能像某些作業系統那樣可以在各種不同的硬體上運行。"
 
 #. Tag: para
-#: preparing.xml:524
+#: preparing.xml:537
 #, no-c-format
 msgid ""
 "In particular, Linux usually cannot run hardware that requires a running "
@@ -779,7 +787,7 @@ msgstr ""
 "特別的是，Linux 通常不能驅動那些需要在某些 Windows 版本上才能運作的硬體。"
 
 #. Tag: para
-#: preparing.xml:529
+#: preparing.xml:542
 #, no-c-format
 msgid ""
 "Although some Windows-specific hardware can be made to run on Linux, doing "
@@ -792,7 +800,7 @@ msgstr ""
 "上。 因此，它們很快就會被廢棄。"
 
 #. Tag: para
-#: preparing.xml:536
+#: preparing.xml:549
 #, no-c-format
 msgid ""
 "So called win-modems are the most common type of this hardware. However, "
@@ -802,19 +810,19 @@ msgstr ""
 "的。"
 
 #. Tag: para
-#: preparing.xml:541
+#: preparing.xml:554
 #, no-c-format
 msgid "You can check hardware compatibility by:"
 msgstr "您可以透過以下方式檢驗硬體相容性："
 
 #. Tag: para
-#: preparing.xml:546
+#: preparing.xml:559
 #, no-c-format
 msgid "Checking manufacturers' web sites for new drivers."
 msgstr "檢查製造商的網站來得到新的驅動程式。"
 
 #. Tag: para
-#: preparing.xml:551
+#: preparing.xml:564
 #, no-c-format
 msgid ""
 "Looking at web sites or manuals for information about emulation. Lesser "
@@ -824,7 +832,7 @@ msgstr ""
 "式或設定。"
 
 #. Tag: para
-#: preparing.xml:558
+#: preparing.xml:571
 #, no-c-format
 msgid ""
 "Checking hardware compatibility lists for Linux on web sites dedicated to "
@@ -832,19 +840,19 @@ msgid ""
 msgstr "檢查您電腦架構的 Linux 相容性列表網站。"
 
 #. Tag: para
-#: preparing.xml:564
+#: preparing.xml:577
 #, no-c-format
 msgid "Searching the Internet for other users' experiences."
 msgstr "搜索網際網路尋找其他使用者的經驗。"
 
 #. Tag: title
-#: preparing.xml:575
+#: preparing.xml:588
 #, no-c-format
 msgid "Network Settings"
 msgstr "網路設置"
 
 #. Tag: para
-#: preparing.xml:577
+#: preparing.xml:590
 #, no-c-format
 msgid ""
 "If your computer is connected to a network 24 hours a day (i.e., an Ethernet "
@@ -855,31 +863,31 @@ msgstr ""
 "連接)，您需要向您的網路系統管理員咨詢這項資料。"
 
 #. Tag: para
-#: preparing.xml:584
+#: preparing.xml:597
 #, no-c-format
 msgid "Your host name (you may be able to decide this on your own)."
 msgstr "您的主機名(也許可以自己決定)。"
 
 #. Tag: para
-#: preparing.xml:589
+#: preparing.xml:602
 #, no-c-format
 msgid "Your domain name."
 msgstr "您的網網域名稱。"
 
 #. Tag: para
-#: preparing.xml:594
+#: preparing.xml:607
 #, no-c-format
 msgid "Your computer's IP address."
 msgstr "您電腦的 IP 位址。"
 
 #. Tag: para
-#: preparing.xml:599
+#: preparing.xml:612
 #, no-c-format
 msgid "The netmask to use with your network."
 msgstr "您網路的網路遮罩。"
 
 #. Tag: para
-#: preparing.xml:604
+#: preparing.xml:617
 #, no-c-format
 msgid ""
 "The IP address of the default gateway system you should route to, if your "
@@ -888,7 +896,7 @@ msgstr ""
 "預設路由閘道的 IP 位址，如果您的網路<emphasis>有</emphasis>閘道器的話。"
 
 #. Tag: para
-#: preparing.xml:610
+#: preparing.xml:623
 #, no-c-format
 msgid ""
 "The system on your network that you should use as a DNS (Domain Name "
@@ -896,7 +904,7 @@ msgid ""
 msgstr "您的網路中作為 DNS (網域名稱稱服務) 伺服器的系統。"
 
 #. Tag: para
-#: preparing.xml:618
+#: preparing.xml:631
 #, no-c-format
 msgid ""
 "On the other hand, if your administrator tells you that a DHCP server is "
@@ -908,31 +916,31 @@ msgstr ""
 "需瞭解這項資料，因為 DHCP 伺服器會在安裝過程中直接提供。"
 
 #. Tag: para
-#: preparing.xml:625
+#: preparing.xml:638
 #, no-c-format
 msgid "If you use a wireless network, you should also find out:"
 msgstr "如果您有一個無線網路，您應該找出："
 
 #. Tag: para
-#: preparing.xml:630
+#: preparing.xml:643
 #, no-c-format
 msgid "ESSID of your wireless network."
 msgstr "您無線網路的 ESSID。"
 
 #. Tag: para
-#: preparing.xml:635
+#: preparing.xml:648
 #, no-c-format
 msgid "WEP security key (if applicable)."
 msgstr "WEP 安全金鑰 (如果可用)。"
 
 #. Tag: title
-#: preparing.xml:652
+#: preparing.xml:665
 #, no-c-format
 msgid "Meeting Minimum Hardware Requirements"
 msgstr "滿足最低的硬體要求"
 
 #. Tag: para
-#: preparing.xml:653
+#: preparing.xml:666
 #, no-c-format
 msgid ""
 "Once you have gathered information about your computer's hardware, check "
@@ -943,7 +951,7 @@ msgstr ""
 "償的安裝系統。"
 
 #. Tag: para
-#: preparing.xml:659
+#: preparing.xml:672
 #, no-c-format
 msgid ""
 "Depending on your needs, you might manage with less than some of the "
@@ -954,17 +962,16 @@ msgstr ""
 "建議的話，多數使用者會安裝失敗。"
 
 #. Tag: para
-#: preparing.xml:665
-#, no-c-format
+#: preparing.xml:678
+#, fuzzy, no-c-format
 msgid ""
-"A Pentium 100 is the minimum recommended for desktop systems, and a Pentium "
-"II-300 for a Server."
+"A Pentium 4, 1GHz system is the minimum recommended for a desktop systems."
 msgstr ""
 "Pentium 100 是桌面系統的最低建議配備，而 Pentium II-300 則是伺服器要求的最低"
 "建議配備。"
 
 #. Tag: para
-#: preparing.xml:670
+#: preparing.xml:683
 #, no-c-format
 msgid ""
 "A 68030 or better processor is recommended for m68k installs. You may get by "
@@ -974,189 +981,140 @@ msgstr ""
 "間就能完成安裝。"
 
 #. Tag: para
-#: preparing.xml:675
-#, no-c-format
-msgid ""
-"Any OldWorld or NewWorld PowerPC can serve well as a Desktop System. For "
-"servers, a minimum 132-Mhz machine is recommended."
+#: preparing.xml:688
+#, fuzzy, no-c-format
+msgid "Any OldWorld or NewWorld PowerPC can serve well as a desktop system."
 msgstr ""
 "任何一台 OldWorld 或 NewWorld PowerPC 都可以用來作為不錯的桌面系統。要是作為"
 "伺服器的話，建議至少要 132 Mhz 的機器才行。"
 
 #. Tag: title
-#: preparing.xml:684
+#: preparing.xml:695
 #, no-c-format
 msgid "Recommended Minimum System Requirements"
 msgstr "建議的最低系統需求"
 
 #. Tag: entry
-#: preparing.xml:688
+#: preparing.xml:699
 #, no-c-format
 msgid "Install Type"
 msgstr "安裝類別"
 
 #. Tag: entry
-#: preparing.xml:688
+#: preparing.xml:700
 #, no-c-format
-msgid "<entry>RAM</entry>"
-msgstr "<entry>記憶體</entry>"
+msgid "RAM (minimal)"
+msgstr ""
 
 #. Tag: entry
-#: preparing.xml:688
+#: preparing.xml:701
+#, no-c-format
+msgid "RAM (recommended)"
+msgstr ""
+
+#. Tag: entry
+#: preparing.xml:702
 #, no-c-format
 msgid "Hard Drive"
 msgstr "硬碟"
 
 #. Tag: entry
-#: preparing.xml:694
+#: preparing.xml:708
 #, no-c-format
 msgid "No desktop"
 msgstr "無桌面系統"
 
 #. Tag: entry
-#: preparing.xml:695
-#, no-c-format
-msgid "24 megabytes"
-msgstr "24 MB"
-
-#. Tag: entry
-#: preparing.xml:696
-#, no-c-format
-msgid "450 megabytes"
-msgstr "450 MB"
-
-#. Tag: entry
-#: preparing.xml:698
-#, no-c-format
-msgid "With Desktop"
-msgstr "有桌面系統"
-
-#. Tag: entry
-#: preparing.xml:699
+#: preparing.xml:709 preparing.xml:714
 #, no-c-format
 msgid "64 megabytes"
 msgstr "64 MB"
 
 #. Tag: entry
-#: preparing.xml:700
+#: preparing.xml:710
+#, fuzzy, no-c-format
+msgid "256 megabytes"
+msgstr "24 MB"
+
+#. Tag: entry
+#: preparing.xml:711
 #, no-c-format
 msgid "1 gigabyte"
 msgstr "1 GB"
 
 #. Tag: entry
-#: preparing.xml:702
+#: preparing.xml:713
 #, no-c-format
-msgid "Server"
-msgstr "伺服器"
+msgid "With Desktop"
+msgstr "有桌面系統"
 
 #. Tag: entry
-#: preparing.xml:703
-#, no-c-format
-msgid "128 megabytes"
+#: preparing.xml:715
+#, fuzzy, no-c-format
+msgid "512 megabytes"
 msgstr "128 MB"
 
 #. Tag: entry
-#: preparing.xml:704
-#, no-c-format
-msgid "4 gigabytes"
-msgstr "4 GB"
+#: preparing.xml:716
+#, fuzzy, no-c-format
+msgid "5 gigabyte"
+msgstr "1 GB"
 
 #. Tag: para
-#: preparing.xml:709
+#: preparing.xml:721
 #, no-c-format
 msgid ""
-"Here is a sampling of some common Debian system configurations. You can also "
-"get an idea of the disk space used by related groups of programs by "
-"referring to <xref linkend=\"tasksel-size-list\"/>."
+"The actual minimum memory requirements are a lot less then the numbers "
+"listed in this table. Depending on the architecture, it is possible to "
+"install Debian with as little as 20MB (for s390) to 48MB (for i386 and "
+"amd64). The same goes for the disk space requirements, especially if you "
+"pick and choose which applications to install; see <xref linkend=\"tasksel-"
+"size-list\"/> for additional information on disk space requirements."
 msgstr ""
-"這裡有些一般 Debian 系統設定的樣本。您可以參閱 <xref linkend=\"tasksel-size-"
-"list\"/> 以瞭解各類軟體需要佔多大的硬碟空間。"
-
-#. Tag: term
-#: preparing.xml:719
-#, no-c-format
-msgid "Standard Server"
-msgstr "標準伺服器"
 
 #. Tag: para
-#: preparing.xml:720
+#: preparing.xml:731
 #, no-c-format
 msgid ""
-"This is a small server profile, useful for a stripped down server which does "
-"not have a lot of niceties for shell users. It includes an FTP server, a web "
-"server, DNS, NIS, and POP. For these 100MB of disk space would suffice, and "
-"then you would need to add space for any data you serve up."
+"It is possible to run a graphical desktop environment on older or low-end "
+"systems, but in that case it is recommended to install a window manager that "
+"is less resource-hungry than those of the GNOME or KDE desktop environments; "
+"alternatives include <classname>xfce4</classname>, <classname>icewm</"
+"classname> and <classname>wmaker</classname>, but there are others to choose "
+"from."
 msgstr ""
-"這裡有一台小型伺服器範例，它適用於精簡型伺服器，即沒有為 shell 的使用者安裝過"
-"多好用的軟體。這類伺服器裝有：FTP 伺服、web 伺服、DNS、NIS 以及 POP 服務。這"
-"些服務總共需要 100MB 磁碟空間，您還需要另外算上服務所需資料所佔用的空間。"
-
-#. Tag: term
-#: preparing.xml:732
-#, no-c-format
-msgid "Desktop"
-msgstr "桌面"
 
 #. Tag: para
-#: preparing.xml:733
+#: preparing.xml:740
 #, no-c-format
 msgid ""
-"A standard desktop box, including the X window system, full desktop "
-"environments, sound, editors, etc. You'll need about 2GB using the standard "
-"desktop task, though it can be done in far less."
+"It is practically impossible to give general memory or disk space "
+"requirements for server installations as those very much depend on what the "
+"server is to be used for."
 msgstr ""
-"標準的桌面用機器安裝有 X 視窗系統、完整的桌面環境、音效軟體、編輯器等。這些軟"
-"體套件將總共需要約 2G 空間，儘管也可以不需要這麼多。"
-
-#. Tag: term
-#: preparing.xml:743
-#, no-c-format
-msgid "Work Console"
-msgstr "工作控制台"
 
 #. Tag: para
-#: preparing.xml:744
-#, no-c-format
-msgid ""
-"A more stripped-down user machine, without the X window system or X "
-"applications. Possibly suitable for a laptop or mobile computer. The size is "
-"around 140MB."
-msgstr ""
-"這是被高度精簡的使用者機器，它沒有安裝 X 視窗系統或者 X 軟體。可能適用於筆記"
-"型電腦或者手提電腦。其所需空間約為 140MB。"
-
-#. Tag: term
-#: preparing.xml:754
-#, no-c-format
-msgid "Developer"
-msgstr "開發人員"
-
-#. Tag: para
-#: preparing.xml:755
-#, no-c-format
-msgid ""
-"A desktop setup with all the development packages, such as Perl, C, C++, "
-"etc. Size is around 475MB. Assuming you are adding X11 and some additional "
-"packages for other uses, you should plan around 800MB for this type of "
-"machine."
-msgstr ""
-"這是包括所有開發軟體套件的桌面設置，例如 Perl、C、C++ 等。其所需空間約為 "
-"475MB。若是您為了其它用途，而另行安裝了 X11 和其它的軟體套件，那麼您需要為這"
-"類機器規劃出約 800MB 空間。"
-
-#. Tag: para
-#: preparing.xml:765
+#: preparing.xml:746
 #, no-c-format
 msgid ""
 "Remember that these sizes don't include all the other materials which are "
 "usually to be found, such as user files, mail, and data. It is always best "
-"to be generous when considering the space for your own files and data. "
-"Notably, the <filename>/var</filename> partition contains a lot of state "
-"information specific to Debian in addition to its regular contents like "
-"logfiles. The <command>dpkg</command> files (with information on all "
-"installed packages) can easily consume 20MB. Also, <command>apt-get</"
-"command> puts downloaded packages here before they are installed. You should "
-"usually allocate at least 100MB for <filename>/var</filename>."
+"to be generous when considering the space for your own files and data."
+msgstr ""
+
+#. Tag: para
+#: preparing.xml:753
+#, fuzzy, no-c-format
+msgid ""
+"Disk space required for the smooth operation of the &debian; system itself "
+"is taken into account in these recommended system requirements. Notably, the "
+"<filename>/var</filename> partition contains a lot of state information "
+"specific to Debian in addition to its regular contents, like logfiles. The "
+"<command>dpkg</command> files (with information on all installed packages) "
+"can easily consume 40MB. Also, <command>apt-get</command> puts downloaded "
+"packages here before they are installed. You should usually allocate at "
+"least 200MB for <filename>/var</filename>, and a lot more if you install a "
+"graphical desktop environment."
 msgstr ""
 "要提醒您的是上面所說的空間大小沒有把其它任何資料數據包含在內。這通常包含使用"
 "者的文件、信件或者使用者的資料。一般來說，最好在為您自己的檔案和資料分配空間"
@@ -1167,13 +1125,13 @@ msgstr ""
 "給 <filename>/var</filename>。"
 
 #. Tag: title
-#: preparing.xml:789
+#: preparing.xml:777
 #, no-c-format
 msgid "Pre-Partitioning for Multi-Boot Systems"
 msgstr "為多重開機系統事先分割磁碟"
 
 #. Tag: para
-#: preparing.xml:790
+#: preparing.xml:778
 #, no-c-format
 msgid ""
 "Partitioning your disk simply refers to the act of breaking up your disk "
@@ -1186,7 +1144,7 @@ msgstr ""
 "傢俱，不會對其它房間有任何影響。"
 
 #. Tag: para
-#: preparing.xml:797
+#: preparing.xml:785
 #, no-c-format
 msgid ""
 "Whenever this section talks about <quote>disks</quote> you should translate "
@@ -1198,19 +1156,19 @@ msgstr ""
 "客。"
 
 #. Tag: para
-#: preparing.xml:803
-#, no-c-format
+#: preparing.xml:791
+#, fuzzy, no-c-format
 msgid ""
-"If you already have an operating system on your system <phrase arch=\"i386"
-"\"> (Windows 9x, Windows NT/2000/XP, OS/2, MacOS, Solaris, FreeBSD, "
-"&hellip;) </phrase> <phrase arch=\"alpha\"> (Tru64 (Digital UNIX), OpenVMS, "
-"Windows NT, FreeBSD, &hellip;) </phrase> <phrase arch=\"s390\"> (VM, z/OS, "
-"OS/390, &hellip;) </phrase> <phrase arch=\"m68k\"> (Amiga OS, Atari TOS, Mac "
-"OS, &hellip;) </phrase> and want to stick Linux on the same disk, you will "
-"need to repartition the disk. Debian requires its own hard disk partitions. "
-"It cannot be installed on Windows or MacOS partitions. It may be able to "
-"share some partitions with other Linux systems, but that's not covered here. "
-"At the very least you will need a dedicated partition for the Debian root."
+"If you already have an operating system on your system <phrase arch=\"x86\"> "
+"(Windows 9x, Windows NT/2000/XP, OS/2, MacOS, Solaris, FreeBSD, &hellip;) </"
+"phrase> <phrase arch=\"alpha\"> (Tru64 (Digital UNIX), OpenVMS, Windows NT, "
+"FreeBSD, &hellip;) </phrase> <phrase arch=\"s390\"> (VM, z/OS, OS/390, "
+"&hellip;) </phrase> <phrase arch=\"m68k\"> (Amiga OS, Atari TOS, Mac OS, "
+"&hellip;) </phrase> and want to stick Linux on the same disk, you will need "
+"to repartition the disk. Debian requires its own hard disk partitions. It "
+"cannot be installed on Windows or MacOS partitions. It may be able to share "
+"some partitions with other Linux systems, but that's not covered here. At "
+"the very least you will need a dedicated partition for the Debian root."
 msgstr ""
 "如果您已經在您的機器中安裝作業系統 <phrase arch=\"i386\"> (Windows 9x, "
 "Windows NT/2000/XP, OS/2, MacOS, Solaris, FreeBSD, &hellip;) </phrase> "
@@ -1223,11 +1181,11 @@ msgstr ""
 "明。最起碼，您要為 Debian 的根目錄準備一個專用的分割區。"
 
 #. Tag: para
-#: preparing.xml:830
-#, no-c-format
+#: preparing.xml:818
+#, fuzzy, no-c-format
 msgid ""
 "You can find information about your current partition setup by using a "
-"partitioning tool for your current operating system<phrase arch=\"i386\">, "
+"partitioning tool for your current operating system<phrase arch=\"x86\">, "
 "such as fdisk or PartitionMagic</phrase><phrase arch=\"powerpc\">, such as "
 "Drive Setup, HD Toolkit, or MacTools</phrase><phrase arch=\"m68k\">, such as "
 "HD SC Setup, HDToolBox, or SCSITool</phrase><phrase arch=\"s390\">, such as "
@@ -1241,7 +1199,7 @@ msgstr ""
 "phrase>分割工具軟體總會提供一種辦法讓您查看現有的分割區情況，而不作任何改動。"
 
 #. Tag: para
-#: preparing.xml:840
+#: preparing.xml:828
 #, no-c-format
 msgid ""
 "In general, changing a partition with a file system already on it will "
@@ -1255,13 +1213,13 @@ msgstr ""
 "最好在把擋路的傢俱都移開，否則就要冒著傢俱被破壞的危險。"
 
 #. Tag: emphasis
-#: preparing.xml:850
+#: preparing.xml:838
 #, no-c-format
 msgid "FIXME: write about HP-UX disks?"
 msgstr "FIXME: write about HP-UX disks?"
 
 #. Tag: para
-#: preparing.xml:852
+#: preparing.xml:840
 #, no-c-format
 msgid ""
 "If your computer has more than one hard disk, you may want to dedicate one "
@@ -1274,7 +1232,7 @@ msgstr ""
 "建的分割區程式會漂亮地完成這個任務。"
 
 #. Tag: para
-#: preparing.xml:859
+#: preparing.xml:847
 #, no-c-format
 msgid ""
 "If your machine has only one hard disk, and you would like to completely "
@@ -1298,7 +1256,7 @@ msgstr ""
 "可以有幾個辦法可選，例如原先系統的安裝磁帶或光碟。"
 
 #. Tag: para
-#: preparing.xml:874
+#: preparing.xml:862
 #, no-c-format
 msgid ""
 "If your machine already has multiple partitions, and enough space can be "
@@ -1315,7 +1273,7 @@ msgstr ""
 "先切割好分割區。"
 
 #. Tag: para
-#: preparing.xml:884
+#: preparing.xml:872
 #, no-c-format
 msgid ""
 "If your machine has a FAT or NTFS filesystem, as used by DOS and Windows, "
@@ -1326,7 +1284,7 @@ msgstr ""
 "Debian 安裝程式中的分割工具來重新調整檔案系統的大小。"
 
 #. Tag: para
-#: preparing.xml:890
+#: preparing.xml:878
 #, no-c-format
 msgid ""
 "If none of the above apply, you'll need to partition your hard disk before "
@@ -1345,7 +1303,7 @@ msgstr ""
 "自身的分割區。"
 
 #. Tag: para
-#: preparing.xml:902
+#: preparing.xml:890
 #, no-c-format
 msgid ""
 "If you are going to install more than one operating system on the same "
@@ -1358,7 +1316,7 @@ msgstr ""
 "能會慫恿您重新格式化不屬於它們自己的分割區。"
 
 #. Tag: para
-#: preparing.xml:910
+#: preparing.xml:898
 #, no-c-format
 msgid ""
 "You can recover from these actions or avoid them, but installing the native "
@@ -1368,7 +1326,7 @@ msgstr ""
 "夠幫您免除這些煩惱。"
 
 #. Tag: para
-#: preparing.xml:915
+#: preparing.xml:903
 #, no-c-format
 msgid ""
 "In order for OpenFirmware to automatically boot &debian; the Linux "
@@ -1388,7 +1346,7 @@ msgstr ""
 "之。"
 
 #. Tag: para
-#: preparing.xml:927
+#: preparing.xml:915
 #, no-c-format
 msgid ""
 "If you currently have one hard disk with one partition (a common setup for "
@@ -1399,13 +1357,13 @@ msgstr ""
 "您希望能多重開機原有的作業系統和 Debian，那麼您就需要："
 
 #. Tag: para
-#: preparing.xml:934
+#: preparing.xml:922
 #, no-c-format
 msgid "Back up everything on the computer."
 msgstr "備份電腦裡所有的資料。"
 
 #. Tag: para
-#: preparing.xml:939
+#: preparing.xml:927
 #, no-c-format
 msgid ""
 "Boot from the native operating system installer media such as CD-ROM or "
@@ -1418,7 +1376,7 @@ msgstr ""
 "的 MacOS 系統。</phrase>"
 
 #. Tag: para
-#: preparing.xml:949
+#: preparing.xml:937
 #, no-c-format
 msgid ""
 "Use the native partitioning tools to create native system partition(s). "
@@ -1428,13 +1386,13 @@ msgstr ""
 "割區，或者騰出一塊空間。"
 
 #. Tag: para
-#: preparing.xml:956
+#: preparing.xml:944
 #, no-c-format
 msgid "Install the native operating system on its new partition."
 msgstr "把原有作業系統安裝到屬於它的新分割區上。"
 
 #. Tag: para
-#: preparing.xml:961
+#: preparing.xml:949
 #, no-c-format
 msgid ""
 "Boot back into the native system to verify everything's OK, and to download "
@@ -1442,19 +1400,19 @@ msgid ""
 msgstr "開機到原有作業系統，以確保一切正常，再下載 Debian 安裝程式的開機檔案。"
 
 #. Tag: para
-#: preparing.xml:967
+#: preparing.xml:955
 #, no-c-format
 msgid "Boot the Debian installer to continue installing Debian."
 msgstr "啟動 Debian 安裝程式，並繼續安裝 Debian。"
 
 #. Tag: title
-#: preparing.xml:981
+#: preparing.xml:969
 #, no-c-format
 msgid "Partitioning in Tru64 UNIX"
 msgstr "Tru64 UNIX 下的分割"
 
 #. Tag: para
-#: preparing.xml:982
+#: preparing.xml:970
 #, no-c-format
 msgid ""
 "Tru64 UNIX, formerly known as Digital UNIX, which is in turn formerly known "
@@ -1476,7 +1434,7 @@ msgstr ""
 "而 <filename>sda5</filename> 是在 Linux 裡的名稱。"
 
 #. Tag: para
-#: preparing.xml:994
+#: preparing.xml:982
 #, no-c-format
 msgid ""
 "Partitions in a Tru64 disk label may overlap. Moreover, if this disk will be "
@@ -1498,7 +1456,7 @@ msgstr ""
 "到 Debian 之下。"
 
 #. Tag: para
-#: preparing.xml:1007
+#: preparing.xml:995
 #, no-c-format
 msgid ""
 "Another conventional requirement is for the <quote>a</quote> partition to "
@@ -1514,7 +1472,7 @@ msgstr ""
 "上，否則資料會破壞。"
 
 #. Tag: para
-#: preparing.xml:1016
+#: preparing.xml:1004
 #, no-c-format
 msgid ""
 "It is possible, and indeed quite reasonable, to share a swap partition "
@@ -1531,7 +1489,7 @@ msgstr ""
 "令之前。"
 
 #. Tag: para
-#: preparing.xml:1025
+#: preparing.xml:1013
 #, no-c-format
 msgid ""
 "If you want to mount UNIX partitions under Linux, note that Digital UNIX can "
@@ -1542,23 +1500,23 @@ msgstr ""
 "系統類型，UFS 和 AdvFS，而 Linux 只能識別前者。"
 
 #. Tag: title
-#: preparing.xml:1034
+#: preparing.xml:1022
 #, no-c-format
 msgid "Partitioning in Windows NT"
 msgstr "Windows NT 下的分割"
 
 #. Tag: para
-#: preparing.xml:1036
-#, no-c-format
+#: preparing.xml:1024
+#, fuzzy, no-c-format
 msgid ""
 "Windows NT uses the PC-style partition table. If you are manipulating "
 "existing FAT or NTFS partitions, it is recommended that you use the native "
 "Windows NT tools (or, more conveniently, you can also repartition your disk "
 "from the AlphaBIOS setup menu). Otherwise, it is not really necessary to "
 "partition from Windows; the Linux partitioning tools will generally do a "
-"better job. Note that when you run NT, the Disk Administrator may offer you "
-"to write a <quote>harmless signature</quote> on non-Windows disks if you "
-"have any. <emphasis>Never</emphasis> let it do that, as this signature will "
+"better job. Note that when you run NT, the Disk Administrator may offer to "
+"write a <quote>harmless signature</quote> on non-Windows disks if you have "
+"any. <emphasis>Never</emphasis> let it do that, as this signature will "
 "destroy the partition information."
 msgstr ""
 "Windows NT 使用 PC 風格的分割表。如果您要處理已存在的 FAT 或 NTFS 分割區，建"
@@ -1569,7 +1527,7 @@ msgstr ""
 "個標誌會破壞該分割區上的資料。"
 
 #. Tag: para
-#: preparing.xml:1049
+#: preparing.xml:1037
 #, no-c-format
 msgid ""
 "If you plan to boot Linux from an ARC/AlphaBIOS/ARCSBIOS console, you will "
@@ -1585,13 +1543,13 @@ msgstr ""
 "上已經有 MILO，或者從其他媒介安裝，Debian 仍然可以從 ARC 開機。"
 
 #. Tag: title
-#: preparing.xml:1066
+#: preparing.xml:1054
 #, no-c-format
 msgid "Partitioning From DOS or Windows"
 msgstr "DOS 或 Windows 下的分割"
 
 #. Tag: para
-#: preparing.xml:1067
+#: preparing.xml:1055
 #, no-c-format
 msgid ""
 "If you are manipulating existing FAT or NTFS partitions, it is recommended "
@@ -1604,16 +1562,16 @@ msgstr ""
 "Windows 分割，一般來說，Linux 的分割軟體會做得更好。"
 
 #. Tag: para
-#: preparing.xml:1075
-#, no-c-format
+#: preparing.xml:1063
+#, fuzzy, no-c-format
 msgid ""
-"But if you have a large IDE disk, and are using neither LBA addressing, "
-"overlay drivers (sometimes provided by hard disk manufacturers), nor a new "
-"(post 1998) BIOS that supports large disk access extensions, then you must "
-"locate your Debian boot partition carefully. In this case, you will have to "
-"put the boot partition into the first 1024 cylinders of your hard drive "
-"(usually around 524 megabytes, without BIOS translation). This may require "
-"that you move an existing FAT or NTFS partition."
+"But if you have a large IDE disk, and are not using LBA addressing, overlay "
+"drivers (sometimes provided by hard disk manufacturers), or a new (post "
+"1998) BIOS that supports large disk access extensions, then you must locate "
+"your Debian boot partition carefully. In this case, you will have to put the "
+"boot partition into the first 1024 cylinders of your hard disk (usually "
+"around 524 megabytes, without BIOS translation). This may require that you "
+"move an existing FAT or NTFS partition."
 msgstr ""
 "但是，如果您有一顆 IDE 介面的大硬碟，而且使用的既不是 LBA 定址或 overlay 驅動"
 "程式 (有時候硬碟廠商會提供這種驅動)，也沒用新款 (1998 年以後) 支援大硬碟追蹤"
@@ -1622,24 +1580,24 @@ msgstr ""
 "524 MB)。為此，您可能需要移動硬碟上的 FAT 或 NTFS 分割區。"
 
 #. Tag: title
-#: preparing.xml:1089
+#: preparing.xml:1077
 #, no-c-format
 msgid "Lossless Repartitioning When Starting From DOS, Win-32 or OS/2"
 msgstr "在 DOS、Win-32 或者 OS/2 下的無害分割"
 
 #. Tag: para
-#: preparing.xml:1092
-#, no-c-format
+#: preparing.xml:1080
+#, fuzzy, no-c-format
 msgid ""
 "One of the most common installations is onto a system that already contains "
 "DOS (including Windows 3.1), Win32 (such as Windows 95, 98, Me, NT, 2000, "
 "XP), or OS/2, and it is desired to put Debian onto the same disk without "
 "destroying the previous system. Note that the installer supports resizing of "
 "FAT and NTFS filesystems as used by DOS and Windows. Simply start the "
-"installer, select the option to <menuchoice> <guimenuitem>Manually edit "
-"partition table</guimenuitem> </menuchoice>, select the partition to resize, "
-"and specify its new size. So in most cases you should not need to use the "
-"method described below."
+"installer and when you get to the partitioning step, select the option for "
+"<menuchoice> <guimenuitem>Manual</guimenuitem> </menuchoice> partitioning, "
+"select the partition to resize, and specify its new size. So in most cases "
+"you should not need to use the method described below."
 msgstr ""
 "各常見的安裝中，其中有一種就是希望在已經安裝有 DOS (含 Windows 3.1)、 Win32 "
 "(如 Windows 95、98、Me、NT、2000、XP) 或者 OS/2 的系統上加裝 Debian 到同一顆"
@@ -1649,7 +1607,7 @@ msgstr ""
 "調整大小的分割區，指定新的大小。在多數情況下您毋須使用下面說明的方法。"
 
 #. Tag: para
-#: preparing.xml:1104
+#: preparing.xml:1092
 #, no-c-format
 msgid ""
 "Before going any further, you should have decided how you will be dividing "
@@ -1665,7 +1623,7 @@ msgstr ""
 "置換分割區或者放置檔案系統。"
 
 #. Tag: para
-#: preparing.xml:1113
+#: preparing.xml:1101
 #, no-c-format
 msgid ""
 "The idea is to move all the data on the partition to the beginning, before "
@@ -1681,7 +1639,7 @@ msgstr ""
 "空間大小。"
 
 #. Tag: para
-#: preparing.xml:1122
+#: preparing.xml:1110
 #, no-c-format
 msgid ""
 "The first thing needed is a copy of <command>fips</command> which is "
@@ -1705,7 +1663,7 @@ msgstr ""
 "emphasis>請先做一張開機片並好好閱讀該文件。"
 
 #. Tag: para
-#: preparing.xml:1135
+#: preparing.xml:1123
 #, no-c-format
 msgid ""
 "The next thing needed is to move all the data to the beginning of the "
@@ -1724,7 +1682,7 @@ msgstr ""
 "VFAT 分割區。"
 
 #. Tag: para
-#: preparing.xml:1145
+#: preparing.xml:1133
 #, no-c-format
 msgid ""
 "After running the defragmenter (which can take a while on a large disk), "
@@ -1736,7 +1694,7 @@ msgstr ""
 "<filename>a:\\fips</filename> 然後按照提示操作。"
 
 #. Tag: para
-#: preparing.xml:1151
+#: preparing.xml:1139
 #, no-c-format
 msgid ""
 "Note that there are many other partition managers out there, in case "
@@ -1746,13 +1704,13 @@ msgstr ""
 "遣。"
 
 #. Tag: title
-#: preparing.xml:1159
+#: preparing.xml:1147
 #, no-c-format
 msgid "Partitioning for DOS"
 msgstr "DOS 下的分割"
 
 #. Tag: para
-#: preparing.xml:1161
+#: preparing.xml:1149
 #, no-c-format
 msgid ""
 "If you are partitioning for DOS drives, or changing the size of DOS "
@@ -1768,7 +1726,7 @@ msgstr ""
 "DOS 或 Windows 中發現的各種古怪的錯誤。"
 
 #. Tag: para
-#: preparing.xml:1169
+#: preparing.xml:1157
 #, fuzzy, no-c-format
 msgid ""
 "Apparently, whenever you create or resize a partition for DOS use, it's a "
@@ -1781,19 +1739,19 @@ msgstr ""
 "這麼做："
 
 #. Tag: screen
-#: preparing.xml:1176
+#: preparing.xml:1164
 #, no-c-format
 msgid "# dd if=/dev/zero of=/dev/hdXX bs=512 count=4"
 msgstr "# dd if=/dev/zero of=/dev/hdXX bs=512 count=4"
 
 #. Tag: title
-#: preparing.xml:1187
+#: preparing.xml:1175
 #, no-c-format
 msgid "Partitioning in AmigaOS"
 msgstr "AmigaOS 下的分割"
 
 #. Tag: para
-#: preparing.xml:1188
+#: preparing.xml:1176
 #, no-c-format
 msgid ""
 "If you are running AmigaOS, you can use the <command>HDToolBox</command> "
@@ -1803,13 +1761,13 @@ msgstr ""
 "整您的分割區。"
 
 #. Tag: title
-#: preparing.xml:1196
+#: preparing.xml:1184
 #, no-c-format
 msgid "Partitioning in Atari TOS"
 msgstr "Atari TOS 下的分割"
 
 #. Tag: para
-#: preparing.xml:1197
+#: preparing.xml:1185
 #, no-c-format
 msgid ""
 "Atari partition IDs are three ASCII characters, use <quote>LNX</quote> for "
@@ -1828,7 +1786,7 @@ msgstr ""
 "混亂，使得整個磁碟無法使用。"
 
 #. Tag: para
-#: preparing.xml:1208
+#: preparing.xml:1196
 #, no-c-format
 msgid ""
 "There are a multitude of third party partitioning tools available (the Atari "
@@ -1842,7 +1800,7 @@ msgstr ""
 "自 Hard+Soft GmBH)的說明。"
 
 #. Tag: para
-#: preparing.xml:1217
+#: preparing.xml:1205
 #, no-c-format
 msgid ""
 "Start <command>SCSITool</command> and select the disk you want to partition "
@@ -1852,7 +1810,7 @@ msgstr ""
 "guimenu> 選單中的 <guimenuitem>select</guimenuitem>)。"
 
 #. Tag: para
-#: preparing.xml:1223
+#: preparing.xml:1211
 #, no-c-format
 msgid ""
 "From the <guimenu>Partition</guimenu> menu, select either <guimenuitem>New</"
@@ -1868,7 +1826,7 @@ msgstr ""
 "則 <guimenuitem>New</guimenuitem> 大概是最佳選擇。"
 
 #. Tag: para
-#: preparing.xml:1233
+#: preparing.xml:1221
 #, no-c-format
 msgid ""
 "For the <guimenuitem>New</guimenuitem> choice, select <guilabel>existing</"
@@ -1886,7 +1844,7 @@ msgstr ""
 "儲存並離開視窗。"
 
 #. Tag: para
-#: preparing.xml:1245
+#: preparing.xml:1233
 #, no-c-format
 msgid ""
 "For the <guimenuitem>Change</guimenuitem> option, select the partition to "
@@ -1901,7 +1859,7 @@ msgstr ""
 "並離開視窗。"
 
 #. Tag: para
-#: preparing.xml:1255
+#: preparing.xml:1243
 #, no-c-format
 msgid ""
 "Write down the Linux names for each of the partitions you created or changed "
@@ -1911,7 +1869,7 @@ msgstr ""
 "linkend=\"device-names\"/>。"
 
 #. Tag: para
-#: preparing.xml:1261
+#: preparing.xml:1249
 #, no-c-format
 msgid ""
 "Quit <command>SCSITool</command> using the <guimenuitem>Quit</guimenuitem> "
@@ -1926,7 +1884,7 @@ msgstr ""
 "過您需要備份磁碟上的所有資料，不是嗎？)。"
 
 #. Tag: para
-#: preparing.xml:1273
+#: preparing.xml:1261
 #, no-c-format
 msgid ""
 "There is a partitioning tool for Linux/m68k called <command>atari-fdisk</"
@@ -1946,13 +1904,13 @@ msgstr ""
 "具。"
 
 #. Tag: title
-#: preparing.xml:1288
+#: preparing.xml:1276
 #, no-c-format
 msgid "Partitioning in MacOS"
 msgstr "MacOS 下的分割"
 
 #. Tag: para
-#: preparing.xml:1289
+#: preparing.xml:1277
 #, no-c-format
 msgid ""
 "Partitioning tools for Macintosh tested include <command>pdisk</command>, "
@@ -1973,37 +1931,35 @@ msgstr ""
 "於 <ulink url=\"http://www.euronet.nl/users/ernstoud/patch.html\"></ulink>)。"
 
 #. Tag: para
-#: preparing.xml:1300
-#, no-c-format
+#: preparing.xml:1288
+#, fuzzy, no-c-format
 msgid ""
 "For IDE based Macs, you need to use <command>Apple Drive Setup</command> to "
 "create empty space for the Linux partitions, and complete the partitioning "
-"under Linux, or use the MacOS version of pdisk available from the MkLinux "
-"FTP server."
+"under Linux, or use the MacOS version of pdisk available for download from "
+"<ulink url=\"http://homepage.mac.com/alk/downloads/pdisk.sit.hqx\">Alsoft</"
+"ulink>."
 msgstr ""
 "對於使用 IDE 的 Mac，您需要使用 <command>Apple Drive Setup</command> 來為 "
 "Linux 分割區建立空間，然後在 Linux 下完成分割，或者使用 MacOS 版的 pdisk，它"
 "可以從 MkLinux FTP 伺服器取得。"
 
 #. Tag: title
-#: preparing.xml:1316
+#: preparing.xml:1304
 #, no-c-format
 msgid "Partitioning from SunOS"
 msgstr "SunOS 下的分割"
 
 #. Tag: para
-#: preparing.xml:1318
-#, no-c-format
+#: preparing.xml:1306
+#, fuzzy, no-c-format
 msgid ""
 "It's perfectly fine to partition from SunOS; in fact, if you intend to run "
 "both SunOS and Debian on the same machine, it is recommended that you "
 "partition using SunOS prior to installing Debian. The Linux kernel "
-"understands Sun disk labels, so there are no problems there. Just make sure "
-"you leave room for the Debian root partition within the first 1GB area of "
-"the boot disk. You can also place the kernel image on a UFS partition if "
-"that is easier than putting the root partition there. SILO supports booting "
-"Linux and SunOS from either EXT2 (Linux), UFS (SunOS), romfs and iso9660 "
-"(CDROM) partitions."
+"understands Sun disk labels, so there are no problems there. SILO supports "
+"booting Linux and SunOS from any of EXT2 (Linux), UFS (SunOS), romfs or "
+"iso9660 (CDROM) partitions."
 msgstr ""
 "從 SunOS 分割區是非常好的。事實上，如果您傾向在同一台電腦上使用 SunOS 和 "
 "Debian，我們建議在安裝 Debian 之前使用 SunOS 進行分割區。Linux 核心可以識別 "
@@ -2013,13 +1969,13 @@ msgstr ""
 "(CDROM) 分割區開機 Linux 和 SunOS。"
 
 #. Tag: title
-#: preparing.xml:1333
+#: preparing.xml:1318
 #, no-c-format
 msgid "Partitioning from Linux or another OS"
 msgstr "Linux 或其他 OS 下的分割"
 
 #. Tag: para
-#: preparing.xml:1335
+#: preparing.xml:1320
 #, no-c-format
 msgid ""
 "Whatever system you are using to partition, make sure you create a "
@@ -2040,7 +1996,7 @@ msgstr ""
 "現。"
 
 #. Tag: para
-#: preparing.xml:1347
+#: preparing.xml:1332
 #, no-c-format
 msgid ""
 "You will probably be using <command>SILO</command> as your boot loader (the "
@@ -2053,13 +2009,13 @@ msgstr ""
 "linkend=\"partitioning\"/>。"
 
 #. Tag: title
-#: preparing.xml:1362
+#: preparing.xml:1347
 #, no-c-format
 msgid "MacOS/OSX Partitioning"
 msgstr "MacOS/OSX 下的分割"
 
 #. Tag: para
-#: preparing.xml:1364
+#: preparing.xml:1349
 #, no-c-format
 msgid ""
 "The <application>Apple Drive Setup</application> application can be found in "
@@ -2074,7 +2030,7 @@ msgstr ""
 "<application>Drive Setup</application> 中。"
 
 #. Tag: para
-#: preparing.xml:1371
+#: preparing.xml:1356
 #, no-c-format
 msgid ""
 "Remember to create a placeholder partition for GNU/Linux, preferably "
@@ -2085,7 +2041,7 @@ msgstr ""
 "類型無關緊要，在後面的 &debian; 安裝程式中，它會被刪除並替換。"
 
 #. Tag: para
-#: preparing.xml:1377
+#: preparing.xml:1362
 #, no-c-format
 msgid ""
 "If you are planning to install both MacOS 9 and OS X, it is best to create "
@@ -2109,7 +2065,7 @@ msgstr ""
 "X 分割區。"
 
 #. Tag: para
-#: preparing.xml:1390
+#: preparing.xml:1375
 #, no-c-format
 msgid ""
 "GNU/Linux is unable to access information on UFS partitions, but does "
@@ -2126,13 +2082,13 @@ msgstr ""
 "援。"
 
 #. Tag: title
-#: preparing.xml:1410
+#: preparing.xml:1395
 #, no-c-format
 msgid "Pre-Installation Hardware and Operating System Setup"
 msgstr "安裝前硬體和作業系統的相關設定"
 
 #. Tag: para
-#: preparing.xml:1411
+#: preparing.xml:1396
 #, no-c-format
 msgid ""
 "This section will walk you through pre-installation hardware setup, if any, "
@@ -2150,13 +2106,13 @@ msgstr ""
 "些硬體問題，您系統上這些硬體問題在將會影響到 &debian; 的可靠性。"
 
 #. Tag: title
-#: preparing.xml:1428
+#: preparing.xml:1418
 #, no-c-format
 msgid "Invoking the BIOS Set-Up Menu"
 msgstr "使用 BIOS 設定選單"
 
 #. Tag: para
-#: preparing.xml:1430
+#: preparing.xml:1420
 #, no-c-format
 msgid ""
 "BIOS provides the basic functions needed to boot your machine to allow your "
@@ -2171,7 +2127,7 @@ msgstr ""
 "常性的系統當機或者根本無法安裝 Debian。"
 
 #. Tag: para
-#: preparing.xml:1439
+#: preparing.xml:1429
 #, no-c-format
 msgid ""
 "The rest of this section is lifted from the <ulink url=\"&url-pc-hw-faq;\"></"
@@ -2184,25 +2140,25 @@ msgstr ""
 "quote>) 設定選單取決於 BIOS 軟體的作者是誰："
 
 #. Tag: term
-#: preparing.xml:1453
+#: preparing.xml:1443
 #, no-c-format
 msgid "AMI BIOS"
 msgstr "AMI BIOS"
 
 #. Tag: para
-#: preparing.xml:1454
+#: preparing.xml:1444
 #, no-c-format
 msgid "<keycap>Delete</keycap> key during the POST (power on self test)"
 msgstr "在 POST (開機自檢) 過程中按 <keycap>Delete</keycap> 鍵"
 
 #. Tag: term
-#: preparing.xml:1462
+#: preparing.xml:1452
 #, no-c-format
 msgid "Award BIOS"
 msgstr "Award BIOS"
 
 #. Tag: para
-#: preparing.xml:1463
+#: preparing.xml:1453
 #, no-c-format
 msgid ""
 "<keycombo> <keycap>Ctrl</keycap><keycap>Alt</keycap><keycap>Esc</keycap> </"
@@ -2212,25 +2168,25 @@ msgstr ""
 "keycap><keycap>Esc</keycap> </keycombo>，或 <keycap>Delete</keycap>鍵"
 
 #. Tag: term
-#: preparing.xml:1472
+#: preparing.xml:1462
 #, no-c-format
 msgid "DTK BIOS"
 msgstr "DTK BIOS"
 
 #. Tag: para
-#: preparing.xml:1473
+#: preparing.xml:1463
 #, no-c-format
 msgid "<keycap>Esc</keycap> key during the POST"
 msgstr "在 POST 過程中按 <keycap>Esc</keycap>鍵"
 
 #. Tag: term
-#: preparing.xml:1480
+#: preparing.xml:1470
 #, no-c-format
 msgid "IBM PS/2 BIOS"
 msgstr "IBM PS/2 BIOS"
 
 #. Tag: para
-#: preparing.xml:1481
+#: preparing.xml:1471
 #, no-c-format
 msgid ""
 "<keycombo> <keycap>Ctrl</keycap><keycap>Alt</keycap><keycap>Insert</keycap> "
@@ -2242,13 +2198,13 @@ msgstr ""
 "keycap><keycap>Alt</keycap><keycap>Delete</keycap> </keycombo>"
 
 #. Tag: term
-#: preparing.xml:1495
+#: preparing.xml:1485
 #, no-c-format
 msgid "Phoenix BIOS"
 msgstr "Phoenix BIOS"
 
 #. Tag: para
-#: preparing.xml:1496
+#: preparing.xml:1486
 #, no-c-format
 msgid ""
 "<keycombo> <keycap>Ctrl</keycap><keycap>Alt</keycap><keycap>Esc</keycap> </"
@@ -2260,7 +2216,7 @@ msgstr ""
 "keycap> </keycombo> 或 <keycap>F1</keycap>"
 
 #. Tag: para
-#: preparing.xml:1512
+#: preparing.xml:1502
 #, no-c-format
 msgid ""
 "Information on invoking other BIOS routines can be found in <ulink url="
@@ -2270,7 +2226,7 @@ msgstr ""
 "invoking-bios-info;\"></ulink>。"
 
 #. Tag: para
-#: preparing.xml:1517
+#: preparing.xml:1507
 #, no-c-format
 msgid ""
 "Some &arch-title; machines don't have a CMOS configuration menu in the BIOS. "
@@ -2286,13 +2242,13 @@ msgstr ""
 
 # index.docbook:1522, index.docbook:1865
 #. Tag: title
-#: preparing.xml:1528 preparing.xml:1872
+#: preparing.xml:1518 preparing.xml:1862
 #, no-c-format
 msgid "Boot Device Selection"
 msgstr "選擇開機設備"
 
 #. Tag: para
-#: preparing.xml:1530
+#: preparing.xml:1520
 #, no-c-format
 msgid ""
 "Many BIOS set-up menus allow you to select the devices that will be used to "
@@ -2310,7 +2266,7 @@ msgstr ""
 "從軟碟或者光碟機開機。這是安裝 Debian 最常用的兩個開機設備。"
 
 #. Tag: para
-#: preparing.xml:1541
+#: preparing.xml:1531
 #, no-c-format
 msgid ""
 "If you have a newer SCSI controller and you have a CD-ROM device attached to "
@@ -2322,7 +2278,7 @@ msgstr ""
 "碟機啟動系統。"
 
 #. Tag: para
-#: preparing.xml:1548
+#: preparing.xml:1538
 #, fuzzy, no-c-format
 msgid ""
 "Another popular option is to boot from a USB storage device (also called a "
@@ -2337,7 +2293,7 @@ msgstr ""
 "<quote>USB-ZIP</quote> 開機。"
 
 #. Tag: para
-#: preparing.xml:1556
+#: preparing.xml:1546
 #, no-c-format
 msgid ""
 "Here are some details about how to set the boot order. Remember to reset the "
@@ -2348,13 +2304,13 @@ msgstr ""
 "來的開機順序，這樣，您就能像以前一樣從硬碟開機了。"
 
 #. Tag: title
-#: preparing.xml:1565
+#: preparing.xml:1555
 #, no-c-format
 msgid "Changing the Boot Order on IDE Computers"
 msgstr "修改 IDE 介面電腦的開機順序"
 
 #. Tag: para
-#: preparing.xml:1568
+#: preparing.xml:1558
 #, no-c-format
 msgid ""
 "As your computer starts, press the keys to enter the BIOS utility. Often, it "
@@ -2366,7 +2322,7 @@ msgstr ""
 "關文件。"
 
 #. Tag: para
-#: preparing.xml:1575
+#: preparing.xml:1565
 #, no-c-format
 msgid ""
 "Find the boot sequence in the setup utility. Its location depends on your "
@@ -2376,19 +2332,19 @@ msgstr ""
 "關。不管如何，您要找的是列有設備的欄位。"
 
 #. Tag: para
-#: preparing.xml:1580
+#: preparing.xml:1570
 #, no-c-format
 msgid "Common entries on IDE machines are C, A, cdrom or A, C, cdrom."
 msgstr "對 IDE 機器而言，列表裡常見的選項是 C、A、cdrom 或者 A、C、cdrom。"
 
 #. Tag: para
-#: preparing.xml:1585
+#: preparing.xml:1575
 #, no-c-format
 msgid "C is the hard drive, and A is the floppy drive."
 msgstr "C 就是硬碟，而 A 則是軟碟機。"
 
 #. Tag: para
-#: preparing.xml:1591
+#: preparing.xml:1581
 #, no-c-format
 msgid ""
 "Change the boot sequence setting so that the CD-ROM or the floppy is first. "
@@ -2399,7 +2355,7 @@ msgstr ""
 "keycap> 或者 <keycap>Page Down</keycap> 鍵能夠循環地切換可能的選項。"
 
 #. Tag: para
-#: preparing.xml:1599
+#: preparing.xml:1589
 #, no-c-format
 msgid ""
 "Save your changes. Instructions on the screen tell you how to save the "
@@ -2407,20 +2363,20 @@ msgid ""
 msgstr "然後，儲存您對設定的修改。螢幕上的提示會告訴您如何才能儲存您的設定。"
 
 #. Tag: title
-#: preparing.xml:1609
+#: preparing.xml:1599
 #, no-c-format
 msgid "Changing the Boot Order on SCSI Computers"
 msgstr "修改 SCSI 介面電腦的開機順序"
 
 #. Tag: para
-#: preparing.xml:1613
+#: preparing.xml:1603
 #, no-c-format
 msgid ""
 "As your computer starts, press the keys to enter the SCSI setup utility."
 msgstr "當您的電腦開機時，可以按某些鍵進入 SCSI 的設定軟體。"
 
 #. Tag: para
-#: preparing.xml:1618
+#: preparing.xml:1608
 #, no-c-format
 msgid ""
 "You can start the SCSI setup utility after the memory check and the message "
@@ -2430,7 +2386,7 @@ msgstr ""
 "提示的時候啟動 SCSI 設定軟體。"
 
 #. Tag: para
-#: preparing.xml:1624
+#: preparing.xml:1614
 #, no-c-format
 msgid ""
 "The keystrokes you need depend on the utility. Often, it is "
@@ -2442,20 +2398,20 @@ msgstr ""
 "的相關文件。"
 
 #. Tag: para
-#: preparing.xml:1632
+#: preparing.xml:1622
 #, no-c-format
 msgid "Find the utility for changing the boot order."
 msgstr "尋找用來修改開機順序的工具軟體。"
 
 #. Tag: para
-#: preparing.xml:1637
+#: preparing.xml:1627
 #, no-c-format
 msgid ""
 "Set the utility so that the SCSI ID of the CD drive is first on the list."
 msgstr "透過這個工具軟體修改設定，讓光碟機的 SCSI ID 排在列表的首位。"
 
 #. Tag: para
-#: preparing.xml:1643
+#: preparing.xml:1633
 #, no-c-format
 msgid ""
 "Save your changes. Instructions on the screen tell you how to save the "
@@ -2465,19 +2421,19 @@ msgstr ""
 "需要按 <keycap>F10</keycap>。"
 
 #. Tag: title
-#: preparing.xml:1657
+#: preparing.xml:1647
 #, no-c-format
 msgid "Miscellaneous BIOS Settings"
 msgstr "其餘的 BIOS 設定項目"
 
 #. Tag: title
-#: preparing.xml:1659
+#: preparing.xml:1649
 #, no-c-format
 msgid "CD-ROM Settings"
 msgstr "CD-ROM 的設定"
 
 #. Tag: para
-#: preparing.xml:1660
+#: preparing.xml:1650
 #, no-c-format
 msgid ""
 "Some BIOS systems (such as Award BIOS) allow you to automatically set the CD "
@@ -2490,13 +2446,13 @@ msgstr ""
 "userinput> 的錯誤提示，那麼就有可能是您的設定有問題。"
 
 #. Tag: title
-#: preparing.xml:1670
+#: preparing.xml:1660
 #, no-c-format
 msgid "Extended vs. Expanded Memory"
 msgstr "延伸記憶體與擴充記憶體"
 
 #. Tag: para
-#: preparing.xml:1671
+#: preparing.xml:1661
 #, no-c-format
 msgid ""
 "If your system provides both ex<emphasis>ten</emphasis>ded and "
@@ -2509,13 +2465,13 @@ msgstr ""
 "體設定得盡量小。Linux 需要使用延伸記憶體，但無法利用擴充記憶體。"
 
 #. Tag: title
-#: preparing.xml:1681
+#: preparing.xml:1671
 #, no-c-format
 msgid "Virus Protection"
 msgstr "病毒保護"
 
 #. Tag: para
-#: preparing.xml:1682
+#: preparing.xml:1672
 #, no-c-format
 msgid ""
 "Disable any virus-warning features your BIOS may provide. If you have a "
@@ -2537,13 +2493,13 @@ msgstr ""
 "</para> </footnote>"
 
 #. Tag: title
-#: preparing.xml:1703
+#: preparing.xml:1693
 #, no-c-format
 msgid "Shadow RAM"
 msgstr "記憶體映像"
 
 #. Tag: para
-#: preparing.xml:1704
+#: preparing.xml:1694
 #, no-c-format
 msgid ""
 "Your motherboard may provide <emphasis>shadow RAM</emphasis> or BIOS "
@@ -2565,13 +2521,13 @@ msgstr ""
 "用更多的常規記憶體。而繼續開啟記憶體映像則有可能妨礙 Linux 存取硬體設備。"
 
 #. Tag: title
-#: preparing.xml:1721
+#: preparing.xml:1711
 #, no-c-format
 msgid "Memory Hole"
 msgstr "記憶體空洞"
 
 #. Tag: para
-#: preparing.xml:1722
+#: preparing.xml:1712
 #, no-c-format
 msgid ""
 "If your BIOS offers something like <quote>15&ndash;16 MB Memory Hole</"
@@ -2582,7 +2538,7 @@ msgstr ""
 "它。如果您有那麼多記憶體的話，Linux 就會認為在那兒應該能找到記憶體區塊。"
 
 #. Tag: para
-#: preparing.xml:1728
+#: preparing.xml:1718
 #, no-c-format
 msgid ""
 "We have a report of an Intel Endeavor motherboard on which there is an "
@@ -2601,13 +2557,13 @@ msgstr ""
 "定，則一切正常，否則就不行。"
 
 #. Tag: title
-#: preparing.xml:1744
+#: preparing.xml:1734
 #, no-c-format
 msgid "Advanced Power Management"
 msgstr "進階電源管理"
 
 #. Tag: para
-#: preparing.xml:1745
+#: preparing.xml:1735
 #, no-c-format
 msgid ""
 "If your motherboard provides Advanced Power Management (APM), configure it "
@@ -2621,13 +2577,13 @@ msgstr ""
 "定時器。Linux 可以接管這些模式的控制權，而且能比 BIOS 的電源管理做得更好。"
 
 #. Tag: title
-#: preparing.xml:1763
+#: preparing.xml:1753
 #, no-c-format
 msgid "Firmware Revisions and Existing OS Setup"
 msgstr "韌體修訂版和既有的 OS 設定"
 
 #. Tag: para
-#: preparing.xml:1765
+#: preparing.xml:1755
 #, no-c-format
 msgid ""
 "&arch-title; machines are generally self-configuring and do not require "
@@ -2647,13 +2603,13 @@ msgstr ""
 "boot ROM。BVMBug boot ROM 不屬於 BVM 系統的標準配置，但可用從 BVM 免費取得。"
 
 #. Tag: title
-#: preparing.xml:1788
+#: preparing.xml:1778
 #, no-c-format
 msgid "Invoking OpenFirmware"
 msgstr "使用 OpenFireware"
 
 #. Tag: para
-#: preparing.xml:1789
+#: preparing.xml:1779
 #, no-c-format
 msgid ""
 "There is normally no need to set up the BIOS (called OpenFirmware) on &arch-"
@@ -2667,7 +2623,7 @@ msgstr ""
 "電腦手冊中相關的硬體文件。"
 
 #. Tag: para
-#: preparing.xml:1797
+#: preparing.xml:1787
 #, no-c-format
 msgid ""
 "On &arch-title; Macintoshes, you invoke OpenFirmware with "
@@ -2684,7 +2640,7 @@ msgstr ""
 "powerpc-faq;\"></ulink> 取得更多提示。"
 
 #. Tag: para
-#: preparing.xml:1806
+#: preparing.xml:1796
 #, no-c-format
 msgid ""
 "The OpenFirmware prompt looks like this: <informalexample><screen>\n"
@@ -2706,7 +2662,7 @@ msgstr ""
 "器連接埠連接到另外一台電腦上的終端程式來與 OpenFirmware 交互。"
 
 #. Tag: para
-#: preparing.xml:1819
+#: preparing.xml:1809
 #, fuzzy, no-c-format
 msgid ""
 "The OpenFirmware on OldWorld Beige G3 machines, OF versions 2.0f1 and 2.4, "
@@ -2726,13 +2682,13 @@ msgstr ""
 "nvram。"
 
 #. Tag: title
-#: preparing.xml:1839
+#: preparing.xml:1829
 #, no-c-format
 msgid "Invoking OpenBoot"
 msgstr "使用 OpenBoot"
 
 #. Tag: para
-#: preparing.xml:1841
+#: preparing.xml:1831
 #, fuzzy, no-c-format
 msgid ""
 "OpenBoot provides the basic functions needed to boot the &arch-title; "
@@ -2746,7 +2702,7 @@ msgstr ""
 "做很多事情如診斷，簡單腳本，等等。"
 
 #. Tag: para
-#: preparing.xml:1849
+#: preparing.xml:1839
 #, no-c-format
 msgid ""
 "To get to the boot prompt you need to hold down the <keycap>Stop</keycap> "
@@ -2765,7 +2721,7 @@ msgstr ""
 "下 <keycap>n</keycap> 鍵得到新風格的提示符號。"
 
 #. Tag: para
-#: preparing.xml:1861
+#: preparing.xml:1851
 #, no-c-format
 msgid ""
 "If you are using a serial console, send a break to the machine. With "
@@ -2779,7 +2735,7 @@ msgstr ""
 "件。"
 
 #. Tag: para
-#: preparing.xml:1874
+#: preparing.xml:1864
 #, fuzzy, no-c-format
 msgid ""
 "You can use OpenBoot to boot from specific devices, and also to change your "
@@ -2797,7 +2753,7 @@ msgstr ""
 "Reference</ulink>。"
 
 #. Tag: para
-#: preparing.xml:1884
+#: preparing.xml:1874
 #, fuzzy, no-c-format
 msgid ""
 "Typically, with newer revisions, you can use OpenBoot devices such as "
@@ -2806,12 +2762,12 @@ msgid ""
 "meanings; the <quote>net</quote> device is for booting from the network. "
 "Additionally, the device name can specify a particular partition of a disk, "
 "such as <quote>disk2:a</quote> to boot disk2, first partition. Full OpenBoot "
-"device names have the form <informalexample> <screen>\n"
+"device names have the form: <informalexample> <screen>\n"
 "<replaceable>driver-name</replaceable>@\n"
 "<replaceable>unit-address</replaceable>:\n"
 "<replaceable>device-arguments</replaceable>\n"
-"</screen></informalexample>. In older revisions of OpenBoot, device naming "
-"is a bit different: the floppy device is called <quote>/fd</quote>, and SCSI "
+"</screen></informalexample> In older revisions of OpenBoot, device naming is "
+"a bit different: the floppy device is called <quote>/fd</quote>, and SCSI "
 "disk devices are of the form <quote>sd(<replaceable>controller</"
 "replaceable>, <replaceable>disk-target-id</replaceable>, <replaceable>disk-"
 "lun</replaceable>)</quote>. The command <userinput>show-devs</userinput> in "
@@ -2836,7 +2792,7 @@ msgstr ""
 "OpenBoot Reference</ulink>。"
 
 #. Tag: para
-#: preparing.xml:1907
+#: preparing.xml:1897
 #, no-c-format
 msgid ""
 "To boot from a specific device, use the command <userinput>boot "
@@ -2865,19 +2821,19 @@ msgstr ""
 "</screen></informalexample> 或在 Solaris下執行："
 
 #. Tag: screen
-#: preparing.xml:1926
+#: preparing.xml:1916
 #, no-c-format
 msgid "eeprom boot-device=disk1:1"
 msgstr "eeprom boot-device=disk1:1"
 
 #. Tag: title
-#: preparing.xml:1936
+#: preparing.xml:1926
 #, no-c-format
 msgid "BIOS Setup"
 msgstr "BIOS 設置"
 
 #. Tag: para
-#: preparing.xml:1937
+#: preparing.xml:1927
 #, no-c-format
 msgid ""
 "In order to install &debian; on a &arch-title; or zSeries machine you have "
@@ -2896,7 +2852,7 @@ msgstr ""
 "方式使用。這歸因於該系統上的 3215/3270 控制台是線性，而不是字元型的。"
 
 #. Tag: para
-#: preparing.xml:1949
+#: preparing.xml:1939
 #, no-c-format
 msgid ""
 "Linux on this platform runs either natively on the bare machine, in a so-"
@@ -2914,18 +2870,18 @@ msgstr ""
 "機。"
 
 #. Tag: para
-#: preparing.xml:1959
-#, no-c-format
+#: preparing.xml:1949
+#, fuzzy, no-c-format
 msgid ""
 "Before you actually perform an installation, you have to go over some design "
 "and preparation steps. IBM has made documentation available about the whole "
-"process, e.g. how to prepare an installation medium and how actually boot "
+"process, e.g. how to prepare an installation medium and how actually to boot "
 "from that medium. Duplicating that information here is neither possible nor "
 "necessary. However, we will describe here which kind of Debian-specific data "
-"is needed and where do you find them. Based on both sources of information "
-"you have to prepare your machine and the installation medium and to perform "
-"a boot from it. When you see the welcome message in your client session join "
-"this document again for the Debian-specific installation steps."
+"is needed and where to find it. Using both sources of information, you have "
+"to prepare your machine and the installation medium before you can perform a "
+"boot from it. When you see the welcome message in your client session, "
+"return to this document to go through the Debian-specific installation steps."
 msgstr ""
 "在真正進行安裝之前，您必須仔細檢查一些設計和準備步驟。IBM 已經有整個過程的文"
 "件，例如，如何準備安裝媒介和如何從該媒介開機。我們無須在此複製那些資料。但我"
@@ -2934,13 +2890,13 @@ msgstr ""
 "本文件查看 Debian 規格的安裝步驟。"
 
 #. Tag: title
-#: preparing.xml:1976
+#: preparing.xml:1966
 #, no-c-format
 msgid "Native and LPAR installations"
 msgstr "本地的 (Native) 和 LPAR 安裝"
 
 #. Tag: para
-#: preparing.xml:1977
+#: preparing.xml:1967
 #, no-c-format
 msgid ""
 "Please refer to chapter 5 of the <ulink url=\"http://www.redbooks.ibm.com/"
@@ -2956,13 +2912,13 @@ msgstr ""
 "如何為 Linux 建立 LPAR 的部分。"
 
 #. Tag: title
-#: preparing.xml:1991
+#: preparing.xml:1981
 #, no-c-format
 msgid "Installation as a VM guest"
 msgstr "以一個 VM guest 安裝"
 
 #. Tag: para
-#: preparing.xml:1993
+#: preparing.xml:1983
 #, no-c-format
 msgid ""
 "Please refer to chapter 6 of the <ulink url=\"http://www.redbooks.ibm.com/"
@@ -2978,7 +2934,7 @@ msgstr ""
 "如何為運行 Linux 建立 VM guest 的部分。"
 
 #. Tag: para
-#: preparing.xml:2003
+#: preparing.xml:1993
 #, no-c-format
 msgid ""
 "You need to copy all the files from the <filename>generic</filename> sub-"
@@ -2991,13 +2947,13 @@ msgstr ""
 "filename> 是以固定 80 個字元長度的二進位形式進行傳輸。"
 
 #. Tag: title
-#: preparing.xml:2015
+#: preparing.xml:2005
 #, no-c-format
 msgid "Setting up an installation server"
 msgstr "設置安裝伺服器"
 
 #. Tag: para
-#: preparing.xml:2017
+#: preparing.xml:2007
 #, no-c-format
 msgid ""
 "If you don't have a connection to the Internet (either directly or via a web "
@@ -3010,7 +2966,7 @@ msgstr ""
 "NFS，HTTP 或 FTP 存取。"
 
 #. Tag: para
-#: preparing.xml:2025
+#: preparing.xml:2015
 #, fuzzy, no-c-format
 msgid ""
 "The installation server needs to copy the exact directory structure from any "
@@ -3022,54 +2978,19 @@ msgstr ""
 "和一些獨立於架構的檔案。您也可以複製所有的安裝光碟片到這樣的目錄樹中。"
 
 #. Tag: emphasis
-#: preparing.xml:2034
+#: preparing.xml:2024
 #, no-c-format
 msgid "FIXME: more information needed &mdash; from a Redbook?"
 msgstr "FIXME: more information needed &mdash; from a Redbook?"
 
 #. Tag: title
-#: preparing.xml:2040
+#: preparing.xml:2031
 #, no-c-format
 msgid "Hardware Issues to Watch Out For"
 msgstr "需要留意的硬體問題"
 
 #. Tag: para
-#: preparing.xml:2041
-#, no-c-format
-msgid ""
-"Many people have tried operating their 90 MHz CPU at 100 MHz, etc. It "
-"sometimes works, but is sensitive to temperature and other factors and can "
-"actually damage your system. One of the authors of this document over-"
-"clocked his own system for a year, and then the system started aborting the "
-"<command>gcc</command> program with an unexpected signal while it was "
-"compiling the operating system kernel. Turning the CPU speed back down to "
-"its rated value solved the problem."
-msgstr ""
-"有很多人嘗試過把他們的 90 MHz 的處理器超頻到 100 MHz 使用，以及其他諸如此類的"
-"做法。這有時可行，但是這賴於外界的溫度和其他因素，而且超頻可能會損毀您的系"
-"統。這份文件的作者之一曾把他的系統超頻使用了有一年，從那以後他在編譯操作業系"
-"統核心時，<command>gcc</command> 總是會被意外的訊號中止。後來，把處理器的頻率"
-"調回標準速度後，問題迎刃而解。"
-
-#. Tag: para
-#: preparing.xml:2051
-#, no-c-format
-msgid ""
-"The <command>gcc</command> compiler is often the first thing to die from bad "
-"memory modules (or other hardware problems that change data unpredictably) "
-"because it builds huge data structures that it traverses repeatedly. An "
-"error in these data structures will cause it to execute an illegal "
-"instruction or access a non-existent address. The symptom of this will be "
-"<command>gcc</command> dying from an unexpected signal."
-msgstr ""
-"如果記憶體模組有故障的話 (或者出現其他會使資料發生異變的硬體故障)，"
-"<command>gcc</command> 編譯器經常是第一個停止工作的程式。因為它會生成龐大的資"
-"料結構，並在記憶體中頻繁移動。一旦這些資料結構中有錯，就會導致程式執行非法指"
-"令或者存取不存在的位址空間。症狀就是 <command>gcc</command> 被一個意外的訊號"
-"中止執行。"
-
-#. Tag: para
-#: preparing.xml:2061
+#: preparing.xml:2033
 #, no-c-format
 msgid ""
 "Atari TT RAM boards are notorious for RAM problems under Linux; if you "
@@ -3083,132 +3004,14 @@ msgstr ""
 "menfile 來排除部分記憶體。 <phrase condition=\"FIXME\"><emphasis> FIXME: "
 "more description of this needed. </emphasis></phrase>"
 
-#. Tag: para
-#: preparing.xml:2073
-#, no-c-format
-msgid ""
-"The very best motherboards support parity RAM and will actually tell you if "
-"your system has a single-bit error in RAM. Unfortunately, they don't have a "
-"way to fix the error, thus they generally crash immediately after they tell "
-"you about the bad RAM. Still, it's better to be told you have bad memory "
-"than to have it silently insert errors in your data. Thus, the best systems "
-"have motherboards that support parity and true-parity memory modules; see "
-"<xref linkend=\"Parity-RAM\"/>."
-msgstr ""
-"最好的主機板應該會支援奇偶檢驗記憶體 (parity RAM)，它會在發現記憶體中有一個錯"
-"誤位元時向您報告。可惜的是，主機板並沒有辦法修正錯誤，因此它通常會在向您報告"
-"記憶體錯誤之後立即當機。無論如何，有報告錯誤總比不聲不響地在您的資料中插入錯"
-"誤數據來的好。所以，最好的系統應當配備支援奇偶檢驗和真奇偶檢驗 (true-parity) "
-"的記憶體。另外還可以參閱 <xref linkend=\"Parity-RAM\"/>。"
-
-#. Tag: para
-#: preparing.xml:2084
-#, no-c-format
-msgid ""
-"If you do have true-parity RAM and your motherboard can handle it, be sure "
-"to enable any BIOS settings that cause the motherboard to interrupt on "
-"memory parity errors."
-msgstr ""
-"如果您配備有真奇偶檢驗的記憶體，而且您的主機板也支援這種記憶體，那麼請一定要"
-"在 BIOS 的設定裡開啟相應的選項，好讓主機板在發現奇偶檢驗錯時送出中斷呼叫。"
-
 #. Tag: title
-#: preparing.xml:2092
-#, no-c-format
-msgid "The Turbo Switch"
-msgstr "加速 (Turbo) 開關"
-
-#. Tag: para
-#: preparing.xml:2093
-#, no-c-format
-msgid ""
-"Many systems have a <emphasis>turbo</emphasis> switch that controls the "
-"speed of the CPU. Select the high-speed setting. If your BIOS allows you to "
-"disable software control of the turbo switch (or software control of CPU "
-"speed), do so and lock the system in high-speed mode. We have one report "
-"that on a particular system, while Linux is auto-probing (looking for "
-"hardware devices) it can accidentally touch the software control for the "
-"turbo switch."
-msgstr ""
-"有許多系統配有一個 <emphasis>turbo</emphasis> 開關，透過這個開關可以控制處理"
-"器的運行速度。請把它調節到``高速''。如果您的 BIOS 能讓您停用讓軟體控制加速開"
-"關的功能(或者對軟體對處理器速度的控制)，那麼就請停用它，這會將系統鎖定為高速"
-"運行模式。我們曾受到過報告稱，在某特別的系統上， Linux 在自動檢測 (搜尋硬體設"
-"備)時，會無意觸動加速開關的軟體控制。"
-
-#. Tag: title
-#: preparing.xml:2106
-#, no-c-format
-msgid "Cyrix CPUs and Floppy Disk Errors"
-msgstr "Cyrix 處理器和軟碟錯誤"
-
-#. Tag: para
-#: preparing.xml:2107
-#, no-c-format
-msgid ""
-"Many users of Cyrix CPUs have had to disable the cache in their systems "
-"during installation, because the floppy disk has errors if they do not. If "
-"you have to do this, be sure to re-enable your cache when you are finished "
-"with installation, as the system runs <emphasis>much</emphasis> slower with "
-"the cache disabled."
-msgstr ""
-"許多 Cyrix 處理器的使用者在安裝時，必須停用系統的高速快取 (cache)。如果不如"
-"此，就會發生軟碟錯誤。如果您停用了高速快取，請在安裝完成後重新開啟它。因為如"
-"果您繼續停用，系統會變慢<emphasis>很多</emphasis>。"
-
-#. Tag: para
-#: preparing.xml:2115
-#, no-c-format
-msgid ""
-"We don't think this is necessarily the fault of the Cyrix CPU. It may be "
-"something that Linux can work around. We'll continue to look into the "
-"problem. For the technically curious, we suspect a problem with the cache "
-"being invalid after a switch from 16-bit to 32-bit code."
-msgstr ""
-"我們並不認為這一定是 Cyrix 處理器的過錯。Linux 或許能想辦法避免它。我們將繼"
-"續 關注這個問題。基於技術上的好奇，我們猜測這可能是系統從 16 位元切換到 32 位"
-"元模式時，導致高速快取失效造成的。"
-
-#. Tag: title
-#: preparing.xml:2125
-#, no-c-format
-msgid "Peripheral Hardware Settings"
-msgstr "周邊硬體的設置"
-
-#. Tag: para
-#: preparing.xml:2126
-#, no-c-format
-msgid ""
-"You may have to change some settings or jumpers on your computer's "
-"peripheral cards. Some cards have setup menus, while others rely on jumpers. "
-"This document cannot hope to provide complete information on every hardware "
-"device; what it hopes to provide is useful tips."
-msgstr ""
-"您也許必須得修改您周邊設備卡上的一些設定或跳線。有的卡有設定選單，而另一些則"
-"使用跳線。本文件無意為您提供所有硬體設備的全面資料，只不過希望能提供一些有用"
-"的提示。"
-
-#. Tag: para
-#: preparing.xml:2133
-#, no-c-format
-msgid ""
-"If any cards provide <quote>mapped memory</quote>, the memory should be "
-"mapped somewhere between 0xA0000 and 0xFFFFF (from 640K to just below 1 "
-"megabyte) or at an address at least 1 megabyte greater than the total amount "
-"of RAM in your system."
-msgstr ""
-"如果有周邊卡提供了<quote>記憶體映射</quote> (mapped memory)，那麼這塊記憶體應"
-"該被映射到介於 0xA0000 和 0xFFFFF (從 640K 到正好 1M) 的某個地方，也可以映射"
-"到您系統中總記憶體 1 MB 以後的位址。"
-
-#. Tag: title
-#: preparing.xml:2144
+#: preparing.xml:2048
 #, no-c-format
 msgid "USB BIOS support and keyboards"
 msgstr "USB BIOS 支援與鍵盤"
 
 #. Tag: para
-#: preparing.xml:2145
+#: preparing.xml:2049
 #, no-c-format
 msgid ""
 "If you have no AT-style keyboard and only a USB model, you may need to "
@@ -3226,20 +3029,238 @@ msgstr ""
 "<quote>USB keyboard support</quote> 選項。"
 
 #. Tag: title
-#: preparing.xml:2158
+#: preparing.xml:2063
 #, no-c-format
-msgid "More than 64 MB RAM"
-msgstr "大於 64 MB 的記憶體"
+msgid "Display-visibility on OldWorld Powermacs"
+msgstr ""
 
 #. Tag: para
-#: preparing.xml:2159
+#: preparing.xml:2065
 #, no-c-format
 msgid ""
-"The Linux Kernel cannot always detect what amount of RAM you have. If this "
-"is the case please look at <xref linkend=\"boot-parms\"/>."
+"Some OldWorld Powermacs, most notably those with the <quote>control</quote> "
+"display driver, may not reliably produce a colormap under Linux when the "
+"display is configured for more than 256 colors. If you are experiencing such "
+"issues with your display after rebooting (you can sometimes see data on the "
+"monitor, but on other occasions cannot see anything) or, if the screen turns "
+"black after booting the installer instead of showing you the user interface, "
+"try changing your display settings under MacOS to use 256 colors instead of "
+"<quote>thousands</quote> or <quote>millions</quote>."
 msgstr ""
-"Linux 核心有時不能檢測出您系統中的記憶體大小。如果您遇到這種情況，請參閱 "
-"<xref linkend=\"boot-parms\"/>。"
+
+#, fuzzy
+#~ msgid ""
+#~ "When <classname>debian-installer</classname> finishes, before the first "
+#~ "system load, you have only a very basic command line driven system. The "
+#~ "graphical interface which displays windows on your monitor will not be "
+#~ "installed unless you select it with <classname>tasksel</classname>. It's "
+#~ "optional because many &debian; systems are servers which don't really "
+#~ "have any need for a graphical user interface to do their job."
+#~ msgstr ""
+#~ "當 <classname>debian-installer</classname> 程式執行結束、系統首次載入之"
+#~ "前，您只有一個非常簡單的命令列系統。除非您在最後一個步驟裡用 "
+#~ "<classname>tasksel</classname> 或 <classname>aptitude</classname> 選擇安裝"
+#~ "了能在您的顯示器上顯示視窗的圖形界面，否則它將不會被自動安裝。因為許多 "
+#~ "&debian; 系統是被用作伺服器，它們的工作根本不需要任何圖形化的使用者界面，"
+#~ "所以它在這裡只是一個選項。"
+
+#~ msgid "<entry>RAM</entry>"
+#~ msgstr "<entry>記憶體</entry>"
+
+#~ msgid "450 megabytes"
+#~ msgstr "450 MB"
+
+#~ msgid "Server"
+#~ msgstr "伺服器"
+
+#~ msgid "4 gigabytes"
+#~ msgstr "4 GB"
+
+#~ msgid ""
+#~ "Here is a sampling of some common Debian system configurations. You can "
+#~ "also get an idea of the disk space used by related groups of programs by "
+#~ "referring to <xref linkend=\"tasksel-size-list\"/>."
+#~ msgstr ""
+#~ "這裡有些一般 Debian 系統設定的樣本。您可以參閱 <xref linkend=\"tasksel-"
+#~ "size-list\"/> 以瞭解各類軟體需要佔多大的硬碟空間。"
+
+#~ msgid "Standard Server"
+#~ msgstr "標準伺服器"
+
+#~ msgid ""
+#~ "This is a small server profile, useful for a stripped down server which "
+#~ "does not have a lot of niceties for shell users. It includes an FTP "
+#~ "server, a web server, DNS, NIS, and POP. For these 100MB of disk space "
+#~ "would suffice, and then you would need to add space for any data you "
+#~ "serve up."
+#~ msgstr ""
+#~ "這裡有一台小型伺服器範例，它適用於精簡型伺服器，即沒有為 shell 的使用者安"
+#~ "裝過多好用的軟體。這類伺服器裝有：FTP 伺服、web 伺服、DNS、NIS 以及 POP 服"
+#~ "務。這些服務總共需要 100MB 磁碟空間，您還需要另外算上服務所需資料所佔用的"
+#~ "空間。"
+
+#~ msgid "Desktop"
+#~ msgstr "桌面"
+
+#~ msgid ""
+#~ "A standard desktop box, including the X window system, full desktop "
+#~ "environments, sound, editors, etc. You'll need about 2GB using the "
+#~ "standard desktop task, though it can be done in far less."
+#~ msgstr ""
+#~ "標準的桌面用機器安裝有 X 視窗系統、完整的桌面環境、音效軟體、編輯器等。這"
+#~ "些軟體套件將總共需要約 2G 空間，儘管也可以不需要這麼多。"
+
+#~ msgid "Work Console"
+#~ msgstr "工作控制台"
+
+#~ msgid ""
+#~ "A more stripped-down user machine, without the X window system or X "
+#~ "applications. Possibly suitable for a laptop or mobile computer. The size "
+#~ "is around 140MB."
+#~ msgstr ""
+#~ "這是被高度精簡的使用者機器，它沒有安裝 X 視窗系統或者 X 軟體。可能適用於筆"
+#~ "記型電腦或者手提電腦。其所需空間約為 140MB。"
+
+#~ msgid "Developer"
+#~ msgstr "開發人員"
+
+#~ msgid ""
+#~ "A desktop setup with all the development packages, such as Perl, C, C++, "
+#~ "etc. Size is around 475MB. Assuming you are adding X11 and some "
+#~ "additional packages for other uses, you should plan around 800MB for this "
+#~ "type of machine."
+#~ msgstr ""
+#~ "這是包括所有開發軟體套件的桌面設置，例如 Perl、C、C++ 等。其所需空間約為 "
+#~ "475MB。若是您為了其它用途，而另行安裝了 X11 和其它的軟體套件，那麼您需要為"
+#~ "這類機器規劃出約 800MB 空間。"
+
+#~ msgid ""
+#~ "Many people have tried operating their 90 MHz CPU at 100 MHz, etc. It "
+#~ "sometimes works, but is sensitive to temperature and other factors and "
+#~ "can actually damage your system. One of the authors of this document over-"
+#~ "clocked his own system for a year, and then the system started aborting "
+#~ "the <command>gcc</command> program with an unexpected signal while it was "
+#~ "compiling the operating system kernel. Turning the CPU speed back down to "
+#~ "its rated value solved the problem."
+#~ msgstr ""
+#~ "有很多人嘗試過把他們的 90 MHz 的處理器超頻到 100 MHz 使用，以及其他諸如此"
+#~ "類的做法。這有時可行，但是這賴於外界的溫度和其他因素，而且超頻可能會損毀您"
+#~ "的系統。這份文件的作者之一曾把他的系統超頻使用了有一年，從那以後他在編譯操"
+#~ "作業系統核心時，<command>gcc</command> 總是會被意外的訊號中止。後來，把處"
+#~ "理器的頻率調回標準速度後，問題迎刃而解。"
+
+#~ msgid ""
+#~ "The <command>gcc</command> compiler is often the first thing to die from "
+#~ "bad memory modules (or other hardware problems that change data "
+#~ "unpredictably) because it builds huge data structures that it traverses "
+#~ "repeatedly. An error in these data structures will cause it to execute an "
+#~ "illegal instruction or access a non-existent address. The symptom of this "
+#~ "will be <command>gcc</command> dying from an unexpected signal."
+#~ msgstr ""
+#~ "如果記憶體模組有故障的話 (或者出現其他會使資料發生異變的硬體故障)，"
+#~ "<command>gcc</command> 編譯器經常是第一個停止工作的程式。因為它會生成龐大"
+#~ "的資料結構，並在記憶體中頻繁移動。一旦這些資料結構中有錯，就會導致程式執行"
+#~ "非法指令或者存取不存在的位址空間。症狀就是 <command>gcc</command> 被一個意"
+#~ "外的訊號中止執行。"
+
+#~ msgid ""
+#~ "If you do have true-parity RAM and your motherboard can handle it, be "
+#~ "sure to enable any BIOS settings that cause the motherboard to interrupt "
+#~ "on memory parity errors."
+#~ msgstr ""
+#~ "如果您配備有真奇偶檢驗的記憶體，而且您的主機板也支援這種記憶體，那麼請一定"
+#~ "要在 BIOS 的設定裡開啟相應的選項，好讓主機板在發現奇偶檢驗錯時送出中斷呼"
+#~ "叫。"
+
+#~ msgid "The Turbo Switch"
+#~ msgstr "加速 (Turbo) 開關"
+
+#~ msgid ""
+#~ "Many systems have a <emphasis>turbo</emphasis> switch that controls the "
+#~ "speed of the CPU. Select the high-speed setting. If your BIOS allows you "
+#~ "to disable software control of the turbo switch (or software control of "
+#~ "CPU speed), do so and lock the system in high-speed mode. We have one "
+#~ "report that on a particular system, while Linux is auto-probing (looking "
+#~ "for hardware devices) it can accidentally touch the software control for "
+#~ "the turbo switch."
+#~ msgstr ""
+#~ "有許多系統配有一個 <emphasis>turbo</emphasis> 開關，透過這個開關可以控制處"
+#~ "理器的運行速度。請把它調節到``高速''。如果您的 BIOS 能讓您停用讓軟體控制加"
+#~ "速開關的功能(或者對軟體對處理器速度的控制)，那麼就請停用它，這會將系統鎖定"
+#~ "為高速運行模式。我們曾受到過報告稱，在某特別的系統上， Linux 在自動檢測 "
+#~ "(搜尋硬體設備)時，會無意觸動加速開關的軟體控制。"
+
+#~ msgid "Cyrix CPUs and Floppy Disk Errors"
+#~ msgstr "Cyrix 處理器和軟碟錯誤"
+
+#~ msgid ""
+#~ "Many users of Cyrix CPUs have had to disable the cache in their systems "
+#~ "during installation, because the floppy disk has errors if they do not. "
+#~ "If you have to do this, be sure to re-enable your cache when you are "
+#~ "finished with installation, as the system runs <emphasis>much</emphasis> "
+#~ "slower with the cache disabled."
+#~ msgstr ""
+#~ "許多 Cyrix 處理器的使用者在安裝時，必須停用系統的高速快取 (cache)。如果不"
+#~ "如此，就會發生軟碟錯誤。如果您停用了高速快取，請在安裝完成後重新開啟它。因"
+#~ "為如果您繼續停用，系統會變慢<emphasis>很多</emphasis>。"
+
+#~ msgid ""
+#~ "We don't think this is necessarily the fault of the Cyrix CPU. It may be "
+#~ "something that Linux can work around. We'll continue to look into the "
+#~ "problem. For the technically curious, we suspect a problem with the cache "
+#~ "being invalid after a switch from 16-bit to 32-bit code."
+#~ msgstr ""
+#~ "我們並不認為這一定是 Cyrix 處理器的過錯。Linux 或許能想辦法避免它。我們將"
+#~ "繼續 關注這個問題。基於技術上的好奇，我們猜測這可能是系統從 16 位元切換到 "
+#~ "32 位元模式時，導致高速快取失效造成的。"
+
+#~ msgid "Peripheral Hardware Settings"
+#~ msgstr "周邊硬體的設置"
+
+#~ msgid ""
+#~ "You may have to change some settings or jumpers on your computer's "
+#~ "peripheral cards. Some cards have setup menus, while others rely on "
+#~ "jumpers. This document cannot hope to provide complete information on "
+#~ "every hardware device; what it hopes to provide is useful tips."
+#~ msgstr ""
+#~ "您也許必須得修改您周邊設備卡上的一些設定或跳線。有的卡有設定選單，而另一些"
+#~ "則使用跳線。本文件無意為您提供所有硬體設備的全面資料，只不過希望能提供一些"
+#~ "有用的提示。"
+
+#~ msgid ""
+#~ "If any cards provide <quote>mapped memory</quote>, the memory should be "
+#~ "mapped somewhere between 0xA0000 and 0xFFFFF (from 640K to just below 1 "
+#~ "megabyte) or at an address at least 1 megabyte greater than the total "
+#~ "amount of RAM in your system."
+#~ msgstr ""
+#~ "如果有周邊卡提供了<quote>記憶體映射</quote> (mapped memory)，那麼這塊記憶"
+#~ "體應該被映射到介於 0xA0000 和 0xFFFFF (從 640K 到正好 1M) 的某個地方，也可"
+#~ "以映射到您系統中總記憶體 1 MB 以後的位址。"
+
+#~ msgid "More than 64 MB RAM"
+#~ msgstr "大於 64 MB 的記憶體"
+
+#~ msgid ""
+#~ "The Linux Kernel cannot always detect what amount of RAM you have. If "
+#~ "this is the case please look at <xref linkend=\"boot-parms\"/>."
+#~ msgstr ""
+#~ "Linux 核心有時不能檢測出您系統中的記憶體大小。如果您遇到這種情況，請參閱 "
+#~ "<xref linkend=\"boot-parms\"/>。"
+
+#~ msgid ""
+#~ "The very best motherboards support parity RAM and will actually tell you "
+#~ "if your system has a single-bit error in RAM. Unfortunately, they don't "
+#~ "have a way to fix the error, thus they generally crash immediately after "
+#~ "they tell you about the bad RAM. Still, it's better to be told you have "
+#~ "bad memory than to have it silently insert errors in your data. Thus, the "
+#~ "best systems have motherboards that support parity and true-parity memory "
+#~ "modules; see <xref linkend=\"Parity-RAM\"/>."
+#~ msgstr ""
+#~ "最好的主機板應該會支援奇偶檢驗記憶體 (parity RAM)，它會在發現記憶體中有一"
+#~ "個錯誤位元時向您報告。可惜的是，主機板並沒有辦法修正錯誤，因此它通常會在向"
+#~ "您報告記憶體錯誤之後立即當機。無論如何，有報告錯誤總比不聲不響地在您的資料"
+#~ "中插入錯誤數據來的好。所以，最好的系統應當配備支援奇偶檢驗和真奇偶檢驗 "
+#~ "(true-parity) 的記憶體。另外還可以參閱 <xref linkend=\"Parity-RAM\"/>。"
 
 #~ msgid ""
 #~ "Install additional software (<firstterm>tasks</firstterm> and/or "

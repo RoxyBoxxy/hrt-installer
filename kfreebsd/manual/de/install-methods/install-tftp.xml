@@ -1,5 +1,5 @@
 <!-- retain these comments for translator revision tracking -->
-<!-- original version: 35613 -->
+<!-- original version: 44002 -->
 
  <sect1 condition="supports-tftp" id="install-tftp">
  <title>Dateien vorbereiten für TFTP-Netzwerk-Boot</title>
@@ -15,26 +15,26 @@ konfiguriert werden.
 </para><para>
 
 Sie müssen einen TFTP-Server einrichten und in vielen Fällen auch
-einen BOOTP-Server<phrase
-condition="supports-rarp"> oder einen RARP-Server</phrase><phrase
-condition="supports-dhcp"> oder einen DHCP-Server</phrase>.
+einen DHCP-Server<phrase condition="supports-rarp"> oder einen
+RARP-Server</phrase><phrase condition="supports-bootp"> oder einen
+BOOTP-Server</phrase>.
 
 </para><para>
 
 <phrase condition="supports-rarp">Das Reverse-Address-Resolution-Protocol (RARP)
 ist eine Möglichkeit, dem Client mitzuteilen, welche IP-Adresse er selbst
-verwenden soll. Ein anderer Weg wäre, das BOOTP-Protokoll zu verwenden. </phrase>
+verwenden soll. Ein anderer Weg wäre, das BOOTP-Protokoll zu verwenden.</phrase>
 
 <phrase condition="supports-bootp">BOOTP ist ein IP-Protokoll, das einem
 Computer seine IP-Adresse mitteilt und wo er im Netzwerk ein Boot-Image
-findet. </phrase>
+findet.</phrase>
 
 <phrase arch="m68k">Auf VMEbus-Systemen existiert noch eine andere Möglichkeit:
-die IP-Adresse kann manuell im Boot-ROM eingestellt werden. </phrase>
+die IP-Adresse kann manuell im Boot-ROM eingestellt werden.</phrase>
 
-<phrase condition="supports-dhcp">Das Dynamic-Host-Configuration-Protocol
-(DHCP) ist eine flexiblere, rückwärts-kompatible Erweiterung von BOOTP.
-Einige Systeme können nur per DHCP konfiguriert werden. </phrase>
+Das Dynamic-Host-Configuration-Protocol (DHCP) ist eine flexiblere,
+rückwärts-kompatible Erweiterung von BOOTP. Einige Systeme können nur per
+DHCP konfiguriert werden.
 
 </para><para arch="powerpc">
 
@@ -76,7 +76,7 @@ auf jeder Plattform benutzt werden, der diese Protokolle implementiert hat.
 In den Beispielen in diesem Abschnitt geben wir Kommandos für
 SunOS 4.x, SunOS 5.x (a.k.a. Solaris) und GNU/Linux an.
 
-<note arch="i386"><para>
+<note arch="x86"><para>
 
 Um die Pre-Boot-Execution-Environment- (PXE) Methode von TFTP zu nutzen,
 benötigen Sie einen TFTP-Server mit Unterstützung für
@@ -104,23 +104,43 @@ wie der folgenden in <filename>/etc/inetd.conf</filename> erreichen:
 tftp dgram udp wait nobody /usr/sbin/tcpd in.tftpd /tftpboot
 </screen></informalexample>
 
-Die Debian-Pakete richten dies generell standardmäßig korrekt ein, wenn sie installiert werden.
+Die Debian-Pakete richten dies generell standardmäßig korrekt ein, wenn sie
+installiert werden.
 
-</para><para>
+</para>
+<note><para>
 
-Schauen Sie sich die Datei an und merken Sie sich das Verzeichnis, das
-als Argument hinter <command>in.tftpd</command> eingetragen ist; Sie
-werden es später brauchen. Das Argument <userinput>-l</userinput>
-aktiviert bei einigen Versionen von <command>in.tftpd</command> das
-Logging, so dass alle Anfragen im Systemlog protokolliert werden;
-dies ist nützlich für die Fehlersuche bei Bootproblemen.
-Wenn Sie <filename>/etc/inetd.conf</filename> ändern mussten,
-ist es nötig, dem laufenden <command>inetd</command>-Prozess
-mitzuteilen, dass sich die Konfigurationsdatei geändert hat.
-Auf einem Debian-Rechner erledigen Sie das mit
-<userinput>/etc/init.d/inetd reload</userinput>; auf anderen Maschinen
-müssen Sie die Prozess-ID von <command>inetd</command> herausfinden
-und <userinput>kill -HUP <replaceable>Prozess-ID</replaceable></userinput>
+Früher haben TFTP-Server das Verzeichnis <filename>/tftpboot</filename>
+genutzt, um Images bereitzustellen. Allerdings verwenden Server aus
+&debian;-Paketen unter Umständen andere Verzeichnisse, um den
+<ulink url="&url-fhs-home;">Filesystem Hierarchy Standard</ulink>
+(Festlegungen, an welcher Stelle im Dateisystem bestimmte Daten abgespeichert
+werden sollten) zu erfüllen. Zum Beispiel nutzt <classname>tftpd-hpa</classname>
+standardmäßig <filename>/var/lib/tftpboot</filename>. Sie müssen also
+eventuell die Konfigurationsbeispiele aus diesem Kapitel entsprechend an
+Ihre Situation anpassen.
+
+</para></note>
+<para>
+
+Schauen Sie sich die Datei <filename>/etc/inetd.conf</filename> an und merken
+Sie sich das Verzeichnis, das als Argument hinter <command>in.tftpd</command>
+eingetragen ist<footnote>
+
+<para>
+Das Argument <userinput>-l</userinput> aktiviert bei einigen Versionen von
+<command>in.tftpd</command> die Log-Funktion, so dass Aufzeichnungen über alle
+Anfragen im System-Log protokolliert werden; dies könnte zur Fehlersuche bei
+Bootproblemen nützlich sein.
+</para>
+
+</footnote>; Sie werden es später benötigen.
+Wenn Sie <filename>/etc/inetd.conf</filename> ändern mussten, ist es nötig,
+dem laufenden <command>inetd</command>-Prozess mitzuteilen, dass sich die
+Konfigurationsdatei geändert hat. Auf einem Debian-Rechner erledigen Sie das
+mit <userinput>/etc/init.d/inetd reload</userinput>; auf anderen Maschinen
+müssen Sie die Prozess-ID von <command>inetd</command> herausfinden und
+<userinput>kill -HUP <replaceable>Prozess-ID</replaceable></userinput>
 ausführen.
 
 </para><para arch="mips">
@@ -133,19 +153,19 @@ Server Folgendes ausführen
 # echo 1 &gt; /proc/sys/net/ipv4/ip_no_pmtu_disc
 </screen></informalexample>
 
-um <quote>Path MTU discovery</quote> auszuschalten, andernfalls kann der PROM des SGI
-den Kernel nicht herunterladen. Außerdem müssen Sie sicherstellen, dass
+um <quote>Path MTU discovery</quote> auszuschalten, andernfalls kann der PROM
+des SGI den Kernel nicht herunterladen. Außerdem müssen Sie sicherstellen, dass
 TFTP-Pakete von einem Quellport nicht größer als 32767 verschickt werden,
-sonst wird der Download nach dem ersten Paket stoppen. Es ist wieder
-der Linux-Kernel 2.4.x, der diesen Fehler im PROM auslöst, aber Sie können
-dies vermeiden, indem Sie
+sonst wird der Download nach dem ersten Paket stoppen. Es ist wieder der
+Linux-Kernel 2.4.x, der diesen Fehler im PROM auslöst, aber Sie können dies
+vermeiden, indem Sie
 
 <informalexample><screen>
 # echo "2048 32767" &gt; /proc/sys/net/ipv4/ip_local_port_range
 </screen></informalexample>
 
-ausführen; dies stellt den Bereich der Quellports ein, den der Linux-TFTP-Server
-benutzt.
+ausführen; dies stellt den Bereich der Quellports ein, den der
+Linux-TFTP-Server benutzt.
 
 </para>
   </sect2>
@@ -154,14 +174,13 @@ benutzt.
   <title>Die TFTP-Images an ihren Platz befördern</title>
 <para>
 
-Als nächstes legen Sie die TFTP-Bootimages, die Sie brauchen
-und die Sie wie in <xref linkend="where-files"/> beschrieben
-finden können, im <command>tftpd</command>-Bootimage-Verzeichnis
-ab. Meistens wird dies <filename>/tftpboot</filename> sein.
-Sie müssen einen Link von diesem Image auf die Datei anlegen,
-die <command>tftpd</command> benutzt, um einen speziellen Client
-zu booten. Bedauerlicherweise hängt der Name dieser Datei von dem
-TFTP-Client ab und es gibt dabei keine festen Standards.
+Als nächstes legen Sie die TFTP-Bootimages, die Sie benötigen und die Sie
+wie in <xref linkend="where-files"/> beschrieben finden können, im
+<command>tftpd</command>-Bootimage-Verzeichnis ab. Sie müssen unter Umständen
+einen Link von diesem Image auf die Datei anlegen, die
+<command>tftpd</command> benutzt, um einen speziellen Client zu booten.
+Bedauerlicherweise hängt der Name dieser Datei von dem TFTP-Client ab und es
+gibt dabei keine festen Standards.
 
 </para><para arch="powerpc">
 
@@ -172,13 +191,13 @@ benutzen Sie die Datei <filename>yaboot-netboot.conf</filename>;
 benennen sie sie einfach in <filename>yaboot.conf</filename> im TFTP-Verzeichnis
 um.
 
-</para><para arch="i386">
+</para><para arch="x86">
 
-Um per PXE zu booten, müssen Sie nur den
-<filename>netboot/netboot.tar.gz</filename>-Tarball einrichten.
+Alles was Sie benötigen, um per PXE zu booten, ist bereits in dem
+<filename>netboot/netboot.tar.gz</filename>-Tarball eingerichtet.
 Entpacken Sie den Tarball einfach in das
 <command>tftpd</command>-Bootimage-Verzeichnis. Stellen Sie sicher, dass
-der DHCP-Server konfiguriert ist, <filename>/pxelinux.0</filename> als
+der DHCP-Server konfiguriert ist, <filename>pxelinux.0</filename> als
 zu bootende Datei zum <command>tftpd</command> weiterzuleiten.
 
 </para><para arch="ia64">
@@ -198,7 +217,8 @@ als zu bootende Datei zum <command>tftpd</command> weiterzuleiten.
 
 Für DECstations gibt es tftp-Image-Dateien für jede Unterarchitektur,
 die sowohl Kernel wie auch den Installer in einer Datei enthalten.
-Sie sind nach dem Schema <replaceable>subarchitecture</replaceable>/netboot-boot.img
+Sie sind nach dem Schema
+<filename><replaceable>subarchitecture</replaceable>/netboot-boot.img</filename>
 benannt. Kopieren Sie die tftp-Image-Datei, die Sie benutzen wollen,
 nach <userinput>/tftpboot/tftpboot.img</userinput> (wenn Sie das obige Beispiel
 mit BOOTP/DHCP verwenden).
@@ -276,22 +296,31 @@ Dateinamen angeben.
    <title>TFTP-Boot von SPARC-Systemen</title>
 <para>
 
-SPARC-Architekturen nutzen die Namen der Unterarchitekturen,
-wie <quote>SUN4M</quote> oder <quote>SUN4C</quote>; in einigen Fällen bleibt die
-Architekturbezeichnung leer, d.h. die Datei, nach der der Client sucht,
-ist einfach <filename>client-ip-in-hex</filename>. Wenn die Unterarchitektur
-Ihres Systems also SUN4C ist und seine IP-Adresse ist 192.168.1.3, wäre
-der Dateiname <filename>C0A80103.SUN4C</filename>. Eine einfache Art, dies
-herauszufinden, ist, den folgenden Befehl in eine Shell einzugeben
-(angenommen, die IP-Adresse der Maschine wäre 10.0.0.4):
+Einige SPARC-Architekturen fügen die Namen der Unterarchitekturen
+wie <quote>SUN4M</quote> oder <quote>SUN4C</quote> zum Dateinamen hinzu;
+Wenn Sie also ein System der Unterarchitektur SUN4C haben und die IP-Adresse
+ist 192.168.1.3, wäre der Dateiname <filename>C0A80103.SUN4C</filename>.
+Allerdings gibt es auch Unterarchitekturen, wo die Datei, nach der der
+Client sucht, einfach <filename>client-ip-in-hex</filename> ist. Ein
+einfacher Weg den Hexadezimal-Code für die IP-Adresse herauszufinden ist,
+den folgenden Befehl in eine Shell einzugeben (angenommen, die IP-Adresse
+der Maschine wäre 10.0.0.4):
 
 <informalexample><screen>
 $ printf '%.2x%.2x%.2x%.2x\n' 10 0 0 4
 </screen></informalexample>
 
-Es wird die IP-Adresse in hexadezimal ausgegeben; um den korrekten
-Dateinamen zu bekommen, müssen Sie alle Buchstaben in Großbuchstaben
-ändern und falls nötig den Namen der Unterarchitektur hinzufügen.
+Um den korrekten Dateinamen zu bekommen, müssen Sie alle Buchstaben
+in Großbuchstaben ändern und falls nötig den Namen der Unterarchitektur
+hinzufügen.
+
+</para><para>
+
+Wenn Sie all dies korrekt erledigt haben, sollte der Befehl
+<userinput>boot net</userinput> unter OpenPROM das Image laden. Falls das
+Image nicht gefunden werden kann, versuchen Sie, die Protokolle auf Ihrem
+tftp-Server zu kontrollieren, um herauszufinden, welcher Image-Name
+angefordert wurde.
 
 </para><para>
 

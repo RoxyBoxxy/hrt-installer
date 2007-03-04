@@ -1,20 +1,20 @@
+
 # Allow preseeding the root password with a crypted password 
 # rather than cleartext
 Template: passwd/root-password-crypted
 Type: password
-Description: For internal use only
+Description: for internal use only
 
-# Allow preseeding the root password with a crypted password 
+# Allow preseeding the user password with a crypted password 
 # rather than cleartext
 Template: passwd/user-password-crypted
 Type: password
-Description: For internal use only
+Description: for internal use only
 
-# Allow preseeding the root password with a crypted password 
-# rather than cleartext
+# Allow preseeding the UID allocated to the first created user
 Template: passwd/user-uid
 Type: string
-Description: For internal use only
+Description: for internal use only
 
 Template: passwd/root-login
 Type: boolean
@@ -53,7 +53,7 @@ _Description: Create a normal user account now?
  those day-to-day tasks.
  .
  Note that you may create it later (as well as any additional account) by
- typing 'adduser <username>' as root, where <username> is an user name,
+ typing 'adduser <username>' as root, where <username> is an username,
  like 'imurdock' or 'rms'.
 
 Template: passwd/user-fullname
@@ -77,9 +77,15 @@ _Description: Username for your account:
 Template: passwd/username-bad
 Type: error
 _Description: Invalid username
- The user name you entered is invalid. Note that usernames must start with
+ The username you entered is invalid. Note that usernames must start with
  a lower-case letter, which can be followed by any combination of numbers
  and more lower-case letters.
+
+Template: passwd/username-reserved
+Type: error
+_Description: Reserved username
+ The username you entered (${USERNAME}) is reserved for use by the system.
+ Please select a different one.
 
 Template: passwd/user-password
 Type: password
@@ -117,8 +123,8 @@ Template: debian-installer/user-setup-udeb/title
 Type: title
 _Description: Set up users and passwords
 
-Template: prebaseconfig/progress/user-setup
+Template: finish-install/progress/user-setup
 Type: text
-# Prebaseconfig progress bar item
+# finish-install progress bar item
 _Description: Setting users and passwords...
 

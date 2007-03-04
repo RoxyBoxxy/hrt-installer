@@ -9,7 +9,7 @@ Type: select
 # Note to translators : Please keep your translations of the choices
 # below a 65 columns limit (which means 65 characters 
 # in single-byte languages)
-_Choices: Start menu, Start shell
+__Choices: Start menu, Start shell
 Default: Start menu
 _Description: Network console option:
  This is the network console for the Debian installer. From here, you
@@ -37,18 +37,18 @@ _Description: Remote installation password:
 
 Template: network-console/password-again
 Type: password
-_Description: Password confirmation:
+_Description: Re-enter password to verify:
  Please enter the same remote installation password again to verify that
  you have typed it correctly.
 
 Template: network-console/password-empty
-Type: text
-_Description: Password empty
- You seem to have entered an empty remote installation password.
- That is not secure. Please enter a password again.
+Type: error
+_Description: Empty password
+ You entered an empty password, which is not allowed.
+ Please choose a non-empty password.
 
 Template: network-console/password-mismatch
-Type: note
+Type: error
 _Description: Password mismatch
  The two passwords you entered were not the same. Please enter a password
  again.

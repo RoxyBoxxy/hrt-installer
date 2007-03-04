@@ -49,6 +49,14 @@
 #include <debian-installer/slist.h>
 #include <gdk/gdkkeysyms.h>
 
+#if GTK_CHECK_VERSION(2,10,0)
+#ifdef GDK_WINDOWING_DIRECTFB
+#include <directfb.h>
+#endif
+#else
+#include <directfb.h>
+#endif
+
 #define WINDOW_WIDTH 800
 #define WINDOW_HEIGHT 600
 
@@ -59,13 +67,13 @@
 #define PROGRESSBAR_HPADDING 60
 #define PROGRESSBAR_VPADDING 60
 
-typedef int (gtk_handler)(struct frontend *obj, struct question *q, GtkWidget *questionbox);
+/* Make sure this is called in a GDK thread-safe way
+ */
+void update_frontend_title (struct frontend *obj, char *title);
 
-#define q_get_extended_description(q)   question_get_field((q), "", "extended_description")
-#define q_get_description(q)            question_get_field((q), "", "description")
-#define q_get_choices(q)                question_get_field((q), "", "choices")
-#define q_get_choices_vals(q)           question_get_field((q), NULL, "choices")
-#define q_get_indices(q)                question_get_field((q), "", "indices")
+char *progressbar_title = NULL;
+
+typedef int (gtk_handler)(struct frontend *obj, struct question *q, GtkWidget *questionbox);
 
 static GCond *button_cond = NULL;
 static GMutex *button_mutex = NULL;
@@ -84,6 +92,8 @@ typedef int (custom_func_t)(struct frontend*, struct question*, GtkWidget*);
 
 static const char * get_text(struct frontend *obj, const char *template, const char *fallback );
 
+static int reset_cursor_cnt = 0;
+
 void register_setter(void (*func)(void*, struct question*),
              void *data, struct question *q, struct frontend *obj)
 {
@@ -98,11 +108,6 @@ void register_setter(void (*func)(void*, struct question*),
 }
 
 void free_description_data( GtkObject *obj, struct frontend_question_data* data )
-{
-    free(data);
-}
-
-void free_treemodel_data( GtkWidget *widget, struct question_treemodel_data* data )
 {
     free(data);
 }
@@ -161,7 +166,97 @@ static void combo_setter(void *entry, struct question *q)
     free(tindex);
 }
 
-static void multi_setter(void *check_container, struct question *q)
+static void select_setter (void *treeview, struct question *q)
+{
+    GtkTreeSelection *selection;
+    GtkTreeModel     *model;
+    GtkTreeIter       iter;
+    int i, count, *tindex = NULL;
+    char **choices, **choices_translated;
+    const gchar *indices = q_get_indices(q);
+
+    count = strgetargc(q_get_choices_vals(q));
+    if (count <= 0)
+        return;
+    choices = malloc(sizeof(char *) * count);
+    choices_translated = malloc(sizeof(char *) * count);
+    tindex = malloc(sizeof(int) * count);
+
+    if (strchoicesplitsort(q_get_choices_vals(q), q_get_choices(q), indices, choices, choices_translated, tindex, count) != count)
+        return;
+
+    selection = gtk_tree_view_get_selection (GTK_TREE_VIEW (treeview));
+    if (gtk_tree_selection_get_selected (selection, &model, &iter)) {
+        gchar *name;
+        gtk_tree_model_get (model, &iter, SELECT_COL_NAME, &name, -1);
+        //g_print ("selected row is: %s\n", name);
+        for (i = 0; i < count; i++) {
+            if (strcmp(name, choices_translated[i]) == 0)
+                question_setvalue(q, choices[tindex[i]]);
+            free(choices[tindex[i]]);
+            free(choices_translated[i]);
+        }
+        g_free (name);
+    }
+
+    free(choices);
+    free(choices_translated);
+    free(tindex);
+}
+
+static void multiselect_single_setter (void *treeview, struct question *q)
+{
+    int i, count;
+    char **choices, **choices_translated;
+    int *tindex = NULL;
+    gchar *indices;
+    gchar *result = NULL, *copy = NULL ;
+    GtkTreeModel *model;
+    GtkTreePath *path;
+    GtkTreeIter iter;
+    gboolean bool_var ;
+
+    count = strgetargc(q_get_choices_vals(q));
+    if (count <= 0)
+        return /* DC_NOTOK */;
+    choices = malloc(sizeof(char *) * count);
+    choices_translated = malloc(sizeof(char *) * count);
+    tindex = malloc(sizeof(int) * count);
+    indices = q_get_indices(q);
+    if (strchoicesplitsort(q_get_choices_vals(q), q_get_choices(q), indices, choices, choices_translated, tindex, count) != count)
+        return /* DC_NOTOK */;
+
+   model = gtk_tree_view_get_model (GTK_TREE_VIEW (treeview));
+   for (i = 0; i < count; i++) {
+        path = gtk_tree_path_new_from_indices ( i, -1);
+        gtk_tree_model_get_iter(model, &iter, path);
+        gtk_tree_model_get(model, &iter, MULTISELECT_COL_BOOL, &bool_var, -1);
+
+        if((result != NULL) && bool_var==1) {
+            printf ("Option %d active\n", i);
+            copy = g_strdup(result);
+            free(result);
+            result = g_strconcat(copy, ", ", choices[tindex[i]], NULL);
+            free(copy);
+        }
+        else if((result == NULL) && bool_var==1)
+            result = g_strdup(choices[tindex[i]]);
+
+        gtk_tree_path_free (path);
+    }
+
+    if (result == NULL)
+        result = g_strdup("");
+
+    question_setvalue(q, result);
+    free(result);
+    free(choices);
+    free(choices_translated);
+    free(tindex);
+    free(indices);
+}
+
+static void multiselect_multiple_setter (void *check_container, struct question *q)
 {
     gchar *result = NULL;
     gchar *copy = NULL;
@@ -241,25 +336,48 @@ gboolean expose_event_callback(GtkWidget *wid, GdkEventExpose *event, struct fro
     if (obj->info != NULL) {
         char *text = q_get_description(obj->info);
         if (text) {
-            message = malloc(strlen(text) + 8 );
-            /* TODO */
-            /* setting custom font colours would make GTKDFB 2.0.9 crash */
-            /* this issue has already been fixed in recent GTKDFB verions */
-            #if GTK_CHECK_VERSION(2,8,0)
+            message = malloc(strlen(text) + 42 );
             sprintf(message,"<b><span foreground=\"#ffffff\">%s</span></b>", text);
-            #else
-            sprintf(message,"<b>%s</b>", text);
-            #endif
             layout = gtk_widget_create_pango_layout(wid, NULL);
             pango_layout_set_markup(layout, message, strlen(message));
             pango_layout_set_font_description(layout, pango_font_description_from_string("Sans 12"));
             pango_layout_get_pixel_size(layout, &w, &h);
             /* obj->info is drawn over the debian banner, top-right corner of the screen */
-            gdk_draw_layout(wid->window, gdk_gc_new(wid->window),  WINDOW_WIDTH - w - 4, 4, layout);
+            gdk_draw_layout(wid->window, gdk_gc_new(wid->window),  WINDOW_WIDTH - w - 4 - DEFAULT_PADDING*2, 4, layout);
+            free(message);
         }
         free(text);
     }
     return FALSE;
+}
+
+/* TODO: workaround for bug #404482
+ * This is a workaround for a bug in gtk/dfb which causes wrong GDK crossing
+ * events (not) to be delivered and hence cursor not to be reshaped when
+ * entering or leaving a gtktextview or a gtkentry
+ */
+static gboolean reset_cursor_callback (GtkWidget *widget, GdkEventExpose *event, void *data)
+{
+    if (event->type == GDK_LEAVE_NOTIFY || event->type == GDK_ENTER_NOTIFY) {
+        if ( (reset_cursor_cnt % 2) == 0)
+            gdk_window_set_cursor (widget->window, NULL);
+        reset_cursor_cnt++;
+    }
+
+    return FALSE;
+}
+
+/* Scrolling to default row in SELECT questions has to be done after the
+ * treeview has been realized
+ */
+void treeview_exposed_callback (GtkWidget *widget, GdkEventExpose *event, struct treeview_expose_callback_data *data)
+{
+    GtkTreePath *path  = gtk_tree_path_new_from_string (data -> path);
+    gtk_tree_view_scroll_to_cell (GTK_TREE_VIEW (widget ), path, NULL, TRUE, 0.5, 0);
+    gtk_tree_view_set_cursor (GTK_TREE_VIEW (widget), path, NULL, FALSE);
+    gtk_tree_path_free (path);
+    g_signal_handler_disconnect (G_OBJECT(widget), data->callback_function);
+    free(data);
 }
 
 void screenshot_button_callback(GtkWidget *button, struct frontend* obj )
@@ -270,7 +388,7 @@ void screenshot_button_callback(GtkWidget *button, struct frontend* obj )
     gint x, y, width, height, depth;
     int i, j;
     char screenshot_name[256], popup_message[256];
-    char *label_title_string;
+    char *tmp;
 	
     gdk_window = gtk_widget_get_parent_window ( button );
     gdk_window_get_geometry( gdk_window, &x, &y, &width, &height, &depth);
@@ -305,9 +423,9 @@ void screenshot_button_callback(GtkWidget *button, struct frontend* obj )
 
     title_label = gtk_label_new (get_text(obj, "debconf/gtk-button-screenshot", "Screenshot"));
     gtk_misc_set_alignment(GTK_MISC(title_label), 0, 0);
-    label_title_string = malloc(strlen(get_text(obj, "debconf/gtk-button-screenshot", "Screenshot")) + 8 );
-    sprintf(label_title_string,"<b>%s</b>", get_text(obj, "debconf/gtk-button-screenshot", "Screenshot"));
-    gtk_label_set_markup(GTK_LABEL(title_label), label_title_string);
+    tmp = malloc(strlen(get_text(obj, "debconf/gtk-button-screenshot", "Screenshot")) + 8 );
+    sprintf(tmp,"<b>%s</b>", get_text(obj, "debconf/gtk-button-screenshot", "Screenshot"));
+    gtk_label_set_markup(GTK_LABEL(title_label), tmp);
     sprintf(popup_message, get_text(obj, "debconf/gtk-screenshot-saved", "Screenshot saved as %s"), screenshot_name );
     message_label = gtk_label_new (popup_message);
 
@@ -334,140 +452,23 @@ void screenshot_button_callback(GtkWidget *button, struct frontend* obj )
     gtk_container_add (GTK_CONTAINER (window), frame);
     gtk_widget_show_all (window);
 
-    free(label_title_string);
-}
-
-void button_single_callback(GtkWidget *button, struct frontend_question_data* data)
-{
-    struct frontend *obj = data->obj;
-    struct question *q = data->q;
-    char **choices, **choices_translated;
-    int i, count;
-    int *tindex = NULL;
-    const gchar *indices = q_get_indices(q);
-
-    count = strgetargc(q_get_choices_vals(q));
-    if (count <= 0)
-        return /* DC_NOTOK */;
-    choices = malloc(sizeof(char *) * count);
-    choices_translated = malloc(sizeof(char *) * count);
-    tindex = malloc(sizeof(int) * count);
-
-    if (strchoicesplitsort(q_get_choices_vals(q), q_get_choices(q), indices, choices, choices_translated, tindex, count) != count)
-        return /* DC_NOTOK */;
-
-    for (i = 0; i < count; i++)
-    {
-        if (strcmp(gtk_button_get_label(GTK_BUTTON(button)), choices_translated[i]) == 0)
-            question_setvalue(q, choices[tindex[i]]);
-        free(choices[tindex[i]]);
-        free(choices_translated[i]);
-    }
-    free(choices);
-    free(choices_translated);
-    free(tindex);
-    ((struct frontend_data*)obj->data)->button_val = DC_OK;
-    free(data);
-
-    gtk_main_quit();
-}
-
-void check_toggled_callback (GtkWidget *toggle, gpointer data)
-{
-    struct question *q = (struct question*)data;
-    gboolean value;
-
-    /* INFO(INFO_DEBUG, "GTK_DI - check_toggled_callback() called"); */
-    value = gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON(toggle));
-    bool_setter (toggle, q);
-}
-
-void boolean_single_callback(GtkWidget *button, struct frontend_question_data* data )
-{
-    struct frontend *obj = data->obj;
-    struct question *q = data->q;
-    char *ret;
-
-    /* INFO(INFO_DEBUG, "GTK_DI - boolean_single_callback() called"); */
-    ret = (char*) gtk_object_get_user_data(GTK_OBJECT(button));
-    question_setvalue(q, ret);
-    free(ret);
-
-    ((struct frontend_data*)obj->data)->button_val = DC_OK;;
-
-    gtk_main_quit();
+    free(tmp);
 }
 
 void multiselect_single_callback(GtkCellRendererToggle *cell, const gchar *path_string, struct question_treemodel_data* data)
 {
-    int i, count;
-    char **choices, **choices_translated;
-    int *tindex = NULL;
-    gchar *indices;
-    gchar *result = NULL, *copy = NULL ;
     GtkTreeModel *model;
     GtkTreePath *path;
     GtkTreeIter iter;
-    gboolean bool_var ;
-    struct question *q = data->q;
+    gboolean bool_var;
+
     model = (GtkTreeModel *) data->treemodel;
-    char str_iter_index[4];
-
-    /* GtkTreeView is updated */
-    path  = gtk_tree_path_new_from_string(path_string);
-    gtk_tree_model_get_iter(model, &iter, path);
-    gtk_tree_path_free(path);
-    gtk_tree_model_get(model, &iter, MULTISELECT_COL_BOOL, &bool_var, -1);
+    path = gtk_tree_path_new_from_string (path_string);
+    gtk_tree_model_get_iter (model, &iter, path);
+    gtk_tree_model_get (model, &iter, MULTISELECT_COL_BOOL, &bool_var, -1);
     bool_var ^= 1;
-    gtk_list_store_set(GTK_LIST_STORE(model), &iter, MULTISELECT_COL_BOOL, bool_var, -1);
-
-    /* frontend's internal question struct is updated */
-    count = strgetargc(q_get_choices_vals(q));
-    if (count <= 0)
-        return /* DC_NOTOK */;
-    choices = malloc(sizeof(char *) * count);
-    choices_translated = malloc(sizeof(char *) * count);
-    tindex = malloc(sizeof(int) * count);
-       indices = q_get_indices(q);
-    if (strchoicesplitsort(q_get_choices_vals(q), q_get_choices(q), indices, choices, choices_translated, tindex, count) != count)
-        return /* DC_NOTOK */;
-
-
-    for (i = 0; i < count; i++)
-    {
-        sprintf(str_iter_index, "%d", i);
-        path  = gtk_tree_path_new_from_string(str_iter_index);
-
-        /* TODO
-         * The above hack is needed since gtk_tree_path_new_from_indices()
-         * was implemented first in GTK v. 2.2
-         * path  = gtk_tree_path_new_from_indices ( i, -1);
-         */
-        gtk_tree_model_get_iter(model, &iter, path);
-        gtk_tree_path_free(path);
-        gtk_tree_model_get(model, &iter, MULTISELECT_COL_BOOL, &bool_var, -1);
-
-        if((result != NULL) && bool_var==1)
-        {
-            copy = g_strdup(result);
-            free(result);
-            result = g_strconcat(copy, ", ", choices[tindex[i]], NULL);
-            free(copy);
-        }
-        else if((result == NULL) && bool_var==1)
-            result = g_strdup(choices[tindex[i]]);
-    }
-
-    if (result == NULL)
-        result = g_strdup("");
-
-    question_setvalue(q, result);
-    free(result);
-    free(choices);
-    free(choices_translated);
-    free(tindex);
-    free(indices);
-
+    gtk_list_store_set (GTK_LIST_STORE (model), &iter, MULTISELECT_COL_BOOL, bool_var, -1);
+    gtk_tree_path_free (path);
 }
 
 static gboolean key_press_event( GtkWidget *widget, GdkEvent  *event, struct frontend* obj )
@@ -507,52 +508,14 @@ void cancel_button_callback(GtkWidget *button, struct frontend* obj)
     ((struct frontend_data*)obj->data)->button_val = DC_GOBACK;
 }
 
-gboolean select_treeview_callback (GtkTreeSelection *selection, GtkTreeModel  *model, GtkTreePath *path, gboolean path_currently_selected, struct frontend_question_data *data)
+/* catches double-clicks, SPACEBAR, ENTER keys pressure for SELECT questions */
+void
+select_onRowActivated (GtkTreeView          *treeview,
+                       GtkTreePath          *path,
+                       GtkTreeViewColumn    *col,
+                       struct frontend_data *data)
 {
-    struct question *q = data->q;
-    char **choices, **choices_translated;
-    int i, count;
-    int *tindex = NULL;
-    const gchar *indices = q_get_indices(q);
-    gchar *name;
-    GtkTreeIter iter;
-
-    /* INFO(INFO_DEBUG, "GTK_DI - gboolean select_treeview_callback() called"); */
-
-    count = strgetargc(q_get_choices_vals(q));
-    if (count <= 0)
-        return FALSE; /* DC_NOTOK */;
-    choices = malloc(sizeof(char *) * count);
-    choices_translated = malloc(sizeof(char *) * count);
-    tindex = malloc(sizeof(int) * count);
-
-    if (strchoicesplitsort(q_get_choices_vals(q), q_get_choices(q), indices, choices, choices_translated, tindex, count) != count)
-        return FALSE;/* DC_NOTOK */;
-
-    if (gtk_tree_model_get_iter(model, &iter, path))
-    {
-        gtk_tree_model_get(model, &iter, SELECT_COL_NAME, &name, -1);
-        if (!path_currently_selected)
-        {
-            for (i = 0; i < count; i++)
-            {
-                if (strcmp(name, choices_translated[i]) == 0)
-                {
-                    /* INFO(INFO_DEBUG, "GTK_DI - gboolean select_treeview_callback(): %s is going to be selected  called", name); */
-                    question_setvalue(q, choices[tindex[i]]);
-                }
-                free(choices[tindex[i]]);
-                free(choices_translated[i]);
-            }
-        }
-    }
-
-    g_free(name);
-    free(choices);
-    free(choices_translated);
-    free(tindex);
-
-return TRUE;
+    gtk_button_clicked ( GTK_BUTTON( data->button_next ) );
 }
 
 static const char *
@@ -650,40 +613,45 @@ GtkWidget* display_descriptions(struct question *q, struct frontend *obj)
 
 static int gtkhandler_boolean(struct frontend *obj, struct question *q, GtkWidget *qbox)
 {
-    GtkWidget *description_box, *check, *hpadbox, *vpadbox;
+    GtkWidget *description_box, *radio_false, *radio_true, *hpadbox, *vpadbox;
     struct frontend_question_data *data;
     const char *defval = question_getvalue(q, "");
 
     /* INFO(INFO_DEBUG, "GTK_DI - gtkhandler_boolean() called"); */
 
-    data = NEW(struct frontend_question_data);
+    data = NEW (struct frontend_question_data);
     data->obj = obj;
     data->q = q;
 
-    check = gtk_check_button_new_with_label(q_get_description(q));
-    if (strcmp(defval, "true") == 0)
-        gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(check), TRUE);
-    else
-        gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(check), FALSE);
+    radio_false = gtk_radio_button_new_with_label (NULL, question_get_text (obj, "debconf/no", "No"));
+    radio_true = gtk_radio_button_new_with_label_from_widget (GTK_RADIO_BUTTON (radio_false), question_get_text (obj, "debconf/yes", "Yes"));
 
-    if (q->next == NULL && q->prev == NULL)
-        g_signal_connect (G_OBJECT(check), "toggled", G_CALLBACK(check_toggled_callback), q);
-    else
-        register_setter(bool_setter, check, q, obj);
+    if (strcmp (defval, "true") == 0) {
+        gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (radio_false), FALSE);
+        gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (radio_true), TRUE);
+    }
+    else {
+        gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (radio_false), TRUE);
+        gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (radio_true), FALSE);
+    }
 
-    g_signal_connect (G_OBJECT(check), "destroy", G_CALLBACK (free_description_data), data);
-
-    description_box = display_descriptions(q, obj);
-
+    g_signal_connect (G_OBJECT (radio_true), "destroy", G_CALLBACK (free_description_data), data);
+    description_box = display_descriptions (q, obj);
     vpadbox = gtk_vbox_new (FALSE, DEFAULT_PADDING);
     gtk_box_pack_start (GTK_BOX(vpadbox), description_box, FALSE, FALSE, 0);
-    gtk_box_pack_start (GTK_BOX(vpadbox), check, FALSE, FALSE, 0);
+    gtk_box_pack_start (GTK_BOX(vpadbox), radio_false, FALSE, FALSE, 0);
+    gtk_box_pack_start (GTK_BOX(vpadbox), radio_true, FALSE, FALSE, 0);
     hpadbox = gtk_hbox_new (FALSE, DEFAULT_PADDING);
-    gtk_box_pack_start (GTK_BOX(hpadbox), vpadbox, TRUE, TRUE, QUESTIONBOX_HPADDING);
-    gtk_box_pack_start(GTK_BOX(qbox), hpadbox, FALSE, FALSE, QUESTIONBOX_VPADDING);
+    gtk_box_pack_start (GTK_BOX (hpadbox), vpadbox, TRUE, TRUE, QUESTIONBOX_HPADDING);
+    gtk_box_pack_start(GTK_BOX (qbox), hpadbox, FALSE, FALSE, QUESTIONBOX_VPADDING);
+    if (is_first_question (q)) {
+        if (strcmp (defval, "true") == 0)
+            gtk_widget_grab_focus (radio_true);
+        else
+            gtk_widget_grab_focus (radio_false);
+    }
 
-    if (is_first_question(q))
-        gtk_widget_grab_focus(check);
+    register_setter (bool_setter, radio_true, q, obj);
 
     return DC_OK;
 }
@@ -692,7 +660,7 @@ static int gtkhandler_multiselect_single(struct frontend *obj, struct question *
 {
     GtkWidget *description_box, *hpadbox, *vpadbox;
     char **choices, **choices_translated, **defvals;
-    int i, j, count, defcount;
+    int i, j, count, defcount, flag_default_found;
     struct question_treemodel_data *data;
     int *tindex = NULL;
     const gchar *indices = q_get_indices(q);
@@ -737,41 +705,31 @@ static int gtkhandler_multiselect_single(struct frontend *obj, struct question *
     data->q = q;
     data->treemodel = model;
     g_signal_connect(G_OBJECT(renderer_check), "toggled", G_CALLBACK(multiselect_single_callback), data);
-    g_signal_connect (G_OBJECT(view), "destroy", G_CALLBACK (free_treemodel_data), data);
+    g_signal_connect (G_OBJECT(view), "destroy", G_CALLBACK (free_description_data), data);
     g_object_unref (model);
 
-    for (i = 0; i < count; i++)
-    {
-        gtk_list_store_append (store, &iter);
-
-        if (defcount == 0)
-            gtk_list_store_set (store, &iter, MULTISELECT_COL_BOOL, FALSE, MULTISELECT_COL_NAME, choices_translated[i],  -1);
-
-        else
-        {
-            for (j = 0; j < defcount; j++)
-            {
-                if (strcmp(choices[tindex[i]], defvals[j]) == 0)
-                {
-                    gtk_list_store_set (store, &iter, MULTISELECT_COL_BOOL, TRUE, MULTISELECT_COL_NAME, choices_translated[i],  -1);
-                    break;
-                }
-                else
-                {
-                    gtk_list_store_set (store, &iter, MULTISELECT_COL_BOOL, FALSE, MULTISELECT_COL_NAME, choices_translated[i],  -1);
-                }
+    for (i = 0; i < count; i++) {
+        flag_default_found = FALSE;
+        for (j = 0; j < defcount; j++) {
+            if (strcmp(choices[tindex[i]], defvals[j]) == 0) {
+                gtk_list_store_insert_with_values (store, &iter, i, MULTISELECT_COL_BOOL, TRUE, MULTISELECT_COL_NAME, choices_translated[i], -1);
+                flag_default_found = TRUE;
+                break;
             }
         }
-        
-		/* by default the first row gets selected if no default option is specified */
-        gtk_tree_model_get_iter_first (model,&iter);
-        path = gtk_tree_model_get_path (model, &iter);
-        gtk_tree_view_set_cursor (GTK_TREE_VIEW(view), path, MULTISELECT_COL_BOOL, FALSE);
-        gtk_tree_path_free (path);
+
+        if (flag_default_found == FALSE)
+            gtk_list_store_insert_with_values (store, &iter, i, MULTISELECT_COL_BOOL, FALSE, MULTISELECT_COL_NAME, choices_translated[i], -1);
 
         free(choices[tindex[i]]);
         free(choices_translated[i]);
     }
+        
+    /* by default the first row gets selected if no default option is specified */
+    gtk_tree_model_get_iter_first (model,&iter);
+    path = gtk_tree_model_get_path (model, &iter);
+    gtk_tree_view_set_cursor (GTK_TREE_VIEW(view), path, MULTISELECT_COL_BOOL, FALSE);
+    gtk_tree_path_free (path);
 
     free(choices);
     free(choices_translated);
@@ -784,20 +742,18 @@ static int gtkhandler_multiselect_single(struct frontend *obj, struct question *
     gtk_container_add(GTK_CONTAINER(scroll), view);
     gtk_scrolled_window_set_policy(GTK_SCROLLED_WINDOW (scroll),
                                    GTK_POLICY_NEVER, GTK_POLICY_AUTOMATIC);
-
     description_box = display_descriptions(q, obj);
-
     vpadbox = gtk_vbox_new (FALSE, DEFAULT_PADDING);
     gtk_box_pack_start (GTK_BOX(vpadbox), description_box, FALSE, FALSE, 0);
     frame = gtk_frame_new(NULL);
     gtk_container_add(GTK_CONTAINER(frame), scroll);
     gtk_box_pack_start (GTK_BOX(vpadbox), frame, TRUE, TRUE, 0);
-
     hpadbox = gtk_hbox_new (FALSE, DEFAULT_PADDING);
     gtk_box_pack_start (GTK_BOX(hpadbox), vpadbox, TRUE, TRUE, QUESTIONBOX_HPADDING);
     gtk_box_pack_start(GTK_BOX(qbox), hpadbox, TRUE, TRUE, QUESTIONBOX_VPADDING);
-
     gtk_widget_grab_focus(view);
+
+    register_setter (multiselect_single_setter, view, q, obj);
 
     return DC_OK;
 }
@@ -878,7 +834,7 @@ static int gtkhandler_multiselect_multiple(struct frontend *obj, struct question
     gtk_box_pack_start (GTK_BOX(hpadbox), vpadbox, TRUE, TRUE, QUESTIONBOX_HPADDING);
     gtk_box_pack_start(GTK_BOX(qbox), hpadbox, FALSE, FALSE, QUESTIONBOX_VPADDING);
 
-    register_setter(multi_setter, check_container, q, obj);
+    register_setter (multiselect_multiple_setter, check_container, q, obj);
 
     return DC_OK;
 }
@@ -941,16 +897,15 @@ static int gtkhandler_password(struct frontend *obj, struct question *q, GtkWidg
     hpadbox = gtk_hbox_new (FALSE, DEFAULT_PADDING);
     gtk_box_pack_start (GTK_BOX(hpadbox), vpadbox, TRUE, TRUE, QUESTIONBOX_HPADDING);
     gtk_box_pack_start(GTK_BOX(qbox), hpadbox, FALSE, FALSE, QUESTIONBOX_VPADDING);
-
-    register_setter(entry_setter, entry, q, obj);
-
     if (is_first_question(q))
         gtk_widget_grab_focus(entry);
+
+    register_setter (entry_setter, entry, q, obj);
 
     return DC_OK;
 }
 
-static int gtkhandler_select_treeview_list(struct frontend *obj, struct question *q, GtkWidget *qbox)
+static int gtkhandler_select_single_list (struct frontend *obj, struct question *q, GtkWidget *qbox)
 {
     char **choices, **choices_translated;
     int i, count;
@@ -967,9 +922,9 @@ static int gtkhandler_select_treeview_list(struct frontend *obj, struct question
     GtkWidget           *view, *scroll, *frame;
     GtkCellRenderer     *renderer;
     GtkTreeSelection    *selection;
-    GtkTreePath         *path;
+    struct treeview_expose_callback_data *expose_data = NEW (struct treeview_expose_callback_data);
 
-    /* INFO(INFO_DEBUG, "GTK_DI - gtkhandler_select_treeview_list() called"); */
+    /* INFO(INFO_DEBUG, "GTK_DI - gtkhandler_select_single_list() called"); */
 
     data = NEW(struct frontend_question_data);
     data->obj = obj;
@@ -991,40 +946,31 @@ static int gtkhandler_select_treeview_list(struct frontend *obj, struct question
     gtk_tree_view_insert_column_with_attributes (GTK_TREE_VIEW (view), -1, q_get_description(q), renderer, "text", SELECT_COL_NAME, NULL);
     store = gtk_list_store_new (SELECT_NUM_COLS, G_TYPE_STRING, G_TYPE_UINT);
     selection = gtk_tree_view_get_selection(GTK_TREE_VIEW(view));
-    gtk_tree_selection_set_select_function(selection, (GtkTreeSelectionFunc) select_treeview_callback, data, NULL);
+    g_signal_connect (G_OBJECT(view), "row-activated", G_CALLBACK (select_onRowActivated), (struct frontend_data *) obj->data);
     g_signal_connect (G_OBJECT(view), "destroy", G_CALLBACK (free_description_data), data);
     gtk_tree_view_set_enable_search (GTK_TREE_VIEW(view), TRUE);
-
+    gtk_tree_selection_set_mode (gtk_tree_view_get_selection (GTK_TREE_VIEW (view)),  GTK_SELECTION_BROWSE);
     model = GTK_TREE_MODEL( store );
     gtk_tree_view_set_model (GTK_TREE_VIEW (view), model);
-    g_object_unref (model);
 
-    for (i = 0; i < count; i++)
-    {
-        gtk_list_store_append (store, &iter);
-        gtk_list_store_set (store, &iter, SELECT_COL_NAME, choices_translated[i], -1);
-        if (defval && strcmp(choices[tindex[i]], defval) == 0)
+    for (i = 0; i < count; i++) {
+        gtk_list_store_insert_with_values (store, &iter, i, SELECT_COL_NAME, choices_translated[i], -1);
+        if (!flag_default_set && defval && strcmp(choices[tindex[i]], defval) == 0)
         {
-            /* TODO
-             * gtk_tree_view_scroll_to_cell() is broken in GTKDFB 2.0.9
-             */
-            path = gtk_tree_model_get_path(model, &iter);
-            gtk_tree_view_scroll_to_cell    (GTK_TREE_VIEW(view), path, NULL, FALSE, 0.5, 0);
-            gtk_tree_view_set_cursor        (GTK_TREE_VIEW(view), path, NULL, FALSE);
-            gtk_tree_path_free (path);
+            expose_data -> path = gtk_tree_path_to_string (gtk_tree_model_get_path (model, &iter));
+            expose_data -> callback_function = g_signal_connect_after (G_OBJECT(view), "expose_event", G_CALLBACK (treeview_exposed_callback), (gpointer) expose_data);
             flag_default_set = TRUE;
         }
         free(choices[tindex[i]]);
     }
-	/* by default the first row gets selected if no default option is specified */
-	if( flag_default_set == FALSE )
-	{
-		gtk_tree_model_get_iter_first (model,&iter);
-		path = gtk_tree_model_get_path(model, &iter);
-		gtk_tree_view_set_cursor (GTK_TREE_VIEW(view), path, NULL, FALSE);
-		gtk_tree_path_free (path);
-	}
 
+    if( flag_default_set == FALSE )
+    {
+        gtk_tree_model_get_iter_first (model, &iter);
+        gtk_tree_view_set_cursor (GTK_TREE_VIEW (view), gtk_tree_path_new_from_indices ( 0, -1), NULL, FALSE);
+    }
+
+    g_object_unref (model);
     free(choices);
     free(choices_translated);
     free(tindex);
@@ -1044,8 +990,9 @@ static int gtkhandler_select_treeview_list(struct frontend *obj, struct question
     hpadbox = gtk_hbox_new (FALSE, DEFAULT_PADDING);
     gtk_box_pack_start (GTK_BOX(hpadbox), vpadbox, TRUE, TRUE, QUESTIONBOX_HPADDING);
     gtk_box_pack_start(GTK_BOX(qbox), hpadbox, TRUE, TRUE, QUESTIONBOX_VPADDING);
-
     gtk_widget_grab_focus(view);
+
+    register_setter (select_setter, view, q, obj);
 
     return DC_OK;
 }
@@ -1054,7 +1001,7 @@ static int gtkhandler_select_treeview_list(struct frontend *obj, struct question
  * better displayed with a tree rather than a list and this question
  * handler is meant for this purpose
  */
-static int gtkhandler_select_treeview_store(struct frontend *obj, struct question *q, GtkWidget *qbox)
+static int gtkhandler_select_single_tree (struct frontend *obj, struct question *q, GtkWidget *qbox)
 {
     char **choices, **choices_translated;
     int i, count;
@@ -1063,6 +1010,7 @@ static int gtkhandler_select_treeview_store(struct frontend *obj, struct questio
     int *tindex = NULL;
     const gchar *indices = q_get_indices(q);
     GtkWidget *hpadbox, *vpadbox, *description_box;
+    int flag_default_set = FALSE;
 
     GtkTreeModel        *model;
     GtkTreeStore        *store;
@@ -1070,9 +1018,9 @@ static int gtkhandler_select_treeview_store(struct frontend *obj, struct questio
     GtkWidget           *view, *scroll, *frame;
     GtkCellRenderer     *renderer;
     GtkTreeSelection    *selection;
-    GtkTreePath         *path;
+    struct treeview_expose_callback_data *expose_data = NEW (struct treeview_expose_callback_data);
 	
-    /* INFO(INFO_DEBUG, "GTK_DI - gtkhandler_select_treeview_store() called"); */
+    /* INFO(INFO_DEBUG, "GTK_DI - gtkhandler_select_single_tree() called"); */
 
     data = NEW(struct frontend_question_data);
     data->obj = obj;
@@ -1095,12 +1043,12 @@ static int gtkhandler_select_treeview_store(struct frontend *obj, struct questio
     store = gtk_tree_store_new (SELECT_NUM_COLS, G_TYPE_STRING, G_TYPE_UINT);
 
     selection = gtk_tree_view_get_selection(GTK_TREE_VIEW(view));
-    gtk_tree_selection_set_select_function(selection, (GtkTreeSelectionFunc) select_treeview_callback, data, NULL);
+    g_signal_connect (G_OBJECT(view), "row-activated", G_CALLBACK (select_onRowActivated), (struct frontend_data *) obj->data);
     g_signal_connect (G_OBJECT(view), "destroy", G_CALLBACK (free_description_data), data);
     gtk_tree_view_set_enable_search (GTK_TREE_VIEW(view), TRUE);
+    gtk_tree_selection_set_mode (gtk_tree_view_get_selection (GTK_TREE_VIEW (view)),  GTK_SELECTION_BROWSE);
     model = GTK_TREE_MODEL( store );
     gtk_tree_view_set_model (GTK_TREE_VIEW (view), model);
-    g_object_unref (model);
 
     for (i = 0; i < count; i++)
     {
@@ -1108,58 +1056,60 @@ static int gtkhandler_select_treeview_store(struct frontend *obj, struct questio
         if(strcmp(q->tag, "countrychooser/country-name") == 0 )
         {
             if( ((choices_translated[i][0]=='-') && (choices_translated[i][1]=='-')) )
-            {    /* father */
+            {    /* father, continent, will never receive focus by default*/
                 gtk_tree_store_append (store, &iter,NULL);
                 gtk_tree_store_set (store, &iter, SELECT_COL_NAME, choices_translated[i], -1);
             }
             else
-            {    /* child */
+            {    /* child, country */
                 gtk_tree_store_append (store, &child, &iter);
                 gtk_tree_store_set (store, &child, SELECT_COL_NAME, choices_translated[i], -1);
 
-                if (defval && strcmp(choices[tindex[i]], defval) == 0)
+                if (!flag_default_set && defval && strcmp(choices[tindex[i]], defval) == 0)
                 {
-                    path = gtk_tree_model_get_path(model, &iter);
-                    gtk_tree_view_scroll_to_cell (GTK_TREE_VIEW(view), path, NULL, FALSE, 0.5, 0);
-                    gtk_tree_view_expand_row (GTK_TREE_VIEW(view), path, TRUE);
-                    gtk_tree_view_set_cursor (GTK_TREE_VIEW(view), path, NULL, FALSE);
-                    gtk_tree_path_free (path);
+                    gtk_tree_view_expand_row (GTK_TREE_VIEW (view), gtk_tree_model_get_path (model, &iter), TRUE);
+                    expose_data -> path = gtk_tree_path_to_string (gtk_tree_model_get_path (model, &child));
+                    expose_data -> callback_function = g_signal_connect_after (G_OBJECT(view), "expose_event", G_CALLBACK (treeview_exposed_callback), (gpointer) expose_data);
+                    flag_default_set = TRUE;
                 }
             }
         }
         else if(strcmp(q->tag, "partman/choose_partition") == 0 )
         {
             if( strstr(choices_translated[i],"    ")!=NULL )
-            {    /* child */
+            {    /* child, partition */
                 gtk_tree_store_append (store, &child, &iter);
                 gtk_tree_store_set (store, &child, SELECT_COL_NAME, choices_translated[i], -1);
-
-                path = gtk_tree_model_get_path(model, &iter);
-                if (defval && strcmp(choices[tindex[i]], defval) == 0)
+                gtk_tree_view_expand_row (GTK_TREE_VIEW(view), gtk_tree_model_get_path(model, &iter), TRUE);
+                if (!flag_default_set && defval && strcmp(choices[tindex[i]], defval) == 0)
                 {
-                    gtk_tree_view_scroll_to_cell (GTK_TREE_VIEW(view), path, NULL, FALSE, 0.5, 0);
-                    gtk_tree_view_set_cursor (GTK_TREE_VIEW(view), path, NULL, FALSE);
+                    expose_data -> path = gtk_tree_path_to_string (gtk_tree_model_get_path (model, &child));
+                    expose_data -> callback_function = g_signal_connect_after (G_OBJECT(view), "expose_event", G_CALLBACK (treeview_exposed_callback), (gpointer) expose_data);
+                    flag_default_set = TRUE;
                 }
-                path = gtk_tree_model_get_path(model, &iter);
-                gtk_tree_view_expand_row (GTK_TREE_VIEW(view), path, TRUE);
-                gtk_tree_path_free (path);
             }
             else
-            {    /* father */
+            {    /* father, disk */
                 gtk_tree_store_append (store, &iter,NULL);
                 gtk_tree_store_set (store, &iter, SELECT_COL_NAME, choices_translated[i], -1);
-                if (defval && strcmp(choices[tindex[i]], defval) == 0)
+                if (!flag_default_set && defval && strcmp(choices[tindex[i]], defval) == 0)
                 {
-                    path = gtk_tree_model_get_path(model, &iter);
-                    gtk_tree_view_scroll_to_cell (GTK_TREE_VIEW(view), path, NULL, FALSE, 0.5, 0);
-                    gtk_tree_view_set_cursor (GTK_TREE_VIEW(view), path, NULL, FALSE);
-                    gtk_tree_path_free (path);
+                    expose_data -> path = gtk_tree_path_to_string (gtk_tree_model_get_path (model, &iter));
+                    expose_data -> callback_function = g_signal_connect_after (G_OBJECT(view), "expose_event", G_CALLBACK (treeview_exposed_callback), (gpointer) expose_data);
+                    flag_default_set = TRUE;
                 }
             }
         }
         free(choices[tindex[i]]);
     }
 
+    if (flag_default_set == FALSE)
+    {
+        gtk_tree_model_get_iter_first (model, &iter);
+        gtk_tree_view_set_cursor (GTK_TREE_VIEW (view), gtk_tree_path_new_from_indices ( 0, -1), NULL, FALSE);
+    }
+
+    g_object_unref (model);
     free(choices);
     free(choices_translated);
     free(tindex);
@@ -1179,8 +1129,9 @@ static int gtkhandler_select_treeview_store(struct frontend *obj, struct questio
     hpadbox = gtk_hbox_new (FALSE, DEFAULT_PADDING);
     gtk_box_pack_start (GTK_BOX(hpadbox), vpadbox, TRUE, TRUE, QUESTIONBOX_HPADDING);
     gtk_box_pack_start(GTK_BOX(qbox), hpadbox, TRUE, TRUE, QUESTIONBOX_VPADDING);
-
     gtk_widget_grab_focus(view);
+
+    register_setter (select_setter, view, q, obj);
 
     return DC_OK;
 }
@@ -1246,7 +1197,8 @@ static int gtkhandler_select_multiple(struct frontend *obj, struct question *q, 
     hpadbox = gtk_hbox_new (FALSE, DEFAULT_PADDING);
     gtk_box_pack_start (GTK_BOX(hpadbox), vpadbox, TRUE, TRUE, QUESTIONBOX_HPADDING);
     gtk_box_pack_start(GTK_BOX(qbox), hpadbox, FALSE, FALSE, QUESTIONBOX_VPADDING);
-    register_setter(combo_setter, GTK_COMBO(combo)->entry, q, obj);
+
+    register_setter (combo_setter, GTK_COMBO(combo)->entry, q, obj);
 
     return DC_OK;
 }
@@ -1257,12 +1209,12 @@ static int gtkhandler_select(struct frontend *obj, struct question *q, GtkWidget
     if (q->prev == NULL && q->next == NULL)
     {
         if ( (strcmp(q->tag, "countrychooser/country-name") == 0) || (strcmp(q->tag, "partman/choose_partition") == 0) )
-            return gtkhandler_select_treeview_store(obj, q, qbox);
+            return gtkhandler_select_single_tree (obj, q, qbox);
         else
-            return gtkhandler_select_treeview_list(obj, q, qbox);
+            return gtkhandler_select_single_list (obj, q, qbox);
     }
     else
-        return gtkhandler_select_multiple(obj, q, qbox);
+        return gtkhandler_select_multiple (obj, q, qbox);
 }
 
 static int gtkhandler_string(struct frontend *obj, struct question *q, GtkWidget *qbox)
@@ -1295,11 +1247,10 @@ static int gtkhandler_string(struct frontend *obj, struct question *q, GtkWidget
     hpadbox = gtk_hbox_new (FALSE, DEFAULT_PADDING);
     gtk_box_pack_start (GTK_BOX(hpadbox), vpadbox, TRUE, TRUE, QUESTIONBOX_HPADDING);
     gtk_box_pack_start(GTK_BOX(qbox), hpadbox, FALSE, FALSE, QUESTIONBOX_VPADDING);
-
-    register_setter(entry_setter, entry, q, obj);
-
     if (is_first_question(q))
         gtk_widget_grab_focus(entry);
+
+    register_setter (entry_setter, entry, q, obj);
 
     return DC_OK;
 }
@@ -1335,6 +1286,7 @@ void set_design_elements(struct frontend *obj, GtkWidget *window)
   
     /* A label is used to display the fontend's title */
     label_title = gtk_label_new(NULL);
+    gtk_misc_set_alignment (GTK_MISC (label_title), 0, 0);
     ((struct frontend_data*) obj->data)->title = label_title;
     h_title_box = gtk_hbox_new (TRUE, 0);
     gtk_box_pack_start(GTK_BOX (h_title_box), label_title, TRUE, TRUE, DEFAULT_PADDING);
@@ -1351,11 +1303,12 @@ void set_design_elements(struct frontend *obj, GtkWidget *window)
     gtk_button_box_set_layout (GTK_BUTTON_BOX(actionbox), GTK_BUTTONBOX_END);
     gtk_box_set_spacing (GTK_BOX(actionbox), DEFAULT_PADDING);
 
-    /* button to take screenshots of the frontend */
+    /* Screenshot button is set insensitive by default */
     button_screenshot = gtk_button_new_with_label (get_text(obj, "debconf/gtk-button-screenshot", "Screenshot"));
     g_signal_connect (G_OBJECT (button_screenshot), "clicked", G_CALLBACK (screenshot_button_callback), obj );
     gtk_box_pack_start (GTK_BOX(actionbox), button_screenshot, TRUE, TRUE, DEFAULT_PADDING);
     ((struct frontend_data*) obj->data)->button_screenshot = button_screenshot;
+    gtk_widget_set_sensitive (button_screenshot, FALSE);
 
     /* Here are the back and forward buttons */
     button_prev = gtk_button_new_with_label (get_text(obj, "debconf/button-goback", "Go Back"));
@@ -1380,7 +1333,7 @@ void set_design_elements(struct frontend *obj, GtkWidget *window)
     gtk_widget_set_sensitive (button_prev, FALSE);
     gtk_widget_set_sensitive (button_next, FALSE);
 
-    /* Cancel button is not displayed by default */
+    /* Cancel button is set insensitive by default */
     button_cancel = gtk_button_new_with_label (get_text(obj, "debconf/button-cancel", "Cancel"));
     ret_val = NEW(int);
     *ret_val = DC_GOBACK;
@@ -1389,7 +1342,7 @@ void set_design_elements(struct frontend *obj, GtkWidget *window)
                       G_CALLBACK(cancel_button_callback), obj);
     gtk_box_pack_start (GTK_BOX(actionbox), button_cancel, TRUE, TRUE, DEFAULT_PADDING);
     ((struct frontend_data*) obj->data)->button_cancel = button_cancel;
-    gtk_widget_hide(button_cancel);
+    gtk_widget_set_sensitive (button_cancel, FALSE);
 
     /* focus order inside actionbox */
     focus_chain = g_list_append(focus_chain, button_next);
@@ -1487,6 +1440,7 @@ static int gtk_initialize(struct frontend *obj, struct configuration *conf)
     gtk_init (&args, &name);
 
     window = gtk_window_new (GTK_WINDOW_TOPLEVEL);
+    g_signal_connect_after (G_OBJECT (window), "event", G_CALLBACK (reset_cursor_callback), NULL);
     gtk_widget_set_size_request (window, WINDOW_WIDTH, WINDOW_HEIGHT);
     gtk_window_set_resizable (GTK_WINDOW (window), TRUE);
     gtk_window_set_position (GTK_WINDOW (window), GTK_WIN_POS_CENTER);
@@ -1505,6 +1459,11 @@ static int gtk_initialize(struct frontend *obj, struct configuration *conf)
 		g_error_free ( err_events_listener ) ;
         return DC_NOTOK;
 	}   
+	
+    /* Workaround for bug #407035 */
+    /* TODO: replace by more structural fix (or remove if fixed upstream) */
+    GtkSettings* settings = gtk_settings_get_default ();
+    gtk_settings_set_long_property (settings, "gtk-dnd-drag-threshold", 1000, "g-i");
 
     return DC_OK;
 }
@@ -1528,6 +1487,20 @@ static int gtk_go(struct frontend *obj)
     data->setters = NULL;
 
     gdk_threads_enter();
+
+    /* TODO
+     * workarund to force dfb to reload keymap at every run, awaiting
+     * for dfb to support automatic keymap change detection and reloading
+     * (See also bug #381979)
+     */
+
+    #if GTK_CHECK_VERSION(2,10,0)
+    #ifdef GDK_WINDOWING_DIRECTFB
+    dfb_input_device_reload_keymap( dfb_input_device_at( DIDID_KEYBOARD ) );
+    #endif
+    #else
+    dfb_input_device_reload_keymap( dfb_input_device_at( DIDID_KEYBOARD ) );
+    #endif
 
     gtk_rc_reparse_all();
 
@@ -1620,6 +1593,8 @@ static int gtk_go(struct frontend *obj)
     GTK_WIDGET_SET_FLAGS (GTK_WIDGET(data->button_next), GTK_CAN_DEFAULT);
     gtk_widget_grab_default (GTK_WIDGET(data->button_next));
 
+    update_frontend_title (obj, obj->title);
+
     gtk_widget_show_all(data->window);
     gtk_widget_hide(((struct frontend_data*)obj->data)->progress_bar_box) ;
     gtk_widget_hide(((struct frontend_data*)obj->data)->button_cancel) ;
@@ -1632,6 +1607,10 @@ static int gtk_go(struct frontend *obj)
     g_mutex_unlock (button_mutex);
 	
     gdk_threads_enter();
+
+    gtk_widget_set_sensitive (data->button_prev, FALSE);
+    gtk_widget_set_sensitive (data->button_next, FALSE);
+    gtk_widget_set_sensitive (data->button_screenshot, FALSE);
 
     if (data->button_val == DC_OK)
     {
@@ -1651,9 +1630,6 @@ static int gtk_go(struct frontend *obj)
     else
         gtk_widget_destroy(questionbox_scroll);
 
-    gtk_widget_set_sensitive (data->button_prev, FALSE);
-    gtk_widget_set_sensitive (data->button_next, FALSE);
-
     gdk_threads_leave();
 
     if (data->button_val == DC_OK)
@@ -1663,23 +1639,16 @@ static int gtk_go(struct frontend *obj)
     else
         return DC_OK;
 }
-
+#if 0
 static void gtk_set_title(struct frontend *obj, const char *title)
 {
-    GtkWidget *label_title;
-    char *label_title_string;
-
     /* INFO(INFO_DEBUG, "GTK_DI - gtk_set_title() called"); */
 
     gdk_threads_enter();
-    label_title = ((struct frontend_data*) obj->data)->title;
-    gtk_misc_set_alignment(GTK_MISC(label_title), 0, 0);
-    label_title_string = malloc(strlen(title) + 10 );
-    sprintf(label_title_string,"<b> %s</b>", title);
-    gtk_label_set_markup(GTK_LABEL(label_title), label_title_string);
+    update_frontend_title (obj, (char *)title);
     gdk_threads_leave();
 }
-
+#endif
 static bool gtk_can_go_back(struct frontend *obj, struct question *q)
 {
     return (obj->capability & DCF_CAPB_BACKUP);
@@ -1700,13 +1669,14 @@ static void set_design_elements_while_progressbar_runs(struct frontend *obj)
         gtk_widget_hide(data->button_prev);
         gtk_widget_hide(data->button_next);
         gtk_widget_show(data->button_cancel);
+        gtk_widget_set_sensitive (data->button_cancel, TRUE);
         GTK_WIDGET_SET_FLAGS (GTK_WIDGET(data->button_cancel), GTK_CAN_DEFAULT);
         gtk_widget_grab_default (GTK_WIDGET(data->button_cancel));    
     }
     else {
-        gtk_widget_set_sensitive (data->button_screenshot, FALSE);
-        gtk_widget_set_sensitive (data->button_prev, FALSE);
-        gtk_widget_set_sensitive (data->button_next, FALSE);
+        gtk_widget_hide(data->button_screenshot);
+        gtk_widget_hide(data->button_prev);
+        gtk_widget_hide(data->button_next);
         gtk_widget_hide(data->button_cancel);
     }
 
@@ -1733,6 +1703,12 @@ static void gtk_progress_start(struct frontend *obj, int min, int max, const cha
     obj->progress_min = min;
     obj->progress_max = max;
     obj->progress_cur = min;
+    
+    free (progressbar_title);
+    progressbar_title = malloc (strlen (obj->title)+1);
+    strcpy(progressbar_title, obj->title);
+    update_frontend_title (obj, progressbar_title);
+    
     gdk_threads_leave();
 
     /* INFO(INFO_DEBUG, "GTK_DI - gtk_progress_start(min=%d, max=%d, title=%s) called", min, max, title); */
@@ -1748,6 +1724,7 @@ static int gtk_progress_set(struct frontend *obj, int val)
     
     /* INFO(INFO_DEBUG, "GTK_DI - gtk_progress_set(val=%d) called", val); */
 
+    update_frontend_title (obj, progressbar_title);
     progress_bar = ((struct frontend_data*)obj->data)->progress_bar;
     gtk_widget_set_sensitive( GTK_WIDGET(progress_bar), TRUE);
 
@@ -1773,11 +1750,13 @@ static int gtk_progress_info(struct frontend *obj, const char *info)
     struct frontend_data *data = (struct frontend_data *) obj->data;
     gdk_threads_enter();
     set_design_elements_while_progressbar_runs(obj);
+
     /* INFO(INFO_DEBUG, "GTK_DI - gtk_progress_info(%s) called", info); */
 
+    update_frontend_title (obj, progressbar_title);
     progress_bar_label = ((struct frontend_data*)obj->data)->progress_bar_label;
-    progress_bar_label_string = malloc(strlen(info) + 13 );
-    sprintf(progress_bar_label_string,"<i> %s...</i>",info);
+    progress_bar_label_string = malloc(strlen(info) + 10 );
+    sprintf(progress_bar_label_string,"<i> %s</i>",info);
     gtk_label_set_markup(GTK_LABEL(progress_bar_label), progress_bar_label_string);
     free(progress_bar_label_string);
     gdk_threads_leave();
@@ -1807,7 +1786,7 @@ struct frontend_module debconf_frontend_module =
 {
     initialize: gtk_initialize,
     go: gtk_go,
-    set_title: gtk_set_title,
+/*  set_title: gtk_set_title, */
     can_go_back: gtk_can_go_back,
     can_cancel_progress: gtk_can_cancel_progress,
     progress_start: gtk_progress_start,
@@ -1816,3 +1795,13 @@ struct frontend_module debconf_frontend_module =
     progress_stop: gtk_progress_stop,
     query_capability: gtk_query_capability,
 };
+
+void update_frontend_title (struct frontend *obj, char *title)
+{
+    char *tmp;
+    
+    tmp = malloc (strlen (title) + 12 );
+    sprintf (tmp,"<b> %s</b>", title);
+    gtk_label_set_markup (GTK_LABEL (((struct frontend_data*) obj->data)->title), tmp);
+    free (tmp);
+}

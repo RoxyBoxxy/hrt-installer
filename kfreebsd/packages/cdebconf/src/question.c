@@ -75,11 +75,26 @@ void question_setvalue(struct question *q, const char *value)
 	}
 }
 
+/* Note that Default-* fields contain *untranslated* choices, so it's usual
+ * to call this with lang="" and then compare the answer with untranslated
+ * choices.
+ */
 const char *question_getvalue(const struct question *q, const char *lang)
 {
 	if (q->value)
 		return q->value;
 	return q->template->lget(q->template, lang, "default");
+}
+
+const char *question_get_variable(const struct question *q, const char *var)
+{
+	struct questionvariable *qvi = q->variables;
+
+	for (; qvi != 0; qvi = qvi->next)
+		if (strcmp(qvi->variable, var) == 0)
+			return qvi->value;
+
+	return NULL;
 }
 
 void question_variable_add(struct question *q, const char *var, 	

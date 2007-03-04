@@ -1,5 +1,5 @@
 <!-- retain these comments for translator revision tracking -->
-<!-- original version: 36758 untranslated -->
+<!-- original version: 44410 untranslated -->
 
  <sect1 id="linux-upgrade">
  <title>Installing &debian; from a Unix/Linux System</title>
@@ -33,17 +33,18 @@ media.
 
 With your current *nix partitioning tools, repartition the hard
 drive as needed, creating at least one filesystem plus swap. You
-need at least 150MB of space available for a console only install,
-or at least 300MB if you plan to install X.
+need around 350MB of space available for a console only install,
+or about 1GB if you plan to install X (more if you intend to
+install desktop environments like GNOME or KDE).
 
 </para><para>
 
-To create file systems on your partitions. For example, to create an
+Next, create file systems on the partitions. For example, to create an
 ext3 file system on partition <filename>/dev/hda6</filename> (that's
 our example root partition):
 
 <informalexample><screen>
-# mke2fs -j /dev/hda6
+# mke2fs -j /dev/<replaceable>hda6</replaceable>
 </screen></informalexample>
 
 To create an ext2 file system instead, omit <userinput>-j</userinput>.
@@ -54,9 +55,9 @@ Initialize and activate swap (substitute the partition number for
 your intended Debian swap partition):
 
 <informalexample><screen>
-# mkswap /dev/hda5
+# mkswap /dev/<replaceable>hda5</replaceable>
 # sync; sync; sync
-# swapon /dev/hda5
+# swapon /dev/<replaceable>hda5</replaceable>
 </screen></informalexample>
 
 Mount one partition as <filename>/mnt/debinst</filename> (the
@@ -66,7 +67,7 @@ referenced later below.
 
 <informalexample><screen>
 # mkdir /mnt/debinst
-# mount /dev/hda6 /mnt/debinst
+# mount /dev/<replaceable>hda6</replaceable> /mnt/debinst
 </screen></informalexample>
 
 </para>
@@ -83,7 +84,7 @@ manually before proceding with the next stage.
   <title>Install <command>debootstrap</command></title>
 <para>
 
-The tool that the Debian installer uses, which is recognized as the
+The utility used by the Debian installer, and recognized as the
 official way to install a Debian base system, is
 <command>debootstrap</command>. It uses <command>wget</command> and
 <command>ar</command>, but otherwise depends only on
@@ -126,21 +127,14 @@ archive (be sure to select the proper file for your
 architecture). Download the <command>debootstrap</command> .deb from
 the <ulink url="http://ftp.debian.org/debian/pool/main/d/debootstrap/">
 pool</ulink>, copy the package to the work folder, and extract the
-binary files from it. You will need to have root privileges to install
-the binaries.
+files from it. You will need to have root privileges to install
+the files.
 
 <informalexample><screen>
-# ar -x debootstrap_0.X.X_arch.deb
+# ar -x debootstrap_0.X.X_all.deb
 # cd /
 # zcat /full-path-to-work/work/data.tar.gz | tar xv
 </screen></informalexample>
-
-</para><para>
-
-Note that running <command>debootstrap</command> may require you to have
-a minimal version of <classname>glibc</classname> installed (currently
-GLIBC_2.3). <command>debootstrap</command> itself is a shell script, but
-it calls various utilities that require <classname>glibc</classname>.
 
 </para>
   </sect2>
@@ -151,7 +145,7 @@ it calls various utilities that require <classname>glibc</classname>.
 
 <command>debootstrap</command> can download the needed files directly
 from the archive when you run it. You can substitute any Debian
-archive mirror for <userinput>http.us.debian.org/debian</userinput> in
+archive mirror for <userinput>&archive-mirror;/debian</userinput> in
 the command example below, preferably a mirror close to you
 network-wise. Mirrors are listed at
 <ulink url="http://www.debian.org/misc/README.mirrors"></ulink>.
@@ -168,6 +162,7 @@ Substitute one of the following for <replaceable>ARCH</replaceable>
 in the <command>debootstrap</command> command:
 
 <userinput>alpha</userinput>,
+<userinput>amd64</userinput>,
 <userinput>arm</userinput>,
 <userinput>hppa</userinput>,
 <userinput>i386</userinput>,
@@ -181,7 +176,7 @@ in the <command>debootstrap</command> command:
 
 <informalexample><screen>
 # /usr/sbin/debootstrap --arch ARCH &releasename; \
-     /mnt/debinst http://http.us.debian.org/debian
+     /mnt/debinst http://ftp.us.debian.org/debian
 </screen></informalexample>
 
 </para>
@@ -192,10 +187,17 @@ in the <command>debootstrap</command> command:
 <para>
 
 Now you've got a real Debian system, though rather lean, on disk.
-<command>Chroot</command> into it:
+<command>chroot</command> into it:
 
 <informalexample><screen>
-# LANG= chroot /mnt/debinst /bin/bash
+# LANG=C chroot /mnt/debinst /bin/bash
+</screen></informalexample>
+
+After chrooting you may need to set the terminal definition to be
+compatible with the Debian base system, for example:
+
+<informalexample><screen>
+# export TERM=<replaceable>xterm-color</replaceable>
 </screen></informalexample>
 
 </para>
@@ -222,8 +224,8 @@ Here is a sample you can modify to suit:
 /dev/XXX         none          swap    sw                       0    0
 proc             /proc         proc    defaults                 0    0
 
-/dev/fd0         /mnt/floppy   auto    noauto,rw,sync,user,exec 0    0
-/dev/cdrom       /mnt/cdrom    iso9660 noauto,ro,user,exec      0    0
+/dev/fd0         /media/floppy auto    noauto,rw,sync,user,exec 0    0
+/dev/cdrom       /media/cdrom  iso9660 noauto,ro,user,exec      0    0
 
 /dev/XXX         /tmp          ext3    rw,nosuid,nodev          0    2
 /dev/XXX         /var          ext3    rw,nosuid,nodev          0    2
@@ -232,11 +234,23 @@ proc             /proc         proc    defaults                 0    0
 </screen></informalexample>
 
 Use <userinput>mount -a</userinput> to mount all the file systems you
-have specified in your <filename>/etc/fstab</filename>, or to mount
-file systems individually use:
+have specified in your <filename>/etc/fstab</filename>, or, to mount
+file systems individually, use:
 
 <informalexample><screen>
 # mount /path   # e.g.: mount /usr
+</screen></informalexample>
+
+Current Debian systems have mountpoints for removable media under
+<filename>/media</filename>, but keep compatibility symlinks in
+<filename>/</filename>. Create these as as needed, for example:
+
+<informalexample><screen>
+# cd /media
+# mkdir cdrom0
+# ln -s cdrom0 cdrom
+# cd /
+# ln -s media/cdrom
 </screen></informalexample>
 
 You can mount the proc file system multiple times and to arbitrary
@@ -261,19 +275,18 @@ the chroot:
    </sect3>
 
    <sect3>
-   <title>Configure Keyboard</title>
+   <title>Setting Timezone</title>
 <para>
 
-To configure your keyboard:
+An option in the file <filename>/etc/default/rcS</filename> determines
+whether the system will interpret the hardware clock as being set to UTC
+or local time. The following command allow you to set that and choose
+your timezone.
 
 <informalexample><screen>
-# dpkg-reconfigure console-data
+# editor /etc/default/rcS
+# tzconfig
 </screen></informalexample>
-
-</para><para>
-
-Note that the keyboard cannot be set while in the chroot, but will be
-configured for the next reboot.
 
 </para>
    </sect3>
@@ -330,10 +343,10 @@ Enter your nameserver(s) and search directives in
 # editor /etc/resolv.conf
 </screen></informalexample>
 
-A simple <filename>/etc/resolv.conf</filename>:
+A simple example <filename>/etc/resolv.conf</filename>:
 
 <informalexample><screen>
-search hqdom.local\000
+search hqdom.local
 nameserver 10.1.1.36
 nameserver 192.168.9.100
 </screen></informalexample>
@@ -342,6 +355,20 @@ Enter your system's host name (2 to 63 characters):
 
 <informalexample><screen>
 # echo DebianHostName &gt; /etc/hostname
+</screen></informalexample>
+
+And a basic <filename>/etc/hosts</filename> with IPv6 support:
+
+<informalexample><screen>
+127.0.0.1 localhost DebianHostName
+
+# The following lines are desirable for IPv6 capable hosts
+::1     ip6-localhost ip6-loopback
+fe00::0 ip6-localnet
+ff00::0 ip6-mcastprefix
+ff02::1 ip6-allnodes
+ff02::2 ip6-allrouters
+ff02::3 ip6-allhosts
 </screen></informalexample>
 
 If you have multiple network cards, you should arrange the names of
@@ -353,21 +380,51 @@ interface name (eth0, eth1, etc.) that you expect.
    </sect3>
 
    <sect3>
-   <title>Configure Locales</title>
+   <title>Configure Apt</title>
+<para>
+
+Debootstrap will have created a very basic
+<filename>/etc/apt/sources.list</filename> that will allow installing
+additional packages. However, you may want to add some additional sources,
+for example for source packages and security updates:
+
+<informalexample><screen>
+deb-src http://ftp.us.debian.org/debian etch main
+
+deb http://security.debian.org/ etch/updates main
+deb-src http://security.debian.org/ etch/updates main
+</screen></informalexample>
+
+Make sure to run <userinput>aptitude update</userinput> after you have
+made changes to the sources list.
+
+</para>
+   </sect3>
+
+   <sect3>
+   <title>Configure Locales and Keyboard</title>
 <para>
 
 To configure your locale settings to use a language other than
-English, install the locales support package and configure it:
+English, install the <classname>locales</classname> support package
+and configure it. Currently the use of UTF-8 locales is recommended.
 
 <informalexample><screen>
-# apt-get install locales
+# aptitude install locales
 # dpkg-reconfigure locales
 </screen></informalexample>
 
-NOTE: Apt must be configured beforehand by creating a sources.list and
-running apt-get update.
-Before using locales with character sets other than ASCII or latin1,
-please consult the appropriate localization HOWTO.
+To configure your keyboard (if needed):
+
+<informalexample><screen>
+# aptitude install console-data
+# dpkg-reconfigure console-data
+</screen></informalexample>
+
+</para><para>
+
+Note that the keyboard cannot be set while in the chroot, but will be
+configured for the next reboot.
 
 </para>
    </sect3>
@@ -378,17 +435,47 @@ please consult the appropriate localization HOWTO.
 <para>
 
 If you intend to boot this system, you probably want a Linux kernel
-and a boot loader. Identify available pre-packaged kernels with
+and a boot loader. Identify available pre-packaged kernels with:
 
 <informalexample><screen>
-# apt-cache search <phrase condition="classic-kpkg">kernel</phrase><phrase condition="common-kpkg">linux</phrase>-image
+# apt-cache search linux-image
 </screen></informalexample>
 
-Then install your choice using its package name.
+</para><para>
+
+If you intend to use a pre-packaged kernel, you may want to create the
+configuration file <filename>/etc/kernel-img.conf</filename> before you
+do so. Here's an example file:
 
 <informalexample><screen>
-# apt-get install <phrase condition="classic-kpkg">kernel</phrase><phrase condition="common-kpkg">linux</phrase>-image-<replaceable>&kernelversion;-arch-etc</replaceable>
+# Kernel image management overrides
+# See kernel-img.conf(5) for details
+do_symlinks = yes
+relative_links = yes
+do_bootloader = yes
+do_bootfloppy = no
+do_initrd = yes
+link_in_boot = no
 </screen></informalexample>
+
+</para><para>
+
+For detailed information about this file and the various options, consult
+its man page which will be available after installing the
+<classname>kernel-package</classname> package. We recommend that you check
+that the values are appropriate for your system.
+
+</para><para>
+
+Then install the kernel package of your choice using its package name.
+
+<informalexample><screen>
+# aptitude install linux-image-<replaceable>&kernelversion;-arch-etc</replaceable>
+</screen></informalexample>
+
+If you did not create a <filename>/etc/kernel-img.conf</filename> before
+installing a pre-packaged kernel, you may be asked some questions during
+its installation that refer to it.
 
 </para>
   </sect2>
@@ -398,11 +485,11 @@ Then install your choice using its package name.
 <para>
 
 To make your &debian; system bootable, set up your boot loader to load
-the installed kernel with your new root partition. Note that debootstrap
-does not install a boot loader, though you can use apt-get inside your
-Debian chroot to do so.
+the installed kernel with your new root partition. Note that
+<command>debootstrap</command> does not install a boot loader, though you
+can use <command>aptitude</command> inside your Debian chroot to do so.
 
-</para><para arch="i386">
+</para><para arch="x86">
 
 Check <userinput>info grub</userinput> or <userinput>man
 lilo.conf</userinput> for instructions on setting up the
@@ -410,22 +497,57 @@ bootloader.  If you are keeping the system you used to install Debian, just
 add an entry for the Debian install to your existing grub
 <filename>menu.lst</filename> or <filename>lilo.conf</filename>.  For
 <filename>lilo.conf</filename>, you could also copy it to the new system and
-edit it there. After you are done editing, call lilo (remember it will use
+edit it there. After you are done editing, call <command>lilo</command>
+(remember it will use
 <filename>lilo.conf</filename> relative to the system you call it from).
 
-</para><para arch="i386">
+</para><para arch="x86">
+
+Installing and setting up <classname>grub</classname> is as easy as:
+
+<informalexample><screen>
+# aptitude install grub
+# grub-install /dev/<replaceable>hda</replaceable>
+# update-grub
+</screen></informalexample>
+
+The second command will install <command>grub</command> (in this case in
+the MBR of <literal>hda</literal>). The last command will create a sane
+and working <filename>/boot/grub/menu.lst</filename>.
+
+</para><para arch="x86">
 
 Here is a basic <filename>/etc/lilo.conf</filename> as an example:
 
 <informalexample><screen>
-boot=/dev/hda6
-root=/dev/hda6
+boot=/dev/<replaceable>hda6</replaceable>
+root=/dev/<replaceable>hda6</replaceable>
 install=menu
 delay=20
 lba32
 image=/vmlinuz
 label=Debian
 </screen></informalexample>
+
+</para><para arch="x86">
+
+Depending on which bootloader you selected, you can now make some
+additional changes in <filename>/etc/kernel-img.conf</filename>.
+
+</para><para arch="x86">
+
+For the <classname>grub</classname> bootloader, you should
+set the <literal>do_bootloader</literal> option to <quote>no</quote>.
+And to automatically update your <filename>/boot/grub/menu.lst</filename>
+on installation or removal of Debian kernels, add the following lines:
+
+<informalexample><screen>
+postinst_hook = update-grub
+postrm_hook   = update-grub
+</screen></informalexample>
+
+For the <classname>lilo</classname> bootloader, the value of
+<literal>do_bootloader</literal> needs to remain <quote>yes</quote>.
 
 </para><para arch="powerpc">
 
@@ -454,6 +576,34 @@ label=Debian
 
 On some machines, you may need to use <userinput>ide0:</userinput>
 instead of <userinput>hd:</userinput>.
+
+</para>
+  </sect2>
+
+  <sect2>
+<title>Finishing touches</title>
+<para>
+
+As mentioned earlier, the installed system will be very basic. If you
+would like to make the system a bit more mature, there is an easy method
+to install all packages with <quote>standard</quote> priority:
+
+<informalexample><screen>
+# tasksel install standard
+</screen></informalexample>
+
+Of course, you can also just use <command>aptitude</command> to install
+packages individually.
+
+</para><para>
+
+After the installation there will be a lot of downloaded packages in
+<filename>/var/cache/apt/archives/</filename>. You can free up some
+diskspace by running:
+
+<informalexample><screen>
+# aptitude clean
+</screen></informalexample>
 
 </para>
   </sect2>

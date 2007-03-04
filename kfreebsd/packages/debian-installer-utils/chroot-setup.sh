@@ -6,6 +6,29 @@ mountpoints () {
 }
 
 chroot_setup () {
+	# Bail out if directories we need are not there
+	if [ ! -d /target/sbin ] || [ ! -d /target/usr/sbin ] || \
+	   [ ! -d /target/proc ]; then
+		return 1
+	fi
+	case $(uname -r | cut -d . -f 1,2) in
+	    2.6)
+		if [ ! -d /target/sys ] ; then
+			return 1
+		fi
+		;;
+	esac
+
+	if [ -e /var/run/chroot-setup.lock ]; then
+		cat >&2 <<EOF
+apt-install or in-target is already running, so you cannot run either of
+them again until the other instance finishes. You may be able to use
+'chroot /target ...' instead.
+EOF
+		return 1
+	fi
+	touch /var/run/chroot-setup.lock
+
 	# Create a policy-rc.d to stop maintainer scripts using invoke-rc.d 
 	# from running init scripts. In case of maintainer scripts that don't
 	# use invoke-rc.d, add a dummy start-stop-daemon.
@@ -38,11 +61,11 @@ EOF
 	# For installing >=2.6.14 kernels we also need sysfs mounted
 	# Only mount it if not mounted already and we're running 2.6
 	case $(uname -r | cut -d . -f 1,2) in
-	2.6)
+	    2.6)
 		if [ ! -d /target/sys/devices ] ; then
 			mount -t sysfs none /target/sys
 		fi
-	;;
+		;;
 	esac
 
 	# Try to enable proxy when using HTTP.
@@ -62,6 +85,7 @@ EOF
 
 	LANG=$(debconf-get debian-installer/locale || true)
 	export LANG
+	export PERL_BADLANG=0
 
 	# Unset variables that would make scripts in the target think
 	# that debconf is already running there.
@@ -72,22 +96,25 @@ EOF
 	# Avoid debconf mailing notes.
 	DEBCONF_ADMIN_EMAIL=""
 	export DEBCONF_ADMIN_EMAIL
+
+	return 0
 }
 
 chroot_cleanup () {
 	rm -f /target/usr/sbin/policy-rc.d
-	rm /target/sbin/start-stop-daemon
 	mv /target/sbin/start-stop-daemon.REAL /target/sbin/start-stop-daemon
 
 	# Undo the mounts done by the packages during installation.
 	# Reverse sorting to umount the deepest mount points first.
 	# Items with count of 1 are new.
 	for dir in $( (cat /tmp/mount.pre /tmp/mount.pre; mountpoints ) | \
-		     sort -r | uniq -c | grep "[[:space:]]1[[:space:]]" | \
-		     sed "s/[[:space:]]*[0-9][[:space:]]//"); do
+		     sort -r | uniq -c | grep "^[[:space:]]*1[[:space:]]" | \
+		     sed "s/^[[:space:]]*[0-9][[:space:]]//"); do
 		if ! umount $dir ; then
 			logger -t $0 "warning: Unable to umount '$dir'"
 		fi
 	done
 	rm -f /tmp/mount.pre
+
+	rm -f /var/run/chroot-setup.lock
 }

@@ -1,8 +1,8 @@
 <!-- retain these comments for translator revision tracking -->
-<!-- original version: 35518 -->
+<!-- original version: 43734 -->
 
    <sect3 id="pkgsel">
-   <title>Software auswählen und installieren</title>
+   <title>Software auswählen und installieren (pkgsel)</title>
 
 <para>
 
@@ -15,21 +15,24 @@ künftigen Aufgaben des Rechners am nächsten kommen.
 
 </para><para>
 
+<!-- TODO: Should explain popcon first -->
+
 Sie können dazu zunächst Programmgruppen (<emphasis>tasks</emphasis>)
 auswählen, die Sie installieren möchten, und anschließend noch einzelne
 Pakete hinzufügen. Diese Programmgruppen repräsentieren eine lockere
 Zusammenstellung von verschiedenen Aufgaben oder Dingen, die Sie mit
-Ihrem Computer erledigen können, wie die <quote>Desktop-Umgebung</quote>
-(Arbeitsplatzrechner), der <quote>Web-Server</quote> (Inhalte für das
-Internet bereitstellen) oder der <quote>Druck-Server</quote> (Drucken
+Ihrem Computer erledigen können, wie <quote>Desktop-Umgebung</quote>
+(Arbeitsplatzrechner), <quote>Web-Server</quote> (Inhalte für das
+Internet bereitstellen) oder <quote>Druck-Server</quote> (Drucken
 und Druckmanagement) <footnote>
 
 <para>
 
 Sie sollten wissen, dass der Installer lediglich das Programm
 <command>tasksel</command> aufruft, in dem dann diese Liste angezeigt
-wird. Es kann auch nach der Installation jederzeit aufgerufen werden, um
-weitere Pakete zu installieren (oder auch zu entfernen), oder Sie benutzen
+wird. <command>tasksel</command> kann auch nach der Installation jederzeit
+aufgerufen werden, um
+weitere Pakete zu installieren (oder sie zu entfernen), oder Sie benutzen
 ein feinkörnigeres Werkzeug wie <command>aptitude</command>.
 Wenn Sie ein bestimmtes einzelnes Paket suchen, nachdem die
 Installation abgeschlossen ist, führen Sie einfach <userinput>aptitude install
@@ -44,25 +47,82 @@ den erforderlichen Speicherplatz für die verschiedenen Programmgruppen.
 
 </para><para>
 
-Wenn Sie die gewünschten Programmgruppen ausgewählt haben, wählen Sie
-<guibutton>Ok</guibutton>. <command>aptitude</command> wird jetzt die
+Einige der Programmgruppen sind unter Umständen vorgewählt, abhängig von
+der Charakteristik des Rechners, den Sie installieren. Falls Sie mit der
+Vorauswahl nicht zufrieden sind, können Sie sie ändern. Sie können sich
+sogar entscheiden, an dieser Stelle gar keine Programmgruppen zu installieren.
+
+</para>
+<note><para>
+
+<!-- TODO: Explain the "Standard system" task first -->
+
+Die Programmgruppe <quote>Arbeitsplatzrechner</quote> installiert die
+GNOME-Desktop-Umgebung. Die Optionen direkt im Installer erlauben es
+derzeit nicht, eine andere Desktop-Umgebung (wie z.B. KDE) zu installieren.
+
+</para><para>
+
+Es ist trotzdem möglich, den Installer anzuweisen, KDE zu installieren,
+und zwar mittels Voreinstellung (siehe <xref linkend="preseed-pkgsel"/>) oder
+indem Sie beim Start des Installers am Boot-Prompt
+<literal>tasks="standard, kde-desktop"</literal> angeben. Allerdings
+wird dies nur funktionieren, wenn die Pakete, die für KDE benötigt werden,
+auch verfügbar sind. Wenn Sie von einem Komplett-CD-Image installieren,
+müssen diese von einem Spiegelserver heruntergeladen werden, da die
+KDE-Pakete im ersten Komplett-CD-Image nicht enthalten sind; KDE auf diesem Weg
+zu installieren, sollte aber funktionieren, wenn Sie von einem DVD-Image
+oder mit irgendeiner anderen Installationsmethode installieren.
+
+</para><para>
+
+Die verschiedenen Server-Programmgruppen installieren grob gesagt folgende
+Software.
+DNS-Server: <classname>bind9</classname>;
+Datei-Server: <classname>samba</classname>, <classname>nfs</classname>;
+Mail-Server: <classname>exim4</classname>, <classname>spamassassin</classname>,
+<classname>uw-imap</classname>;
+Print-Server: <classname>cups</classname>;
+SQL-Datenbank: <classname>postgresql</classname>;
+Web-Server: <classname>apache</classname>.
+
+</para></note>
+<para>
+
+Wenn Sie die gewünschten Programmgruppen ausgewählt haben, drücken Sie
+<guibutton>OK</guibutton>. <command>aptitude</command> wird jetzt die
 entsprechenden Pakete installieren.
 
+</para>
 <note><para>
 
-In der Standard-Benutzeroberfläche des Installers können Sie die Leertaste
-benutzen, um den Auswahlzustand einer Programmgruppe zu verändern.
+In der Standard-Benutzeroberfläche des Installers (text-basierter Installer)
+können Sie die Leertaste benutzen, um den Auswahlzustand der Programmgruppen
+umzuschalten.
 
 </para></note>
+<para>
 
-<note><para>
+</para><para>
 
-Beachten Sie, dass einige Programmgruppen bereits im Vornherein ausgewählt
-sein können, basierend auf der Charakteristik des Rechners, den Sie
-installieren. Wenn Sie mit dieser Auswahl nicht zufrieden sind, können Sie
-sie ändern. Sie können auch wählen, an diesem Punkt nichts zu installieren.
+Sie sollten beachten, dass besonders die Programmgruppe Arbeitsplatzrechner
+sehr gross ist. Speziell wenn Sie von einer normalen CD-ROM installieren und
+zusätzlich Pakete, die dort nicht enthalten sind, von einem Spiegel-Server
+beziehen, muss der Installer unter Umständen sehr viele Pakete über das
+Netzwerk herunterladen. Falls Sie eine relativ langsame Internetverbindung
+haben, kann dies recht lange dauern. Es gibt keine Möglichkeit, die
+Installation der Pakete abzubrechen, wenn sie einmal gestartet ist.
+ 
+ </para><para>
 
-</para></note>
+Sogar wenn Pakete auf der CD-ROM enthalten sind, könnte der Installer sie
+trotzdem über das Internet herunterladen, wenn die auf dem Spiegel-Server
+verfügbare Version neuer ist als die auf der CD-ROM. Falls Sie die
+stable-Distribution installieren, kann dies vorkommen, wenn eine
+Aktualisierung von stable stattgefunden hat (ein sogenanntes Point-Release,
+hierbei werden Pakete nur aufgrund von Sicherheits-Updates oder kritischen
+Fehlern aktualisiert); falls Sie testing installieren, kann dies passieren,
+wenn Sie ein älteres CD-Image verwenden.
 
 </para><para>
 
@@ -73,100 +133,4 @@ Programm für die Installation zusätzliche Informationen von Ihnen
 benötigt, werden Sie während dieses Prozesses danach gefragt.
 
 </para>
- <sect4 id="config-mta">
- <title>Ihren MTA (Mail-Transport-Agent) konfigurieren</title>
-
-<para>
-
-Heutzutage ist E-Mail für viele Leute ein sehr wichtiger Teil des
-Lebens, und so ist es keine Überraschung, dass Debian während des
-Installationsprozesses auch Ihr Mail-System korrekt einzurichtet.
-Der Standard-Mail-Transport-Agent (MTA, das ist das Programm,
-das Ihre Mails ausliefert) in Debian ist <command>exim4</command>,
-der relativ klein, flexibel und leicht zu erlernen ist.
-
-</para><para>
-
-Sie könnten fragen, ob dies denn notwendig ist, obwohl Ihr Computer
-überhaupt nicht an irgendein Netzwerk angeschlossen ist. Die kurze Antwort:
-Ja. Die längere Erklärung: einige System-Werkzeuge (wie cron, quota,
-aide, &hellip;) könnten Ihnen wichtige Informationen per E-Mail schicken.
-
-</para><para>
-
-Auf dem ersten Bildschirm werden Ihnen mehrere allgemeine Mail-Szenarien
-angezeigt. Wählen Sie eines, das Ihren Bedürfnissen am ehesten entspricht:
-
-</para>
-
-<variablelist>
-<varlistentry>
-<term>Internet-Server</term>
-<listitem><para>
-
-Ihr System ist mit einem Netzwerk verbunden und Ihre Mails werden direkt
-per SMTP verschickt und empfangen. Auf den folgenden Seiten werden Sie nach
-ein paar Basisinformationen gefragt, wie dem Mail-Namen Ihres Rechners oder
-einer Liste von Domains, für die Sie Mails akzeptieren oder weiterleiten.
-
-</para></listitem>
-</varlistentry>
-
-<varlistentry>
-<term>Mail-Versand über einen Smarthost</term>
-<listitem><para>
-
-In diesem Szenario wird Ihre ausgehende Mail an einen anderen Rechner
-weitergeleitet, <quote>Smarthost</quote> genannt, der den eigentlichen
-Job für Sie erledigt. Der Smarthost speichert für gewöhnlich auch
-ankommende Mails, die für Ihren Rechner bestimmt sind, so dass Sie nicht
-ständig online sein müssen. Das bedeutet auch, dass Sie Ihre Mail mit
-Programmen wie fetchmail vom Smarthost abholen müssen. Diese Option ist
-passend für Einwahl-Nutzer (die sich per Modem-Wählverbindung o.ä.
-ins Internet einwählen), also wahrscheinlich auch für die meisten Privatnutzer.
-
-</para></listitem>
-</varlistentry>
-
-<varlistentry>
-<term>Nur lokale Mail-Zustellung</term>
-<listitem><para>
-
-Ihr System ist nicht mit einem Netzwerk verbunden und Mails werden nur
-zwischen lokalen Benutzern versandt oder empfangen. Diese Option wird
-dringendst empfohlen, auch wenn Sie nicht vorhaben, Nachrichten zu
-versenden, da einige System-Werkzeuge Ihnen von Zeit zu Zeit verschiedene
-Alarmmeldungen schicken könnten (z.B. die beliebte Meldung <quote>Disk
-quota exceeded</quote> / Kontintent zur Festplattennutzung überschritten).
-Diese Option ist auch gut geeignet für Benutzer, die neu sind bei Debian,
-da sie nicht viele Fragen stellt.
-
-</para></listitem>
-</varlistentry>
-
-<varlistentry>
-<term>Keine Konfiguration zu diesem Zeitpunkt</term>
-<listitem><para>
-
-Wählen Sie dies nur, wenn Sie sich absolut sicher sind, was Sie tun.
-Sie haben anschließend ein unkonfiguriertes Mail-System &ndash; bis Sie
-es einrichten, sind Sie nicht in der Lage, Mails zu senden oder zu
-empfangen und könnten so wichtige Meldungen von den Systemprogrammen
-Ihres Rechners verpassen.
-
-</para></listitem>
-</varlistentry>
-</variablelist>
-
-<para>
-
-Wenn keines dieser Szenarien für Sie passt oder wenn Sie eine
-feinere Einstellung benötigen, müssen Sie die Konfigurationsdateien
-im Verzeichnis <filename>/etc/exim4</filename> manuell anpassen, nachdem
-die Installation beendet ist. Mehr Informationen über
-<command>exim4</command> finden Sie unter
-<filename>/usr/share/doc/exim4</filename>.
-
-</para>
- </sect4>
    </sect3>

@@ -15,15 +15,37 @@ error () {
 	exit 1
 }
 
-# Note: Needs a preseed_fetch function or command not provided by this
-# file, as well as preseed_relative
+# Function to implement the behaviour documented in README.pressed_fetch
+make_absolute_url() {
+	url="$1"
+	last="$2"
+
+	if [ -n "${url##*://*}" ]; then
+		# url does not contain ://
+		if [ -z "${url##/*}" ]; then
+			# url starts with /
+			if [ -z "${last##*/./*}" ]; then
+				# if last has a /./, start the "root" there
+				url="${last%%/./*}/.$url"
+			else
+				# if not, strip the path component of $last
+				url="$(expr $last : '\([^:]*://[^/]*/\)')$url"
+			fi
+		else
+			# for relative urls, just replace the old filename
+			url="${last%/*}/$url"
+		fi
+	fi
+	echo "$url"
+}
+
 preseed_location () {
 	local location="$1"
 	local checksum="$2"
 	
 	local tmp=/tmp/debconf-seed
 	
-	if ! preseed_fetch $location $tmp; then
+	if ! preseed_fetch "$location" "$tmp"; then
 		error retrieve_error "$location"
 	fi
 	if [ -n "$checksum" ] && \
@@ -33,6 +55,7 @@ preseed_location () {
 
 	db_set preseed/include ""
 	db_set preseed/include_command ""
+	db_set preseed/run ""
 	UNSEEN=
 	db_get preseed/interactive
 	if [ "$RET" = true ]; then
@@ -41,40 +64,63 @@ preseed_location () {
 	if ! debconf-set-selections $UNSEEN $tmp; then
 		error load_error "$location"
 	fi
-		
-	if [ -e $logfile ]; then
-		cat $tmp >> $logfile
-	else
-		cp $tmp $logfile
-	fi
 	rm -f $tmp
 
 	log "successfully loaded preseed file from $location"
 	local last_location="$location"
 	
-	db_get preseed/include
-	local include="$RET"
-	db_get preseed/include_command
-	if [ -n "$RET" ]; then
-		include="$include $(eval $RET)" || true # TODO error handling?
-	fi
-	if db_get preseed/include/checksum; then
-		checksum="$RET"
-	else
-		checksum=""
-	fi
-	for location in $include; do
-		sum="${checksum%% *}"
-		checksum="${checksum#$sum }"
+	while true ; do
+		db_get preseed/include
+		local include="$RET"
+		db_get preseed/include_command
+		if [ -n "$RET" ]; then
+			include="$include $(eval $RET)" || true # TODO error handling?
+		fi
+		if db_get preseed/include/checksum; then
+			checksum="$RET"
+		else
+			checksum=""
+		fi
+		db_get preseed/run
+		local torun="$RET"
 
-		# Support relative paths, just use path of last file.
-		if preseed_relative "$location"; then
-			# This works for urls too.
-			location="$(dirname $last_location)/$location"
-		fi
-		if [ -n "$location" ]; then
-			preseed_location "$location" "$sum"
-		fi
+		# not really sure if the ones above are required if this is here
+		db_set preseed/include ""
+		db_set preseed/include_command ""
+		db_set preseed/run ""
+
+		[ -n "$include" -o -n "$torun" ] || break
+
+		for location in $include; do
+			sum="${checksum%% *}"
+			checksum="${checksum#$sum }"
+
+			location=$(make_absolute_url "$location" "$last_location")
+			# BTW -- is this test for empty strings really needed?
+			if [ -n "$location" ]; then
+				preseed_location "$location" "$sum"
+			fi
+		done
+	
+		echo $last_location > /var/run/preseed.last_location
+
+		for location in $torun; do
+			location=$(make_absolute_url "$location" "$last_location")
+			# BTW -- is this test for empty strings really needed?
+			if [ -n "$location" ]; then
+				if ! preseed_fetch "$location" "$tmp"; then
+					log "error fetching \"$location\""
+					error retrieve_error "$location"
+				fi
+				chmod +x $tmp
+				if ! log-output -t preseed/run $tmp; then
+					log "error running \"$location\""
+					error load_error "$location"
+				fi
+				log "successfully ran \"$location\""
+				rm -f $tmp
+			fi
+		done
 	done
 }
 	

@@ -1,5 +1,5 @@
 <!-- retain these comments for translator revision tracking -->
-<!-- original version: 33725 -->
+<!-- original version: 45239 -->
 
  <sect1 id="boot-parms"><title>Boot-Parameter</title>
 <para>
@@ -24,8 +24,8 @@ Informationen über viele Boot-Parameter finden Sie im
 <ulink url="http://www.tldp.org/HOWTO/BootPrompt-HOWTO.html"> Linux
 BootPrompt-HowTo</ulink>, inklusive Tipps für problematische Hardware.
 Dieses Kapitel enthält nur einen Abriss der wichtigsten Parameter.
-Einige häufig vorkommenden Problemfälle sind in <xref linkend="boot-troubleshooting"/>
-beschrieben.
+Einige häufig vorkommenden Problemfälle sind in
+<xref linkend="boot-troubleshooting"/> beschrieben.
 
 </para><para>
 
@@ -39,8 +39,9 @@ Memory:<replaceable>avail</replaceable>k/<replaceable>total</replaceable>k avail
 erscheinen.
 <replaceable>Total</replaceable> sollte der Summe des installierten
 Arbeitsspeichers in Kilobyte entsprechen. Wenn dem nicht so ist,
-müssen Sie den Parameter <userinput>mem=<replaceable>ram</replaceable></userinput>
-verwenden, wobei <replaceable>ram</replaceable> durch den Gesamtwert des Arbeitsspeichers
+müssen Sie den Parameter
+<userinput>mem=<replaceable>ram</replaceable></userinput> verwenden,
+wobei <replaceable>ram</replaceable> durch den Gesamtwert des Arbeitsspeichers
 ersetzt werden muss (mit einem nachfolgenden <quote>k</quote> für Kilobyte
 oder <quote>m</quote> für Megabyte). Ein Beispiel: sowohl
 <userinput>mem=65536k</userinput>
@@ -48,7 +49,7 @@ wie auch <userinput>mem=64m</userinput> entsprechen 64MB RAM.
 
 </para><para condition="supports-serial-console">
 
-Wenn Sie von einer seriellen Konsole aus booten, wird der Kernel dies
+Wenn Sie mit einer seriellen Konsole booten, wird der Kernel dies
 normalerweise automatisch
 erkennen<phrase arch="mipsel"> (allerdings nicht auf DECstations)</phrase>.
 Wenn der Rechner, den Sie per serieller Konsole installieren wollen,
@@ -73,27 +74,32 @@ Alternativ können Sie die <envar>input-device</envar>- und
   <sect2 id="installer-args"><title>Debian-Installer-Parameter</title>
 <para>
 
-Das Installationssystem kennt ein paar zusätzliche Boot-Parameter, <footnote>
+Das Installationssystem kennt ein paar zusätzliche Boot-Parameter<footnote>
 
 <para>
 
-Bedenken Sie, das der Kernel maximal 8 Kommandozeilen-Optionen und
-8 Umgebungs-Optionen (inklusive der Optionen, die standardmäßig für
-den Installer hinzugefügt werden) akzeptiert. Werden diese Grenzen
-überschritten, wird ein 2.4er Kernel überzählige Optionen ignorieren,
-ein 2.6er Kernel erzeugt eine Kernel-Panic. Falls Sie einen 2.6.9-Kernel
-oder neuer verwenden, können Sie 32 Kommandozeilenoptionen und 32
-Umgebungsoptionen angeben.
+Mit aktuellen Kernels (2.6.9 und neuer) können Sie 32
+Kommandozeilenoptionen und 32 Umgebungsoptionen benutzen. Werden diese Grenzen
+überschritten, meldet der Kernel eine Panic (stürzt ab).
 
 </para>
 
-</footnote>die vielleicht nützlich sein könnten.
+</footnote>, die vielleicht nützlich sein könnten.
+
+</para><para>
+
+Einige Parameter haben eine <quote>Kurzform</quote>, die dabei hilft, die
+Einschränkungen für die Kernel-Kommandozeilenoptionen zu umgehen und
+außerdem wird die Eingabe des Parameters vereinfacht. Wenn eine Kurzform
+für einen Parameter existiert, wird sie in Klammern hinter der (normalen)
+langen Form angegeben. Beispiele in diesem Kapitel benutzen normalerweise
+auch die Kurzform.
 
 </para>
 
 <variablelist>
 <varlistentry>
-<term>debconf/priority</term>
+<term>debconf/priority (priority)</term>
 <listitem><para>
 
 Dieser Parameter legt die niedrigste Prioritätsstufe von Meldungen fest,
@@ -102,19 +108,19 @@ angegeben werden unterdrückt).
 
 </para><para>
 
-Die Standardinstallation nutzt <userinput>debconf/priority=high</userinput>.
+Die Standardinstallation nutzt <userinput>priority=high</userinput>.
 Dies bedeutet, dass Meldungen mit hoher und kritischer Priorität angezeigt
 werden, Meldungen mit Priorität medium oder niedrig werden unterdrückt.
 Treten Probleme auf, verändert der Installer die Priorität nach Bedarf.
 
 </para><para>
 
-Wenn Sie <userinput>debconf/priority=medium</userinput> als Boot-Parameter
+Wenn Sie <userinput>priority=medium</userinput> als Boot-Parameter
 angeben, wird das Installationsmenü angezeigt und gibt Ihnen mehr Kontrolle
-über die Installation. Wird <userinput>debconf/priority=low</userinput>
+über die Installation. Wird <userinput>priority=low</userinput>
 benutzt, werden alle Meldungen angezeigt (dies entspricht dem
 <emphasis>Experten</emphasis>-Modus).
-Bei <userinput>debconf/priority=critical</userinput> zeigt das
+Bei <userinput>priority=critical</userinput> zeigt das
 Installationssystem nur kritische Meldungen an und versucht, ohne viel
 Klamauk das Richtige zu tun.
 
@@ -137,15 +143,7 @@ die für den Installer benutzt wird. Mögliche Einstellungen sind:
 </listitem><listitem>
 <para><userinput>DEBIAN_FRONTEND=newt</userinput></para>
 </listitem><listitem>
-<para><userinput>DEBIAN_FRONTEND=slang</userinput></para>
-</listitem><listitem>
-<para><userinput>DEBIAN_FRONTEND=ncurses</userinput></para>
-</listitem><listitem>
-<para><userinput>DEBIAN_FRONTEND=bogl</userinput></para>
-</listitem><listitem>
 <para><userinput>DEBIAN_FRONTEND=gtk</userinput></para>
-</listitem><listitem>
-<para><userinput>DEBIAN_FRONTEND=corba</userinput></para>
 </listitem>
 </itemizedlist>
 
@@ -153,12 +151,11 @@ die für den Installer benutzt wird. Mögliche Einstellungen sind:
 <userinput>DEBIAN_FRONTEND=text</userinput> könnte man bevorzugt für
 Installationen per serieller Konsole nutzen. Allgemein ist auf
 Standard-Installationsmedien nur das <userinput>newt</userinput>-Frontend
-vorhanden, deswegen ist dieser Parameter im Moment noch nicht so sehr
-nützlich.
+vorhanden; auf Architekturen, auf denen der grafische Installer unterstützt
+wird, benutzt er das <userinput>gtk</userinput>-Frontend.
 
 </para></listitem>
 </varlistentry>
-
 
 <varlistentry>
 <term>BOOT_DEBUG</term>
@@ -166,8 +163,8 @@ nützlich.
 
 Ist dieser Bootparameter auf 2 gesetzt, wird der Bootprozess des Installers
 ausführlich protokolliert. Auf 3 gesetzt bewirkt er, dass an strategischen
-Punkten des Bootprozesses eine Shell zur Fehlersuche gestartet wird (schliessen
-Sie die Shell, um den Bootprozess fortzusetzen).
+Punkten des Bootprozesses eine Shell zur Fehlersuche gestartet wird
+(schließen Sie die Shell, um den Bootprozess fortzusetzen).
 
 <variablelist>
 <varlistentry>
@@ -200,7 +197,6 @@ Bootvorgang fortzusetzen.
 </para></listitem>
 </varlistentry>
 
-
 <varlistentry>
 <term>INSTALL_MEDIA_DEV</term>
 <listitem><para>
@@ -211,31 +207,32 @@ Installer geladen wird. Ein Beispiel:
 
 </para><para>
 
-Die Boot-Floppy scannt normalerweise alle möglichen Floppy-Laufwerke
-und USB-Speicher-Geräte, um die Root-Floppy zu finden; der
-Parameter kann dies überschreiben, so dass nur dieses eine Gerät
-durchsucht wird.
+Die Boot-Floppy scannt normalerweise alle verfügbaren
+Floppy-Laufwerke, um die Root-Floppy zu finden; der Parameter
+kann dies überschreiben, so dass nur dieses eine Gerät durchsucht wird.
 
 </para></listitem>
 </varlistentry>
 
 <varlistentry>
-<term>debian-installer/framebuffer</term>
+<term>debian-installer/framebuffer (fb)</term>
 <listitem><para>
 
 Auf einigen Architekturen wird der Kernel-Framebuffer benutzt, um
 die Installation in vielen verschiedenen Sprachen anbieten zu können.
 Falls der Framebuffer auf Ihrem System Probleme macht, können Sie ihn
-mit dem Parameter <userinput>debian-installer/framebuffer=false</userinput>
-deaktivieren. Symptome für diese Probleme können Fehlermeldungen betreffend
-<quote>bterm</quote> oder <quote>bogl</quote> sein sowie ein schwarzer Bildschirm oder ein
-Einfrieren des Systems ein paar Minuten nach dem Installationsstart.
+mit dem Parameter <userinput>fb=false</userinput> deaktivieren.
+Symptome für diese Probleme können Fehlermeldungen betreffend
+<quote>bterm</quote> oder <quote>bogl</quote> sein sowie ein schwarzer
+Bildschirm oder ein Einfrieren des Systems ein paar Minuten nach dem
+Installationsstart.
 
-</para><para arch="i386">
+</para><para arch="x86">
 
 Manchmal muss auch <userinput>video=vga16:off</userinput> benutzt werden,
-um den Framebuffer zu deaktivieren. Solche Probleme wurden von
-einem Dell Inspiron mit Mobile Radeon-Grafikkarte berichtet.
+um die Verwendung des Framebuffers durch den Kernel zu deaktivieren. Solche
+Probleme wurden von einem Dell Inspiron mit Mobile Radeon-Grafikkarte
+berichtet.
 
 </para><para arch="m68k">
 
@@ -248,14 +245,29 @@ Probleme mit dem Framebuffer wurden u.a. von hppa-Systemen berichtet.
 </para><note arch="sparc"><para>
 
 Aufgrund von Darstellungsproblemen auf manchen Systemen ist die
-Framebuffer-Unterstützung für die &arch-title;-Architektur <emphasis>standardmäßig
-deaktiviert</emphasis>. Dies kann auf Systemen, die den Framebuffer eigentlich
-korrekt unterstützen (wie solche mit ATI-Grafikkarten), zu einer seltsamen
-Anzeige führen. Wenn Sie solche Anzeigeprobleme im Installer feststellen,
-können Sie versuchen, mit dem Parameter
-<userinput>debian-installer/framebuffer=true</userinput> zu booten.
+Framebuffer-Unterstützung für die &arch-title;-Architektur
+<emphasis>standardmäßig deaktiviert</emphasis>. Dies kann auf Systemen, die den
+Framebuffer eigentlich korrekt unterstützen (wie solche mit ATI-Grafikkarten),
+zu einer seltsamen Anzeige führen. Wenn Sie solche Anzeigeprobleme im Installer
+feststellen, können Sie versuchen, mit dem Parameter
+<userinput>debian-installer/framebuffer=true</userinput> oder
+kurz <userinput>fb=true</userinput> zu booten.
 
 </para></note></listitem>
+</varlistentry>
+
+<varlistentry>
+<term>debian-installer/theme (theme)</term>
+<listitem><para>
+
+Ein Theme legt fest, wie die Benutzerschnittstelle des Installers aussieht
+(Farben, Icons etc.) Welche Themes verfügbar sind, ist je nach Frontend
+verschieden. Derzeit haben sowohl das Newt- wie auch das Gtk-Frontend nur
+ein, <quote>dark</quote> genanntes Theme, das für visuell beeinträchtigte
+Benutzer erstellt wurde. Sie verwenden dieses Theme, indem Sie mit dem
+Parameter <userinput>theme=<replaceable>dark</replaceable></userinput> booten.
+
+</para></listitem>
 </varlistentry>
 
 <varlistentry>
@@ -272,19 +284,19 @@ die Suche nach USB-Geräten für den Fall, dass diese sonst Probleme verursacht.
 <term>netcfg/disable_dhcp</term>
 <listitem><para>
 
-Standardmäßig versucht der &d-i;, die Netzwerkkonfiguration per DHCP 
-zu beziehen. Wenn dies erfolgreich ist, haben Sie keine Chance mehr, 
-sich anders zu entscheiden und die Einstellungen manuell zu ändern. 
-Das manuelle Netzwerksetup kann man nur erreichen, wenn die DHCP-Abfrage 
-fehlschlägt. 
+Standardmäßig versucht der &d-i;, die Netzwerkkonfiguration per DHCP
+zu beziehen. Wenn dies erfolgreich ist, haben Sie keine Chance mehr,
+sich anders zu entscheiden und die Einstellungen manuell zu ändern.
+Das manuelle Netzwerksetup kann man nur erreichen, wenn die DHCP-Abfrage
+fehlschlägt.
 
 </para><para>
 
-Wenn Sie einen DHCP-Server in Ihrem lokalen Netzwerk haben, ihn aber 
-umgehen wollen, z.B. weil er falsche Antworten gibt, können Sie 
-den Parameter <userinput>netcfg/disable_dhcp=true</userinput> benutzen, 
-um die Konfiguration per DHCP zu unterdrücken und die Daten manuell 
-einzugeben. 
+Wenn Sie einen DHCP-Server in Ihrem lokalen Netzwerk haben, ihn aber
+umgehen wollen, z.B. weil er falsche Antworten gibt, können Sie
+den Parameter <userinput>netcfg/disable_dhcp=true</userinput> benutzen,
+um die Konfiguration per DHCP zu unterdrücken und die Daten manuell
+einzugeben.
 
 </para></listitem>
 </varlistentry>
@@ -302,7 +314,7 @@ Phänomene.
 </varlistentry>
 
 <varlistentry>
-<term>preseed/url</term>
+<term>preseed/url (url)</term>
 <listitem><para>
 
 Geben Sie die URL einer Voreinstellungs-Datei an, die heruntergeladen
@@ -313,12 +325,38 @@ und benutzt wird, um die Installation zu automatisieren. Siehe auch
 </varlistentry>
 
 <varlistentry>
-<term>preseed/file</term>
+<term>preseed/file (file)</term>
 <listitem><para>
 
 Geben Sie den Pfad zu einer Voreinstellungs-Datei an, die geladen werden kann,
 um die Installation zu automatisieren. Siehe auch
 <xref linkend="automatic-install"/>.
+
+</para></listitem>
+</varlistentry>
+
+<varlistentry>
+<term>preseed/interactive</term>
+<listitem><para>
+
+Setzen Sie diesen Parameter auf <userinput>true</userinput>, um auch Fragen
+anzuzeigen, obwohl Sie voreingestellt werden. Dies kann zum Testen oder zur
+Fehlersuche an der Voreinstellungsdatei nützlich sein. Beachten Sie, dass dies
+bei solchen Parametern, die als Boot-Parameter angegeben werden, keinen Effekt
+haben wird; für solche kann aber eine spezielle Syntax genutzt werden. Siehe
+<xref linkend="preseed-seenflag"/>.
+
+</para></listitem>
+</varlistentry>
+
+<varlistentry>
+<term>auto-install/enable (auto)</term>
+<listitem><para>
+
+Fragen, die eigentlich gestellt werden, bevor Voreinstellung greift, können
+aufgeschoben werden, bis das Netzwerk konfiguriert ist. Siehe
+<xref linkend="preseed-auto"/>, wie Sie dies für automatisierte
+Installationen nutzen können.
 
 </para></listitem>
 </varlistentry>
@@ -331,25 +369,62 @@ Standardmäßig wirft der &d-i; automatisch das optische Installationsmedium
 aus, bevor er den Rechner neu startet. Dies kann jedoch unnötig sein, falls
 das System eh nicht automatisch von CD bootet. In einigen Fällen könnte es
 sogar unerwünscht sein, wenn z.B. das optische Laufwerk das Medium nicht selbst
-wieder einlegen kann und der Benutzer nicht vor Ort ist, um dies manuell zu erledigen.
-Viele Slot-In-, Slim-Line- und Cartridge-Laufwerke können Medien nicht automatisch
-neu einlegen/einziehen.
+wieder einlegen kann und der Benutzer nicht vor Ort ist, um dies manuell zu
+erledigen. Viele Slot-In-, Slim-Line- und Cartridge-Laufwerke können Medien
+nicht automatisch neu einlegen/einziehen.
 
 </para><para>
 
-Setzen Sie diesen Parameter auf <userinput>false</userinput>, um das automatische
-Auswerfen des Mediums zu deaktivieren und stellen Sie sicher, dass das System nach
-der Basisinstallation nicht mehr vom optischen Laufwerk bootet.
+Setzen Sie diesen Parameter auf <userinput>false</userinput>, um das
+automatische Auswerfen des Mediums zu deaktivieren und stellen Sie sicher, dass
+das System nach der Basisinstallation nicht mehr vom optischen Laufwerk bootet.
 
 </para></listitem>
 </varlistentry>
 
 <varlistentry>
+<term>debian-installer/allow_unauthenticated</term>
+<listitem><para>
+
+Standardmäßig verlangt der Installer, dass Paketquellen (Repositories) mittels
+bekannter GPG-Schlüssel authentifiziert werden. Setzen Sie dies auf
+<userinput>true</userinput>, um die Authentifizierung zu deaktivieren.
+<emphasis role="bold">Warnung: unsicher, nicht empfohlen.</emphasis>
+
+</para></listitem>
+</varlistentry>
+
+<varlistentry arch="alpha;m68k;mips;mipsel">
 <term>ramdisk_size</term>
 <listitem><para>
 
-Wenn Sie einen Kernel in Version 2.2.x benutzen, müssen Sie unter Umständen
-die &ramdisksize; angeben.
+Dieser Parameter sollte bereits auf einen passenden Wert gesetzt sein, falls
+er benötigt wird; verändern Sie ihn nur, falls Sie Fehler während des Bootens
+beobachten, die den Schluss zulassen, dass die Ramdisk nicht komplett geladen
+werden konnte. Der Wert wird in kB angegeben.
+
+</para></listitem>
+</varlistentry>
+
+<varlistentry condition="gtk">
+<term>mouse/left</term>
+<listitem><para>
+
+Für das GTK-Frontend (den grafischen Installer) kann der Benutzer die Maus
+auf Linkshänder-Betrieb umschalten, indem dieser Parameter auf
+<userinput>true</userinput> gesetzt wird.
+
+</para></listitem>
+</varlistentry>
+
+<varlistentry condition="gtk">
+<term>directfb/hw-accel</term>
+<listitem><para>
+
+Im Gtk-Frontend (graphischer Installer) ist die Hardwarebeschleunigung in
+directfb (Framebuffer) standardmäßig deaktiviert. Um sie zu aktivieren, setzen
+Sie beim Booten des Installers diesen Parameter auf
+<userinput>true</userinput>.
 
 </para></listitem>
 </varlistentry>
@@ -365,8 +440,163 @@ Siehe <xref linkend="rescue"/>.
 </para></listitem>
 </varlistentry>
 
+</variablelist>
+
+   <sect3 id="preseed-args">
+   <title>Boot-Parameter benutzen, um Fragen automatisiert zu beantworten</title>
+<para>
+
+Mit einigen Ausnahmen kann für jede während der Installation gestellte Frage
+am Bootprompt eine Antwort vorgegeben werden, obwohl dies nur in speziellen
+Fällen sinnvoll ist. Generelle Anweisungen, wie Sie dies erledigen, finden
+Sie im <xref linkend="preseed-bootparms"/>. Einige spezielle Beispiele
+sind weiter unten aufgelistet.
+
+</para>
+
+<variablelist>
+
+<varlistentry>
+<term>debian-installer/locale (locale)</term>
+<listitem><para>
+
+Kann genutzt werden, um sowohl die Sprache wie auch das Land für die
+Installation anzugeben. Dies funktioniert nur, wenn die angegebene
+Locale in Debian unterstützt wird. Um zum Beispiel Deutsch als Sprache
+zu verwenden und Schweiz als Land, nutzen Sie
+<userinput>locale=de_CH</userinput>.
+
+</para></listitem>
+</varlistentry>
+
+<varlistentry>
+<term>anna/choose_modules (modules)</term>
+<listitem><para>
+
+Kann benutzt werden, um Installer-Komponenten zu laden, die standardmäßig
+nicht geladen werden. Ein Beispiel für eine solche, vielleicht nützliche
+zusätzliche Komponente ist <classname>openssh-client-udeb</classname>
+(um <command>scp</command> während der Installation verwenden zu können)<phrase
+arch="not-s390"> oder <classname>ppp-udeb</classname> (siehe
+<xref linkend="pppoe"/>)</phrase>.
+
+</para></listitem>
+</varlistentry>
+
+<varlistentry>
+<term>netcfg/disable_dhcp</term>
+<listitem><para>
+
+Setzen Sie dies auf <userinput>true</userinput>, wenn Sie DHCP deaktivieren
+möchten und stattdessen statische Netzwerkkonfiguration erzwingen möchten.
+
+</para></listitem>
+</varlistentry>
+
+<varlistentry>
+<term>mirror/protocol (protocol)</term>
+<listitem><para>
+
+Standardmässig nutzt der Installer das http-Protokoll, um Dateien von
+Debian-Spiegelservern herunterzuladen und es ist während einer Installation
+in normaler Priorität nicht möglich, dies auf ftp zu ändern. Indem dieser
+Parameter auf <userinput>ftp</userinput> gesetzt wird, kann der Installer
+gezwungen werden, dieses Protokoll zu verwenden. Beachten Sie, dass Sie derzeit
+keinen ftp-Spiegelserver aus der Liste auswählen können; Sie müssen den
+Hostnamen des Servers manuell eingeben.
+
+</para></listitem>
+</varlistentry>
+
+<varlistentry>
+<term>tasksel:tasksel/first (tasks)</term>
+<listitem><para>
+
+Dies kann genutzt werden, um Programmgruppen zu installieren, die in der
+interaktiven Liste von tasksel nicht verfügbar sind, wie z.B.
+<literal>kde-desktop</literal>.
+Siehe <xref linkend="pkgsel"/> für zusätzliche Informationen.
+
+</para></listitem>
+</varlistentry>
 
 </variablelist>
+
+   </sect3>
+
+   <sect3 id="module-parms">
+   <title>Parameter für Kernelmodule angeben</title>
+<para>
+
+Wenn Treiber in den Kernel einkompiliert sind, können Sie Parameter für
+sie angeben wie in der Kerneldokumentation beschrieben. Wenn allerdings
+die Treiber als Module kompiliert sind und weil Kernelmodule während einer
+Installation ein wenig anders geladen werden wie beim Booten eines
+installierten System, ist es nicht möglich, Parameter für die Module
+auf die gleiche Art anzugeben wie gewöhnlich. Statt dessen müssen Sie eine
+spezielle Syntax einhalten, die vom Installer erkannt wird und sicherstellt,
+dass die Parameter in den passenden Konfigurationsdateien gespeichert werden
+und beim eigentlichen Laden der Module genutzt werden. Außerdem werden
+die Parameter automatisch zur Konfiguration des installierten System
+hinzugefügt.
+
+</para><para>
+
+Beachten Sie, dass es mittlerweile sehr selten ist, Parameter für Module
+angeben zu müssen. In den meisten Fällen kann der Kernel die im System
+vorhandene Hardware erkennen und auf dem Wege gute Voreinstellungen setzen.
+In einigen Situationen könnte es allerdings trotzdem nötig sein, Parameter
+manuell zu setzen.
+
+</para><para>
+
+Die zu verwendende Syntax, um Parameter für Module zu setzen:
+
+<informalexample><screen>
+<replaceable>Modulname</replaceable>.<replaceable>Parametername</replaceable>=<replaceable>Wert</replaceable>
+</screen></informalexample>
+
+Müssen Sie mehrere Parameter für das gleiche oder andere Module angeben,
+wiederholen Sie es einfach. Um zum Beispiel eine alte 3Com-Netzwerkkarte
+so einzustellen, dass der BNC-(Koax-)Anschluss und der Interrupt IRQ 10
+verwendet wird, nutzen Sie dies:
+
+<informalexample><screen>
+3c509.xcvr=3 3c509.irq=10
+</screen></informalexample>
+
+</para>
+   </sect3>
+
+   <sect3 id="module-blacklist">
+   <title>Kernel-Module als gesperrt markieren</title>
+<para>
+
+Manchmal könnte es nötig sein, ein Modul als gesperrt zu markieren, um zu
+verhindern, dass es automatisch vom Kernel und von udev geladen wird. Ein
+Grund dafür könnte sein, dass ein spezielles Modul Probleme mit Ihrer Hardware
+verursacht. Außerdem listet der Kernel manchmal zwei verschiedene Treiber für
+das gleiche Gerät. Dies könnte zu inkorrekter Funktion des Gerätes führen,
+falls der Treiber zu einem Konflikt führt oder der falsche Treiber zuerst
+geladen wird.
+
+</para><para>
+
+Sie können mit der folgenden Syntax ein Modul als gesperrt markieren:
+<userinput><replaceable>Modul-Name</replaceable>.blacklist=yes</userinput>.
+Das führt dazu, dass das Modul in
+<filename>/etc/modprobe.d/blacklist.local</filename> eingetragen wird; es
+wird sowohl für die Installation wie auch später für das installierte System
+gesperrt.
+
+</para><para>
+
+Beachten Sie, dass das Modul trotzdem noch vom Installationssystem selbst
+geladen werden könnte. Sie können dies verhindern, indem Sie die Installation
+im Expert-Modus durchführen und das Modul in den Listen der zu ladenden Module
+(während der Hardware-Erkennung) deaktivieren.
+
+</para>
+   </sect3>
   </sect2>
  </sect1>
-

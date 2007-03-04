@@ -1,5 +1,5 @@
 <!-- retain these comments for translator revision tracking -->
-<!-- original version: 29334 untranslated -->
+<!-- original version: 43789 untranslated -->
 
  <sect2 arch="alpha" id="alpha-firmware">
  <title>Alpha Console Firmware</title>
@@ -286,7 +286,7 @@ ewc0.0.0.2002.0            EWC0              00-06-2B-01-32-B0
 You first need to set the boot protocol:
 
 <informalexample><screen>
-&gt;&gt;&gt; set ewa0_protocol bootp
+&gt;&gt;&gt; set ewa0_protocols bootp
 </screen></informalexample>
 
 Then check the medium type is correct:
@@ -330,13 +330,26 @@ and use a console on the first serial port, you would type:
   <sect2 arch="alpha"><title>Booting from CD-ROM with the SRM Console</title>
 <para>
 
-Type
+The &debian; install CDs include several preconfigured boot options for
+VGA and serial consoles.  Type
 
 <informalexample><screen>
 &gt;&gt;&gt; boot xxxx -flags 0
 </screen></informalexample>
 
-where <replaceable>xxxx</replaceable> is your CD-ROM drive in SRM notation.
+to boot using VGA console, where <replaceable>xxxx</replaceable> is your
+CD-ROM drive in SRM notation.  To use serial console on the first 
+serial device, type
+
+<informalexample><screen>
+&gt;&gt;&gt; boot xxxx -flags 1
+</screen></informalexample>
+
+and for console on the second serial port, type
+
+<informalexample><screen>
+&gt;&gt;&gt; boot xxxx -flags 2
+</screen></informalexample>
 
 </para>
   </sect2>

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="EUC-JP"?>
 <!-- retain these comments for translator revision tracking -->
-<!-- original version: 35612 -->
+<!-- original version: 43773 -->
 
  <sect1 id="installation-media">
  <title>インストールに利用できるメディア</title>
@@ -10,7 +10,7 @@
 <!--
 This section will help you determine which different media types you can use to
 install Debian. For example, if you have a floppy disk drive on your machine,
-it can be used to install Debian. There is a whole chapter devoted media,
+it can be used to install Debian. There is a whole chapter devoted to media,
 <xref linkend="install-methods"/>, which lists the advantages and
 disadvantages of each media type. You may want to refer back to this page once
 you reach that section.
@@ -21,7 +21,7 @@ you reach that section.
 Debian をインストールするのに使用することができます。
 各メディアに対して利点と欠点を挙げた、
 章全体をメディアに費やした章 (<xref linkend="install-methods"/>) があります。
-一度そこへ行ったら、このページを参照したくなるかもしれません。
+その章から、このページをもう一度参照するかもしれません。
 
 </para>
 
@@ -84,7 +84,7 @@ CD-ROM からの起動ができないシステムでは、
 インストールに CD-ROM を使えます。
 <xref linkend="boot-installer"/> を参照して一度他の方法で起動してください。
 
-</para><para arch="i386">
+</para><para arch="x86">
 
 <!--
 Both SCSI and IDE/ATAPI CD-ROMs are supported.  In addition, all
@@ -105,7 +105,7 @@ Linux 上で CD-ROM を利用するための詳細な情報は、
 <ulink url="&url-cd-howto;">Linux CD-ROM HOWTO</ulink>
 にあります。
 
-</para><para arch="i386">
+</para><para arch="x86">
 
 <!--
 USB CD-ROM drives are also supported, as are FireWire devices that
@@ -146,7 +146,7 @@ RiscPC では SCSI CD-ROM もサポートしています。
 <!--
 On SGI machines, booting from CD-ROM requires a SCSI CD-ROM drive
 capable of working with a logical blocksize of 512 bytes. Many of the
-SCSI CD-DROM drives sold for the PC market do not have this
+SCSI CD-ROM drives sold on the PC market do not have this
 capability. If your CD-ROM drive has a jumper labeled
 <quote>Unix/PC</quote> or <quote>512/2048</quote>, place it in the
 <quote>Unix</quote> or <quote>512</quote> position.
@@ -159,7 +159,7 @@ IDE, SATA or SCSI card.
 -->
 SGI マシンで CD-ROM から起動するには、512 バイトの論理ブロックサイズを
 扱える SCSI CD-ROM ドライブが必要です。
-PC 向けに売られている SCSI CD-ROM の多くは、この機能を持っていません。
+PC 向けに売られている SCSI CD-ROM の多くは、この機能がありません。
 お持ちの CD-ROM ドライブに <quote>Unix/PC</quote> とか
 <quote>512/2048</quote> というラベルのついたジャンパがあったら、
 <quote>Unix</quote> または <quote>512</quote> の方にしてください。
@@ -177,14 +177,14 @@ PCI の IDE, SATA, SCSI いずれかのカードが必要です。
 <!--
 On DECstations, booting from CD-ROM requires a SCSI CD-ROM drive
 capable of working with a logical blocksize of 512 bytes. Many of the
-SCSI CD-DROM drives sold for the PC market do not have this capability.
+SCSI CD-ROM drives sold on the PC market do not have this capability.
 If your CD-ROM drive has a jumper labeled <quote>Unix/PC</quote> or
 <quote>512/2048</quote>, place it in the <quote>Unix</quote> or
 <quote>512</quote> position.
 -->
 DECstations で CD-ROM から起動するには、512 バイトの論理ブロックサイズを
 扱える SCSI CD-ROM ドライブが必要です。
-PC 向けに売られている SCSI CD-ROM の多くは、この機能を持っていません。
+PC 向けに売られている SCSI CD-ROM の多くは、この機能がありません。
 お持ちの CD-ROM ドライブに <quote>Unix/PC</quote> とか
 <quote>512/2048</quote> というラベルのついたジャンパがあったら、
 <quote>Unix</quote> または <quote>512</quote> の方にしてください。
@@ -270,7 +270,7 @@ Although the &arch-title; does not allow booting from SunOS
 </para>
   </sect2>
 
-  <sect2 condition="bootable-usb"><title>USB メモリースティック</title>
+  <sect2 condition="bootable-usb"><title>USB メモリ</title>
 
 <para>
 
@@ -284,24 +284,49 @@ systems which have no room for unnecessary drives.
 -->
 多くの Debian ボックスではシステムのセットアップやレスキュー用途のみに
 フロッピー・CD-ROM ドライブが必要です。
-サーバの操作をしている方は、そんなドライブを省略して、
-システムのインストールや修復に USB メモリースティックを使用する事を
-既に考えているでしょう。
+複数のサーバの操作をしている場合、
+そんなドライブを省略して USB メモリを使用して、
+システムのインストールや (必要なら) 修復することを既に考えていることでしょう。
+また、不要なドライブを格納する余地のない、
+小さなシステムに対しても便利です。
 
 </para>
   </sect2>
 
+<!--
+  <sect2><title>Network</title>
+-->
   <sect2><title>ネットワーク</title>
 
-<para condition="supports-tftp">
+<para>
 
 <!--
-You can also <emphasis>boot</emphasis> your system over the network.
-<phrase arch="mips">This is the preferred installation technique for
-Mips.</phrase>
+The network can be used during the installation to retrieve files needed
+for the installation. Whether the network is used or not depends on the
+installation method you choose and your answers to certain questions that
+will be asked during the installation. The installation system supports
+most types of network connections (including PPPoE, but not ISDN or PPP),
+via either HTTP or FTP. After the installation is completed, you can also
+configure your system to use ISDN and PPP.
 -->
-またネットワーク越しにシステムを<emphasis>起動</emphasis>することもできます。
-<phrase arch="mips">Mips ではこれが好ましいでしょう。</phrase>
+インストールに必要なファイルをインストール中に取得するのに、
+ネットワークを使用できます。
+ネットワークを使用するかどうかは、あなたが選択したインストール方法と、
+インストール中の質問への答に依存します。
+インストールシステムは、ネットワークへのほとんどの接続法 (PPPoE を含む。
+ISDN や PPP は不可) 上での、HTTP と FTP のどちらともサポートしています。
+インストール完了後に、ISDN や PPP を使用するようにシステムの設定ができます。
+
+</para><para condition="supports-tftp">
+
+<!--
+You can also <emphasis>boot</emphasis> the installation system over the
+network. <phrase arch="mips">This is the preferred installation technique
+for &arch-title;.</phrase>
+-->
+また、インストールシステムを、
+ネットワーク越しに<emphasis>起動</emphasis>することもできます。
+<phrase arch="mips">&arch-title; ではこれが好ましいでしょう。</phrase>
 
 </para><para condition="supports-nfsroot">
 
@@ -313,17 +338,6 @@ and NFS-mounting of all local filesystems, is another option.
 すべてのローカルファイルシステムを NFS でマウントして、
 ディスクレスインストールをすることも一つの選択です。
 
-</para><para>
-
-<!--
-After the operating system kernel is installed, you can install the
-rest of your system via any sort of network connection (including
-PPP after installation of the base system), via FTP or HTTP.
--->
-オペレーティングシステムのカーネルをインストールした後は 
-(基本システムインストール後の PPP を含め)
-残りのシステムは FTP、HTTP 経由でネットワークインストールできます。
-
 </para>
   </sect2>
 
@@ -333,13 +347,13 @@ PPP after installation of the base system), via FTP or HTTP.
 
 <!--
 If you are running another Unix-like system, you could use it to install
-&debian; without using the &d-i; described in the rest of the
+&debian; without using the &d-i; described in the rest of this
 manual. This kind of install may be useful for users with otherwise
 unsupported hardware or on hosts which can't afford downtime.  If you
 are interested in this technique, skip to the <xref
 linkend="linux-upgrade"/>.
 -->
-他の Unix ライクシステムが稼働していれば、このマニュアルの残りで説明している 
+他の Unix ライクシステムが稼働していれば、本マニュアルの残りで説明している 
 &d-i; を使用しないで、 &debian; をインストールできます。
 このインストール方法なら、他の方法ではサポートしないハードウェアや、
 ダウンタイムを用意できないユーザにとって便利です。
@@ -362,45 +376,45 @@ build your own kernel).  Support for the widest possible range of
 devices is desirable in general, to ensure that Debian can be
 installed on the widest array of hardware.
 -->
-Debian の起動ディスクには、さまざまなシステムに最大限対応したカーネルが
+Debian の起動ディスクには、様々なシステムに最大限対応したカーネルが
 収められています。そのため残念ながら、まったく使われることのないたくさんの
 ドライバがカーネルを肥大化させています
  (再構築の仕方は <xref linkend="kernel-baking"/> をご覧ください)。
-しかし、さまざまなハードウェアへ確実に Debian をインストールするには
+しかし、様々なハードウェアへ確実に Debian をインストールするには
 できるだけ幅広いデバイスをサポートするのが望ましいでしょう。
 
-</para><para arch="i386">
+</para><para arch="x86">
 
 <!--
 Generally, the Debian installation system includes support for floppies,
 IDE drives, IDE floppies, parallel port IDE devices, SCSI controllers and
-drives, USB, and FireWire.  The file systems supported include FAT,
-Win-32 FAT extensions (VFAT), and NTFS, among others.
+drives, USB, and FireWire.  The supported file systems include FAT,
+Win-32 FAT extensions (VFAT) and NTFS.
 -->
 一般的に Debian のインストーラは、
 フロッピー、IDE ドライブ、IDE フロッピー、パラレルポートの IDE デバイス、
 SCSI コントローラとドライブ、USB、FireWire をサポートしています。
-またファイルシステムは、FAT、Win-32 拡張 FAT (VFAT)、NTFS
-などがサポートされています。
+サポートしているファイルシステムは、FAT、Win-32 拡張 FAT (VFAT)、NTFS です。
 
 </para><para arch="i386">
 
 <!--
-The disk interfaces that emulate the <quote>AT</quote> hard disk interface
-which are often called MFM, RLL, IDE, or ATA are supported.  Very old 8 bit
-hard disk controllers used in the IBM XT computer are supported only
-as a module. SCSI disk controllers from many different manufacturers
+Disk interfaces that emulate the <quote>AT</quote> hard disk interface
+&mdash; often called MFM, RLL, IDE, or ATA &mdash; are supported.  Very old
+8&ndash;bit hard disk controllers used in the IBM XT computer are supported
+only as a module. SCSI disk controllers from many different manufacturers
 are supported. See the
 <ulink url="&url-hardware-howto;">Linux Hardware Compatibility HOWTO</ulink>
 for more details.
 -->
-MFM、RLL、IDE、ATA など <quote>AT</quote> ハードディスクが動作する
-ディスクインターフェースがサポートされています。
-IBM XT コンピュータで使用される非常に古い
-8 ビットハードディスクコントローラも、
-モジュールとしてのみですがサポートされています。
-また、多くのメーカーの
-SCSI ディスクコントローラもサポートされています。詳細は
+MFM、RLL、IDE、ATA といった <quote>AT</quote> 
+ハードディスクインターフェースをエミュレートする、
+ディスクインターフェースをサポートしています。
+IBM XT コンピュータで使用される、
+非常に古い 8&ndash;ビットハードディスクコントローラも、
+モジュールとしてのみですがサポートしています。
+また、多くのメーカーの SCSI ディスクコントローラもサポートしています。
+詳細は
 <ulink url="&url-hardware-howto;">Linux ハードウェア互換性 HOWTO</ulink>
 をご覧ください。
 

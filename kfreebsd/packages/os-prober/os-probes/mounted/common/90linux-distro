@@ -81,7 +81,7 @@ if ls $dir/lib/ld*.so* >/dev/null 2>/dev/null; then
 		long=$(cat "$dir/etc/redhat-release")
 	elif [ -e "$dir/etc/SuSE-release" ]; then
 		short="SuSE"
-		long=$(head -1 "$dir/etc/SuSE-release")
+		long=$(head -n 1 "$dir/etc/SuSE-release")
 	elif [ -e "$dir/etc/gentoo-release" ]; then
 		short="Gentoo"
 		long=$(cat "$dir/etc/gentoo-release")
@@ -94,13 +94,19 @@ if ls $dir/lib/ld*.so* >/dev/null 2>/dev/null; then
 	elif [ -e "$dir/etc/turbolinux-release" ]; then
 		short="Turbolinux"
 		long=$(cat "$dir/etc/turbolinux-release")
+	elif [ -e "$dir/etc/pardus-release" ]; then
+		short="Pardus"
+		long=$(cat "$dir/etc/pardus-release")
+	elif [ -e "$dir/etc/kanotix-version" ]; then
+		short="Kanotix"
+		long=$(cat "$dir/etc/kanotix-version")
 	elif [ -e "$dir/etc/slackware-version" ]; then
 		short="Slackware"
 		long=$(printf "Slackware Linux (%s)\n" "$(cat $dir/etc/slackware-version)")
 	elif [ -e "$dir/sbin/pkgtool" ]; then
 		short="Slackware"
 		long="Slackware Linux"
-	elif grep -q OpenLinux "$dir/etc/issue"; then
+	elif grep -qs OpenLinux "$dir/etc/issue"; then
 		short="Caldera"
 		long="Caldera OpenLinux"
 	else

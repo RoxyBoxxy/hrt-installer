@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<!-- original version: 33725 -->
+<!-- original version: 43599 -->
 <!-- revisado por jfs, 28 octubre 2004 -->
 <!-- revisado Rudy Godoy, 24 feb. 2005 -->
+<!-- revisado por Igor Tamara, enero 2007 -->
 
 <chapter id="boot-new">
  <title>Arrancando su nuevo sistema Debian</title>
@@ -12,18 +13,46 @@
 El primer arranque autónomo de su sistema es lo que los ingenieros
 eléctricos llaman <quote>la prueba de humo</quote>.
 
+</para><para arch="x86">
+
+Lo primero que debería ver cuando arranque el sistema es el menú del cargador
+de arranque <classname>grub</classname> o <classname>lilo</classname> si ha
+hecho la instalación por omisión.  Las primeras opciones en el menú serán las
+de su nuevo sistema Debian. Se listarán más abajo otros sistemas operativos en
+su sistema (como Windows) si los tenía y los detectó el sistema de instalación.
+
 </para><para>
 
-Si está arrancando directamente en Debian y el sistema no inicia,
-debe usar o bien el medio original de instalación o insertar el disquete
-de arranque a medida, si tiene uno, y reiniciar su sistema. Es posible
-que, en su caso, tenga que introducir algunos argumentos adicionales al
-arranque como <userinput>root=<replaceable>root</replaceable></userinput>,
-donde <replaceable>root</replaceable> es su partición raíz, como por
-ejemplo <filename>/dev/sda1</filename>.
-Además, puede consultar <xref linkend="rescue"/> para leer las instrucciones
-de cómo usar el modo de rescate incorporado en el instalador.
+No se preocupe si el sistema no llega a arrancar. Si la instalación se
+completó con éxito es posible que sólo haya un problema menor que
+impida que su sistema arranque Debian. En muchos casos estos problemas
+pueden arreglarse sin tener que repetir la instalación. Una opción
+disponible para arreglar problemas de arranque es utilizar el modo
+de rescate que está disponible en el propio instalador (consulte <xref
+linkend="rescue"/>).
+ 
+</para><para>
+Es posible que necesite ayuda de usuarios más experimentados si es
+nuevo a Debian y a Linux.
+<phrase arch="x86">Puede intentar obtener ayuda directamente en línea en
+los canales de IRC #debian o #debian-boot en la red OFTC.
+También puede contactar la <ulink url="&url-list-subscribe;">lista de
+usuarios debian-user</ulink> (en inglés) o <ulink url="&url-list-subscribe;">lista de
+usuarios debian-user-spanish</ulink> (en español).</phrase>
+<phrase arch="not-x86">Para arquitecturas menos habituales como es el
+caso de &arch-title;, su mejor opción es preguntar en la 
+<ulink url="&url-list-subscribe;">lista de correo debian-&arch-listname; 
+</ulink>.</phrase>
+También puede enviar un informe de instalación tal y como se describe
+en <xref linkend="submit-bug"/>. Por favor, asegúrese de que describe
+claramente su problema y de que incluye cualquier mensaje que se
+muestra de forma que otros puedan diagnosticar el problema.
 
+</para><para arch="x86">
+
+Si tenía algún sistema operativo en su ordenador que no se detectó o
+se detectó incorrectamente, por favor, envíe un informe de
+instalación.
 
 </para>
 
@@ -119,7 +148,7 @@ de arranque predeterminada en <filename>quik.conf</filename> está
 etiquetada como Linux). Podrá ver las etiquetas definidas en
 <filename>quik.conf</filename> si presiona la tecla
 <keycap>Tab</keycap> en el cursor <prompt>boot:</prompt>.
-También puede intentar volver al instalador y editar el fichero
+También puede intentar volver a arrancar vía  el instalador y editar el fichero
 <filename>/target/etc/quik.conf</filename> que se ha generado en
 el paso <guimenuitem>Instalar quik en un disco duro</guimenuitem>.
 Puede encontrar algunas pistas para adaptar
@@ -199,6 +228,8 @@ Para más información, por favor lea el
    </sect2>
  </sect1>
 
+&mount-encrypted.xml;
+
  <sect1 id="login">
  <title>Acceso</title>
 
@@ -221,51 +252,62 @@ encontrará algunas guías que le indicarán dónde empezar a buscar.
 
 La documentación que acompaña a los programas que ha instalado se
 encuentra en el directorio <filename>/usr/share/doc/</filename>, bajo
-un subdirectorio cuyo nombre coincide con el del programa. Por
-ejemplo, la «Guía de usuario de APT» que le indica cómo utilizar
-<command>apt</command> para instalar otros programas en su sistema, se
-encuentra en
-<filename>/usr/share/doc/apt/guide.html/index.html</filename>.
+un subdirectorio cuyo nombre coincide con el del programa (o, más
+exactamente, el nombre del paquete Debian que contiene el
+programa). Sin embargo podrá encontrar documentación más extensa en
+paquetes independientes de documentación que generalmente no se
+instalan por omisión. Por ejemplo, puede encontrar documentación de la
+herramienta de gestión de paquetes <command>apt</command> en los
+paquetes <classname>apt-doc</classname> o
+<classname>apt-howto</classname>.
 
 </para><para>
 
 
 Además, existen algunos directorios especiales dentro de la jerarquía
 de <filename>/usr/share/doc/</filename>. Puede encontrar los CÓMOs de
-Linux en formato <emphasis>.gz</emphasis>, en
+Linux en formato <emphasis>.gz</emphasis> (comprimido), en
 <filename>/usr/share/doc/HOWTO/en-txt/</filename>. Encontrará un
 índice navegable de la documentación instalada en
 <filename>/usr/share/doc/HTML/index.html</filename> una vez
-instale <command>dhelp</command>.
+instale <classname>dhelp</classname>.
 
 </para><para>
 
-Una forma fácil de consultar estos documentos es ejecutar
-<userinput>«cd /usr/share/doc/»</userinput>, y escribir
-<userinput>«lynx»</userinput> seguido de un espacio y un punto (el
-punto indica el directorio actual).
+Una forma fácil de consultar estos documentos utilizando un navegador
+con interfaz de texto es ejecutar las siguientes órdenes:
+
+<informalexample><screen>
+$ cd /usr/share/doc/
+$ w3c .
+</screen></informalexample>
+
+El punto después de la orden <command>w3c</command> le indica que debe
+mostrar los contenidos del directorio actual.
+
+ </para><para>
+ 
+Puede utilizar el navegador web del entorno gráfico de escritorio si
+tiene instalado uno. Arranque el navegador web del menú de aplicación
+y escriba <userinput>/usr/share/doc/</userinput> en la barra de
+direcciones.
 
 </para><para>
 
-También puede escribir <userinput>«info
-<replaceable>programa</replaceable>»</userinput> o <userinput>«man
-<replaceable>programa</replaceable>»</userinput> para consultar la
+También puede escribir <userinput>info
+<replaceable>programa</replaceable></userinput> o <userinput>man
+<replaceable>programa</replaceable></userinput> para consultar la
 documentación de la mayoría de los programas disponibles en la línea
 de órdenes. Si escribe <userinput>«help»</userinput> se le mostrará una
 ayuda sobre las órdenes del guión de línea de órdenes. Habitualmente,
 si escribe el nombre de un programa seguido de
 <userinput>--help</userinput> se le mostrará un breve resumen del uso
 de este programa. Si la salida es mayor que el tamaño de su pantalla,
-escriba <userinput>| more</userinput> después de la llamada anterior
+escriba <userinput>|&nbsp;more</userinput> después de la llamada anterior
 para hacer que los resultados se pausen antes de que sobrepasen el
 tamaño de la pantalla. Puede también ver la lista de todos los
 programas disponibles que empiezan con una cierta letra. Simplemente,
 escriba la letra en cuestión y luego presione dos veces el tabulador.
-
-</para><para>
-
-Puede leer una introducción más completa a Debian y GNU/Linux en
-<filename>/usr/share/doc/debian-guide/html/noframes/index.html</filename>.
 
 </para>
 

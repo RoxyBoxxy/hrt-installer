@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="EUC-JP"?>
 <!-- retain these comments for translator revision tracking -->
-<!-- original version: 35612 -->
+<!-- original version: 43939 -->
 
  <sect1 id="supported-peripherals">
  <title>周辺機器やその他のハードウェア</title>
@@ -12,21 +12,21 @@ printers, scanners, PCMCIA and USB devices.  However, most of these
 devices are not required while installing the system.
 -->
 Linux は、マウス、プリンタ、スキャナ、PCMCIA、 USB デバイスなどの
-さまざまなハードウェアに幅広く対応しています。しかし、
+様々なハードウェアに幅広く対応しています。しかし、
 システムのインストールに、これらのデバイスが必要なわけではありません。
 
-</para><para arch="i386">
+</para><para arch="x86">
 
 <!--
 USB hardware generally works fine, only some
 USB keyboards may require additional configuration
-(see <xref linkend="usb-keyboard-config"/>).
+(see <xref linkend="hardware-issues"/>).
 -->
 USB ハードウェアはたいていうまく動きます。
 USB キーボードだけは追加設定が必要かもしれません
-(<xref linkend="usb-keyboard-config"/> をご覧ください)。
+(<xref linkend="hardware-issues"/> をご覧ください)。
 
-</para><para arch="i386">
+</para><para arch="x86">
 
 <!--
 Again, see the
@@ -105,7 +105,7 @@ new &arch-title; machines at all.
 -->
 残念ながら、新しい &arch-title; マシンを出荷するベンダは
 ほとんどありません。
-</para><para arch="i386">
+</para><para arch="x86">
 
 <!--
 If you do have to buy a machine with Windows bundled, carefully read
@@ -198,7 +198,7 @@ is an important market.
 </sect2>
 
 
-  <sect2 arch="i386"><title>Windows に特化したハードウェア</title>
+  <sect2 arch="x86"><title>Windows に特化したハードウェア</title>
 <para>
 
 <!--
@@ -234,7 +234,7 @@ is that the manufacturers do not generally make the resources
 available to write a Linux driver. Generally, the hardware and
 software interface to the device is proprietary, and documentation is
 not available without a non-disclosure agreement, if it is available
-at all. This precludes its being used for free software, since free
+at all. This precludes it being used for free software, since free
 software writers disclose the source code of their programs. The
 second reason is that when devices like these have had their embedded
 processors removed, the operating system must perform the work of the
@@ -272,73 +272,20 @@ CPU に置き換わっていることに実際は気付かないだろうと高を括っています。
 <!--
 You can help this situation by encouraging these manufacturers to
 release the documentation and other resources necessary for us to
+
+You can help improve this situation by encouraging these manufacturers
+to release the documentation and other resources necessary for us to
 program their hardware, but the best strategy is simply to avoid this
 sort of hardware until it is listed as working in the
 <ulink url="&url-hardware-howto;">Linux Hardware Compatibility HOWTO</ulink>.
 -->
 これらの製造メーカーに、ハードウェアのプログラムを作るのに必要な文書や
-その他のリソースを公開するように働きかけ、このような状況を変化させる手助けは
-あなたにもできます。しかし、最もよい方法は
+その他のリソースを公開するように働きかけ、
+このような状況を改善する手助けはあなたにもできます。
+しかし、最もよい方法は
 <ulink url="&url-hardware-howto;">Linux ハードウェア互換性 HOWTO</ulink>
 に載るまで、この種のハードウェアを避けることです。
 
 </para>
 </sect2>
-
-
-  <sect2 id="Parity-RAM">
-  <title>似非ないし<quote>仮想</quote>パリティ RAM</title>
-<para>
-
-<!--
-If you ask for Parity RAM in a computer store, you'll probably get
-<emphasis>virtual parity</emphasis> memory modules instead of
-<emphasis>true parity</emphasis> ones. Virtual parity SIMMs can often
-(but not always) be distinguished because they only have one more chip
-than an equivalent non-parity SIMM, and that one extra chip is smaller
-than all the others. Virtual-parity SIMMs work exactly like non-parity
-memory.  They can't tell you when you have a single-bit RAM error the
-way true-parity SIMMs do in a motherboard that implements
-parity. Don't ever pay more for a virtual-parity SIMM than a
-non-parity one. Do expect to pay a little more for true-parity SIMMs,
-because you are actually buying one extra bit of memory for every 8
-bits.
--->
-コンピュータを取り扱っているお店でパリティ付き RAM を購入するとき、
-もしかしたら<emphasis>本当のパリティ</emphasis>付きのものではなく、
-<emphasis>仮想パリティ</emphasis>のものを手に入れることになるかもしれません。
-仮想パリティ SIMM を見分けるには、
-パリティなしの同等の SIMM よりもチップがひとつだけ多く、
-かつその余分のチップが他のチップよりも小さいことでわかります
-(常にこの識別が可能とは限りませんが)。
-仮想パリティ SIMM はパリティなしのメモリと同様のものです。それらは
-1 ビットの RAM エラーを、パリティをサポートしたマザーボード上の
-本当のパリティ付き SIMM のようには知らせてくれません。
-もうこれ以上、仮想パリティ SIMM に パリティなしの SIMM より高いお金を
-払ってはいけません。
-もう少しお金を払って本当のパリティ付き SIMM を買いましょう。
-こちらは、ちゃんと 8 ビットにつき 1 ビットのメモリを買うことになりますから。
-
-</para><para>
-
-<!--
-If you want complete information on &arch-title; RAM issues, and what
-is the best RAM to buy, see the
-<ulink url="&url-pc-hw-faq;">PC Hardware FAQ</ulink>.
--->
-&arch-title; アーキテクチャの RAM に関する問題や
-どの RAM を買うべきかについての完全な情報が必要ならば、
-<ulink url="&url-pc-hw-faq;">PC ハードウェア FAQ</ulink> をご覧ください。
-
-</para><para arch="alpha">
-
-<!--
-Most, if not all, Alpha systems require true-parity RAM.
--->
-すべてではありませんが、ほとんどの Alpha システムでは、
-本当のパリティ付き RAM が必要です。
-</para>
-
-  </sect2>
-
  </sect1>

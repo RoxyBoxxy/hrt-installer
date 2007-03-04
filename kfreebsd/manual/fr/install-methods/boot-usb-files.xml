@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<!-- original version: 32124 -->
+<!-- original version: 45616 -->
 
  <sect1 condition="bootable-usb" id="boot-usb-files">
  <title>Préparation des fichiers pour un amorçage avec une clé USB</title>
@@ -7,22 +7,22 @@
 <para>
 
 Pour préparer une clé USB, vous avez besoin d'un système GNU/Linux fonctionnel
-et qui accepte les périphériques USB. Vérifiez que le module du noyau
+qui gère les périphériques USB. Vérifiez que le module du noyau
 usb-storage est chargé (<userinput>modprobe usb-storage</userinput>) et trouvez
-à quel périphérique SCSI la clé USB est affectée (dans cet exemple, c'est
+à quel périphérique SCSI la clé USB est affectée (dans l'exemple qui suit, ce sera
 <filename>/dev/sda</filename>). Pour pouvoir écrire sur la clé, il vous faudra
 enlever la protection contre l'écriture.
 </para>
 <para>
 
-Notez que la taille de la clé doit être au moins égale à 128&nbsp;Mo. Pour des
+Notez que la taille de la clé doit être au moins égale à 256&nbsp;Mo. Pour des
 tailles inférieures, voyez <xref linkend="usb-copy-flexible"/>.
 
 </para>
 
   <sect2 id="usb-copy-easy">
-  <title>Copie des fichiers &mdash; la méthode simple</title>
-<para arch="i386">
+  <title>Copie des fichiers &mdash; méthode simple</title>
+<para arch="x86">
 
 Le fichier <filename>hd-media/boot.img.gz</filename> contient tous les
 fichiers de l'installateur, le noyau et le programme 
@@ -48,44 +48,47 @@ avec&nbsp;:
 </screen></informalexample>
 </para>
 <warning><para>
-Bien sûr toutes les données présentes sur la clé seront détruites. Utilisez
-le bon périphérique pour votre clé&nbsp;!
+Bien sûr, toutes les données présentes sur la clé seront détruites. Assurez-vous
+d'utiliser le périphérique correspondant à votre clé&nbsp;!
 </para>
 </warning>
 <para>
 
 Montez ensuite la clé (<userinput>mount 
-<replaceable arch="i386">/dev/sda</replaceable>
-<replaceable arch="powerpc">/dev/sda2</replaceable>
-/mnt</userinput>), qui aura
-maintenant un système de fichiers 
-<phrase arch="i386">FAT</phrase>
+<replaceable arch="x86">/dev/sda</replaceable>
+<replaceable arch="powerpc">/dev/sda2</replaceable> /mnt</userinput>),
+qui aura maintenant un système de fichiers 
+<phrase arch="x86">FAT</phrase>
 <phrase arch="powerpc">HFS</phrase>, et copiez une image ISO de type
-netinst ou businesscard. Le nom de ce fichier doit se terminer par
+<quote>netinst</quote> ou <quote>businesscard</quote>.
+Consultez <xref linkend="usb-add-iso"/>. Le nom de ce fichier doit se terminer par
 <filename>.iso</filename>. Démontez la clé (<userinput>umount /mnt</userinput>)
 et voilà, c'est fait&nbsp;!
 </para>
 </sect2>
 
   <sect2 id="usb-copy-flexible">
-  <title>Copie des fichiers &mdash; la méthode souple</title>
+  <title>Copie des fichiers &mdash; méthode détaillée</title>
 <para>
 
-Si vous aimez la souplesse ou si vous voulez simplement savoir ce qui se
+Si vous aimez la souplesse d'utilisation ou si vous voulez simplement savoir ce qui se
 passe, vous pouvez utiliser la méthode suivante pour mettre les fichiers
 sur la clé. 
 </para>
 
-&usb-setup-i386.xml;
+&usb-setup-x86.xml;
 &usb-setup-powerpc.xml;
 
-<sect3>
+</sect2>
+
+<sect2 id="usb-add-iso">
 <title>Ajouter une image ISO</title>
 <para>
 
-Vous pouvez maintenant mettre une image ISO (businesscard, netinst ou même
-l'image complète) sur la clé. Le nom de cette image doit se terminer par
-<filename>.iso</filename>.
+L'installateur recherchera une image ISO Debian sur la clé où prendre les données
+nécessaires à l'installation. Il vous faut donc copier une image ISO
+(<quote>businesscard</quote>, <quote>netinst</quote> ou même l'image complète) sur la clé.
+Le nom de cette image doit se terminer par <filename>.iso</filename>.
 
 </para>
 <para>
@@ -104,15 +107,15 @@ Quand tout est fait, démontez la clé USB (<userinput>umount /mnt</userinput>)
 et activez la protection contre l'écriture.
 
 </para>
-</sect3>
+</sect2>
 
 <!-- TODO: doesn't this section belong later? -->
-<sect3 arch="i386">
+<sect2 arch="x86">
    <title>Amorcer la clé USB</title>
 <warning><para>
 
-Si le système refuse de s'amorcer à partir de la clé, il se peut que la clé
-possède un secteur principal d'amorçage défectueux. Corrigez-le avec le
+Si le système refuse de s'amorcer à partir de la clé, il se peut que le
+secteur principal d'amorçage de la clé soit défectueux. Corrigez-le avec le
 programme <command>install-mbr</command> qui se trouve dans le paquet
 <classname>mbr</classname>&nbsp;:
 
@@ -121,6 +124,5 @@ programme <command>install-mbr</command> qui se trouve dans le paquet
 </screen></informalexample>
 
 </para></warning>
-</sect3>
   </sect2>
  </sect1>

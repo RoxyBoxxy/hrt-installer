@@ -4,25 +4,24 @@
 # DO NOT MODIFY IT DIRECTLY : SUCH CHANGES WILL BE LOST
 # 
 # Spanish messages for debian-installer.
-# Copyright (C) 2003, 2004, 2005 Software in the Public Interest, Inc.
+# Copyright (C) 2003-2007 Software in the Public Interest, Inc.
 # This file is distributed under the same license as debian-installer.
 #
 # Contributors to the translation of debian-installer:
 # Teófilo Ruiz Suárez <teo@debian.org>, 2003.
-# Javier Fernández-Sanguino <jfs@debian.org>, 2003.
 # David Martínez Moreno <ender@debian.org>, 2003, 2005.
 # Carlos Alberto Martín Edo <carlos@dat.etsit.upm.es>, 2003
 # Carlos Valdivia Yagüe <valyag@dat.etsit.upm.es>, 2003
-# Rudy Godoy <rudy@kernel-panik.org>, 2003
+# Rudy Godoy <rudy@kernel-panik.org>, 2003-2006
 # Steve Langasek <vorlon@debian.org>, 2004
 # Enrique Matias Sanchez (aka Quique) <cronopios@gmail.com>, 2005
-# Javier Fernández-Sanguino <jfs@debian.org>, 2004-2005
 # Rubén Porras Campo <nahoo@inicia.es>, 2005
+# Javier Fernández-Sanguino <jfs@debian.org>, 2003-2006
 #
 # Equipo de traducción al español, por favor lean antes de traducir
 # los siguientes documentos:
 #
-# - El proyecto de traducción de Debian al españl
+# - El proyecto de traducción de Debian al español
 #   http://www.debian.org/intl/spanish/
 #   especialmente las notas de traducción en
 #   http://www.debian.org/intl/spanish/notas
@@ -34,12 +33,23 @@
 # Si tiene dudas o consultas sobre esta traducción consulte con el último
 # traductor (campo Last-Translator) y ponga en copia a la lista de
 # traducción de Debian al español (debian-l10n-spanish@lists.debian.org)
+#
+# NOTAS: 
+#
+# - Se ha traducido en este fichero 'boot loader' de forma homogénea por
+# 'cargador de arranque' aunque en el manual se utiliza éste término y
+# también 'gestor de arranque'
+#
+# - 'array' no está traducido aún. La traducción como 'arreglo' suena
+# fatal (y es poco conocida)
+#
+#  
 msgid ""
 msgstr ""
 "Project-Id-Version: debian-installer\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-08-18 18:32-0600\n"
-"PO-Revision-Date: 2005-08-21 01:46+0200\n"
+"Report-Msgid-Bugs-To: debian-boot@lists.debian.org\n"
+"POT-Creation-Date: 2007-01-06 22:48+0100\n"
+"PO-Revision-Date: 2007-01-03 15:08+0100\n"
 "Last-Translator: Javier Fernández-Sanguino Peña <jfs@debian.org>\n"
 "Language-Team:  Debian Spanish <debian-l10n-spanish@lists.debian.org>\n"
 "MIME-Version: 1.0\n"
@@ -55,61 +65,38 @@ msgstr "Continuar sin cargador de arranque"
 
 #. Type: note
 #. Description
-#: ../nobootloader.templates:8
+#: ../nobootloader.templates:9
 msgid ""
-"Some variables need to be set in the Pegasos OpenFirmware in order for your "
-"system to boot linux automatically.  At the end of the installation, the "
-"system will reboot.  At the Pegasos OpenFirmware prompt, set the following "
-"OpenFirmware variables to enable auto-booting:"
+"Some variables need to be set in the Genesi firmware in order for your "
+"system to boot automatically.  At the end of the installation, the system "
+"will reboot.  At the firmware prompt, set the following firmware variables "
+"to enable auto-booting:"
 msgstr ""
-"Debe establecer algunas variables en el «OpenFirmware» de Pegasos para poder "
-"arrancar el sistema linux de forma automática. Al final de la instalación el "
-"sistema se reiniciará. En el símbolo de espera de órdenes de «OpenFirmware» "
-"establezca las variables que se indican a continuación para activar el "
-"arranque automático:"
+"Debe establecer algunas variables en el firmware de Genesi para poder "
+"arrancar el sistema de forma automática. Al final de la instalación el "
+"sistema se reiniciará. En el símbolo de espera de órdenes del firmware "
+"establezca las variables de firmware que se indican a continuación para "
+"activar el arranque automático:"
 
 #. Type: note
 #. Description
-#: ../nobootloader.templates:8
+#: ../nobootloader.templates:9
 msgid ""
-" setenv boot-device ${OF_BOOT_DEVICE}\n"
-" setenv boot-file ${OF_BOOT_FILE}\n"
-" setenv auto-boot-timeout 5000\n"
-" setenv auto-boot? true"
+"Alternatively, you will be able to boot the kernel manually by entering, at "
+"the firmware prompt:"
 msgstr ""
-" setenv boot-device ${OF_BOOT_DEVICE}\n"
-" setenv boot-file ${OF_BOOT_FILE}\n"
-" setenv auto-boot-timeout 5000\n"
-" setenv auto-boot? true"
+"También podrá cargar el núcleo manualmente si introduce, en el indicador del "
+"firmware:"
 
 #. Type: note
 #. Description
-#: ../nobootloader.templates:8
-msgid ""
-"Alternatively, you will be able to boot the kernel manually by entering :"
-msgstr "También podrá cargar el núcleo manualmente si introduce:"
-
-#. Type: note
-#. Description
-#: ../nobootloader.templates:8
-msgid " ${KERNEL_BOOT}"
-msgstr "${KERNEL_BOOT}"
-
-#. Type: note
-#. Description
-#: ../nobootloader.templates:8
-msgid "at the OpenFirmware prompt."
-msgstr "en la línea de órdenes de «OpenFirmware»."
-
-#. Type: note
-#. Description
-#: ../nobootloader.templates:30
+#: ../nobootloader.templates:31
 msgid "Setting firmware variables for automatic boot"
 msgstr "Estableciendo las variables del firmware para el arranque automático"
 
 #. Type: note
 #. Description
-#: ../nobootloader.templates:30
+#: ../nobootloader.templates:31
 msgid ""
 "Some variables need to be set in the Netwinder NeTTrom firmware in order for "
 "your system to boot linux automatically.  At the end of this installation "
@@ -119,48 +106,30 @@ msgid ""
 msgstr ""
 "Debe establecer algunas variables en el firmware del Netwinder NeTTrom para "
 "poder arrancar linux de forma automática. Al final de la instalación el "
-"sistema rearrancará y el firmware intentará auto-arrancar. Puede cancelar "
+"sistema rearrancará y el firmware intentará auto-arrancar. Puede interrumpir "
 "este arranque pulsando cualquier tecla. Entrará en el sistema de órdenes de "
 "NeTTrom donde deberá ejecutar las siguientes órdenes:"
 
 #. Type: note
 #. Description
-#: ../nobootloader.templates:30
-msgid ""
-"   setenv kernconfig fs\n"
-"   setenv kerndev ${KERNDEV}\n"
-"   setenv kernfile ${KERNFILE}\n"
-"   setenv rootdev ${ROOTDEV}\n"
-"   setenv cmdappend ${CMDAPPEND}\n"
-"   save-all"
-msgstr ""
-"   setenv kernconfig fs\n"
-"   setenv kerndev ${KERNDEV}\n"
-"   setenv kernfile ${KERNFILE}\n"
-"   setenv rootdev ${ROOTDEV}\n"
-"   setenv cmdappend ${CMDAPPEND}\n"
-"   save-all"
-
-#. Type: note
-#. Description
-#: ../nobootloader.templates:30
+#: ../nobootloader.templates:31
 msgid ""
 "You will only need to do this once.  Afterwards, enter the \"boot\" command "
-"or reboot the system to proceed to the next installation stage."
+"or reboot the system to proceed to your newly installed system."
 msgstr ""
-"Sólo tendrá que hacer ésto una vez. Para pasar al siguiente paso de la "
-"instalación deberá introducir, más adelante, la orden \"boot\" o reiniciar "
-"el sistema."
+"Sólo tendrá que hacer ésto una vez. Para acceder a su sistema recién "
+"instalado deberá introducir, más adelante, la orden «boot» o reiniciar el "
+"sistema."
 
 #. Type: note
 #. Description
-#: ../nobootloader.templates:50
+#: ../nobootloader.templates:51
 msgid "No boot loader installed"
 msgstr "No se ha instalado ningún cargador de arranque"
 
 #. Type: note
 #. Description
-#: ../nobootloader.templates:50
+#: ../nobootloader.templates:51
 msgid ""
 "No boot loader has been installed, either because you chose not to or "
 "because your specific architecture doesn't support a boot loader yet."
@@ -170,7 +139,7 @@ msgstr ""
 
 #. Type: note
 #. Description
-#: ../nobootloader.templates:50
+#: ../nobootloader.templates:51
 msgid ""
 "You will need to boot manually with the ${KERNEL} kernel on partition "
 "${BOOT} and ${ROOT} passed as a kernel argument."

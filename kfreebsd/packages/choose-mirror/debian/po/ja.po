@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: debian-installer\n"
 "Report-Msgid-Bugs-To: debian-boot@lists.debian.org\n"
-"POT-Creation-Date: 2006-04-24 18:28-0600\n"
-"PO-Revision-Date: 2006-04-18 19:48+0900\n"
+"POT-Creation-Date: 2007-01-06 22:47+0100\n"
+"PO-Revision-Date: 2006-04-25 20:52+0900\n"
 "Last-Translator:  Kenshi Muto <kmuto@debian.org>\n"
 "Language-Team: Debian L10n Japanese <debian-l10n-japanese@lists.debian.org>\n"
 "MIME-Version: 1.0\n"
@@ -22,8 +22,20 @@ msgstr ""
 #. Type: select
 #. Choices
 #: ../choose-mirror-bin.templates-in:13
-msgid "stable, testing, unstable"
-msgstr "安定版, 試験版, 不安定版"
+msgid "stable"
+msgstr "安定版"
+
+#. Type: select
+#. Choices
+#: ../choose-mirror-bin.templates-in:13
+msgid "testing"
+msgstr "試験版"
+
+#. Type: select
+#. Choices
+#: ../choose-mirror-bin.templates-in:13
+msgid "unstable"
+msgstr "不安定版"
 
 #. Type: select
 #. Description
@@ -99,25 +111,42 @@ msgstr "Debian アーカイブのミラーを選択"
 #. Type: select
 #. Choices
 #: ../choose-mirror-bin.templates.http-in:5
-#: ../choose-mirror-bin.templates.ftp-in:5
+#: ../choose-mirror-bin.templates.ftp.sel-in:6
 msgid "enter information manually"
 msgstr "情報を手動で入力"
 
-#: ../choose-mirror-bin.templates.http-in:17
+#. Type: select
+#. Default
+#. Translators, you should put here the ISO 3166 code of a country
+#. which you know hosts at least one Debian HTTP mirror. Please check
+#. that the country really has a Debian HTTP mirror before putting a
+#. random value here
+#.
+#. First check that the country you mention here is listed in
+#. http://cvs.debian.org/ *checkout* /webwml/english/mirror/Mirrors.masterlist?rev=HEAD\&cvsroot=webwml&content-type=text/plain
+#. (remove the spaces between "*" and "/")
+#.
+#. BE CAREFUL to use the TWO LETTER ISO-3166 CODE and not anything else
+#.
+#. You do not need to translate what's between the square brackets
+#. You should even NOT put square brackets in translations:
+#. msgid "US[ Default value for http]"
+#. msgstr "FR"
+#: ../choose-mirror-bin.templates.http-in:21
 msgid "US[ Default value for http]"
 msgstr "JP"
 
 #. Type: select
 #. Description
-#: ../choose-mirror-bin.templates.http-in:18
-#: ../choose-mirror-bin.templates.ftp-in:18
+#: ../choose-mirror-bin.templates.http-in:22
+#: ../choose-mirror-bin.templates.ftp.sel-in:23
 msgid "Debian archive mirror country:"
 msgstr "Debian アーカイブミラーの国:"
 
 #. Type: select
 #. Description
-#: ../choose-mirror-bin.templates.http-in:18
-#: ../choose-mirror-bin.templates.ftp-in:18
+#: ../choose-mirror-bin.templates.http-in:22
+#: ../choose-mirror-bin.templates.ftp.sel-in:23
 msgid ""
 "The goal is to find a mirror of the Debian archive that is close to you on "
 "the network -- be aware that nearby countries, or even your own, may not be "
@@ -129,15 +158,15 @@ msgstr ""
 
 #. Type: select
 #. Description
-#: ../choose-mirror-bin.templates.http-in:27
-#: ../choose-mirror-bin.templates.ftp-in:27
+#: ../choose-mirror-bin.templates.http-in:30
+#: ../choose-mirror-bin.templates.ftp.sel-in:31
 msgid "Debian archive mirror:"
 msgstr "Debian アーカイブミラー:"
 
 #. Type: select
 #. Description
-#: ../choose-mirror-bin.templates.http-in:27
-#: ../choose-mirror-bin.templates.ftp-in:27
+#: ../choose-mirror-bin.templates.http-in:30
+#: ../choose-mirror-bin.templates.ftp.sel-in:31
 msgid ""
 "Please select a Debian archive mirror. You should use a mirror in your "
 "country or region if you do not know which mirror has the best Internet "
@@ -149,30 +178,30 @@ msgstr ""
 
 #. Type: select
 #. Description
-#: ../choose-mirror-bin.templates.http-in:27
-#: ../choose-mirror-bin.templates.ftp-in:27
+#: ../choose-mirror-bin.templates.http-in:30
+#: ../choose-mirror-bin.templates.ftp.sel-in:31
 msgid "Usually, ftp.<your country code>.debian.org is a good choice."
 msgstr "通常、ftp.<あなたの国コード>.debian.org が良い選択です。"
 
 #. Type: string
 #. Description
-#: ../choose-mirror-bin.templates.http-in:36
-#: ../choose-mirror-bin.templates.ftp-in:36
+#: ../choose-mirror-bin.templates.http-in:39
+#: ../choose-mirror-bin.templates.ftp.base-in:5
 msgid "Debian archive mirror hostname:"
 msgstr "Debian アーカイブミラーホスト名:"
 
 #. Type: string
 #. Description
-#: ../choose-mirror-bin.templates.http-in:36
-#: ../choose-mirror-bin.templates.ftp-in:36
+#: ../choose-mirror-bin.templates.http-in:39
+#: ../choose-mirror-bin.templates.ftp.base-in:5
 msgid ""
 "Please enter the hostname of the mirror from which Debian will be downloaded."
 msgstr "Debian をダウンロードするミラーホスト名を入力してください。"
 
 #. Type: string
 #. Description
-#: ../choose-mirror-bin.templates.http-in:36
-#: ../choose-mirror-bin.templates.ftp-in:36
+#: ../choose-mirror-bin.templates.http-in:39
+#: ../choose-mirror-bin.templates.ftp.base-in:5
 msgid ""
 "An alternate port can be specified using the standard [hostname]:[port] "
 "format."
@@ -180,15 +209,15 @@ msgstr "標準の [hostname]:[port] 形式を使って別のポートも指定�
 
 #. Type: string
 #. Description
-#: ../choose-mirror-bin.templates.http-in:46
-#: ../choose-mirror-bin.templates.ftp-in:46
+#: ../choose-mirror-bin.templates.http-in:48
+#: ../choose-mirror-bin.templates.ftp.base-in:14
 msgid "Debian archive mirror directory:"
 msgstr "Debian アーカイブミラーディレクトリ:"
 
 #. Type: string
 #. Description
-#: ../choose-mirror-bin.templates.http-in:46
-#: ../choose-mirror-bin.templates.ftp-in:46
+#: ../choose-mirror-bin.templates.http-in:48
+#: ../choose-mirror-bin.templates.ftp.base-in:14
 msgid ""
 "Please enter the directory in which the mirror of the Debian archive is "
 "located."
@@ -196,13 +225,13 @@ msgstr "Debian アーカイブミラーの置かれているディレクトリ�
 
 #. Type: string
 #. Description
-#: ../choose-mirror-bin.templates.http-in:52
+#: ../choose-mirror-bin.templates.http-in:54
 msgid "HTTP proxy information (blank for none):"
 msgstr "HTTP プロキシの情報 (なければ空):"
 
 #. Type: string
 #. Description
-#: ../choose-mirror-bin.templates.http-in:52
+#: ../choose-mirror-bin.templates.http-in:54
 msgid ""
 "If you need to use a HTTP proxy to access the outside world, enter the proxy "
 "information here. Otherwise, leave this blank."
@@ -212,8 +241,8 @@ msgstr ""
 
 #. Type: string
 #. Description
-#: ../choose-mirror-bin.templates.http-in:52
-#: ../choose-mirror-bin.templates.ftp-in:52
+#: ../choose-mirror-bin.templates.http-in:54
+#: ../choose-mirror-bin.templates.ftp.base-in:20
 msgid ""
 "The proxy information should be given in the standard form of \"http://"
 "[[user][:pass]@]host[:port]/\"."
@@ -221,25 +250,42 @@ msgstr ""
 "プロキシ情報は、\"http://[[user][:pass]@]host[:port]/\" の標準形式で指定して"
 "ください。"
 
-#: ../choose-mirror-bin.templates.ftp-in:17
-msgid "US[ Default value for ftp]"
-msgstr "JP"
-
 #. Type: string
 #. Description
-#: ../choose-mirror-bin.templates.ftp-in:52
+#: ../choose-mirror-bin.templates.ftp.base-in:20
 msgid "FTP proxy information (blank for none):"
 msgstr "FTP プロキシの情報 (なければ空):"
 
 #. Type: string
 #. Description
-#: ../choose-mirror-bin.templates.ftp-in:52
+#: ../choose-mirror-bin.templates.ftp.base-in:20
 msgid ""
 "If you need to use a FTP proxy to access the outside world, enter the proxy "
 "information here. Otherwise, leave this blank."
 msgstr ""
 "外の世界にアクセスするのに FTP プロキシを使う必要があるなら、プロキシ情報をこ"
 "こに入力します。そうでないなら空のままにしておきます。"
+
+#. Type: select
+#. Default
+#. Translators, you should put here the ISO 3166 code of a country
+#. which you know hosts at least one Debian FTP mirror. Please check
+#. that the country really has a Debian FTP mirror before putting a
+#. random value here
+#.
+#. First check that the country you mention here is listed in
+#. http://cvs.debian.org/ *checkout* /webwml/english/mirror/Mirrors.masterlist?rev=HEAD\&cvsroot=webwml&content-type=text/plain
+#. (remove the spaces between "*" and "/")
+#.
+#. BE CAREFUL to use the TWO LETTER ISO-3166 CODE and not anything else
+#.
+#. You do not need to translate what's between the square brackets
+#. You should even NOT put square brackets in translations:
+#. msgid "US[ Default value for ftp]"
+#. msgstr "FR"
+#: ../choose-mirror-bin.templates.ftp.sel-in:22
+msgid "US[ Default value for ftp]"
+msgstr "JP"
 
 #. Type: select
 #. Description

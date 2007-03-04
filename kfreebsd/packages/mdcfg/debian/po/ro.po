@@ -18,21 +18,21 @@
 #
 #    Developers do not need to manually edit POT or PO files.
 #
-# Eddy Petrişor <eddy.petrisor@gmail.com>, 2004, 2005, 2006.
+# Eddy Petrișor <eddy.petrisor@gmail.com>, 2004, 2005, 2006, 2007.
 msgid ""
 msgstr ""
 "Project-Id-Version: ro\n"
-"Report-Msgid-Bugs-To: proguy@proguy.dk\n"
-"POT-Creation-Date: 2006-04-22 23:51-0600\n"
-"PO-Revision-Date: 2005-11-20 18:34+0200\n"
-"Last-Translator: Eddy Petrişor <eddy.petrisor@gmail.com>\n"
+"Report-Msgid-Bugs-To: debian-boot@lists.debian.org\n"
+"POT-Creation-Date: 2007-01-06 22:48+0100\n"
+"PO-Revision-Date: 2007-01-30 16:22+0200\n"
+"Last-Translator: Eddy Petrișor <eddy.petrisor@gmail.com>\n"
 "Language-Team: Romanian <debian-l10n-romanian@lists.debian.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: KBabel 1.11.1\n"
-"Plural-Forms: nplurals=3;plural=(n==1?0:(((n%100>19)||((n%100==0)&&(n!=0)))?"
-"2:1))\n"
+"X-Generator: KBabel 1.11.4\n"
+"Plural-Forms:  nplurals=3; plural=n==1 ? 0 : (n==0 || (n%100 > 0 && n%100 < "
+"20)) ? 1 : 2;\n"
 
 #. Type: text
 #. Description
@@ -82,7 +82,7 @@ msgstr "Şterge dispozitiv MD"
 #. in single-byte languages)
 #: ../mdcfg-utils.templates:17
 msgid "Finish"
-msgstr "Sfârşit"
+msgstr "Finalizează"
 
 #. Type: select
 #. Description
@@ -150,8 +150,8 @@ msgid ""
 "configuration requires ${REQUIRED} partitions."
 msgstr ""
 "Nu există destule partiţii RAID disponibile pentru configuraţia selectată de "
-"dvs. Aveţi ${NUM_PART} partiţii RAID disponibile, dar configuraţia dvs. are "
-"nevoie de ${REQUIRED} partiţii."
+"dumneavoastră. Aveţi ${NUM_PART} partiţii RAID disponibile, dar configuraţia "
+"dumneavoastră are nevoie de ${REQUIRED} partiţii."
 
 #. Type: select
 #. Choices
@@ -243,7 +243,7 @@ msgstr ""
 #. Description
 #: ../mdcfg-utils.templates:72
 msgid "NOTE: this setting cannot be changed later."
-msgstr "NOTĂ: această ajustare nu poate fi schimbată mai târziu."
+msgstr "NOTĂ: această configuraţie nu poate fi schimbată mai târziu."
 
 #. Type: string
 #. Description
@@ -329,19 +329,19 @@ msgstr ""
 
 #. Type: select
 #. Choices
-#: ../mdcfg-utils.templates:122
+#: ../mdcfg-utils.templates:123
 msgid "Cancel"
 msgstr "Anulează"
 
 #. Type: select
 #. Description
-#: ../mdcfg-utils.templates:123
+#: ../mdcfg-utils.templates:124
 msgid "Multidisk device to be deleted:"
 msgstr "Dispozitivul multidisc ce va fi şters:"
 
 #. Type: select
 #. Description
-#: ../mdcfg-utils.templates:123
+#: ../mdcfg-utils.templates:124
 msgid ""
 "Deleting a multidisk device will stop it and clear the superblock of all its "
 "components."
@@ -351,7 +351,7 @@ msgstr ""
 
 #. Type: select
 #. Description
-#: ../mdcfg-utils.templates:123
+#: ../mdcfg-utils.templates:124
 msgid ""
 "Please note this will not immediately allow you to reuse the partitions or "
 "devices in a new multidisk device. The array will however be unusable after "
@@ -363,7 +363,7 @@ msgstr ""
 
 #. Type: select
 #. Description
-#: ../mdcfg-utils.templates:123
+#: ../mdcfg-utils.templates:124
 msgid ""
 "If you select a device for deletion, you will get some information about it "
 "and you will be given the option of aborting this operation."
@@ -373,25 +373,25 @@ msgstr ""
 
 #. Type: error
 #. Description
-#: ../mdcfg-utils.templates:136
+#: ../mdcfg-utils.templates:137
 msgid "No multidisk devices available"
 msgstr "Nu există dispozitive multidisc disponibile"
 
 #. Type: error
 #. Description
-#: ../mdcfg-utils.templates:136
+#: ../mdcfg-utils.templates:137
 msgid "No multidisk devices are available for deletion."
 msgstr "Nu există dispozitive multidisc disponibile pentru ştergere."
 
 #. Type: boolean
 #. Description
-#: ../mdcfg-utils.templates:142
+#: ../mdcfg-utils.templates:144
 msgid "Really delete this multidisk device?"
 msgstr "Şterg într-adevăr acest dispozitiv multidisc?"
 
 #. Type: boolean
 #. Description
-#: ../mdcfg-utils.templates:142
+#: ../mdcfg-utils.templates:144
 msgid ""
 "Please confirm whether you really want to delete the following multidisk "
 "device:"
@@ -401,7 +401,7 @@ msgstr ""
 
 #. Type: boolean
 #. Description
-#: ../mdcfg-utils.templates:142
+#: ../mdcfg-utils.templates:144
 msgid ""
 " Device:            ${DEVICE}\n"
 " Type:              ${TYPE}\n"
@@ -411,8 +411,16 @@ msgstr ""
 " Tip:                    ${TYPE}\n"
 " Dispozitive componente:"
 
-#. Type: boolean
+#. Type: error
 #. Description
-#: ../mdcfg-utils.templates:142
-msgid "${DEVICES}"
-msgstr "${DEVICES}"
+#: ../mdcfg-utils.templates:156
+msgid "Failed to delete the multidisk device"
+msgstr "Eşec la ştergera dispozitivului multidisc"
+
+#. Type: error
+#. Description
+#: ../mdcfg-utils.templates:156
+msgid "There was an error deleting the multidisk device. It may be in use."
+msgstr ""
+"A apărut o eroare la ştergerea dispozitivului multidisc. Acesta ar putea fi "
+"folosit în momentul de faţă."

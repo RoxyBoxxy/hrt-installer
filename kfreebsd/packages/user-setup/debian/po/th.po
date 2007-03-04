@@ -10,13 +10,13 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: debian-installer\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-04-07 23:43-0600\n"
-"PO-Revision-Date: 2006-04-19 21:22+0700\n"
+"Report-Msgid-Bugs-To: debian-boot@lists.debian.org\n"
+"POT-Creation-Date: 2007-01-06 22:47+0100\n"
+"PO-Revision-Date: 2006-09-17 17:09+0700\n"
 "Last-Translator: Theppitak Karoonboonyanan <thep@linux.thai.net>\n"
 "Language-Team: Thai <l10n@opentle.org>\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=utf-8\n"
+"Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
 #. Type: boolean
@@ -94,7 +94,7 @@ msgstr ""
 #: ../user-setup-udeb.templates:49
 msgid ""
 "Note that you may create it later (as well as any additional account) by "
-"typing 'adduser <username>' as root, where <username> is an user name, like "
+"typing 'adduser <username>' as root, where <username> is an username, like "
 "'imurdock' or 'rms'."
 msgstr ""
 "สังเกตว่า คุณสามารถสร้างบัญชีดังกล่าวภายหลังได้ (รวมถึงบัญชีเพิ่มเติมอื่นๆ) โดยพิมพ์คำสั่ง "
@@ -154,22 +154,36 @@ msgstr "ชื่อผู้ใช้ผิดพลาด"
 #. Description
 #: ../user-setup-udeb.templates:79
 msgid ""
-"The user name you entered is invalid. Note that usernames must start with a "
+"The username you entered is invalid. Note that usernames must start with a "
 "lower-case letter, which can be followed by any combination of numbers and "
 "more lower-case letters."
 msgstr ""
 "ชื่อผู้ใช้ที่คุณป้อนไม่สามารถใช้ได้ โปรดสังเกตว่าชื่อผู้ใช้ต้องขึ้นต้นด้วยอักษรตัวพิมพ์เล็ก "
 "และสามารถตามด้วยตัวเลขหรือตัวพิมพ์เล็กหลายตัวได้"
 
-#. Type: password
+#. Type: error
 #. Description
 #: ../user-setup-udeb.templates:86
+msgid "Reserved username"
+msgstr "ชื่อผู้ใช้สงวนไว้"
+
+#. Type: error
+#. Description
+#: ../user-setup-udeb.templates:86
+msgid ""
+"The username you entered (${USERNAME}) is reserved for use by the system. "
+"Please select a different one."
+msgstr "ชื่อผู้ใช้ที่คุณป้อน (${USERNAME}) ได้สงวนไว้สำหรับการทำงานของระบบ กรุณาตั้งชื่อใหม่"
+
+#. Type: password
+#. Description
+#: ../user-setup-udeb.templates:92
 msgid "Choose a password for the new user:"
 msgstr "ตั้งรหัสผ่านสำหรับผู้ใช้ใหม่:"
 
 #. Type: password
 #. Description
-#: ../user-setup-udeb.templates:86
+#: ../user-setup-udeb.templates:92
 msgid ""
 "A good password will contain a mixture of letters, numbers and punctuation "
 "and should be changed at regular intervals."
@@ -178,13 +192,13 @@ msgstr ""
 
 #. Type: password
 #. Description
-#: ../user-setup-udeb.templates:92
+#: ../user-setup-udeb.templates:98
 msgid "Re-enter password to verify:"
 msgstr "ป้อนรหัสผ่านอีกครั้งเพื่อตรวจสอบ:"
 
 #. Type: password
 #. Description
-#: ../user-setup-udeb.templates:92
+#: ../user-setup-udeb.templates:98
 msgid ""
 "Please enter the same user password again to verify you have typed it "
 "correctly."
@@ -192,25 +206,25 @@ msgstr "กรุณาป้อนรหัสผ่านเดิมอีก
 
 #. Type: error
 #. Description
-#: ../user-setup-udeb.templates:98
+#: ../user-setup-udeb.templates:104
 msgid "Password input error"
 msgstr "การป้อนรหัสผ่านผิดพลาด"
 
 #. Type: error
 #. Description
-#: ../user-setup-udeb.templates:98
+#: ../user-setup-udeb.templates:104
 msgid "The two passwords you entered were not the same. Please try again."
 msgstr "รหัสผ่านที่คุณป้อนทั้งสองครั้งไม่ตรงกัน กรุณาลองใหม่"
 
 #. Type: error
 #. Description
-#: ../user-setup-udeb.templates:103
+#: ../user-setup-udeb.templates:109
 msgid "Empty password"
 msgstr "รหัสผ่านว่างเปล่า"
 
 #. Type: error
 #. Description
-#: ../user-setup-udeb.templates:103
+#: ../user-setup-udeb.templates:109
 msgid ""
 "You entered an empty password, which is not allowed. Please choose a non-"
 "empty password."
@@ -218,13 +232,13 @@ msgstr "คุณป้อนรหัสผ่านว่างเปล่า
 
 #. Type: boolean
 #. Description
-#: ../user-setup-udeb.templates:110
+#: ../user-setup-udeb.templates:116
 msgid "Enable shadow passwords?"
 msgstr "เปิดใช้รหัสผ่าน shadow หรือไม่?"
 
 #. Type: boolean
 #. Description
-#: ../user-setup-udeb.templates:110
+#: ../user-setup-udeb.templates:116
 msgid ""
 "Shadow passwords make your system more secure because nobody is able to view "
 "even encrypted passwords. The passwords are stored in a separate file that "
@@ -238,13 +252,13 @@ msgstr ""
 
 #. Type: title
 #. Description
-#: ../user-setup-udeb.templates:118
+#: ../user-setup-udeb.templates:124
 msgid "Set up users and passwords"
 msgstr "ตั้งบัญชีผู้ใช้และรหัสผ่าน"
 
 #. Type: text
 #. Description
-#. Prebaseconfig progress bar item
-#: ../user-setup-udeb.templates:123
+#. finish-install progress bar item
+#: ../user-setup-udeb.templates:129
 msgid "Setting users and passwords..."
 msgstr "กำลังตั้งบัญชีผู้ใช้และรหัสผ่าน..."

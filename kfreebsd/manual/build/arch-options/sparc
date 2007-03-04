@@ -2,20 +2,23 @@
 # the 'sparc' architecture
 # It is sourced by the build scripts
 
-archspec="sparc;not-i386;not-s390;not-m68k;not-powerpc;not-alpha"
-kernelversion="2.6.15"
+archspec="sparc;not-x86;not-s390;not-m68k;not-powerpc;not-alpha"
+kernelversion="2.6.18"
 arch_listname="sparc"
+minimum_memory=32
 # These two options should be set if condition 'smp' is set below
 smp_config_section="General setup"
 smp_config_option="Symmetric multi-processing support"
 
 # Options below are assembled into one variable 'condition'
 # in the build scripts
-kernelpackage="common-kpkg"
 fdisk="fdisk.txt"
-network="supports-tftp;supports-rarp;supports-dhcp;supports-bootp;supports-nfsroot"
+network="supports-tftp;supports-rarp;supports-bootp;supports-nfsroot"
 boot="supports-floppy-boot"
-other="supports-serial-console;rescue-needs-root-disk"
-smp="supports-smp"
+frontend="newt;not-gtk"
+other="supports-serial-console"
+# SMP support is described in hardware/supported/sparc.xml
+#smp="supports-smp-sometimes"
+smp=""
 goodies=""
-status="not-checked"
+status="checked"

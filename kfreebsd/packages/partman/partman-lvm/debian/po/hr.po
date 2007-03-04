@@ -11,90 +11,744 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Debian-installer 1st-stage master file HR\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-08-31 13:17-0400\n"
-"PO-Revision-Date: 2004-09-30 21:45+0200\n"
-"Last-Translator: Krunoslav Gernhard <kruno@linux.hr>\n"
+"Report-Msgid-Bugs-To: debian-boot@lists.debian.org\n"
+"POT-Creation-Date: 2007-01-06 22:48+0100\n"
+"PO-Revision-Date: 2006-09-25 23:55+0200\n"
+"Last-Translator: Josip Rodin <joy+ditrans@linux.hr>\n"
 "Language-Team: Croatian <lokalizacija@linux.hr>\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=iso-8859-2\n"
+"Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
 #. Type: text
 #. Description
 #: ../partman-lvm.templates:3
-msgid "Configure the Logical Volume Manager"
-msgstr "Podesi Upravlja� logi�kim prostorom"
+msgid "Unallocated physical volumes:"
+msgstr "Nedodijeljeni fizički prostor:"
+
+#. Type: text
+#. Description
+#: ../partman-lvm.templates:7
+msgid "Volume groups:"
+msgstr "Prostorne grupe:"
+
+#. Type: text
+#. Description
+#: ../partman-lvm.templates:11
+msgid "Uses physical volume:"
+msgstr "Koristi fizički prostor:"
+
+#. Type: text
+#. Description
+#: ../partman-lvm.templates:15
+msgid "Provides logical volume:"
+msgstr "Pruža logički prostor:"
+
+#. Type: text
+#. Description
+#. "none" here == "No Physical Volumes"
+#: ../partman-lvm.templates:20
+msgid ""
+"none[ Do not translate what's inside the brackets and just put the "
+"translation for the word \"none\" in your language without any brackets. "
+"This \"none\" relates to \"Physical Volumes:\" ]"
+msgstr "nijedan"
+
+#. Type: text
+#. Description
+#. "none" here == "No Volume Groups"
+#: ../partman-lvm.templates:25
+msgid ""
+"none[ Do not translate what's inside the brackets and just put the "
+"translation for the word \"none\" in your language without any brackets. "
+"This \"none\" relates to \"Volume Groups:\" ]"
+msgstr "nijedan"
+
+#. Type: text
+#. Description
+#. Translators: use the acronym for "Physical Volume" in your language here
+#: ../partman-lvm.templates:34
+msgid "PV"
+msgstr "FP"
+
+#. Type: text
+#. Description
+#. What is "in use" is a partition
+#: ../partman-lvm.templates:39
+msgid "In use by LVM volume group ${VG}"
+msgstr "Koristi ju LVM prostorna grupa ${VG}"
+
+#. Type: text
+#. Description
+#. Menu entry
+#. Use infinitive form
+#: ../partman-lvm.templates:45
+msgid "Display configuration details"
+msgstr "Pokaži detalje postavki"
+
+#. Type: text
+#. Description
+#. Menu entry
+#. Use infinitive form
+#: ../partman-lvm.templates:51
+msgid "Create volume group"
+msgstr "Načini prostornu grupu"
+
+#. Type: text
+#. Description
+#. Menu entry
+#. Use infinitive form
+#: ../partman-lvm.templates:57
+msgid "Delete volume group"
+msgstr "Obriši prostornu grupu"
+
+#. Type: text
+#. Description
+#. Menu entry
+#. Use infinitive form
+#: ../partman-lvm.templates:63
+msgid "Extend volume group"
+msgstr "Povećaj prostornu grupu"
+
+#. Type: text
+#. Description
+#. Menu entry
+#. Use infinitive form
+#: ../partman-lvm.templates:69
+msgid "Reduce volume group"
+msgstr "Smanji prostornu grupu"
+
+#. Type: text
+#. Description
+#. Menu entry
+#. Use infinitive form
+#: ../partman-lvm.templates:75
+msgid "Create logical volume"
+msgstr "Načini logički prostor"
+
+#. Type: text
+#. Description
+#. Menu entry
+#. Use infinitive form
+#: ../partman-lvm.templates:81
+msgid "Delete logical volume"
+msgstr "Obriši logički prostor"
+
+#. Type: text
+#. Description
+#. Menu entry
+#. Use infinitive form
+#: ../partman-lvm.templates:87
+msgid "Finish"
+msgstr "Završi"
 
 #. Type: boolean
 #. Description
-#: ../partman-lvm.templates:8
+#: ../partman-lvm.templates:93
 msgid "Write the changes to disks and configure LVM?"
-msgstr "Zapi�i promjene na diskove i podesi ULP?"
+msgstr "Zapiši promjene na diskove i podesi ULP?"
 
 #. Type: boolean
 #. Description
-#: ../partman-lvm.templates:8
+#: ../partman-lvm.templates:93
 msgid ""
 "Before the Logical Volume Manager can be configured, the current "
 "partitioning scheme has to be written to disk.  These changes cannot be "
 "undone."
 msgstr ""
-"Prije negoli krenete pode�avati Upravlja� logi�kim prostorom, trenutna shema "
-"particioniranja mora biti zapisana na disk. To se ne mo�e poni�titi."
+"Prije negoli krenete podešavati Upravljač logičkim prostorom, trenutna shema "
+"particioniranja mora biti zapisana na disk. To se ne može poništiti."
 
 #. Type: boolean
 #. Description
-#: ../partman-lvm.templates:8
-msgid "${ITEMS}"
-msgstr "${ITEMS}"
+#: ../partman-lvm.templates:93
+msgid ""
+"After the Logical Volume Manager is configured, no additional changes to the "
+"partitioning scheme of disks containing physical volumes are allowed during "
+"the installation. Please decide if you are satisfied with the current "
+"partitioning scheme before continuing."
+msgstr ""
+"Nakon što podesite Upravljač logičkim prostorom, instalacija vam više neće "
+"dopustiti dodatne promjene particija na diskovima koji sadrže fizičke "
+"prostore. Molim odlučite jeste li zadovoljni trenutnom shemom "
+"particioniranja na tim diskovima prije negoli nastavite."
 
 #. Type: boolean
 #. Description
-#: ../partman-lvm.templates:23
+#: ../partman-lvm.templates:108
 msgid "Keep current partition layout and configure LVM?"
-msgstr "Zadr�i trenutni raspored particija i podesi ULP?"
+msgstr "Zadrži trenutni raspored particija i podesi ULP?"
 
 #. Type: boolean
 #. Description
-#: ../partman-lvm.templates:23
+#: ../partman-lvm.templates:108
 msgid ""
 "After the Logical Volume Manager is configured, no additional changes to the "
 "partitions in the disks containing physical volumes are allowed. Please "
 "decide if you are satisfied with the current partitioning scheme in these "
 "disks before continuing."
 msgstr ""
-"Nakon �to podesite Upravlja� logi�kim prostorom, vi�e ne�e biti mogu�e "
-"dodatne promjene particija na diskovima koji sadr�e fizi�ke prostore. Molim "
-"odlu�ite jeste li zadovoljni trenutnom shemom particioniranja na tim "
+"Nakon što podesite Upravljač logičkim prostorom, više neće biti moguće "
+"dodatne promjene particija na diskovima koji sadrže fizičke prostore. Molim "
+"odlučite jeste li zadovoljni trenutnom shemom particioniranja na tim "
 "diskovima prije negoli nastavite."
 
 #. Type: error
 #. Description
-#: ../partman-lvm.templates:31
+#: ../partman-lvm.templates:116
 msgid "LVM configuration failure"
-msgstr "ULP pode�avanje neuspjelo"
+msgstr "ULP podešavanje nije uspjelo"
 
 #. Type: error
 #. Description
-#: ../partman-lvm.templates:31
+#: ../partman-lvm.templates:116
 msgid "An error occurred while writing the changes to the disks."
-msgstr "Pojavila se pogre�ka pri zapisivanju promjena na diskove."
+msgstr "Pojavila se pogreška pri zapisivanju promjena na diskove."
 
 #. Type: error
 #. Description
-#: ../partman-lvm.templates:31
+#: ../partman-lvm.templates:116
 msgid "The configuration of the Logical Volume Manager is aborted."
-msgstr "Pode�avanje Upravlja�a logi�kim prostorom prekinuto je."
+msgstr "Podešavanje Upravljača logičkim prostorom prekinuto je."
 
 #. Type: text
 #. Description
-#: ../partman-lvm.templates:38
+#: ../partman-lvm.templates:123
 msgid "physical volume for LVM"
-msgstr "fizi�ki prostor za ULP"
+msgstr "fizički prostor za ULP"
 
 #. Type: text
 #. Description
-#: ../partman-lvm.templates:42
+#. keep it short (ideally a 3-letter acronym)
+#: ../partman-lvm.templates:128
 msgid "lvm"
 msgstr "ulp"
+
+#. Type: text
+#. Description
+#. Main menu item
+#. Use infinitive form
+#: ../partman-lvm.templates:134
+msgid "Configure the Logical Volume Manager"
+msgstr "Podesi Upravljač logičkim prostorom"
+
+#. Type: boolean
+#. Description
+#: ../partman-lvm.templates:139
+msgid "Activate existing volume groups?"
+msgstr "Aktiviraj postojeće prostorne grupe?"
+
+#. Type: boolean
+#. Description
+#: ../partman-lvm.templates:139
+msgid ""
+"${COUNT} existing volume groups have been found. Please indicate whether you "
+"want to activate them."
+msgstr ""
+"Pronađeno je ${COUNT} postojećih prostornih grupa. Molim odredite želite li "
+"ih aktivirati."
+
+#. Type: select
+#. Description
+#: ../partman-lvm.templates:146
+msgid "LVM configuration action:"
+msgstr "Postupak podešavanja ULP:"
+
+#. Type: select
+#. Description
+#: ../partman-lvm.templates:146
+msgid "Summary of current LVM configuration:"
+msgstr "Sažetak trenutnih postavki za ULP"
+
+#. Type: select
+#. Description
+#: ../partman-lvm.templates:146
+msgid ""
+" Free Physical Volumes:  ${FREE_PVS}\n"
+" Used Physical Volumes:  ${USED_PVS}\n"
+" Volume Groups:          ${VGS}\n"
+" Logical Volumes:        ${LVS}"
+msgstr ""
+" Slobodni fiz. prostori:  ${FREE_PVS}\n"
+" Korišteni fiz. prostori: ${USED_PVS}\n"
+" Prostorne grupe:         ${VGS}\n"
+" Logički prostori:        ${LVS}"
+
+#. Type: note
+#. Description
+#: ../partman-lvm.templates:157
+msgid "Current LVM configuration:"
+msgstr "Trenutne postavke ULP-a:"
+
+#. Type: multiselect
+#. Description
+#: ../partman-lvm.templates:163
+msgid "Devices for the new volume group:"
+msgstr "Uređaji za novu prostornu grupu:"
+
+#. Type: multiselect
+#. Description
+#: ../partman-lvm.templates:163
+msgid "Please select the devices for the new volume group."
+msgstr "Molim izaberite uređaje za novu prostornu grupu."
+
+#. Type: string
+#. Description
+#: ../partman-lvm.templates:170
+msgid "Volume group name:"
+msgstr "Ime prostorne grupe:"
+
+#. Type: string
+#. Description
+#: ../partman-lvm.templates:170
+msgid "Please enter the name you would like to use for the new volume group."
+msgstr "Molim unesite ime za novu prostornu grupu."
+
+#. Type: error
+#. Description
+#: ../partman-lvm.templates:175
+msgid ""
+"No physical volumes were selected. The creation of a new volume group was "
+"aborted."
+msgstr ""
+"Nisu izabrani fizički prostori. Stvaranje nove prostorne grupe prekinuto."
+
+#. Type: error
+#. Description
+#: ../partman-lvm.templates:181
+msgid "No volume group name entered"
+msgstr "Nije uneseno ime prostorne grupe"
+
+#. Type: error
+#. Description
+#: ../partman-lvm.templates:181
+msgid "No name for the volume group has been entered.  Please enter a name."
+msgstr "Nije uneseno ime za prostornu grupu. Molim unesite ga."
+
+#. Type: error
+#. Description
+#: ../partman-lvm.templates:187
+msgid "Volume group name already in use"
+msgstr "Ime prostorne grupe već se koristi."
+
+#. Type: error
+#. Description
+#: ../partman-lvm.templates:187
+msgid ""
+"The selected volume group name is already in use. Please choose another name."
+msgstr "Izabrano ime prostorne grupe već je iskorišteno. Molim odredite drugo."
+
+#. Type: error
+#. Description
+#: ../partman-lvm.templates:193
+msgid "Volume group name overlaps with device name"
+msgstr "Ime prostorne grupe preklapa se s nazivom uređaja"
+
+#. Type: error
+#. Description
+#: ../partman-lvm.templates:193
+msgid ""
+"The selected volume group name overlaps with an existing device name. Please "
+"choose another name."
+msgstr ""
+"Izabrano ime prostorne grupe preklapa se s nazivom postojećeg uređaja. Molim "
+"odredite drugo ime."
+
+#. Type: error
+#. Description
+#: ../partman-lvm.templates:199
+msgid "The volume group ${VG} could not be created."
+msgstr "Prostorna grupa ${VG} se ne može napraviti."
+
+#. Type: select
+#. Description
+#: ../partman-lvm.templates:207
+msgid "Volume group to delete:"
+msgstr "Obriši prostornu grupu:"
+
+#. Type: select
+#. Description
+#: ../partman-lvm.templates:207
+msgid "Please select the volume group you wish to delete."
+msgstr "Molim izaberite prostornu grupu koju želite obrisati."
+
+#. Type: error
+#. Description
+#: ../partman-lvm.templates:212
+msgid "The volume group may have already been deleted."
+msgstr "Prostorna grupa možda je već obrisana."
+
+#. Type: boolean
+#. Description
+#: ../partman-lvm.templates:220
+msgid "Really delete the volume group?"
+msgstr "Stvarno obriši prostornu grupu?"
+
+#. Type: boolean
+#. Description
+#: ../partman-lvm.templates:220
+msgid "Please confirm the ${VG} volume group removal."
+msgstr "Molim potvrdite uklanjanje prostorne grupe ${VG}."
+
+#. Type: error
+#. Description
+#: ../partman-lvm.templates:225
+msgid "Error while deleting volume group"
+msgstr "Pogreška pri brisanju prostorne grupe"
+
+#. Type: error
+#. Description
+#: ../partman-lvm.templates:225
+msgid ""
+"The selected volume group could not be deleted. One or more logical volumes "
+"may currently be in use."
+msgstr ""
+"Izabrana prostorna grupa ne može biti obrisana. Jedan ili više logičkih "
+"prostora je možda već u uporabi."
+
+#. Type: error
+#. Description
+#: ../partman-lvm.templates:231
+msgid "No volume group can be deleted."
+msgstr "Nema prostorne grupe za brisanje"
+
+#. Type: select
+#. Description
+#: ../partman-lvm.templates:239
+msgid "Volume group to extend:"
+msgstr "Povećaj prostornu grupu:"
+
+#. Type: select
+#. Description
+#: ../partman-lvm.templates:239
+msgid "Please select the volume group you wish to extend."
+msgstr "Molim izaberite prostornu grupu koju želite povećati."
+
+#. Type: multiselect
+#. Description
+#: ../partman-lvm.templates:245
+msgid "Devices to add to the volume group:"
+msgstr "Prostornoj grupi dodaj uređaje:"
+
+#. Type: multiselect
+#. Description
+#: ../partman-lvm.templates:245
+msgid "Please select the devices you wish to add to the volume group."
+msgstr "Molim izaberite uređaje koje želite dodati prostornoj grupi."
+
+#. Type: error
+#. Description
+#: ../partman-lvm.templates:252
+msgid ""
+"No physical volumes were selected. Extension of the volume group was aborted."
+msgstr ""
+"Niste izabrali fizičke prostore. Povećavanje prostorne grupe prekinuto je."
+
+#. Type: error
+#. Description
+#: ../partman-lvm.templates:258
+msgid "Error while extending volume group"
+msgstr "Pogreška pri povećavanju prostorne grupe"
+
+#. Type: error
+#. Description
+#: ../partman-lvm.templates:258
+msgid ""
+"The physical volume ${PARTITION} could not be added to the selected volume "
+"group."
+msgstr ""
+"Fizički prostor ${PARTITION} nije moguće dodati izabranoj prostornoj grupi."
+
+#. Type: error
+#. Description
+#: ../partman-lvm.templates:264
+msgid "No volume group has been found."
+msgstr "Nema prostornih grupa."
+
+#. Type: error
+#. Description
+#: ../partman-lvm.templates:264
+msgid "No volume group can be reduced."
+msgstr "Nema prostornih grupa za smanjivanje."
+
+#. Type: select
+#. Description
+#: ../partman-lvm.templates:272
+msgid "Volume group to reduce:"
+msgstr "Smanji prostornu grupu:"
+
+#. Type: select
+#. Description
+#: ../partman-lvm.templates:272
+msgid "Please select the volume group you wish to reduce."
+msgstr "Molim izaberite prostornu grupu koju želite smanjiti."
+
+#. Type: multiselect
+#. Description
+#: ../partman-lvm.templates:278
+msgid "Devices to remove from the volume group:"
+msgstr "Uređaji za uklanjanje iz prostorne grupe:"
+
+#. Type: multiselect
+#. Description
+#: ../partman-lvm.templates:278
+msgid "Please select the devices you wish to remove from the volume group."
+msgstr "Molim izaberite uređaje koje želite ukloniti iz prostorne grupe."
+
+#. Type: multiselect
+#. Description
+#: ../partman-lvm.templates:278
+msgid "You can select one or more devices."
+msgstr "Možete izabrati jedan ili više uređaja."
+
+#. Type: error
+#. Description
+#: ../partman-lvm.templates:285
+msgid "No physical volumes selected"
+msgstr "Nema izabranih fizičkih prostora"
+
+#. Type: error
+#. Description
+#: ../partman-lvm.templates:285
+msgid ""
+"No physical volumes were selected. Reduction of the volume group was aborted."
+msgstr ""
+"Niste izabrali fizičke prostore. Smanjenje prostorne grupe je prekinuto."
+
+#. Type: error
+#. Description
+#: ../partman-lvm.templates:291
+msgid "Error while reducing volume group"
+msgstr "Pogreška pri smanjivanju prostorne grupe"
+
+#. Type: error
+#. Description
+#: ../partman-lvm.templates:291
+msgid ""
+"The physical volume ${PARTITION} could not be removed from the selected "
+"volume group."
+msgstr ""
+"Fizički prostor ${PARTITION} nije moguće dodati izabranoj prostornoj grupi."
+
+#. Type: error
+#. Description
+#: ../partman-lvm.templates:299
+msgid "No volume group found"
+msgstr "Nema prostornih grupa"
+
+#. Type: error
+#. Description
+#: ../partman-lvm.templates:299
+msgid ""
+"No free volume groups were found for creating a new logical volume. Please "
+"create more physical volumes and volume groups, or reduce an existing volume "
+"group."
+msgstr ""
+"Nisu ponađene slobodne prostorne grupe za stvaranje novog logičkog prostora. "
+"Molim načinite više fizičkih prostora i prostornih grupa, ili smanjite koju "
+"postojeću prostornu grupu."
+
+#. Type: string
+#. Description
+#: ../partman-lvm.templates:306
+msgid "Logical volume name:"
+msgstr "Ime logičkog prostora:"
+
+#. Type: string
+#. Description
+#: ../partman-lvm.templates:306
+msgid "Please enter the name you would like to use for the new logical volume."
+msgstr "Molim unesite ime koje ćete koristiti za novi logički prostor."
+
+#. Type: select
+#. Description
+#: ../partman-lvm.templates:312
+msgid "Volume group:"
+msgstr "Prostorna grupa:"
+
+#. Type: select
+#. Description
+#: ../partman-lvm.templates:312
+msgid ""
+"Please select the volume group where the new logical volume should be "
+"created."
+msgstr ""
+"Molim izaberite prostornu grupu gdje će biti stvoren novi logički prostor."
+
+#. Type: error
+#. Description
+#: ../partman-lvm.templates:318
+msgid "No logical volume name entered"
+msgstr "Nije uneseno ime logičkog prostora"
+
+#. Type: error
+#. Description
+#: ../partman-lvm.templates:318
+msgid "No name for the logical volume has been entered.  Please enter a name."
+msgstr "Nije uneseno ime logičkog prostora. Molim unesite ime."
+
+#. Type: error
+#. Description
+#: ../partman-lvm.templates:324
+msgid ""
+"The name ${LV} is already in use by another logical volume on the same "
+"volume group (${VG})."
+msgstr ""
+"Ime ${LV} već je iskorišteno za drugi logički prostor u istoj prostornoj "
+"grupi (${VG})."
+
+#. Type: string
+#. Description
+#: ../partman-lvm.templates:330
+msgid "Logical volume size:"
+msgstr "Veličina logičkog prostora:"
+
+#. Type: string
+#. Description
+#: ../partman-lvm.templates:330
+msgid ""
+"Please enter the size of the new logical volume. The size may be entered in "
+"the following formats: 10K (Kilobytes), 10M (Megabytes), 10G (Gigabytes), "
+"10T (Terabytes). The default unit is Megabytes."
+msgstr ""
+"Molim unesite veličinu novog logičkog prostora. Ona može biti unesena na "
+"sljedeće načine: 10K (kilobajta), 10M (megabajta), 10G (gigabajta), 10T "
+"(terabajta). Zadana vrijednost su megabajti."
+
+#. Type: error
+#. Description
+#: ../partman-lvm.templates:337
+msgid "Error while creating a new logical volume"
+msgstr "Pogreška pri stvaranju novog logičkog prostora"
+
+#. Type: error
+#. Description
+#: ../partman-lvm.templates:337
+msgid ""
+"Unable to create a new logical volume (${LV}) on ${VG} with the new size "
+"${SIZE}."
+msgstr ""
+"Ne mogu načiniti novi logički prostor (${LV}) u grupi ${VG} nove veličine "
+"${SIZE}."
+
+#. Type: error
+#. Description
+#: ../partman-lvm.templates:345
+msgid "No logical volume found"
+msgstr "Nema logičkog prostora"
+
+#. Type: error
+#. Description
+#: ../partman-lvm.templates:345
+msgid ""
+"No logical volume has been found.  Please create a logical volume first."
+msgstr "Nije pronađen logički prostor. Molim, prvo ga načinite."
+
+#. Type: select
+#. Description
+#: ../partman-lvm.templates:351
+msgid "Logical volume:"
+msgstr "Logički prostor:"
+
+#. Type: select
+#. Description
+#: ../partman-lvm.templates:351
+msgid "Please select the logical volume to delete."
+msgstr "Molim izaberite logički prostor za brisanje."
+
+#. Type: text
+#. Description
+#: ../partman-lvm.templates:356
+msgid "in VG ${VG}"
+msgstr "u PG ${VG}"
+
+#. Type: error
+#. Description
+#: ../partman-lvm.templates:360
+msgid "Error while deleting the logical volume"
+msgstr "Pogreška pri brisanju logičkog prostora"
+
+#. Type: error
+#. Description
+#: ../partman-lvm.templates:360
+msgid "The logical volume (${LV}) on ${VG} could not be deleted."
+msgstr "Logički prostor (${LV}) u grupi ${VG} nije moguće obrisati."
+
+#. Type: error
+#. Description
+#: ../partman-lvm.templates:367
+msgid "No usable physical volumes found"
+msgstr "Nema upotrebljivih fizičkih prostora"
+
+#. Type: error
+#. Description
+#: ../partman-lvm.templates:367
+msgid ""
+"No physical volumes (i.e. partitions) were found in your system. All "
+"physical volumes may already be in use. You may also need to load some "
+"required kernel modules or re-partition the hard drives."
+msgstr ""
+"Nisu pronađeni fizički prostori (npr. particije) na vašem sustavu. Svi "
+"fizički prostori možda su već u uporabi, a možda trebate učitati neke module "
+"za kernel, ili reparticionirati tvrde diskove."
+
+#. Type: error
+#. Description
+#: ../partman-lvm.templates:374
+msgid "Logical Volume Manager not available"
+msgstr "Nije dostupan Upravljač logičkim prostorima"
+
+#. Type: error
+#. Description
+#: ../partman-lvm.templates:374
+msgid ""
+"The current kernel doesn't support the Logical Volume Manager. You may need "
+"to load the lvm-mod module."
+msgstr ""
+"Trenutni kernel ne podržava Upravljača logičkim prostorima. Možda trebate "
+"učitati ULP modul (lvm-mod)."
+
+#. Type: error
+#. Description
+#: ../partman-lvm.templates:380
+msgid "Error while initializing physical volume"
+msgstr "Pogreška pri inicijalizaciji fizičkog prostora"
+
+#. Type: error
+#. Description
+#: ../partman-lvm.templates:380
+msgid "The physical volume ${PV} could not be initialized."
+msgstr "Fizički prostor (${PV}) nije moguće inicijalizirati."
+
+#. Type: error
+#. Description
+#: ../partman-lvm.templates:380
+msgid "Check /var/log/syslog or see virtual console 4 for the details."
+msgstr "Za pojedinosti provjerite /var/log/syslog ili četvrtu konzolu."
+
+#. Type: error
+#. Description
+#: ../partman-lvm.templates:387
+msgid "Invalid logical volume or volume group name"
+msgstr "Neispravno ime prostorne grupe ili logičkog prostora"
+
+#. Type: error
+#. Description
+#: ../partman-lvm.templates:387
+msgid ""
+"Logical volume or volume group names may only contain alphanumeric "
+"characters, hyphen, plus, period and underscore. They must be 128 characters "
+"or less and may not begin with a hyphen. The names \".\" and \"..\" are not "
+"allowed. In addition, logical volume names may not begin with \"snapshot\"."
+msgstr ""
+"Imena logičkih prostora ili prostornih grupa smiju sadržavati samo "
+"alfanumeričke znakove, crticu, plus, točku i podvlaku. Ona moraju biti "
+"dugačka 128 znakova ili manje, i ne smiju počinjati crticom. Imena \".\" i "
+"\"..\" nisu dopuštena. Uz to, imena logičkih prostora ne smiju počinjati sa "
+"\"snapshot\"."
+
+#. Type: error
+#. Description
+#: ../partman-lvm.templates:387
+msgid "Please choose another name."
+msgstr "Molim odaberite drugo ime"

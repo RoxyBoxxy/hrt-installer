@@ -54,7 +54,7 @@ for dev in $DEVICES/*; do
 		    db_progress INFO $template
 		    db_progress SET 1
 		    if
-			log-output -t partman --pass-stdout mkfs.ext2 -r 0 -O none $device >/dev/null
+			log-output -t partman --pass-stdout mkfs.ext2 -r 0 $device >/dev/null
 		    then
 			sync
 			status=OK
@@ -67,9 +67,6 @@ for dev in $DEVICES/*; do
 		    if [ -f $id/label ]; then
 			label=$(cat $id/label|
 			    sed 's/\(................\).*/\1/g')
-		    elif [ -f $id/mountpoint ]; then
-			label=$(cat $id/mountpoint|
-			    sed 's/.*\(................\)/\1/g')
 		    else
 			label=''
 		    fi

@@ -10,9 +10,9 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: debian-installer\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-04-07 23:43-0600\n"
-"PO-Revision-Date: 2006-04-13 00:01+0900\n"
+"Report-Msgid-Bugs-To: debian-boot@lists.debian.org\n"
+"POT-Creation-Date: 2007-01-06 22:47+0100\n"
+"PO-Revision-Date: 2006-09-25 14:25+0900\n"
 "Last-Translator:  Kenshi Muto <kmuto@debian.org>\n"
 "Language-Team: Debian L10n Japanese <debian-l10n-japanese@lists.debian.org>\n"
 "MIME-Version: 1.0\n"
@@ -89,14 +89,14 @@ msgid ""
 msgstr ""
 "root アカウントで電子メールのやりとりなどの日常業務を行うべきではありません。"
 "なぜなら、どんな小さなミスでも取り返しのつかない結果を招くからです。ここで、"
-"このような日常業務を�うための一般ユーザアカウントを作成しましょう。"
+"このような日常業務を行うための一般ユーザアカウントを作成しましょう。"
 
 #. Type: boolean
 #. Description
 #: ../user-setup-udeb.templates:49
 msgid ""
 "Note that you may create it later (as well as any additional account) by "
-"typing 'adduser <username>' as root, where <username> is an user name, like "
+"typing 'adduser <username>' as root, where <username> is an username, like "
 "'imurdock' or 'rms'."
 msgstr ""
 "Debian システムのインストール後でも、(追加ユーザアカウントの作成と同様に) あ"
@@ -161,7 +161,7 @@ msgstr "無効なユーザ名"
 #. Description
 #: ../user-setup-udeb.templates:79
 msgid ""
-"The user name you entered is invalid. Note that usernames must start with a "
+"The username you entered is invalid. Note that usernames must start with a "
 "lower-case letter, which can be followed by any combination of numbers and "
 "more lower-case letters."
 msgstr ""
@@ -169,15 +169,31 @@ msgstr ""
 "合わせで構成されます。ユーザ名の先頭は小文字アルファベットでなければなりませ"
 "ん。"
 
-#. Type: password
+#. Type: error
 #. Description
 #: ../user-setup-udeb.templates:86
+msgid "Reserved username"
+msgstr "予約されたユーザ名"
+
+#. Type: error
+#. Description
+#: ../user-setup-udeb.templates:86
+msgid ""
+"The username you entered (${USERNAME}) is reserved for use by the system. "
+"Please select a different one."
+msgstr ""
+"入力したユーザ名 (${USERNAME}) は、システムでの利用のために予約されています。"
+"異なるものを選択してください。"
+
+#. Type: password
+#. Description
+#: ../user-setup-udeb.templates:92
 msgid "Choose a password for the new user:"
 msgstr "新しいユーザのパスワードを選んでください:"
 
 #. Type: password
 #. Description
-#: ../user-setup-udeb.templates:86
+#: ../user-setup-udeb.templates:92
 msgid ""
 "A good password will contain a mixture of letters, numbers and punctuation "
 "and should be changed at regular intervals."
@@ -187,13 +203,13 @@ msgstr ""
 
 #. Type: password
 #. Description
-#: ../user-setup-udeb.templates:92
+#: ../user-setup-udeb.templates:98
 msgid "Re-enter password to verify:"
 msgstr "確認のため、再度パスワードを入力してください:"
 
 #. Type: password
 #. Description
-#: ../user-setup-udeb.templates:92
+#: ../user-setup-udeb.templates:98
 msgid ""
 "Please enter the same user password again to verify you have typed it "
 "correctly."
@@ -203,25 +219,25 @@ msgstr ""
 
 #. Type: error
 #. Description
-#: ../user-setup-udeb.templates:98
+#: ../user-setup-udeb.templates:104
 msgid "Password input error"
 msgstr "パスワード入力エラー"
 
 #. Type: error
 #. Description
-#: ../user-setup-udeb.templates:98
+#: ../user-setup-udeb.templates:104
 msgid "The two passwords you entered were not the same. Please try again."
 msgstr "2回入力されたパスワードは同じではありません。再度入力してください。"
 
 #. Type: error
 #. Description
-#: ../user-setup-udeb.templates:103
+#: ../user-setup-udeb.templates:109
 msgid "Empty password"
 msgstr "空のパスワード"
 
 #. Type: error
 #. Description
-#: ../user-setup-udeb.templates:103
+#: ../user-setup-udeb.templates:109
 msgid ""
 "You entered an empty password, which is not allowed. Please choose a non-"
 "empty password."
@@ -231,13 +247,13 @@ msgstr ""
 
 #. Type: boolean
 #. Description
-#: ../user-setup-udeb.templates:110
+#: ../user-setup-udeb.templates:116
 msgid "Enable shadow passwords?"
 msgstr "シャドーパスワードを有効にしますか?"
 
 #. Type: boolean
 #. Description
-#: ../user-setup-udeb.templates:110
+#: ../user-setup-udeb.templates:116
 msgid ""
 "Shadow passwords make your system more secure because nobody is able to view "
 "even encrypted passwords. The passwords are stored in a separate file that "
@@ -251,13 +267,13 @@ msgstr ""
 
 #. Type: title
 #. Description
-#: ../user-setup-udeb.templates:118
+#: ../user-setup-udeb.templates:124
 msgid "Set up users and passwords"
 msgstr "ユーザーとパスワードのセットアップ"
 
 #. Type: text
 #. Description
-#. Prebaseconfig progress bar item
-#: ../user-setup-udeb.templates:123
+#. finish-install progress bar item
+#: ../user-setup-udeb.templates:129
 msgid "Setting users and passwords..."
 msgstr "ユーザーとパスワードをセットアップ中..."

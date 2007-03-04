@@ -11,7 +11,7 @@
 #define q_get_extended_description(q)   question_get_field((q), "", "extended_description")
 #define q_get_description(q)  		question_get_field((q), "", "description")
 #define q_get_choices(q)		question_get_field((q), "", "choices")
-#define q_get_choices_vals(q)		question_get_field((q), NULL, "choices")
+#define q_get_choices_vals(q)		question_get_field((q), "C", "choices")
 #define q_get_indices(q)		question_get_field((q), "", "indices")
 
 struct template;
@@ -63,6 +63,8 @@ void question_variable_add(struct question *q, const char *var,
 	const char *value);
 void question_variable_delete(struct question *q, const char *var, 	
 	const char *value);
+const char *question_get_variable(const struct question *q, const char *var);
+
 void question_owner_add(struct question *q, const char *owner);
 void question_owner_delete(struct question *q, const char *owner);
 char *question_get_field(const struct question *q, const char *lang,

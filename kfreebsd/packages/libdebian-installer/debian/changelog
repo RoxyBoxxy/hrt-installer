@@ -1,9 +1,89 @@
-libdebian-installer (0.42) UNRELEASED; urgency=low
+libdebian-installer (0.50) unstable; urgency=low
 
+  [ Joey Hess ]
+  * Add back subarch-armeb-linux.c, and modify the Makefile to include it,
+    so it's used after all.
+  * Add support for armel.
+
+ -- Frans Pop <fjp@debian.org>  Thu, 22 Feb 2007 12:11:32 +0100
+
+libdebian-installer (0.49) unstable; urgency=low
+
+  [ Joey Hess ]
+  * Remove subarch-armeb-linux.c, which was never used. subarch-arm-linux.c
+    is used for all arm variants.
+
+ -- Frans Pop <fjp@debian.org>  Sun, 18 Feb 2007 13:44:15 +0100
+
+libdebian-installer (0.48) unstable; urgency=low
+
+  [ Sven Luther ]
+  * Added support for Efika /proc/cpuinfo machine field. Closes: #403293.
+
+ -- Frans Pop <fjp@debian.org>  Tue, 13 Feb 2007 23:24:24 +0100
+
+libdebian-installer (0.47) unstable; urgency=low
+
+  * Fix FTBFS on mips/mipsel.
+
+ -- Thiemo Seufer <ths@debian.org>  Wed, 22 Nov 2006 15:59:38 +0000
+
+libdebian-installer (0.46) unstable; urgency=low
+
+  [ Thiemo Seufer ]
+  * archdetect: Add mips/qemu-mips32 and mipsel/qemu-mips32.
+
+  [ Colin Watson ]
+  * include/debian-installer/macros.h: Add DI_GNUC_PREREQ macro useful for
+    making use of __attribute__ in various places throughout d-i.
+
+ -- Frans Pop <fjp@debian.org>  Wed, 22 Nov 2006 15:06:29 +0100
+
+libdebian-installer (0.45) unstable; urgency=low
+
+  * archdetect: Add the ARM Versatile platform.
+  * archdetect: Return ixp4xx rather than nslu2 on Linksys NSLU2 since
+    the NSLU2-specific flavour is no longer needed.
+
+ -- Martin Michlmayr <tbm@cyrius.com>  Sat, 30 Sep 2006 17:10:13 +0200
+
+libdebian-installer (0.44) unstable; urgency=low
+
+  * archdetect: Add the arm/iop32x platform, listing a number if Intel
+    evaluation boards, the Thecus N2100 and N4100 and the GLAN Tank.
+  * archdetect: Add the arm/iop33x platform, listing a number if Intel
+    evaluation boards.
+  * archdetect: Add the arm/ixp4xx platform.
+
+ -- Martin Michlmayr <tbm@cyrius.com>  Mon, 21 Aug 2006 00:21:24 +0200
+
+libdebian-installer (0.43) unstable; urgency=low
+
+  * Add mapping for I20 hard disks. Patch from Robert Millan
+    Closes: #373730
+  * Call dh_makeshlibs w/o -n to get postinsts created.
+  * Current policy.
+
+ -- Joey Hess <joeyh@debian.org>  Thu, 15 Jun 2006 14:48:35 -0400
+
+libdebian-installer (0.42) unstable; urgency=low
+
+  [ Bastian Blank ]
   * Bump shared library revision to 6.
   * Add small AVL tree implementation.
 
- -- Bastian Blank <waldi@debian.org>  Tue, 18 Apr 2006 19:51:57 +0200
+  [ Martin Michlmayr ]
+  * Remove (incomplete) BAST and LAST support.
+  * Drop Riscstation since it's no longer supported in 2.6 kernels.
+  * Rename arm/riscpc to arm/rpc for consistency.
+
+  [ Colin Watson ]
+  * Fix Hurd detection at build time.
+
+  [ Joey Hess ]
+  * Move more resolver debug logging into ENABLE_EXTENSIVE_DEBUG ifdefs.
+
+ -- Bastian Blank <waldi@debian.org>  Wed, 31 May 2006 23:02:10 +0200
 
 libdebian-installer (0.41) unstable; urgency=low
 

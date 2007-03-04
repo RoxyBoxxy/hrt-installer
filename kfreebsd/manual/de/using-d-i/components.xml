@@ -1,5 +1,5 @@
 <!-- retain these comments for translator revision tracking -->
-<!-- original version: 35395 -->
+<!-- original version: 43965 -->
 
  <sect1 id="module-details">
  <title>Die einzelnen Komponenten</title>
@@ -26,7 +26,7 @@ Da der &d-i; sehr clever ist, kann er automatisch Ihre Hardware erkennen,
 seine restlichen noch nicht geladenen Komponenten finden und sich selbst zu
 einem leistungsfähigen Installationssystem machen.
 
-Allerdings braucht er immer noch Ihre Hilfe, um einige Informationen zu bekommen,
+Allerdings benötigt er immer noch Ihre Hilfe, um einige Informationen zu bekommen,
 die er nicht automatisch erkennen kann (wie die bevorzugte Sprache, die
 Tastaturbelegung oder den gewünschten Netzwerk-Spiegelserver).
 
@@ -75,8 +75,9 @@ wie der Konfiguration von LVM- oder RAID-Laufwerken.
 &module-autopartkit.xml;
 &module-partitioner.xml;
 &module-partconf.xml;
-&module-lvmcfg.xml;
 &module-mdcfg.xml;
+&module-partman-lvm.xml;
+&module-partman-crypto.xml;
   </sect2>
 
   <sect2 id="di-system-setup">
@@ -137,22 +138,13 @@ der Schritt in diesem Fall übersprungen.
 standardmäßig per Netzwerk gebootet wird; siehe dazu
 <xref linkend="boot-dev-select-sun"/>.</phrase>
 
-</para><para>
-
-Bedenken Sie, dass es manchmal noch so etwas wie schwarze Magie ist,
-mehrere Betriebssysteme auf einem einzigen Rechner zu booten. Dieses
-Dokument versucht erst gar nicht, die vielen Bootmanager zu beschreiben,
-die sich architekturabhängig sehr unterscheiden (manchmal sogar
-innerhalb der Unterarchitekturen). Sie sollten deshalb die Dokumentation
-Ihres Bootmanagers zu Hilfe nehmen, wenn Sie mehr Informationen brauchen.
-
 </para>
 
 &module-os-prober.xml;
 &module-alpha-aboot-installer.xml;
 &module-hppa-palo-installer.xml;
-&module-i386-grub-installer.xml;
-&module-i386-lilo-installer.xml;
+&module-x86-grub-installer.xml;
+&module-x86-lilo-installer.xml;
 &module-ia64-elilo-installer.xml;
 &module-mips-arcboot-installer.xml;
 &module-mipsel-colo-installer.xml;
@@ -174,7 +166,7 @@ ein wenig aufzuräumen.
 
 </para>
 
-&module-prebaseconfig.xml;
+&module-finish-install.xml;
   </sect2>
 
   <sect2 id="di-miscellaneous">

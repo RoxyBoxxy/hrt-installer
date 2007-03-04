@@ -39,7 +39,7 @@ disk_found() {
 		else
 			# Essentially the same approach used by partitioner and
 			# autopartkit to find their disks.
-			if [ -n "$(ls /dev/discs/ 2>/dev/null)" ]; then
+			if [ -n "$(list-devices disk)" ]; then
 				return 0
 			fi
 		fi
@@ -49,6 +49,8 @@ disk_found() {
 			sleep 2
 		fi
 	done
+
+	return 1
 }
 
 module_probe() {

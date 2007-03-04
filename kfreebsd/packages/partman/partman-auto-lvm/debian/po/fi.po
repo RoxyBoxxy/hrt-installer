@@ -7,16 +7,16 @@
 # Copyright (C) 2003 Software in the Public Interest, Inc.
 # This file is distributed under the same license as debian-installer.
 # Tommi Vainikainen <thv+debian@iki.fi>, 2003 - 2004
-# Tapio Lehtonen <tale@debian.org>, 2004 - 2005
+# Tapio Lehtonen <tale@debian.org>, 2004 - 2006
 # Thanks to lokalisointi-laatu@linux-aktivaattori.org.
-# 
-# 
+#
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: debian-installer\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-04-19 18:36-0600\n"
-"PO-Revision-Date: 2006-01-31 14:39+0200\n"
+"Report-Msgid-Bugs-To: debian-boot@lists.debian.org\n"
+"POT-Creation-Date: 2007-01-06 22:48+0100\n"
+"PO-Revision-Date: 2006-10-12 15:29+0300\n"
 "Last-Translator: Tapio Lehtonen <tale@debian.org>\n"
 "Language-Team: Finnish <debian-l10n-finnish@lists.debian.org>\n"
 "MIME-Version: 1.0\n"
@@ -26,35 +26,32 @@ msgstr ""
 #. Type: text
 #. Description
 #. TRANSLATORS: This is a menu entry. Keep in under 55 columns/characters
-#. The string replacing ${DEVICE} may be very long, so make your translation
-#. as short as possible and keep the variable AT THE END
-#. for example "Erase entire disk and use LVM: IDE0 master - Maxtor 46L489"
-#: ../partman-auto-lvm.templates:7
-msgid "Erase entire disk and use LVM: ${DEVICE}"
-msgstr "Tyhjennä koko levy ja käytä LVM: ${DEVICE}"
+#: ../partman-auto-lvm.templates:4
+msgid "Guided - use entire disk and set up LVM"
+msgstr "Ohjattu - käytä koko levyä ja tee LVM:n asetukset"
 
 #. Type: string
 #. Description
-#: ../partman-auto-lvm.templates:16
+#: ../partman-auto-lvm.templates:12
 msgid "Name of the volume group for the new system:"
 msgstr "Uuden järjestelmän levynideryhmän nimi:"
 
 #. Type: string
 #. Description
-#: ../partman-auto-lvm.templates:16
+#: ../partman-auto-lvm.templates:12
 msgid ""
 "The selected volume group name is already in use. Please choose another name."
 msgstr "Valittu levynideryhmän nimi on jo käytässä. Valitse jokin muu nimi."
 
 #. Type: error
 #. Description
-#: ../partman-auto-lvm.templates:22
+#: ../partman-auto-lvm.templates:18
 msgid "Failed to partition the selected disk"
 msgstr "Valitun levyn osiointi ei onnistunut"
 
 #. Type: error
 #. Description
-#: ../partman-auto-lvm.templates:22
+#: ../partman-auto-lvm.templates:18
 msgid ""
 "This happened because the selected recipe does not contain any partition "
 "that can be created on LVM volumes."
@@ -64,75 +61,68 @@ msgstr ""
 
 #. Type: boolean
 #. Description
-#: ../partman-auto-lvm.templates:28
-#, fuzzy
+#: ../partman-auto-lvm.templates:24
 msgid "Continue installation without /boot partition?"
-msgstr "Jatketaanko osiointia?"
+msgstr "Jatketaanko asennusta ilman /boot-osiota?"
 
 #. Type: boolean
 #. Description
-#: ../partman-auto-lvm.templates:28
+#: ../partman-auto-lvm.templates:24
 msgid ""
 "The recipe you selected does not contain a separate partition for /boot. "
 "This is normally needed to allow you to boot the system when using LVM."
 msgstr ""
+"Valittu malline ei sisällä erillistä osiota hakemistolle /boot. Tavallisesti "
+"tätä tarvitaan järjestelmän käynnistämiseen käytettäessä levyniteiden "
+"hallintaohjelmaa."
 
 #. Type: boolean
 #. Description
-#: ../partman-auto-lvm.templates:28
+#: ../partman-auto-lvm.templates:24
 msgid ""
 "You can choose to ignore this warning, but that may result in a failure to "
 "reboot the system after the installation is completed."
 msgstr ""
+"Tämä varoitus voidaan ohittaa, mutta järjestelmä ei ehkä käynnisty kun "
+"asennus on valmis."
 
 #. Type: error
 #. Description
-#: ../partman-auto-lvm.templates:37
-#, fuzzy
-msgid "Existing physical volume on the selected device"
-msgstr "Yhtään levynidettä ei ole valittuna"
-
-#. Type: error
-#. Description
-#: ../partman-auto-lvm.templates:37
-msgid ""
-"The device you selected already contains one or more physical volumes. It is "
-"not possible to automatically partition this device using LVM."
-msgstr ""
-
-#. Type: error
-#. Description
-#: ../partman-auto-lvm.templates:43
+#: ../partman-auto-lvm.templates:33
 msgid "Volume group name already in use"
 msgstr "Levynideryhmän nimi on jo käytössä"
 
 #. Type: error
 #. Description
-#: ../partman-auto-lvm.templates:43
+#: ../partman-auto-lvm.templates:33
 msgid ""
 "The volume group name used to automatically partition using LVM is already "
 "in use. Lowering the priority for configuration questions will allow you to "
 "specify an alternative name."
 msgstr ""
+"Automaattisen osioinnin levyniteiden hallintaohjelmalla käyttämä "
+"levynideryhmän nimi on jo käytössä. Asetuskysymysten tärkeyden alentaminen "
+"sallii muun nimen käyttämisen."
 
 #. Type: error
 #. Description
-#: ../partman-auto-lvm.templates:50
-#, fuzzy
+#: ../partman-auto-lvm.templates:40
 msgid "Unexpected error while creating volume group"
-msgstr "Tapahtui virhe poistettaessa ."
+msgstr "Tapahtui odottamaton virhe luotaessa levynideryhmää"
 
 #. Type: error
 #. Description
-#: ../partman-auto-lvm.templates:50
+#: ../partman-auto-lvm.templates:40
 msgid ""
 "Autopartitioning using LVM failed because an error occurred while creating "
 "the volume group."
 msgstr ""
+"Osioiden teko automaattisesti levyniteiden hallintaohjelmaa käyttäen "
+"epäonnistui koska tapahtui virhe luotaessa levynideryhmää."
 
 #. Type: error
 #. Description
-#: ../partman-auto-lvm.templates:50
+#: ../partman-auto-lvm.templates:40
 msgid "Check /var/log/syslog or see virtual console 4 for the details."
 msgstr ""
 "Tarkista tiedosto /var/log/syslog tai katso tarkempaa tietoa "

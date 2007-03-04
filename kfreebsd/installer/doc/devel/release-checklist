@@ -2,181 +2,167 @@ Release testing checklist. Successful installs should be reported
 for each of the following before release.
 
 					pass/fail (details)
-languages (using netinst CD image unless otherwise stated)
 
-	C (no locales)			pass etch_d-i netinst 20060217 base
-	Albanian			pass etch_d-i netinst 20060217 base
-	Arabic				post beta1 half-fail netboot 20051210
-                                              #338198
-					      will go away when we get 
-					      rid of 2nd stage
-	Basque				beta1 pass
-	Belarusian			post beta1 pass netboot 20051208. Better use localechooser 0.25 to avoid Russian as alternative.
-	Bosnian				post beta1 pass netboot 20051212
-					glitch on cdebconf priority screen
-					possible cdebconf or newt bug
-					possible font problems for some chars
-                                        after login at the console
-					console font changed in 
-					localechooser 0.25
-	Bulgarian			post beta1 pass netboot 20051212
-                                        how do users enter cyrillic characters?
-	Catalan				post beta1 pass netboot 20051212
-	Chinese (Simplified)		pass etch_beta2 20060304 (#355209). Useless zhcon debconf note pops up (#355948)
+Translations (using netinst CD image unless otherwise stated)
+	C (no locales)			
+	Albanian			
+	Arabic				
+	Basque				
+	Belarusian			
+	Bosnian				
+	Bulgarian			
+	Catalan				
+	Chinese (Simplified)		
 	Chinese (Traditional)		
 	Croatian			
-	Czech				pass etch_beta2 20060302 businesscard desktop (tasksel/GDM not translated, Xkb #333960)
+	Czech				
 	Danish				
-	Dutch				pass etch_beta2 20060302 (pkgsel progress not translated)
+	Dutch				
 	Finnish				
-	French				pass etch_beta2 20060304 businesscard base/desktop/laptop (but tasksel not translated, nor GDM)
+	French				
 	Galician			
 	German				
 	Greek				
-	Hebrew				pass etch_beta2
+	Hebrew				
 	Hungarian			
 	Indonesian			
 	Italian				
 	Japanese			
-	Korean				pass etch_beta2 20060304 (#355209)
-	Kurdish				pass etch_beta2 (input at console correct?)
+	Korean				
+	Kurdish				
 	Latvian				
-	Lithuanian			pass etch_beta2 20060302 netinst base/desktop (tasksel and GDM not translated, can't enter
-					Lithuanian characters at the console)
+	Lithuanian			
 	Macedonian			
 	Northern Sami			
 	Norwegian Bokmal		
 	Norwegian Nynorsk		
 	Persian				
 	Polish				
-	Portuguese of Brazil		pass etch_beta2 20060302 (andrelop) (taskel not translated)
+	Portuguese of Brazil		
 	Portuguese			
 	Romanian			
-	Russian				half-fail etch_beta2 (#355251)
-	Slovak				pass etch_beta2 (Peter Mann). popcon not fully translated
+	Russian				
+	Slovak				
 	Slovenian			
 	Spanish				
 	Swedish				
 	Turkish				
 	Ukrainian			
-	Vietnamese			pass etch_d-i netinst 20060218 base
+	Vietnamese			
 	Welsh				
 	Wolof				
 
 i386
-	2.6 netinst cd install			pass (vmware, auto-lvm, 20060302)
-	2.6 businesscard cd install		pass (vmware, Dutch, desktop, 20060302)
-	2.6 netboot install			pass (vmware, expert, yaird/lilo, 20060302)
-	2.6 pcmcia install			
-	2.6 lvm install				
-	2.6 lvm root				pass (see 2.6 netinst)
-	2.6 software raid install		
-	2.6 usb keychain			
-	2.6 lvm over raid			
-	2.4 netinst cd install			
-	2.4 businesscard cd install		pass (20060307)
-						auto-lvm does not work (lvm partition created but "not found" afterwards)
-	2.4 netboot install			
-	2.4 usb keychain			
-	2.4 lvm install				
-	2.4 lvm root				
-	2.4 lvm over raid			
-	2.4 32 mb ram install			
-	2.4 48 mb ram install			
-	2.6 32 mb ram install			pass (vmware, businesscard, default) -  issues:
-		- partitions not visible unless scsi-extra loaded first time
-		- ext3 not available in partman even though udeb loaded (used ext2 instead)
-	2.6 48 mb ram install			pass (vmware, businesscard, default)
-	2.4 rescue mode				
-	2.6 rescue mode				
+	netinst CD install			
+	businesscard CD install			
+	netboot install				
+	pcmcia install				
+	lvm install				
+	lvm root				
+	software raid install			
+	lvm over raid				
+	crypto install (dm-crypt)		
+	crypto install (loop-AES)		
+	crypto install (both)			
+	crypto root (dm-crypt)			
+	usb keychain				
+
+	32 mb ram install			
+	48 mb ram install			
+	rescue mode				
+	graphical (gtk)				
 	lvm install from netinst CD		
 	raid root				
 	raid 1 root and boot (lilo)		
-	usb floppy install			
+	usb floppy install			N/A
 	real floppy install			
-	floppy + cd install			pass (20060302)
-	floppy + network install		pass (20060302)
+	floppy + cd install			
+	floppy + network install		
 	pcmcia network install 			
-          (any boot media)			
-	windows detection			pass (MS-DOS)
-	NTFS resizing				pass (VFAT)
+	  (any boot media)			
+	windows detection			
+	NTFS resizing				
 	other linux detection			
-	full CD desktop install			pass Yay! (20060308)
-	access floppy + cd install		
-	access floppy + network install		
+	full CD desktop install			
+
+amd64
+	netinst CD install			
+	businesscard CD install			
+	netboot install				
+	usb keychain				Success (daily build, #410593)
+	full CD					
+	graphical (gtk)				
 
 powerpc
-        pegasos netinst cd			
-        pegasos businesscard cd			
+	pegasos netinst cd			
+	pegasos businesscard cd			
 	pegasos	netboot				
 	pegasos serial install			
-        newworld netinst cd			
-        newworld businesscard cd		
+	newworld netinst cd			Success (iMac G5, powerpc64; #411702)
+	newworld businesscard cd		
 	newworld netboot	 		
 	newworld serial install			
 	newworld floppy + cd 			
-        newworld floppy + network 		
-        newworld w. pcmcia network card		
-        newworld 32 mb ram			
-        newworld 48 mb ram			
-        oldworld netinst cd			
-        oldworld businesscard cd		
+	newworld floppy + network 		
+	newworld w. pcmcia network card		
+	newworld 32 mb ram			
+	newworld 48 mb ram			
+	oldworld netinst cd			
+	oldworld businesscard cd		
 	oldworld netboot	 		
 	oldworld serial install			
 	oldworld floppy + cd 			
-        oldworld floppy + network 		
-        oldworld w. pcmcia network card		
-        oldworld 32 mb ram			
-        oldworld 48 mb ram			
-        G5 powermac netinst cd			
-        G5 powermac businesscard cd		
+	oldworld floppy + network 		
+	oldworld w. pcmcia network card		
+	oldworld 32 mb ram			
+	oldworld 48 mb ram			
+	G5 powermac netinst cd			
+	G5 powermac businesscard cd		
 	G5 powermac netboot	 		
 	G5 powermac serial install		
-        IBM 32bit CHRP netinst cd		
-        IBM 32bit CHRP businesscard cd		
+	IBM 32bit CHRP netinst cd		
+	IBM 32bit CHRP businesscard cd		
 	IBM 32bit CHRP netboot	 		
 	IBM 32bit CHRP serial install		
-        IBM 64bit CHRP netinst cd		
-        IBM 64bit CHRP businesscard cd		
+	IBM 64bit CHRP netinst cd		
+	IBM 64bit CHRP businesscard cd		
 	IBM 64bit CHRP netboot	 		
 	IBM 64bit CHRP serial install		
-        nubus powermac netinst cd		
-        nubus powermac businesscard cd		
+	nubus powermac netinst cd		
+	nubus powermac businesscard cd		
 	nubus powermac netboot	 		
 	nubus powermac serial install		
-        prep powermac netinst cd		
-        prep powermac businesscard cd		
+	prep powermac netinst cd		
+	prep powermac businesscard cd		
 	prep powermac netboot	 		
 	prep powermac serial install		
-        apus netinst cd				
-        apus businesscard cd			
-	apus netboot	 			
-	apus serial install			
-
-sparc
-	sparc32 netinst cd 2.4			
-	sparc32 businesscard cd 2.4		
-	sparc64 netinst cd 2.4			pass (U10, Dutch, 20060303)
-						Known boot error messages.
-						Strange hang just before popcon question is asked; worked around by killing some processes; not investigated furter as not reprocucible with 2.6 kernel.
-	sparc64 netinst cd 2.6			pass (U10, medium prio, 20060303)
-	sparc64 businesscard cd 2.6		
-	sparc32 netboot	2.4			
-	sparc32 netboot	2.6			N/A
-	sparc64 netboot	2.4			
-	sparc64 netboot 2.6			
-
-ia64
-	netboot				
-	netinst CD				pass (rx2600, default priority, 20060303)
-	businesscard CD				pass (rx2600, default priority, 20060303)
-	usb keyboard			
-	desktop task install			pass
+	apus netinst cd				N/A
+	apus businesscard cd			N/A
+	apus netboot	 			N/A
+	apus serial install			N/A
 
 alpha
-	netinst cd install			
+	netinst cd install			Success (daily build, #410388)
 	businesscard cd install			
 	netboot install				
+	desktop task install			
+
+arm
+	Netwinder netboot via serial		
+	Netwinder netboot via graphics		
+	NSLU2					
+	IOP32x					
+
+hppa
+	netinst CD install			
+	businesscard CD install			
+	netboot					
+
+ia64
+	netboot					
+	netinst CD				
+	businesscard CD				
+	usb keyboard			
 	desktop task install			
 
 mips
@@ -212,33 +198,24 @@ m68k
 	atari floppy				
 	atari nativehd				
 	mac cdrom22				
-	mac hd-media22				pass etch_beta2 20060316
-	mac nativehd22				pass etch_beta2 20060304 
-	vme netboot				pass etch_beta2 20060308
-
-hppa
-	netinst CD install			pass (medium prio, sercon/network console, 20060303)
-						openssh-server not on installed system because not included on netinst CD (should be fixed now)
-	businesscard CD install			pass (all server tasks) - LVM ok; RAID and XFS fail
-	netboot					
-
-arm
-	Netwinder netboot via serial		pass
-	Netwinder netboot via graphics		pass
-	NSLU2					FAILS, fix available
+	mac hd-media22				
+	mac nativehd22				
+	vme netboot				
 
 s390						
-	IPL from dasd (generic)			pass (hercules, no network-console, 20060304)
+	IPL from dasd (generic)			
 	IPL from vm reader (generic)		
-	IPL from tape				pass (hercules, network-console, 20060304)
+	IPL from tape				
 	IUCV network				
-	CTC network				pass (hercules, 20060304)
+	CTC network				
 	QETH network, GuestLAN			
 	QETH network, OSA			
 
-amd64
-	netinst cd				
-	businesscard cd				
-	full cd					
-	USB					
-	netboot					
+sparc
+	sparc32 netinst cd 2.6			
+	sparc32 businesscard cd 2.6		
+	sparc32 netboot	2.6			
+
+	sparc64 netinst cd 2.6			
+	sparc64 businesscard cd 2.6		
+	sparc64 netboot 2.6			

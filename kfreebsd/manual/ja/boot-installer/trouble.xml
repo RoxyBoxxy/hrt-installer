@@ -1,11 +1,354 @@
 <?xml version="1.0" encoding="EUC-JP"?>
 <!-- retain these comments for translator revision tracking -->
-<!-- original version: 33725 -->
+<!-- original version: 44560 -->
 
  <sect1 id="boot-troubleshooting">
  <title>インストールプロセスのトラブルシューティング</title>
 <para>
 </para>
+
+  <sect2 arch="not-s390" id="unreliable-cd">
+<!--
+  <title>CD-ROM Reliability</title>
+-->
+  <title>CD-ROM の信頼性</title>
+<para>
+
+<!--
+Sometimes, especially with older CD-ROM drives, the installer may fail
+to boot from a CD-ROM. The installer may also &mdash; even after booting
+successfully from CD-ROM &mdash; fail to recognize the CD-ROM or return
+errors while reading from it during the installation.
+-->
+時々、特に古い CD-ROM ドライブの場合、
+CD-ROM からのインストーラの起動に失敗するかもしれません。
+また、インストーラは (その CD-ROM から起動しても) CD-ROM を認識しなかったり、
+インストール中、 CD の読み込みでエラーを返す可能性もあります。
+
+</para><para>
+
+<!--
+There are a many different possible causes for these problems. We can
+only list some common issues and provide general suggestions on how to
+deal with them. The rest is up to you.
+-->
+この問題の原因は様々なことが考えられます。
+一般的な問題を挙げて、一般的な対処法を提供することしかできません。
+後はあなた次第です。
+
+</para><para>
+
+<!--
+There are two very simple things that you should try first.
+-->
+まずはじめに試すのは、以下の 2 点です。
+
+<itemizedlist>
+<listitem><para>
+
+<!--
+If the CD-ROM does not boot, check that it was inserted correctly and that
+it is not dirty.
+-->
+CD-ROM が起動しない場合、正しく挿入されているか、
+汚れていないかを確認してください。
+
+</para></listitem>
+<listitem><para>
+
+<!--
+If the installer fails to recognize a CD-ROM, try just running the option
+<menuchoice> <guimenuitem>Detect and mount CD-ROM</guimenuitem> </menuchoice>
+a second time. Some DMA related issues with older CD-ROM drives are known to
+be resolved in this way.
+-->
+インストーラが CD-ROM を認識しない場合、次に 
+<menuchoice> <guimenuitem>CD-ROM の検出とマウント</guimenuitem> </menuchoice>
+を実行してください。
+古い CD-ROM ドライブの DMA に関連する問題は、
+この方法で解決することが知られています。
+
+</para></listitem>
+</itemizedlist>
+
+</para><para>
+
+<!--
+If this does not work, then try the suggestions in the subsections below.
+Most, but not all, suggestions discussed there are valid for both CD-ROM and
+DVD, but we'll use the term CD-ROM for simplicity.
+-->
+これでも動作しない場合、以下の節にあることを試してみてください。
+ほとんどの (でもすべてではない) 提案は CD-ROM と DVD の両方で有効ですが、
+単純に CD-ROM という用語を用いています。
+
+</para><para>
+
+<!--
+If you cannot get the installation working from CD-ROM, try one of the
+other installation methods that are available.
+-->
+CD-ROM からインストールができなければ、
+他のインストール方法も試してみてください。
+
+</para>
+
+  <sect3>
+<!--
+  <title>Common issues</title>
+-->
+  <title>共通の問題</title>
+
+<itemizedlist>
+  <listitem><para>
+
+<!--
+Some older CD-ROM drives do not support reading from discs that were burned
+at high speeds using a modern CD writer.
+-->
+古い CD-ROM ドライブの中には、最近の CD ライタで使用するような、
+高速で焼いた ディスクからの読み込みをサポートしていない物があります。
+
+  </para></listitem>
+  <listitem><para>
+
+<!--
+If your system boots correctly from the CD-ROM, it does not necessarily
+mean that Linux also supports the CD-ROM (or, more correctly, the controller
+that your CD-ROM drive is connected to).
+-->
+システムが CD-ROM から正しく起動するといって、
+Linux がその CD-ROM ドライブ
+(もっと正確に言うと、CD-ROM ドライブがつながっているコントローラ) 
+をサポートしているとは限りません。
+
+  </para></listitem>
+  <listitem><para>
+
+<!--
+Some older CD-ROM drives do not work correctly if <quote>direct memory
+access</quote> (DMA) is enabled.
+-->
+古い CD-ROM ドライブの中には、
+<quote>ダイレクトメモリアクセス</quote> (DMA) が有効だと、
+正しく動作しない物もあります。
+
+  </para></listitem>
+</itemizedlist>
+
+  </sect3>
+
+  <sect3>
+<!--
+  <title>How to investigate and maybe solve issues</title>
+-->
+  <title>調査および問題解決の方法</title>
+<para>
+
+<!--
+If the CD-ROM fails to boot, try the suggestions listed below.
+-->
+CD-ROM が起動に失敗したら、以下のことを試してください。
+
+<itemizedlist>
+  <listitem><para>
+
+<!--
+Check that your BIOS actually supports booting from CD-ROM (older systems
+possibly don't) and that your CD-ROM drive supports the media you are using.
+-->
+BIOS が CD-ROM からの起動をきちんとサポートしているか 
+(古いシステムはおそらく無理)、
+CD-ROM ドライブが使う予定のメディアをサポートしているかをチェックしてください。
+
+  </para></listitem>
+  <listitem><para>
+
+<!--
+If you downloaded an iso image, check that the md5sum of that image matches
+the one listed for the image in the <filename>MD5SUMS</filename> file that
+should be present in the same location as where you downloaded the image
+from.
+-->
+ISO イメージをダウンロードした場合、
+イメージをダウンロードしたのと同じ場所にある <filename>MD5SUMS</filename> 
+に記載されている md5sum と同じかどうかチェックしてください。
+
+<informalexample><screen>
+$ md5sum <replaceable>debian-testing-i386-netinst.iso</replaceable>
+a20391b12f7ff22ef705cee4059c6b92  <replaceable>debian-testing-i386-netinst.iso</replaceable>
+</screen></informalexample>
+
+<!--
+Next, check that the md5sum of the burned CD-ROM matches as well. The
+following command should work. It uses the size of the image to read the
+correct number of bytes from the CD-ROM.
+-->
+次に、焼いた CD-ROM の md5sum と一致するかどうかチェックしてください。
+以下のコマンドで行います。
+CD-ROM から正しいバイト数を読み込むのにイメージのサイズを利用します。
+
+<informalexample><screen>
+$ dd if=/dev/cdrom | \
+> head -c `stat --format=%s <replaceable>debian-testing-i386-netinst.iso</replaceable>` | \
+> md5sum
+a20391b12f7ff22ef705cee4059c6b92  -
+262668+0 records in
+262668+0 records out
+134486016 bytes (134 MB) copied, 97.474 seconds, 1.4 MB/s
+</screen></informalexample>
+
+  </para></listitem>
+</itemizedlist>
+
+</para><para>
+
+<!--
+If, after the installer has been booted successfully, the CD-ROM is not
+detected, sometimes simply trying again may solve the problem. If you have
+more than one CD-ROM drive, try changing the CD-ROM to the other drive.
+If that does not work or if the CD-ROM is recognized but there are errors
+when reading from it, try the suggestions listed below. Some basic knowledge
+of Linux is required for this.
+To execute any of the commands, you should first switch to the second
+virtual console (VT2) and activate the shell there.
+-->
+インストーラの起動が成功した後で、CD-ROM を検出しない場合、
+単純にリトライするだけで解決することもあります。
+CD-ROM ドライブが複数ある場合、他の CD-ROM ドライブに変えてみてください。
+それでも動作しなかったり、CD-ROM を認識しても読み込みエラーが発生する場合は、
+以下のことを試してみてください。Linux の基礎知識が少し必要です。
+コマンドを実行するには、まず第 2 仮想コンソール (VT2) に切り替えて、
+シェルを有効にしてください。
+
+<itemizedlist>
+  <listitem><para>
+
+<!--
+Switch to VT4 or view the contents of <filename>/var/log/syslog</filename>
+(use <command>nano</command> as editor) to check for any specific error
+messages. After that, also check the output of <command>dmesg</command>.
+-->
+エラーメッセージをチェックするのに VT4 に切り替えたり、
+<filename>/var/log/syslog</filename> の内容を 
+(エディタの <command>nano</command> を使用して) 表示してください。
+その後、<command>dmesg</command> の出力でもチェックできます。
+
+  </para></listitem>
+  <listitem><para>
+
+<!--
+Check in the output of <command>dmesg</command> if your CD-ROM drive was
+recognized. You should see something like (the lines do not necessarily
+have to be consecutive):
+-->
+CD-ROM ドライブを認識したかを <command>dmesg</command> 
+の出力でチェックしてください。以下のように見えます。
+(行は連続している必要はありません)
+
+<informalexample><screen>
+Probing IDE interface ide1...
+hdc: TOSHIBA DVD-ROM SD-R6112, ATAPI CD/DVD-ROM drive
+ide1 at 0x170-0x177,0x376 on irq 15
+hdc: ATAPI 24X DVD-ROM DVD-R CD-R/RW drive, 2048kB Cache, UDMA(33)
+Uniform CD-ROM driver Revision: 3.20
+</screen></informalexample>
+
+<!--
+If you don't see something like that, chances are the controller your CD-ROM
+is connected to was not recognized or may be not supported at all. If you
+know what driver is needed for the controller, you can try loading it manually
+using <command>modprobe</command>.
+-->
+以上のように見えなければ、CD-ROM を接続したコントローラを認識できないか、
+おそらく全くサポートされていません。
+コントローラに必要なドライバが分かっていれば、
+<command>modprobe</command> を用い、手で読み込むのを試せます。
+
+  </para></listitem>
+  <listitem><para>
+
+<!--
+Check that there is a device node for your CD-ROM drive under
+<filename>/dev/</filename>. In the example above, this would be
+<filename>/dev/hdc</filename>.
+There should also be a <filename>/dev/cdroms/cdrom0</filename>.
+-->
+<filename>/dev/</filename> にある 
+CD-ROM ドライブのデバイスノードをチェックしてください。
+上の例では、<filename>/dev/hdc</filename> になっています。
+<filename>/dev/cdroms/cdrom0</filename> にもあるかもしれません。
+
+  </para></listitem>
+  <listitem><para>
+
+<!--
+Use the <command>mount</command> command to check if the CD-ROM is already
+mounted; if not, try mounting it manually:
+-->
+CD-ROM がすでにマウントされていないか、
+<command>mount</command> コマンドでチェックしてください。
+マウントされていなければ、手でマウントしてください。
+
+<informalexample><screen>
+$ mount /dev/<replaceable>hdc</replaceable> /cdrom
+</screen></informalexample>
+
+<!--
+Check if there are any error messages after that command.
+-->
+上記のコマンド後に、エラーメッセージがでるかチェックしてください。
+
+  </para></listitem>
+  <listitem><para>
+
+<!--
+Check if DMA is currently enabled:
+-->
+DMA が有効か、以下のようにチェックしてください。
+
+<informalexample><screen>
+$ cd /proc/<replaceable>ide</replaceable>/<replaceable>hdc</replaceable>
+$ grep using_dma settings
+using_dma      1       0       1       rw
+</screen></informalexample>
+
+<!--
+A <quote>1</quote> in the first column after <literal>using_dma</literal>
+means it is enabled. If it is, try disabling it:
+-->
+<literal>using_dma</literal> の後、初めの列にある <quote>1</quote> は、
+有効という意味です。その場合以下のように無効にしてください。
+
+<informalexample><screen>
+$ echo -n "using_dma:0" >settings
+</screen></informalexample>
+
+<!--
+Make sure that you are in the directory for the device that corresponds
+to your CD-ROM drive.
+-->
+確実に、CD-ROM ドライブに一致するデバイスのディレクトリで操作してください。
+
+  </para></listitem>
+  <listitem><para>
+
+<!--
+If there are any problems during the installation, try checking the integrity
+of the CD-ROM using the option near the bottom of the installer's main menu.
+This option can also be used as a general test if the CD-ROM can be read
+reliably.
+-->
+インストール中に何か問題があれば、インストーラメインメニューの下の方にある、
+CD-ROM の整合性チェックを行ってください。
+CD-ROM が確実に読める場合、このオプションを一般的なテストとして使用できます。
+
+  </para></listitem>
+</itemizedlist>
+
+</para>
+  </sect3>
+  </sect2>
 
   <sect2 condition="supports-floppy-boot" id="unreliable-floppies">
   <title>フロッピーディスクの信頼性</title>
@@ -16,7 +359,7 @@
 The biggest problem for people using floppy disks to install Debian
 seems to be floppy disk reliability.
 -->
-フロッピーディスクを用いて Debian をインストールする人がつまづく最大の問題は、
+フロッピーディスクを用いて Debian をインストールする人がつまずく最大の問題は、
 フロッピーディスクの信頼性だと思います。
 
 </para><para>
@@ -26,7 +369,7 @@ The boot floppy is the floppy with the worst problems, because it
 is read by the hardware directly, before Linux boots.  Often, the
 hardware doesn't read as reliably as the Linux floppy disk driver, and
 may just stop without printing an error message if it reads incorrect
-data. There can also be failures in the Driver Floppies most of which
+data. There can also be failures in the driver floppies, most of which
 indicate themselves with a flood of messages about disk I/O errors.
 -->
 特にブートフロッピーが最も問題になるようです。
@@ -41,21 +384,31 @@ indicate themselves with a flood of messages about disk I/O errors.
 </para><para>
 
 <!--
-If you are having the installation stall at a particular floppy, the
-first thing you should do is re-download the floppy disk image and
-write it to a <emphasis>different</emphasis> floppy. Simply
-reformatting the old
+If you are having the installation stall at a particular floppy, the first
+thing you should do is write the image to a <emphasis>different</emphasis>
+floppy and see if that solves the problem. Simply reformatting the old
 floppy may not be sufficient, even if it appears that the floppy was
 reformatted and written with no errors. It is sometimes useful to try
 writing the floppy on a different system.
 -->
 インストールが特定のフロッピーで停止してしまう場合は、
-まずフロッピーディスクのイメージをダウンロードし直して、
-それを <emphasis>別の</emphasis> フロッピーに書き直してみることです。
+まず <emphasis>別の</emphasis> フロッピーに書き直して、
+問題が解決するか見てください。
 古いフロッピーをフォーマットし直すだけでは充分ではありません
-(そのフロッピーのフォーマットと書き込み時にエラーが出なかったとしても、です)。
+(そのフロッピーのフォーマットや書き込み時にエラーが出なかったとしても、です)。
 フロッピーを別のシステムで書き込んでみると、
 うまくいくこともあるようです。
+
+</para><para>
+
+<!--
+Normally you should not have download a floppy image again, but if you
+are experiencing problems it is always useful to verify that the images
+were downloaded correctly by verifying their md5sums.
+-->
+通常、フロッピーイメージを再度ダウンロードする必要はありませんが、
+問題が常に発生する場合は、イメージのダウンロードが正しく行われているかを、
+md5sum を検証して確認するといいでしょう。
 
 </para><para>
 
@@ -103,26 +456,13 @@ as discussed in <xref linkend="boot-parms"/>.
 </para><para>
 
 <!--
-If you are booting with your own kernel instead of the one supplied
-with the installer, be sure that <userinput>CONFIG_DEVFS</userinput> is set in
-your kernel.  The installer requires
-<userinput>CONFIG_DEVFS</userinput>.
--->
-インストーラから与えられたカーネルではなく、
-自分で作ったカーネルから起動した場合は、
-<userinput>CONFIG_DEVFS</userinput> が設定されていることを確認してください。
-このインストーラには <userinput>CONFIG_DEVFS</userinput> が必要です。
-
-</para><para>
-
-<!--
 Often, problems can be solved by removing add-ons and peripherals, and
-then trying booting again.  <phrase arch="i386">Internal modems, sound
+then trying booting again.  <phrase arch="x86">Internal modems, sound
 cards, and Plug-n-Play devices can be especially problematic.</phrase>
 -->
 また、増設カードや周辺機器を取り外して再起動してみると、
 このような問題が解決できることもよくあります。
-<phrase arch="i386">内蔵モデム、サウンドカード、
+<phrase arch="x86">内蔵モデム、サウンドカード、
 Plug-n-Play デバイスなどは特に問題となりがちです。</phrase>
 
 </para><para>
@@ -141,7 +481,7 @@ kernel sees, such as <userinput>mem=512m</userinput>.
 </para>
   </sect2>
 
-  <sect2 arch="i386" id="i386-boot-problems">
+  <sect2 arch="x86" id="i386-boot-problems">
 <!--
   <title>Common &arch-title; Installation Problems</title>
 -->
@@ -209,19 +549,18 @@ If your screen begins to show a weird picture while the kernel boots,
 eg. pure white, pure black or colored pixel garbage, your system may
 contain a problematic video card which does not switch to the
 framebuffer mode properly.  Then you can use the boot parameter
-<userinput>debian-installer/framebuffer=false</userinput> or
-<userinput>video=vga16:off</userinput> to disable the framebuffer
-console. Only the English
-language will be available during the installation due to limited
+<userinput>fb=false video=vga16:off</userinput> to disable the framebuffer
+console. Only a reduced set of
+languages will be available during the installation due to limited
 console features. See <xref linkend="boot-parms"/> for details.
 -->
 カーネルの起動時に画面が不思議な絵 (例: 真っ白、真っ黒、色付きピクセル屑) 
 を表示し始める場合、あなたのシステムは、
 フレームバッファモードに適切に変わらない問題のあるビデオカードがついているかもしれません。
-その場合、フレームバッファコンソールを無効にするため、
-ブートパラメータに <userinput>debian-installer/framebuffer=false</userinput> 
-か <userinput>video=vga16:off</userinput> を使用できます。
-コンソールの機能が制限されているため、インストール中には英語しか使えません。
+その場合、フレームバッファコンソールを無効にするため、ブートパラメータに 
+<userinput>fb=false video=vga16:off</userinput> を使用できます。
+コンソールの機能が制限されているため、
+インストール中には特定の言語しか使えません。
 詳細は <xref linkend="boot-parms"/> をご覧ください。
 
 </para>
@@ -282,7 +621,7 @@ PCMCIA HOWTO のシステムリソースの設定</ulink> にあります。
 
    <sect3>
 <!--
-   <title>System Freeze while Loading the USB Modules</title>
+   <title>System Freeze while Loading USB Modules</title>
 -->
    <title>USB モジュールロード中のシステムフリーズ</title>
 <para>
@@ -311,6 +650,99 @@ USB コントローラを無効にできるかもしれません。
    </sect3>
   </sect2>
 
+  <sect2 arch="sparc" id="sparc-boot-problems">
+<!--
+  <title>Common &arch-title; Installation Problems</title>
+-->
+  <title>&arch-title; へのインストールに共通の問題</title>
+<para>
+
+<!--
+There are some common installation problems that are worth mentioning.
+-->
+以下、言及しておくべき、インストール時の一般的な問題があります。
+
+</para>
+   <sect3>
+<!--
+   <title>Misdirected video output</title>
+-->
+   <title>ビデオ出力先の間違い</title>
+<para>
+
+<!--
+It is fairly common for &arch-title; to have two video cards in one machine,
+for example an ATI card and a Sun Creator 3D. In some cases, this may result
+in the video output getting misdirected soon after the system boots. In
+typical cases, the display will only show:
+-->
+ATI カードと Sun Creator 3D といった、
+1 台のマシンに 2 枚のビデオカードがある構成は、&arch-title; によくあります。
+その場合、システム起動後にビデオ出力先を間違うということがあります。
+典型的なケースは、
+ディスプレイに以下のメッセージしか表示されないといった場合です。
+
+<informalexample><screen>
+Remapping the kernel... done
+Booting Linux...
+</screen></informalexample>
+
+<!--
+To work around this, you can either pull out one of the video cards, or
+disable the one not used during the OpenProm boot phase using a kernel
+parameter. For example, to disable an ATI card, you should boot the
+installer with <userinput>video=atyfb:off</userinput>.
+-->
+これに対処するには、ビデオカードを引き抜くか、
+OpenProm ブートフェイズでカーネルパラメータを与え、
+使用しないカードを無効にしてください。
+例えば、ATI カードを無効にするには、
+<userinput>video=atyfb:off</userinput> をインストーラに与えて起動してください。
+
+</para><para>
+
+<!--
+Note that you may also have to manually add this parameter to the silo
+configuration (edit <filename>/target/etc/silo.conf</filename> before
+rebooting) and, if you installed X11, modify the video driver in
+<filename>/etc/X11/xorg.conf</filename>.
+-->
+このパラメータを silo の設定に、手で加えなければならない 
+(再起動の前に <filename>/target/etc/silo.conf</filename> を編集する) 
+ことに注意してください。
+また、X11 をインストールしている場合、
+<filename>/etc/X11/xorg.conf</filename> のビデオドライバを修正してください。
+
+</para>
+   </sect3>
+
+   <sect3>
+<!--
+   <title>Failure to Boot or Install from CD-ROM</title>
+-->
+   <title>起動に失敗ないし CD-ROM からインストール</title>
+<para>
+
+<!--
+Some Sparc systems are notoriously difficult to boot from CD-ROM and
+even if they do boot, there may be inexplicable failures during the
+installation. Most problems have been reported with SunBlade systems.
+-->
+いくつかの Sparc システムは、CD-ROM から起動するのが難しく、
+起動してもインストール時に不可解な失敗をすることが知られています。
+ほとんどの問題は SunBlade システムで報告されています。
+
+</para><para>
+
+<!--
+We recommend to install such systems by netbooting the installer.
+-->
+そのようなシステムでは、インストーラをネットから起動するのをお奨めします。
+
+</para>
+   </sect3>
+  </sect2>
+
   <sect2 id="kernel-msgs">
   <title>カーネルの起動時メッセージの意味</title>
 
@@ -318,12 +750,12 @@ USB コントローラを無効にできるかもしれません。
 
 <!--
 During the boot sequence, you may see many messages in the form
-<computeroutput>can't find <replaceable>something</replaceable>
-</computeroutput>, or <computeroutput>
-<replaceable>something</replaceable> not present</computeroutput>,
-<computeroutput>can't initialize <replaceable>something</replaceable>
-</computeroutput>, or even <computeroutput>this driver release depends
-on <replaceable>something</replaceable> </computeroutput>.
+<computeroutput>can't find <replaceable>something</replaceable></computeroutput>,
+or <computeroutput><replaceable>something</replaceable>
+not present</computeroutput>, <computeroutput>can't initialize
+<replaceable>something</replaceable></computeroutput>,
+or even <computeroutput>this driver release depends
+on <replaceable>something</replaceable></computeroutput>.
 Most of these messages are harmless. You
 see them because the kernel for the installation system is built to
 run on computers with many different peripheral devices. Obviously, no
@@ -336,14 +768,14 @@ takes to boot the system unacceptably long, you can create a
 custom kernel later (see <xref linkend="kernel-baking"/>).
 -->
 ブートシーケンスの途中で、
-<computeroutput>can't find <replaceable>something</replaceable>
-</computeroutput> (〜が見つからない),
- <computeroutput><replaceable>something</replaceable> not present
-</computeroutput> (〜が存在しない),
-<computeroutput>can't initialize <replaceable>something</replaceable>
-</computeroutput> (〜を初期化できない),
-<computeroutput>this driver release depends on <replaceable>something
-</replaceable></computeroutput> (このドライバには〜が必要だ)
+<computeroutput>can't find 
+<replaceable>something</replaceable></computeroutput> (〜が見つからない),
+ <computeroutput><replaceable>something</replaceable> 
+not present</computeroutput> (〜が存在しない),
+<computeroutput>can't initialize 
+<replaceable>something</replaceable></computeroutput> (〜を初期化できない),
+<computeroutput>this driver release depends on 
+<replaceable>something</replaceable></computeroutput> (このドライバには〜が必要だ)
 などのメッセージがたくさん出力されることがあります。
 これらのメッセージのほとんどは無害です。
 これらが出力される理由は、インストールシステムのカーネルが、
@@ -362,23 +794,27 @@ custom kernel later (see <xref linkend="kernel-baking"/>).
 
 
   <sect2 id="problem-report">
-  <title>バグレポータ</title>
+<!--
+  <title>Reporting Installation Problems</title>
+-->
+  <title>インストールで発生した問題の報告</title>
 <para>
 
 <!--
-If you get through the initial boot phase but cannot complete the
-install, the bug reporter menu choice may be helpful.
+If you get through the initial boot phase but cannot complete the install,
+the menu option <guimenuitem>Save debug logs</guimenuitem> may be helpful.
 It lets you store system error logs and configuration information from the
-installer to a floppy, or download them in a web browser.
+installer to a floppy, or download them using a web browser.
 -->
 最初の起動段階は通過したのに、インストールが完了できなかった場合は、
-バグレポータメニューを選択するといいかもしれません。
+メニューから <guimenuitem>デバッグログを保存</guimenuitem> 
+を選択するといいかもしれません。
 インストーラからのシステムのエラーログや設定情報をフロッピーに格納したり、
 web ブラウザでダウンロードしたりできるようになります。
 
 <!--       
 This information may provide clues as to what went wrong and how to
-fix it.  If you are submitting a bug report you may want to attach
+fix it.  If you are submitting a bug report, you may want to attach
 this information to the bug report.
 -->
 この情報は、何が間違っていてどのように修正するか、
@@ -418,27 +854,46 @@ number of hardware configurations.
 </para><para>
 
 <!--
-If you have a working Debian system, the easiest way to send an installation
-report is to install the installation-report and reportbug packages
-(<command>apt-get install installation-report reportbug</command>) and run
-the command <command>reportbug installation-report</command>.
+Note that your installation report will be published in the Debian Bug
+Tracking System (BTS) and forwarded to a public mailing list. Make sure that
+you use an e-mail address that you do not mind being made public.
 -->
-動作する Debian システムがある場合、
-インストールレポートを送る最も簡単な方法は以下のようになります。
-installation-report と reportbug パッケージをインストール
-(<command>apt-get install installation-report reportbug</command>) し、
-<command>reportbug installation-report</command> を実行してください。
+あなたのインストールレポートは、Debian バグ追跡システム (BTS) で公開され、
+公開メーリングリストに転送されることに留意してください。
+必ず、公開されても問題ない e-mail アドレスを使用してください。
 
 </para><para>
 
 <!--
-Please use this template when filling out
+If you have a working Debian system, the easiest way to send an installation
+report is to install the <classname>installation-report</classname> and
+<classname>reportbug</classname> packages
+(<command>aptitude install installation-report reportbug</command>),
+configure <classname>reportbug</classname> as explained in
+<xref linkend="mail-outgoing"/>, and run the command <command>reportbug
+installation-reports</command>.
+-->
+動作する Debian システムがある場合、
+インストールレポートを送る最も簡単な方法は以下のようになります。
+<classname>installation-report</classname> と 
+<classname>reportbug</classname> パッケージをインストール
+(<command>aptitude install installation-report reportbug</command>) し、
+<xref linkend="mail-outgoing"/> で説明しているように 
+<classname>reportbug</classname> を設定して、
+<command>reportbug installation-reports</command> を実行してください。
+
+</para><para>
+
+<!--
+Alternatively you can use this template when filling out
 installation reports, and file the report as a bug report against the
 <classname>installation-reports</classname> pseudo package, by sending it to
 <email>submit@bugs.debian.org</email>.
 -->
-インストールレポートを記入する際には、以下のテンプレートをお使いください。
-そのファイルを、<classname>installation-reports</classname> 疑似パッケージのバグ報告として、
+その他、インストールレポートを記入する際には、
+以下のテンプレートも使用できます。
+そのファイルを、<classname>installation-reports</classname> 
+疑似パッケージのバグ報告として、
 <email>submit@bugs.debian.org</email> 宛にお送りください。
 
 <informalexample><screen>
@@ -446,7 +901,7 @@ Package: installation-reports
 
 
 Boot method: &lt;インストーラの起動方法は? CD? フロッピー? ネットワーク?&gt;
-Image version: &lt;イメージを取得した場所と日時&gt;
+Image version: &lt;イメージをダウンロードした URL がベスト&gt;
 Date: &lt;インストールした日時&gt;
 
 Machine: &lt;マシンの説明 (例 IBM Thinkpad R32)&gt;
@@ -455,23 +910,24 @@ Memory:
 Root Device: &lt;IDE?  SCSI?  デバイス名は?&gt;
 Partitions: &lt;df -Tl の結果; 優先される生のパーティションテーブル&gt;
 
-Output of lspci and lspci -n:
+Output of lspci -nn and lspci -vnn:
 
 Base System Installation Checklist:
 [O] = OK, [E] = Error (please elaborate below), [ ] = didn't try it
 
-Initial boot worked:    [ ]
-Configure network HW:   [ ]
-Config network:         [ ]
+Initial boot:           [ ]
+Detect network card:    [ ]
+Configure network:      [ ]
 Detect CD:              [ ]
 Load installer modules: [ ]
 Detect hard drives:     [ ]
 Partition hard drives:  [ ]
-Create file systems:    [ ]
-Mount partitions:       [ ]
 Install base system:    [ ]
+Clock/timezone setup:   [ ]
+User/password setup:    [ ]
+Install tasks:          [ ]
 Install boot loader:    [ ]
-Reboot:                 [ ]
+Overall install:        [ ]
 
 Comments/Problems:
 

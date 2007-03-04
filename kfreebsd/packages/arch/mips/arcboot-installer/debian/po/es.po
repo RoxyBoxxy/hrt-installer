@@ -9,20 +9,19 @@
 #
 # Contributors to the translation of debian-installer:
 # Teófilo Ruiz Suárez <teo@debian.org>, 2003.
-# Javier Fernández-Sanguino <jfs@debian.org>, 2003.
 # David Martínez Moreno <ender@debian.org>, 2003, 2005.
 # Carlos Alberto Martín Edo <carlos@dat.etsit.upm.es>, 2003
 # Carlos Valdivia Yagüe <valyag@dat.etsit.upm.es>, 2003
-# Rudy Godoy <rudy@kernel-panik.org>, 2003
+# Rudy Godoy <rudy@kernel-panik.org>, 2003-2006
 # Steve Langasek <vorlon@debian.org>, 2004
 # Enrique Matias Sanchez (aka Quique) <cronopios@gmail.com>, 2005
-# Javier Fernández-Sanguino <jfs@debian.org>, 2004-2005
 # Rubén Porras Campo <nahoo@inicia.es>, 2005
+# Javier Fernández-Sanguino <jfs@debian.org>, 2003-2006
 #
 # Equipo de traducción al español, por favor lean antes de traducir
 # los siguientes documentos:
 #
-# - El proyecto de traducción de Debian al españl
+# - El proyecto de traducción de Debian al español
 #   http://www.debian.org/intl/spanish/
 #   especialmente las notas de traducción en
 #   http://www.debian.org/intl/spanish/notas
@@ -34,12 +33,23 @@
 # Si tiene dudas o consultas sobre esta traducción consulte con el último
 # traductor (campo Last-Translator) y ponga en copia a la lista de
 # traducción de Debian al español (debian-l10n-spanish@lists.debian.org)
+#
+# NOTAS: 
+#
+# - Se ha traducido en este fichero 'boot loader' de forma homogénea por
+# 'cargador de arranque' aunque en el manual se utiliza éste término y
+# también 'gestor de arranque'
+#
+# - 'array' no está traducido aún. La traducción como 'arreglo' suena
+# fatal (y es poco conocida)
+#
+#  
 msgid ""
 msgstr ""
 "Project-Id-Version: debian-installer\n"
 "Report-Msgid-Bugs-To: debian-boot@lists.debian.org\n"
-"POT-Creation-Date: 2006-04-22 23:51-0600\n"
-"PO-Revision-Date: 2005-07-30 10:54+0200\n"
+"POT-Creation-Date: 2007-01-06 22:48+0100\n"
+"PO-Revision-Date: 2006-10-15 23:14-0500\n"
 "Last-Translator: Javier Fernández-Sanguino Peña <jfs@debian.org>\n"
 "Language-Team:  Debian Spanish <debian-l10n-spanish@lists.debian.org>\n"
 "MIME-Version: 1.0\n"
@@ -100,28 +110,22 @@ msgid ""
 "a boot loader is a required step.  The install problem might however be "
 "unrelated to Arcboot, so continuing the installation may be possible."
 msgstr ""
-"No se pudo instalar el paquete arcboot en /target/. Instalar Arcboot como "
-"cargador de arranque es un paso requerido. El problema puede no estar "
+"No se pudo instalar el paquete «arcboot» en «/target/». Instalar Arcboot "
+"como cargador de arranque es un paso requerido. El problema puede no estar "
 "relacionado con arcboot y es posible que funcione de todas formas."
 
 #. Type: note
 #. Description
-#. Note to translators : please leave the paragraphs with
-#. "setenv" lines UNCHANGED in the LONG description of this template.
-#. Do NOT translate anything there
-#. but just copy the msgid to msgstr
-#. "Stop for Maintenance" should also be left in English
+#. Translators, the 4th string of this description has been dropped from
+#. PO files. It contains firmware commands and should not be translated.
 #: ../arcboot-installer.templates:34
 msgid "Setting PROM variables for Arcboot"
 msgstr "Establecer las variables PROM para Arcboot"
 
 #. Type: note
 #. Description
-#. Note to translators : please leave the paragraphs with
-#. "setenv" lines UNCHANGED in the LONG description of this template.
-#. Do NOT translate anything there
-#. but just copy the msgid to msgstr
-#. "Stop for Maintenance" should also be left in English
+#. Translators, the 4th string of this description has been dropped from
+#. PO files. It contains firmware commands and should not be translated.
 #: ../arcboot-installer.templates:34
 msgid ""
 "If this is the first Linux installation on this machine, or if the hard "
@@ -134,11 +138,9 @@ msgstr ""
 
 #. Type: note
 #. Description
-#. Note to translators : please leave the paragraphs with
-#. "setenv" lines UNCHANGED in the LONG description of this template.
-#. Do NOT translate anything there
-#. but just copy the msgid to msgstr
-#. "Stop for Maintenance" should also be left in English
+#. Translators, the 4th string of this description has been dropped from
+#. PO files. It contains firmware commands and should not be translated.
+#. "Stop for Maintenance" should be left in English
 #: ../arcboot-installer.templates:34
 msgid ""
 "At the end of this installation stage, the system will reboot.  After this, "
@@ -147,43 +149,18 @@ msgid ""
 msgstr ""
 "El sistema se reiniciará al final de este paso de la instalación. Después de "
 "que esto suceda, entre en el «command monitor» (monitor de órdenes) con la "
-"opción «Stop for maintenance» (Parada de Mantenimiento) e introduzca las "
+"opción «Stop for Maintenance» (Parada de Mantenimiento) e introduzca las "
 "siguientes órdenes:"
 
 #. Type: note
 #. Description
-#. Note to translators : please leave the paragraphs with
-#. "setenv" lines UNCHANGED in the LONG description of this template.
-#. Do NOT translate anything there
-#. but just copy the msgid to msgstr
-#. "Stop for Maintenance" should also be left in English
-#: ../arcboot-installer.templates:34
-msgid ""
-"   setenv SystemPartition scsi(${BOOTBUS})disk(${BOOTID})rdisk(${BOOTLUN})"
-"partition(8)\n"
-"   setenv OSLoadPartition scsi(${ROOTBUS})disk(${ROOTID})rdisk(${ROOTLUN})"
-"partition(${ROOTPART})\n"
-"   setenv OSLoader arcboot\n"
-"   setenv OSLoadFilename Linux"
-msgstr ""
-"   setenv SystemPartition scsi(${BOOTBUS})disk(${BOOTID})rdisk(${BOOTLUN}) "
-"partición(8)\n"
-"   setenv OSLoadPartition scsi(${ROOTBUS})disk(${ROOTID})rdisk(${ROOTLUN}) "
-"partición(${ROOTPART})\n"
-"   setenv OSLoader arcboot\n"
-"   setenv OSLoadFilename Linux"
-
-#. Type: note
-#. Description
-#. Note to translators : please leave the paragraphs with
-#. "setenv" lines UNCHANGED in the LONG description of this template.
-#. Do NOT translate anything there
-#. but just copy the msgid to msgstr
-#. "Stop for Maintenance" should also be left in English
+#. Translators, the 4th string of this description has been dropped from
+#. PO files. It contains firmware commands and should not be translated.
 #: ../arcboot-installer.templates:34
 msgid ""
 "You will only need to do this once.  Afterwards, enter the \"boot\" command "
-"or reboot the system to proceed to the next stage of the installation."
+"or reboot the system to proceed to your newly installed system."
 msgstr ""
-"Sólo tendrá que hacer ésto una vez. Después, introduzca la orden «boot» o "
-"reinicie el sistema para proceder al siguiente paso de la instalación."
+"Sólo tendrá que hacer ésto una vez. Para acceder a su sistema recién "
+"instalado deberá introducir, más adelante, la orden «boot» o reiniciar el "
+"sistema."

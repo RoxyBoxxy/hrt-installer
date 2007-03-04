@@ -1,3 +1,384 @@
+base-installer (1.75) unstable; urgency=low
+
+  * Set Aptitude::CmdLine::Ignore-Trust-Violations in allow_unauthenticated
+    mode. Seems that aptitude needs two options for some reason.
+    Closes: #411927
+
+ -- Joey Hess <joeyh@debian.org>  Thu, 22 Feb 2007 15:00:07 -0500
+
+base-installer (1.74) unstable; urgency=low
+
+  * Only pass keyring to debootstrap if using a network protocol.
+
+ -- Joey Hess <joeyh@debian.org>  Sat, 17 Feb 2007 14:13:08 -0500
+
+base-installer (1.73) unstable; urgency=low
+
+  [ Aurélien GÉRÔME ]
+  * Add VIA C7 processor definition and test case. Closes: #410819.
+
+  [ Joey Hess ]
+  * Add support for armel.
+  * If debian-installer/allow_unauthenticated exists and is true, write a
+    /etc/apt/apt.conf.d/00AllowUnauthenticated file making apt allow
+    unauthenticated mirrors.
+  * Depend on gpgv-udeb, which has apparently never really been pulled in
+    before.
+
+  [ Updated translations ]
+  * Hebrew (he.po) by Lior Kaplan
+  * Swedish (sv.po) by Daniel Nylander
+
+ -- Joey Hess <joeyh@debian.org>  Fri, 16 Feb 2007 16:04:00 -0500
+
+base-installer (1.72) unstable; urgency=low
+
+  [ Colin Watson ]
+  * Fix processor detection on SMP i386 and amd64 systems when booting with
+    an SMP-capable kernel.
+    See https://bugs.launchpad.net/ubuntu/+source/base-installer/+bug/79109;
+    test case taken from that bug.
+
+  [ Updated translations ]
+  * Arabic (ar.po) by Ossama M. Khayat
+  * Hebrew (he.po) by Lior Kaplan
+  * Latvian (lv.po) by Aigars Mahinovs
+  * Malayalam (ml.po) by Praveen A
+  * Portuguese (Brazil) (pt_BR.po) by Felipe Augusto van de Wiel (faw)
+  * Romanian (ro.po) by Eddy Petrișor
+  * Slovak (sk.po) by Peter Mann
+
+ -- Frans Pop <fjp@debian.org>  Wed, 31 Jan 2007 11:23:40 +0100
+
+base-installer (1.71) unstable; urgency=low
+
+  [ Colin Watson ]
+  * Strip comments from debian/templates-arch in output templates file.
+
+  [ Frans Pop ]
+  * Also write the default header comments for kernel-img.conf.
+  * For powerpc/prep systems, write the root partition to an initramfs-tools
+    config file. Thanks to Ulrich Teichert for testing. Closes: #405572.
+
+  [ Updated translations ]
+  * Belarusian (be.po) by Pavel Piatruk
+  * Danish (da.po) by Claus Hindsgaul
+  * Spanish (es.po) by Javier Fernández-Sanguino Peña
+  * Galician (gl.po) by Jacobo Tarrio
+  * Kurdish (ku.po) by Amed Çeko Jiyan
+  * Panjabi (pa.po) by A S Alam
+  * Portuguese (Brazil) (pt_BR.po) by Felipe Augusto van de Wiel (faw)
+  * Portuguese (pt.po) by Miguel Figueiredo
+  * Slovenian (sl.po) by Matej Kovačič
+  * Swedish (sv.po) by Daniel Nylander
+  * Thai (th.po) by Theppitak Karoonboonyanan
+
+ -- Frans Pop <fjp@debian.org>  Sat,  6 Jan 2007 20:15:26 +0100
+
+base-installer (1.70) unstable; urgency=low
+
+  * Add support for selecting prep kernels (powerpc). Closes: #386265.
+    Thanks to Sven Luther for the patch.
+  * Create new testcase for powerstack II prep boxes based on cpuinfo
+    provided by Sven Luther.
+  * Only offer initramfs generator selection at low priority as yaird is no
+    longer a really logical option.
+
+  [ Updated translations ]
+  * Georgian (ka.po) by Aiet Kolkhi
+  * Kurdish (ku.po) by Erdal Ronahi
+  * Latvian (lv.po) by Aigars Mahinovs
+  * Malayalam (ml.po) by Praveen A
+  * Panjabi (pa.po) by A S Alam
+
+ -- Frans Pop <fjp@debian.org>  Tue,  5 Dec 2006 23:24:58 +0100
+
+base-installer (1.69) unstable; urgency=low
+
+  [ Thiemo Seufer ]
+  * Add support for qemu on mips/mipsel, thanks to Aurelien Jarno.
+
+  [ Martin Michlmayr ]
+  * nslu2 uses the ixp4xx kernel now - update the test suite.
+
+  [ Colin Watson ]
+  * Use log-output for hook scripts rather than a temporary file.
+
+  [ Updated translations ]
+  * Bulgarian (bg.po) by Damyan Ivanov
+  * Bosnian (bs.po) by Safir Secerovic
+  * Catalan (ca.po) by Jordi Mallach
+  * Czech (cs.po) by Miroslav Kure
+  * Esperanto (eo.po) by Serge Leblanc
+  * Spanish (es.po) by Javier Fernández-Sanguino Peña
+  * Georgian (ka.po) by Aiet Kolkhi
+  * Kurdish (ku.po) by rizoye-xerzi
+  * Norwegian Bokmål (nb.po) by Bjørn Steensrud
+  * Polish (pl.po) by Bartosz Fenski
+  * Romanian (ro.po) by Eddy Petrișor
+
+ -- Frans Pop <fjp@debian.org>  Wed, 22 Nov 2006 15:04:49 +0100
+
+base-installer (1.68) unstable; urgency=low
+
+  [ Frans Pop ]
+  * Clean up defaults for kernel/image-2.6. All were obsolete and thus
+    obviously no longer needed.
+
+  [ Joey Hess ]
+  * Clean up defaults for kernel/image. All but i386 were obsolete and thus
+    obviously no longer needed, and I'm sure we don't need a default 2.4
+    kernel for i386 any longer.
+
+  [ Updated translations ]
+  * Belarusian (be.po) by Andrei Darashenka
+  * German (de.po) by Jens Seidel
+  * Estonian (et.po) by Siim Põder
+  * Basque (eu.po) by Piarres Beobide
+  * Finnish (fi.po) by Tapio Lehtonen
+  * Hindi (hi.po) by Nishant Sharma
+  * Croatian (hr.po) by Josip Rodin
+  * Italian (it.po) by Stefano Canepa
+  * Korean (ko.po) by Sunjae park
+  * Kurdish (ku.po) by Erdal Ronahi
+  * Norwegian Bokmal (nb.po) by Bjørn Steensrud
+  * Romanian (ro.po) by Eddy Petrișor
+  * Albanian (sq.po) by Elian Myftiu
+  * Tamil (ta.po) by Damodharan Rajalingam
+  * Vietnamese (vi.po) by Clytie Siddall
+
+ -- Frans Pop <fjp@debian.org>  Tue, 24 Oct 2006 13:53:47 +0200
+
+base-installer (1.67) unstable; urgency=low
+
+  [ Petter Reinholdtsen ]
+  * Always use template base-installer/kernel/linux/extra-packages, even if
+    base-installer/kernel/linux/extra-packages-$kernelver exists.
+    Closes: #383896.
+
+  [ dann frazier ]
+  * Drop SMP detection on IA64. IA64 -smp flavours have been dropped.
+    As of 2.6.17, all Debian IA64 kernels are SMP.
+
+  [ Colin Watson ]
+  * Mark ${ERROR} in base-installer/debootstrap/fallback-error as
+    untranslatable.
+  * Suppress a spurious "dmsetup: not found" error.
+
+  [ Sven Luther ]
+  * [powerpc] Added support for IBM Power5+ cpus.
+
+  [ Updated translations ]
+  * Bengali (bn.po) by Mahay Alam Khan (মাহে আলম খান)
+  * Czech (cs.po) by Miroslav Kure
+  * Danish (da.po) by Claus Hindsgaul
+  * German (de.po) by Jens Seidel
+  * Spanish (es.po) by Javier Fernández-Sanguino Peña
+  * Basque (eu.po) by Piarres Beobide
+  * French (fr.po) by Christian Perrier
+  * Galician (gl.po) by Jacobo Tarrio
+  * Hebrew (he.po) by Lior Kaplan
+  * Hungarian (hu.po) by SZERVÁC Attila
+  * Indonesian (id.po) by Arief S Fitrianto
+  * Italian (it.po) by Giuseppe Sacco
+  * Japanese (ja.po) by Kenshi Muto
+  * Korean (ko.po) by Sunjae park
+  * Latvian (lv.po) by Aigars Mahinovs
+  * Dutch (nl.po) by Bart Cornelis
+  * Portuguese (pt.po) by Miguel Figueiredo
+  * Portuguese (Brazil) (pt_BR.po) by André Luís Lopes
+  * Romanian (ro.po) by Eddy Petrişor
+  * Russian (ru.po) by Yuri Kozlov
+  * Northern Sami (se.po) by Børre Gaup
+  * Slovak (sk.po) by Peter Mann
+  * Swedish (sv.po) by Daniel Nylander
+  * Thai (th.po) by Theppitak Karoonboonyanan
+  * Tagalog (tl.po) by Eric Pareja
+  * Turkish (tr.po) by Recai Oktaş
+  * Vietnamese (vi.po) by Clytie Siddall
+  * Wolof (wo.po) by Mouhamadou Mamoune Mbacke
+
+ -- Frans Pop <fjp@debian.org>  Sat, 16 Sep 2006 11:26:25 +0200
+
+base-installer (1.66) unstable; urgency=low
+
+  [ Joey Hess ]
+  * Clean up apt.conf settings code; stop using apt.conf and use
+    apt.conf.d for 00trustcdrom.
+
+  [ Frans Pop ]
+  * Activate initramfs for IA64. Closes: #383557.
+  * Various changes in kernel selection for i386/amd64:
+    - no longer support SMP in defaults as this is no longer needed with
+      smp-alternatives enabled for 2.6.17 and this never worked anyway
+    - remove smp specific tests in kernel selection testsuite
+    - i386: speakup kernel was 2.4 only, so no longer supported
+    - amd64: add support for new generic -amd64 flavor
+  * Add Lintian override for standards-version.
+
+ -- Frans Pop <fjp@debian.org>  Sun, 20 Aug 2006 00:53:40 +0200
+
+base-installer (1.65) unstable; urgency=low
+
+  [ Martin Michlmayr ]
+  * Handle the ARM sub-architectures iop32x, iop33x and ixp4xx.
+  * Add a test suite entry for arm/iop32x based on the Thecus N2100.
+
+  [ Frans Pop ]
+  * Don't offer yaird for S/390 as it does not configure the dasds.
+  * Add kernel selection support for ppc64. Closes: #383135.
+
+  [ Updated translations ]
+  * Spanish (es.po) by Javier Fernández-Sanguino Peña
+
+ -- Martin Michlmayr <tbm@cyrius.com>  Thu, 17 Aug 2006 17:33:24 +0200
+
+base-installer (1.64) unstable; urgency=low
+
+  [ Colin Watson ]
+  * Try to use /etc/initramfs-tools/conf.d/resume or
+    /etc/mkinitramfs/conf.d/resume if initramfs-tools is new enough to have
+    the conf.d directory, rather than editing a conffile.
+  * Separate resume configuration file handling from other ramdisk
+    configuration file handling.
+  * AMD CPU family 15 systems (i.e. K8) should be allowed to install K7
+    kernels.
+  * Fix quoting so that LVM (but not crypto) installs don't break due to the
+    lack of dmsetup-udeb.
+
+  [ Frans Pop ]
+  * Use separate variable for selected ramdisk generator.
+  * Select kernel meta package for current kernel major version for hppa.
+
+  [ Updated translations ]
+  * Catalan (ca.po) by Jordi Mallach
+  * Panjabi (pa.po) by A S Alam
+  * Traditional Chinese (zh_TW.po) by Tetralet
+
+ -- Frans Pop <fjp@debian.org>  Sun, 30 Jul 2006 02:38:59 +0200
+
+base-installer (1.63) unstable; urgency=low
+
+  * Set meta package as default kernel for S/390.
+  * Remove code for determining KERNEL_ABI from testsuite as it is now unused
+    and as it is broken anyway if the first wanted kernel is a meta package.
+  * Be more conservative when setting a generic default for kernel selection.
+  * Run vgscan in-target during create_devices as it needs /sys mounted; if
+    not, the kernel can get loads of ghost RAID devices in /sys/block.
+  * Avoid warnings from lvm2 tools about open file descriptors.
+
+ -- Frans Pop <fjp@debian.org>  Tue, 11 Jul 2006 14:10:38 +0200
+
+base-installer (1.62) unstable; urgency=low
+
+  [ Martin Michlmayr ]
+  * RiscPC has been renamed from riscpc to rpc.
+  * Add RiscPC to the testsuite.
+
+  [ Colin Watson ]
+  * Add empty binary-indep target in debian/rules, per policy.
+
+ -- Martin Michlmayr <tbm@cyrius.com>  Mon, 03 Jul 2006 17:40:31 +0200
+
+base-installer (1.61) unstable; urgency=low
+
+  [ David Härdeman ]
+  * If we have any dm-crypt devices, install cryptsetup before the
+    initramfs image is generated. Closes: #375928.
+
+  [ Updated translations ]
+  * Estonian (et.po) by Siim Põder
+  * Norwegian Nynorsk (nn.po) by Håvard Korsvoll
+
+ -- Frans Pop <fjp@debian.org>  Fri, 30 Jun 2006 13:55:39 +0200
+
+base-installer (1.60) unstable; urgency=low
+
+  * Support finish-install, both by installing the script there and for
+    searching for templates in its namespace in the fallback code for
+    post-base-installer hooks.
+
+  [ Updated translations ]
+  * Lithuanian (lt.po) by Kęstutis Biliūnas
+
+ -- Joey Hess <joeyh@debian.org>  Mon,  5 Jun 2006 18:14:17 -0400
+
+base-installer (1.59) unstable; urgency=low
+
+  * Fix a mistake in the initramfs-tools confdir renaming code, thanks makx.
+
+ -- Joey Hess <joeyh@debian.org>  Thu,  1 Jun 2006 19:26:12 -0400
+
+base-installer (1.58) unstable; urgency=low
+
+  [ Joey Hess ]
+  * Remove some unncessary debug logging.
+  * Support initramfs-tools renaming its confdir by testing which directory
+    exists. Required moving some code around so it runs only after
+    initramfs-tools is installed.
+
+  [ Bastian Blank ]
+  * Use initrd for s390.
+  * Update kernel list for s390.
+
+ -- Bastian Blank <waldi@debian.org>  Thu,  1 Jun 2006 10:14:37 +0200
+
+base-installer (1.57) unstable; urgency=low
+
+  [ Frans Pop ]
+  * Create devmapper device nodes in /target if these are used in the installer;
+    needed for partman crypto (closes: #365747). Patch by Riku Voipio.
+  * If root is encrypted, also create crypto device nodes. Patch by David
+    Härdeman.
+
+  [ Martin Michlmayr ]
+  * Remove incomplete LART and BAST support.
+  * Drop Riscstation since it's no longer supported in 2.6 kernels.
+
+  [ Colin Watson ]
+  * Rename install_kernel to install_linux, to allow for future ports to
+    other systems.
+
+  [ Christian Perrier ]
+  * Split _Choices to __Choices in templates
+
+  [ Updated translations ]
+  * Arabic (ar.po) by Ossama M. Khayat
+  * Czech (cs.po) by Miroslav Kure
+  * Danish (da.po) by Claus Hindsgaul
+  * German (de.po) by Jens Seidel
+  * Dzongkha (dz.po)
+  * Esperanto (eo.po) by Serge Leblanc
+  * Spanish (es.po) by Javier Fernández-Sanguino Peña
+  * Basque (eu.po) by Piarres Beobide
+  * French (fr.po) by Christian Perrier
+  * Galician (gl.po) by Jacobo Tarrio
+  * Hungarian (hu.po) by SZERVÑC Attila
+  * Japanese (ja.po) by Kenshi Muto
+  * Khmer (km.po) by Khoem Sokhem
+  * Korean (ko.po) by Sunjae park
+  * Kurdish (ku.po) by Erdal Ronahi
+  * Malagasy (mg.po) by Jaonary Rabarisoa
+  * Macedonian (mk.po) by Georgi Stanojevski
+  * Bokmål, Norwegian (nb.po) by Bjørn Steensrud
+  * Dutch (nl.po) by Bart Cornelis
+  * Norwegian Nynorsk (nn.po) by Håvard Korsvoll
+  * Polish (pl.po) by Bartosz Fenski
+  * Portuguese (pt.po) by Miguel Figueiredo
+  * Portuguese (Brazil) (pt_BR.po) by André Luís Lopes
+  * Romanian (ro.po) by Eddy Petrişor
+  * Russian (ru.po) by Yuri Kozlov
+  * Slovak (sk.po) by Peter Mann
+  * Slovenian (sl.po) by Jure Čuhalev
+  * Albanian (sq.po) by Elian Myftiu
+  * Swedish (sv.po) by Daniel Nylander
+  * Tamil (ta.po) by Damodharan Rajalingam
+  * Thai (th.po) by Theppitak Karoonboonyanan
+  * Turkish (tr.po) by Recai Oktaş
+  * Vietnamese (vi.po) by Clytie Siddall
+
+ -- Frans Pop <fjp@debian.org>  Sun, 14 May 2006 22:54:26 +0200
+
 base-installer (1.56) unstable; urgency=low
 
   [ Frans Pop ]

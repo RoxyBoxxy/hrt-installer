@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<!-- original version: 35613 -->
+<!-- original version: 44002 -->
 
  <sect1 condition="supports-tftp" id="install-tftp">
  <title>Préparer les fichiers pour amorcer depuis le réseau avec TFTP</title>
@@ -8,14 +8,14 @@
 Si votre machine est connectée à un réseau local, vous pouvez l'amorcer 
 directement à partir d'une autre machine de ce réseau en utilisant 
 TFTP. Pour cela, les fichiers d'amorçage doivent être 
-placés à un endroit spécifique de cette machine et elle doit savoir 
-amorcer votre propre machine.
+placés à un endroit spécifique de cette machine et celle-ci doit savoir 
+amorcer votre machine.
 
 </para><para>
 
 Vous devez configurer un serveur TFTP et, pour beaucoup de machines, 
-un serveur BOOTP<phrase condition="supports-rarp">, un serveur RARP</phrase>
-<phrase condition="supports-dhcp">ou un serveur DHCP</phrase>.
+un serveur DHCP<phrase condition="supports-rarp">, un serveur RARP</phrase>
+<phrase condition="supports-bootp">ou un serveur BOOTP</phrase>.
 
 </para><para>
 
@@ -33,16 +33,16 @@ image d'amorçage.</phrase>
 VMEbus&nbsp;: l'adresse IP peut être configurée manuellement dans la ROM 
 d'amorçage.</phrase>
 
-<phrase condition="supports-dhcp">Le protocole DHCP 
+Le protocole DHCP 
 («&nbsp;Dynamic Host Configuration Protocole&nbsp;», Protocole de 
 configuration dynamique des hôtes) est une extension bien plus flexible 
 de BOOTP (et respectant la compatibilité ascendante). Certains systèmes ne 
-peuvent être configurés que par DHCP.</phrase>
+peuvent être configurés que par DHCP.
 
 </para><para arch="powerpc">
 
 Pour les PowerPC, si vous avez une machine Power Macintosh NewWorld, il vaut 
-mieux utiliser DHCP plutôt que BOOTP. Certaines de ces machines ne peuvent pas 
+mieux utiliser DHCP plutôt que BOOTP. Certaines machines récentes ne peuvent pas 
 s'amorcer avec BOOTP.
 
 </para><para arch="alpha"> 
@@ -66,23 +66,23 @@ la configuration IP des interfaces réseau.
 </para><para arch="hppa"> 
 
 Quelques vieilles machines HPPA (p. ex. 715/75) utilisent RBOOTD plutôt que 
-BOOTP. Un paquet <classname>RBOOTD</classname> est disponible dans l'archive Debian.
+BOOTP. Un paquet <classname>rbootd</classname> est disponible dans l'archive Debian.
 
 </para><para>
 
-Le protocole trivial de transfert des fichiers («&nbsp;Trivial Transfert File 
-Protocol&nbsp;» ou TFTP) est utilisé pour transférer l'image d'amorçage 
+Le protocole trivial de transfert de fichiers (<emphasis>Trivial File Transfert
+Protocol, TFTP</emphasis>) est utilisé pour transférer l'image d'amorçage 
 au client. Théoriquement, tout serveur sur les plateformes qui
 implémentent ces protocoles peut être utilisé. Dans les exemples qui vont 
 suivre, on donnera les commandes pour SunOS 4.x, SunOS 5.x (mieux connu sous 
 le nom de Solaris) et GNU/Linux.
 
-<note arch="i386"><para>
+<note arch="x86"><para>
 
 Pour utiliser la méthode de démarrage par l'exécution d'un environnement de
 pré-amorçage (PXE) de TFTP, vous avez besoin d'un serveur TFTP avec
 <userinput>tsize</userinput>. Sur un serveur &debian;, les paquets
-<classname>atftpd</classname> et <classname>tftp-hpa</classname> 
+<classname>atftpd</classname> et <classname>tftpd-hpa</classname> 
 sont bons&nbsp;; nous vous conseillons <classname>tftpd-hpa</classname>.
 
 </para></note>
@@ -107,18 +107,32 @@ tftp dgram udp wait root /usr/sbin/tcpd in.tftpd /tftpboot
 
 Les paquets Debian, quand ils sont installés, placent correctement cette
 ligne.
-</para><para> 
+</para>
 
-Lisez ce fichier et mémorisez le répertoire passé en argument à 
-<command>in.tftpd</command>&nbsp;; vous en aurez besoin ultérieurement. 
+<note><para>
+Les serveurs TFTP utilisaient habituellement le répertoire <filename>/tftpboot</filename> pour
+stocker les images. Cependant les paquets &debian; se servent d'autres répertoires
+pour obéir au <ulink url="&url-fhs-home;">standard sur l'organisation des fichiers</ulink>.
+Par exemple, <classname>tftpd-hpa</classname> utilise par défaut
+<filename>/var/lib/tftpboot</filename>. Vous aurez à modifier les exemples de cette section.
+</para></note>
+
+<para> 
+
+Lisez le fichier <filename>/etc/inetd.conf</filename> et mémorisez le répertoire
+passé en paramètre à <command>in.tftpd</command>
+<footnote>
+<para>
 L'option <userinput>-l</userinput> autorise certaines versions de 
 <command>in.tftpd</command> à enregistrer toutes les requêtes dans le journal 
-du système&nbsp;; c'est extrêmement pratique en cas d'erreur d'amorçage. Si 
-vous avez dû modifier <filename>/etc/inetd.conf</filename>, vous devrez le 
+du système&nbsp;; c'est extrêmement pratique en cas d'erreur d'amorçage.
+</para>
+</footnote>&nbsp;; vous en aurez besoin ultérieurement. 
+Si vous avez dû modifier <filename>/etc/inetd.conf</filename>, vous devrez le 
 signaler au processus <command>inetd</command>. Sur une machine Debian,
 lancez <userinput>/etc/init.d/inetd reload</userinput>&nbsp;; sur les autres 
 machines, retrouvez le numéro de processus de <command>inetd</command> et 
-tuez-le avec la commande 
+exécutez la commande 
 <userinput>kill -HUP <replaceable>inetd-pid</replaceable></userinput>.
 
 </para><para arch="mips">
@@ -131,11 +145,11 @@ man&oelig;uvre suivante sur votre serveur&nbsp;:
 # echo 1 &gt; /proc/sys/net/ipv4/ip_no_pmtu_disc
 </screen></informalexample>
 
-de façon à détourner la détection du MTU, sinon la PROM de la machine SGI ne pourra 
+de façon à empêcher la détection du MTU, sinon la PROM de la machine SGI ne pourra 
 pas télécharger le nouveau noyau. En outre, assurez-vous que les paquets TFTP 
 transitent par un port source inférieur à 32767 ou bien le téléchargement 
 s'arrêtera après le premier paquet. Vous pouvez toujours contourner ce
-         bogue de la PROM grâce au noyau 2.4.X en ajustant
+bogue de la PROM grâce au noyau 2.4.X en ajustant
 
 <informalexample><screen>
 # echo "2048 32767" &gt; /proc/sys/net/ipv4/ip_local_port_range
@@ -151,7 +165,7 @@ pour fixer l'intervalle des ports source que le serveur TFTP peut utiliser.
 <para>
 
 Ensuite, placez les images TFTP dont vous avez besoin (décrites dans la 
-<xref linkend="where-files"/>) dans le répertoire des images d'amorce 
+<xref linkend="where-files"/>) dans le répertoire des images d'amorçage 
 de <command>tftpd</command>. Généralement, ce répertoire s'appelle 
 <filename>/tftpboot</filename>. Vous aurez à faire un lien depuis ce fichier 
 vers le fichier que <command>tftpd</command> utilisera pour amorcer le client.
@@ -169,12 +183,12 @@ travers TFTP. Pour amorcer sur le réseau, utilisez
 <filename>yaboot.conf</filename> dans le répertoire TFTP.
 
 </para>
-<para arch="i386">
+<para arch="x86">
 
 Pour le démarrage PXE, tout ce dont vous avez besoin est dans l'archive
 <filename>netboot/netboot.tar.gz</filename>. Extrayez les fichiers dans le
 répertoire de l'image <command>tftpd</command>. Assurez-vous que le serveur
-DHCP donnera bien le fichier <filename>/pxelinux.0</filename> comme fichier
+DHCP donnera bien le fichier <filename>pxelinux.0</filename> comme fichier
 d'amorçage à <command>tftpd</command>.
 </para>
 <para arch="ia64">
@@ -193,7 +207,7 @@ d'amorçage à <command>tftpd</command>.
 Pour les DECstation, il y a des fichiers tftpimage pour chaque 
 sous-architecture&nbsp;; ils contiennent à la fois un noyau et un 
 installateur en un seul fichier. La convention
-de nommage est <replaceable>subarchitecture</replaceable>/netboot-boot.img.
+de nommage est <filename><replaceable>subarchitecture</replaceable>/netboot-boot.img</filename>.
 Copiez l'image tftp que vous allez utiliser dans
 <userinput>/tftpboot/tftpboot.img</userinput> si vous travaillez avec
 l'exemple de configuration de BOOTP/DHCP décrit plus haut.
@@ -205,7 +219,7 @@ la commande <userinput>boot <replaceable>#</replaceable>/tftp</userinput>
 où <replaceable>#</replaceable> est le numéro de périphérique 
 «&nbsp;TurboChannel&nbsp;» sur lequel amorcer. Sur la plupart des DECstation, 
 c'est le numéro <quote>3</quote>. Si le serveur BOOTP/DHCP ne fournit pas le
-nom du fichier ou bien que vous ayez besoin de passer des paramètres 
+nom du fichier ou si vous avez besoin de passer des paramètres 
 supplémentaires, cela peut se faire avec la syntaxe suivante&nbsp;:
 
 </para><para>
@@ -223,7 +237,7 @@ Il peut y avoir plusieurs causes&nbsp;:
 <listitem><para>
 
 Le microprogramme ne répond pas à une requête ARP durant un transfert TFTP. 
-Cela conduit à une suspension ARP et le transfert s'arrête. La solution est 
+Cela conduit à un <quote>timeout</quote> d'ARP et le transfert s'arrête. La solution est 
 d'ajouter l'adresse MAC de la carte Ethernet dans la table 
 ARP du serveur TFTP. On peut le faire avec
 <userinput>arp -s <replaceable>IP-address</replaceable>
@@ -234,8 +248,7 @@ machine serveur TFTP. On peut lire l'adresse MAC de la DECstation en entrant
 </para></listitem>
 <listitem><para>
 
-Le microprogramme impose une taille limite aux fichiers
-             utilisés pour amorcer par TFTP.
+Le microprogramme impose une taille limite aux fichiers utilisés pour amorcer par TFTP.
 
 </para></listitem>
 </orderedlist>
@@ -256,9 +269,9 @@ relatif au répertoire de l'image d'amorçage) en utilisant l'argument
 de SRM ou en configurant la variable d'environnement 
 <userinput>BOOT_FILE</userinput>. Vous pouvez aussi passer le nom de fichier 
 via BOOTP (pour <command>dhcpd</command> ISC, utilisez la directive 
-<userinput>filename</userinput>). À la différence de Open Firmware, il n'y a 
-pas de <emphasis>nom de fichier par défaut</emphasis> dans SRM donc vous 
-<emphasis>devez</emphasis> utiliser une de ces méthodes pour spécifier un nom 
+<userinput>filename</userinput>). À la différence d'Open Firmware, il n'y a 
+pas de <emphasis>nom de fichier par défaut</emphasis> dans SRM et vous 
+<emphasis>devez</emphasis> utiliser l'une de ces méthodes pour spécifier un nom 
 de fichier.
 
 </para>
@@ -268,12 +281,11 @@ de fichier.
    <title>Amorçage TFTP pour SPARC</title>
 <para>
 
-Les architectures SPARC utilisent des noms de sous-architecture, comme 
-<quote>SUN4M</quote> ou <quote>SUN4C</quote>&nbsp;; dans certains cas, 
-l'architecture est laissée en blanc et le fichier que le client recherche
-est simplement <filename>ip-du-client-en-hexa</filename>. Ainsi, si
-votre sous-architecture système est SUN4C et que son adresseIP est 
-192.168.1.3, le nom de fichier sera <filename>C0A80103.SUN4C</filename>.
+Certaines architectures SPARC ajoutent au nom de fichier la sous-architecture, comme 
+<quote>SUN4M</quote> ou <quote>SUN4C</quote>. Ainsi, si votre sous-architecture système
+est SUN4C et que son adresseIP est 192.168.1.3, le nom de fichier sera
+<filename>C0A80103.SUN4C</filename>. Cependant, pour certaines architectures, le fichier
+recherché est simplement <filename>client-ip-en-hex</filename>.
 Pour déterminer facilement ce nom et en supposant que l'adresse IP est 
 10.0.0.4, lancez un interpréteur de commandes et faites&nbsp;:
 
@@ -281,11 +293,18 @@ Pour déterminer facilement ce nom et en supposant que l'adresse IP est
 $ printf '%.2x%.2x%.2x%.2x\n' 10 0 0 4
 </screen></informalexample>
 
-Cela recrache l'adresse en hexadécimal. Il suffira de mettre les lettres en 
-majuscule et d'ajouter le nom de la sous-architecture pour obtenir le nom du 
-fichier.
+Il suffira de mettre les lettres en majuscule et d'ajouter le nom de la sous-architecture
+pour obtenir le nom du fichier.
 
-</para><para>
+</para>
+
+<para>
+
+Si tout a été fait correctement, la commande <userinput>boot net</userinput>
+depuis l'OpenPROM devrait charger l'image. Si l'image n'est pas trouvée,
+vérifiez dans les journaux du serveur tftp sous quel nom elle a été demandée.
+</para>
+<para>
 
 Vous pouvez aussi forcer certains systèmes SPARC à rechercher un nom de 
 fichier spécifique en l'ajoutant à la fin de la commande d'amorçage de 
@@ -314,7 +333,7 @@ des informations supplémentaires sur la configuration de votre système.
    </sect3>
 
    <sect3 arch="mips">
-   <title> Amorçage TFTP pour SGI</title>
+   <title>Amorçage TFTP pour SGI</title>
 <para>
 
 Sur les machines SGI, vous pouvez compter sur <command>bootpd</command> pour
@@ -331,7 +350,7 @@ bien par l'option <userinput>filename=</userinput> dans
 <para>
 
 Il n'est pas utile de configurer DHCP car vous indiquerez à CFE l'adresse 
-exacte du fichier qui doit être chargé
+exacte du fichier qui doit être chargé.
 
 </para>
    </sect3>

@@ -1,283 +1,553 @@
-<?xml version="1.0" encoding="ISO-8859-2"?>
 <!-- $Id$ -->
-<!-- original version: 33725 -->
+<!-- original version: 44560 -->
 
  <sect1 id="boot-troubleshooting">
- <title>Problémy s instalačním systémem</title>
+ <title>ProblĂŠmy s instalaÄnĂ­m systĂŠmem</title>
 <para>
 </para>
+
+  <sect2 arch="not-s390" id="unreliable-cd">
+  <title>Spolehlivost CD</title>
+<para>
+
+ObÄas, obzvlĂĄĹĄtÄ se starĹĄĂ­mi CD mechanikami, se nemusĂ­ podaĹit zavĂŠst
+instalaÄnĂ­ systĂŠm. Dokonce je moĹžnĂŠ, Ĺže se systĂŠm zavede, ale potĂŠ jiĹž
+CD mechaniku nenalezne, nebo bÄhem instalace bude ÄtenĂ­ vracet chyby.
+
+</para><para>
+
+MoĹžnĂ˝ch pĹĂ­Äin je spousta a mĹŻĹžeme zde vypsat jen ty nejbÄĹžnÄjĹĄĂ­,
+resp. mĹŻĹžeme zmĂ­nit obecnĂŠ postupy. Zbytek je na vĂĄs.
+
+</para><para>
+
+Nejprve byste mÄli vyzkouĹĄet dvÄ nejjednoduĹĄĹĄĂ­ vÄci.
+
+<itemizedlist>
+<listitem><para>
+
+Pokud z CD nejde zavĂŠst, zkontrolujte, Ĺže je disk vloĹžen sprĂĄvnÄ a Ĺže
+nenĂ­ ĹĄpinavĂ˝.
+
+</para></listitem>
+<listitem><para>
+
+Pokud systĂŠm sice nabÄhne, ale rozpoznĂĄnĂ­ CD selĹže, zkuste z menu
+opakovanÄ vybrat moĹžnost <menuchoice> <guimenuitem>Rozpoznat a
+pĹipojit CD-ROM</guimenuitem> </menuchoice>. Je znĂĄmo, Ĺže se tĂ­m
+vyĹeĹĄĂ­ nÄkterĂŠ problĂŠmy s DMA starĹĄĂ­ch CD mechanik.
+
+</para></listitem>
+</itemizedlist>
+
+</para><para>
+
+JestliĹže to stĂĄle nepomohlo, zkuste nÄkterĂ˝ z nĂĄvrhĹŻ nĂ­Ĺže. VÄtĹĄina
+nĂĄvrhĹŻ platĂ­ jak pro CD mechaniky, tak pro DVD, Blue Ray a podobnĂŠ
+mechaniky.
+
+</para><para>
+
+Jako poslednĂ­ zĂĄchrana zde stĂĄle existuje moĹžnost zvolit instalaci
+z jinĂŠho mĂŠdia, napĹ. ze sĂ­tÄ.
+
+</para>
+
+  <sect3>
+  <title>BÄĹžnĂŠ problĂŠmy</title>
+
+<itemizedlist>
+  <listitem><para>
+
+NÄkterĂŠ starĹĄĂ­ CD mechaniky nepodporujĂ­ ÄtenĂ­ diskĹŻ vypĂĄlenĂ˝ch
+na novÄjĹĄĂ­ch vypalovaÄkĂĄch vyĹĄĹĄĂ­mi rychlostmi.
+
+  </para></listitem>
+  <listitem><para>
+
+JestliĹže vĂĄĹĄ systĂŠm zvlĂĄdĂĄ zavĂĄdÄnĂ­ z CD, nemusĂ­ to nutnÄ znamenat, Ĺže
+Ĺže tuto mechaniku (pĹesnÄji ĹeÄeno ĹadiÄ, ke kterĂŠmu je mechanika
+pĹipojena) podporuje i Linux.
+
+  </para></listitem>
+  <listitem><para>
+
+NÄkterĂŠ starĹĄĂ­ CD mechaniky nefungujĂ­ sprĂĄvnÄ pĹi povolenĂŠm DMA
+<quote>direct memory access</quote>.
+
+  </para></listitem>
+</itemizedlist>
+
+  </sect3>
+
+  <sect3>
+  <title>Jak zjistit o problĂŠmu co nejvĂ­ce (a moĹžnĂĄ jej vyĹeĹĄit)</title>
+<para>
+
+Pokud se nedaĹĂ­ z CD zavĂŠst systĂŠm, zkuste nĂĄsledujĂ­cĂ­.
+
+<itemizedlist>
+  <listitem><para>
+
+Zkontrolujte, zda je v BIOSu povoleno zavĂĄdÄnĂ­ z CD (starĹĄĂ­ systĂŠmy to
+nejspĂ­ĹĄ nezvlĂĄdajĂ­) a Ĺže vaĹĄe CD mechanika podporuje mĂŠdia, kterĂĄ
+pouĹžĂ­vĂĄte.
+
+  </para></listitem>
+  <listitem><para>
+
+Pokud jste si stĂĄhli iso obraz, zkontrolujte, Ĺže souhlasĂ­ kontrolnĂ­
+souÄet s tĂ­m, kterĂ˝ se nachĂĄzĂ­ v souboru
+<filename>MD5SUMS</filename>. Soubor by mÄl leĹžet na stejnĂŠm mĂ­stÄ, ze
+kterĂŠho jste stĂĄhli obraz.
+
+<informalexample><screen>
+<prompt>$</prompt> <userinput>md5sum <replaceable>debian-testing-i386-netinst.iso</replaceable></userinput>
+a20391b12f7ff22ef705cee4059c6b92  <replaceable>debian-testing-i386-netinst.iso</replaceable>
+</screen></informalexample>
+
+DĂĄle zkontrolujte, Ĺže kontrolnĂ­ souÄet souhlasĂ­ i po vypĂĄlenĂ­ obrazu.
+
+<informalexample><screen>
+<prompt>$</prompt> <userinput>dd if=/dev/cdrom | \</userinput>
+<prompt>></prompt> <userinput>head -c `stat --format=%s <replaceable>debian-testing-i386-netinst.iso</replaceable>` | \</userinput>
+<prompt>></prompt> <userinput>md5sum</userinput>
+a20391b12f7ff22ef705cee4059c6b92  -
+262668+0 records in
+262668+0 records out
+134486016 bytes (134 MB) copied, 97.474 seconds, 1.4 MB/s
+</screen></informalexample>
+
+  </para></listitem>
+</itemizedlist>
+
+</para><para>
+
+Pokud se podaĹilo zavĂŠst instalaÄnĂ­ systĂŠm, ale ten uĹž CD nerozpoznĂĄ,
+postaÄĂ­ nÄkdy z hlavnĂ­ho instalaÄnĂ­ho menu znovu spustit krok
+rozpoznĂĄnĂ­ CD. MĂĄte-li vĂ­ce mechanik, zkuste pouĹžĂ­t nÄjakou
+jinou. JestliĹže to nepomĂĄhĂĄ, nebo se pĹi ÄtenĂ­ objevujĂ­ chyby, zkuste
+nÄkterou z rad nĂ­Ĺže. Pro nĂĄsledujĂ­cĂ­ kroky je tĹeba zĂĄkladnĂ­ znalost
+Linuxu. Pro spouĹĄtÄnĂ­ rĹŻznĂ˝ch pĹĂ­kazĹŻ byste se mÄli pĹepnout na druhou
+virtuĂĄlnĂ­ konzolu (VT2) a aktivovat tam spĂ­cĂ­ shell.
+
+<itemizedlist>
+  <listitem><para>
+
+Zkontrolujte podezĹelĂŠ hlĂĄĹĄky na ÄtvrtĂŠ virtuĂĄlnĂ­ konzoli, nebo si
+editorem <command>nano</command> prohlĂŠdnÄte obsah souboru
+<filename>/var/log/syslog</filename>. PotĂŠ zkontrolujte vĂ˝stup pĹĂ­kazu
+<command>dmesg</command>.
+
+  </para></listitem>
+  <listitem><para>
+
+Ve vĂ˝pisu pĹĂ­kazu <command>dmesg</command> se podĂ­vejte, zda byla vaĹĄe
+CD mechanika nalezena. MÄli byste tam vidÄt nÄco podobnĂŠho (ne nutnÄ v
+tomto poĹadĂ­):
+
+<informalexample><screen>
+Probing IDE interface ide1...
+hdc: TOSHIBA DVD-ROM SD-R6112, ATAPI CD/DVD-ROM drive
+ide1 at 0x170-0x177,0x376 on irq 15
+hdc: ATAPI 24X DVD-ROM DVD-R CD-R/RW drive, 2048kB Cache, UDMA(33)
+Uniform CD-ROM driver Revision: 3.20
+</screen></informalexample>
+
+NevidĂ­te-li nic podobnĂŠho, je moĹžnĂŠ, Ĺže ĹadiÄ, ke kterĂŠmu je vaĹĄe CD
+mechanika pĹipojena, nebyl rozpoznĂĄn, nebo nenĂ­ podporovĂĄn. JestliĹže
+vĂ­te, kterĂ˝ ovladaÄ je vyĹžadovĂĄn pro vĂĄĹĄ ĹadiÄ, mĹŻĹžete jej zkusit
+nahrĂĄt ruÄnÄ pĹĂ­kazem <command>modprobe</command>.
+
+  </para></listitem>
+  <listitem><para>
+
+Zkontrolujte, zda se v adresĂĄĹi <filename>/dev/</filename> vytvoĹil
+soubor zaĹĂ­zenĂ­ odpovĂ­dajĂ­cĂ­ vaĹĄĂ­ CD mechanice. Podle vĂ˝ĹĄe uvedenĂŠho
+pĹĂ­kladu by to byl soubor <filename>/dev/hdc</filename>. TakĂŠ by mÄl
+existovat <filename>/dev/cdroms/cdrom0</filename>.
+
+  </para></listitem>
+  <listitem><para>
+
+PĹĂ­kazem <command>mount</command> se pĹesvÄdÄte, zda je CD pĹipojeno.
+Pokud ne, zkuste je pĹipojit ruÄnÄ.
+
+<informalexample><screen>
+<prompt>$</prompt> <userinput>mount /dev/<replaceable>hdc</replaceable> /cdrom</userinput>
+</screen></informalexample>
+
+PodĂ­vejte se, zda tento pĹĂ­kaz nevyvolal nÄjakĂĄ chybovĂĄ hlĂĄĹĄenĂ­.
+
+  </para></listitem>
+  <listitem><para>
+
+Zkontrolujte, zda je DMA zapnutĂŠ:
+
+<informalexample><screen>
+<prompt>$</prompt> <userinput>cd /proc/<replaceable>ide</replaceable>/<replaceable>hdc</replaceable></userinput>
+<prompt>$</prompt> <userinput>grep using_dma settings</userinput>
+using_dma      1       0       1       rw
+</screen></informalexample>
+
+ÄĂ­slo <quote>1</quote> v prvnĂ­m sloupci za textem
+<literal>using_dma</literal> znamenĂĄ, Ĺže je DMA povoleno. Pokud je,
+zkuste je vypnout:
+
+<informalexample><screen>
+<prompt>$</prompt> <userinput>echo -n "using_dma:0" >settings</userinput>
+</screen></informalexample>
+
+PĹed spuĹĄtÄnĂ­m pĹĂ­kazu se ujistÄte, Ĺže jste v adresĂĄĹi zaĹĂ­zenĂ­, kterĂŠ
+odpovĂ­dĂĄ vaĹĄĂ­ CD mechanice.
+
+  </para></listitem>
+  <listitem><para>
+
+Pokud se bÄhem instalace vyskytnou problĂŠmy, zkuste zkontrolovat
+integritu mĂŠdia pomocĂ­ volby v hlavnĂ­m menu instalaÄnĂ­ho systĂŠmu. Toto
+menu mĹŻĹžete pouĹžĂ­t jako rozumnĂ˝ test, zda je moĹžnĂŠ spolehlivÄ pĹeÄĂ­st
+celĂŠ CD.
+
+  </para></listitem>
+</itemizedlist>
+
+</para>
+  </sect3>
+  </sect2>
 
   <sect2 condition="supports-floppy-boot" id="unreliable-floppies">
   <title>Spolehlivost disket</title>
 
 <para>
 
-Pro lidi, kteří instalují Debian z disket, bývá největším problémem
-spolehlivost těchto médií.
+Pro lidi, kteĹĂ­ instalujĂ­ Debian z disket, bĂ˝vĂĄ nejvÄtĹĄĂ­m problĂŠmem
+spolehlivost tÄchto mĂŠdiĂ­.
 
 </para><para>
 
-Nejhorší problémy bývají se zaváděcí disketou, poněvadž tuto disketu
-čte BIOS ještě před zavedením Linuxu. BIOS nedokáže číst disketu tak
-spolehlivě jako linuxový ovladač, a pokud dojde k chybnému načtení dat,
-může se čtení <quote>jen tak</quote> zastavit bez vypsání chybového
-hlášení. K chybnému čtení může samozřejmě dojít i u disket s ovladači
-a instalačním systémem, což se, na rozdíl od zaváděcí diskety, projeví
-záplavou hlášení o V/V chybách.
+NejhorĹĄĂ­ problĂŠmy bĂ˝vajĂ­ se zavĂĄdÄcĂ­ disketou, ponÄvadĹž tuto disketu
+Äte BIOS jeĹĄtÄ pĹed zavedenĂ­m Linuxu. BIOS nedokĂĄĹže ÄĂ­st disketu tak
+spolehlivÄ jako linuxovĂ˝ ovladaÄ, a pokud dojde k chybnĂŠmu naÄtenĂ­ dat,
+mĹŻĹže se ÄtenĂ­ <quote>jen tak</quote> zastavit bez vypsĂĄnĂ­ chybovĂŠho
+hlĂĄĹĄenĂ­. K chybnĂŠmu ÄtenĂ­ mĹŻĹže samozĹejmÄ dojĂ­t i u disket s ovladaÄi
+a instalaÄnĂ­m systĂŠmem, coĹž se, na rozdĂ­l od zavĂĄdÄcĂ­ diskety, projevĂ­
+zĂĄplavou hlĂĄĹĄenĂ­ o V/V chybĂĄch.
 
 </para><para>
 
-Pokud se vám instalace zasekne vždy na stejné disketě, první věc,
-kterou byste měli udělat, je znovu stáhnout obraz diskety a zapsat
-jej na <emphasis>jinou</emphasis> disketu. Přeformátování původní
-diskety nemusí vést k úspěchu, ani když se po formátování vypíše, že
-operace proběhla bez problémů. Někdy je užitečné zkusit nahrát
-diskety na jiném počítači.
+Pokud se vĂĄm instalace zasekne vĹždy na stejnĂŠ disketÄ, prvnĂ­ vÄc,
+kterou byste mÄli udÄlat, je znovu stĂĄhnout obraz diskety a zapsat
+jej na <emphasis>jinou</emphasis> disketu. PĹeformĂĄtovĂĄnĂ­ pĹŻvodnĂ­
+diskety nemusĂ­ vĂŠst k ĂşspÄchu, ani kdyĹž se po formĂĄtovĂĄnĂ­ vypĂ­ĹĄe, Ĺže
+operace probÄhla bez problĂŠmĹŻ. NÄkdy je uĹžiteÄnĂŠ zkusit nahrĂĄt
+diskety na jinĂŠm poÄĂ­taÄi. MĂĄte-li podezĹenĂ­ na problĂŠm pĹi stahovĂĄnĂ­,
+ovÄĹte md5souÄty obrazĹŻ.
 
 </para><para>
 
-Jeden z uživatelů napsal, že se mu podařilo vytvořit bezchybnou
-zaváděcí disketu až na <emphasis>třetí</emphasis> takový pokus.
+Jeden z uĹživatelĹŻ napsal, Ĺže se mu podaĹilo vytvoĹit bezchybnou
+zavĂĄdÄcĂ­ disketu aĹž na <emphasis>tĹetĂ­</emphasis> takovĂ˝ pokus.
 
 </para><para>
 
-Podle dalších uživatelů může systém úspěšně naběhnout až na několikátý
-pokus při čtení ze stejné diskety. Příčinou jsou nespolehlivé
-disketové jednotky nebo chyby ve firmwaru.
+Podle dalĹĄĂ­ch uĹživatelĹŻ mĹŻĹže systĂŠm ĂşspÄĹĄnÄ nabÄhnout aĹž na nÄkolikĂĄtĂ˝
+pokus pĹi ÄtenĂ­ ze stejnĂŠ diskety. PĹĂ­Äinou jsou nespolehlivĂŠ
+disketovĂŠ jednotky nebo chyby ve firmwaru.
 
 </para>
   </sect2>
 
-  <sect2><title>Zaváděcí konfigurace</title>
+  <sect2><title>ZavĂĄdÄcĂ­ konfigurace</title>
 
 <para>
 
-Pokud se jádro zasekne během zavádění, nerozezná připojená zařízení,
-nebo disky nejsou korektně rozpoznány, v prvé řadě zkontrolujte
-parametry jádra, kterými se zabývá <xref linkend="boot-parms"/>.
+Pokud se jĂĄdro zasekne bÄhem zavĂĄdÄnĂ­, nerozeznĂĄ pĹipojenĂĄ zaĹĂ­zenĂ­,
+nebo disky nejsou korektnÄ rozpoznĂĄny, v prvĂŠ ĹadÄ zkontrolujte
+parametry jĂĄdra, kterĂ˝mi se zabĂ˝vĂĄ <xref linkend="boot-parms"/>.
 
 </para><para>
 
-Jestliže používáte vlastní jádro, ujistěte se, že jste v nastavení
-jádra povolili možnost <userinput>CONFIG_DEVFS</userinput>.
-Instalační systém totiž tuto volbou vyžaduje.
-
-</para><para>
-
-Často pomůže, pokud z počítače vyjmete přídavná zařízení a
-znovu zkusíte zavést systém. <phrase arch="i386">Obzvláště
-problematické mohou být interní modemy, zvukové karty a zařízení
+Äasto pomĹŻĹže, pokud z poÄĂ­taÄe vyjmete pĹĂ­davnĂĄ zaĹĂ­zenĂ­ a
+znovu zkusĂ­te zavĂŠst systĂŠm. <phrase arch="x86">ObzvlĂĄĹĄtÄ
+problematickĂŠ mohou bĂ˝t internĂ­ modemy, zvukovĂŠ karty a zaĹĂ­zenĂ­
 Plug-n-Play.</phrase>
 
 </para><para>
 
-Pokud máte ve svém počítači více než 512MB paměti a instalační systém
-se v průběhu zavádění jádra zasekne, zkuste omezit viditelnou paměť
-zaváděcím parametrem <userinput>mem=512m</userinput>.
+Pokud mĂĄte ve svĂŠm poÄĂ­taÄi vĂ­ce neĹž 512MB pamÄti a instalaÄnĂ­ systĂŠm
+se v prĹŻbÄhu zavĂĄdÄnĂ­ jĂĄdra zasekne, zkuste omezit viditelnou pamÄĹĽ
+zavĂĄdÄcĂ­m parametrem <userinput>mem=512m</userinput>.
 
 </para>
   </sect2>
 
-  <sect2 arch="i386" id="i386-boot-problems">
-  <title>Běžné instalační problémy na &arch-title;</title>
+  <sect2 arch="x86" id="i386-boot-problems">
+  <title>BÄĹžnĂŠ instalaÄnĂ­ problĂŠmy na &arch-title;</title>
 <para>
 
-V praxi se můžete potkat s instalačními problémy, které lze vyřešit,
-nebo je aspoň obejít, zadáním určitých zaváděcích parametrů
-instalačnímu programu.
+V praxi se mĹŻĹžete potkat s instalaÄnĂ­mi problĂŠmy, kterĂŠ lze vyĹeĹĄit,
+nebo je aspoĹ obejĂ­t, zadĂĄnĂ­m urÄitĂ˝ch zavĂĄdÄcĂ­ch parametrĹŻ
+instalaÄnĂ­mu programu.
 
 </para><para>
 
-Některé systémy mají disketové mechaniky s invertovanými DCL. Pokud
-při čtení z mechaniky zaznamenáte chyby a přitom jste si jisti, že
-disketa je dobrá, zkuste parametr
+NÄkterĂŠ systĂŠmy majĂ­ disketovĂŠ mechaniky s invertovanĂ˝mi DCL. Pokud
+pĹi ÄtenĂ­ z mechaniky zaznamenĂĄte chyby a pĹitom jste si jisti, Ĺže
+disketa je dobrĂĄ, zkuste parametr
 <userinput>floppy=thinkpad</userinput>.
 
 </para><para>
 
-Na některých systémech jako např. IBM PS/1 nebo ValuePoint, které
-používají řadiče disků ST-506, asi nebude řadič IDE rozpoznán
-korektně. Nejprve pokud možno vyzkoušejte zavést systém beze změny
-parametrů. Pokud nebude disk rozpoznán, zkuste zadat geometrii disku
-(počet cylindrů, hlav a sektorů) pomocí parametru:
+Na nÄkterĂ˝ch systĂŠmech jako napĹ. IBM PS/1 nebo ValuePoint, kterĂŠ
+pouĹžĂ­vajĂ­ ĹadiÄe diskĹŻ ST-506, asi nebude ĹadiÄ IDE rozpoznĂĄn
+korektnÄ. Nejprve pokud moĹžno vyzkouĹĄejte zavĂŠst systĂŠm beze zmÄny
+parametrĹŻ. Pokud nebude disk rozpoznĂĄn, zkuste zadat geometrii disku
+(poÄet cylindrĹŻ, hlav a sektorĹŻ) pomocĂ­ parametru:
 <userinput>hd=<replaceable>cylindry</replaceable>,<replaceable>hlavy</replaceable>,<replaceable>sektory</replaceable></userinput>.
 
 </para><para>
 
-Jestliže máte velmi starý počítač a jádro se zasekne po hlášce
+JestliĹže mĂĄte velmi starĂ˝ poÄĂ­taÄ a jĂĄdro se zasekne po hlĂĄĹĄce
 <computeroutput>Checking 'hlt' instruction...</computeroutput>, potom
-by mohl pomoci parametr <userinput>no-hlt</userinput>, kterým zakážete
-provádění tohoto testu.
+by mohl pomoci parametr <userinput>no-hlt</userinput>, kterĂ˝m zakĂĄĹžete
+provĂĄdÄnĂ­ tohoto testu.
 
 </para><para>
 
-Jestliže je obraz na obrazovce během zavádění jádra
-<quote>divný</quote>, jako třeba čistě bílý, naprosto černý, nebo se
-zobrazuje barevné <quote>smetí</quote>, máte problematickou grafickou
-kartu, která se neumí správně přepnout do grafického režimu. V takovém
-případě pomůže zaváděcí parametr
-<userinput>debian-installer/framebuffer=false</userinput> nebo
-<userinput>video=vga16:off</userinput>, kterým vypnete grafickou
-konzolu. Během instalace se však nezobrazí výzva pro výběr jazyka
-a celá instalace proběhne pouze v angličtině. Zaváděcí parametry
-popisuje <xref linkend="boot-parms"/>.
+JestliĹže je obraz na obrazovce bÄhem zavĂĄdÄnĂ­ jĂĄdra
+<quote>divnĂ˝</quote>, jako tĹeba ÄistÄ bĂ­lĂ˝, naprosto ÄernĂ˝, nebo se
+zobrazuje barevnĂŠ <quote>smetĂ­</quote>, mĂĄte problematickou grafickou
+kartu, kterĂĄ se neumĂ­ sprĂĄvnÄ pĹepnout do grafickĂŠho reĹžimu. V takovĂŠm
+pĹĂ­padÄ pomĹŻĹže zavĂĄdÄcĂ­ parametr
+<userinput>fb=false video=vga16:off</userinput>, kterĂ˝m vypnete
+grafickou konzolu. BÄhem instalace vĹĄak bude k dispozici pouze
+podmnoĹžina dostupnĂ˝ch jazykĹŻ, protoĹže nÄkterĂŠ jazyky nejdou v ÄistÄ
+textovĂŠm reĹžimu zobrazit. ZavĂĄdÄcĂ­ parametry popisuje
+<xref linkend="boot-parms"/>.
 
 </para>
 
    <sect3>
-   <title>Systém zamrzne během konfigurování PCMCIA</title>
+   <title>SystĂŠm zamrzne bÄhem konfigurovĂĄnĂ­ PCMCIA</title>
 <para>
 
-Některé modely notebooků firmy Dell jsou známé tím, že se zhroutí,
-když automatické rozpoznávání PCMCIA zařízení přistoupí na určité
-hardwarové adresy. Toto chování mohou vykazovat i některé notebooky
-jiných výrobců. Pokud se u vás tento problém projevuje a pro instalaci
-podporu PCMCIA nepotřebujete, můžete ji vypnout zaváděcím parametrem
-<userinput>hw-detect/start_pcmcia=false</userinput>. Služby PCMCIA
-můžete zprovoznit později po instalaci.
+NÄkterĂŠ modely notebookĹŻ firmy Dell jsou znĂĄmĂŠ tĂ­m, Ĺže se zhroutĂ­,
+kdyĹž automatickĂŠ rozpoznĂĄvĂĄnĂ­ PCMCIA zaĹĂ­zenĂ­ pĹistoupĂ­ na urÄitĂŠ
+hardwarovĂŠ adresy. Toto chovĂĄnĂ­ mohou vykazovat i nÄkterĂŠ notebooky
+jinĂ˝ch vĂ˝robcĹŻ. Pokud se u vĂĄs tento problĂŠm projevuje a pro instalaci
+podporu PCMCIA nepotĹebujete, mĹŻĹžete ji vypnout zavĂĄdÄcĂ­m parametrem
+<userinput>hw-detect/start_pcmcia=false</userinput>. SluĹžby PCMCIA
+mĹŻĹžete zprovoznit pozdÄji po instalaci.
 
 </para><para>
 
-Alternativně můžete instalační program zavést v expertním režimu. Pak
-budete mimo jiné dotázáni na rozsah zdrojů, které váš hardware
-vyžaduje. Například pokud máte jeden z výše zmíněných Dellů, měli
+AlternativnÄ mĹŻĹžete instalaÄnĂ­ program zavĂŠst v expertnĂ­m reĹžimu. Pak
+budete mimo jinĂŠ dotĂĄzĂĄni na rozsah zdrojĹŻ, kterĂŠ vĂĄĹĄ hardware
+vyĹžaduje. NapĹĂ­klad pokud mĂĄte jeden z vĂ˝ĹĄe zmĂ­nÄnĂ˝ch DellĹŻ, mÄli
 byste zde zadat <userinput>exclude port
-0x800-0x8ff</userinput>. Seznam obvyklých rozsahů se nachází například
+0x800-0x8ff</userinput>. Seznam obvyklĂ˝ch rozsahĹŻ se nachĂĄzĂ­ napĹĂ­klad
 v <ulink
 url="http://pcmcia-cs.sourceforge.net/ftp/doc/PCMCIA-HOWTO-1.html#ss1.12">System
 resource settings section of the PCMCIA HOWTO</ulink>.
-Při zadávání rozsahů do instalačního programu vynechejte všechny
-čárky (pokud se v rozsazích nachází).
+PĹi zadĂĄvĂĄnĂ­ rozsahĹŻ do instalaÄnĂ­ho programu vynechejte vĹĄechny
+ÄĂĄrky (pokud se v rozsazĂ­ch nachĂĄzĂ­).
 
 </para>
    </sect3>
 
-   <sect3 arch="i386">
-   <title>Systém zamrzne během nahrávání USB modulů</title>
+   <sect3 arch="x86">
+   <title>SystĂŠm zamrzne bÄhem nahrĂĄvĂĄnĂ­ USB modulĹŻ</title>
 <para>
 
-Jádro se standardně snaží nahrát ovladače pro USB a konkrétně pro USB
-klávesnice, aby umožnilo instalaci uživatelům s nestandardními USB
-klávesnicemi. Bohužel existují porouchané USB systémy, na kterých se
-ovladač při nahrávání zasekne. Obejít je můžete tím, že problémový USB
-řadič deaktivujete v BIOSu základní desky. Jinou možností je zaváděcí
+JĂĄdro se standardnÄ snaĹžĂ­ nahrĂĄt ovladaÄe pro USB a konkrĂŠtnÄ pro USB
+klĂĄvesnice, aby umoĹžnilo instalaci uĹživatelĹŻm s nestandardnĂ­mi USB
+klĂĄvesnicemi. BohuĹžel existujĂ­ porouchanĂŠ USB systĂŠmy, na kterĂ˝ch se
+ovladaÄ pĹi nahrĂĄvĂĄnĂ­ zasekne. ObejĂ­t je mĹŻĹžete tĂ­m, Ĺže problĂŠmovĂ˝ USB
+ĹadiÄ deaktivujete v BIOSu zĂĄkladnĂ­ desky. Jinou moĹžnostĂ­ je zavĂĄdÄcĂ­
 parametr <userinput>debian-installer/probe/usb=false</userinput>,
-který zabrání zavedení USB modulů, i když je příslušný hardware
+kterĂ˝ zabrĂĄnĂ­ zavedenĂ­ USB modulĹŻ, i kdyĹž je pĹĂ­sluĹĄnĂ˝ hardware
 nalezen.
 
 </para>
    </sect3>
   </sect2>
 
+  <sect2 arch="sparc" id="sparc-boot-problems">
+  <title>BÄĹžnĂŠ problĂŠmy s instalacĂ­ na &arch-title;</title>
+<para>
+
+PĹi instalaci existuje nÄkolik znĂĄmĂ˝ch problĂŠmĹŻ, kterĂŠ je dobrĂŠ zmĂ­nit.
+
+</para>
+
+   <sect3>
+   <title>ChybnĂŠ pĹesmÄrovĂĄnĂ­ video vĂ˝stupu</title>
+<para>
+
+NenĂ­ neobvyklĂŠ, Ĺže ve vĂ˝chozĂ­ konfiguraci majĂ­ systĂŠmy &arch-title; dvÄ
+grafickĂŠ karty, napĹĂ­klad ATI a Sun Creator 3D. V nÄkterĂ˝ch pĹĂ­padech se
+mĹŻĹže stĂĄt, Ĺže Linux nepĹesmÄruje svĹŻj video vĂ˝stup na kartu pĹŻvodnÄ zvolenou
+firmwarem, ale na tu druhou. To pak mĹŻĹže vypadat, jako by se zavĂĄdÄnĂ­
+zaseklo. PoslednĂ­ viditelnĂĄ hlĂĄĹĄka bĂ˝vĂĄ obvykle:
+
+<informalexample><screen>
+Remapping the kernel... done
+Booting Linux...
+</screen></informalexample>
+
+MoĹžnĂ˝m ĹeĹĄenĂ­m je fyzickĂŠ odstranÄnĂ­ jednĂŠ z grafickĂ˝ch karet, nebo
+zakĂĄzĂĄnĂ­ nepouĹžĂ­vanĂŠ karty pomocĂ­ parametru jĂĄdra. NapĹĂ­klad pro
+zakĂĄzĂĄnĂ­ karty ATI byste zavedli instalaÄnĂ­ systĂŠm s parametrem
+<userinput>video=atyfb:off</userinput>.
+
+</para><para>
+
+Je moĹžnĂŠ, Ĺže tento parametr budete muset pĹed restartem pĹidat i do
+konfiguraÄnĂ­ho souboru zavadÄÄe silo
+(<filename>/target/etc/silo.conf</filename>) a pokud jste instalovali
+X11, tak v souboru <filename>/etc/X11/xorg.conf</filename> zmÄnit
+ovladaÄ, aby odpovĂ­dal skuteÄnÄ pouĹžitĂŠ kartÄ.
+
+</para>
+   </sect3>
+
+   <sect3>
+   <title>Chyba pĹi zavĂĄdÄnĂ­ z CD-ROM</title>
+<para>
+
+NÄkterĂŠ Sparc systĂŠmy jsou notoricky znĂĄmĂŠ tĂ­m, Ĺže majĂ­ problĂŠmy se
+zavĂĄdÄnĂ­m z CD-ROM. A i kdyĹž se zavedenĂ­ podaĹĂ­, mohou se bÄhem
+instalace objevovat nevysvÄtlitelnĂŠ chyby. NejvĂ­ce problĂŠmĹŻ bylo
+hlĂĄĹĄeno na systĂŠmech SunBlade.
+
+</para><para>
+
+DoporuÄujeme tyto systĂŠmy instalovat zavedenĂ­m ze sĂ­tÄ.
+
+</para>
+   </sect3>
+  </sect2>
+
+
   <sect2 id="kernel-msgs">
-  <title>Význam hlášek při zavádění jádra</title>
+  <title>VĂ˝znam hlĂĄĹĄek pĹi zavĂĄdÄnĂ­ jĂĄdra</title>
 
 <para>
 
-Během zavádění systému můžete vidět spoustu hlášení typu
+BÄhem zavĂĄdÄnĂ­ systĂŠmu mĹŻĹžete vidÄt spoustu hlĂĄĹĄenĂ­ typu
 <computeroutput>can't find ...</computeroutput>,
 <computeroutput>... not present</computeroutput>,
 <computeroutput>can't initialize ...</computeroutput> nebo
 <computeroutput>this driver release depends on ...</computeroutput>.
-Většina těchto hlášení je neškodná.  Vy je vidíte proto, že jádro
-instalačního systému je přeloženo tak, aby mohlo běžet na počítačích s
-odlišnými hardwarovými konfiguracemi a mnoha různými periferními
-zařízeními. Samozřejmě že žádný počítač asi nebude mít všechna
-zařízení, tudíž systém nahlásí několik nenalezených zařízení. Také se
-může stát, že se zavádění na chvíli zastaví. To se stává při čekání na
-odpověď od zařízení, které v systému chybí. Pokud se vám zdá doba, za
-kterou systém naběhne, příliš dlouhá, můžete si později vytvořit
-vlastní jádro (viz <xref linkend="kernel-baking"/>).
+VÄtĹĄina tÄchto hlĂĄĹĄenĂ­ je neĹĄkodnĂĄ.  Vy je vidĂ­te proto, Ĺže jĂĄdro
+instalaÄnĂ­ho systĂŠmu je pĹeloĹženo tak, aby mohlo bÄĹžet na poÄĂ­taÄĂ­ch s
+odliĹĄnĂ˝mi hardwarovĂ˝mi konfiguracemi a mnoha rĹŻznĂ˝mi perifernĂ­mi
+zaĹĂ­zenĂ­mi. SamozĹejmÄ Ĺže ĹžĂĄdnĂ˝ poÄĂ­taÄ asi nebude mĂ­t vĹĄechna
+zaĹĂ­zenĂ­, tudĂ­Ĺž systĂŠm nahlĂĄsĂ­ nÄkolik nenalezenĂ˝ch zaĹĂ­zenĂ­. TakĂŠ se
+mĹŻĹže stĂĄt, Ĺže se zavĂĄdÄnĂ­ na chvĂ­li zastavĂ­. To se stĂĄvĂĄ pĹi ÄekĂĄnĂ­ na
+odpovÄÄ od zaĹĂ­zenĂ­, kterĂŠ v systĂŠmu chybĂ­. Pokud se vĂĄm zdĂĄ doba, za
+kterou systĂŠm nabÄhne, pĹĂ­liĹĄ dlouhĂĄ, mĹŻĹžete si pozdÄji vytvoĹit
+vlastnĂ­ jĂĄdro (viz <xref linkend="kernel-baking"/>).
 
 </para>
   </sect2>
 
 
   <sect2 id="problem-report">
-  <title><command>dbootstrap</command> &mdash; hlášení problému</title>
+  <title>HlĂĄĹĄenĂ­ problĂŠmĹŻ s instalacĂ­</title>
 <para>
 
-Jestliže se dostanete přes úvodní fázi zavedení systému, ale nemůžete
-instalaci dokončit, můžete použít menu <quote>Report a Problem</quote>
-(nahlášení chyby). Tato volba vám umožní uložit na disketu nebo
-zpřístupnit přes webové rozhraní chybové hlášky, stav systému a jiné
-užitečné informace, které vám mohou naznačit, v čem je problém a jak
-ho vyřešit. Tyto údaje nám také můžete poslat spolu s hlášením
-o chybě.
+JestliĹže se dostanete pĹes ĂşvodnĂ­ fĂĄzi zavedenĂ­ systĂŠmu, ale nemĹŻĹžete
+instalaci dokonÄit, mĹŻĹžete pouĹžĂ­t menu <guimenuitem>UloĹžit zĂĄznamy pro
+pozdÄjĹĄĂ­ ladÄnĂ­</guimenuitem>. Tato volba vĂĄm umoĹžnĂ­ uloĹžit na disketu nebo
+zpĹĂ­stupnit pĹes webovĂŠ rozhranĂ­ chybovĂŠ hlĂĄĹĄky, stav systĂŠmu a jinĂŠ
+uĹžiteÄnĂŠ informace, kterĂŠ vĂĄm mohou naznaÄit, v Äem je problĂŠm a jak
+ho vyĹeĹĄit. Tyto Ăşdaje nĂĄm takĂŠ mĹŻĹžete poslat spolu s hlĂĄĹĄenĂ­m
+o chybÄ.
 
 </para><para>
 
-Další užitečné informace můžete najít během instalace v adresáři
-<filename>/var/log/</filename> a později v novém systému ve
+DalĹĄĂ­ uĹžiteÄnĂŠ informace mĹŻĹžete najĂ­t bÄhem instalace v adresĂĄĹi
+<filename>/var/log/</filename> a pozdÄji v novĂŠm systĂŠmu ve
 <filename>/var/log/installer/</filename>.
 
 </para>
   </sect2>
 
   <sect2 id="submit-bug">
-  <title>Pošlete nám zprávu o instalaci</title>
+  <title>PoĹĄlete nĂĄm zprĂĄvu o instalaci</title>
 <para>
 
-Pokud problém přetrvává, prosíme vás o zaslání zprávy o průběhu
-instalace. Zprávu o instalaci můžete zaslat i v případě, že vše
-proběhlo bez problémů &mdash; získáme tak přehled o nejrůznějších
-hardwarových konfiguracích.
+Pokud problĂŠm pĹetrvĂĄvĂĄ, prosĂ­me vĂĄs o zaslĂĄnĂ­ zprĂĄvy o prĹŻbÄhu
+instalace. ZprĂĄvu o instalaci mĹŻĹžete zaslat i v pĹĂ­padÄ, Ĺže vĹĄe
+probÄhlo bez problĂŠmĹŻ &mdash; zĂ­skĂĄme tak pĹehled o nejrĹŻznÄjĹĄĂ­ch
+hardwarovĂ˝ch konfiguracĂ­ch.
 
 </para><para>
 
-Máte-li funkční systém s Debianem, je nejjednodušší zaslat zprávu
-pomocí balíčku <classname>reportbug</classname>. Nainstalujte si
-potřebné balíčky (<command>apt-get install installation-report
-reportbug</command>) a spusťte příkaz <command>reportbug
-installation-report</command>.
+ZprĂĄvy o instalaci budou publikovĂĄny v debianĂ­m systĂŠmu sledovĂĄnĂ­ chyb
+(BTS, Bug Tracking System) a budou pĹeposlĂĄny do veĹejnĂŠho diskusnĂ­ho
+listu. Proto se ujistÄte, Ĺže pouĹžijete emailovou adresu, u kterĂŠ vĂĄm
+nevadĂ­, Ĺže bude zveĹejnÄna.
 
 </para><para>
 
-Při psaní, prosím, použijte následující
-šablonu, kterou pak zašlete jako hlášení o chybě vůči pseudobalíku
+MĂĄte-li funkÄnĂ­ systĂŠm s Debianem, je nejjednoduĹĄĹĄĂ­ zaslat zprĂĄvu
+pomocĂ­ balĂ­ku <classname>reportbug</classname>. Nainstalujte si
+potĹebnĂŠ balĂ­ky (<command>aptitude install installation-report
+reportbug</command>), nastavte <classname>reportbug</classname> podle
+kapitoly <xref linkend="mail-outgoing"/> a spusĹĽte pĹĂ­kaz
+<command>reportbug installation-reports</command>.
+
+</para><para>
+
+PĹi psanĂ­ zprĂĄvy mĹŻĹžete vyuĹžĂ­t nĂĄsledujĂ­cĂ­
+ĹĄablonu, kterou pak zaĹĄlete jako hlĂĄĹĄenĂ­ o chybÄ vĹŻÄi pseudobalĂ­ku
 <classname>installation-report</classname> na adresu
 <email>submit@bugs.debian.org</email>.
 
 <informalexample><screen>
 Package: installation-reports
 
-Boot method: <replaceable>&lt;Jak jste zavedli instalaci? CD? Disketa? Síť?&gt;</replaceable>
-Image version: <replaceable>&lt;Kdy a odkud jste stáhli obraz(y)&gt;</replaceable>
-Date: <replaceable>&lt;Datum a čas instalace&gt;</replaceable>
+Boot method: <replaceable>&lt;Jak jste zavedli instalaci? CD? Disketa? SĂ­ĹĽ?&gt;</replaceable>
+Image version: <replaceable>&lt;CelĂŠ url, odkud jste stĂĄhli obraz(y)&gt;</replaceable>
+Date: <replaceable>&lt;Datum a Äas instalace&gt;</replaceable>
 
-Machine: <replaceable>&lt;Popis počítače (např. IBM Thinkpad T41)&gt;</replaceable>
+Machine: <replaceable>&lt;Popis poÄĂ­taÄe (napĹ. IBM Thinkpad T41)&gt;</replaceable>
 Processor:
 Memory:
-Partitions: <replaceable>&lt;Výstup příkazu df -Tl;&gt;</replaceable>
+Partitions: <replaceable>&lt;VĂ˝stup pĹĂ­kazu df -Tl;&gt;</replaceable>
 
-Output of lspci and lspci -n:
+Output of lspci -nn and lspci -vnn:
 
 Base System Installation Checklist:
 [O] = OK, [E] = Error (please elaborate below), [ ] = didn't try it
 
-Initial boot worked:    [ ]
-Configure network HW:   [ ]
-Config network:         [ ]
+Initial boot:           [ ]
+Detect network card:    [ ]
+Configure network:      [ ]
 Detect CD:              [ ]
 Load installer modules: [ ]
 Detect hard drives:     [ ]
 Partition hard drives:  [ ]
-Create file systems:    [ ]
-Mount partitions:       [ ]
 Install base system:    [ ]
+Clock/timezone setup:   [ ]
+User/password setup:    [ ]
+Install tasks:          [ ]
 Install boot loader:    [ ]
-Reboot:                 [ ]
+Overall install:        [ ]
 
 Comments/Problems:
 
-<replaceable>&lt;Zde se můžete rozepsat o způsobu instalace, zmínit nápady
-      a postřehy, které vás napadly během instalace.&gt;</replaceable>
+<replaceable>&lt;Zde se mĹŻĹžete rozepsat o zpĹŻsobu instalace, zmĂ­nit nĂĄpady
+      a postĹehy, kterĂŠ vĂĄs napadly bÄhem instalace.&gt;</replaceable>
 </screen></informalexample>
 
-V samotné zprávě podrobně popište problém, včetně posledních
-viditelných hlášek jádra v okamžiku zaseknutí počítače.
-Také nezapomeňte popsat kroky, kterými jste se do problémové
-části dostali.
+V samotnĂŠ zprĂĄvÄ podrobnÄ popiĹĄte problĂŠm, vÄetnÄ poslednĂ­ch
+viditelnĂ˝ch hlĂĄĹĄek jĂĄdra v okamĹžiku zaseknutĂ­ poÄĂ­taÄe.
+TakĂŠ nezapomeĹte popsat kroky, kterĂ˝mi jste se do problĂŠmovĂŠ
+ÄĂĄsti dostali.
 
 </para>
   </sect2>

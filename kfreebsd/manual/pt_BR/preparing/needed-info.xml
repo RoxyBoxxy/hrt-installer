@@ -1,6 +1,9 @@
 <!-- retain these comments for translator revision tracking -->
-<!-- original version: 35130 -->
-<!-- updated from 31136 to 35130 by André Luís Lopes (andrelop) 2006.04.20 -->
+<!-- original version: 43939 -->
+<!-- updated 31136:35130 by André Luís Lopes (andrelop) 2006.04.20 -->
+<!-- updated 35130:38334 by Felipe Augusto van de Wiel (faw) 2006.06.26 -->
+<!-- revised by Felipe Augusto van de Wiel (faw) 2006.12.27 -->
+<!-- updated 43558:43939 by Felipe Augusto van de Wiel (faw) 2007.01.14 -->
 
  <sect1 id="needed-info">
  <title>Informações que precisa saber</title>
@@ -55,8 +58,8 @@ seu hardware.
 
  <!-- We need the arch dependence for the whole list to ensure proper xml
       as long as not architectures have a paragraph -->
- <itemizedlist arch="i386;m68k;alpha;sparc;mips;mipsel">
-<listitem arch="i386"><para>
+ <itemizedlist arch="x86;m68k;alpha;sparc;mips;mipsel">
+<listitem arch="x86"><para>
 
 <ulink url="&url-hardware-howto;">HOWTO de Compatibilidade de Hardware do
 Linux</ulink>
@@ -180,7 +183,7 @@ Os casos relacionados com cada peça de hardware.
 
 </para></listitem>
 
-<listitem arch="i386"><para>
+<listitem arch="x86"><para>
 
 A janela de sistema no Painel de Controle do Windows.
 
@@ -218,8 +221,9 @@ configurar em sua rede e e-mail.
   <entry morerows="5">Discos Rígidos</entry>
   <entry>Quantos você possui.</entry>
 </row>
-<row arch="not-s390;not-m68k"><entry>Sua ordem no sistema.</entry></row>
-<row arch="not-s390">
+<row arch="not-s390"><entry>Sua ordem no sistema.</entry></row>
+<!-- "not-m68k;not-s390" would really turn out to be everything... -->
+<row arch="alpha;arm;hppa;x86;ia64;mips;mipsel;powerpc;sparc">
   <entry>Quando são IDE ou SCSI (a maioria dos computadores são IDE).</entry>
 </row>
 <row arch="m68k">
@@ -296,17 +300,17 @@ configurar em sua rede e e-mail.
 
 <para>
 
-Muitos produtos funcionam sem problemas com o Linux. De forma
-satisfatória, o hardware para Linux está crescendo a cada dia. No entanto,
+Muitos produtos funcionam sem problemas com o Linux. De forma satisfatória,
+o suporte a hardware no Linux está melhorando a cada dia. No entanto,
 o Linux ainda não tem suporte a tantos tipos de hardwares quanto em outros
 sistemas operacionais.
 
-</para><para arch="i386">
+</para><para arch="x86">
 
 Em particular, o Linux normalmente não funciona com hardwares que
 requerem Windows para funcionar.
 
-</para><para arch="i386">
+</para><para arch="x86">
 
 Embora alguns hardwares específicos para Windows podem ser colocados em
 funcionamento do Linux, fazê-lo normalmente requer um esforço extra.
@@ -314,7 +318,7 @@ Em adição, controladores de Linux para hardwares específicos do Windows
 são geralmente ligados a uma versão do kernel do Linux. Assim eles podem
 se tornar obsoletos rapidamente.
 
-</para><para arch="i386">
+</para><para arch="x86">
 
 Os chamados win-modems são o tipo mais comum destes hardwares.
 Mas impressoras e outros equipamentos também podem ser específicos
@@ -397,7 +401,7 @@ Domínio).
 </para></listitem>
 </itemizedlist>
 
-</para><para condition="supports-dhcp">
+</para><para>
 
 Por outro lado, se o seu administrador lhe dize que um servidor DHCP
 está disponível e é recomendado, então não precisará destas informações

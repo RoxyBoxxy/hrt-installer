@@ -14,6 +14,28 @@ Template: partman/progress/init/update_partitions
 Type: text
 _Description: Detecting file systems...
 
+Template: partman-base/devicelocked
+Type: error
+#flag:translate!:3
+_Description: Device in use
+ No modifications can be made to the device ${DEVICE} for the
+ following reasons:
+ .
+ ${MESSAGE}
+
+Template: partman-base/partlocked
+Type: error
+#flag:translate!:3
+#flag:comment:2
+# This should be translated as "partition *number* ${PARTITION}"
+# In short, ${PARTITION} will indeed contain the partition
+# NUMBER and not the partition NAME
+_Description: Partition in use
+ No modifications can be made to the partition #${PARTITION} of
+ device ${DEVICE} for the following reasons:
+ .
+ ${MESSAGE}
+
 Template: partman/exception_handler
 Type: select
 Choices: ${CHOICES}
@@ -88,6 +110,7 @@ _Description: Continue with the installation?
 Template: partman/confirm
 Type: boolean
 Default: false
+#flag:translate!:4
 _Description: Write the changes to disks?
  If you continue, the changes listed below will be written to the disks.
  Otherwise, you will be able to make further changes manually.
@@ -105,6 +128,12 @@ Template: partman/text/confirm_item
 Type: text
 # for example: "partition #6 of IDE0 master as ext3 journaling file system"
 _Description: partition #${PARTITION} of ${DEVICE} as ${TYPE}
+
+Template: partman/text/confirm_unpartitioned_item
+Type: text
+# for devices which have no partitions
+# for example: "LVM VG Debian, LV Root as ext3 journaling file system"
+_Description: ${DEVICE} as ${TYPE}
 
 Template: partman/text/confirm_partitem_header
 Type: text
@@ -263,6 +292,14 @@ _Description: LVM VG %s, LV %s
 Template: partman/text/loopback
 Type: text
 _Description: Loopback (loop%s)
+
+Template: partman/text/dasd_disk
+Type: text
+_Description: DASD %s (%s)
+
+Template: partman/text/dasd_partition
+Type: text
+_Description: DASD %s (%s), partition #%s
 
 Template: partman/text/cancel_menu
 Type: text

@@ -5,7 +5,7 @@
 # 
 # Simplified Chinese translation for Debian Installer.
 #
-# Copyright (C) 2003, 2004, 2005 Software in the Public Interest, Inc.
+# Copyright (C) 2003-2006 Software in the Public Interest, Inc.
 # This file is distributed under the same license as debian-installer.
 #
 # Translated by bbbush (2004), Carlos Z.F. Liu (2004,2005,2006) and
@@ -14,10 +14,10 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: debian-installer\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-04-07 23:43-0600\n"
-"PO-Revision-Date: 2006-03-31 17:38+1200\n"
-"Last-Translator: Carlos Z.F. Liu <carlosliu@users.sourceforge.net>\n"
+"Report-Msgid-Bugs-To: debian-boot@lists.debian.org\n"
+"POT-Creation-Date: 2007-01-06 22:47+0100\n"
+"PO-Revision-Date: 2006-10-20 20:53-0500\n"
+"Last-Translator: Ming Hua <minghua@rice.edu>\n"
 "Language-Team: Debian Chinese [GB] <debian-chinese-gb@lists.debian.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -27,7 +27,7 @@ msgstr ""
 #. Description
 #: ../user-setup-udeb.templates:22
 msgid "Allow login as root?"
-msgstr ""
+msgstr "允许以根用户 (root) 登录吗？"
 
 #. Type: boolean
 #. Description
@@ -36,6 +36,8 @@ msgid ""
 "If you choose not to allow root to log in, then a user account will be "
 "created and given the power to become root using the 'sudo' command."
 msgstr ""
+"如果您选择不允许根用户登录，那么将会有一个普通用户被创建并被赋予通过“sudo”命"
+"令变身为根用户的权限。"
 
 #. Type: password
 #. Description
@@ -53,8 +55,8 @@ msgid ""
 "It should not be a word found in dictionaries, or a word that could be "
 "easily associated with you."
 msgstr ""
-"您需要为“root”用户(即系统管理员帐号)设置一个密码。如果恶意或无资格的用户获得"
-"了 root 权限将可能会导致灾难性的结果，因此您应该小心地选择一个不容易猜出的 "
+"您需要为“root”用户 (即系统管理员帐号) 设置一个密码。如果恶意或无资格的用户获"
+"得了 root 权限将可能会导致灾难性的结果，因此您应该小心地选择一个不容易猜出的 "
 "root 密码。它不应该是一个能在字典中找得到的单词或者一个跟您本人有紧密关系的词"
 "语。"
 
@@ -96,10 +98,10 @@ msgstr ""
 #: ../user-setup-udeb.templates:49
 msgid ""
 "Note that you may create it later (as well as any additional account) by "
-"typing 'adduser <username>' as root, where <username> is an user name, like "
+"typing 'adduser <username>' as root, where <username> is an username, like "
 "'imurdock' or 'rms'."
 msgstr ""
-"请注意，您也可以稍后再创建此帐户(也包括任何其它帐户)。方法是以 root 身份执"
+"请注意，您也可以稍后再创建此帐户 (也包括任何其它帐户)。方法是以 root 身份执"
 "行“adduser <username>”，此处的 <username> 就是一个用户名，例"
 "如“imurdock”或“rms”。"
 
@@ -156,22 +158,37 @@ msgstr "无效的用户名"
 #. Description
 #: ../user-setup-udeb.templates:79
 msgid ""
-"The user name you entered is invalid. Note that usernames must start with a "
+"The username you entered is invalid. Note that usernames must start with a "
 "lower-case letter, which can be followed by any combination of numbers and "
 "more lower-case letters."
 msgstr ""
 "您所输入的用户名是无效的。请注意，用户名必须以一个小写字母开头，接着是任意数"
 "字和其它小写字母的组合。"
 
-#. Type: password
+#. Type: error
 #. Description
 #: ../user-setup-udeb.templates:86
+msgid "Reserved username"
+msgstr "系统保留的用户名"
+
+#. Type: error
+#. Description
+#: ../user-setup-udeb.templates:86
+msgid ""
+"The username you entered (${USERNAME}) is reserved for use by the system. "
+"Please select a different one."
+msgstr ""
+"您所输入的用户名 (${USERNAME}) 是被保留为系统使用的。请另选择一个用户名。"
+
+#. Type: password
+#. Description
+#: ../user-setup-udeb.templates:92
 msgid "Choose a password for the new user:"
 msgstr "请为新用户选择一个密码："
 
 #. Type: password
 #. Description
-#: ../user-setup-udeb.templates:86
+#: ../user-setup-udeb.templates:92
 msgid ""
 "A good password will contain a mixture of letters, numbers and punctuation "
 "and should be changed at regular intervals."
@@ -179,39 +196,39 @@ msgstr "一个安全的密码应该是由字母、数字和标点符号混合而
 
 #. Type: password
 #. Description
-#: ../user-setup-udeb.templates:92
+#: ../user-setup-udeb.templates:98
 msgid "Re-enter password to verify:"
 msgstr "请再次输入密码以验证其正确性："
 
 #. Type: password
 #. Description
-#: ../user-setup-udeb.templates:92
+#: ../user-setup-udeb.templates:98
 msgid ""
 "Please enter the same user password again to verify you have typed it "
 "correctly."
-msgstr "请再次输入相同用户密码以保证你的输入不会出错。"
+msgstr "请再次输入相同用户密码以保证您的输入不会出错。"
 
 #. Type: error
 #. Description
-#: ../user-setup-udeb.templates:98
+#: ../user-setup-udeb.templates:104
 msgid "Password input error"
 msgstr "密码输入错误"
 
 #. Type: error
 #. Description
-#: ../user-setup-udeb.templates:98
+#: ../user-setup-udeb.templates:104
 msgid "The two passwords you entered were not the same. Please try again."
 msgstr "您所输入的两个密码并不相同。请重新输入。"
 
 #. Type: error
 #. Description
-#: ../user-setup-udeb.templates:103
+#: ../user-setup-udeb.templates:109
 msgid "Empty password"
 msgstr "空密码"
 
 #. Type: error
 #. Description
-#: ../user-setup-udeb.templates:103
+#: ../user-setup-udeb.templates:109
 msgid ""
 "You entered an empty password, which is not allowed. Please choose a non-"
 "empty password."
@@ -219,13 +236,13 @@ msgstr "您输入的是空密码，且不被系统所接受。请选择一个非
 
 #. Type: boolean
 #. Description
-#: ../user-setup-udeb.templates:110
+#: ../user-setup-udeb.templates:116
 msgid "Enable shadow passwords?"
 msgstr "启用 shadow 密码吗？"
 
 #. Type: boolean
 #. Description
-#: ../user-setup-udeb.templates:110
+#: ../user-setup-udeb.templates:116
 msgid ""
 "Shadow passwords make your system more secure because nobody is able to view "
 "even encrypted passwords. The passwords are stored in a separate file that "
@@ -238,13 +255,13 @@ msgstr ""
 
 #. Type: title
 #. Description
-#: ../user-setup-udeb.templates:118
+#: ../user-setup-udeb.templates:124
 msgid "Set up users and passwords"
 msgstr "设置用户和密码"
 
 #. Type: text
 #. Description
-#. Prebaseconfig progress bar item
-#: ../user-setup-udeb.templates:123
+#. finish-install progress bar item
+#: ../user-setup-udeb.templates:129
 msgid "Setting users and passwords..."
 msgstr "正在设置用户和密码..."

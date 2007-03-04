@@ -1,5 +1,5 @@
 <!-- retain these comments for translator revision tracking -->
-<!-- original version: 29689 -->
+<!-- original version: 43043 -->
 
 
 <appendix id="administrivia">
@@ -56,19 +56,25 @@ contiene informazioni per ciascuna diversa architettura: vengono usati
 degli attributi per isolare determinate parti di testo che sono specifiche
 di una certa architettura.
 
-<!--
-</para><para>
+</para><para condition="about-langteam">
 
-Translators can uncomment this paragraph and add an acknowledgement
-to the people responsible for the translation of the manual.
+<!-- La compilazione di questo paragrafo è attivata -->
+
+<!--
+Translators can use this paragraph to acknowledge the people responsible
+for the translation of the manual.
 Translation teams are advised to just mention the coordinator and maybe
 major contributors and thank everybody else in a phrase like "all
-translators and reviewers from the translation team for <your language>
-at <your l10n mailinglist>".
+translators and reviewers from the translation team for {your language}
+at {your l10n mailinglist}".
 
-(Note: support for this for translations using PO files will be added
- soon.)
+See build/lang-options/README on how to enable this paragraph.
+Its condition is "about-langteam".
 -->
+
+La traduzione di questo manuale è coordinata da Luca Monducci. Hanno
+contribuito alla traduzione Ottavio Campana, Stefano Canepa, Fabio Pani,
+Cristian Rigamonti, Giuseppe Sacco e Giuliano.
 
 </para>
  </sect1>
@@ -81,12 +87,12 @@ at <your l10n mailinglist>".
 <!--
 If you have problems or suggestions regarding this document, you
 should probably submit them as a bug report against the package
-<classname>debian-installer-manual</classname>.  See the
+<classname>installation-guide</classname>.  See the
 <classname>reportbug</classname> package or read the online
 documentation of the <ulink url="&url-bts;">Debian Bug
 Tracking System</ulink>.  It would be nice if you could check the
-<ulink url="&url-bts;debian-installer-manual">open bugs against
-debian-installer-manual</ulink> to see whether your problem has
+<ulink url="&url-bts;installation-guide">open bugs against
+installation-guide</ulink> to see whether your problem has
 already been reported. If so, you can supply additional corroboration
 or helpful information to
 <email><replaceable>XXXX</replaceable>@bugs.debian.org</email>,
@@ -96,11 +102,11 @@ already-reported bug.
 
 Se si hanno problemi o suggerimenti su questo documento, si dovrebbe
 inviarli come segnalazioni di bug per il pacchetto
-<classname>debian-installer-manual</classname>; consultare il pacchetto
+<classname>installation-guide</classname>; consultare il pacchetto
 <classname>reportbug</classname> o leggere la documentazione in linea del
 <ulink url="&url-bts;">Debian Bug Tracking System</ulink>. È preferibile
-consultare prima l'<ulink url="&url-bts;debian-installer-manual">elenco
-dei bug aperti per debian-installer-manual</ulink> per controllare se il
+consultare prima l'<ulink url="&url-bts;installation-guide">elenco
+dei bug aperti per installation-guide</ulink> per controllare se il
 problema riscontrato sia già stato comunicato. Se è così, si possono
 fornire delle informazioni aggiuntive all'email
 <email><replaceable>XXXX</replaceable>@bugs.debian.org</email>, dove
@@ -175,7 +181,7 @@ url="&url-m68k-old-amiga-install;">Amiga install manual</ulink>),
 Arto Astala, Eric Delaunay/Ben Collins (SPARC information), Tapio
 Lehtonen, and Stéphane Bortzmeyer for numerous edits and text.
 We have to thank Pascal Le Bail for useful information about booting
-from USB memory sticks. Miroslav Kure has documented a lot of the new
+from USB memory sticks. Miroslav Kuře has documented a lot of the new
 functionality in Sarge's debian-installer.
 -->
 
@@ -188,7 +194,7 @@ originale dell'<ulink url="&url-m68k-old-amiga-install;">Amiga install
 manual</ulink>), Arto Astala, Eric Delaunay/Ben Collins (informazioni
 sulle SPARC), Tapio Lehtonen e Stphane Bortzmeyer per le numerose
 modifiche e il testo fornito. Si deve anche ringraziare Pascal Le Bail per
-le informazioni sull'avvio da memorie USB e Miroslav Kure che ha documentato
+le informazioni sull'avvio da memorie USB e Miroslav Kuře che ha documentato
 molte delle nuove funzionalità dell'Installatore Debian per Sarge.
 
 </para><para>
@@ -212,7 +218,7 @@ sull'avvio via rete di Jim Mintha (non è disponibile un URL), in
 <ulink url="&url-sparc-linux-faq;">Linux for SPARC Processors FAQ</ulink>,
 <ulink url="&url-alpha-faq;">Linux/Alpha FAQ</ulink>, tra l'altro. Un
 ringraziamento particolare va ai manutentori di queste ricche fonti di
-informazioni, liberamente disponibili. 
+informazioni, liberamente disponibili.
 
 </para><para>
 
@@ -226,7 +232,7 @@ Una parte della sezione di questo manuale sull'installazione con chroot
 (<xref linkend="linux-upgrade"/>) è derivata da alcuni documenti sotto
 il copyright di Karsten M. Self.
 
-</para><para arch="i386">
+</para><para arch="x86">
 
 <!--
 The section on installations over plip in this manual

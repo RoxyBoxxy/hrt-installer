@@ -1,10 +1,358 @@
-cdebconf (0.101) UNRELEASED; urgency=low
+cdebconf (0.114) unstable; urgency=low
+
+  [ Attilio Fiandrotti ]
+  * Fix display of text in info box for gtk frontend. Closes: #408435.
+
+  [ Updated translations ]
+  * Malayalam (ml.po) by Praveen A
+  * Swedish (sv.po) by Daniel Nylander
+
+ -- Frans Pop <fjp@debian.org>  Tue, 27 Feb 2007 16:39:56 +0100
+
+cdebconf (0.113) unstable; urgency=low
+
+  [ Attilio Fiandrotti ]
+  * For SELECT and MULTISELECT questions, only update the debconf database if
+    the user presses <Ok>. Closes: #407205.
+  * Workaround for crash when performing drag'n'drop of text (experienced with
+    gtk/dfb 2.8.20). Closes: #407035.
+
+  [ Updated translations ]
+  * Arabic (ar.po) by Ossama M. Khayat
+  * Latvian (lv.po) by Aigars Mahinovs
+  * Portuguese (Brazil) (pt_BR.po) by Felipe Augusto van de Wiel (faw)
+  * Romanian (ro.po) by Eddy Petrișor
+
+ -- Frans Pop <fjp@debian.org>  Wed, 31 Jan 2007 11:26:06 +0100
+
+cdebconf (0.112) unstable; urgency=low
+
+  [ Attilio Fiandrotti ]
+  * The cursor is now "I" shaped only when over a text input box, this is a
+    workaround to a gtk/dfb bug. Closes: #404482.
+  * Removed an old workaround due to gtk_tree_path_new_from_indices() lacking
+    in gtk+ 2.0, code cleanup.
+
+  [ Updated translations ]
+  * Danish (da.po) by Claus Hindsgaul
+  * Panjabi (pa.po) by A S Alam
+  * Slovenian (sl.po) by Matej Kovačič
+
+ -- Frans Pop <fjp@debian.org>  Sat,  6 Jan 2007 10:34:56 +0100
+
+cdebconf (0.111) unstable; urgency=low
+
+  [ Attilio Fiandrotti ]
+  * For SELECT handlers, properly manage those cases where the default option
+    exists multiple times. Closes: #402661.
+  * Only set the title of questions and progress bars once; reset the title of
+    a progress bar after a question has been asked while one is running.
+
+ -- Frans Pop <fjp@debian.org>  Sat, 16 Dec 2006 17:57:12 +0100
+
+cdebconf (0.110) unstable; urgency=low
+
+  [ Attilio Fiandrotti ]
+  * Create buttons in GTK frontend inactive and hide them while the
+    progressbar runs. Closes: #400124.
+  * Avoid crash in GTK frontend in some cases during language selection.
+    Closes: #401871.
+
+  [ Colin Watson ]
+  * Restore newt progress bar refactoring, this time with an extra tweak to
+    tear down the old progress bar if you attempt to start a nested progress
+    bar. (Don't do that; it's not supported and trying to use the outer
+    progress bar after stopping the inner one will result in cdebconf
+    silently sitting there at a black screen. However, partman-auto does
+    this at the moment. See #391676.)
+
+  [ Petter Reinholdtsen ]
+  * Remove myself as uploader.
+
+  [ Updated translations ]
+  * Belarusian (be.po) by Pavel Piatruk
+  * Basque (eu.po) by Piarres Beobide
+  * Kurdish (ku.po) by Erdal Ronahi
+  * Latvian (lv.po) by Aigars Mahinovs
+  * Malayalam (ml.po) by Praveen A
+  * Panjabi (pa.po) by A S Alam
+
+ -- Frans Pop <fjp@debian.org>  Mon, 11 Dec 2006 01:13:33 +0100
+
+cdebconf (0.109) unstable; urgency=low
+
+  [ Attilio Fiandrotti ]
+  * Disable the screenshot button before gtk_go() returns. Closes: #396071.
+  * Change handler for BOOLEAN questions in GTK frontend to use radiobuttons
+    instead of a checkbox. Closes: #395052.
+  * Make sure the default choice for countrychooser/country-name is correctly
+    preselected by the GTK frontend's special handler. Closes: #397877.
+  * Fixed scrolling to default option in GTK frontend for SELECT questions.
+    Closes: #340007.
+  * Remove code belonging to ancient SELECT and BOOLEAN handlers which are
+    no longer used.
+
+  [ Updated translations ]
+  * Bulgarian (bg.po) by Damyan Ivanov
+  * Bosnian (bs.po) by Safir Secerovic
+  * Esperanto (eo.po) by Serge Leblanc
+  * Georgian (ka.po) by Aiet Kolkhi
+  * Kurdish (ku.po) by rizoye-xerzi
+  * Norwegian Bokmål (nb.po) by Bjørn Steensrud
+  * Norwegian Nynorsk (nn.po) by Håvard Korsvoll
+  * Swedish (sv.po) by Daniel Nylander
+
+ -- Frans Pop <fjp@debian.org>  Wed, 22 Nov 2006 14:23:39 +0100
+
+cdebconf (0.108) unstable; urgency=low
+
+  * Revert refactoring of progress bar in newt frontend. Closes: #391676.
+
+  [ Updated translations ]
+  * Belarusian (be.po) by Andrei Darashenka
+  * Catalan (ca.po) by Jordi Mallach
+  * Spanish (es.po) by Javier Fernández-Sanguino Peña
+  * Indonesian (id.po) by Arief S Fitrianto
+  * Kurdish (ku.po) by Erdal Ronahi
+  * Norwegian Bokmal (nb.po) by Bjørn Steensrud
+  * Nepali (ne.po) by Shiva Prasad Pokharel
+  * Romanian (ro.po) by Eddy Petrișor
+  * Tamil (ta.po) by Damodharan Rajalingam
+  * Turkish (tr.po) by Recai Oktaş
+  * Vietnamese (vi.po) by Clytie Siddall
+
+ -- Frans Pop <fjp@debian.org>  Tue, 24 Oct 2006 14:01:53 +0200
+
+cdebconf (0.107) unstable; urgency=low
+
+  [ Attilio Fiandrotti ]
+  * A double click on a tree leaf is now equivalent to selecting it and
+    pressing continue. Closes: #382357.
+
+  [ Frans Pop ]
+  * cdebconf/udeb: add debconf/language template and set default language for
+    the installer to "en" (#381142).
+
+  [ Updated translations ]
+  * Greek (el.po) by quad-nrg.net
+  * Estonian (et.po) by Siim Põder
+  * Hindi (hi.po) by Nishant Sharma
+  * Croatian (hr.po) by Josip Rodin
+  * Macedonian (mk.po) by Georgi Stanojevski
+  * Albanian (sq.po) by Elian Myftiu
+  * Traditional Chinese (zh_TW.po) by Tetralet
+
+ -- Frans Pop <fjp@debian.org>  Fri,  6 Oct 2006 02:27:00 +0200
+
+cdebconf (0.106) unstable; urgency=low
+
+  [ Denis Barbier ]
+  * Change select, multiselect and button colors for the newt interface
+    when FRONTEND_BACKGROUND=dark, to improve text readability.
+
+  [ Attilio Fiandrotti ]
+  * Fix buffer overflow spotted by Aike Reyer <aike@users.sourceforge.net>
+    in the GTK frontend. Closes: #386752.
+  * GTK frontend: force DirectFB to reload keymap at every frontend_go() run.
+    This will ensure that we have the correct keymap after the user selects
+    one in kbd-chooser. This solution is a workaround until we can implement
+    a reload triggered from kbd-chooser, which would be cleaner.
+    Closes: #381979.
+
+  [ Colin Watson ]
+  * Refactor newt frontend to have a single common function to build the
+    progress bar form, which redraws the progress bar when the
+    progresscancel state changes (closes: https://launchpad.net/bugs/47733).
+  * Allow Choices-C to be listed separately from Choices (etc.) in templates
+    files. This lets you say "Choices: ${CHOICES-TRANS}" and "Choices-C:
+    ${CHOICES}" to substitute reliably into translated and untranslated
+    templates without having to ensure that ${CHOICES-TRANS} is translated
+    to the same thing in every language.
+  * X_LOADTEMPLATEFILE now takes an optional owner argument, passed to it by
+    debconf-loadtemplate.
+  * Add debconf_x_save and debconf_info macros to debconfclient.h.
+  * debconf-loadtemplate now tells debconf to save its databases immediately
+    after loading templates files; this can make debugging easier under some
+    circumstances.
+
+  [ Frans Pop ]
+  * GTK frontend: don't print an extra ellipsis in the progress bar. Thanks
+    to Jens Seidel for spotting this.
+
+  [ Updated translations ]
+  * Bengali (bn.po) by Mahay Alam Khan (মাহে আলম খান)
+  * Catalan (ca.po) by Jordi Mallach
+  * Czech (cs.po) by Miroslav Kure
+  * Danish (da.po) by Claus Hindsgaul
+  * German (de.po) by Jens Seidel
+  * Esperanto (eo.po) by Serge Leblanc
+  * Spanish (es.po) by Javier Fernández-Sanguino Peña
+  * Basque (eu.po) by Piarres Beobide
+  * Finnish (fi.po) by Tapio Lehtonen
+  * French (fr.po) by Christian Perrier
+  * Galician (gl.po) by Jacobo Tarrio
+  * Hebrew (he.po) by Lior Kaplan
+  * Hungarian (hu.po) by SZERVÁC Attila
+  * Indonesian (id.po) by Arief S Fitrianto
+  * Italian (it.po) by Giuseppe Sacco
+  * Japanese (ja.po) by Kenshi Muto
+  * Korean (ko.po) by Sunjae park
+  * Kurdish (ku.po) by Erdal Ronahi
+  * Lithuanian (lt.po) by Kęstutis Biliūnas
+  * Latvian (lv.po) by Aigars Mahinovs
+  * Norwegian Bokmål (nb.po) by Bjørn Steensrud
+  * Dutch (nl.po) by Bart Cornelis
+  * Polish (pl.po) by Bartosz Fenski
+  * Portuguese (Brazil) (pt_BR.po) by André Luís Lopes
+  * Russian (ru.po) by Yuri Kozlov
+  * Northern Sami (se.po) by Børre Gaup
+  * Slovak (sk.po) by Peter Mann
+  * Slovenian (sl.po) by Jure Čuhalev
+  * Thai (th.po) by Theppitak Karoonboonyanan
+  * Turkish (tr.po) by Recai Oktaş
+  * Vietnamese (vi.po) by Clytie Siddall
+  * Wolof (wo.po) by Mouhamadou Mamoune Mbacke
+  * Simplified Chinese (zh_CN.po) by Carlos Z.F. Liu
+
+ -- Frans Pop <fjp@debian.org>  Sun, 24 Sep 2006 15:08:33 +0200
+
+cdebconf (0.105) unstable; urgency=low
+
+  [ Colin Watson ]
+  * Make DEBCONF_DEBUG=developer be equivalent to DEBCONF_DEBUG=5, for
+    compatibility with debconf (not perfect, but this is a common case).
+
+  [ Joey Hess ]
+  * Patch from Davide Viti to make newt frontend display errors with a help
+    bar that's not blue. Closes: #317354
+
+  [ Frans Pop ]
+  * Switch gtk frontend to build using gtk+2.0 2.8 libs.
+  * Increase TITLE_PADDING to allow for vertical bars that delimit the border
+    in the title. Thanks to Davide Viti. Closes: #382278.
+
+  [ Updated translations ]
+  * Dzongkha (dz.po) by Jurmey Rabgay
+  * Greek, Modern (1453-) (el.po) by quad-nrg.net
+  * Estonian (et.po) by Siim Põder
+  * Gujarati (gu.po) by Kartik Mistry
+  * Khmer (km.po) by Khoem Sokhem
+  * Panjabi (pa.po) by A S Alam
+  * Portuguese (pt.po) by Miguel Figueiredo
+  * Romanian (ro.po) by Eddy Petrişor
+  * Swedish (sv.po) by Daniel Nylander
+  * Tagalog (tl.po) by Eric Pareja
+  * Ukrainian (uk.po) by Eugeniy Meshcheryakov
+  * Traditional Chinese (zh_TW.po) by Tetralet
+
+ -- Frans Pop <fjp@debian.org>  Fri, 11 Aug 2006 19:24:58 +0200
+
+cdebconf (0.104) unstable; urgency=low
+
+  * Rebuilt with libtextwrap1 0.1-5 to get proper library udeb dependency.
+
+ -- Joey Hess <joeyh@debian.org>  Sun, 25 Jun 2006 23:51:08 -0400
+
+cdebconf (0.103) unstable; urgency=low
+
+  [ Attilio Fiandrotti ]
+  * GTK frontend: don't display the description for BOOLEAN questions twice.
+    Closes: #370172
+  * GTK frontend: manage double-clicks and ENTER or SPACEBAR presses in
+    SELECT questions.
+
+  [ Joey Hess ]
+  * Newt frontend layout fixes:
+    - Allow for the up to 5 extra characters of window width that can be
+      needed for titles due to the sigil and whitespace around it.
+    - Text and password entry boxes have continue buttons, so take the width
+      of those buttons into account.
+    Closes: #324495
+  * Patch from Sesse to fix support for preserving utf-8 (and other)
+    fields when copying to debconf database files. Closes: #361872
+
+  [ Frans Pop ]
+  * debconf-copydb.c: remove setenv statement that disables i18n support as
+    that statement still causes the debconf database in /target to be trashed.
+
+  [ Updated translations ]
+  * Estonian (et.po) by Siim Põder
+  * Norwegian Nynorsk (nn.po) by Håvard Korsvoll
+
+ -- Frans Pop <fjp@debian.org>  Wed, 21 Jun 2006 13:47:47 +0200
+
+cdebconf (0.102) unstable; urgency=low
+
+  * Add a dirty flag to rfc822db, so that we don't have to save databases if
+    no changes occurred. Should make time between installer menu steps a lot
+    shorter, since the templates database is not generally modified.
+
+  [ Updated translations ]
+  * Catalan (ca.po) by Jordi Mallach
+  * Italian (it.po) by Giuseppe Sacco
+  * Northern Sami (se.po) by Børre Gaup
+  * Thai (th.po) by Theppitak Karoonboonyanan
+
+ -- Attilio Fiandrotti <fiandro@tiscali.it>  Sun, 11 Jun 2006 12:33:19 +0200
+
+cdebconf (0.101) unstable; urgency=low
 
   [ Attilio Fiandrotti ]
   * Removed arrows from GTK frontend buttons as they look ugly with RTL
     languages.
 
- -- Attilio Fiandrotti <fiandro@tiscali.it>  Sat, 29 Apr 2006 09:56:58 +0200
+  [ Christian Perrier ]
+  * Split out _Choices to __Choices in templates.
+
+  [ Max Vozeler ]
+  * Add question_get_variable() function to lookup the value of template
+    variables.
+  * Mention plugin examples and note about using exported functions where
+    possible in doc/plugins.txt.
+
+  [ Frans Pop ]
+  * Look first in /usr/lib/directfb when determining dependencies to obtain
+    correct deps from cdebconf-gtk-udeb.
+
+  [ Updated translations ]
+  * Arabic (ar.po) by Ossama M. Khayat
+  * Bosnian (bs.po) by Safir Secerovic
+  * Czech (cs.po) by Miroslav Kure
+  * Danish (da.po) by Claus Hindsgaul
+  * German (de.po) by Jens Seidel
+  * Dzongkha (dz.po)
+  * Esperanto (eo.po) by Serge Leblanc
+  * Spanish (es.po) by Javier Fernández-Sanguino Peña
+  * Basque (eu.po) by Piarres Beobide
+  * French (fr.po) by Christian Perrier
+  * Galician (gl.po) by Jacobo Tarrio
+  * Hungarian (hu.po) by SZERVÑC Attila
+  * Italian (it.po) by Giuseppe Sacco
+  * Japanese (ja.po) by Kenshi Muto
+  * Khmer (km.po) by Khoem Sokhem
+  * Korean (ko.po) by Sunjae park
+  * Kurdish (ku.po) by Erdal Ronahi
+  * Macedonian (mk.po) by Georgi Stanojevski
+  * Bokmål, Norwegian (nb.po) by Bjørn Steensrud
+  * Dutch (nl.po) by Bart Cornelis
+  * Norwegian Nynorsk (nn.po) by Håvard Korsvoll
+  * Polish (pl.po) by Bartosz Fenski
+  * Portuguese (pt.po) by Miguel Figueiredo
+  * Portuguese (Brazil) (pt_BR.po) by André Luís Lopes
+  * Romanian (ro.po) by Eddy Petrişor
+  * Russian (ru.po) by Yuri Kozlov
+  * Slovak (sk.po) by Peter Mann
+  * Slovenian (sl.po) by Jure Čuhalev
+  * Albanian (sq.po) by Elian Myftiu
+  * Swedish (sv.po) by Daniel Nylander
+  * Tamil (ta.po) by Damodharan Rajalingam
+  * Thai (th.po) by Theppitak Karoonboonyanan
+  * Tagalog (tl.po) by Eric Pareja
+  * Turkish (tr.po) by Recai Oktaş
+  * Vietnamese (vi.po) by Clytie Siddall
+  * Wolof (wo.po) by Mouhamadou Mamoune Mbacke
+
+ -- Frans Pop <fjp@debian.org>  Fri, 12 May 2006 07:33:04 +0200
 
 cdebconf (0.100) unstable; urgency=low
 

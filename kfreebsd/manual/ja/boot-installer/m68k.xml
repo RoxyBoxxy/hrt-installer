@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="EUC-JP"?>
 <!-- retain these comments for translator revision tracking -->
-<!-- original version: 33725 -->
+<!-- original version: 45435 -->
 
+<!--
+  <sect2 arch="m68k"><title>Choosing an Installation Method</title>
+-->
   <sect2 arch="m68k"><title>インストール方法の選択</title>
 
 <para>
@@ -77,12 +80,11 @@ Amiga にインストールする唯一の方法は、
 
 <!--
 Amiga does not currently work with bogl, so if
-you are seeing bogl errors, you need to include the kernel parameter
-<userinput>debian-installer/framebuffer=false</userinput>.
+you are seeing bogl errors, you need to include the boot parameter
+<userinput>fb=false</userinput>.
 -->
 bogl エラーを見るには、
-カーネルパラメータ <userinput>debian-installer/framebuffer=false</userinput>
-を含める必要があります。
+ブートパラメータ <userinput>fb=false</userinput> を含める必要があります。
 そのため、Amiga は、現在 bogl とともには動作しません。
 
 </para>
@@ -105,12 +107,11 @@ Atari 用のインストーラは、ハードディスク (<xref linkend="m68k-boot-hd"/> 参照)
 
 <!--
 Atari does not currently work with bogl, so if
-you are seeing bogl errors, you need to include the kernel parameter
-<userinput>debian-installer/framebuffer=false</userinput>.
+you are seeing bogl errors, you need to include the boot parameter
+<userinput>fb=false</userinput>.
 -->
 bogl エラーを見るには、
-カーネルパラメータ <userinput>debian-installer/framebuffer=false</userinput>
-を含める必要があります。
+ブートパラメータ <userinput>fb=false</userinput> を含める必要があります。
 そのため、Atari は、現在 bogl とともには動作しません。
 
 </para>
@@ -206,6 +207,9 @@ Q40/Q60 にインストールする唯一の方法は、
 
   </sect2>
 
+<!--
+  <sect2 arch="m68k" id="m68k-boot-hd"><title>Booting from a Hard Disk</title>
+-->
   <sect2 arch="m68k" id="m68k-boot-hd"><title>ハードディスクからの起動</title>
 
 &boot-installer-intro-hd.xml;
@@ -256,6 +260,9 @@ debian-installer パッケージを取得するのに cdrom を使用します。
 </itemizedlist>
 
 
+<!--
+    <sect3 id="m68k-boothd-amiga"><title>Booting from AmigaOS</title>
+-->
     <sect3 id="m68k-boothd-amiga"><title>AmigaOS からの起動</title>
 <para>
 
@@ -295,6 +302,9 @@ Amiga インストールプログラムが画面にデバッグ情報を出した後で、
     </sect3>
 
 
+<!--
+    <sect3 id="m68k-boothd-atari"><title>Booting from Atari TOS</title>
+-->
     <sect3 id="m68k-boothd-atari"><title>Atari TOS からの起動</title>
 <para>
 
@@ -335,6 +345,9 @@ Atari bootstrap が画面にデバッグ情報を出力した後、
     </sect3>
 
 
+<!--
+    <sect3 id="m68k-boothd-mac"><title>Booting from MacOS</title>
+-->
     <sect3 id="m68k-boothd-mac"><title>MacOS からの起動</title>
 <para>
 
@@ -360,18 +373,23 @@ linux カーネルを実行する際に、予測できない問題が発生するかもしれません。
 </para><para>
 
 <!--
-Macs require the <command>Penguin</command>
-bootloader. If you do not have the tools to handle
-a <command>Stuffit</command> archive, &penguin19.hfs; is an
-hfs disk image with <command>Penguin</command> unpacked.
-<xref linkend="create-floppy"/> describes how to copy this
-image to a floppy.
+Macs require the <command>Penguin</command> bootloader, which can be
+downloaded from <ulink url="&url-m68k-mac;">the Linux/mac68k
+sourceforge.net project</ulink>. If you do not have the tools to handle
+a <command>Stuffit</command> archive, you can put it on a
+MacOS-formatted floppy using a second GNU/Linux machine of any
+architecture and the <command>hmount</command>,
+<command>hcopy</command>, and <command>humount</command> tools from the
+<classname>hfsutils</classname> suite.
 -->
-Mac には <command>Penguin</command> ブートローダが必要です。
+Mac には、<ulink url="&url-m68k-mac;">the Linux/mac68k
+sourceforge.net project</ulink> からダウンロードできる 
+<command>Penguin</command> ブートローダが必要です。
 <command>Stuffit</command> アーカイブを扱うツールがなければ、
-&penguin19.hfs; が <command>Penguin</command> を展開した hfs ディスクイメージです。
-<xref linkend="create-floppy"/> では、
-このイメージをフロッピーにコピーする方法を説明しています。
+いずれかのアーキテクチャの 2 つ目の GNU/Linux マシンと、
+<classname>hfsutils</classname> スイートにある <command>hmount</command>,
+<command>hcopy</command>, <command>humount</command> ツールで、
+MacOS フォーマットのフロッピーに入れられます。
 
 </para><para>
 
@@ -457,11 +475,17 @@ should start automatically, so you can continue below at
 
     </sect3>
 
+<!--
+    <sect3 id="m68k-boothd-q40"><title>Booting from Q40/Q60</title>
+-->
     <sect3 id="m68k-boothd-q40"><title>Q40/Q60 からの起動</title>
 
 <para>
 
+<!--
 FIXME
+-->
+要更新
 
 </para><para>
 
@@ -478,6 +502,9 @@ continue below at <xref linkend="d-i-intro"/>.
   </sect2>
 
 
+<!--
+  <sect2 arch="m68k" id="m68k-boot-cdrom"><title>Booting from a CD-ROM</title>
+-->
   <sect2 arch="m68k" id="m68k-boot-cdrom"><title>CD-ROM からの起動</title>
 <para>
 
@@ -495,6 +522,9 @@ supports CD-ROM booting is the BVME6000.
   </sect2>
 
 
+<!--
+  <sect2 arch="m68k" id="boot-tftp"><title>Booting with TFTP</title>
+-->
   <sect2 arch="m68k" id="boot-tftp"><title>TFTP での起動</title>
 
 &boot-installer-intro-net.xml;
@@ -523,14 +553,14 @@ vt102 端末エミュレーションを使った Debian ソフトウェアの
 <!--
 type <screen>i6000 &enterkey;</screen> to install a BVME4000/6000
 -->
-BVME4000/6000 のインストールには <screen>i6000 &enterkey;</screen> と入力
+BVME4000/6000 のインストールには <screen>i6000 &enterkey;</screen> と入力してください。
 </para></listitem>
 <listitem><para>
 
 <!--
 type <screen>i162 &enterkey;</screen> to install an MVME162
 -->
-MVME162 のインストールには <screen>i162 &enterkey;</screen> と入力
+MVME162 のインストールには <screen>i162 &enterkey;</screen> と入力してください。
 
 </para></listitem>
 <listitem><para>
@@ -538,7 +568,7 @@ MVME162 のインストールには <screen>i162 &enterkey;</screen> と入力
 <!--
 type <screen>i167 &enterkey;</screen> to install an MVME166/167
 -->
-MVME166/167 のインストールには <screen>i167 &enterkey;</screen> と入力
+MVME166/167 のインストールには <screen>i167 &enterkey;</screen> と入力してください。
 
 </para></listitem>
     </itemizedlist>
@@ -550,16 +580,19 @@ You may additionally append the string
 <screen>TERM=vt100</screen> to use vt100 terminal emulation,
 e.g., <screen>i6000 TERM=vt100 &enterkey;</screen>.
 -->
-<screen>TERM=vt100</screen> という文字列を追加することも可能で、
-この場合は vt100 端末エミュレーションが利用されます。
-例: <screen>i6000 TERM=vt100 &enterkey;</screen>
+また vt100 端末エミュレーションを利用するのに、
+<screen>TERM=vt100</screen> という文字列を追加できます。
+例えば <screen>i6000 TERM=vt100 &enterkey;</screen> としてください。
 
 </para>
   </sect2>
 
 
   <sect2 arch="m68k" id="boot-from-floppies">
-  <title>フロッピーからのブート</title>
+<!--
+  <title>Booting from Floppies</title>
+-->
+  <title>フロッピーからの起動</title>
 <para>
 
 <!--

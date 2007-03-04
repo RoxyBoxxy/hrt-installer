@@ -4,7 +4,7 @@
 # DO NOT MODIFY IT DIRECTLY : SUCH CHANGES WILL BE LOST
 # 
 # Spanish messages for debian-installer.
-# Copyright (C) 2003, 2004, 2005 Software in the Public Interest, Inc.
+# Copyright (C) 2003-2007 Software in the Public Interest, Inc.
 # This file is distributed under the same license as debian-installer.
 #
 # Contributors to the translation of debian-installer:
@@ -12,7 +12,7 @@
 # David Martínez Moreno <ender@debian.org>, 2003, 2005.
 # Carlos Alberto Martín Edo <carlos@dat.etsit.upm.es>, 2003
 # Carlos Valdivia Yagüe <valyag@dat.etsit.upm.es>, 2003
-# Rudy Godoy <rudy@kernel-panik.org>, 2003
+# Rudy Godoy <rudy@kernel-panik.org>, 2003-2006
 # Steve Langasek <vorlon@debian.org>, 2004
 # Enrique Matias Sanchez (aka Quique) <cronopios@gmail.com>, 2005
 # Rubén Porras Campo <nahoo@inicia.es>, 2005
@@ -21,7 +21,7 @@
 # Equipo de traducción al español, por favor lean antes de traducir
 # los siguientes documentos:
 #
-# - El proyecto de traducción de Debian al españl
+# - El proyecto de traducción de Debian al español
 #   http://www.debian.org/intl/spanish/
 #   especialmente las notas de traducción en
 #   http://www.debian.org/intl/spanish/notas
@@ -33,12 +33,23 @@
 # Si tiene dudas o consultas sobre esta traducción consulte con el último
 # traductor (campo Last-Translator) y ponga en copia a la lista de
 # traducción de Debian al español (debian-l10n-spanish@lists.debian.org)
+#
+# NOTAS: 
+#
+# - Se ha traducido en este fichero 'boot loader' de forma homogénea por
+# 'cargador de arranque' aunque en el manual se utiliza éste término y
+# también 'gestor de arranque'
+#
+# - 'array' no está traducido aún. La traducción como 'arreglo' suena
+# fatal (y es poco conocida)
+#
+#  
 msgid ""
 msgstr ""
 "Project-Id-Version: debian-installer\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-04-14 18:36-0600\n"
-"PO-Revision-Date: 2006-04-22 03:13+0200\n"
+"Report-Msgid-Bugs-To: debian-boot@lists.debian.org\n"
+"POT-Creation-Date: 2007-01-06 22:48+0100\n"
+"PO-Revision-Date: 2007-01-03 15:08+0100\n"
 "Last-Translator: Javier Fernández-Sanguino Peña <jfs@debian.org>\n"
 "Language-Team:  Debian Spanish <debian-l10n-spanish@lists.debian.org>\n"
 "MIME-Version: 1.0\n"
@@ -47,28 +58,23 @@ msgstr ""
 
 #. Type: select
 #. Choices
-#. TRANSLATORS, please translate "Finish" after ${choices}
-#. the same way you translate it in the
-#. " Select "Finish" at the bottom of the list when you are done"
-#. string
-#.
-#. Also DO NOT translate "${choices}" which is a variable and note that
-#. THERE IS NO COMMA before "Finish"
-#: ../s390-dasd.templates:10
-msgid "${choices} Finish"
-msgstr "${choices} Terminar"
+#. TRANSLATORS, please translate "Finish" the same way you translate it in
+#. the " Select "Finish" at the bottom of the list when you are done" string
+#: ../s390-dasd.templates:6
+msgid "Finish"
+msgstr "Terminar"
 
 #. Type: select
 #. Description
-#: ../s390-dasd.templates:11
+#: ../s390-dasd.templates:7
 msgid "Available disks:"
 msgstr "Discos disponibles:"
 
 #. Type: select
 #. Description
-#: ../s390-dasd.templates:11
+#: ../s390-dasd.templates:7
 msgid ""
-"The following disk access storage devices (DASD) are available.  Please "
+"The following disk access storage devices (DASD) are available. Please "
 "select each device you want to use one at a time."
 msgstr ""
 "Están disponibles los siguientes dispositivos de acceso a discos de "
@@ -77,19 +83,19 @@ msgstr ""
 
 #. Type: select
 #. Description
-#: ../s390-dasd.templates:11
+#: ../s390-dasd.templates:7
 msgid "Select \"Finish\" at the bottom of the list when you are done."
 msgstr "Seleccione «Terminar» al final de la lista cuando haya acabado."
 
 #. Type: string
 #. Description
-#: ../s390-dasd.templates:19
+#: ../s390-dasd.templates:15
 msgid "Choose disk:"
 msgstr "Elija un disco:"
 
 #. Type: string
 #. Description
-#: ../s390-dasd.templates:19
+#: ../s390-dasd.templates:15
 msgid ""
 "Please choose a disk. You have to specify the complete device number, "
 "including leading zeros."
@@ -99,73 +105,53 @@ msgstr ""
 
 #. Type: error
 #. Description
-#: ../s390-dasd.templates:25
+#: ../s390-dasd.templates:21
 msgid "Invalid disk"
 msgstr "Disco inválido"
 
 #. Type: error
 #. Description
-#: ../s390-dasd.templates:25
+#: ../s390-dasd.templates:21
 msgid "An invalid device number has been chosen."
 msgstr "Se ha elegido un número de dispositivo inválido."
 
-#. Type: error
-#. Description
-#: ../s390-dasd.templates:30
-msgid "Error: impossible to continue"
-msgstr "Error: imposible continuar"
-
-#. Type: error
-#. Description
-#: ../s390-dasd.templates:30
-msgid "An undefined error occurred. You may try to continue."
-msgstr "Ocurrió un error indefinido. Puede intentar continuar."
-
 #. Type: boolean
 #. Description
-#: ../s390-dasd.templates:35
-msgid ""
-"The device ${device} seems to be a fresh disk not yet prepared for Linux.  "
-"Such disk should be formatted before you can create partitions."
-msgstr ""
-"El dispositivo ${device} parece un disco limpio que no ha sido preparado aún "
-"para Linux. Un disco así debe formatearse antes de poder crear particiones."
-
-#. Type: text
-#. Description
-#: ../s390-dasd.templates:41
-msgid "Formatting ${device}..."
-msgstr "Formateando ${device}..."
-
-#. Type: boolean
-#. Description
-#: ../s390-dasd.templates:45
+#: ../s390-dasd.templates:26
 msgid "Format the disk?"
 msgstr "¿Formatear el disco?"
 
 #. Type: boolean
 #. Description
-#: ../s390-dasd.templates:45
+#: ../s390-dasd.templates:26
 msgid ""
-"The device ${device} seems to be an already low-level formatted disk. If the "
-"disk has not been used for Linux 2.4 before, formatting it now is "
-"recommended."
+"The installer is unable to detect if the device ${device} has already been "
+"formatted or not. Disks need to be formatted before you can create "
+"partitions."
 msgstr ""
-"El dispositivo ${device} parece un disco que ya ha sido formateado a bajo "
-"nivel. Si el disco no ha sido usado para Linux 2.4 antes, se recomienda que "
-"lo formatee ahora."
+"El instalador no puede determinar si el dispositivo ${device} ha sido o no "
+"formateado. Los discos deben formatearse antes de poder crear particiones."
 
 #. Type: boolean
 #. Description
-#: ../s390-dasd.templates:45
-msgid "WARNING: All data on this disk will be IRREVERSIBLY LOST!"
+#: ../s390-dasd.templates:26
+msgid ""
+"If you are sure the disk has already been correctly formatted, you don't "
+"need to do so again."
 msgstr ""
-"PRECAUCIÓN: ¡Todos los datos en este disco se PERDERÁN IRREMISIBLEMENTE!"
+"No debe volver a formatearlo si está seguro que el disco ya ha sido "
+"formateado correctamente."
+
+#. Type: text
+#. Description
+#: ../s390-dasd.templates:36
+msgid "Formatting ${device}..."
+msgstr "Formateando ${device}..."
 
 #. Type: text
 #. Description
 #. Main menu item. Keep translations below 55 columns
-#: ../s390-dasd.templates:55
+#: ../s390-dasd.templates:41
 msgid "Configure disk access storage devices (DASD)"
 msgstr ""
 "Configurar los dispositivos de acceso a discos de almacenamiento (DASD)"

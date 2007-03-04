@@ -1,17 +1,18 @@
 <!-- retain these comments for translator revision tracking -->
-<!-- original version: 33887 -->
+<!-- original version: 44436 -->
 
 
  <sect1 id="linuxdevices"><title>Linux-Geräte</title>
 <para>
 
-Unter Linux haben Sie im Verzeichnis <filename>/dev</filename> verschiedene
-spezielle Dateien. Diese heißen Gerätedateien. In der Unix-Welt unterscheidet
-sich die Art des Zugriffs auf die Hardware. Dort gibt es eine spezielle Datei,
-die dann den Treiber startet, und dieser wiederum greift auf die Hardware zu.
-Die Gerätedatei ist eine Schnittstelle zu der jeweiligen Systemkomponente.
-Dateien unter <filename>/dev</filename> verhalten sich auch anders als normale
-Dateien. Hier sind die wichtigsten Gerätedateien aufgelistet.
+Unter Linux finden Sie im Verzeichnis <filename>/dev</filename> verschiedene
+spezielle Dateien. Diese heißen Gerätedateien und verhalten sich anders wie
+gewöhnliche Dateien. Die bekanntesten Typen von Gerätedateien sind die für
+blockorientierte und für zeichenorientierte Geräte. Diese Dateien stellen
+eine Schnittstelle zu dem jeweiligen Treiber (ein Teil des Linux-Kernels)
+dar, der dann wiederum auf die Hardware zugreift. Eine weitere wichtige, aber
+weniger bekannte Gerätedatei heißt <firstterm>pipe</firstterm>.
+Die wichtigsten Gerätedateien sind in der untenstehenden Tabelle aufgelistet.
 
 </para><para>
 
@@ -28,16 +29,16 @@ Dateien. Hier sind die wichtigsten Gerätedateien aufgelistet.
 <informaltable><tgroup cols="2"><tbody>
 <row>
   <entry><filename>hda</filename></entry>
-  <entry>Festplatte oder CD-ROM am ersten IDE-Port (Master)</entry>
+  <entry>Festplatte oder CD-ROM am ersten IDE-Port - Master</entry>
 </row><row>
   <entry><filename>hdb</filename></entry>
-  <entry>Festplatte oder CD-ROM am ersten IDE-Port (Slave)</entry>
+  <entry>Festplatte oder CD-ROM am ersten IDE-Port - Slave</entry>
 </row><row>
   <entry><filename>hdc</filename></entry>
-  <entry>Festplatte oder CD-ROM am zweiten IDE-Port (Master)</entry>
+  <entry>Festplatte oder CD-ROM am zweiten IDE-Port - Master</entry>
 </row><row>
   <entry><filename>hdd</filename></entry>
-  <entry>Festplatte oder CD-ROM am zweiten IDE-Port (Slave)</entry>
+  <entry>Festplatte oder CD-ROM am zweiten IDE-Port - Slave</entry>
 </row><row>
   <entry><filename>hda1</filename></entry>
   <entry>Die erste Partition auf der ersten IDE-Festplatte</entry>
@@ -114,54 +115,71 @@ Dateien. Hier sind die wichtigsten Gerätedateien aufgelistet.
 
 </para>
 
-  <sect2>
-<title>Einrichten der Maus</title>
+  <sect2 arch="not-s390" id="device-mouse">
+  <title>Einrichten der Maus</title>
 
 <para>
 
-Die Maus kann sowohl in der Linux-Konsole (mit GPM) wie auch in der
-X-Window-Umgebung verwendet werden. Die beiden Verwendungsarten können gleichzeitig
-genutzt werden, indem der GPM-Repeater wie gezeigt benutzt wird, um dem Signal
-zu ermöglichen, zum X-Server zu gelangen:
-
-<informalexample><screen>
-mouse =&gt; /dev/psaux  =&gt; gpm =&gt; /dev/gpmdata -&gt; /dev/mouse =&gt; X
-         /dev/ttyS0             (repeater)        (symlink)
-         /dev/ttyS1
-</screen></informalexample>
-
-Setzen Sie das Protokoll des Repeaters auf <quote>raw</quote> (in
-<filename>/etc/gpm.conf</filename>), während X in <filename>/etc/X11/XF86Config</filename> oder
-<filename>/etc/X11/XF86Config-4</filename> auf das Original-Mausprotokoll eingestellt ist.
+Die Maus kann sowohl auf der Linux-Konsole (mit GPM) wie auch in der
+X-Window-Umgebung verwendet werden. Normalerweise ist es dazu lediglich
+erforderlich, <filename>gpm</filename> sowie den X-Server selbst zu
+installieren. Beide sollten so konfiguriert werden,
+dass sie <filename>/dev/input/mice</filename> als Maus-Gerät verwenden.
+Das korrekte Mausprotokoll in gpm heißt <userinput>exps2</userinput>, in X
+<userinput>ExplorerPS/2</userinput>. Die entsprechenden Konfigurationsdateien
+sind <filename>/etc/gpm.conf</filename> beziehungsweise
+<filename>/etc/X11/xorg.conf</filename>.
 
 </para><para>
 
-Dieser Ansatz, GPM auch unter X (der grafischen Oberfläche) zu nutzen, hat
-Vorteile, wenn die Maus unbeabsichtigterweise abgezogen wird. Sie müssen GPM lediglich mit
-<informalexample><screen>
-# /etc/init.d/gpm restart
-</screen></informalexample>
+Bestimmte Kernel-Module müssen geladen werden, damit Ihre Maus funktioniert.
+In den meisten Fällen werden die richtigen Module automatisch erkannt, aber für
+ältere serielle oder Bus-Mäuse funktioniert dies nicht immer<footnote>
 
-neu starten, um die Maus wieder zu aktivieren, ohne dabei den X-Server neu starten zu müssen.
+<para>
+Serielle Mäuse haben gewöhnlich einen 9-poligen Sub-D-Anschluss, Bus-Mäuse haben
+einen runden 8-poligen Stecker (nicht zu verwechseln mit dem runden 6-poligen
+Stecker einer PS/2-Maus oder dem runden 4-poligen Stecker einer ADB-Maus).
+</para>
 
-</para><para>
+</footnote>; diese sind jedoch sehr selten, außer vielleicht bei sehr alten
+Rechnern. Eine Zusammenfassung der Linux-Kernel-Module, die für verschiedene
+Maustypen erforderlich sind:
 
-Wenn GPM aus irgendeinem Grund deaktiviert ist oder nicht installiert, stellen
-Sie sicher, dass X direkt von der Mausschnittstelle liest, z.B. von /dev/psaux. Details
-finden Sie im 3-Tasten-Maus-HowTo unter
-<filename>/usr/share/doc/HOWTO/en-txt/mini/3-Button-Mouse.gz</filename>, auf der
-Handbuchseite von gpm (<userinput>man gpm</userinput>) sowie unter
-<filename>/usr/share/doc/gpm/FAQ.gz</filename> und
-<ulink url="&url-xorg;current/doc/html/mouse.html">Mouse Support
-in x.org)</ulink>.
+<informaltable><tgroup cols="2"><thead>
+<row>
+  <entry>Modul</entry>
+  <entry>Beschreibung</entry>
+</row>
+</thead><tbody>
+<row>
+  <entry>psmouse</entry>
+  <entry>PS/2-Maus (sollte automatisch erkannt werden)</entry>
+</row>
+<row>
+  <entry>usbhid</entry>
+  <entry>USB-Maus (sollte automatisch erkannt werden)</entry>
+</row>
+<row>
+  <entry>sermouse</entry>
+  <entry>Die meisten seriellen Mäuse</entry>
+</row>
+<row>
+  <entry>logibm</entry>
+  <entry>Bus-Maus, die an eine Logitech-Adapterkarte angeschlossen ist</entry>
+</row>
+<row>
+  <entry>inport</entry>
+  <entry>Bus-Maus, die an eine ATI oder Microsoft InPort-Karte angeschlossen ist</entry>
+</row>
+</tbody></tgroup></informaltable>
+
+Um ein Maustreiber-Modul zu laden, können Sie den Befehl
+<command>modconf</command> (aus dem gleichnamigen Paket) verwenden; sehen
+Sie in der Kategorie <userinput>kernel/drivers/input/mouse</userinput> nach.
 
 </para><para arch="powerpc">
-
-Auf PowerPCs setzen Sie in <filename>/etc/X11/XF86Config</filename> oder
-<filename>/etc/X11/XF86Config-4</filename> die Mausschnittstelle auf
-<userinput>"/dev/input/mice"</userinput>.
-
-</para><para arch="powerpc">
+<!-- FJP 20070122: Unsure if this is still valid -->
 
 Moderne Kernel geben Ihnen die Möglichkeit, eine Drei-Tasten-Maus zu
 emulieren, wenn Sie nur eine Ein-Tasten-Maus haben. Fügen Sie dazu die
@@ -187,36 +205,40 @@ folgenden Zeilen zur Datei <filename>/etc/sysctl.conf</filename> hinzu.
  <title>Festplattenplatz, der für die Programmgruppen benötigt wird</title>
 <para>
 
-<!-- Note for d-i and manual maintainers
-Sizes of tasks should be determined by running "tasksel new" on a system
-that been fully installed without selecting any tasks. By selecting a
-task together with the "manual selection" option, aptitude will be started
-and show the sizes for the task. After deselecting the packages to be
-installed, quit aptitude and repeat for other tasks.
-Space requirements need to be determined from tasksel as tasksel will not
-install recommended packages while selecting a task from aptitude will.
--->
+Eine Standard-Installation für die i386-Architektur inklusive aller
+Standardpakete und mit Verwendung des standardmäßigen 2.6-Kernels benötigt
+&std-system-size;MB Festplattenplatz. Eine minimale Basisinstallation ohne die Programmgruppe
+<quote>Standard-System</quote> belegt &base-system-size;MB.
+</para>
+<important><para>
 
-Eine Basis-Installation für i386 unter Verwendung des 2.4-Kernels (dies
-ist der Standardkernel) inklusive aller Standard-Pakete benötigt
-573MB Festplattenspeicher.
+In beiden Fällen ist dies der benötigte Platz auf der Platte,
+<emphasis>nachdem</emphasis> die Installation beendet ist und alle temporären
+Dateien gelöscht wurden. Ebenfalls ist der vom Dateisystem genutzte Overhead
+nicht mit eingerechnet, zum Beispiel für die Journal-Dateien. Dies bedeutet,
+dass noch bedeutend mehr Festplattenplatz benötigt wird, und zwar sowohl
+<emphasis>während</emphasis> der Installation wie auch später bei der normalen
+Nutzung des Systems.
 
-</para><para>
+</para></important>
+<para>
+
 
 Die folgende Tabelle listet die Größe der Programmgruppen auf (die Sie in
 tasksel auswählen können), wie Sie von aptitude angegeben wird. Beachten Sie,
-dass einige Gruppen überlappende Bestandteile haben, so dass die absolut installierte
-Größe von zwei Gruppen zusammen weniger sein kann als die Summe der einzelnen
-Werte.
+dass einige Gruppen überlappende Bestandteile haben, so dass die absolut
+installierte Größe von zwei Gruppen zusammen weniger sein kann als die Summe
+der einzelnen Werte.
 
 </para><para>
 
 Bedenken Sie, dass Sie zu den Angaben aus der Liste noch die Größe der
-Basis-Installation hinzurechnen müssen, wenn es darum geht, die benötigte
+Standard-Installation hinzurechnen müssen, wenn es darum geht, die benötigte
 Größe der Partitionen abzuschätzen. Von dem, was unter <quote>Größe
 nach der Installation</quote> aufgeführt ist, wird das meiste in
-<filename>/usr</filename> landen; die Werte unter <quote>Herunterzuladende
-Größe</quote> werden (vorübergehend) in <filename>/var</filename> benötigt.
+<filename>/usr</filename> und <filename>/lib</filename> landen; die Werte
+unter <quote>Herunterzuladende Größe</quote> werden (vorübergehend) in
+<filename>/var</filename> benötigt.
  
 </para><para>
 
@@ -234,51 +256,66 @@ Größe</quote> werden (vorübergehend) in <filename>/var</filename> benötigt.
 <tbody>
 <row>
   <entry>Arbeitsplatzrechner</entry>
-  <entry>1392</entry>
-  <entry>460</entry>
-  <entry>1852</entry>
+  <entry>&task-desktop-inst;</entry>
+  <entry>&task-desktop-dl;</entry>
+  <entry>&task-desktop-tot;</entry>
+</row>
+
+<row>
+  <entry>Laptop<footnote>
+  
+  <para>
+   Es gibt eine erhebliche Überschneidung der Programmgruppe Laptop mit
+   der für Arbeitsplatzrechner. Wenn Sie beide installieren, benötigt Laptop
+   nur ein paar MB zusätzlich.
+  </para>
+
+  </footnote></entry>
+  <entry>&task-laptop-inst;</entry>
+  <entry>&task-laptop-dl;</entry>
+  <entry>&task-laptop-tot;</entry>
 </row>
 
 <row>
   <entry>Web-Server</entry>
-  <entry>36</entry>
-  <entry>12</entry>
-  <entry>48</entry>
+  <entry>&task-web-inst;</entry>
+  <entry>&task-web-dl;</entry>
+  <entry>&task-web-tot;</entry>
 </row>
 
 <row>
   <entry>Print-Server</entry>
-  <entry>168</entry>
-  <entry>58</entry>
-  <entry>226</entry>
+  <entry>&task-print-inst;</entry>
+  <entry>&task-print-dl;</entry>
+  <entry>&task-print-tot;</entry>
 </row>
 
 <row>
   <entry>DNS-Server</entry>
-  <entry>2</entry>
-  <entry>1</entry>
-  <entry>3</entry>
+  <entry>&task-dns-inst;</entry>
+  <entry>&task-dns-dl;</entry>
+  <entry>&task-dns-tot;</entry>
 </row>
 
 <row>
-  <entry>File-Server</entry>
-  <entry>47</entry>
-  <entry>24</entry>
-  <entry>71</entry>
+  <entry>Datei-Server</entry>
+  <entry>&task-file-inst;</entry>
+  <entry>&task-file-dl;</entry>
+  <entry>&task-file-tot;</entry>
 </row>
 
 <row>
   <entry>Mail-Server</entry>
-  <entry>10</entry>
-  <entry>3</entry>
-  <entry>13</entry>
+  <entry>&task-mail-inst;</entry>
+  <entry>&task-mail-dl;</entry>
+  <entry>&task-mail-tot;</entry>
 </row>
 
 <row>
-  <entry>SQL-Datenbank</entry>
-  <entry>66</entry>
-  <entry>21</entry>
-  <entry>87</entry>
+  <entry>SQL-Datenbank-Server</entry>
+  <entry>&task-sql-inst;</entry>
+  <entry>&task-sql-dl;</entry>
+  <entry>&task-sql-tot;</entry>
 </row>
 
 </tbody>
@@ -286,18 +323,18 @@ Größe</quote> werden (vorübergehend) in <filename>/var</filename> benötigt.
 
 <note><para>
 
-Die Programmgruppe <emphasis>Desktop</emphasis> installiert die Gnome-
-und die KDE-Desktop-Umgebung.
+Die Programmgruppe <emphasis>Desktop</emphasis> installiert die
+GNOME-Desktop-Umgebung.
 
 </para></note>
 
 </para><para>
 
 Falls Sie bei der Sprachauswahl nicht Englisch gewählt haben, installiert
-<command>tasksel</command> möglicherweise automatisch eine <firstterm>Programmgruppe
-für die Lokalisierung</firstterm>, falls diese für Ihre Sprache verfügbar ist.
+<command>tasksel</command> möglicherweise automatisch eine Programmgruppe
+für die Lokalisierung, falls diese für Ihre Sprache verfügbar ist.
 Der Speicherbedarf differiert abhängig von der Sprache; Sie sollten insgesamt
-bis zu 200MB für das Herunterladen und die Installation vorsehen.
+bis zu 350MB für das Herunterladen und die Installation vorsehen.
 
 </para>
  </sect1>

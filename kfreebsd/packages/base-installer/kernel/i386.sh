@@ -1,15 +1,15 @@
 arch_get_kernel_flavour () {
-	VENDOR=`grep '^vendor_id' "$CPUINFO" | cut -d: -f2`
-	FAMILY=`grep '^cpu family' "$CPUINFO" | cut -d: -f2`
+	VENDOR=`grep '^vendor_id' "$CPUINFO" | head -n1 | cut -d: -f2`
+	FAMILY=`grep '^cpu family' "$CPUINFO" | head -n1 | cut -d: -f2`
 	case "$VENDOR" in
 		" AuthenticAMD"*)
 			case "$FAMILY" in
-				" 6")	echo k7 ;;
-				" 5")	echo k6 ;;
-				*)	echo 386 ;;
+				" 6"|" 15")	echo k7 ;;
+				" 5")		echo k6 ;;
+				*)		echo 386 ;;
 			esac
 		;;
-		" GenuineIntel"|" GenuineTMx86"*)
+		" GenuineIntel"|" GenuineTMx86"*|" CentaurHauls")
 			case "$FAMILY" in
 				" 6"|" 15")	echo 686 ;;
 				" 5")		echo 586tsc ;;
@@ -48,9 +48,6 @@ arch_get_kernel_etch () {
 	fi
 
 	if [ "$1" = k7 ]; then
-		if [ "$SMP" ]; then
-			echo "$imgbase-$KERNEL_MAJOR-k7$SMP"
-		fi
 		echo "$imgbase-$KERNEL_MAJOR-k7"
 		set k6
 	fi
@@ -62,9 +59,6 @@ arch_get_kernel_etch () {
 	fi
 
 	if [ "$1" = 686 ]; then
-		if [ "$SMP" ]; then
-			echo "$imgbase-$KERNEL_MAJOR-686$SMP"
-		fi
 		echo "$imgbase-$KERNEL_MAJOR-686"
 		set 586tsc
 	fi
@@ -81,9 +75,6 @@ arch_get_kernel_sarge () {
 	imgbase=kernel-image
 
 	if [ "$1" = k7 ]; then
-		if [ "$SMP" ]; then
-			echo "$imgbase-$KERNEL_MAJOR-k7$SMP"
-		fi
 		echo "$imgbase-$KERNEL_MAJOR-k7"
 		set k6
 	fi
@@ -95,9 +86,6 @@ arch_get_kernel_sarge () {
 	fi
 
 	if [ "$1" = 686 ]; then
-		if [ "$SMP" ]; then
-			echo "$imgbase-$KERNEL_MAJOR-686$SMP"
-		fi
 		echo "$imgbase-$KERNEL_MAJOR-686"
 		set 586tsc
 	fi
@@ -111,18 +99,6 @@ arch_get_kernel_sarge () {
 }
 
 arch_get_kernel () {
-	if [ -e "$SPEAKUP" ]; then
-		# Override and use speakup kernel. There's only one.
-		echo "kernel-image-$KERNEL_VERSION-speakup"
-		return
-	fi
-
-	if [ -n "$NUMCPUS" ] && [ "$NUMCPUS" -gt 1 ]; then
-		SMP=-smp
-	else
-		SMP=
-	fi
-
 	arch_get_kernel_etch "$1"
 	arch_get_kernel_sarge "$1"
 }

@@ -39,20 +39,43 @@ while (<KVERS>) {
 		$extraname="$suffix";
 	}
 	
-	if (-e "$sourcedir/boot/vmlinux-$installedname") {
+	my $modlistdir;
+	if (-d "modules/$arch-$flavour") {
+		$modlistdir="modules/$arch-$flavour";
+	}
+	elsif (-d "modules/$flavour") {
+		$modlistdir="modules/$flavour";
+	}
+	else {
+		$modlistdir="modules/$arch";
+	}
+
+	if (! -e "$modlistdir/kernel-image") {
+		# copy no kernel
+	}
+	elsif (-e "$sourcedir/boot/vmlinux-$installedname") {
 		doit("install", "-D", "-m", 644,
 			"$sourcedir/boot/vmlinux-$installedname",
 			"debian/kernel-image-$kernelversion-$flavour-di/boot/vmlinux$extraname");
 	}
-	else {
+	elsif (-e "$sourcedir/boot/vmlinuz-$installedname") {
 		doit("install", "-D", "-m", 644,
 			"$sourcedir/boot/vmlinuz-$installedname",
 			"debian/kernel-image-$kernelversion-$flavour-di/boot/vmlinuz$extraname");
 	}
+	elsif (-e "$sourcedir/boot/kfreebsd-$installedname.gz") {
+		doit("install", "-D", "-m", 644,
+			"$sourcedir/boot/kfreebsd-$installedname.gz",
+			"debian/kernel-image-$kernelversion-$flavour-di/boot/kfreebsd$extraname.gz");
+	}
+	else {
+		die "could not find kernel image";
+	}
 	doit("install", "-D", "-m", 644,
 		"$sourcedir/boot/System.map-$installedname",
 		"debian/kernel-image-$kernelversion-$flavour-di/boot/System.map$extraname")
-	      if -e "$sourcedir/boot/System.map-$installedname";
+	      if -e "$sourcedir/boot/System.map-$installedname" &&
+	         -e "$modlistdir/kernel-image";
 
 	# Include extra files to help the d-i build process build kernels
 	# for certain subarchitectures. This is powerpc-specific at the
@@ -74,5 +97,6 @@ while (<KVERS>) {
 
 	doit("kernel-wedge", "copy-modules", $kernelversion, $flavour, $installedname);
 	doit("kernel-wedge", "find-dups", "$kernelversion-$flavour");
+	doit("kernel-wedge", "strip-modules", "$kernelversion-$flavour");
 }
 close KVERS;

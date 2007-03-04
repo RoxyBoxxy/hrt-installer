@@ -49,10 +49,22 @@ CFLAGS += -DAT_KBD -DSPARC_KBD -DUSB_KBD
 KEYBOARDS := at usb sparc
 endif
 ifeq ($(ARCH),powerpc)
-CFLAGS +=  -DUSB_KBD -DAT_KBD -DAMIGA_KBD  -DMAC_KBD
+CFLAGS +=  -DUSB_KBD -DAT_KBD -DAMIGA_KBD -DMAC_KBD
 KEYBOARDS := at usb amiga mac
 endif
+ifeq ($(ARCH),ppc64)
+CFLAGS +=  -DUSB_KBD -DAT_KBD -DMAC_KBD
+KEYBOARDS := at usb mac
+endif
 ifeq ($(ARCH),arm)
+CFLAGS +=  -DAT_KBD -DUSB_KBD 
+KEYBOARDS := at usb
+endif
+ifeq ($(ARCH),armel)
+CFLAGS +=  -DAT_KBD -DUSB_KBD 
+KEYBOARDS := at usb
+endif
+ifeq ($(ARCH),armeb)
 CFLAGS +=  -DAT_KBD -DUSB_KBD 
 KEYBOARDS := at usb
 endif
@@ -86,9 +98,7 @@ debian/kbd-chooser.templates:  $(TEMPLATES)
 	# debconf-updatepo
 	touch -mr debian/kbd-chooser.templates-in $@
 	
-# loadkeys.o: separate rule since the flex output does not permit -Wall
 loadkeys.o:     loadkeys.c analyze.c
-	$(CC) -c $(CFLAGS) $(DEFS) $<
 
 clean:
 	rm -f *~ *.o kbd-mode kbd-chooser analyze.c loadkeys.c demo demo.templates *#

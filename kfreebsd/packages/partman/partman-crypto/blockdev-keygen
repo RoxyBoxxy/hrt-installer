@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# usage: $0 description keytype keyfile [keysize]
+# usage: $0 description keytype keyfile [keybits]
 #
 # This handles sensitive data that must not be swapped out
 # or written out to disk unencrypted.
@@ -37,28 +37,28 @@ get_passphrase () {
 		db_fset $templ seen false
 		db_subst $templ DEVICE "$description"
 		db_input critical $templ
-		db_go || return 1
-		db_get $templ || RET=''
-		pass=$RET
-		if [ -z "$pass" ]; then
-			templ="partman-crypto/passphrase-empty"
-			db_fset $templ seen false
-			db_input critical $templ
-			db_go || true
-			continue
-		fi
 	
 		templ="partman-crypto/passphrase-again"
 		db_set $templ ""
 		db_fset $templ seen false
 		db_input critical $templ
+
 		db_go || return 1
-		db_get $templ || RET=''
+
+		db_get partman-crypto/passphrase || RET=''
+		pass=$RET
+		if [ -z "$pass" ]; then
+			templ="partman-crypto/passphrase-empty"
+			db_fset $templ seen false
+			db_input critical $templ
+			continue
+		fi
+
+		db_get partman-crypto/passphrase-again || RET=''
 		if [ "$pass" != "$RET" ]; then
 			templ="partman-crypto/passphrase-mismatch"
 			db_fset $templ seen false
 			db_input critical $templ
-			db_go || true
 			continue
 		fi
 
@@ -88,29 +88,26 @@ get_passphrase () {
 	fi
 }
 
-read_random () {
+have_entropy_plugin () {
+	db_capb
+	set -- $RET 
+	for cap; do
+		if [ "$cap" = plugin-entropy-text ]; then
+			return 0
+		fi
+	done
+	return 1
+}
+
+call_entropy_plugin () {
 	local keybytes
 	keybytes=$1
 
-	db_capb
-	set -- $RET 
-	for cap in $*; do
-		if [ "$cap" = plugin-entropy-text ]; then
-			use_entropy_plugin=yes
-		fi
-	done
-
-	if [ -z "$use_entropy_plugin" ]; then
-		db_fset partman-crypto/tools_missing seen false
-		db_input critical partman-crypto/tools_missing
-		db_go || true
-		return 1
-	fi
-
-	db_set partman-crypto/keysize $keysize
-	db_fset partman-crypto/entropy-text seen false
-	db_subst partman-crypto/entropy-text DEVICE "$description"
-	db_input critical partman-crypto/entropy-text
+	templ=partman-crypto/entropy-text
+	db_fset $templ seen false
+	db_subst $templ DEVICE "$description"
+	db_subst $templ KEYSIZE "$keybytes"
+	db_input critical $templ
 	db_go || return 1
 
 	return 0
@@ -148,12 +145,13 @@ create_gnupg_keyfile () {
 	# Fork off gnupg encrypting pipe
 	echo -n "$pass" > $passfifo &
 	gnupg_encrypt $keyfile $passfifo &
-	pid=$!
+	gpg_pid=$!
 
 	# Call plugin to feed randfifo
-	read_random 2925
-	if [ $? -ne 0 ] || !wait $pid; then
+	call_entropy_plugin 2925
+	if [ $? -ne 0 ] || ! wait $gpg_pid; then
 		rm $keyfile
+		kill $gpg_pid
 		return 1
 	fi
 
@@ -164,7 +162,7 @@ create_gnupg_keyfile () {
 
 # Create a one-time random keyfile for use during install
 create_random_keyfile() {
-	local keyfile keysize
+	local keyfile keybytes
 	keyfile=$1
 	keybytes=$2
 
@@ -174,12 +172,13 @@ create_random_keyfile() {
 	 done
 	 cat $randfifo > $keyfile
 	) &
-	pid=$!
+	writer_pid=$!
 
 	# Call plugin to feed randfifo
-	read_random $keybytes
-	if [ $? -ne 0 ] || !wait $pid; then
+	call_entropy_plugin $keybytes
+	if [ $? -ne 0 ] || ! wait $writer_pid; then
 		rm $keyfile
+		kill $writer_pid
 		return 1
 	fi
 
@@ -195,7 +194,7 @@ problem_dialog () {
 description=$1
 keytype=$2
 keyfile=$3
-keysize=$4
+keybits=$4
 
 if ! ([ "$description" ] && [ "$keytype" ] && [ "$keyfile" ]); then
 	# bad options
@@ -205,6 +204,15 @@ fi
 
 # Log available entropy
 logger -t partman-crypto "kernel entropy_avail: $(cat /proc/sys/kernel/random/entropy_avail) bits"
+
+if [ "$keytype" = random ] || [ "$keytype" = keyfile ]; then
+	if ! have_entropy_plugin; then
+		db_fset partman-crypto/tools_missing seen false
+		db_input critical partman-crypto/tools_missing
+		db_go || true
+		exit 1
+	fi
+fi
 
 case $keytype in
 	keyfile)
@@ -229,18 +237,18 @@ case $keytype in
 		;;
 
 	random)
-		if [ -z "$keysize" ]; then
+		if [ -z "$keybits" ]; then
 			problem_dialog
 			exit 1
 		fi
-		# Round keysize up to closest byte
-		keysize=$(( (keysize + 7)/8 ))
-		if [ $keysize -lt 1 ]; then
-			# keysize invalid
+		# Round keybits up to closest byte
+		keybytes=$(( (keybits + 7)/8 ))
+		if [ $keybytes -lt 1 ]; then
+			# key size invalid
 			problem_dialog
 			exit 1
 		fi
-		if ! create_random_keyfile $keyfile $keysize; then
+		if ! create_random_keyfile $keyfile $keybytes; then
 			problem_dialog
 			exit 1
 		fi

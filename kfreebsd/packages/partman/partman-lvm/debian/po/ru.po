@@ -7,17 +7,17 @@
 # Russian messages for debian-installer.
 # Copyright (C) 2003 Software in the Public Interest, Inc.
 # This file is distributed under the same license as debian-installer.
+#
 # Russian L10N Team <debian-l10n-russian@lists.debian.org>, 2004.
 # Yuri Kozlov <yuray@id.ru>, 2004, 2005.
 # Dmitry Beloglazov <dm-guest@alioth.debian.org>, 2005.
 # Yuri Kozlov <kozlov.y@gmail.com>, 2005, 2006.
-#
 msgid ""
 msgstr ""
 "Project-Id-Version: ru\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-08-31 13:17-0400\n"
-"PO-Revision-Date: 2005-05-18 19:29+0400\n"
+"Report-Msgid-Bugs-To: debian-boot@lists.debian.org\n"
+"POT-Creation-Date: 2007-01-06 22:48+0100\n"
+"PO-Revision-Date: 2006-12-02 13:22+0300\n"
 "Last-Translator: Yuri Kozlov <kozlov.y@gmail.com>\n"
 "Language-Team: Russian <debian-l10n-russian@lists.debian.org>\n"
 "MIME-Version: 1.0\n"
@@ -25,23 +25,139 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms:  nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%"
 "10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
-"X-Generator: KBabel 1.9.1\n"
+"X-Generator: KBabel 1.11.4\n"
 
 #. Type: text
 #. Description
 #: ../partman-lvm.templates:3
-msgid "Configure the Logical Volume Manager"
-msgstr "Настройка менеджера логических томов (LVM)"
+msgid "Unallocated physical volumes:"
+msgstr "Нераспределённые логические тома:"
+
+#. Type: text
+#. Description
+#: ../partman-lvm.templates:7
+msgid "Volume groups:"
+msgstr "Группы томов:"
+
+#. Type: text
+#. Description
+#: ../partman-lvm.templates:11
+msgid "Uses physical volume:"
+msgstr "Использование физического тома:"
+
+#. Type: text
+#. Description
+#: ../partman-lvm.templates:15
+msgid "Provides logical volume:"
+msgstr "Предоставление логического тома:"
+
+#. Type: text
+#. Description
+#. "none" here == "No Physical Volumes"
+#: ../partman-lvm.templates:20
+msgid ""
+"none[ Do not translate what's inside the brackets and just put the "
+"translation for the word \"none\" in your language without any brackets. "
+"This \"none\" relates to \"Physical Volumes:\" ]"
+msgstr "отсутствует"
+
+#. Type: text
+#. Description
+#. "none" here == "No Volume Groups"
+#: ../partman-lvm.templates:25
+msgid ""
+"none[ Do not translate what's inside the brackets and just put the "
+"translation for the word \"none\" in your language without any brackets. "
+"This \"none\" relates to \"Volume Groups:\" ]"
+msgstr "отсутствует"
+
+#. Type: text
+#. Description
+#. Translators: use the acronym for "Physical Volume" in your language here
+#: ../partman-lvm.templates:34
+msgid "PV"
+msgstr "PV"
+
+#. Type: text
+#. Description
+#. What is "in use" is a partition
+#: ../partman-lvm.templates:39
+msgid "In use by LVM volume group ${VG}"
+msgstr "Используется LVM группой томов ${VG}"
+
+#. Type: text
+#. Description
+#. Menu entry
+#. Use infinitive form
+#: ../partman-lvm.templates:45
+msgid "Display configuration details"
+msgstr "Показать настройку подробней"
+
+#. Type: text
+#. Description
+#. Menu entry
+#. Use infinitive form
+#: ../partman-lvm.templates:51
+msgid "Create volume group"
+msgstr "Создать группу томов"
+
+#. Type: text
+#. Description
+#. Menu entry
+#. Use infinitive form
+#: ../partman-lvm.templates:57
+msgid "Delete volume group"
+msgstr "Удалить группу томов"
+
+#. Type: text
+#. Description
+#. Menu entry
+#. Use infinitive form
+#: ../partman-lvm.templates:63
+msgid "Extend volume group"
+msgstr "Расширить группу томов"
+
+#. Type: text
+#. Description
+#. Menu entry
+#. Use infinitive form
+#: ../partman-lvm.templates:69
+msgid "Reduce volume group"
+msgstr "Уменьшить группу томов"
+
+#. Type: text
+#. Description
+#. Menu entry
+#. Use infinitive form
+#: ../partman-lvm.templates:75
+msgid "Create logical volume"
+msgstr "Создать логический том"
+
+#. Type: text
+#. Description
+#. Menu entry
+#. Use infinitive form
+#: ../partman-lvm.templates:81
+msgid "Delete logical volume"
+msgstr "Удалить логический том"
+
+#. Type: text
+#. Description
+#. Menu entry
+#. Use infinitive form
+#: ../partman-lvm.templates:87
+msgid "Finish"
+msgstr "Закончить"
 
 #. Type: boolean
 #. Description
-#: ../partman-lvm.templates:8
+#: ../partman-lvm.templates:93
 msgid "Write the changes to disks and configure LVM?"
 msgstr "Записать изменения на диск и настроить LVM?"
 
 #. Type: boolean
 #. Description
-#: ../partman-lvm.templates:8
+#: ../partman-lvm.templates:93
 msgid ""
 "Before the Logical Volume Manager can be configured, the current "
 "partitioning scheme has to be written to disk.  These changes cannot be "
@@ -52,55 +168,588 @@ msgstr ""
 
 #. Type: boolean
 #. Description
-#: ../partman-lvm.templates:8
-msgid "${ITEMS}"
-msgstr "${ITEMS}"
+#: ../partman-lvm.templates:93
+msgid ""
+"After the Logical Volume Manager is configured, no additional changes to the "
+"partitioning scheme of disks containing physical volumes are allowed during "
+"the installation. Please decide if you are satisfied with the current "
+"partitioning scheme before continuing."
+msgstr ""
+"После настройки с помощью менеджера логических томов больше нельзя изменять "
+"разметку дисков, содержащих физические тома. Прежде чем продолжить "
+"настройку, убедитесь, что вы удовлетворены текущей разметкой дисков."
 
 #. Type: boolean
 #. Description
-#: ../partman-lvm.templates:23
+#: ../partman-lvm.templates:108
 msgid "Keep current partition layout and configure LVM?"
 msgstr "Записать изменения на диск и настроить LVM?"
 
 #. Type: boolean
 #. Description
-#: ../partman-lvm.templates:23
+#: ../partman-lvm.templates:108
 msgid ""
 "After the Logical Volume Manager is configured, no additional changes to the "
 "partitions in the disks containing physical volumes are allowed. Please "
 "decide if you are satisfied with the current partitioning scheme in these "
 "disks before continuing."
 msgstr ""
-"После настройки логических томов больше нельзя изменять разметку диска/ов, "
-"содержащего логические тома. Прежде чем продолжить настройку, убедитесь, что "
-"вы довольны текущей структурой диска(ов)."
+"После настройки с помощью менеджера логических томов больше нельзя изменять "
+"разметку дисков, содержащих физические тома. Прежде чем продолжить "
+"настройку, убедитесь, что вы удовлетворены текущей разметкой дисков."
 
 #. Type: error
 #. Description
-#: ../partman-lvm.templates:31
+#: ../partman-lvm.templates:116
 msgid "LVM configuration failure"
 msgstr "Не удалось настроить LVM"
 
 #. Type: error
 #. Description
-#: ../partman-lvm.templates:31
+#: ../partman-lvm.templates:116
 msgid "An error occurred while writing the changes to the disks."
 msgstr "Произошла ошибка при записи изменений на диск."
 
 #. Type: error
 #. Description
-#: ../partman-lvm.templates:31
+#: ../partman-lvm.templates:116
 msgid "The configuration of the Logical Volume Manager is aborted."
 msgstr "Настройка логических томов была прервана."
 
 #. Type: text
 #. Description
-#: ../partman-lvm.templates:38
+#: ../partman-lvm.templates:123
 msgid "physical volume for LVM"
 msgstr "физический том для LVM"
 
 #. Type: text
 #. Description
-#: ../partman-lvm.templates:42
+#. keep it short (ideally a 3-letter acronym)
+#: ../partman-lvm.templates:128
 msgid "lvm"
 msgstr "lvm"
+
+#. Type: text
+#. Description
+#. Main menu item
+#. Use infinitive form
+#: ../partman-lvm.templates:134
+msgid "Configure the Logical Volume Manager"
+msgstr "Настройка менеджера логических томов (LVM)"
+
+#. Type: boolean
+#. Description
+#: ../partman-lvm.templates:139
+msgid "Activate existing volume groups?"
+msgstr "Активировать существующие группы томов?"
+
+#. Type: boolean
+#. Description
+#: ../partman-lvm.templates:139
+msgid ""
+"${COUNT} existing volume groups have been found. Please indicate whether you "
+"want to activate them."
+msgstr ""
+"Найдено ${COUNT} групп томов. Укажите, какие из них вы хотите активировать."
+
+#. Type: select
+#. Description
+#: ../partman-lvm.templates:146
+msgid "LVM configuration action:"
+msgstr "Настройка LVM:"
+
+#. Type: select
+#. Description
+#: ../partman-lvm.templates:146
+msgid "Summary of current LVM configuration:"
+msgstr "Кратко о имеющейся конфигурации LVM:"
+
+#. Type: select
+#. Description
+#: ../partman-lvm.templates:146
+msgid ""
+" Free Physical Volumes:  ${FREE_PVS}\n"
+" Used Physical Volumes:  ${USED_PVS}\n"
+" Volume Groups:          ${VGS}\n"
+" Logical Volumes:        ${LVS}"
+msgstr ""
+" Свободно физических томов(PV):      ${FREE_PVS}\n"
+" Использовано физических томов(PV):  ${USED_PVS}\n"
+" Групп томов(VG):                    ${VGS}\n"
+" Логических томов(LV):               ${LVS}"
+
+#. Type: note
+#. Description
+#: ../partman-lvm.templates:157
+msgid "Current LVM configuration:"
+msgstr "Текущая конфигурация LVM:"
+
+#. Type: multiselect
+#. Description
+#: ../partman-lvm.templates:163
+msgid "Devices for the new volume group:"
+msgstr "Устройства для новой группы томов:"
+
+#. Type: multiselect
+#. Description
+#: ../partman-lvm.templates:163
+msgid "Please select the devices for the new volume group."
+msgstr "Выберите устройства для новой группы томов."
+
+#. Type: string
+#. Description
+#: ../partman-lvm.templates:170
+msgid "Volume group name:"
+msgstr "Название группы томов:"
+
+#. Type: string
+#. Description
+#: ../partman-lvm.templates:170
+msgid "Please enter the name you would like to use for the new volume group."
+msgstr "Введите название, которое вы хотите дать новой группе томов."
+
+#. Type: error
+#. Description
+#: ../partman-lvm.templates:175
+msgid ""
+"No physical volumes were selected. The creation of a new volume group was "
+"aborted."
+msgstr "Не были выбраны физические тома. Создание новой группы томов прервано."
+
+#. Type: error
+#. Description
+#: ../partman-lvm.templates:181
+msgid "No volume group name entered"
+msgstr "Не задано название группе томов"
+
+#. Type: error
+#. Description
+#: ../partman-lvm.templates:181
+msgid "No name for the volume group has been entered.  Please enter a name."
+msgstr "Не задано название группе томов. Введите название."
+
+#. Type: error
+#. Description
+#: ../partman-lvm.templates:187
+msgid "Volume group name already in use"
+msgstr "Такое название группы томов уже существует"
+
+#. Type: error
+#. Description
+#: ../partman-lvm.templates:187
+msgid ""
+"The selected volume group name is already in use. Please choose another name."
+msgstr ""
+"Указанное название группы томов уже существует. Выберите другое название."
+
+#. Type: error
+#. Description
+#: ../partman-lvm.templates:193
+msgid "Volume group name overlaps with device name"
+msgstr "Название группы томов уже используется как название устройства"
+
+#. Type: error
+#. Description
+#: ../partman-lvm.templates:193
+msgid ""
+"The selected volume group name overlaps with an existing device name. Please "
+"choose another name."
+msgstr ""
+"Указанное название группы томов уже как название устройства. Выберите другое "
+"название."
+
+#. Type: error
+#. Description
+#: ../partman-lvm.templates:199
+msgid "The volume group ${VG} could not be created."
+msgstr "Группа томов ${VG} не может быть создана."
+
+#. Type: select
+#. Description
+#: ../partman-lvm.templates:207
+msgid "Volume group to delete:"
+msgstr "Группа томов для удаления:"
+
+#. Type: select
+#. Description
+#: ../partman-lvm.templates:207
+msgid "Please select the volume group you wish to delete."
+msgstr "Выберите группу томов для удаления."
+
+#. Type: error
+#. Description
+#: ../partman-lvm.templates:212
+msgid "The volume group may have already been deleted."
+msgstr "Эта группа томов возможно уже удалена."
+
+#. Type: boolean
+#. Description
+#: ../partman-lvm.templates:220
+msgid "Really delete the volume group?"
+msgstr "Вы действительно хотите удалить группу томов?"
+
+#. Type: boolean
+#. Description
+#: ../partman-lvm.templates:220
+msgid "Please confirm the ${VG} volume group removal."
+msgstr "Подтвердите удаление группы томов ${VG}."
+
+#. Type: error
+#. Description
+#: ../partman-lvm.templates:225
+msgid "Error while deleting volume group"
+msgstr "Ошибка при удалении группы томов"
+
+#. Type: error
+#. Description
+#: ../partman-lvm.templates:225
+msgid ""
+"The selected volume group could not be deleted. One or more logical volumes "
+"may currently be in use."
+msgstr ""
+"Указанная группа томов не может быть удалена. Вероятно, что один или более "
+"логических томов все ещё используется."
+
+#. Type: error
+#. Description
+#: ../partman-lvm.templates:231
+msgid "No volume group can be deleted."
+msgstr "Группа томов не может быть удалена."
+
+#. Type: select
+#. Description
+#: ../partman-lvm.templates:239
+msgid "Volume group to extend:"
+msgstr "Группа томов для расширения:"
+
+#. Type: select
+#. Description
+#: ../partman-lvm.templates:239
+msgid "Please select the volume group you wish to extend."
+msgstr "Выберите группу томов для расширения."
+
+#. Type: multiselect
+#. Description
+#: ../partman-lvm.templates:245
+msgid "Devices to add to the volume group:"
+msgstr "Устройства для добавления в группу томов:"
+
+#. Type: multiselect
+#. Description
+#: ../partman-lvm.templates:245
+msgid "Please select the devices you wish to add to the volume group."
+msgstr "Выберите устройства для добавления в группу томов."
+
+#. Type: error
+#. Description
+#: ../partman-lvm.templates:252
+msgid ""
+"No physical volumes were selected. Extension of the volume group was aborted."
+msgstr "Физические тома не были выбраны. Расширение группы томов прервано."
+
+#. Type: error
+#. Description
+#: ../partman-lvm.templates:258
+msgid "Error while extending volume group"
+msgstr "Ошибка при расширении группы томов"
+
+#. Type: error
+#. Description
+#: ../partman-lvm.templates:258
+msgid ""
+"The physical volume ${PARTITION} could not be added to the selected volume "
+"group."
+msgstr ""
+"Не удалось добавить физический том ${PARTITION} в выбранную группу томов."
+
+#. Type: error
+#. Description
+#: ../partman-lvm.templates:264
+msgid "No volume group has been found."
+msgstr "Группа томов не найдена."
+
+#. Type: error
+#. Description
+#: ../partman-lvm.templates:264
+msgid "No volume group can be reduced."
+msgstr "Группа томов не может быть сокращена."
+
+#. Type: select
+#. Description
+#: ../partman-lvm.templates:272
+msgid "Volume group to reduce:"
+msgstr "Группа томов для сокращения:"
+
+#. Type: select
+#. Description
+#: ../partman-lvm.templates:272
+msgid "Please select the volume group you wish to reduce."
+msgstr "Выберите группу томов для сокращения."
+
+#. Type: multiselect
+#. Description
+#: ../partman-lvm.templates:278
+msgid "Devices to remove from the volume group:"
+msgstr "Устройства для удаления из группы томов:"
+
+#. Type: multiselect
+#. Description
+#: ../partman-lvm.templates:278
+msgid "Please select the devices you wish to remove from the volume group."
+msgstr "Выберите устройства для удаления из группы томов."
+
+#. Type: multiselect
+#. Description
+#: ../partman-lvm.templates:278
+msgid "You can select one or more devices."
+msgstr "Вы можете выбрать одно или несколько устройств."
+
+#. Type: error
+#. Description
+#: ../partman-lvm.templates:285
+msgid "No physical volumes selected"
+msgstr "Физические тома не выбраны"
+
+#. Type: error
+#. Description
+#: ../partman-lvm.templates:285
+msgid ""
+"No physical volumes were selected. Reduction of the volume group was aborted."
+msgstr "Физические тома не были выбраны. Уменьшение группы томов прервано."
+
+#. Type: error
+#. Description
+#: ../partman-lvm.templates:291
+msgid "Error while reducing volume group"
+msgstr "Ошибка при сокращении группы томов"
+
+#. Type: error
+#. Description
+#: ../partman-lvm.templates:291
+msgid ""
+"The physical volume ${PARTITION} could not be removed from the selected "
+"volume group."
+msgstr ""
+"Не удалось удалить физический том ${PARTITION} из выбранной группы томов."
+
+#. Type: error
+#. Description
+#: ../partman-lvm.templates:299
+msgid "No volume group found"
+msgstr "Группа томов не найдена"
+
+#. Type: error
+#. Description
+#: ../partman-lvm.templates:299
+msgid ""
+"No free volume groups were found for creating a new logical volume. Please "
+"create more physical volumes and volume groups, or reduce an existing volume "
+"group."
+msgstr ""
+"Не найдено свободных групп томов для создания нового логического тома. "
+"Создайте дополнительные физические тома и группы или уменьшите существующую "
+"группу томов."
+
+#. Type: string
+#. Description
+#: ../partman-lvm.templates:306
+msgid "Logical volume name:"
+msgstr "Название логического тома:"
+
+#. Type: string
+#. Description
+#: ../partman-lvm.templates:306
+msgid "Please enter the name you would like to use for the new logical volume."
+msgstr "Введите название, которое вы хотите дать новому логическому тому."
+
+#. Type: select
+#. Description
+#: ../partman-lvm.templates:312
+msgid "Volume group:"
+msgstr "Группа томов:"
+
+#. Type: select
+#. Description
+#: ../partman-lvm.templates:312
+msgid ""
+"Please select the volume group where the new logical volume should be "
+"created."
+msgstr "Выберите группу томов, где должен быть создан новый логический том."
+
+#. Type: error
+#. Description
+#: ../partman-lvm.templates:318
+msgid "No logical volume name entered"
+msgstr "Не задано название логического тома"
+
+#. Type: error
+#. Description
+#: ../partman-lvm.templates:318
+msgid "No name for the logical volume has been entered.  Please enter a name."
+msgstr "Не задано название логического тома. Введите название."
+
+#. Type: error
+#. Description
+#: ../partman-lvm.templates:324
+msgid ""
+"The name ${LV} is already in use by another logical volume on the same "
+"volume group (${VG})."
+msgstr ""
+"Название ${LV} уже используется другим логическим томом в той же группе "
+"томов (${VG})."
+
+#. Type: string
+#. Description
+#: ../partman-lvm.templates:330
+msgid "Logical volume size:"
+msgstr "Размер логического тома:"
+
+#. Type: string
+#. Description
+#: ../partman-lvm.templates:330
+msgid ""
+"Please enter the size of the new logical volume. The size may be entered in "
+"the following formats: 10K (Kilobytes), 10M (Megabytes), 10G (Gigabytes), "
+"10T (Terabytes). The default unit is Megabytes."
+msgstr ""
+"Введите размер нового логического тома. Размер может быть указан в следующих "
+"форматах: 10K (килобайты), 10M (мегабайты), 10G (гигабайты), 10T "
+"(терабайты). По умолчанию используются мегабайты."
+
+#. Type: error
+#. Description
+#: ../partman-lvm.templates:337
+msgid "Error while creating a new logical volume"
+msgstr "Ошибка при создании нового логического тома."
+
+#. Type: error
+#. Description
+#: ../partman-lvm.templates:337
+msgid ""
+"Unable to create a new logical volume (${LV}) on ${VG} with the new size "
+"${SIZE}."
+msgstr ""
+"Не удаётся создать новый логический том (${LV}) в группе ${VG} с размером "
+"${SIZE}. "
+
+#. Type: error
+#. Description
+#: ../partman-lvm.templates:345
+msgid "No logical volume found"
+msgstr "Логический том не найден"
+
+#. Type: error
+#. Description
+#: ../partman-lvm.templates:345
+msgid ""
+"No logical volume has been found.  Please create a logical volume first."
+msgstr "Не найден логический том. Сначала создайте логический том."
+
+#. Type: select
+#. Description
+#: ../partman-lvm.templates:351
+msgid "Logical volume:"
+msgstr "Логический том:"
+
+#. Type: select
+#. Description
+#: ../partman-lvm.templates:351
+msgid "Please select the logical volume to delete."
+msgstr "Выберите логический том для удаления."
+
+#. Type: text
+#. Description
+#: ../partman-lvm.templates:356
+msgid "in VG ${VG}"
+msgstr "в VG ${VG}"
+
+#. Type: error
+#. Description
+#: ../partman-lvm.templates:360
+msgid "Error while deleting the logical volume"
+msgstr "Ошибка при удалении логического тома"
+
+#. Type: error
+#. Description
+#: ../partman-lvm.templates:360
+msgid "The logical volume (${LV}) on ${VG} could not be deleted."
+msgstr "Не удалось удалить логический том (${LV}) из группы ${VG}."
+
+#. Type: error
+#. Description
+#: ../partman-lvm.templates:367
+msgid "No usable physical volumes found"
+msgstr "Не найдены подходящие физические тома "
+
+#. Type: error
+#. Description
+#: ../partman-lvm.templates:367
+msgid ""
+"No physical volumes (i.e. partitions) were found in your system. All "
+"physical volumes may already be in use. You may also need to load some "
+"required kernel modules or re-partition the hard drives."
+msgstr ""
+"Не удалось найти ни одного физического тома (т.е. раздела) на вашей системе. "
+"Возможно, все физические тома уже используются. Возможно, необходимо "
+"загрузить требуемые модули ядра или переразметить жёсткие диски, ."
+
+#. Type: error
+#. Description
+#: ../partman-lvm.templates:374
+msgid "Logical Volume Manager not available"
+msgstr "Менеджер логических томов не доступен"
+
+#. Type: error
+#. Description
+#: ../partman-lvm.templates:374
+msgid ""
+"The current kernel doesn't support the Logical Volume Manager. You may need "
+"to load the lvm-mod module."
+msgstr ""
+"Текущая конфигурация ядра не поддерживает менеджер логических томов. "
+"Возможно, вам нужно загрузить модуль lvm-mod, чтобы эта функция ядра "
+"включилась."
+
+#. Type: error
+#. Description
+#: ../partman-lvm.templates:380
+msgid "Error while initializing physical volume"
+msgstr "Ошибка при инициализации физического тома"
+
+#. Type: error
+#. Description
+#: ../partman-lvm.templates:380
+msgid "The physical volume ${PV} could not be initialized."
+msgstr "Не удалось инициализировать физический том ${PV}."
+
+#. Type: error
+#. Description
+#: ../partman-lvm.templates:380
+msgid "Check /var/log/syslog or see virtual console 4 for the details."
+msgstr "Подробности смотрите в файле /var/log/syslog или на консоли 4."
+
+#. Type: error
+#. Description
+#: ../partman-lvm.templates:387
+msgid "Invalid logical volume or volume group name"
+msgstr "Недопустимое имя логического тома или группы томов"
+
+#. Type: error
+#. Description
+#: ../partman-lvm.templates:387
+msgid ""
+"Logical volume or volume group names may only contain alphanumeric "
+"characters, hyphen, plus, period and underscore. They must be 128 characters "
+"or less and may not begin with a hyphen. The names \".\" and \"..\" are not "
+"allowed. In addition, logical volume names may not begin with \"snapshot\"."
+msgstr ""
+"Имя логического тома или группы томов может состоять только из букв и цифр, "
+"дефиса, знака плюс, точки и подчёркивания. Оно может быть длиной до 128 "
+"знаков и не может начинаться с дефиса. Имена \".\" и \"..\" недопустимы. "
+"Также, имена логических томов не могут начинаться со слова \"snapshot\"."
+
+#. Type: error
+#. Description
+#: ../partman-lvm.templates:387
+msgid "Please choose another name."
+msgstr "Укажите другое имя."

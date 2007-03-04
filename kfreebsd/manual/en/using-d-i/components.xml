@@ -72,8 +72,9 @@ like LVM or RAID devices.
 &module-autopartkit.xml;
 &module-partitioner.xml;
 &module-partconf.xml;
-&module-lvmcfg.xml;
 &module-mdcfg.xml;
+&module-partman-lvm.xml;
+&module-partman-crypto.xml;
   </sect2>
   
   <sect2 id="di-system-setup">
@@ -109,8 +110,8 @@ take some time.
 <para>
 
 After the base system is installed, you have a usable but limited system.
-Most users will want to add additional software to the system to tune it to
-their needs, and the installer lets you do so. This step can take even
+Most users will want to install additional software on the system to tune it to
+their needs, and the installer allows you do so. This step can take even
 longer than installing the base system if you have a slow computer or
 network.
 
@@ -126,25 +127,17 @@ network.
 
 If you are installing a diskless workstation, obviously, booting off
 the local disk isn't a meaningful option, and this step will be
-skipped. <phrase arch="sparc">You may wish to set the OpenBoot to boot
+skipped. <phrase arch="sparc">You may wish to set OpenBoot to boot
 from the network by default; see <xref
 linkend="boot-dev-select-sun"/>.</phrase>
-
-</para><para>
-
-Note that multiple operating systems booting on a single machine is
-still something of a black art.  This document does not even attempt
-to document the various boot managers, which vary by architecture and
-even by subarchitecture.  You should see your boot manager's
-documentation for more information.
 
 </para>
 
 &module-os-prober.xml;
 &module-alpha-aboot-installer.xml;
 &module-hppa-palo-installer.xml;
-&module-i386-grub-installer.xml;
-&module-i386-lilo-installer.xml;
+&module-x86-grub-installer.xml;
+&module-x86-lilo-installer.xml;
 &module-ia64-elilo-installer.xml;
 &module-mips-arcboot-installer.xml;
 &module-mipsel-colo-installer.xml;
@@ -165,7 +158,7 @@ mostly consists of tidying up after the &d-i;.
 
 </para>
 
-&module-prebaseconfig.xml;
+&module-finish-install.xml;
   </sect2>
 
   <sect2 id="di-miscellaneous">

@@ -9,20 +9,19 @@
 #
 # Contributors to the translation of debian-installer:
 # Teófilo Ruiz Suárez <teo@debian.org>, 2003.
-# Javier Fernández-Sanguino <jfs@debian.org>, 2003.
 # David Martínez Moreno <ender@debian.org>, 2003, 2005.
 # Carlos Alberto Martín Edo <carlos@dat.etsit.upm.es>, 2003
 # Carlos Valdivia Yagüe <valyag@dat.etsit.upm.es>, 2003
-# Rudy Godoy <rudy@kernel-panik.org>, 2003
+# Rudy Godoy <rudy@kernel-panik.org>, 2003-2006
 # Steve Langasek <vorlon@debian.org>, 2004
 # Enrique Matias Sanchez (aka Quique) <cronopios@gmail.com>, 2005
-# Javier Fernández-Sanguino <jfs@debian.org>, 2004-2005
 # Rubén Porras Campo <nahoo@inicia.es>, 2005
+# Javier Fernández-Sanguino <jfs@debian.org>, 2003-2006
 #
 # Equipo de traducción al español, por favor lean antes de traducir
 # los siguientes documentos:
 #
-# - El proyecto de traducción de Debian al españl
+# - El proyecto de traducción de Debian al español
 #   http://www.debian.org/intl/spanish/
 #   especialmente las notas de traducción en
 #   http://www.debian.org/intl/spanish/notas
@@ -34,12 +33,23 @@
 # Si tiene dudas o consultas sobre esta traducción consulte con el último
 # traductor (campo Last-Translator) y ponga en copia a la lista de
 # traducción de Debian al español (debian-l10n-spanish@lists.debian.org)
+#
+# NOTAS: 
+#
+# - Se ha traducido en este fichero 'boot loader' de forma homogénea por
+# 'cargador de arranque' aunque en el manual se utiliza éste término y
+# también 'gestor de arranque'
+#
+# - 'array' no está traducido aún. La traducción como 'arreglo' suena
+# fatal (y es poco conocida)
+#
+#  
 msgid ""
 msgstr ""
 "Project-Id-Version: debian-installer\n"
 "Report-Msgid-Bugs-To: debian-boot@lists.debian.org\n"
-"POT-Creation-Date: 2005-11-16 15:56-0500\n"
-"PO-Revision-Date: 2005-11-16 02:28+0100\n"
+"POT-Creation-Date: 2007-01-06 22:47+0100\n"
+"PO-Revision-Date: 2006-10-10 01:13+0200\n"
 "Last-Translator: Javier Fernández-Sanguino Peña <jfs@debian.org>\n"
 "Language-Team:  Debian Spanish <debian-l10n-spanish@lists.debian.org>\n"
 "MIME-Version: 1.0\n"
@@ -50,24 +60,25 @@ msgstr ""
 #. Description
 #: ../anna.templates:4
 msgid ""
-"All components of the installer needed to complete the install should "
-"already be selected. Other installer components have low priority and are "
-"probably not necessary, but may be interesting to some users."
+"All components of the installer needed to complete the install will be "
+"loaded automatically and are not listed here. Some other (optional) "
+"installer components are shown below. They are probably not necessary, but "
+"may be interesting to some users."
 msgstr ""
 "La mayoría de los componentes que necesitará el instalador para completar la "
-"instalación se cargarán automáticamente. Otros componentes son de baja "
-"prioridad y probablemente no sean necesarios, aunque pueden interesar a "
-"algunos usuarios."
+"instalación se cargarán automáticamente y no se listarán aquí. Abajo se "
+"muestran otros componentes (opcionales). Probablemente no sean necesarios, "
+"aunque pueden interesar a algunos usuarios."
 
 #. Type: multiselect
 #. Description
-#: ../anna.templates:15
+#: ../anna.templates:16
 msgid "Installer components to load:"
 msgstr "Componentes del instalador a cargar:"
 
 #. Type: multiselect
 #. Description
-#: ../anna.templates:15
+#: ../anna.templates:16
 msgid ""
 "To save memory, only components that are certainly needed for an install are "
 "selected by default. The other installer components are not all necessary "
@@ -76,14 +87,14 @@ msgid ""
 "you need."
 msgstr ""
 "Sólo se instalarán los componentes necesarios para la instalación para "
-"ahorrar memoria. Los demás componentes del instalador  no son necesarios "
-"para una instalación básica, pero es posible que necesite alguno, sobre todo "
+"ahorrar memoria. Los demás componentes del instalador no son necesarios para "
+"una instalación básica, pero es posible que necesite alguno, sobre todo "
 "algunos módulos del núcleo. Revise la lista detenidamente y seleccione los "
 "componentes que necesite."
 
 #. Type: multiselect
 #. Description
-#: ../anna.templates:15
+#: ../anna.templates:16
 msgid ""
 "Note that if you select a component that requires others, those components "
 "will also be loaded."
@@ -95,7 +106,7 @@ msgstr ""
 #. Description
 #. (Progress bar) title displayed when loading udebs
 #. TRANSLATORS : keep short
-#: ../anna.templates:29
+#: ../anna.templates:30
 msgid "Loading additional components"
 msgstr "Cargando componentes adicionales"
 
@@ -103,19 +114,19 @@ msgstr "Cargando componentes adicionales"
 #. Description
 #. (Progress bar)
 #. TRANSLATORS : keep short
-#: ../anna.templates:35
+#: ../anna.templates:36
 msgid "Retrieving ${PACKAGE}"
 msgstr "Descargando ${PACKAGE}"
 
 #. Type: error
 #. Description
-#: ../anna.templates:39
+#: ../anna.templates:40
 msgid "Failed to load installer component"
 msgstr "Se produjo un fallo al cargar un componente del instalador"
 
 #. Type: error
 #. Description
-#: ../anna.templates:39
+#: ../anna.templates:40
 msgid "Loading ${PACKAGE} failed for unknown reasons. Aborting."
 msgstr ""
 "La carga del componente ${PACKAGE} falló por razones desconocidas. "
@@ -123,13 +134,13 @@ msgstr ""
 
 #. Type: boolean
 #. Description
-#: ../anna.templates:45
+#: ../anna.templates:46
 msgid "Continue the install without loading kernel modules?"
 msgstr "¿Desea continuar la instalación sin cargar módulos del núcleo?"
 
 #. Type: boolean
 #. Description
-#: ../anna.templates:45
+#: ../anna.templates:46
 msgid ""
 "No kernel modules were found. This probably is due to a mismatch between the "
 "kernel used by this version of the installer and the kernel version "
@@ -141,7 +152,7 @@ msgstr ""
 
 #. Type: boolean
 #. Description
-#: ../anna.templates:45
+#: ../anna.templates:46
 msgid ""
 "If you're installing from a mirror, you can work around this problem by "
 "choosing to install a different version of Debian. The install will probably "

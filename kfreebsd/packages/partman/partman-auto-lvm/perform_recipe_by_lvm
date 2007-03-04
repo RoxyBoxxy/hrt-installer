@@ -73,12 +73,15 @@ foreach_partition '
 	fi
 
 	if [ "$last" = "yes" ]; then
-		LV_create $VG_name full  "$lvname" || autopartitioning_failed
+		lv_create $VG_name "$lvname" full || autopartitioning_failed
 	else
-		LV_create $VG_name "$1"000 "$lvname" || autopartitioning_failed
+		lv_create $VG_name "$lvname" $(($1/1024)) || autopartitioning_failed
 	fi
 
-	device=/dev/mapper/"$VG_name"-"$lvname"
+	# Hyphens in VG or LV names are doubled under /dev/mapper
+	VG_dev="$(echo "$VG_name" | sed 's/-/--/g')"
+	LV_dev="$(echo "$lvname" | sed 's/-/--/g')"
+	device=/dev/mapper/"$VG_dev"-"$LV_dev"
 
 	dirname=$(echo "$device" | sed "s:/:=:g")
 	dev=$DEVICES/$dirname

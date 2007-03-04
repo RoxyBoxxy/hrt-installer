@@ -10,7 +10,8 @@
 #modprobe raid1 1>/dev/null 2>&1
 #
 ## Detect and start MD devices
-#/sbin/mdrun
+#/sbin/mdadm --examine --scan --config=partitions > /tmp/mdadm.conf
+#/sbin/mdadm --assemble --scan --run --config=/tmp/mdadm.conf --auto=yes
 
 # Mark all RAID partitions as being MD
 for dev in /var/lib/partman/devices/*; do
@@ -37,7 +38,7 @@ for dev in /var/lib/partman/devices/*; do
 		done
 		close_dialog
 		if [ "$md" = yes ]; then
-			[ -d $id ] || mkdir $id
+			mkdir -p $id
 			echo raid > $id/method
 		fi
 	done
@@ -57,7 +58,7 @@ done
 #for i in `grep md /proc/mdstat|sed -e 's/^\(md.*\) : active \([[:alnum:]]*\).*/\1/'`; do
 #	NUMBER=`echo ${i}|sed -e "s/^md//"`
 #	DEVICE="/var/lib/partman/devices/=dev=md=${NUMBER}"
-#	mkdir ${DEVICE}
+#	mkdir -p ${DEVICE}
 #	cd ${DEVICE}
 #	echo "/dev/md/${NUMBER}" > ${DEVICE}/device
 #	echo "Unknown" > ${DEVICE}/model

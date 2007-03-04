@@ -1,8 +1,8 @@
 <!-- retain these comments for translator revision tracking -->
-<!-- original version: 28997 -->
+<!-- original version: 39920 -->
 
 
-  <sect2 arch="alpha"><title>Particionament per &arch-title;</title>
+  <sect2 arch="alpha"><title>Particionar per a &arch-title;</title>
 <para>
 
 Per arrencar Debian des de la consola SRM (l'únic mètode d'arrencada de
@@ -12,8 +12,8 @@ bloc d'arrencada de SRM és incompatible amb les tabules de particions
 MS-DOS &mdash; vegeu <xref linkend="alpha-firmware"/>). Quan s'usa
 <command>partman</command> a un maquinari &architecture;, crea etiquetes
 de disc BSD, però si el vostre disc té una taula de particions DOS al
-disc, partman necessitarà esborrar primer la taula de particions existents
-per que la pugui convertir en un disc amb etiqueta.
+disc, <command>partman</command> necessitarà esborrar primer la taula de
+particions existents per que la pugui convertir en un disc amb etiqueta.
 
 </para><para>
 
@@ -26,12 +26,13 @@ de disc.
 
 A no ser que desitgeu utilitzar el disc que esteu particionant des del
 Unix Tru64 o un dels sistemes operatius lliures derivats de 4.4BSD-Lite
-(FreeBSD, OpenBSD o NetBSD), es suggereix que <emphasis>no</emphasis>
-feu que la tercera partició contingui el disc complet. No és necessària
-per l'ordre <command>aboot</command>, i de fet, porta a confusió ja que
-la utilitat <command>swriteboot</command> que s'utilitza per instal·lar
-l'<command>aboot</command> al sector d'arrencada es queixarà de que s'està
-xafant la partició amb el bloc d'arrencada.
+(FreeBSD, OpenBSD o NetBSD), <emphasis>no</emphasis> hauríeu de crear
+la tercera partició com a partició <quote>disc sencer</quote> (es a dir
+amb el sector inicial i el final que abastin tot el disc), ja que el fa
+incompatible amb les eines utilitzades per fer-lo arrencable amb aboot.
+Açò vol dir que el disc que ha configurat l'instal·lador per utilitzar-lo
+amb el disc d'arranc Debian no serà accessible als sistemes operatius
+anomenats abans.
 
 </para><para>
 

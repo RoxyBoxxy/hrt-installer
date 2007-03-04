@@ -49,7 +49,7 @@ my @buildlist = (
 		description => 'Joey\'s daily i386 tests',
 		logext => ".log",
 		frequency => 1,
-		notes => 'virtual CDs have stopped working reliably; grub works only unreliably with the raid controller and 2.6 kernel in donkey',
+		notes => 'virtual CDs unreliable under linux now',
 	},
 	{
 		url => 'http://dilab.debian.net:800/~joey/d-i/logs/ia64/',
@@ -76,7 +76,7 @@ my @buildlist = (
 		description => 'Joey\'s daily sparc tests',
 		logext => ".log",
 		frequency => 1,
-		notes => '2.6 kernel is broken for zebra, does not talk correctly to serial port',
+		notes => '',
 	},
 	{
 		url => 'http://dilab.debian.net:800/~joey/d-i/logs/s390/',
@@ -127,9 +127,6 @@ print OUT <<"EOS";
 </ul>
 
 Totals: $total tests ($failed failed, $old old)
-
-<p>
-<img src="$basebasename.png" alt=graph>
 
 <hr>
 $date

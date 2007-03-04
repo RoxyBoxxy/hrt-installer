@@ -17,13 +17,14 @@
 # Jure Čuhalev <gandalf@owca.info>, 2005.
 # Jure Cuhalev <gandalf@owca.info>, 2006.
 # Matej Kovačič <matej.kovacic@owca.info>, 2006.
+# Jožko Škrablin <jozko.skrablni@gmail.com>, 2006.
 msgid ""
 msgstr ""
 "Project-Id-Version: sl\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-04-07 23:43-0600\n"
-"PO-Revision-Date: 2006-04-26 00:10+0100\n"
-"Last-Translator: Jure Čuhalev <gandalf@owca.info>\n"
+"Report-Msgid-Bugs-To: debian-boot@lists.debian.org\n"
+"POT-Creation-Date: 2007-01-06 22:47+0100\n"
+"PO-Revision-Date: 2007-01-04 09:47+0100\n"
+"Last-Translator: Matej Kovačič <matej.kovacic@owca.info>\n"
 "Language-Team: Slovenian <lugos-slo@lugos.si>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -66,10 +67,10 @@ msgid ""
 "easily associated with you."
 msgstr ""
 "Za račun sistemskega administratorja, 'root', morate nastaviti geslo. Zloben "
-"ali neprimeren uporabnik z root dostopom ima lahko strašanske posledice za "
-"sistem, zato pri izbiri root gesla pazite, da ga ni lahko uganiti. Le ta naj "
-"ne bo beseda, ki jo je mogoče najti v slovarju, ali beseda ki jo je lahko "
-"povezati z vami."
+"ali neprimeren uporabnik z root dostopom lahko resno ogrozi vaš sistem, zato "
+"pri izbiri root gesla pazite, da ga ni lahko uganiti. Le ta naj ne bo "
+"beseda, ki jo je mogoče najti v slovarju, ali beseda ki jo je lahko povezati "
+"z vami."
 
 #. Type: password
 #. Description
@@ -91,7 +92,7 @@ msgstr ""
 #. Description
 #: ../user-setup-udeb.templates:49
 msgid "Create a normal user account now?"
-msgstr "Ustvarim normalni uporabniški račun?"
+msgstr "Ustvarim običajen uporabniški račun?"
 
 #. Type: boolean
 #. Description
@@ -103,20 +104,20 @@ msgid ""
 "day-to-day tasks."
 msgstr ""
 "Root računa ni pametno uporabljati za vsakodnevna opravila, kot je branje "
-"elektronske pošte, ker celo majhne napake lahko povzročijo katastrofo. Za "
-"vsakodnevna opravila si naredite normalni uporabniški račun."
+"elektronske pošte, ker celo majhne napake lahko resno ogrozijo vaš sistem. "
+"Za vsakodnevna opravila si naredite običajen uporabniški račun."
 
 #. Type: boolean
 #. Description
 #: ../user-setup-udeb.templates:49
 msgid ""
 "Note that you may create it later (as well as any additional account) by "
-"typing 'adduser <username>' as root, where <username> is an user name, like "
+"typing 'adduser <username>' as root, where <username> is an username, like "
 "'imurdock' or 'rms'."
 msgstr ""
 "Naredite ga lahko tudi kasneje (kot tudi ostale dodatne račune) s pomočjo "
 "ukaza 'adduser <uporabniško ime>' kot root, kjer je <uporabniško ime> "
-"uporabniško ime kot 'imurdock' ali 'rms'."
+"uporabniško ime kot 'matthai' ali 'gandalf'."
 
 #. Type: string
 #. Description
@@ -176,37 +177,54 @@ msgstr "Neveljavno uporabniško ime"
 #. Description
 #: ../user-setup-udeb.templates:79
 msgid ""
-"The user name you entered is invalid. Note that usernames must start with a "
+"The username you entered is invalid. Note that usernames must start with a "
 "lower-case letter, which can be followed by any combination of numbers and "
 "more lower-case letters."
 msgstr ""
 "Vnesli ste neprimerno uporabniško ime. Uporabniško ime se mora začeti z malo "
 "začetnico, ki ji lahko sledi kakršnakoli kombinacija številk in malih črk."
 
-#. Type: password
+#. Type: error
 #. Description
 #: ../user-setup-udeb.templates:86
+msgid "Reserved username"
+msgstr "Neveljavno uporabniško ime"
+
+#. Type: error
+#. Description
+#: ../user-setup-udeb.templates:86
+msgid ""
+"The username you entered (${USERNAME}) is reserved for use by the system. "
+"Please select a different one."
+msgstr ""
+"Uporabniško ime, ki ste ga vnesli (${USERNAME}) že uporablja sistem. Prosim, "
+"izberite si drugačnega."
+
+#. Type: password
+#. Description
+#: ../user-setup-udeb.templates:92
 msgid "Choose a password for the new user:"
 msgstr "Vnesite geslo za novega uporabnika:"
 
 #. Type: password
 #. Description
-#: ../user-setup-udeb.templates:86
+#: ../user-setup-udeb.templates:92
 msgid ""
 "A good password will contain a mixture of letters, numbers and punctuation "
 "and should be changed at regular intervals."
 msgstr ""
-"Dobro geslo sestavlja mešanica črk, številk in ločil in je redno spreminjan."
+"Dobro geslo sestavlja mešanica črk, številk in ločil in ga je priporočljivo "
+"redno spreminjati."
 
 #. Type: password
 #. Description
-#: ../user-setup-udeb.templates:92
+#: ../user-setup-udeb.templates:98
 msgid "Re-enter password to verify:"
 msgstr "Ponovno vnesite geslo za potrditev:"
 
 #. Type: password
 #. Description
-#: ../user-setup-udeb.templates:92
+#: ../user-setup-udeb.templates:98
 msgid ""
 "Please enter the same user password again to verify you have typed it "
 "correctly."
@@ -214,25 +232,25 @@ msgstr "Ponovno vnesite geslo za istega uporabnika za potrditev vnosa."
 
 #. Type: error
 #. Description
-#: ../user-setup-udeb.templates:98
+#: ../user-setup-udeb.templates:104
 msgid "Password input error"
 msgstr "Napaka pri vnosu gesla"
 
 #. Type: error
 #. Description
-#: ../user-setup-udeb.templates:98
+#: ../user-setup-udeb.templates:104
 msgid "The two passwords you entered were not the same. Please try again."
 msgstr "Gesli, ki ste ju vpisali, se ne ujemata. Prosimo poskusite znova."
 
 #. Type: error
 #. Description
-#: ../user-setup-udeb.templates:103
+#: ../user-setup-udeb.templates:109
 msgid "Empty password"
 msgstr "Prazno geslo"
 
 #. Type: error
 #. Description
-#: ../user-setup-udeb.templates:103
+#: ../user-setup-udeb.templates:109
 msgid ""
 "You entered an empty password, which is not allowed. Please choose a non-"
 "empty password."
@@ -241,13 +259,13 @@ msgstr ""
 
 #. Type: boolean
 #. Description
-#: ../user-setup-udeb.templates:110
+#: ../user-setup-udeb.templates:116
 msgid "Enable shadow passwords?"
 msgstr "Omogočim senčenje gesel?"
 
 #. Type: boolean
 #. Description
-#: ../user-setup-udeb.templates:110
+#: ../user-setup-udeb.templates:116
 msgid ""
 "Shadow passwords make your system more secure because nobody is able to view "
 "even encrypted passwords. The passwords are stored in a separate file that "
@@ -261,13 +279,13 @@ msgstr ""
 
 #. Type: title
 #. Description
-#: ../user-setup-udeb.templates:118
+#: ../user-setup-udeb.templates:124
 msgid "Set up users and passwords"
 msgstr "Nastavite uporabnike in gesla"
 
 #. Type: text
 #. Description
-#. Prebaseconfig progress bar item
-#: ../user-setup-udeb.templates:123
+#. finish-install progress bar item
+#: ../user-setup-udeb.templates:129
 msgid "Setting users and passwords..."
 msgstr "Pripravljam uporabnike in gesla..."

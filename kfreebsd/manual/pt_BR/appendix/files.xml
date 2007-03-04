@@ -1,19 +1,23 @@
 <!-- retain these comments for translator revision tracking -->
-<!-- original version: 33887 -->
+<!-- original version: 43841 -->
 <!-- updated from 28672 to 33887 by André Luís Lopes (andrelop) 2006.04.20 -->
+<!-- revised by Herbert Parentes Fortes Neto (hpfn) 2006.11.05 -->
+<!-- revised by Felipe Augusto van de Wiel (faw) 2006.11.06 -->
+<!-- updated 42302:43841 by Felipe Augusto van de Wiel (faw) 2007.01.18 -->
+
 
  <sect1 id="linuxdevices"><title>Dispositivos do Linux</title>
 <para>
 
-No Linux, você tem diversos arquivos especiais em
-<filename>/dev</filename>. Estes arquivos são chamados de arquivos
-de dispositivos. No mundo Unix, o acesso a hardwares é feito de
-forma diferente. Lá você tem um arquivo especial que permite que
-um módulo tenha acesso a um hardware. O arquivo de dispositivo é
-uma interface para o componente atual do sistema. Os arquivos
-sob <filename>/dev</filename> também funcionam de forma diferente
-de arquivos ordinários. Abaixo estão listados alguns dos arquivos
-mais importantes.
+No Linux, diversos arquivos especiais podem ser encontrados sob o diretório
+<filename>/dev</filename>. Estes arquivos são chamados de arquivos de
+dispositivos e não se comportam como arquivos comuns. Os tipos mais comuns de
+arquivos de dispositivos são os dispositivos de bloco (<quote>block
+devices</quote>)e os dispositivos de caracter (<quote>character
+devices</quote>). Estes arquivos são uma interface para o driver atual (parte
+do kernel Linux) que por sua vez acessa o hardware. Outro tipo, menos comum,
+de arquivo de dispositivo é o chamado <firstterm>pipe</firstterm>.
+Os arquivos de dispositivo mais importantes estão listados nas tabelas abaixo.
 
 </para><para>
 
@@ -107,7 +111,7 @@ mais importantes.
 <informaltable><tgroup cols="2"><tbody>
 <row>
   <entry><filename>null</filename></entry>
-  <entry>Tudo que for colocado neste dispositivo é enviado para o nada</entry>
+  <entry>Qualquer coisa escrita neste dispositivo irá desaparecer</entry>
 </row><row>
   <entry><filename>zero</filename></entry>
   <entry>Qualquer um poderá ler zeros deste dispositivo</entry>
@@ -122,7 +126,7 @@ mais importantes.
 <para>
 
 O mouse pode ser usado em ambos o console do Linux (com o gpm) e no
-ambiente X window. Os dois podem se tornar compatíveis caso o repetidor
+ambiente X Window. Os dois podem se tornar compatíveis caso o repetidor
 gpm é usado para permitir que o sinal vá para o servidor X como
 mostrado:
 
@@ -151,9 +155,9 @@ para reativar o mouse sem reiniciar o X.
 
 </para><para>
 
-Caso o gpm for desativado ou não estiver instalado por alguma
-razão, tenha certeza de ajustar o X para ler o dispositivo
-de mouse diretamente, como as /dev/psaux. Para detalhes, veja o
+Caso o gpm esteja desativado ou não esteja instalado por alguma
+razão, tenha certeza de ajustar o X para ler um dispositivo
+de mouse, como o /dev/psaux, diretamente. Para detalhes, veja o
 documento 3-Button Mouse mini-Howto em
 <filename>/usr/share/doc/HOWTO/en-txt/mini/3-Button-Mouse.gz</filename>,
 <userinput>man gpm</userinput>,
@@ -164,7 +168,7 @@ documento 3-Button Mouse mini-Howto em
 
 Para PowerPC, altere o dispotivo de mouse no arquivo
 <filename>/etc/X11/XF86Config</filename> ou
-<filename>/etc/X11/XF86Config-4</filename> para 
+<filename>/etc/X11/XF86Config-4</filename> para
 <userinput>"/dev/input/mice"</userinput>.
 
 </para><para arch="powerpc">
@@ -190,24 +194,25 @@ seguinte linhas no seu arquivo
 
  <sect1 id="tasksel-size-list">
  <title>Espaço em Disco Necessário para as Tarefas (tasks)</title>
-
-<!-- Nota para os mantenedores do d-i e manual
- Tamanhos de tarefas devem ser determinados executando-se "tasksel new" em um
- sistema que foi completamente instalado sem a seleção de qualquer tarefa.
- Selecionando uma tarefa junto com a opção "seleção manual", o aptitude será
- iniciado e mostrará o tamanho que será usado por aquela tarefa. Após desmarcar
- os pacotes que serão instalados, saia do aptitude e repita para outras tarefas.
- Os requerimentos de espaço precisam ser determinados a partir do tasksel, pois
- o tasksel não instala pacotes recomendados enquanto a seleção de uma tarefa
- pelo aptitude sim.
--->
-
 <para>
 
-A instalação do sistema básico para i386, usando o kernel padrão 2.4,
-incluindo todos os pacotes padrões, requer 573MB de espaço em disco.
+Uma instalação padrão para a arquitetura i386, incluindo todos os pacotes
+padrão (<quote>standard</quote>) e usando o kernel padrão 2.6, ocupa &std-system-size;MB
+de espaço em disco. Uma instalação mínima, sem a tarefa
+<quote>Sistema padrão</quote> selecionada, ocupará &base-system-size;MB.
 
-</para><para>
+</para>
+<important><para>
+
+Em ambos os casos, este é o espaço em disco usado <emphasis>após</emphasis>
+a instalação ter terminado e quaisquer arquivos temporários terem sido
+apagados. Isto também não leva em conta a sobrecarga usada pelo sistema de
+arquivos, por exemplo, para arquivos de <quote>journal</quote>. Isto quer
+dizer que significativamente mais espaço em disco é necessário tanto
+<emphasis>durante</emphasis> a instalação quanto para o uso normal do sistema.
+
+</para></important>
+<para>
 
 A seguinte tabela lista tamanhos relatados pelo aptitude para as tarefas
 listadas no tasksel. Note que algumas tarefas tem pacotes que também são
@@ -217,14 +222,14 @@ ser menos que o total obtido pela adição dos números.
 </para><para>
 
 Note que você precisará adicionar os tamanhos listados na tabela ao
-tamanho da instalação do sistema básico, quando determinar o tamanho
+tamanho da instalação do sistema padrão, quando determinar o tamanho
 de partições. A maioria dos tamanhos listados como <quote>Tamanho
-instalado</quote> é o requerimento em <filename>/usr</filename>;
-o tamanho listado em <quote>Tamanho do Download</quote> é o espaço (temporário)
-requerido em <filename>/var</filename>.
+instalado</quote> é o requerimento em <filename>/usr</filename> e em
+<filename>/lib</filename>; o tamanho listado em
+<quote>Tamanho do Download</quote> é o espaço (temporário) requerido
+em <filename>/var</filename>.
 
 </para><para>
-
 
 <informaltable><tgroup cols="4">
 <thead>
@@ -238,60 +243,74 @@ requerido em <filename>/var</filename>.
 
 <tbody>
 <row>
-  <entry>Desktop</entry>
-  <entry>1392</entry>
-  <entry>460</entry>
-  <entry>1852</entry>
+  <entry>Ambiente desktop</entry>
+  <entry>&task-desktop-inst;</entry>
+  <entry>&task-desktop-dl;</entry>
+  <entry>&task-desktop-tot;</entry>
+</row>
+
+<row>
+  <entry>Laptop<footnote>
+
+  <para>
+  Há uma grande sobreposição da tarefa Laptop com a tarefa Ambiente Desktop.
+  Se você instalar ambas, a tarefa Laptop irá requerer apenas alguns MB
+  adicionais de espaço em disco.
+  </para>
+
+  </footnote></entry>
+  <entry>&task-laptop-inst;</entry>
+  <entry>&task-laptop-dl;</entry>
+  <entry>&task-laptop-tot;</entry>
 </row>
 
 <row>
   <entry>Servidor Web</entry>
-  <entry>36</entry>
-  <entry>12</entry>
-  <entry>48</entry>
+  <entry>&task-web-inst;</entry>
+  <entry>&task-web-dl;</entry>
+  <entry>&task-web-tot;</entry>
 </row>
 
 <row>
   <entry>Servidor de Impressão</entry>
-  <entry>168</entry>
-  <entry>58</entry>
-  <entry>226</entry>
+  <entry>&task-print-inst;</entry>
+  <entry>&task-print-dl;</entry>
+  <entry>&task-print-tot;</entry>
 </row>
 
 <row>
   <entry>Servidor de DNS</entry>
-  <entry>2</entry>
-  <entry>1</entry>
-  <entry>3</entry>
+  <entry>&task-dns-inst;</entry>
+  <entry>&task-dns-dl;</entry>
+  <entry>&task-dns-tot;</entry>
 </row>
 
 <row>
   <entry>Servidor de Arquivos</entry>
-  <entry>47</entry>
-  <entry>24</entry>
-  <entry>71</entry>
+  <entry>&task-file-inst;</entry>
+  <entry>&task-file-dl;</entry>
+  <entry>&task-file-tot;</entry>
 </row>
 
  <row>
   <entry>Servidor de E-mails</entry>
-  <entry>10</entry>
-  <entry>3</entry>
-  <entry>13</entry>
+  <entry>&task-mail-inst;</entry>
+  <entry>&task-mail-dl;</entry>
+  <entry>&task-mail-tot;</entry>
 </row>
 
 <row>
   <entry>Banco de dados SQL</entry>
-  <entry>66</entry>
-  <entry>21</entry>
-  <entry>87</entry>
+  <entry>&task-sql-inst;</entry>
+  <entry>&task-sql-dl;</entry>
+  <entry>&task-sql-tot;</entry>
 </row>
 
 </tbody>
 </tgroup></informaltable>
 <note><para>
 
-A tarefa <emphasis>Desktop</emphasis> instalará ambos os ambientes de Desktop
-Gnome e KDE.
+A tarefa <emphasis>Desktop</emphasis> instalará o ambiente desktop GNOME.
 
 </para></note>
 
@@ -300,7 +319,7 @@ Gnome e KDE.
 Se instalar em um idioma que não seja o inglês, o <command>tasksel</command>
 pode instalar automaticamente uma <firstterm>tarefa de localização</firstterm>,
 se alguma estiver disponível para seu idioma. Os requerimentos de espaço se
-diferem por idioma, você deverá permitir até 200Mb de espaço total para
+diferem por idioma, você deverá permitir até 350MB de espaço total para
 download e instalação.
 
 </para>

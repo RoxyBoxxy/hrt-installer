@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="EUC-JP"?>
 <!-- retain these comments for translator revision tracking -->
-<!-- original version: 28997 -->
+<!-- original version: 43641 -->
 
 
   <sect2 arch="sparc" id="invoking-openboot"><title>OpenBoot の起動</title>
@@ -13,14 +13,15 @@ architecture.  This is rather similar in function to the BIOS in the
 x86 architecture, although much nicer.  The Sun boot PROMs have a
 built-in forth interpreter which lets you do quite a number of things
 with your machine, such as diagnostics, simple scripts, etc.
+with your machine, such as diagnostics and simple scripts.
 -->
 OpenBoot は、&arch-title; アーキテクチャのブートに必要となる
 基本的な機能を提供するものです。
 これは x86 アーキテクチャに置ける BIOS と機能的には似ていますが、
 ずっと優れています。
 Sun のブート PROM には Forth のインタープリタが組み込まれており、
-これを使うと診断を行ったり、簡単なスクリプトを実行したり、
-コンピュータに対してさまざまなことが行えます。
+これを使うと診断や簡単なスクリプトの実行など、
+コンピュータに対して様々なことが行えます。
 
 </para><para>
 
@@ -71,7 +72,7 @@ cu では <keycap>Enter</keycap> を押して、
 <!--
 You can use OpenBoot to boot from specific devices, and also to change
 your default boot device.  However, you need to know some details
-about how OpenBoot names devices; it's much different from Linux
+about how OpenBoot names devices; it's considerably different from Linux
 device naming, described in <xref linkend="device-names"/>.
 Also, the command will vary a bit, depending on what version of
 OpenBoot you have.  More information about OpenBoot can be found in
@@ -90,13 +91,13 @@ OpenBoot に関するより詳細な情報は、
 </para><para>
 
 <!--
-Typically, with newer revisions, you can use OpenBoot device such as
+Typically, with newer revisions, you can use OpenBoot devices such as
 <quote>floppy</quote>, <quote>cdrom</quote>, <quote>net</quote>,
 <quote>disk</quote>, or <quote>disk2</quote>.  These have the obvious
 meanings; the <quote>net</quote> device is for booting from the network.
 Additionally, the device name can specify a particular partition of a disk,
 such as <quote>disk2:a</quote> to boot disk2, first partition.  Full
-OpenBoot device names have the form
+OpenBoot device names have the form:
 -->
 新しい版では、たいていの場合 
 <quote>floppy</quote>, <quote>cdrom</quote>, <quote>net</quote>,
@@ -108,7 +109,7 @@ OpenBoot device names have the form
 指定することもできます。
 例えば第 2 ディスクの第 1 パーティションから起動するには 
 <quote>disk2:a</quote> のように指定します。
-OpenBoot の完全なデバイス名は、
+OpenBoot の完全なデバイス名は以下のようになります。
 
 <informalexample>
 <screen>
@@ -116,7 +117,7 @@ OpenBoot の完全なデバイス名は、
 <replaceable>unit-address</replaceable>:
 <replaceable>device-arguments</replaceable>
 </screen></informalexample>
-という形式です。
+
 
 <!--
 In older revisions of OpenBoot, device naming is a bit different: the
@@ -180,13 +181,11 @@ OpenBoot 1.x では、
 <!--
 and under Solaris:
 -->
-Solaris では
+Solaris では以下のようにしてください。
 
 <informalexample><screen>
 eeprom boot-device=disk1:1
 </screen></informalexample>
-
-のようにします。
 
 </para>
   </sect2>

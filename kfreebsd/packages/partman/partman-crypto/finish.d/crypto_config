@@ -83,7 +83,10 @@ crypttab_add_entry () {
 				return 1
 			fi
 		done
-		opts="cipher=$cipher-$ivalgorithm,size=$keysize,hash=$keyhash"
+		opts="cipher=$cipher-$ivalgorithm,size=$keysize"
+		if [ $keytype != random -a -n "$keyhash" ]; then
+			opts="$opts,hash=$keyhash"
+		fi
 	fi
 
 	# Set key source
@@ -104,9 +107,9 @@ crypttab_add_entry () {
 		mnt=$(cat $cryptdevdir/mountpoint)
 	fi
 	if [ $method = swap ]; then
-		$opts="$opts,swap"
-	elif [ $mnt = /tmp ]; then
-		$opts="$opts,tmp"
+		opts="$opts,swap"
+	elif [ $mnt = /tmp -a $keytype = random ]; then
+		opts="$opts,tmp"
 	fi
 
 	# Check mapping name
@@ -118,6 +121,8 @@ crypttab_add_entry () {
 	# Add entry to crypttab
 	echo "$target $source $keyfile $opts" >> /target/etc/crypttab
 }
+
+loop_ciphers=
 
 for dev in $DEVICES/*; do
 	[ -d "$dev" ] || continue
@@ -149,19 +154,25 @@ for dev in $DEVICES/*; do
 		[ -f $realdevdir/keytype ] || continue
 		[ -f $id/method ] || continue
 
-		# skip unless swap or to be mounted
+		# skip unless swap, to be mounted or lvm on dm-crypt
 		method=$(cat $id/method)
-		if [ "$method" != swap ] && [ ! -f $id/mountpoint ]; then
+		type=$(cat $realdevdir/crypto_type)
+		if [ "$method" != swap ] && [ "$method" != lvm ] && [ ! -f $id/mountpoint ]; then
+			continue
+		fi
+		if [ "$method" = lvm ] && [ "$type" != dm-crypt ]; then
 			continue
 		fi
 
-		type=$(cat $realdevdir/crypto_type)
 		realdev=$(mapdevfs $realdev)
 		cryptdev=$(mapdevfs $path)
 
 		case $type in
 		loop-AES)
 			fstab_replace_entry $realdev $realdevdir $cryptdev $cryptdevdir
+			cipher=$(cat $realdevdir/cipher)
+			loop_ciphers="$loop_ciphers
+${cipher%%[0-9]*}"
 			;;
 		dm-crypt)
 			crypttab_add_entry $realdev $realdevdir $cryptdev $cryptdevdir
@@ -169,3 +180,10 @@ for dev in $DEVICES/*; do
 		esac
 	done
 done
+
+# Register modules for loop-AES
+register-module loop
+for cipher in $(echo "$loop_ciphers" | sort -u | grep -v AES); do
+	register-module loop_$cipher
+done
+

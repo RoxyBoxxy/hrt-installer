@@ -1,8 +1,12 @@
 #ifndef AUTOPARTKIT_H
 #define AUTOPARTKIT_H
 
-#include <parted/device.h>  /* for PedSector */
-#include <parted/disk.h>    /* for PedGeometry */
+#include <parted/parted.h>
+
+#if defined(__GNUC__) && defined(__GNUC_MINOR__) && \
+    (__GNUC__ > 2 || (__GNUC__ == 2 && __GNUC_MINOR__ > 4))
+#define ATTRIBUTE_UNUSED __attribute__((__unused__))
+#endif
 
 struct disk_info_t;
 
@@ -44,6 +48,7 @@ int distribute_partitions(struct disk_info_t diskinfo[],
 			  struct diskspace_req_s reqs[]);
 struct disk_info_t *get_free_space_list(void);
 void print_list(struct disk_info_t diskinfo[], struct diskspace_req_s reqs[]);
+PedDevice *my_ped_device_get_next_rw(PedDevice *dev);
 
 /* from loadpartitions.c */
 diskspace_req_t * load_partitions(const char *filename);
@@ -61,9 +66,6 @@ void autopartkit_error (int isfatal, const char * format, ...);
 /* Assumes 2048 byte sector_size */
 #define MiB_TO_BLOCKS(mb) ((mb) * 2048l)
 #define BLOCKS_TO_MiB(b)  ((b)  / 2048l)
-
-/* from mapdevfs.c */
-char *normalize_devfs(const char* path);
 
 /* from lvm.c */
 int lvm_init(void);

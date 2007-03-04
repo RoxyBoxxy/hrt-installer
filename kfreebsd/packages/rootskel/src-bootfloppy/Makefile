@@ -1,13 +1,20 @@
 dir =
 
 subdirs = \
-	sbin
+	bin
 
 subdirs_empty = \
 	dev \
 	floppy \
 	initrd \
+	lib \
 	mnt \
-	proc
+	proc \
+	sys
+
+files_exec = \
+	init \
+	lib:/lib/klibc-*.so
+
 
 include ../Makefile.inc

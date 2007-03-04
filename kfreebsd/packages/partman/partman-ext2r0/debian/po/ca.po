@@ -11,10 +11,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: debian-installer 1.1\n"
+"Project-Id-Version: debian-installer etch\n"
 "Report-Msgid-Bugs-To: debian-boot@lists.debian.org\n"
-"POT-Creation-Date: 2006-04-22 23:50-0600\n"
-"PO-Revision-Date: 2006-02-19 01:20+0100\n"
+"POT-Creation-Date: 2007-01-06 22:47+0100\n"
+"PO-Revision-Date: 2006-11-03 14:57+0100\n"
 "Last-Translator: Jordi Mallach <jordi@debian.org>\n"
 "Language-Team: Catalan <debian-l10n-catalan@lists.debian.org>\n"
 "MIME-Version: 1.0\n"
@@ -28,7 +28,7 @@ msgid ""
 "Checking the ext2 (revision 0) file system in partition #${PARTITION} of "
 "${DEVICE}..."
 msgstr ""
-"S'està comprovant el sistema de fitxers ext2 (revisió 0) en la partició no. "
+"S'està comprovant el sistema de fitxers ext2 (revisió 0) a la partició no. "
 "${PARTITION} de ${DEVICE}..."
 
 #. Type: boolean
@@ -44,7 +44,7 @@ msgid ""
 "The test of the file system with type ext2 (revision 0) in partition #"
 "${PARTITION} of ${DEVICE} found uncorrected errors."
 msgstr ""
-"La comprovació del sistema de fitxers de tipus ext2 (revisió 0) en la "
+"La comprovació del sistema de fitxers de tipus ext2 (revisió 0) a la "
 "partició no. ${PARTITION} de ${DEVICE} ha trobat errors no corregits."
 
 #. Type: boolean
@@ -70,7 +70,7 @@ msgid ""
 "The ext2 (revision 0) file system creation in partition #${PARTITION} of "
 "${DEVICE} failed."
 msgstr ""
-"Ha fallat la creació del sistema de fitxers ext2 (revisió 0) en la partició "
+"Ha fallat la creació del sistema de fitxers ext2 (revisió 0) a la partició "
 "no. ${PARTITION} del ${DEVICE}."
 
 #. Type: boolean
@@ -87,7 +87,7 @@ msgid ""
 "partition #${PARTITION} of ${DEVICE}."
 msgstr ""
 "No s'ha assignat cap punt de muntatge per al sistema de fitxers ext2 "
-"(revisió 0) en la partició no. ${PARTITION} de ${DEVICE}."
+"(revisió 0) a la partició no. ${PARTITION} de ${DEVICE}."
 
 #. Type: boolean
 #. Description
@@ -96,46 +96,54 @@ msgid ""
 "If you do not go back to the partitioning menu and assign a mount point from "
 "there, this partition will not be used at all."
 msgstr ""
-"Si no aneu enrere al menú de partició i assigneu un punt de muntatge, "
+"Si no aneu enrere al menú de partició i hi assigneu un punt de muntatge, "
 "aquesta partició no s'utilitzarà en absolut."
 
 #. Type: select
 #. Choices
-#: ../partman-ext2r0.templates:31
-msgid "/, /boot, Enter manually, Do not mount it"
-msgstr "/, /boot, Introdueix manualment, No la muntes"
+#. what's to be entered is a mount point
+#: ../partman-ext2r0.templates:36
+msgid "Enter manually"
+msgstr "Introdueix manualment"
+
+#. Type: select
+#. Choices
+#. "it" is a partition
+#: ../partman-ext2r0.templates:36
+msgid "Do not mount it"
+msgstr "No el muntes"
 
 #. Type: string
 #. Description
-#: ../partman-ext2r0.templates:36
+#: ../partman-ext2r0.templates:41
 msgid "Mount point for this partition:"
 msgstr "Punt de muntatge per a aquesta partició:"
 
 #. Type: error
 #. Description
-#: ../partman-ext2r0.templates:40
+#: ../partman-ext2r0.templates:45
 msgid "Invalid mount point"
 msgstr "El punt de muntatge és invàlid"
 
 #. Type: error
 #. Description
-#: ../partman-ext2r0.templates:40
+#: ../partman-ext2r0.templates:45
 msgid "The mount point you entered is invalid."
 msgstr "El punt de muntatge que heu introduït és invàlid."
 
 #. Type: error
 #. Description
-#: ../partman-ext2r0.templates:40
+#: ../partman-ext2r0.templates:45
 msgid "Mount points must start with \"/\". They cannot contain spaces."
 msgstr ""
-"Els punts de muntatge han de començar amb «/». No poden contenir espais."
+"Els punts de muntatge han de començar amb «/». No poden contindre espais."
 
 #. Type: multiselect
 #. Choices
 #. Note to translators : Please keep your translations of the choices
 #. below a 65 columns limit (which means 65 characters
 #. in single-byte languages)
-#: ../partman-ext2r0.templates:55
+#: ../partman-ext2r0.templates:60
 msgid "noatime - do not update inode access times at each access"
 msgstr "noatime - no actualitza els temps d'accés als inodes en cada accés"
 
@@ -144,7 +152,7 @@ msgstr "noatime - no actualitza els temps d'accés als inodes en cada accés"
 #. Note to translators : Please keep your translations of the choices
 #. below a 65 columns limit (which means 65 characters
 #. in single-byte languages)
-#: ../partman-ext2r0.templates:55
+#: ../partman-ext2r0.templates:60
 msgid "nodev - do not support character or block special devices"
 msgstr "nodev - no suporta dispositius especials de caràcter o bloc"
 
@@ -153,7 +161,7 @@ msgstr "nodev - no suporta dispositius especials de caràcter o bloc"
 #. Note to translators : Please keep your translations of the choices
 #. below a 65 columns limit (which means 65 characters
 #. in single-byte languages)
-#: ../partman-ext2r0.templates:55
+#: ../partman-ext2r0.templates:60
 msgid "nosuid - ignore set-user-identifier or set-group-identifier bits"
 msgstr "nosuid - ignora els bits set-user-identifier o set-group-identifier"
 
@@ -162,7 +170,7 @@ msgstr "nosuid - ignora els bits set-user-identifier o set-group-identifier"
 #. Note to translators : Please keep your translations of the choices
 #. below a 65 columns limit (which means 65 characters
 #. in single-byte languages)
-#: ../partman-ext2r0.templates:55
+#: ../partman-ext2r0.templates:60
 msgid "noexec - do not allow execution of any binaries"
 msgstr "noexec - no permet l'execució de cap binari"
 
@@ -171,7 +179,7 @@ msgstr "noexec - no permet l'execució de cap binari"
 #. Note to translators : Please keep your translations of the choices
 #. below a 65 columns limit (which means 65 characters
 #. in single-byte languages)
-#: ../partman-ext2r0.templates:55
+#: ../partman-ext2r0.templates:60
 msgid "ro - mount the file system read-only"
 msgstr "ro - munta el sistema de fitxers en mode només lectura"
 
@@ -180,7 +188,7 @@ msgstr "ro - munta el sistema de fitxers en mode només lectura"
 #. Note to translators : Please keep your translations of the choices
 #. below a 65 columns limit (which means 65 characters
 #. in single-byte languages)
-#: ../partman-ext2r0.templates:55
+#: ../partman-ext2r0.templates:60
 msgid "sync - all input/output activities occur synchronously"
 msgstr ""
 "sync - totes les activitats d'entrada/eixida tenen lloc sincronitzadament"
@@ -190,7 +198,7 @@ msgstr ""
 #. Note to translators : Please keep your translations of the choices
 #. below a 65 columns limit (which means 65 characters
 #. in single-byte languages)
-#: ../partman-ext2r0.templates:55
+#: ../partman-ext2r0.templates:60
 msgid "usrquota - user disk quota accounting enabled"
 msgstr "usrquota - habilita la quota de disc per a usuaris"
 
@@ -199,19 +207,19 @@ msgstr "usrquota - habilita la quota de disc per a usuaris"
 #. Note to translators : Please keep your translations of the choices
 #. below a 65 columns limit (which means 65 characters
 #. in single-byte languages)
-#: ../partman-ext2r0.templates:55
+#: ../partman-ext2r0.templates:60
 msgid "grpquota - group disk quota accounting enabled"
 msgstr "grpquota - habilita la quota de disc per a grups"
 
 #. Type: multiselect
 #. Description
-#: ../partman-ext2r0.templates:56
+#: ../partman-ext2r0.templates:61
 msgid "Mount options:"
 msgstr "Opcions de muntatge:"
 
 #. Type: multiselect
 #. Description
-#: ../partman-ext2r0.templates:56
+#: ../partman-ext2r0.templates:61
 msgid "Mount options can tune the behavior of the file system."
 msgstr ""
 "Les opcions de muntatge poden afinar el comportament del sistema de fitxers."
@@ -219,20 +227,20 @@ msgstr ""
 #. Type: text
 #. Description
 #. File system name
-#: ../partman-ext2r0.templates:62
+#: ../partman-ext2r0.templates:67
 msgid "old Ext2 (revision 0) file system"
 msgstr "sistema de fitxers ext2 vell (revisió 0)"
 
 #. Type: text
 #. Description
 #. Short file system name (untranslatable in many languages)
-#: ../partman-ext2r0.templates:67
+#: ../partman-ext2r0.templates:72
 msgid "ext2r0"
 msgstr "ext2r0"
 
 #. Type: boolean
 #. Description
-#: ../partman-ext2r0.templates:71
+#: ../partman-ext2r0.templates:76
 msgid ""
 "Your boot partition has not been configured with the old ext2 (revision 0) "
 "file system.  This is needed by your machine in order to boot.  Please go "
@@ -245,26 +253,26 @@ msgstr ""
 
 #. Type: boolean
 #. Description
-#: ../partman-ext2r0.templates:82
+#: ../partman-ext2r0.templates:87
 msgid ""
 "Your boot partition is not located on the first primary partition of your "
 "hard disk.  This is needed by your machine in order to boot.  Please go back "
 "and use your first primary partition as a boot partition."
 msgstr ""
-"La vostra partició d'arrencada no està ubicada en la primera partició "
+"La vostra partició d'arrencada no està ubicada a la primera partició "
 "primària del disc dur. Això és necessari per a que l'ordinador puga "
-"arrencar. Aneu enrere i utilitzeu la vostra partició primària com la "
-"partició d'arrencada."
+"arrencar. Aneu enrere i utilitzeu la vostra partició primària com a partició "
+"d'arrencada."
 
 #. Type: boolean
 #. Description
-#: ../partman-ext2r0.templates:93
+#: ../partman-ext2r0.templates:98
 msgid "Go back to the menu and correct this problem?"
 msgstr "Voleu tornar al menú i corregir aquest problema?"
 
 #. Type: boolean
 #. Description
-#: ../partman-ext2r0.templates:93
+#: ../partman-ext2r0.templates:98
 msgid ""
 "Your root partition is not a primary partition of your hard disk.  This is "
 "needed by your machine in order to boot.  Please go back and use a primary "
@@ -275,7 +283,7 @@ msgstr ""
 
 #. Type: boolean
 #. Description
-#: ../partman-ext2r0.templates:93
+#: ../partman-ext2r0.templates:98
 msgid ""
 "If you do not go back to the partitioning menu and correct this error, the "
 "partition will be used as is.  This means that you may not be able to boot "
@@ -283,4 +291,4 @@ msgid ""
 msgstr ""
 "Si no aneu enrere al menú de partició i corregiu aquest error, la partició "
 "s'utilitzarà com està. Això vol dir que potser no podreu arrencar des del "
-"disc dur. Això significa que potser no podreu arrencar des del disc dur."
+"disc dur."

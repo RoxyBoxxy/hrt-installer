@@ -60,12 +60,14 @@ static kbd_t *usb_preferred_keymap (kbd_t *keyboards, const char *subarch)
 	 * UPDATE
 	 * Because of the changes in the input layer, we can now be sure that an
 	 * AT keyboard layout is needed, even if an USB keyboard is detected. So we force
-	 * any USB keyboard to AT and no longer include the option to select a USB keymap.
+	 * any USB keyboard to AT and no longer include the option to select a USB keymap
+	 * for all arches except powerpc which still needs the usb keymaps as otherwise
+	 * the mode switch key (for accented characters) is mapped to the wrong key.
 	 */
 
-	// Always use AT keymaps for USB keyboards with 2.6 kernel
+	// Always use AT keymaps for USB keyboards with 2.6 kernel (except for powerpc)
 	int skip_26_kernels = 0;
-#if defined (AT_KBD)
+#if defined (AT_KBD) && !defined(__powerpc__)
 	struct utsname buf;
 	uname(&buf);
 	if (strncmp(buf.release, "2.6", 3) == 0)
@@ -104,10 +106,22 @@ static kbd_t *usb_preferred_keymap (kbd_t *keyboards, const char *subarch)
 		}
 	}
 	// Ensure at least 1 USB entry, unless the arch uses AT for 2.6 kernels
-	if ((!usb_present) && (!skip_26_kernels)) {
-		di_debug ("Adding generic entry for USB keymaps\n");
-		p = usb_new_entry (keyboards);
-		keyboards = p;
+	if (!usb_present) {
+		if (!skip_26_kernels) {
+			di_debug ("Adding generic entry for USB keymaps\n");
+			p = usb_new_entry (keyboards);
+			keyboards = p;
+		} else {
+			/* Hack because on powerpc laptops no keyboard is detected at all
+			 * (they use ADB (Apple bus) keyboards) and keyboard configuration
+			 * actually depended on the generic USB entry being added, so we
+			 * now add a generic AT entry (yeah, ugly as hell)
+			 */
+			di_debug ("Adding generic entry for AT keymaps\n");
+			p = usb_new_entry (keyboards);
+			p->name = "at";   // Force installer to show AT keymaps
+			keyboards = p;
+		}
 	}
 	return keyboards;
 }

@@ -1,8 +1,86 @@
-os-prober (1.10) UNRELEASED; urgency=low
+os-prober (1.17) unstable; urgency=low
 
+  * Check for both upper and lowercase filenames when detecting Windows
+    NT/XP/2000. Thanks to Thanatermesis.
+
+ -- Frans Pop <fjp@debian.org>  Tue, 27 Feb 2007 20:16:49 +0100
+
+os-prober (1.16) unstable; urgency=low
+
+  [ Joey Hess ]
+  * Support for recognising Pardus linux.
+
+  [ Frans Pop ]
+  * Skip grub entries that have "module" lines as we currently don't support
+    those. Based on #399882 where they were used for entries related to Xen.
+  * Support for recognizing Kanotix linux.
+  * Add support for probing other operating systems on LVM partitions. This
+    will only work if LVM support has already been loaded. Closes: #277901.
+
+ -- Frans Pop <fjp@debian.org>  Tue, 20 Feb 2007 12:57:42 +0100
+
+os-prober (1.15) unstable; urgency=low
+
+  [ Colin Watson ]
+  * Discard stderr from udevinfo call in parse_proc_mdstat.
+
+  [ Fabio M. Di Nitto ]
+  * Nuke os-probes/x86. Empty useless dir.
+  * Use -qs to grep and avoid an annoying warning when running os-probes.
+
+ -- Frans Pop <fjp@debian.org>  Thu, 21 Dec 2006 16:29:06 +0100
+
+os-prober (1.14) unstable; urgency=low
+
+  * Use udevinfo if available in parse_proc_mdstat to figure out whether a
+    device is a partition.
+
+ -- Colin Watson <cjwatson@debian.org>  Tue, 29 Aug 2006 11:27:47 +0100
+
+os-prober (1.13) unstable; urgency=low
+
+  * Add support for detecting Windows Vista/Longhorn.
+
+ -- Frans Pop <fjp@debian.org>  Tue, 25 Jul 2006 13:06:13 +0200
+
+os-prober (1.12) unstable; urgency=low
+
+  [ Joey Hess ]
+  * Patch from VMiklos to sed off (hdn,n) from the front of a kernel path,
+    as seen in SuSE grub configs. Closes: #258623 although this is fixed
+    imprefectly since it assumes stripping the string is enough.
+  * Patch from VMiklos to not require an initrd be specified in the grub
+    probe.
+  * Patch from VMiklos to add --mounted option to linux-boot-prober.
+    May not be useful for d-i but in other situations including for the
+    Frugalware installer.
+
+  [ Frans Pop ]
+  * When parsing a lilo configuration, dereference symbolic links. Not doing
+    this will break booting the old OS if the link was in / and there was a
+    separate /boot partition. And grub in general prefers full paths.
+    Closes: #259825.
+  * Use environment variable to pass --mounted option to lower level scripts
+    instead of perpetuating the parameter.
+  * Add myself to uploaders.
+
+ -- Frans Pop <fjp@debian.org>  Fri, 23 Jun 2006 21:46:41 +0200
+
+os-prober (1.11) unstable; urgency=low
+
+  * Remove a useless debug message.
+
+ -- Joey Hess <joeyh@debian.org>  Wed,  7 Jun 2006 22:10:10 -0400
+
+os-prober (1.10) unstable; urgency=low
+
+  [ Colin Watson ]
   * Drop os-prober's priority to extra to match overrides.
 
- -- Colin Watson <cjwatson@debian.org>  Sat, 10 Dec 2005 22:44:39 +0000
+  [ Frans Pop ]
+  * Old-style options for head/tail are no longer supported by new busybox.
+
+ -- Frans Pop <fjp@debian.org>  Fri, 12 May 2006 15:26:30 +0200
 
 os-prober (1.09) unstable; urgency=low
 

@@ -14,26 +14,63 @@
 
 #include <libsysfs.h>
 
-const char *const file_devices = "/proc/dasd/devices";
-
+#define SYSCONFIG_DIR "/etc/sysconfig/hardware/"
 #define TEMPLATE_PREFIX	"s390-dasd/"
 
 static struct debconfclient *client;
 
-enum dasd_type { DASD_TYPE_ECKD, DASD_TYPE_FBA };
-
-struct dasd
+enum channel_type
 {
-	char name[SYSFS_NAME_LEN];
-	char devtype[SYSFS_NAME_LEN];
-	enum dasd_type type;
+	CHANNEL_TYPE_DASD_ECKD,
+	CHANNEL_TYPE_DASD_FBA
 };
 
-static di_tree *dasds;
+struct channel
+{
+	int key;
+	char name[SYSFS_NAME_LEN];
+	char devtype[SYSFS_NAME_LEN];
+	bool configured;
+	bool online;
+	enum channel_type type;
+};
 
-static struct dasd *dasd_current;
+static di_tree *channels;
 
-enum state_wanted { WANT_NONE = 0, WANT_BACKUP, WANT_NEXT, WANT_FINISH, WANT_ERROR };
+static struct channel *channel_current;
+
+struct driver
+{
+	const char *name;
+	int type;
+};
+
+static const struct driver drivers[] =
+{
+	{ "dasd-eckd", CHANNEL_TYPE_DASD_ECKD },
+	{ "dasd-fba", CHANNEL_TYPE_DASD_FBA },
+};
+
+enum state
+{
+	BACKUP,
+	SETUP,
+	DETECT_CHANNELS,
+	GET_CHANNEL,
+	FORMAT,
+	WRITE,
+	ERROR,
+	FINISH
+};
+
+enum state_wanted
+{
+	WANT_NONE = 0,
+	WANT_BACKUP,
+	WANT_NEXT,
+	WANT_FINISH,
+	WANT_ERROR
+};
 
 int my_debconf_input(char *priority, char *template, char **ptr)
 {
@@ -45,9 +82,14 @@ int my_debconf_input(char *priority, char *template, char **ptr)
 	return ret;
 }
 
-static di_compare_func dasd_compare;
+static di_compare_func channel_compare;
+int channel_compare (const void *key1, const void *key2)
+{
+	const unsigned int *k1 = key1, *k2 = key2;
+	return *k1 - *k2;
+}
 
-int dasd_device (const char *i)
+static int channel_device (const char *i)
 {
 	unsigned int ret;
 	if (sscanf (i, "0.0.%04x", &ret) == 1)
@@ -57,68 +99,46 @@ int dasd_device (const char *i)
 	return -1;
 }
 
-int dasd_compare (const void *key1, const void *key2)
+static enum state_wanted setup ()
 {
-	return dasd_device ((const char *) key1) - dasd_device ((const char *) key2);
+	channels = di_tree_new (channel_compare);
+
+	return WANT_NEXT;
 }
 
-#if 0
-static bool update_state (void)
-{
-	char buf[256];
-	FILE *f = fopen(file_devices, "r");
-	unsigned int i;
-
-	if (!f)
-		return false;
-
-	while (fgets (buf, sizeof (buf), f))
-	{
-		for (i = 0; i < dasds_items; i++)
-			if (strncmp (buf, dasds[i].device, strlen (dasds[i].device)) == 0)
-			{
-				if (!strncmp (buf + 48, "active", 6))
-				{
-					if (!strncmp (buf + 55, "n/f", 3))
-						dasds[i].state = UNFORMATTED;
-					else
-						dasds[i].state = FORMATTED;
-				}
-				else if (!strncmp (buf + 48, "ready", 5))
-					dasds[i].state = READY;
-				else
-					dasds[i].state = UNKNOWN;
-				break;
-			}
-	}
-
-	return true;
-}
-#endif
-
-static enum state_wanted detect_channels_driver (struct sysfs_driver *driver, enum dasd_type type)
+static enum state_wanted detect_channels_driver (struct sysfs_driver *driver, int type)
 {
 	struct dlist *devices;
 	struct sysfs_device *device;
 
 	devices = sysfs_get_driver_devices (driver);
+	if (!devices)
+		return WANT_NONE;
 
 	dlist_for_each_data (devices, device, struct sysfs_device)
 	{
-		struct sysfs_attribute *devtype_attr;
-		struct dasd *current;
+		struct sysfs_attribute *attr_devtype, *attr_online;
+		struct channel *current;
 
-		devtype_attr = sysfs_get_device_attr (device, "devtype");
-		if (!devtype_attr)
+		attr_devtype = sysfs_get_device_attr (device, "devtype");
+		attr_online = sysfs_get_device_attr (device, "online");
+		if (!attr_devtype || !attr_online)
 			return WANT_NONE;
-		current = di_new (struct dasd, 1);
+		current = di_new0 (struct channel, 1);
 		if (!current)
 			return WANT_ERROR;
 		strncpy (current->name, device->name, sizeof (current->name));
-		sysfs_read_attribute (devtype_attr);
-		strncpy (current->devtype, devtype_attr->value, sizeof (current->devtype));
+		current->key = channel_device(device->name);
+
+		sysfs_read_attribute (attr_devtype);
+		strncpy (current->devtype, attr_devtype->value, sizeof (current->devtype));
 		current->type = type;
-		di_tree_insert (dasds, current, current);
+
+		sysfs_read_attribute (attr_online);
+		if (strtol (attr_online->value, NULL, 10) > 0)
+			current->online = true;
+
+		di_tree_insert (channels, current, current);
 	}
 
 	return WANT_NONE;
@@ -129,15 +149,6 @@ static enum state_wanted detect_channels (void)
 	struct sysfs_driver *driver;
 	enum state_wanted ret;
 	unsigned int i;
-	const struct {
-		const char *name;
-		enum dasd_type type;
-	} drivers[] = {
-		{ "dasd-eckd", DASD_TYPE_ECKD },
-		{ "dasd-fba", DASD_TYPE_FBA },
-	};
-
-	dasds = di_tree_new (dasd_compare);
 
 	for (i = 0; i < sizeof (drivers) / sizeof (*drivers); i++)
 	{
@@ -155,60 +166,71 @@ static enum state_wanted detect_channels (void)
 
 static enum state_wanted get_channel_input (void)
 {
-	int ret;
+	int ret, dev;
 	char *ptr;
 
 	while (1)
 	{
 		ret = my_debconf_input ("high", TEMPLATE_PREFIX "choose", &ptr);
-		if (ret == 10)
+		if (ret == 30)
 			return WANT_BACKUP;
 
-		dasd_current = di_tree_lookup (dasds, ptr);
-		if (dasd_current)
-			return WANT_NEXT;
+		dev = channel_device (ptr);
+		if (dev >= 0)
+		{
+			channel_current = di_tree_lookup (channels, &dev);
+			if (channel_current)
+				return WANT_NEXT;
+		}
 
 		ret = my_debconf_input ("high", TEMPLATE_PREFIX "choose_invalid", &ptr);
-		if (ret == 10)
+		if (ret == 30)
 			return WANT_BACKUP;
 	}
 }
 
 static di_hfunc get_channel_select_append;
-static void get_channel_select_append (void *key, void *value __attribute__ ((unused)), void *user_data)
+static void get_channel_select_append (void *key __attribute__ ((unused)), void *value, void *user_data)
 {
-	const char *name = key;
+	struct channel *channel = value;
 	char *buf = user_data;
-	di_snprintfcat (buf, 512, "%s, ", name);
+	if (buf[0])
+		strncat (buf, ", ", 1024);
+	strncat (buf, channel->name, 1024);
+	if (channel->configured)
+		strncat (buf, " (configured)", 1024);
+	else if (channel->online)
+		strncat (buf, " (online)", 1024);
 }
 
 static enum state_wanted get_channel_select (void)
 {
-	char buf[512], *ptr;
-	int ret;
+	char buf[1024], *ptr;
+	int ret, dev;
 
 	buf[0] = '\0';
-	di_tree_foreach (dasds, get_channel_select_append, buf);
+	di_tree_foreach (channels, get_channel_select_append, buf);
 
 	debconf_subst (client, TEMPLATE_PREFIX "choose_select", "choices", buf);
 	ret = my_debconf_input ("high", TEMPLATE_PREFIX "choose_select", &ptr);
 
-	if (ret == 10)
+	if (ret == 30)
 		return WANT_BACKUP;
 	if (!strcmp (ptr, "Finish"))
 		return WANT_FINISH;
 
-	dasd_current = di_tree_lookup (dasds, ptr);
-	if (dasd_current)
+	dev = channel_device (ptr);
+	channel_current = di_tree_lookup (channels, &dev);
+	if (channel_current)
 		return WANT_NEXT;
 	return WANT_ERROR;
 }
 
 static enum state_wanted get_channel (void)
 {
-	if (di_tree_size (dasds) > 20)
+	if (di_tree_size (channels) > 20)
 		return get_channel_input ();
-	else if (di_tree_size (dasds) > 0)
+	else if (di_tree_size (channels) > 0)
 		return get_channel_select ();
 	return WANT_ERROR;
 }
@@ -233,107 +255,75 @@ static int format_handler (const char *buf, size_t len, void *user_data __attrib
 	return 0;
 }
 
-static enum state_wanted confirm (void)
+static enum state_wanted format (void)
 {
-#if 0
-	char buf[256], *ptr;
-	int ret;
-	bool needs_format = false;
+	char buf[256], dev[128], *ptr;
+	int fd, ret;
+	struct hd_geometry drive_geo;
 
-	if (dasd_current->state == NEW)
-	{
-		snprintf (buf, sizeof (buf), "echo add %04x >/proc/dasd/devices", dasd_current->device);
-		ret = di_exec_shell_log (buf);
-		if (ret)
-			return WANT_ERROR;
-		update_state ();
-	}
+	debconf_subst (client, TEMPLATE_PREFIX "format", "device", channel_current->name);
+	debconf_set (client, TEMPLATE_PREFIX "format", "false");
+	ret = my_debconf_input ("medium", TEMPLATE_PREFIX "format", &ptr);
 
-	snprintf (buf, sizeof (buf), "%04x", dasd_current->device);
-
-	switch (dasd_current->state)
-	{
-		case UNFORMATTED:
-		case READY:
-			needs_format = true;
-			debconf_subst (client, TEMPLATE_PREFIX "format", "device", buf);
-			debconf_set (client, TEMPLATE_PREFIX "format", "true");
-			ret = my_debconf_input ("medium", TEMPLATE_PREFIX "format", &ptr);
-			break;
-		case FORMATTED:
-			debconf_subst (client, TEMPLATE_PREFIX "format_unclean", "device", buf);
-			debconf_set (client, TEMPLATE_PREFIX "format_unclean", "false");
-			ret = my_debconf_input ("critical", TEMPLATE_PREFIX "format_unclean", &ptr);
-			break;
-		default:
-			return WANT_ERROR;
-	}
-
-	if (ret == 10 || (strcmp (ptr, "true") && needs_format))
+	if (ret == 10)
 		return WANT_BACKUP;
+	if (strcmp (ptr, "true"))
+		return WANT_NEXT;
 
-	if (strcmp (ptr, "true") == 0)
-	{
-		char dev[128];
-		int fd;
-		struct hd_geometry drive_geo;
+	snprintf (dev, sizeof (dev), "/dev/disk/by-path/ccw-%s", channel_current->name);
 
-		snprintf (dev, sizeof (dev), "/dev/dasd/%04x/device", dasd_current->device);
+	fd = open (dev, O_RDONLY);
+	if (fd < 0)
+		return WANT_ERROR;
+	if (ioctl (fd, HDIO_GETGEO, &drive_geo) < 0)
+		return WANT_ERROR;
+	close (fd);
 
-		fd = open (dev, O_RDONLY);
-		if (fd < 0)
-			return WANT_ERROR;
-		if (ioctl (fd, HDIO_GETGEO, &drive_geo) < 0)
-			return WANT_ERROR;
-		close (fd);
+	debconf_subst (client, TEMPLATE_PREFIX "formatting", "device", channel_current->name);
+	debconf_progress_start (client, 0, drive_geo.cylinders - 1, TEMPLATE_PREFIX "formatting");
 
-		debconf_subst (client, TEMPLATE_PREFIX "formatting", "device", buf);
-		debconf_progress_start (client, 0, drive_geo.cylinders, TEMPLATE_PREFIX "formatting");
+	snprintf (buf, sizeof (buf), "dasdfmt -l LX%04x -b 4096 -m 1 -f %s -y", channel_device (channel_current->name), dev);
+	ret = di_exec_shell_full (buf, format_handler, NULL, NULL, NULL, NULL, NULL, NULL);
 
-		snprintf (buf, sizeof (buf), "dasdfmt -l LX%04x -b 4096 -m 1 -f %s -y", dasd_current->device, dev);
-		ret = di_exec_shell_full (buf, format_handler, NULL, NULL, NULL, NULL, NULL, NULL);
+	debconf_progress_stop (client);
 
-		debconf_progress_stop (client);
+	if (ret)
+		return WANT_ERROR;
 
-		if (ret)
-			return WANT_ERROR;
-	}
-
-	debconf_get (client, "debian-installer/kernel/commandline");
-	strncpy (buf, client->value, sizeof (buf));
-
-	ptr = strstr (buf, "dasd=");
-	if (ptr)
-	{
-		char buf1[256] = "", buf2[256] = "";
-		while (*ptr++ != '=');
-		while (1)
-		{ 
-			unsigned int a = 0;
-			sscanf (ptr, "%x", &a);
-			if (a == dasd_current->device)
-				return WANT_NEXT;;
-			while (*++ptr && *ptr != ',' && !isspace (*ptr));
-			if (*ptr != ',')
-				break;
-		}
-		strncpy (buf1, buf, ptr - buf);
-		strncpy (buf2, ptr, sizeof (buf2));
-		snprintf (buf, sizeof (buf), "%s,%04x%s", buf1, dasd_current->device, buf2);
-	}
-	else
-		di_snprintfcat (buf, sizeof (buf), " dasd=%04x", dasd_current->device);
-	debconf_set (client, "debian-installer/kernel/commandline", buf);
-
-#endif
 	return WANT_NEXT;
 }
 
-static void error (void)
+static enum state_wanted write_dasd (void)
 {
-	char *ptr;
+	struct sysfs_device *device;
+	struct sysfs_attribute *attr;
+        char buf[256];
+        FILE *config;
 
-	my_debconf_input ("high", TEMPLATE_PREFIX "error", &ptr);
+        device = sysfs_open_device ("ccw", channel_current->name);
+        if (!device)
+                return WANT_ERROR;
+
+        attr = sysfs_get_device_attr (device, "online");
+        if (!attr)
+                return WANT_ERROR;
+        if (sysfs_write_attribute (attr, "1", 1) < 0)
+                return WANT_ERROR;
+
+        sysfs_close_device (device);
+
+	channel_current->online = true;
+
+        snprintf (buf, sizeof (buf), SYSCONFIG_DIR "config-ccw-%s", channel_current->name);
+        config = fopen (buf, "w");
+        if (!config)
+                return WANT_ERROR;
+
+        fclose (config);
+
+	channel_current->configured = true;
+
+	return WANT_NEXT;
 }
 
 int main ()
@@ -343,12 +333,7 @@ int main ()
 	client = debconfclient_new ();
 	debconf_capb (client, "backup");
 
-	enum
-	{
-		BACKUP, DETECT_CHANNEL, GET_CHANNEL,
-		CONFIRM, ERROR, FINISH
-	}
-	state = DETECT_CHANNEL;
+	enum state state = SETUP;
 
 	while (1)
 	{
@@ -358,41 +343,48 @@ int main ()
 		{
 			case BACKUP:
 				return 10;
-			case DETECT_CHANNEL:
+			case SETUP:
+				state_want = setup ();
+				break;
+			case DETECT_CHANNELS:
 				state_want = detect_channels ();
 				break;
 			case GET_CHANNEL:
 				state_want = get_channel ();
 				break;
-			case CONFIRM:
-				state_want = confirm ();
+			case FORMAT:
+				state_want = format ();
+				break;
+			case WRITE:
+				state_want = write_dasd ();
 				break;
 			case ERROR:
-				error ();
-				state_want = WANT_FINISH;
+				return 1;
 			case FINISH:
 				return 0;
 		}
 		switch (state_want)
 		{
-			case WANT_NONE:
-				state = ERROR;
-				break;
 			case WANT_NEXT:
 				switch (state)
 				{
-					case DETECT_CHANNEL:
+					case SETUP:
+						state = DETECT_CHANNELS;
+						break;
+					case DETECT_CHANNELS:
 						state = GET_CHANNEL;
 						break;
 					case GET_CHANNEL:
-						state = CONFIRM;
+						state = FORMAT;
 						break;
-					case CONFIRM:
+					case FORMAT:
+						state = WRITE;
+						break;
+					case WRITE:
 						state = GET_CHANNEL;
 						break;
 					default:
 						state = ERROR;
-						break;
 				}
 				break;
 			case WANT_BACKUP:
@@ -401,18 +393,17 @@ int main ()
 					case GET_CHANNEL:
 						state = BACKUP;
 						break;
-					case CONFIRM:
+					case WRITE:
 						state = GET_CHANNEL;
 						break;
 					default:
 						state = ERROR;
-						break;
 				}
 				break;
 			case WANT_FINISH:
 				state = FINISH;
 				break;
-			case WANT_ERROR:
+			default:
 				state = ERROR;
 		}
 	}

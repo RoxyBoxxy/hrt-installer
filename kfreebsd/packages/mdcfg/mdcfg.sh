@@ -34,16 +34,17 @@ md_delete_verify() {
 			# Stop the MD device, and zero the superblock
 			# of all the component devices
       DEVICES=`mdadm -Q --detail /dev/md/${NUMBER} | grep "\(active\|spare\)" | sed -e 's/.* //'`
-			mdadm --stop /dev/md/${NUMBER}
-			echo "Removing /dev/md/$NUMBER" > /var/log/mdcfg.log
-			echo "${DEVICES}" >> /var/log/mdcfg.log
+			logger -t mdcfg "Removing /dev/md/$NUMBER ($DEVICES)"
+			log-output -t mdcfg mdadm --stop /dev/md/${NUMBER} || return 1
 			for DEV in "$DEVICES"; do
-				mdadm --zero-superblock --force ${DEV}
-				echo ${DEV} >> /var/log/mdcfg.log
+				log-output -t mdcfg \
+					mdadm --zero-superblock --force ${DEV} || return 1
 			done
 			;;
-		"false") ;;
+		"false")
+			: ;;
 	esac
+	return 0
 }
 
 md_delete() {
@@ -62,8 +63,13 @@ md_delete() {
 
 	case $RET in
 		md*)
-			md_delete_verify $RET;;
-		*);;
+			if ! md_delete_verify $RET; then
+				db_input critical mdcfg/deletefailed
+				db_go
+			fi
+			;;
+		*)
+			: ;;
 	esac
 }
 
@@ -73,16 +79,22 @@ md_createmain() {
 	db_go
 	if [ $? -ne "30" ]; then
 		db_get mdcfg/createmain
+		if [ "$RET" = Cancel ]; then
+			return
+		fi
+		RAID_SEL="$RET"
 		
-		get_partitions
+		if ! get_partitions; then
+			return
+		fi
 
-		case $RET in
+		case "$RAID_SEL" in
 			"RAID5")
-			md_create_raid5;;
+				md_create_raid5 ;;
 			"RAID1")
-			md_create_raid1;;
+				md_create_raid1 ;;
 			"RAID0")
-			md_create_raid0;;
+				md_create_raid0 ;;
 		esac
 	fi
 }
@@ -100,16 +112,17 @@ get_partitions() {
 	NUM_PART=0
 	for i in ${RAW_PARTITIONS}; do
 		DEV=`echo ${i}|sed -e "s/\/dev\///"`
-		MAPPEDDEV=`mapdevfs ${i} | sed -e "s/\/dev\///"`
+		REALDEV=$(mapdevfs "$i")
+		MAPPEDDEV=$(echo "$REALDEV" | sed -e "s/\/dev\///")
 
 		if grep -q "\(${DEV}\|${MAPPEDDEV}\)" /proc/mdstat; then
 			continue
 		fi
 
 		if [ -z "${PARTITIONS}" ] ; then
-			PARTITIONS="${i}"
+			PARTITIONS="$REALDEV"
 		else
-			PARTITIONS="${PARTITIONS}, ${i}"
+			PARTITIONS="${PARTITIONS}, $REALDEV"
 		fi
 		NUM_PART=$(($NUM_PART + 1))
 	done
@@ -117,8 +130,9 @@ get_partitions() {
 	if [ -z "${PARTITIONS}" ] ; then
 		db_input critical mdcfg/noparts
 		db_go
-		return
+		return 1
 	fi
+	return 0
 }
 
 prune_partitions() {
@@ -169,11 +183,12 @@ md_create_raid0() {
 		let MD_NUM++
 	fi
 
-	echo "Number of devices in the RAID0 array md${MD_NUM}: ${SELECTED}"
+	logger -t mdcfg "Number of devices in the RAID0 array md${MD_NUM}: ${SELECTED}"
 
 	RAID_DEVICES="$(echo ${RET} | sed -e 's/,//g')"
-	echo "Commandline:"
-	`mdadm --create /dev/md/${MD_NUM} --auto=yes --force -R -l raid0 -n ${SELECTED} ${RAID_DEVICES}`
+	log-output -t mdcfg \
+		mdadm --create /dev/md/${MD_NUM} --auto=yes --force -R -l raid0 \
+		      -n ${SELECTED} ${RAID_DEVICES}
 }
 
 md_create_raid1() {
@@ -245,6 +260,7 @@ md_create_raid1() {
 	done
 
 	# Add "missing" for as many devices as weren't selected
+	MISSING_DEVICES=""
 	while [ "${SELECTED}" -lt "${DEV_COUNT}" ]; do
 		MISSING_DEVICES="${MISSING_DEVICES} missing"
 		let SELECTED++
@@ -305,11 +321,13 @@ md_create_raid1() {
 		let MD_NUM++
 	fi
 
-	echo "Selected spare count: ${NAMED_SPARES}"
-	echo "Raid devices count: ${DEV_COUNT}"
-	echo "Spare devices count: ${SPARE_COUNT}"
-	echo "Commandline:"
-	`mdadm --create /dev/md/${MD_NUM} --auto=yes --force -R -l raid1 -n ${DEV_COUNT} -x ${SPARE_COUNT} ${RAID_DEVICES} ${MISSING_DEVICES} ${SPARE_DEVICES} ${MISSING_SPARES}`
+	logger -t mdcfg "Selected spare count: ${NAMED_SPARES}"
+	logger -t mdcfg "Raid devices count: ${DEV_COUNT}"
+	logger -t mdcfg "Spare devices count: ${SPARE_COUNT}"
+	log-output -t mdcfg \
+		mdadm --create /dev/md/${MD_NUM} --auto=yes --force -R -l raid1 \
+		      -n ${DEV_COUNT} -x ${SPARE_COUNT} ${RAID_DEVICES} ${MISSING_DEVICES} \
+		      ${SPARE_DEVICES} ${MISSING_SPARES}
 }
 
 md_create_raid5() {
@@ -445,11 +463,13 @@ md_create_raid5() {
 		let MD_NUM++
 	fi
 
-	echo "Selected spare count: ${NAMED_SPARES}"
-	echo "Raid devices count: ${DEV_COUNT}"
-	echo "Spare devices count: ${SPARE_COUNT}"
-	echo "Commandline:"
-	`mdadm --create /dev/md/${MD_NUM} --auto=yes --force -R -l raid5 -n ${DEV_COUNT} -x ${SPARE_COUNT} ${RAID_DEVICES} ${SPARE_DEVICES} ${MISSING_SPARES}`
+	logger -t mdcfg "Selected spare count: ${NAMED_SPARES}"
+	logger -t mdcfg "Raid devices count: ${DEV_COUNT}"
+	logger -t mdcfg "Spare devices count: ${SPARE_COUNT}"
+	log-output -t mdcfg \
+		mdadm --create /dev/md/${MD_NUM} --auto=yes --force -R -l raid5 \
+		      -n ${DEV_COUNT} -x ${SPARE_COUNT} ${RAID_DEVICES} \
+		      ${SPARE_DEVICES} ${MISSING_SPARES}
 }
 
 md_mainmenu() {
@@ -463,11 +483,11 @@ md_mainmenu() {
 		db_get mdcfg/mainmenu
 		case $RET in
 			"Create MD device")
-				md_createmain;;
+				md_createmain ;;
 			"Delete MD device")
-				md_delete;;
+				md_delete ;;
 			"Finish")
-				break;;
+				break ;;
 		esac
 	done
 }
@@ -476,22 +496,26 @@ md_mainmenu() {
 
 # Try to load the necesarry modules.
 # Supported schemes: RAID 0, RAID 1, RAID 5
-depmod -a 1>/dev/null 2>&1
-modprobe md 1>/dev/null 2>&1 || modprobe md-mod 1>/dev/null 2>&1
+depmod -a >/dev/null 2>&1
+modprobe md >/dev/null 2>&1 || modprobe md-mod >/dev/null 2>&1
 modprobe raid0 >/dev/null 2>&1
-modprobe raid1 1>/dev/null 2>&1
-modprobe raid5 >/dev/null 2>&1
-mkdir -p /dev/md
+modprobe raid1 >/dev/null 2>&1
+# kernels >=2.6.18 have raid456
+modprobe raid456 >/dev/null 2>&1 || modprobe raid5 >/dev/null 2>&1
 
 # Try to detect MD devices, and start them
-mdrun
+# mdadm will fail if /dev/md does not already exist
+mkdir -p /dev/md
+log-output -t mdcfg --pass-stdout \
+	mdadm --examine --scan --config=partitions > /tmp/mdadm.conf
+log-output -t mdcfg \
+	mdadm --assemble --scan --run --config=/tmp/mdadm.conf --auto=yes
 
 # Make sure that we have md-support
 if [ ! -e /proc/mdstat ]; then
 	db_set mdcfg/nomd "false"
 	db_input high mdcfg/nomd
 	db_go
-	db_stop
 	exit 0
 fi
 
@@ -503,5 +527,4 @@ apt-install mdadm
 
 md_mainmenu
 
-#db_stop
 exit 0

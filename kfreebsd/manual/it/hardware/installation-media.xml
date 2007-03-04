@@ -1,5 +1,5 @@
 <!-- retain these comments for translator revision tracking -->
-<!-- original version: 36732 -->
+<!-- original version: 43773 -->
 
 
  <sect1 id="installation-media">
@@ -10,7 +10,7 @@
 <!--
 This section will help you determine which different media types you can use to
 install Debian. For example, if you have a floppy disk drive on your machine,
-it can be used to install Debian. There is a whole chapter devoted media,
+it can be used to install Debian. There is a whole chapter devoted to media,
 <xref linkend="install-methods"/>, which lists the advantages and
 disadvantages of each media type. You may want to refer back to this page once
 you reach that section.
@@ -18,7 +18,7 @@ you reach that section.
 
 Questa sezione aiuta a determinare quali tipi di supporto è possibile
 usare per installare Debian. Per esempio, se sulla propria macchina si
-dispone di un lettore floppy, è possibile usarlo per installare
+dispone di un lettore per dischetti, è possibile usarlo per installare
 Debian. C'è un intero capitolo dedicato ai supporti,
 <xref linkend="install-methods"/>, che elenca i vantaggi e gli svantaggi
 di ogni supporto. È possibile rileggere questa pagina una volta letta
@@ -28,7 +28,7 @@ quella sezione.
 
   <sect2 condition="supports-floppy-boot">
   <!-- <title>Floppies</title> -->
-  <title>Floppy</title>
+  <title>Dischetti</title>
 <para>
 
 <!--
@@ -65,9 +65,9 @@ old nonstandard CD-ROM drives which are neither SCSI nor IDE/ATAPI.
 -->
 
 Tutte le volte che in questo manuale è riportato <quote>CD-ROM</quote>,
-devono essere considerati sia i CD-ROM che i DVD-ROM, perché entrambe
-le tecnologie sono molto simili dal punto di vista del sistema operativo, con
-l'eccezione di alcuni vecchi lettori CD-ROM non standard che non sono
+devono essere considerati sia i CD-ROM che i DVD-ROM, perché le due
+tecnologie sono molto simili dal punto di vista del sistema operativo,
+con l'eccezione di alcuni vecchi lettori CD-ROM non standard che non sono
 né SCSI né IDE/ATAPI.
 
 </para></note><para>
@@ -94,7 +94,7 @@ possibile usare il CD-ROM assieme ad un'altra tecnica per l'installazione
 del sistema, dopo che il sistema d'installazione è stato avviato
 in un altro modo; vedere <xref linkend="boot-installer"/>.
 
-</para><para arch="i386">
+</para><para arch="x86">
 
 <!--
 Both SCSI and IDE/ATAPI CD-ROMs are supported.  In addition, all
@@ -115,7 +115,7 @@ l'avvio da queste interfacce. Il <ulink url="&url-cd-howto;">Linux CD-ROM
 HOWTO</ulink> contiene delle informazioni più approfondite sull'uso dei
 CD-ROM con Linux.
 
-</para><para arch="i386">
+</para><para arch="x86">
 
 <!--
 USB CD-ROM drives are also supported, as are FireWire devices that
@@ -158,7 +158,7 @@ sono supportati anche i CD-ROM SCSI.
 <!--
 On SGI machines, booting from CD-ROM requires a SCSI CD-ROM drive
 capable of working with a logical blocksize of 512 bytes. Many of the
-SCSI CD-ROM drives sold for the PC market do not have this
+SCSI CD-ROM drives sold on the PC market do not have this
 capability. If your CD-ROM drive has a jumper labeled
 <quote>Unix/PC</quote> or <quote>512/2048</quote>, place it in the
 <quote>Unix</quote> or <quote>512</quote> position.
@@ -189,7 +189,7 @@ o SCSI.
 <!--
 On DECstations, booting from CD-ROM requires a SCSI CD-ROM drive
 capable of working with a logical blocksize of 512 bytes. Many of the
-SCSI CD-ROM drives sold for the PC market do not have this capability.
+SCSI CD-ROM drives sold on the PC market do not have this capability.
 If your CD-ROM drive has a jumper labeled <quote>Unix/PC</quote> or
 <quote>512/2048</quote>, place it in the <quote>Unix</quote> or
 <quote>512</quote> position.
@@ -311,7 +311,7 @@ systems which have no room for unnecessary drives.
 Molti computer Debian hanno bisogno del floppy o del lettore CD-ROM solo
 per installare il sistema o per operazioni di ripristino del sistema. Se
 ci si trova a operare con dei server probabilmente questi lettori sono
-già stati rimossi ed è possibile usare una penna USB per
+già stati rimossi ed è possibile usare una chiavetta USB per
 installare e (quando necessario) recuperare il sistema. Questo è
 utile anche per i piccoli sistemi che non hanno spazio per lettori
 inutili.
@@ -322,21 +322,37 @@ inutili.
   <sect2>
   <!-- <title>Network</title> -->
   <title>Rete</title>
-<para condition="supports-tftp">
+<para>
 
 <!--
-You can also <emphasis>boot</emphasis> your system over the network.
+The network can be used during the installation to retrieve files needed
+for the installation. Whether the network is used or not depends on the
+installation method you choose and your answers to certain questions that
+will be asked during the installation. The installation system supports
+most types of network connections (including PPPoE, but not ISDN or PPP),
+via either HTTP or FTP. After the installation is completed, you can also
+configure your system to use ISDN and PPP.
 -->
 
-È anche possibile avviare il sistema attraverso la rete.
+La rete può essere usata durante l'installazione per recuperare i file
+necessari all'installazione. L'uso della rete dipende dal metodo
+d'installazione scelto e dalle risposte date ad alcune delle domande poste
+durante l'installazione. Il sistema d'installazione supporta connessioni
+alla rete di diversi tipi (tra questi PPPoE ma non ISDN e PPP), via FTP o
+HTTP. Al termine dell'installazione è possibile configurare il proprio
+sistema per l'uso di ISDN e PPP.
+
+</para><para condition="supports-tftp">
 
 <!--
-<phrase arch="mips">This is the preferred installation technique for
-Mips.</phrase>
+You can also <emphasis>boot</emphasis> the installation system over the
+network. <phrase arch="mips">This is the preferred installation technique
+for &arch-title;.</phrase>
 -->
 
-<phrase arch="mips">Questo è il metodo d'installazione preferito
-per Mips.</phrase>
+È anche possibile <emphasis>avviare</emphasis> il sistema d'installazione
+dalla rete. <phrase arch="mips">Questo è il metodo d'installazione preferito
+per &arch-title;.</phrase>
 
 </para><para condition="supports-nfsroot">
 
@@ -348,19 +364,6 @@ and NFS-mounting of all local filesystems, is another option.
 L'installazione senza dischi, usando l'avvio dalla rete da una LAN e montare
 l'intero filesystem attraverso NFS è un'altra opzione.
 
-</para><para>
-
-<!--
-After the operating system kernel is installed, you can install the
-rest of your system via any sort of network connection (including
-PPP after installation of the base system), via FTP or HTTP.
--->
-
-Dopo che il kernel del sistema operativo è stato installato, si
-può installare il resto del sistema con una qualsiasi sorta di
-connessione (tra queste anche con una connessione PPP dopo l'installazione
-del sistema base), via FTP o HTTP.
-
 </para>
   </sect2>
 
@@ -371,7 +374,7 @@ del sistema base), via FTP o HTTP.
 
 <!--
 If you are running another Unix-like system, you could use it to install
-&debian; without using the &d-i; described in the rest of the
+&debian; without using the &d-i; described in the rest of this
 manual. This kind of install may be useful for users with otherwise
 unsupported hardware or on hosts which can't afford downtime.  If you
 are interested in this technique, skip to the <xref
@@ -412,7 +415,7 @@ personalizzato). Il supporto per la maggior quantità di dispositivi
 è desiderabile in generale per permettere che Debian possa essere
 installata sul numero maggiore possibile di combinazioni di hardware.
 
-</para><para arch="i386">
+</para><para arch="x86">
 
 <!--
 Generally, the Debian installation system includes support for floppies,
@@ -496,6 +499,10 @@ Adaptec AIC7xxx
 
 </para></listitem>
 <listitem><para>
+
+<!--
+NCR and Symbios 53C8XX
+-->
 
 NCR e Symbios 53C8XX
 

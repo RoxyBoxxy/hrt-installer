@@ -59,6 +59,10 @@ A more detailed overview of how the installer is built:
   not for another, put the kernel major version(s) that should have the
   package in brackets at the end of the line.
   For example: discover1 [2.2 2.4]
+* Similarly, if you need to include a package for only one type of kernel,
+  put the name of the kernel(s) that should have the package in brackets at
+  the end of the line.
+  For example: gnumach-udeb [hurd]
 * If you'd like to include a given package only if it's available, and not
   fail otherwise, put a question mark at the end of the line.
   For example: pcmcia-modules-${kernel:Version} ?
@@ -336,12 +340,19 @@ GZIPPED
 EXTRADRIVERS
   This variable points to the directories where additional driver
   .udebs reside. This causes these .udebs to be considered in the font
-  reduction step, so the characters needed for them are kept.
+  and library reduction steps, so the characters and library symbols needed
+  for them are kept.
 
 EXTRATARGETS
   Additional targets which are run before the ones in TARGET. This is
   e.g. useful to build the additional driver images first, and then
   use their intermediate tree for EXTRADRIVERS.
+
+EXTRAUDEBS
+  This variable points to additional udebs that should be considered by the
+  library reduction step. cdebconf plugins should be listed here so the
+  symbols they will need are available on the initrd (since cdebconf runs
+  using the initrd libc, its plugins do too)
 
 DRIVER_FOR
   The variable indicates that the image is just a driver image for some

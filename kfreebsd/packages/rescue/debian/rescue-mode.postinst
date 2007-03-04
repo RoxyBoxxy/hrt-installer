@@ -27,8 +27,14 @@ try_load_module vfat
 try_load_module md
 try_load_module raid0
 try_load_module raid1
-try_load_module raid5
-log-output -t rescue mdrun || true
+try_load_module raid5   # <=2.6.17
+try_load_module raid456 # >=2.6.18
+# mdadm will fail if /dev/md does not already exist
+mkdir -p /dev/md
+log-output -t rescue --pass-stdout \
+	   mdadm --examine --scan --config=partitions > /tmp/mdadm.conf || true
+log-output -t rescue \
+	   mdadm --assemble --scan --run --config=/tmp/mdadm.conf --auto=yes || true
 
 # LVM support
 try_load_module dm-mod
@@ -40,7 +46,7 @@ db_capb backup
 
 # Choose a root filesystem.
 choose_root () {
-	PARTITIONS="$(find /dev/discs -follow -name part\* | sort | \
+	PARTITIONS="$(list-devices partition | sort | \
 		tr '\n' , | sed 's/,$//; s/,/, /g')"
 
 	if lvdisplay -c | cut -d: -f4 | grep 0 >/dev/null; then
@@ -81,7 +87,7 @@ choose_root () {
 	log-output -t rescue umount /target || true
 	if ! log-output -t rescue mount "$RESCUE_ROOTDEV" /target; then
 		log "mount '$RESCUE_ROOTDEV' /target failed"
-		db_subst rescue/no-such-device DEVICE "$RESCUE_ROOTDEV"
+		db_subst rescue/mount-failed DEVICE "$RESCUE_ROOTDEV"
 		db_input critical rescue/mount-failed
 		# Since continuing returns to the rescue/root question,
 		# backing up returns to the main menu.

@@ -1,3 +1,219 @@
+apt-setup (1:0.20) unstable; urgency=low
+
+  [ Updated translations ]
+  * Malayalam (ml.po) by Praveen A
+
+ -- Frans Pop <fjp@debian.org>  Tue, 27 Feb 2007 16:37:56 +0100
+
+apt-setup (1:0.19) unstable; urgency=low
+
+  [ Joey Hess ]
+  * Improve regexp in 90security to not misfire if the mirror's name or path
+    contains "contrib" or "non-free".
+
+  [ Updated translations ]
+  * Hebrew (he.po) by Lior Kaplan
+
+ -- Frans Pop <fjp@debian.org>  Tue, 13 Feb 2007 23:23:00 +0100
+
+apt-setup (1:0.18) unstable; urgency=low
+
+  [ Updated translations ]
+  * Romanian (ro.po) by Eddy Petrișor
+
+ -- Frans Pop <fjp@debian.org>  Wed, 31 Jan 2007 11:18:40 +0100
+
+apt-setup (1:0.17) unstable; urgency=low
+
+  [ Christian Perrier ]
+  * Fix error in French translation. Closes: #400715.
+
+  [ Frans Pop ]
+  * Make wget respect proxy servers defined for local sources. Based on a
+    patch suggested by John Morrissey, for which thanks. Closes: #408297.
+  * Use log-output for commands that produce output if run in the installer.
+  * Consistently use http protocol when setting up security archive (ftp
+    reguires a different mirror directory and is thus not easy to support).
+  * Reduce timeout for testing security mirrors to 30 seconds. As security.d.o
+    currently has 3 IP addresses listed, and these are tried consecutively, the
+    total timeout will be 1.5 minutes (was 6 minutes). Closes: #393033.
+  * apt-setup-verify: reset IFS to avoid problems with option processing.
+
+  [ Updated translations ]
+  * Arabic (ar.po) by Ossama M. Khayat
+  * Belarusian (be.po) by Pavel Piatruk
+  * Bulgarian (bg.po) by Damyan Ivanov
+  * Bosnian (bs.po) by Safir Secerovic
+  * Danish (da.po) by Claus Hindsgaul
+  * Esperanto (eo.po) by Serge Leblanc
+  * Spanish (es.po) by Javier Fernández-Sanguino Peña
+  * Basque (eu.po) by Piarres Beobide
+  * Hebrew (he.po) by Lior Kaplan
+  * Georgian (ka.po) by Aiet Kolkhi
+  * Kurdish (ku.po) by Amed Çeko Jiyan
+  * Latvian (lv.po) by Aigars Mahinovs
+  * Malayalam (ml.po) by Praveen A
+  * Panjabi (pa.po) by A S Alam
+  * Portuguese (Brazil) (pt_BR.po) by Felipe Augusto van de Wiel (faw)
+  * Slovak (sk.po) by Peter Mann
+  * Slovenian (sl.po) by Matej Kovačič
+  * Swedish (sv.po) by Daniel Nylander
+  * Thai (th.po) by Theppitak Karoonboonyanan
+  * Turkish (tr.po) by Recai Oktaş
+
+ -- Frans Pop <fjp@debian.org>  Mon, 29 Jan 2007 21:43:32 +0100
+
+apt-setup (1:0.16) unstable; urgency=low
+
+  * Arabic (ar.po) by Ossama M. Khayat
+  * Belarusian (be.po) by Andrei Darashenka
+  * Bengali (bn.po) by Mahay Alam Khan (মাহে আলম খান)
+  * Danish (da.po) by Claus Hindsgaul
+  * Esperanto (eo.po) by Serge Leblanc
+  * Spanish (es.po) by Javier Fernández-Sanguino Peña
+  * Estonian (et.po) by Siim Põder
+  * Basque (eu.po) by Piarres Beobide
+  * Finnish (fi.po) by Tapio Lehtonen
+  * Hebrew (he.po) by Lior Kaplan
+  * Hindi (hi.po) by Nishant Sharma
+  * Croatian (hr.po) by Josip Rodin
+  * Indonesian (id.po) by Arief S Fitrianto
+  * Italian (it.po) by Stefano Canepa
+  * Korean (ko.po) by Sunjae park
+  * Kurdish (ku.po) by Erdal Ronahi
+  * Latvian (lv.po) by Aigars Mahinovs
+  * Nepali (ne.po) by Shiva Prasad Pokharel
+  * Romanian (ro.po) by Eddy Petrișor
+  * Russian (ru.po) by Yuri Kozlov
+  * Slovenian (sl.po) by Jure Čuhalev
+  * Albanian (sq.po) by Elian Myftiu
+  * Tamil (ta.po) by Damodharan Rajalingam
+  * Vietnamese (vi.po) by Clytie Siddall
+  * Wolof (wo.po) by Mouhamadou Mamoune Mbacke
+
+ -- Frans Pop <fjp@debian.org>  Tue, 24 Oct 2006 13:48:32 +0200
+
+apt-setup (1:0.15) unstable; urgency=low
+
+  * Fix broken proxy setting code in 90security. Closes: #378868
+    Some systems installed before this fix will have Acquire::http::proxy "false"
+    set in apt.conf, which leads to breakage in some situations. Also, if a
+    proxy was set, it would not be written to the file.
+
+ -- Joey Hess <joeyh@debian.org>  Thu, 17 Aug 2006 17:45:07 -0400
+
+apt-setup (1:0.14) unstable; urgency=low
+
+  * Make apt-setup idempotent by removing workfile on back up.
+  * Allow back up from use network mirror question.
+  * Make apt-setup-verify responsible for blank lines between sources lines
+    from different generators.
+  * Add Lintian override for standards-version.
+  * Add missing dependencies on debconf.
+
+  [ Updated translations ]
+  * Catalan (ca.po) by Jordi Mallach
+  * Greek, Modern (1453-) (el.po) by quad-nrg.net
+  * Spanish (es.po) by Javier Fernández-Sanguino Peña
+  * Icelandic (is.po) by David Steinn Geirsson
+  * Dutch (nl.po) by Bart Cornelis
+  * Simplified Chinese (zh_CN.po) by Carlos Z.F. Liu
+  * Traditional Chinese (zh_TW.po) by Tetralet
+
+ -- Frans Pop <fjp@debian.org>  Tue, 15 Aug 2006 02:22:07 +0200
+
+apt-setup (1:0.13) unstable; urgency=low
+
+  [ Colin Watson ]
+  * Only use RET in security generator for data returned from debconf, to
+    avoid confusion.
+  * Fix mirror generators not to break if apt-setup/use_mirror isn't asked.
+
+  [ Updated translations ]
+  * Finnish (fi.po) by Tapio Lehtonen
+  * Panjabi (pa.po) by A S Alam
+  * Tagalog (tl.po) by Eric Pareja
+
+ -- Frans Pop <fjp@debian.org>  Tue, 25 Jul 2006 13:01:56 +0200
+
+apt-setup (1:0.12) unstable; urgency=low
+
+  [ Colin Watson ]
+  * Port mirror generator changes from 1:0.11 to Ubuntu mirror generator.
+
+  [ Updated translations ]
+  * Dzongkha (dz.po) by Jurmey Rabgay
+  * Estonian (et.po) by Siim Põder
+  * Hungarian (hu.po) by SZERVÑC Attila
+  * Macedonian (mk.po) by Georgi Stanojevski
+  * Dutch (nl.po) by Bart Cornelis
+  * Norwegian Nynorsk (nn.po) by Håvard Korsvoll
+  * Polish (pl.po) by Bartosz Fenski
+  * Ukrainian (uk.po) by Eugeniy Meshcheryakov
+
+ -- Frans Pop <fjp@debian.org>  Thu, 13 Jul 2006 17:11:34 +0200
+
+apt-setup (1:0.11) unstable; urgency=low
+
+  [ Frans Pop ]
+  * Make the use of a network mirror optional if the base system is
+    installable from CD.
+
+  [ Colin Watson ]
+  * Set $protocol in security generator so that proxy configuration works.
+
+  [ Joey Hess ]
+  * Move mirror use prompt code into mirror generator.
+  * Run choose-mirror with new -n switch so it does not mess with the existing
+    progress bar.
+
+  [ Updated translations ]
+  * Arabic (ar.po) by Ossama M. Khayat
+  * Bengali (bn.po) by Progga
+  * Catalan (ca.po) by Jordi Mallach
+  * Czech (cs.po) by Miroslav Kure
+  * Danish (da.po) by Claus Hindsgaul
+  * German (de.po) by Jens Seidel
+  * Dzongkha (dz.po)
+  * Esperanto (eo.po) by Serge Leblanc
+  * Spanish (es.po) by Javier Fernández-Sanguino Peña
+  * Basque (eu.po) by Piarres Beobide
+  * French (fr.po) by Christian Perrier
+  * Galician (gl.po) by Jacobo Tarrio
+  * Hebrew (he.po) by Lior Kaplan
+  * Hungarian (hu.po) by SZERVÑC Attila
+  * Italian (it.po) by Stefano Canepa
+  * Japanese (ja.po) by Kenshi Muto
+  * Georgian (ka.po) by Aiet Kolkhi
+  * Khmer (km.po) by Khoem Sokhem
+  * Korean (ko.po) by Sunjae park
+  * Kurdish (ku.po) by Erdal Ronahi
+  * Lithuanian (lt.po) by Kęstutis Biliūnas
+  * Malagasy (mg.po) by Jaonary Rabarisoa
+  * Macedonian (mk.po) by Georgi Stanojevski
+  * Bokmål, Norwegian (nb.po) by Bjørn Steensrud
+  * Nepali (ne.po) by Shiva Pokharel
+  * Dutch (nl.po) by Bart Cornelis
+  * Norwegian Nynorsk (nn.po) by Håvard Korsvoll
+  * Polish (pl.po) by Bartosz Fenski
+  * Portuguese (pt.po) by Miguel Figueiredo
+  * Portuguese (Brazil) (pt_BR.po) by André Luís Lopes
+  * Romanian (ro.po) by Eddy Petrişor
+  * Russian (ru.po) by Yuri Kozlov
+  * Northern Sami (se.po) by Børre Gaup
+  * Slovak (sk.po) by Peter Mann
+  * Slovenian (sl.po) by Jure Čuhalev
+  * Albanian (sq.po) by Elian Myftiu
+  * Swedish (sv.po) by Daniel Nylander
+  * Thai (th.po) by Theppitak Karoonboonyanan
+  * Tagalog (tl.po) by Eric Pareja
+  * Turkish (tr.po) by Recai Oktaş
+  * Ukrainian (uk.po) by Eugeniy Meshcheryakov
+  * Vietnamese (vi.po) by Clytie Siddall
+  * Simplified Chinese (zh_CN.po) by Carlos Z.F. Liu
+
+ -- Joey Hess <joeyh@debian.org>  Thu, 15 Jun 2006 13:54:54 -0400
+
 apt-setup (1:0.10) unstable; urgency=low
 
   [ Frans Pop ]

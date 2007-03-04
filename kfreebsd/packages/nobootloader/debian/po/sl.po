@@ -17,13 +17,14 @@
 # Jure Čuhalev <gandalf@owca.info>, 2005.
 # Jure Cuhalev <gandalf@owca.info>, 2006.
 # Matej Kovačič <matej.kovacic@owca.info>, 2006.
+# Jožko Škrablin <jozko.skrablni@gmail.com>, 2006.
 msgid ""
 msgstr ""
 "Project-Id-Version: sl\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-08-18 18:32-0600\n"
-"PO-Revision-Date: 2006-04-26 00:10+0100\n"
-"Last-Translator: Jure Čuhalev <gandalf@owca.info>\n"
+"Report-Msgid-Bugs-To: debian-boot@lists.debian.org\n"
+"POT-Creation-Date: 2007-01-06 22:48+0100\n"
+"PO-Revision-Date: 2007-01-04 14:08+0100\n"
+"Last-Translator: Matej Kovačič <matej.kovacic@owca.info>\n"
 "Language-Team: Slovenian <lugos-slo@lugos.si>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -42,60 +43,34 @@ msgstr "Nadaljuj brez zagonskega nalagalnika"
 
 #. Type: note
 #. Description
-#: ../nobootloader.templates:8
+#: ../nobootloader.templates:9
 msgid ""
-"Some variables need to be set in the Pegasos OpenFirmware in order for your "
-"system to boot linux automatically.  At the end of the installation, the "
-"system will reboot.  At the Pegasos OpenFirmware prompt, set the following "
-"OpenFirmware variables to enable auto-booting:"
+"Some variables need to be set in the Genesi firmware in order for your "
+"system to boot automatically.  At the end of the installation, the system "
+"will reboot.  At the firmware prompt, set the following firmware variables "
+"to enable auto-booting:"
 msgstr ""
-"Če želite samodejno zagnati Debian, je potrebno nastaviti nekaj spremenljivk "
-"v Pegasos OpenFirmware.  Na koncu namestitve se bo sistem ponovno zagnal.  "
-"Ob pozivniku Pegasos OpenFirmware nastavite sledeče OpenFirmware "
-"spremenljivke, da boste omogočili samodejni zagon:"
+"V Genesi firmwareu je potrebno nastaviti nekatere spremenljivke. Na koncu "
+"namestitve se bo sistem ponovno zagnal. Ob pozivniku firmwarea nastavite "
+"sledeče spremenljivke, da boste omogočili samodejni zagon:"
 
 #. Type: note
 #. Description
-#: ../nobootloader.templates:8
+#: ../nobootloader.templates:9
 msgid ""
-" setenv boot-device ${OF_BOOT_DEVICE}\n"
-" setenv boot-file ${OF_BOOT_FILE}\n"
-" setenv auto-boot-timeout 5000\n"
-" setenv auto-boot? true"
-msgstr ""
-" setenv boot-device ${OF_BOOT_DEVICE}\n"
-" setenv boot-file ${OF_BOOT_FILE}\n"
-" setenv auto-boot-timeout 5000\n"
-" setenv auto-boot? true"
+"Alternatively, you will be able to boot the kernel manually by entering, at "
+"the firmware prompt:"
+msgstr "Vedite, da boste lahko pozneje zagnali jedro ročno z ukazom:"
 
 #. Type: note
 #. Description
-#: ../nobootloader.templates:8
-msgid ""
-"Alternatively, you will be able to boot the kernel manually by entering :"
-msgstr "Vedite, da boste lahko pozneje zagnali jedro ročno z ukazom :"
-
-#. Type: note
-#. Description
-#: ../nobootloader.templates:8
-msgid " ${KERNEL_BOOT}"
-msgstr " ${KERNEL_BOOT}"
-
-#. Type: note
-#. Description
-#: ../nobootloader.templates:8
-msgid "at the OpenFirmware prompt."
-msgstr "na OpenFirmware pozivniku."
-
-#. Type: note
-#. Description
-#: ../nobootloader.templates:30
+#: ../nobootloader.templates:31
 msgid "Setting firmware variables for automatic boot"
 msgstr "Nastavljanje firmware spremenljivk za samodejni zagon"
 
 #. Type: note
 #. Description
-#: ../nobootloader.templates:30
+#: ../nobootloader.templates:31
 msgid ""
 "Some variables need to be set in the Netwinder NeTTrom firmware in order for "
 "your system to boot linux automatically.  At the end of this installation "
@@ -104,35 +79,17 @@ msgid ""
 "NeTTrom command system where you have to execute the following commands:"
 msgstr ""
 "Če želite samodejno zagnati Debian, je potrebno nastaviti nekaj spremenljivk "
-"v firmware opremi Netwinder NeTTrom.  Na koncu namestitve se bo sistem "
-"ponovno zagnal in poskusil s samozagonom.  Prekličete ga lahko s poljubno "
-"tipko.  Pristali boste v ukaznem sistemu NeTTrom, kjer morate izvesti "
+"v firmware opremi Netwinder NeTTrom. Na koncu namestitve se bo sistem "
+"ponovno zagnal in poskusil s samozagonom. Prekličete ga lahko s poljubno "
+"tipko. Pristali boste v ukaznem sistemu NeTTrom, kjer morate izvesti "
 "naslednje ukaze:"
 
 #. Type: note
 #. Description
-#: ../nobootloader.templates:30
-msgid ""
-"   setenv kernconfig fs\n"
-"   setenv kerndev ${KERNDEV}\n"
-"   setenv kernfile ${KERNFILE}\n"
-"   setenv rootdev ${ROOTDEV}\n"
-"   setenv cmdappend ${CMDAPPEND}\n"
-"   save-all"
-msgstr ""
-"   setenv kernconfig fs\n"
-"   setenv kerndev ${KERNDEV}\n"
-"   setenv kernfile ${KERNFILE}\n"
-"   setenv rootdev ${ROOTDEV}\n"
-"   setenv cmdappend ${CMDAPPEND}\n"
-"   save-all"
-
-#. Type: note
-#. Description
-#: ../nobootloader.templates:30
+#: ../nobootloader.templates:31
 msgid ""
 "You will only need to do this once.  Afterwards, enter the \"boot\" command "
-"or reboot the system to proceed to the next installation stage."
+"or reboot the system to proceed to your newly installed system."
 msgstr ""
 "To boste morali storiti samo enkrat. Kasneje, vnesite \"boot\" ukaz ali "
 "ponovno zaženite računalnik za nadaljevanje z naslednjim namestitvenim "
@@ -140,26 +97,26 @@ msgstr ""
 
 #. Type: note
 #. Description
-#: ../nobootloader.templates:50
+#: ../nobootloader.templates:51
 msgid "No boot loader installed"
-msgstr "Ni nameščenih zagonskih nalagalnikov"
+msgstr "Ni nameščenega nobenega zagonskega nalagalnika"
 
 #. Type: note
 #. Description
-#: ../nobootloader.templates:50
+#: ../nobootloader.templates:51
 msgid ""
 "No boot loader has been installed, either because you chose not to or "
 "because your specific architecture doesn't support a boot loader yet."
 msgstr ""
-"Ni nameščenih zagonskih nalagalnikov, ker ga niste želeli namestiti ali pa "
-"ga vaša arhitektura še ne podpira."
+"Ni nameščenega nobenega zagonskega nalagalnika, ker ga niste želeli "
+"namestiti ali pa ga vaša arhitektura še ne podpira."
 
 #. Type: note
 #. Description
-#: ../nobootloader.templates:50
+#: ../nobootloader.templates:51
 msgid ""
 "You will need to boot manually with the ${KERNEL} kernel on partition "
 "${BOOT} and ${ROOT} passed as a kernel argument."
 msgstr ""
-"Zagnati boste mogli ročno z jedrom ${KERNEL} na razdelkih ${BOOT} in "
-"${ROOT}, podanih kot argumenti jedra."
+"Sistem boste morali zagnati ročno z jedrom ${KERNEL} na razdelku ${BOOT} in "
+"z ${ROOT}, kot podanemu argumentu jedra."

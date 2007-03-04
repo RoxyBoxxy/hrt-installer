@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<!-- original version: 33725 -->
+<!-- original version: 44551 -->
 <!-- Revisado por jfs, 6 dic 2004 -->
 <!-- revisado Rudy Godoy, 23 feb. 2005 -->
 
@@ -27,7 +27,7 @@ favor, diríjase a <xref linkend="submit-bug" /> para consultar las
 instrucciones sobre cómo informar de éstos. Si tiene preguntas que este
 documento no absuelve, por favor, diríjala a la lista de correo debian-boot
 (&email-debian-boot-list;) o pregunte en el IRC (#debian-boot en la red
-freenode).
+OFTC).
 
 </para>
  </sect1>
@@ -80,7 +80,7 @@ primer CD del conjunto de CDs de Debian.
 </para><para>
 
 Descargue la imagen que prefiera y grábela en un CD.
-<phrase arch="i386">Para arrancar el CD, puede que necesite modificar la
+<phrase arch="x86">Para arrancar el CD, puede que necesite modificar la
 configuración de su BIOS, como se detalla en <xref linkend="bios-setup" />.</phrase>
 <phrase arch="powerpc">
 Para arrancar un PowerMac desde el CD, pulse la tecla <keycap>c</keycap>
@@ -98,7 +98,7 @@ mientras éste se inicia. Para consultar otros mecanismos para poder arrancar des
 Puede descargar las imágenes de disquete para instalar Debian si no puede
 arrancar desde un CD. Necesitará las imágenes
 <filename>floppy/boot.img</filename>, <filename>floppy/root.img</filename> y
-posiblemente uno de los disquetes de controladores.
+uno o más de los disquetes de controladores.
 
 </para><para>
 
@@ -109,9 +109,11 @@ disquete. Utilice el que tiene el nombre <filename>root.img</filename>.
 </para><para>
 
 Generalmente necesitará la imagen
-<filename>floppy/net-drivers.img</filename> si planea instalar a través de
-la red, ya que éste contiene controladores adicionales para muchas tarjetas
-de red Ethernet, y también incluye el soporte para PCMCIA.
+<filename>floppy/net-drivers-1.img</filename> si planea instalar a
+través de la red. También necesitará el segundo disquete de
+controladores <filename>floppy/net-drivers-2.img</filename> para
+interfaces de red PCMCIA o USB y algunas tarjetas de red menos
+habituales.
 
 </para><para>
 
@@ -147,9 +149,9 @@ lugar.
 
 La forma más fácil de preparar su dispositivo de memoria USB es
 descargar <filename>hd-media/boot.img.gz</filename> y usar
-«gunzip» para extraer la imagen de 128 MB desde este fichero.
+«gunzip» para extraer la imagen de 256 MB desde este fichero.
 Escriba esta imagen directamente en el dispositivo de memoria,
-que debe tener por lo menos 128 MB de tamaño. Obviamente se
+que debe tener por lo menos 256 MB de tamaño. Obviamente se
 destruirá todo lo que ya se encuentre en el dispositivo de memoria. A continuación
 monte el dispositivo de memoria, que ahora tendrá un sistema
 de ficheros FAT. Por último, descargue una imagen de CD «netinst»
@@ -169,15 +171,13 @@ más detalles, vea <xref linkend="boot-usb-files" />.
 El arranque de sistemas desde dispositivos de almacenamiento USB requiere el uso
 manual de «OpenFirmware». Para más indicaciones, vea <xref linkend="usb-boot" />.
 
-</para><para arch="i386">
+</para><para arch="x86">
 
 Algunas BIOS pueden arrancar directamente desde dispositivos de
 almacenamiento USB, pero otras no. Puede que necesite configurar su BIOS
 para arrancar desde un <quote>dispositivo extraíble</quote> o incluso un <quote>USB-ZIP</quote> para
-hacerlo arrancar desde el dispositivo USB. Si no consigue que arranque desde
-éste, puede arrancar desde un disquete y usar el dispositivo de memoria USB
-para el resto de la instalación. Puede encontrar algunos consejos útiles y
-obtener más información en <xref linkend="usb-boot" />.
+hacerlo arrancar desde el dispositivo USB. Puede encontrar algunos consejos
+útiles y obtener más información en <xref linkend="usb-boot" />.
 
 </para>
   </sect2>
@@ -192,7 +192,7 @@ arquitectura y configuración de arranque desde red.
 Los ficheros en <filename>netboot/</filename> pueden usarse
 para arrancar el &d-i; desde la red.
 
-</para><para arch="i386">
+</para><para arch="x86">
 
 La forma más fácil de configurar el arranque desde red probablemente
 sea usando PXE. Extraiga el fichero
@@ -216,7 +216,7 @@ diferente. Descargue <filename>hd-media/initrd.gz</filename>,
 <filename>hd-media/vmlinuz</filename>, y una imagen de CD de Debian en el
 directorio de nivel más alto en el disco duro. Asegúrese de que la imagen de
 CD tiene un nombre de fichero que termine en <literal>.iso</literal>. Ahora sólo es cuestión
-de arrancar linux con initrd. <phrase arch="i386"> <xref
+de arrancar linux con initrd. <phrase arch="x86"> <xref
 linkend="boot-initrd" /> explica una forma de hacerlo. </phrase>
 
 </para>
@@ -229,16 +229,6 @@ linkend="boot-initrd" /> explica una forma de hacerlo. </phrase>
 Una vez que se inicie el instalador, se le mostrará una pantalla inicial de bienvenida.
 Pulse &enterkey; para arrancar, o lea las instrucciones
 para obtener información de otros métodos y parámetros para la instalación (vea <xref linkend="boot-parms" />).
-<phrase arch="i386">
-Si desea un núcleo 2.4, escriba <userinput>install24</userinput> en el
-cursor <prompt>boot:</prompt>.
-<footnote><para>
-
-El núcleo 2.6 es la versión que se utiliza por omisión en la mayoría
-de los métodos de arranque, pero no está disponible en el arranque desde disquete.
-
-</para></footnote>
-</phrase>
 
 </para><para>
 
@@ -268,13 +258,14 @@ está en una red o no tiene DHCP.
 
 </para><para>
 
-Ahora toca particionar sus discos. Primero se le dará la oportunidad de
-particionar automáticamente bien el disco entero o bien el espacio libre en
-su disco. Esta opción es la más recomendable para usuarios noveles o alguien
-con prisa. Escoja la configuración manual en el menú si no desea
-particionado automático.
+Ahora toca particionar sus discos. Primero se le dará la oportunidad
+de particionar automáticamente bien el disco entero o bien el espacio
+libre disponible en su disco (particionado guiado). Esta opción es la
+más recomendable para usuarios noveles o alguien con prisa. Escoja la
+<guimenuitem>Manual</guimenuitem> en el menú si no desea particionado
+automático.
 
-</para><para arch="i386">
+</para><para arch="x86">
 
 Si tiene una partición DOS o Windows que quiera preservar, tenga cuidado con el
 particionado automático. Si elije particionado manual, puede usar el instalador
@@ -302,7 +293,7 @@ la instalación del núcleo.
 El último paso es la instalación del gestor de arranque. El instalador
 añadirá automáticamente al menú de arranque y mostrará un aviso si
 detecta otros sistemas operativos en su ordenador.
-<phrase arch="i386">GRUB se instala de forma predeterminada en el sector de
+<phrase arch="x86">GRUB se instala de forma predeterminada en el sector de
 arranque del primer disco duro, lo que generalmente es una buena elección.
 Podrá cambiarlo e instalarlo en otra ubicación si así lo desea.</phrase>
 
@@ -325,11 +316,12 @@ proceso de instalación.
  <title>Envíe un informe de instalación</title>
 <para>
 
-Si ha realizado una instalación con éxito con el &d-i;, por favor, tómese un
-momento para enviarnos un informe.
-La forma más sencilla es instalar el paquete reportbu
-(<command>apt-get install reportbug</command>), y ejecutar
-<command>reportbug installation-report</command>.
+Si ha realizado una instalación con éxito con el &d-i;, por favor,
+tómese un momento para enviarnos un informe.  La forma más sencilla es
+instalar el paquete reportbug (<command>aptitude install
+reportbug</command>), configurar <classname>reportbug</classname> como
+se describe en <xref linkend="mail-outgoing"/>, y ejecutar
+<command>reportbug installation-reports</command>.
 
 </para><para>
 
@@ -344,7 +336,7 @@ completo.
 </para>
  </sect1>
  <sect1 id="howto-installation-finally">
-<title>Y finalmente...</title>
+<title>Y finalmente&hellip;</title>
 <para>
 
 Esperamos que su instalación de Debian sea satisfactoria y que encuentre

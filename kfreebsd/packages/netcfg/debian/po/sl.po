@@ -17,13 +17,14 @@
 # Jure Čuhalev <gandalf@owca.info>, 2005.
 # Jure Cuhalev <gandalf@owca.info>, 2006.
 # Matej Kovačič <matej.kovacic@owca.info>, 2006.
+# Jožko Škrablin <jozko.skrablni@gmail.com>, 2006.
 msgid ""
 msgstr ""
 "Project-Id-Version: sl\n"
 "Report-Msgid-Bugs-To: debian-boot@lists.debian.org\n"
-"POT-Creation-Date: 2006-04-22 23:50-0600\n"
-"PO-Revision-Date: 2006-04-26 00:10+0100\n"
-"Last-Translator: Jure Čuhalev <gandalf@owca.info>\n"
+"POT-Creation-Date: 2007-01-06 22:47+0100\n"
+"PO-Revision-Date: 2007-01-22 09:38+0100\n"
+"Last-Translator: Matej Kovačič <matej.kovacic@owca.info>\n"
 "Language-Team: Slovenian <lugos-slo@lugos.si>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -69,8 +70,8 @@ msgid ""
 "If you are setting up a home network, you can make something up, but make "
 "sure you use the same domain name on all your computers."
 msgstr ""
-"Ime domene je del vašega Internetnega naslova desno od vašega gostiteljskega "
-"imena. Pogosto se konča z com, .net, .edu, or .org.  Če nastavljate domače "
+"Ime domene je del vašega internetnega naslova desno od vašega gostiteljskega "
+"imena. Pogosto se konča z .com, .net, .edu, or .org.  Če nastavljate domače "
 "omrežje si lahko nekaj izmislite, vendar se prepričajte, da na vseh "
 "računalnikih uporabljate isto ime domene."
 
@@ -110,15 +111,9 @@ msgid ""
 "primary network interface during the installation. If possible, the first "
 "connected network interface found has been selected."
 msgstr ""
-"Vaš sistem ima več mrežnih naprav. Izberite napravo, ki jo želite uporabiti "
-"kot primarno mrežno napravo med namestitvijo. Namestitveni program je "
-"poskusil izbrati prvi povezan mrežni vmesnik."
-
-#. Type: string
-#. Description
-#: ../netcfg-common.templates:39
-msgid "Wireless ESSID for ${iface}:"
-msgstr "Brezžični ESSID za ${iface}:"
+"Vaš sistem ima več mrežnih vmesnikov. Izberite napravo, ki jo želite "
+"uporabiti kot primarno mrežno napravo med namestitvijo. Namestitveni program "
+"je poskusil izbrati prvi povezan mrežni vmesnik."
 
 #. Type: string
 #. Description
@@ -135,12 +130,36 @@ msgstr ""
 #. Type: string
 #. Description
 #: ../netcfg-common.templates:46
+msgid "Wireless ESSID for ${iface}:"
+msgstr "Brezžični ESSID za ${iface}:"
+
+#. Type: string
+#. Description
+#: ../netcfg-common.templates:46
+msgid "Attempting to find an available wireless network failed."
+msgstr "Poskus iskanja dosegljivega brezžičnega omrežja ni uspel."
+
+#. Type: string
+#. Description
+#: ../netcfg-common.templates:46
+msgid ""
+"${iface} is a wireless network interface. Please enter the name (the ESSID) "
+"of the wireless network you would like ${iface} to use. To skip wireless "
+"configuration and continue, leave this field blank."
+msgstr ""
+"${iface} je brezžična mrežna naprava. Prosim vnesite ime (ESSID) brezžičnega "
+"omrežja za katerega želite, da ga ${iface} uporablja. Če želite preskočiti "
+"konfiguracijo brezžičnega omrežja, pustite to polje prazno."
+
+#. Type: string
+#. Description
+#: ../netcfg-common.templates:55
 msgid "WEP key for wireless device ${iface}:"
 msgstr "WEP ključ za brezžično napravo ${iface}:"
 
 #. Type: string
 #. Description
-#: ../netcfg-common.templates:46
+#: ../netcfg-common.templates:55
 msgid ""
 "If applicable, please enter the WEP security key for the wireless device "
 "${iface}. There are two ways to do this:"
@@ -150,7 +169,7 @@ msgstr ""
 
 #. Type: string
 #. Description
-#: ../netcfg-common.templates:46
+#: ../netcfg-common.templates:55
 msgid ""
 "If your WEP key is in the format 'nnnn-nnnn-nn', 'nn:nn:nn:nn:nn:nn:nn:nn', "
 "or 'nnnnnnnn', where n is a number, just enter it as it is into this field."
@@ -160,7 +179,7 @@ msgstr ""
 
 #. Type: string
 #. Description
-#: ../netcfg-common.templates:46
+#: ../netcfg-common.templates:55
 msgid ""
 "If your WEP key is in the format of a passphrase, prefix it with "
 "'s:' (without quotes)."
@@ -170,61 +189,61 @@ msgstr ""
 
 #. Type: string
 #. Description
-#: ../netcfg-common.templates:46
+#: ../netcfg-common.templates:55
 msgid ""
 "Of course, if there is no WEP key for your wireless network, leave this "
 "field blank."
 msgstr ""
-"Seveda, če ne potrebujete WEP ključa za vaše omrežje, pustite to polje "
+"Seveda, če za vaše omrežje ne potrebujete WEP ključa, pustite to polje "
 "prazno."
 
 #. Type: error
 #. Description
-#: ../netcfg-common.templates:61
+#: ../netcfg-common.templates:70
 msgid "Invalid WEP key"
 msgstr "Nepravilen WEP ključ"
 
 #. Type: error
 #. Description
-#: ../netcfg-common.templates:61
+#: ../netcfg-common.templates:70
 msgid ""
 "The WEP key '${wepkey}' is invalid. Please refer to the instructions on the "
 "next screen carefully on how to enter your WEP key correctly, and try again."
 msgstr ""
-"WEP kluč '${wepkey}' ni pravilen. Pozorno sledite navodilom na naslednjem "
-"zaslonu kako pravilno vnesti WEP ključ in poskusite ponovno."
+"WEP kluč '${wepkey}' ni pravilen. Pozorno sledite navodilom na naslednji "
+"strani kako pravilno vnesti WEP ključ in poskusite ponovno."
 
 #. Type: error
 #. Description
-#: ../netcfg-common.templates:68
+#: ../netcfg-common.templates:77
 msgid "Invalid ESSID"
 msgstr "Nepravilen ESSID"
 
 #. Type: error
 #. Description
-#: ../netcfg-common.templates:68
+#: ../netcfg-common.templates:77
 msgid ""
 "The ESSID \"${essid}\" is invalid. ESSIDs may only be up to 32 characters, "
 "but may contain all kinds of characters."
 msgstr ""
-"ESSID \"${essid}\" ni pravilen. Dolžina ESSID-jev je laho do 32 znakov "
+"ESSID \"${essid}\" ni pravilen. Dolžina ESSID-jev je lahko do 32 znakov "
 "vendar lahko vsebuje vse vrste znakov."
 
 #. Type: string
 #. Description
-#: ../netcfg-common.templates:75
+#: ../netcfg-common.templates:84
 msgid "Hostname:"
 msgstr "Gostiteljsko ime:"
 
 #. Type: string
 #. Description
-#: ../netcfg-common.templates:75
+#: ../netcfg-common.templates:84
 msgid "Please enter the hostname for this system."
 msgstr "Prosim vnesite gostiteljsko ime za ta sistem."
 
 #. Type: string
 #. Description
-#: ../netcfg-common.templates:75
+#: ../netcfg-common.templates:84
 msgid ""
 "The hostname is a single word that identifies your system to the network. If "
 "you don't know what your hostname should be, consult your network "
@@ -238,19 +257,19 @@ msgstr ""
 
 #. Type: error
 #. Description
-#: ../netcfg-common.templates:85
+#: ../netcfg-common.templates:94
 msgid "Invalid hostname"
 msgstr "Neveljavno gostiteljsko ime"
 
 #. Type: error
 #. Description
-#: ../netcfg-common.templates:85
+#: ../netcfg-common.templates:94
 msgid "The name \"${hostname}\" is invalid."
 msgstr "Ime \"${hostname}\" ni veljavno."
 
 #. Type: error
 #. Description
-#: ../netcfg-common.templates:85
+#: ../netcfg-common.templates:94
 msgid ""
 "A valid hostname may contain only the numbers 0-9, the lowercase letters a-"
 "z, and the minus sign. It must be between 2 and 63 characters long, and may "
@@ -262,13 +281,13 @@ msgstr ""
 
 #. Type: error
 #. Description
-#: ../netcfg-common.templates:94
+#: ../netcfg-common.templates:103
 msgid "Error"
 msgstr "Napaka"
 
 #. Type: error
 #. Description
-#: ../netcfg-common.templates:94
+#: ../netcfg-common.templates:103
 msgid ""
 "An error occurred and the network configuration process has been aborted. "
 "You may retry it from the installation main menu."
@@ -278,13 +297,13 @@ msgstr ""
 
 #. Type: error
 #. Description
-#: ../netcfg-common.templates:100
+#: ../netcfg-common.templates:109
 msgid "No network interfaces detected"
 msgstr "Nisem zaznal nobenega mrežnega vmesnika"
 
 #. Type: error
 #. Description
-#: ../netcfg-common.templates:100
+#: ../netcfg-common.templates:109
 msgid ""
 "No network interfaces were found. The installation system was unable to find "
 "a network device."
@@ -294,7 +313,7 @@ msgstr ""
 
 #. Type: error
 #. Description
-#: ../netcfg-common.templates:100
+#: ../netcfg-common.templates:109
 msgid ""
 "You may need to load a specific module for your network card, if you have "
 "one. For this, go back to the network hardware detection step."
@@ -307,22 +326,22 @@ msgstr ""
 #. Description
 #. A "kill switch" is a physical switch found on some network cards that
 #. disables the card.
-#: ../netcfg-common.templates:111
+#: ../netcfg-common.templates:120
 msgid "Kill switch enabled on ${iface}"
-msgstr "Izklopitveno stikalo je onemogočeno na ${iface}"
+msgstr "Izklopitveno stikalo je omogočeno na ${iface}"
 
 #. Type: note
 #. Description
 #. A "kill switch" is a physical switch found on some network cards that
 #. disables the card.
-#: ../netcfg-common.templates:111
+#: ../netcfg-common.templates:120
 msgid ""
 "${iface} appears to have been disabled by means of a physical \"kill switch"
 "\". If you intend to use this interface, please switch it on before "
 "continuing."
 msgstr ""
-"Izgleda da je bil omrežni vmesnik ${iface} onemogočen preko fizičnega "
-"stikala. Če jo želite uporabite, jo vklopite pred nadaljevanjem."
+"Kaže, da je bil omrežni vmesnik ${iface} onemogočen preko fizičnega stikala. "
+"Če ga želite uporabite, ga pred nadaljevanjem vključite."
 
 #. Type: select
 #. Choices
@@ -331,143 +350,153 @@ msgstr ""
 #. Choices MUST be separated by commas
 #. You MUST use standard commas not special commas for your language
 #. You MUST NOT use commas inside choices
-#: ../netcfg-common.templates:124
-msgid "Infrastructure (Managed) network, Ad-hoc network (Peer to peer)"
-msgstr ""
-"Omrežje z infrastrukturo (upravljano), neposredno omrežje (uporabnik do "
-"uporabnika)"
+#: ../netcfg-common.templates:133
+msgid "Infrastructure (Managed) network"
+msgstr "Omrežje z infrastrukturo (upravljano)"
+
+#. Type: select
+#. Choices
+#. Note to translators : Please keep your translations of each choice
+#. below the 65 columns limit (which means 65 characters for most languages)
+#. Choices MUST be separated by commas
+#. You MUST use standard commas not special commas for your language
+#. You MUST NOT use commas inside choices
+#: ../netcfg-common.templates:133
+msgid "Ad-hoc network (Peer to peer)"
+msgstr "Neposredno omrežje (uporabnik do uporabnika)"
 
 #. Type: select
 #. Description
-#: ../netcfg-common.templates:125
-msgid "Wireless network kind:"
+#: ../netcfg-common.templates:134
+msgid "Type of wireless network:"
 msgstr "Tip brezžičnega omrežja:"
 
 #. Type: select
 #. Description
-#: ../netcfg-common.templates:125
+#: ../netcfg-common.templates:134
 msgid ""
 "Wireless networks are either managed or ad-hoc. If you use a real access "
 "point of some sort, your network is Managed. If another computer is your "
 "'access point', then your network may be Ad-hoc."
 msgstr ""
 "Brezžična omrežja so ali upravljana ali pa ad-hoc. Če uporabljate pravo "
-"dostopno točko določene vrste imate upravljano omrežje. Če je drugi "
-"računalnik vaša 'dostopna točka', potem je vaše omrežje Ad-hoc."
+"brezžično dostopno točko, imate upravljano omrežje. Če je vaša 'dostopna "
+"točka' drugi računalnik, potem je vaše omrežje Ad-hoc."
 
 #. Type: text
 #. Description
-#: ../netcfg-common.templates:132
+#: ../netcfg-common.templates:141
 msgid "Wireless network configuration"
 msgstr "Mrežne nastavitve brezžičnega omrežja"
 
 #. Type: text
 #. Description
-#: ../netcfg-common.templates:136
+#: ../netcfg-common.templates:145
 msgid "Searching for wireless access points ..."
-msgstr "Iščem brezžične dostopne točke ..."
+msgstr "Iščem brezžične dostopne točke..."
 
 #. Type: text
 #. Description
-#: ../netcfg-common.templates:146
+#: ../netcfg-common.templates:155
 msgid "<none>"
 msgstr "<nobeden>"
 
 #. Type: text
 #. Description
-#: ../netcfg-common.templates:150
+#: ../netcfg-common.templates:159
 msgid "Wireless ethernet (802.11x)"
 msgstr "Brezžični ethernet (802.11x)"
 
 #. Type: text
 #. Description
-#: ../netcfg-common.templates:154
+#: ../netcfg-common.templates:163
 msgid "wireless"
 msgstr "brezžično"
 
 #. Type: text
 #. Description
-#: ../netcfg-common.templates:158
-msgid "Ethernet or Fast Ethernet"
-msgstr "Ethernet ali Fast Ethernet"
+#: ../netcfg-common.templates:167
+msgid "Ethernet or FireWire (IEEE 1394)"
+msgstr "ethernet ali FireWire (IEEE 1394)"
 
 #. Type: text
 #. Description
-#: ../netcfg-common.templates:162
+#: ../netcfg-common.templates:171
 msgid "Token Ring"
 msgstr "Token Ring"
 
 #. Type: text
 #. Description
-#: ../netcfg-common.templates:166
+#: ../netcfg-common.templates:175
 msgid "USB net"
-msgstr "USB mreža"
+msgstr "USB omrežje"
 
 #. Type: text
 #. Description
-#: ../netcfg-common.templates:175
+#: ../netcfg-common.templates:184
 msgid "Serial-line IP"
 msgstr "Serijska-povezava IP"
 
 #. Type: text
 #. Description
-#: ../netcfg-common.templates:179
+#: ../netcfg-common.templates:188
 msgid "Parallel-port IP"
 msgstr "Paralelna vrata IP"
 
 #. Type: text
 #. Description
-#: ../netcfg-common.templates:183
+#: ../netcfg-common.templates:192
 msgid "Point-to-Point Protocol"
 msgstr "Točka-do-Točka Protokol (Point-to-Point Protocol)"
 
 #. Type: text
 #. Description
-#: ../netcfg-common.templates:187
+#: ../netcfg-common.templates:196
 msgid "IPv6-in-IPv4"
 msgstr "IPv6-v-IPv4"
 
 #. Type: text
 #. Description
-#: ../netcfg-common.templates:191
+#: ../netcfg-common.templates:200
 msgid "ISDN Point-to-Point Protocol"
 msgstr "ISDN Točka-do-Točka Protokol (Point-to-Point)"
 
 #. Type: text
 #. Description
-#: ../netcfg-common.templates:195
+#: ../netcfg-common.templates:204
 msgid "Channel-to-channel"
 msgstr "Kanal-do-kanal (Channel-to-channel)"
 
 #. Type: text
 #. Description
-#: ../netcfg-common.templates:199
+#: ../netcfg-common.templates:208
 msgid "Real channel-to-channel"
 msgstr "Pravi kanal-do-kanal (channel-to-channel)"
 
 #. Type: text
 #. Description
-#: ../netcfg-common.templates:208
+#: ../netcfg-common.templates:217
 msgid "Inter-user communication vehicle"
-msgstr "Inter-user communication vehicle"
+msgstr ""
+"Meduporabniško komunikacijsko vozilo (Inter-user communication vehicle)"
 
 #. Type: text
 #. Description
-#: ../netcfg-common.templates:212
+#: ../netcfg-common.templates:221
 msgid "Unknown interface"
-msgstr "Neznani vmesniki"
+msgstr "Neznani vmesnik"
 
 #. Type: text
 #. Description
 #. base-installer progress bar item
-#: ../netcfg-common.templates:217
+#: ../netcfg-common.templates:226
 msgid "Storing network settings ..."
-msgstr "Shranjujem omrežne nastavitve ..."
+msgstr "Shranjujem omrežne nastavitve..."
 
 #. Type: text
 #. Description
 #. Item in the main menu to select this package
-#: ../netcfg-common.templates:222
+#: ../netcfg-common.templates:231
 msgid "Configure the network"
 msgstr "Nastavi omrežje"
 
@@ -485,7 +514,7 @@ msgid ""
 "might need to specify an account number here."
 msgstr ""
 "Morda morate vnesti gostiteljsko ime DHCP. Če uporabljate kabelski modem, "
-"boste morali mora vnesti vašo številko računa."
+"boste morali morda vnesti vašo številko računa."
 
 #. Type: string
 #. Description
@@ -515,14 +544,13 @@ msgstr "Samodejna nastavitev mreže je uspela"
 #. Description
 #: ../netcfg-dhcp.templates:23
 msgid "No DHCP client found"
-msgstr "Nisem našel nobenega DHCP vmesnika."
+msgstr "Nisem našel DHCP odjemalca."
 
 #. Type: error
 #. Description
 #: ../netcfg-dhcp.templates:23
 msgid "No DHCP client was found. This package requires pump or dhcp-client."
-msgstr ""
-"Nisem našel nobenega DHCP odjemalca. Ta paket potrebuje pump ali dhcp-client."
+msgstr "Nisem našel DHCP odjemalca. Ta paket potrebuje pump ali dhcp-client."
 
 #. Type: error
 #. Description
@@ -535,7 +563,7 @@ msgstr "Proces DHCP nastavitve bo prekinjen."
 #. Note to translators : Please keep your translation
 #. below a 65 columns limit (which means 65 characters
 #. in single-byte languages)
-#: ../netcfg-dhcp.templates:33
+#: ../netcfg-dhcp.templates:34
 msgid "Retry network autoconfiguration"
 msgstr "Ponovno poskusi s samodejno nastavitvijo mreže"
 
@@ -544,16 +572,16 @@ msgstr "Ponovno poskusi s samodejno nastavitvijo mreže"
 #. Note to translators : Please keep your translation
 #. below a 65 columns limit (which means 65 characters
 #. in single-byte languages)
-#: ../netcfg-dhcp.templates:33
+#: ../netcfg-dhcp.templates:34
 msgid "Retry network autoconfiguration with a DHCP hostname"
-msgstr "Ponovno poskusi s samodejno nastavitvijo omrežja z DHCP imenom"
+msgstr "Ponovno poskusi s samodejno nastavitvijo omrežja z DHCP gostiteljem"
 
 #. Type: select
 #. Choices
 #. Note to translators : Please keep your translation
 #. below a 65 columns limit (which means 65 characters
 #. in single-byte languages)
-#: ../netcfg-dhcp.templates:33
+#: ../netcfg-dhcp.templates:34
 msgid "Configure network manually"
 msgstr "Ročno nastavi omrežje"
 
@@ -562,28 +590,19 @@ msgstr "Ročno nastavi omrežje"
 #. Note to translators : Please keep your translation
 #. below a 65 columns limit (which means 65 characters
 #. in single-byte languages)
-#: ../netcfg-dhcp.templates:33
-msgid "${wifireconf}"
-msgstr "${wifireconf}"
-
-#. Type: select
-#. Choices
-#. Note to translators : Please keep your translation
-#. below a 65 columns limit (which means 65 characters
-#. in single-byte languages)
-#: ../netcfg-dhcp.templates:33
+#: ../netcfg-dhcp.templates:34
 msgid "Do not configure the network at this time"
 msgstr "Ne nastavi omrežja sedaj"
 
 #. Type: select
 #. Description
-#: ../netcfg-dhcp.templates:35
+#: ../netcfg-dhcp.templates:36
 msgid "Network configuration method:"
 msgstr "Način nastavitve mreže:"
 
 #. Type: select
 #. Description
-#: ../netcfg-dhcp.templates:35
+#: ../netcfg-dhcp.templates:36
 msgid ""
 "From here you can choose to retry DHCP network autoconfiguration (which may "
 "succeed if your DHCP server takes a long time to respond) or to configure "
@@ -599,13 +618,13 @@ msgstr ""
 
 #. Type: note
 #. Description
-#: ../netcfg-dhcp.templates:45
+#: ../netcfg-dhcp.templates:46
 msgid "Network autoconfiguration failed"
 msgstr "Samodejna nastavitev mreže ni uspela"
 
 #. Type: note
 #. Description
-#: ../netcfg-dhcp.templates:45
+#: ../netcfg-dhcp.templates:46
 msgid ""
 "Your network is probably not using the DHCP protocol. Alternatively, the "
 "DHCP server may be slow or some network hardware is not working properly."
@@ -615,13 +634,13 @@ msgstr ""
 
 #. Type: boolean
 #. Description
-#: ../netcfg-dhcp.templates:51
+#: ../netcfg-dhcp.templates:52
 msgid "Continue without a default route?"
 msgstr "Nadaljujem brez privzete smeri?"
 
 #. Type: boolean
 #. Description
-#: ../netcfg-dhcp.templates:51
+#: ../netcfg-dhcp.templates:52
 msgid ""
 "The network autoconfiguration was successful. However, no default route was "
 "set: the system does not know how to communicate with hosts on the Internet. "
@@ -636,7 +655,7 @@ msgstr ""
 
 #. Type: boolean
 #. Description
-#: ../netcfg-dhcp.templates:51
+#: ../netcfg-dhcp.templates:52
 msgid ""
 "If you are unsure, you should not continue without a default route: contact "
 "your local network administrator about this problem."
@@ -646,7 +665,7 @@ msgstr ""
 
 #. Type: text
 #. Description
-#: ../netcfg-dhcp.templates:63
+#: ../netcfg-dhcp.templates:64
 msgid "Reconfigure the wireless network"
 msgstr "Ponastavi brezžično omrežje"
 
@@ -740,7 +759,7 @@ msgid ""
 msgstr ""
 "Prehod je naslov IP (štiri številke med seboj ločene s pikami), ki poimenuje "
 "prehodni usmerjevalnik, znan tudi kot privzeti usmerjevalnik.  Ves promet, "
-"ki gre izven vašega LAN-a (na primer v Internet), se steka prek "
+"ki gre izven vašega lokalnega omrežja (na primer v internet), se steka prek "
 "usmerjevalnika. V redkih primerih morda nimate usmerjevalnika in v tem "
 "primeru to polje lahko pustite prazno. Če na to vprašanje ne veste "
 "pravilnega odgovora, se posvetujte s skrbnikom omrežja."
@@ -789,7 +808,7 @@ msgid ""
 " nameservers   = ${nameservers}"
 msgstr ""
 " vmesnik            = ${interface}\n"
-" naslov ip          = ${ipaddress}\n"
+" IP naslov          = ${ipaddress}\n"
 " maska              = ${netmask}\n"
 " prehod             = ${gateway}\n"
 " točkovni naslov    = ${pointopoint}\n"

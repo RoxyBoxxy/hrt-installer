@@ -1,33 +1,87 @@
-<?xml version="1.0" encoding="ISO-8859-2"?>
 <!-- $Id$ -->
-<!-- original version: 30158 -->
+<!-- original version: 45238 -->
 
    <sect3 id="partman">
-   <title>Rozdělení disků</title>
+   <title>RozdÄlenĂ­ diskĹŻ</title>
 <para>
 
-Nyní nastal čas rozdělit pevné disky. Pokud se náhodou něco pokazí,
-nebo pokud chcete o rozdělování disků dozvědět více, podívejte se do
+NynĂ­ nastal Äas rozdÄlit pevnĂŠ disky. Pokud se nĂĄhodou nÄco pokazĂ­,
+nebo pokud chcete o rozdÄlovĂĄnĂ­ diskĹŻ dozvÄdÄt vĂ­ce, podĂ­vejte se do
 dodatku <xref linkend="partitioning"/>.
 
+</para><warning arch="sparc"><para>
+
+JestliĹže byl disk pĹŻvodnÄ pouĹžit v Solarisu, dÄlenĂ­ diskĹŻ nemusĂ­
+rozpoznat sprĂĄvnou velikost disku. VytvoĹenĂ­ novĂŠ tabulky oblastĂ­
+nepomĹŻĹže. PomĹŻĹže vĹĄak <quote>vynulovĂĄnĂ­</quote> nÄkolika prvnĂ­ch
+sektorĹŻ disku:
+
+<informalexample><screen>
+<prompt>#</prompt> <userinput>dd if=/dev/zero of=/dev/hd<replaceable>X</replaceable> bs=512 count=2; sync</userinput>
+</screen></informalexample>
+
+MÄjte na pamÄti, Ĺže tĂ­mto znepĹĂ­stupnĂ­te vĹĄechna data, kterĂĄ se na
+disku dosud nachĂĄzela.
+
+</para></warning><para>
+
+Nejprve vĂĄm bude nabĂ­dnuta moĹžnost automaticky rozdÄlit buÄ celĂ˝ disk,
+nebo dostupnĂŠ volnĂŠ mĂ­sto na disku. Tato volba se nÄkdy nazĂ˝vĂĄ
+<quote>asistovanĂŠ</quote> rozdÄlenĂ­, protoĹže do dÄlenĂ­ mĹŻĹžete sami
+zasĂĄhnout. Pokud nechcete vyuĹžĂ­t automatickĂŠ dÄlenĂ­ disku, zvolte
+z nabĂ­dky <guimenuitem>RuÄnÄ</guimenuitem>.
+
 </para><para>
 
-Nejprve vám bude nabídnuta možnost automaticky rozdělit buď celý disk,
-nebo volné místo na disku. Tato volba se někdy nazývá
-<quote>asistované</quote> rozdělení, protože do dělení můžete sami
-zasáhnout. Pokud nechcete využít automatické dělení disku, zvolte
-z menu <guimenuitem>Ručně upravit tabulku oblastí</guimenuitem>.
+ZvolĂ­te-li automatickĂŠ rozdÄlovĂĄnĂ­, mÄli byste mĂ­t na vĂ˝bÄr nÄkolik
+moĹžnostĂ­: vytvoĹit oblasti pĹĂ­mo na disku (klasickĂ˝ zpĹŻsob), pouĹžĂ­t
+Logical Volume Management (LVM), nebo pouĹžĂ­t ĹĄifrovanĂŠ LVM<footnote>
 
-</para><para>
+<para>
 
-Pokračujete-li v automatickém rozdělování, můžete si vybrat z několika
-připravených schémat rozdělení disku (viz tabulka níže). Všechny
-možnosti mají svá pro a proti, některé argumenty jsou zmíněny
-v dodatku <xref linkend="partitioning"/>. Pokud si nejste jisti,
-zvolte první možnost. Pamatujte však, že asistované dělení vyžaduje
-určitou minimální velikost volného místa, se kterým může
-pracovat. Nemáte-li k dispozici zhruba 1GB volného místa (závisí na
-zvoleném způsobu dělení), asistované dělení selže.
+InstalĂĄtor zaĹĄifruje skupinu svazkĹŻ pomocĂ­ 256 bitovĂŠho klĂ­Äe AES a
+vyuĹžije pro to <quote>dm-crypt</quote>, kterĂ˝ je souÄĂĄstĂ­ linuxovĂŠho
+jĂĄdra.
+
+</para></footnote>. Ve druhĂŠm
+a tĹetĂ­m pĹĂ­padÄ vytvoĹĂ­ instalĂĄtor vÄtĹĄinu oblastĂ­ uvnitĹ jednĂŠ
+velikĂŠ; vĂ˝hoda je ta, Ĺže oblasti uvnitĹ tĂŠto velikĂŠ oblasti pak mĹŻĹžete
+relativnÄ jednoduĹĄe zvÄtĹĄovat a pĹĂ­padnÄ zmenĹĄovat. U ĹĄifrovanĂŠho LVM
+bude tato velikĂĄ oblast ĹĄifrovanĂĄ a pro pĹĂ­stup k datĹŻm na nĂ­ uloĹženĂ˝m
+budete muset znĂĄt pĹĂ­stupovou frĂĄzi. Ĺ ifrovanĂŠ LVM mĂĄ jeĹĄtÄ jednu
+vĂ˝hodu, a to tu, Ĺže pĹed pouĹžitĂ­m se celĂĄ oblast pĹepĂ­ĹĄe nĂĄhodnĂ˝mi
+daty, takĹže nebude moĹžnĂŠ rozeznat, kterĂŠ ÄĂĄsti oblasti se aktivnÄ
+pouĹžĂ­vajĂ­, a takĂŠ tĂ­m zruĹĄĂ­te stopy po pĹedchozĂ­ch instalacĂ­ch. MusĂ­te
+vĹĄak poÄĂ­tat s tĂ­m, Ĺže mazĂĄnĂ­ zabere urÄitĂ˝ Äas, kterĂ˝ mĹŻĹže bĂ˝t u
+vÄtĹĄĂ­ch oblastĂ­ docela znaÄnĂ˝.
+
+</para><note><para>
+
+(Ĺ ifrovanĂŠ) LVM nemusĂ­ bĂ˝t k dispozici na vĹĄech architekturĂĄch.
+
+</para></note><note><para>
+
+PĹi automatickĂŠm rozdÄlenĂ­ pomocĂ­ LVM (nebo ĹĄifrovanĂŠho LVM), se budou
+muset na zvolenĂ˝ disk zapsat nÄkterĂŠ zmÄny provedenĂŠ v tabulce
+oblastĂ­. Tyto zmÄny z disku efektivnÄ smaĹžou vĹĄechna stĂĄvajĂ­cĂ­ data a
+tento krok nebudete moci vrĂĄtit zpÄt. PĹed samotnĂ˝m zĂĄpisem vĹĄak
+budete pro jistotu dotĂĄzĂĄni.
+
+</para></note><para>
+
+PokraÄujete-li v automatickĂŠm rozdÄlovĂĄnĂ­ (klasickĂŠm nebo LVM) celĂŠho
+disku, budete nejprve poĹžĂĄdĂĄni, abyste vybrali disk, kterĂ˝ chcete
+pouĹžĂ­t. MĂĄte-li vĂ­ce diskĹŻ, dejte dobrĂ˝ pozor, kterĂ˝ disk zvolĂ­te,
+protoĹže poĹadĂ­, ve kterĂŠm jsou vypsĂĄny, se mĹŻĹže liĹĄit od toho, na
+kterĂŠ jste zvyklĂ­. V identifikaci diskĹŻ mĹŻĹže pomoci i jejich velikost.
+DĂĄle si budete moci vybrat z nÄkolika pĹipravenĂ˝ch schĂŠmat rozdÄlenĂ­
+disku (viz tabulka
+nĂ­Ĺže). VĹĄechny moĹžnosti majĂ­ svĂĄ pro a proti, nÄkterĂŠ argumenty jsou
+zmĂ­nÄny v dodatku <xref linkend="partitioning"/>. Pokud si nejste
+jisti, zvolte prvnĂ­ moĹžnost. Pamatujte vĹĄak, Ĺže asistovanĂŠ dÄlenĂ­
+vyĹžaduje urÄitou minimĂĄlnĂ­ velikost volnĂŠho mĂ­sta, se kterĂ˝m mĹŻĹže
+pracovat. NemĂĄte-li k dispozici zhruba 1GB volnĂŠho mĂ­sta (zĂĄvisĂ­ na
+zvolenĂŠm zpĹŻsobu dÄlenĂ­), asistovanĂŠ dÄlenĂ­ selĹže.
 
 </para>
 
@@ -35,25 +89,25 @@ zvoleném způsobu dělení), asistované dělení selže.
 <tgroup cols="3">
 <thead>
 <row>
-  <entry>Způsob dělení</entry>
-  <entry>Minimální místo</entry>
-  <entry>Vytvořené oblasti</entry>
+  <entry>ZpĹŻsob dÄlenĂ­</entry>
+  <entry>MinimĂĄlnĂ­ mĂ­sto</entry>
+  <entry>VytvoĹenĂŠ oblasti</entry>
 </row>
 </thead>
 
 <tbody>
 <row>
-  <entry>Všechny soubory v jedné oblasti</entry>
+  <entry>VĹĄechny soubory v jednĂŠ oblasti</entry>
   <entry>600MB</entry>
   <entry><filename>/</filename>, swap</entry>
 </row><row>
-  <entry>Desktopový počítač</entry>
+  <entry>SamostatnĂĄ oblast pro /home</entry>
   <entry>500MB</entry>
   <entry>
     <filename>/</filename>, <filename>/home</filename>, swap
   </entry>
 </row><row>
-  <entry>Víceuživatelská pracovní stanice</entry>
+  <entry>SamostatnĂŠ oblasti pro /home, /usr, /var a /tmp</entry>
   <entry>1GB</entry>
   <entry>
     <filename>/</filename>, <filename>/home</filename>,
@@ -65,141 +119,155 @@ zvoleném způsobu dělení), asistované dělení selže.
 
 <para>
 
-Na další obrazovce se zobrazí tabulka rozdělení disku(ů) společně
-s informacemi o souborových systémech a přípojných bodech. Pokud jste
-provedli automatické rozdělení disku a jste s navrženým rozdělením
-spokojeni, stačí z nabídky vybrat <guimenuitem>Ukončit
-rozdělování</guimenuitem>.
+Pokud jste zvolili automatickĂŠ rozdÄlenĂ­ pomocĂ­ (ĹĄifrovanĂŠho) LVM,
+vytvoĹĂ­ se takĂŠ malĂĄ oblast pro <filename>/boot</filename>. OstatnĂ­
+oblasti, vÄetnÄ odklĂĄdacĂ­, budou vytvoĹeny uvnitĹ LVM.
+
+</para><para>
+
+Na dalĹĄĂ­ obrazovce se zobrazĂ­ tabulka rozdÄlenĂ­ disku(ĹŻ) spoleÄnÄ
+s informacemi o souborovĂ˝ch systĂŠmech a pĹĂ­pojnĂ˝ch bodech. Pokud jste
+provedli automatickĂŠ rozdÄlenĂ­ disku a jste s navrĹženĂ˝m rozdÄlenĂ­m
+spokojeni, staÄĂ­ z nabĂ­dky vybrat <guimenuitem>UkonÄit
+rozdÄlovĂĄnĂ­</guimenuitem>.
 
 </para><para arch="ia64">
 
-Na architektuře &arch-title; se při automatickém rozdělení disku
-vytvoří malá zaváděcí oblast pro zavaděč <command>EFI</command>,
-formátovaná souborovým systémem FAT16. Při ručním dělení disku přibude
-ve formátovacím menu položka <guimenuitem>Použít oblast jako zaváděcí
+Na architektuĹe &arch-title; se pĹi automatickĂŠm rozdÄlenĂ­ disku
+vytvoĹĂ­ malĂĄ zavĂĄdÄcĂ­ oblast pro zavadÄÄ <command>EFI</command>,
+formĂĄtovanĂĄ souborovĂ˝m systĂŠmem FAT16. PĹi ruÄnĂ­m dÄlenĂ­ disku pĹibude
+ve formĂĄtovacĂ­m menu poloĹžka <guimenuitem>PouĹžĂ­t oblast jako zavĂĄdÄcĂ­
 EFI oblast</guimenuitem>.
 
 </para><para arch="alpha">
 
-Na Alpha systémech se při automatickém rozdělení disku alokuje na
-začátku disku malá nenaformátovaná oblast pro zavaděč
+Na Alpha systĂŠmech se pĹi automatickĂŠm rozdÄlenĂ­ disku alokuje na
+zaÄĂĄtku disku malĂĄ nenaformĂĄtovanĂĄ oblast pro zavadÄÄ
 <command>aboot</command>.
 
 </para><para>
 
-Seznam oblastí může vypadat třeba takto:
+Seznam oblastĂ­ mĹŻĹže vypadat tĹeba takto:
 
-<!-- TODO: show some flags here (lightning, skull, smiley) -->
 <informalexample><screen>
   IDE1 master (hda) - 6.4 GB WDC AC36400L
-       1. primární   16.4 MB    ext2       /boot
-       2. primární  551.0 MB    swap       swap
-       3. primární    5.8 GB    ntfs
-          pri/log     8.2 MB    VOLNÉ MÍSTO
+       1. primĂĄrnĂ­   16.4 MB  B f ext2       /boot
+       2. primĂĄrnĂ­  551.0 MB      swap       swap
+       3. primĂĄrnĂ­    5.8 GB      ntfs
+          pri/log     8.2 MB      VOLNĂ MĂSTO
 
   IDE1 slave (hdb) - 80.0 GB ST380021A
-       1. primární   15.9 MB    ext3
-       2. primární  996.0 MB    fat16
-       3. primární    3.9 GB    xfs        /home
-       5. logická     6.0 GB    ext3       /
-       6. logická     1.0 GB    ext3       /var
-       7. logická   498.8 MB    ext3
-       8. logická   551.5 MB    swap       swap
-       9. logická    65.8 GB    ext2
+       1. primĂĄrnĂ­   15.9 MB      ext3
+       2. primĂĄrnĂ­  996.0 MB      fat16
+       3. primĂĄrnĂ­    3.9 GB      xfs        /home
+       5. logickĂĄ     6.0 GB    f ext3       /
+       6. logickĂĄ     1.0 GB    f ext3       /var
+       7. logickĂĄ   498.8 MB      ext3
+       8. logickĂĄ   551.5 MB    f swap       swap
+       9. logickĂĄ    65.8 GB      ext2
 </screen></informalexample>
 
-Jak je vidět, v počítači jsou dva pevné disky rozdělené na několik
-oblastí. Každý řádek popisující oblast zobrazuje její pořadí, typ,
-velikost, volitelné příznaky, souborový systém a (pokud existuje)
-přípojný bod. Na prvním disku je ještě kousek volného místa.
+Jak je vidÄt, v poÄĂ­taÄi jsou dva pevnĂŠ disky rozdÄlenĂŠ na nÄkolik
+oblastĂ­. KaĹždĂ˝ ĹĂĄdek popisujĂ­cĂ­ oblast zobrazuje jejĂ­ poĹadĂ­, typ,
+velikost, volitelnĂŠ pĹĂ­znaky, souborovĂ˝ systĂŠm a (pokud existuje)
+pĹĂ­pojnĂ˝ bod. Na prvnĂ­m disku je jeĹĄtÄ kousek volnĂŠho mĂ­sta.
 
 </para><para>
 
-Pokud chcete v tabulce něco změnit, vyberte ze seznamu objekt, který
-chcete upravit a stiskněte &enterkey;. Objektem je míněn disk, oblast
-nebo volné místo. S každým objektem můžete provádět různé
+Pokud chcete v tabulce nÄco zmÄnit, vyberte ze seznamu objekt, kterĂ˝
+chcete upravit a stisknÄte &enterkey;. Objektem je mĂ­nÄn disk, oblast
+nebo volnĂŠ mĂ­sto. S kaĹždĂ˝m objektem mĹŻĹžete provĂĄdÄt rĹŻznĂŠ
 akce.
 
 </para><para>
 
-Jestliže vyberete dosud nedotčený disk, na kterém nejsou ani oblasti
-ani volné místo, bude vám nabídnuta možnost vytvoření nové tabulky
-oblastí (to je nutné k tomu, abyste mohli vytvářet oblasti). Po této
-akci se pod vybraným diskem zobrazí řádka nadepsaná <quote>VOLNÉ
-MÍSTO</quote>.
+JestliĹže vyberete dosud nedotÄenĂ˝ disk, na kterĂŠm nejsou ani oblasti
+ani volnĂŠ mĂ­sto, bude vĂĄm nabĂ­dnuta moĹžnost vytvoĹenĂ­ novĂŠ tabulky
+oblastĂ­ (to je nutnĂŠ k tomu, abyste mohli vytvĂĄĹet oblasti). Po tĂŠto
+akci se pod vybranĂ˝m diskem zobrazĂ­ ĹĂĄdka nadepsanĂĄ <quote>VOLNĂ
+MĂSTO</quote>.
 
 </para><para>
 
-Vyberete-li volné místo, <command>partman</command> vám nabídne
-vytvoření nové oblasti. Nejprve musíte odpovědět několik základních
-otázek jako velikost nové oblasti, typ (primární nebo logická)
-a umístění (na začátku nebo na konci volného místa). Poté se zobrazí
-detailní pohled na novou oblast. Naleznete zde volby jako přípojný
-bod, volby připojení, zaváděcí příznak nebo způsob použití. Pokud vám
-nevyhovují přednastavené hodnoty, můžete je upravit dle
-libosti. Například výběrem volby <guimenuitem>Použít
-jako:</guimenuitem> můžete změnit souborový systém dané oblasti včetně
-možnosti použít oblast jako odkládací prostor, softwarový RAID, LVM
-nebo ji nepoužít vůbec. Další příjemnou vlastností je možnost
-zkopírovat na oblast stávající data z jiné oblasti. Až budete
-s oblastí spokojeni, vyberte položku <guimenuitem>Skončit
-s nastavováním oblasti</guimenuitem>, což vás vrátí zpět do hlavní
-obrazovky rozdělování disků.
+Vyberete-li volnĂŠ mĂ­sto, <command>partman</command> vĂĄm nabĂ­dne
+vytvoĹenĂ­ novĂŠ oblasti. Nejprve musĂ­te odpovÄdÄt nÄkolik zĂĄkladnĂ­ch
+otĂĄzek jako velikost novĂŠ oblasti, typ (primĂĄrnĂ­ nebo logickĂĄ)
+a umĂ­stÄnĂ­ (na zaÄĂĄtku nebo na konci volnĂŠho mĂ­sta). PotĂŠ se zobrazĂ­
+detailnĂ­ pohled na novou oblast. Naleznete zde poloĹžky jako pĹĂ­pojnĂ˝
+bod, volby pĹipojenĂ­, zavĂĄdÄcĂ­ pĹĂ­znak nebo zpĹŻsob pouĹžitĂ­. Pokud vĂĄm
+nevyhovujĂ­ pĹednastavenĂŠ hodnoty, mĹŻĹžete je upravit dle
+libosti. NejdĹŻleĹžitÄjĹĄĂ­ volbou <guimenuitem>PouĹžĂ­t
+jako:</guimenuitem> mĹŻĹžete zmÄnit souborovĂ˝ systĂŠm danĂŠ oblasti vÄetnÄ
+moĹžnosti pouĹžĂ­t oblast jako odklĂĄdacĂ­ prostor, softwarovĂ˝ RAID, LVM
+nebo ji nepouĹžĂ­t vĹŻbec. DalĹĄĂ­ pĹĂ­jemnou vlastnostĂ­ je moĹžnost
+zkopĂ­rovat na oblast stĂĄvajĂ­cĂ­ data z jinĂŠ oblasti. AĹž budete
+s oblastĂ­ spokojeni, vyberte poloĹžku <guimenuitem>SkonÄit
+s nastavovĂĄnĂ­m oblasti</guimenuitem>, coĹž vĂĄs vrĂĄtĂ­ zpÄt do hlavnĂ­
+obrazovky rozdÄlovĂĄnĂ­ diskĹŻ.
 
 </para><para>
 
-Pokud se rozhodnete, že chcete něco změnit na stávajícíc oblasti,
-jednoduše ji vyberte a stiskněte &enterkey;. Ocitnete se ve stejné
-obrazovce jako při vytváření nové oblasti a tedy máte i stejné
-možnosti nastavení. Jedna věc, která nemusí být na první pohled zcela
-zřejmá je fakt, že u většiny oblastí můžete změnit jejich velikost -
-stačí vybrat položku, která zobrazuje velikost oblasti. Změna
-velikosti by měla fungovat minimálně se souborovými systémy fat16,
-fat32, ext2, ext3 a swap. Pokud se vám oblast nelíbí, můžete ji
+Pokud se rozhodnete, Ĺže chcete nÄco zmÄnit na stĂĄvajĂ­cĂ­ oblasti,
+jednoduĹĄe ji vyberte a stisknÄte &enterkey;. Ocitnete se ve stejnĂŠ
+obrazovce jako pĹi vytvĂĄĹenĂ­ novĂŠ oblasti a tedy mĂĄte i stejnĂŠ
+moĹžnosti nastavenĂ­. Jedna vÄc, kterĂĄ nemusĂ­ bĂ˝t na prvnĂ­ pohled zcela
+zĹejmĂĄ je fakt, Ĺže u vÄtĹĄiny oblastĂ­ mĹŻĹžete zmÄnit jejich velikost -
+staÄĂ­ vybrat poloĹžku, kterĂĄ zobrazuje velikost oblasti. ZmÄna
+velikosti by mÄla fungovat minimĂĄlnÄ se souborovĂ˝mi systĂŠmy fat16,
+fat32, ext2, ext3 a swap. Pokud se vĂĄm oblast nelĂ­bĂ­, mĹŻĹžete ji
 z tohoto menu i smazat.
 
 </para><para>
 
-Nezapomeňte vytvořit aspoň dvě oblasti &mdash; jednu pro
-<emphasis>odkládací prostor</emphasis> (<quote>swap</quote>) a jednu
-pro <emphasis>kořenový souborový systém</emphasis> (který musí být
-připojen jako <filename>/</filename>). Bez připojeného kořenového
-souborového systému vám <command>partman</command> nedovolí
-pokračovat. Chcete-li s rozdělováním pomoci, můžete kdykoliv
-z rozdělovacího menu vybrat možnost <guimenuitem>Automaticky rozdělit
-disk</guimenuitem> nebo <guimenuitem>Automaticky rozdělit volné
-místo</guimenuitem>.
+NezapomeĹte vytvoĹit aspoĹ dvÄ oblasti &mdash; jednu pro
+<emphasis>odklĂĄdacĂ­ prostor</emphasis> (<quote>swap</quote>) a jednu
+pro <emphasis>koĹenovĂ˝ souborovĂ˝ systĂŠm</emphasis> (kterĂ˝ musĂ­ bĂ˝t
+pĹipojen jako <filename>/</filename>). Bez pĹipojenĂŠho koĹenovĂŠho
+souborovĂŠho systĂŠmu vĂĄm <command>partman</command> nedovolĂ­
+pokraÄovat. Chcete-li s rozdÄlovĂĄnĂ­m pomoci, mĹŻĹžete kdykoliv
+z rozdÄlovacĂ­ho menu vybrat moĹžnost <guimenuitem>Automaticky rozdÄlit
+disk</guimenuitem> nebo <guimenuitem>Automaticky rozdÄlit volnĂŠ
+mĂ­sto</guimenuitem>.
 
 </para><para arch="ia64">
 
-Pokud zapomenete vytvořit a nastavit zaváděcí EFI oblast,
-<command>partman</command> to zjistí a dokud vše nespravíte, nenechá
-vás pokračovat.
+Pokud zapomenete vytvoĹit a nastavit zavĂĄdÄcĂ­ EFI oblast,
+<command>partman</command> to zjistĂ­ a dokud vĹĄe nespravĂ­te, nenechĂĄ
+vĂĄs pokraÄovat.
 
 </para><para>
 
-Jestliže budete ve vytváření své tabulky oblastí příliš kreativní
-a uvedete ji do nepoužitelného stavu, můžete se vždy vrátit do
-výchozího bodu volbou <guimenuitem>Vrátit zpět změny provedené na
-oblastech</guimenuitem>.
+JestliĹže budete ve vytvĂĄĹenĂ­ svĂŠ tabulky oblastĂ­ pĹĂ­liĹĄ kreativnĂ­
+a uvedete ji do nepouĹžitelnĂŠho stavu, mĹŻĹžete se vĹždy vrĂĄtit do
+vĂ˝chozĂ­ho bodu volbou <guimenuitem>VrĂĄtit zpÄt zmÄny provedenĂŠ na
+oblastech</guimenuitem><footnote>
+
+<para>
+
+V urÄitĂ˝ch pĹĂ­padech (jako je pouĹžitĂ­ LVM) nebudete moci
+vrĂĄtit <emphasis>vĹĄechny</emphasis> zmÄny, protoĹže nÄkterĂŠ z nich jsou
+jiĹž zapsĂĄny na disku. NaĹĄtÄstĂ­ vĂĄs vĹĄak instalaÄnĂ­ program bude pĹed
+kaĹždou trvalou zmÄnou varovat.
+
+</para></footnote>.
 
 </para><para>
 
-<command>partman</command> samotný je poměrně malý a hloupý program,
-avšak jeho schopnosti mohou být rozšiřovány moduly instalačního
-programu. Pokud tedy nevidíte všechny slibované vlastnosti, přesvědčte
-se, že máte nahrány příslušné moduly
-(např. <filename>partman-ext3</filename>,
+<command>partman</command> samotnĂ˝ je pomÄrnÄ malĂ˝ a hloupĂ˝ program,
+avĹĄak jeho schopnosti mohou bĂ˝t rozĹĄiĹovĂĄny moduly instalaÄnĂ­ho
+programu. Pokud tedy nevidĂ­te vĹĄechny slibovanĂŠ vlastnosti, pĹesvÄdÄte
+se, Ĺže mĂĄte nahrĂĄny pĹĂ­sluĹĄnĂŠ moduly
+(napĹ. <filename>partman-ext3</filename>,
 <filename>partman-xfs</filename> nebo
 <filename>partman-lvm</filename>).
 
 </para><para>
 
-Až budete s rozdělením disků hotovi, vyberte z nabídky
-<guimenuitem>Ukončit rozdělování a zapsat změny na
-disk</guimenuitem>. Zobrazí se seznam provedených změn a budete
-požádáni o potvrzení, zda opravdu chcete vytvořit nové souborové
-systémy.
+AĹž budete s rozdÄlenĂ­m diskĹŻ hotovi, vyberte z nabĂ­dky
+<guimenuitem>UkonÄit rozdÄlovĂĄnĂ­ a zapsat zmÄny na
+disk</guimenuitem>. ZobrazĂ­ se seznam provedenĂ˝ch zmÄn a budete
+poĹžĂĄdĂĄni o potvrzenĂ­, zda opravdu chcete vytvoĹit novĂŠ souborovĂŠ
+systĂŠmy.
 
 </para>
    </sect3>

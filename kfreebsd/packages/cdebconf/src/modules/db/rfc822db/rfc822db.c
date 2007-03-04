@@ -8,6 +8,7 @@
 #include "strutl.h"
 
 #include <dirent.h>
+#include <stdbool.h>
 #include <stdio.h>
 #include <string.h>
 #include <sys/types.h>
@@ -135,6 +136,7 @@ static int rfc822db_template_initialize(struct template_db *db, struct configura
 
     dbdata->root = NULL;
     dbdata->iterator = NULL;
+    dbdata->dirty = false;
     db->data = dbdata;
 
     return DC_OK;
@@ -228,8 +230,14 @@ void rfc822db_template_dump(const void *node, const VISIT which, const int depth
             {
                 p = t->lget((struct template *) t, lang, *field);
                 if (p != NULL && p != t->lget((struct template *) t, NULL, *field))
-                    fprintf(outf, "%c%s-%s.UTF-8: %s\n",
-                        toupper((*field)[0]), (*field)+1, lang, escapestr(p));
+                {
+                    if (strcmp(lang, "C") == 0)
+                        fprintf(outf, "%c%s-C: %s\n",
+                            toupper((*field)[0]), (*field)+1, escapestr(p));
+                    else
+                        fprintf(outf, "%c%s-%s.UTF-8: %s\n",
+                            toupper((*field)[0]), (*field)+1, lang, escapestr(p));
+                }
             }
             lang = t->next_lang((struct template *) t, lang);
         }
@@ -242,6 +250,7 @@ static int rfc822db_template_save(struct template_db *db)
     struct template_db_cache *dbdata = db->data;
     char tmp[1024];
     const char *path;
+    struct stat st;
 
     if (outf != NULL)
     {
@@ -256,7 +265,14 @@ static int rfc822db_template_save(struct template_db *db)
         INFO(INFO_ERROR, "Cannot open template file <empty>");
         return DC_NOTOK;
     }
-    else if ((outf = fopen(path, "w")) == NULL)
+
+    if (!dbdata->dirty && stat(path, &st) == 0)
+    {
+        INFO(INFO_DEBUG, "Template database %s clean; not saving", path);
+        return DC_OK;
+    }
+
+    if ((outf = fopen(path, "w")) == NULL)
     {
         INFO(INFO_ERROR, "Cannot open template file %s: %s",
             path, strerror(errno));
@@ -295,6 +311,7 @@ static int rfc822db_template_set(struct template_db *db, struct template *templa
 
     tdelete(template, &dbdata->root, nodetemplatecomp);
     tsearch(template, &dbdata->root, nodetemplatecomp);
+    dbdata->dirty = true;
    
     template_ref(template);
 
@@ -316,6 +333,7 @@ static int rfc822db_template_remove(struct template_db *db, const char *tag)
     {
             t = *(struct template **) t;
             tdelete(t, &dbdata->root, nodetemplatecomp);
+            dbdata->dirty = true;
             template_deref(t);
             return DC_OK;
     }
@@ -388,6 +406,7 @@ static int rfc822db_question_initialize(struct question_db *db, struct configura
 
     dbdata->root = NULL;
     dbdata->iterator = NULL;
+    dbdata->dirty = false;
     db->data = dbdata;
 
     return DC_OK;
@@ -522,6 +541,7 @@ static int rfc822db_question_save(struct question_db *db)
     struct question_db_cache *dbdata = db->data;
     const char *path;
     char tmp[1024];
+    struct stat st;
     
     snprintf(tmp, sizeof(tmp), "%s::path", db->configpath);
     path = db->config->get(db->config, tmp, 0);
@@ -530,7 +550,14 @@ static int rfc822db_question_save(struct question_db *db)
         INFO(INFO_ERROR, "Cannot open question file <empty>");
         return DC_NOTOK;
     }
-    else if ((outf = fopen(path, "w")) == NULL)
+
+    if (!dbdata->dirty && stat(path, &st) == 0)
+    {
+        INFO(INFO_DEBUG, "Question database %s clean; not saving", path);
+        return DC_OK;
+    }
+
+    if ((outf = fopen(path, "w")) == NULL)
     {
         INFO(INFO_ERROR, "Cannot open question file %s: %s",
             path, strerror(errno));
@@ -585,6 +612,7 @@ static int rfc822db_question_set(struct question_db *db, struct question *questi
 
     tdelete(question, &dbdata->root, nodequestioncomp);
     q = tsearch(question, &dbdata->root, nodequestioncomp);
+    dbdata->dirty = true;
     question_ref(question);
 
     return DC_OK;
@@ -618,6 +646,7 @@ static int rfc822db_question_remove(struct question_db *db, const char *tag)
     if (q != NULL) {
         q = *(struct question **) q;
         tdelete(q, &dbdata->root, nodequestioncomp);
+        dbdata->dirty = true;
         question_deref(q);
         return DC_OK;
     }

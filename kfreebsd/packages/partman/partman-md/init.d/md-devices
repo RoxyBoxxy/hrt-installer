@@ -2,6 +2,11 @@
 
 . /lib/partman/definitions.sh
 
+# Check if we have RAID
+if [ ! -f /proc/mdstat ]; then
+	exit 0
+fi
+
 # Obtain the size of an MD device
 get_size () {
     while [ -z "$(echo "$line" | grep "^md$NUMBER :")" ]; do
@@ -18,10 +23,11 @@ get_size () {
 }
 
 # Create the raid devices
-for i in `grep ^md /proc/mdstat|grep -v inactive|sed -e 's/^\(md.*\) : active \([[:alnum:]]*\).*/\1/'`; do
-	NUMBER=`echo ${i}|sed -e "s/^md//"`
+for i in $(grep ^md /proc/mdstat | grep -v inactive | \
+	   sed -e 's/^\(md.*\) : active \([[:alnum:]]*\).*/\1/'); do
+	NUMBER=$(echo ${i}|sed -e "s/^md//")
 	DEVICE="/var/lib/partman/devices/=dev=md=${NUMBER}"
-	mkdir ${DEVICE}
+	mkdir -p ${DEVICE}
 	cd ${DEVICE}
 	echo "/dev/md/${NUMBER}" > ${DEVICE}/device
 
@@ -35,11 +41,17 @@ for i in `grep ^md /proc/mdstat|grep -v inactive|sed -e 's/^\(md.*\) : active \(
 	fi
 	size=$(($size * $sector_size))
 	echo "$size" > ${DEVICE}/size
-	open_dialog OPEN "/dev/md/${NUMBER}"
+
+	open_dialog OPENED "/dev/md/${NUMBER}"
 	read_line response
 	close_dialog
-	if [ "$response" = "failed" ]; then
-		rm -rf ${DEVICE}
+	if [ "$response" = "no" ]; then
+		open_dialog OPEN "/dev/md/${NUMBER}"
+		read_line response
+		close_dialog
+		if [ "$response" = "failed" ]; then
+			rm -rf ${DEVICE}
+		fi
 	fi
 
 	open_dialog NEW_LABEL loop
@@ -69,8 +81,9 @@ for i in `grep ^md /proc/mdstat|grep -v inactive|sed -e 's/^\(md.*\) : active \(
 		fi
 	    fi
 	fi
-open_dialog DISK_UNCHANGED
-close_dialog
+
+	open_dialog DISK_UNCHANGED
+	close_dialog
 done
 
 exit 0

@@ -37,9 +37,9 @@ my @buildlist = (
 	},
 
 	{
-		url => 'http://amd64.debian.net/debian-installer/daily/',
-		logurl => 'http://amd64.debian.net/debian-installer/daily/',
-		email => 'Q@ping.be',
+		url => 'http://people.debian.org/~aba/d-i/images/daily/',
+		logurl => 'http://people.debian.org/~aba/d-i/images/daily/',
+		email => 'aba@not.so.argh.org',
 		description => 'daily amd64 images build',
 		logext => ".log",
 		frequency => 1,
@@ -70,9 +70,9 @@ my @buildlist = (
 		url => 'http://people.debian.org/~joeyh/d-i/images/daily/',
 		logurl => 'http://people.debian.org/~joeyh/d-i/images/daily/',
 		email => 'joeyh@debian.org',
-		description => 'daily i386 images build',
+		description => 'bi-daily i386 images build',
 		logext => ".log",
-		frequency => 1,
+		frequency => 0.5,
 		notes => '',
 	},
 	
@@ -107,23 +107,23 @@ my @buildlist = (
 	},
 
 	{
-		url => 'http://people.debian.org/~joeyh/d-i/mipsel/images/daily/',
-		logurl => 'http://people.debian.org/~joeyh/d-i/mipsel/images/daily/',
-		email => 'joeyh@debian.org',
+		url => 'http://people.debian.org/~ths/d-i/mipsel/images/daily/',
+		logurl => 'http://people.debian.org/~ths/d-i/mipsel/images/daily/',
+		email => 'ths@debian.org',
 		description => 'daily mipsel images build',
 		logext => ".log",
 		frequency => 1,
-		notes => 'machine hangs after a few days uptime',
+		notes => '',
 	},
 
 	{
-		url => 'http://people.debian.org/~cjwatson/d-i/images/daily/',
-		logurl => 'http://people.debian.org/~cjwatson/d-i/images/daily/',
-		email => 'cjwatson@debian.org',
+		url => 'http://people.debian.org/~wouter/d-i/powerpc/daily/',
+		logurl => 'http://people.debian.org/~wouter/d-i/powerpc/daily/',
+		email => 'wouter@debian.org',
 		description => 'daily powerpc images build',
 		logext => ".log",
 		frequency => 1,
-		notes => 'currently on a laptop so not cronned, should be moved soon',
+		notes => '',
 	},
 
 	{
@@ -145,11 +145,11 @@ my @buildlist = (
 		frequency => 1,
 		notes => '',
 	},
-
+	
 	{
-		url => 'http://cdimage.debian.org/pub/cdimage-testing/',
-		logurl => 'http://cd-builder.debian.net/log/',
-		email => 'manty@debian.org',
+		url => 'http://cdimage.debian.org/cdimage/',
+		logurl => 'http://farbror.acc.umu.se/cdimage-log/',
+		email => '93sam@debian.org',
 		description => 'CD image builds',
 		logext => "",
 		frequency => 7, # some build only weekly
@@ -189,15 +189,11 @@ EOS
 my ($total, $failed, $success, $old) = aggregate(*OUT, $basename, @buildlist);
 
 my $date=`LANG=C TZ=GMT date`;
-my ($basebasename)=($basename)=~m/(?:.*\/)?(.*)/;
 chomp $date;
 print OUT <<"EOS";
 </ul>
 
 Totals: $total builds ($failed failed, $old old)
-
-<p>
-<img src="$basebasename.png" alt=graph>
 
 <hr>
 

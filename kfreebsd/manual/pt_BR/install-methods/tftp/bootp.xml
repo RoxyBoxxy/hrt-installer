@@ -1,17 +1,17 @@
 <!-- retain these comments for translator revision tracking -->
-<!-- original version: 35613 -->
-<!-- reviesed by Felipe Augusto van de Wiel (faw) 2005.12.30 -->
-<!-- revised by Herbert P Fortes Neto (hpfn) 2006.04.13 -->
+<!-- original version: 43558 -->
+<!-- revised by Herbert P Fortes Neto (hpfn) 2006.05.02 -->
+<!-- revised by Felipe Augusto van de Wiel (faw) 2006.12.27 -->
 
   <sect2 condition="supports-bootp" id="tftp-bootp">
   <title>Configurando um servidor BOOTP</title>
 <para>
 
-Existem dois servidores BOOTP disponíveis para o GNU/Linux: o
-CMU <command>bootpd</command> e o outro atualmente é o
-servidor DHCP, ISC <command>dhcpd</command>, que estão disponíveis
-nos pacotes <classname>bootp</classname> e <classname>dhcp</classname>
-no &debian;.
+Existem dois servidores BOOTP disponíveis para o GNU/Linux. O primeiro é o
+CMU <command>bootpd</command>. O outro é, na verdade, um servidor DHCP: ISC
+<command>dhcpd</command>. No &debian; eles estão disponíveis nos pacotes
+<classname>bootp</classname> e <classname>dhcp3-server</classname>
+respectivamente.
 
 </para><para>
 
@@ -20,8 +20,9 @@ descomentar (ou adicionar) a linha relevante em
 <filename>/etc/inetd.conf</filename>.
 No &debian;, você poderá executar <userinput>update-inetd --enable
 bootps</userinput> então o comando <userinput>/etc/init.d/inetd
-reload</userinput> para fazer isto. Em todo caso, a linha em questão
-deverá se parecer com:
+reload</userinput> para fazer isto. Apenas para o caso de seu servidor BOOTP
+não estar <quote>rodando</quote> Debian, a linha em questão deveria se parecer
+com:
 
 <informalexample><screen>
 bootps  dgram  udp  wait  root  /usr/sbin/bootpd  bootpd -i -t 120
@@ -65,11 +66,10 @@ Em contraste, a configuração de um BOOTP com o ISC <command>dhcpd</command>
 forma especial como clientes DHCP. Algumas arquiteturas requerem uma
 configuração complexa para a inicialização dos clientes via
 BOOTP. Caso a sua seja uma destas, leia a seção <xref linkend="dhcpd"/>.
-Caso contrário, você será provavelmente capaz de adicionar a diretiva
-<userinput>allow bootp</userinput> no bloco de configuraçào de sub-rede
-de seu cliente e reiniciar o servidor dhcp
-<command>dhcpd</command> com o comando <userinput>/etc/init.d/dhcpd
-restart</userinput>.
+Neste caso, você será provavelmente capaz de adicionar a diretiva
+<userinput>allow bootp</userinput> no bloco de configuração de sub-rede
+de seu cliente e reiniciar o <command>dhcpd</command> com o comando
+<userinput>/etc/init.d/dhcpd3-server restart</userinput>.
 
 </para>
   </sect2>

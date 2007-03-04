@@ -12,7 +12,7 @@
 # David Martínez Moreno <ender@debian.org>, 2003, 2005.
 # Carlos Alberto Martín Edo <carlos@dat.etsit.upm.es>, 2003
 # Carlos Valdivia Yagüe <valyag@dat.etsit.upm.es>, 2003
-# Rudy Godoy <rudy@kernel-panik.org>, 2003
+# Rudy Godoy <rudy@kernel-panik.org>, 2003-2006
 # Steve Langasek <vorlon@debian.org>, 2004
 # Enrique Matias Sanchez (aka Quique) <cronopios@gmail.com>, 2005
 # Rubén Porras Campo <nahoo@inicia.es>, 2005
@@ -21,7 +21,7 @@
 # Equipo de traducción al español, por favor lean antes de traducir
 # los siguientes documentos:
 #
-# - El proyecto de traducción de Debian al españl
+# - El proyecto de traducción de Debian al español
 #   http://www.debian.org/intl/spanish/
 #   especialmente las notas de traducción en
 #   http://www.debian.org/intl/spanish/notas
@@ -33,12 +33,23 @@
 # Si tiene dudas o consultas sobre esta traducción consulte con el último
 # traductor (campo Last-Translator) y ponga en copia a la lista de
 # traducción de Debian al español (debian-l10n-spanish@lists.debian.org)
+#
+# NOTAS: 
+#
+# - Se ha traducido en este fichero 'boot loader' de forma homogénea por
+# 'cargador de arranque' aunque en el manual se utiliza éste término y
+# también 'gestor de arranque'
+#
+# - 'array' no está traducido aún. La traducción como 'arreglo' suena
+# fatal (y es poco conocida)
+#
+#  
 msgid ""
 msgstr ""
 "Project-Id-Version: debian-installer\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-04-19 18:36-0600\n"
-"PO-Revision-Date: 2006-04-22 03:13+0200\n"
+"Report-Msgid-Bugs-To: debian-boot@lists.debian.org\n"
+"POT-Creation-Date: 2007-01-06 22:48+0100\n"
+"PO-Revision-Date: 2006-10-10 01:13+0200\n"
 "Last-Translator: Javier Fernández-Sanguino Peña <jfs@debian.org>\n"
 "Language-Team:  Debian Spanish <debian-l10n-spanish@lists.debian.org>\n"
 "MIME-Version: 1.0\n"
@@ -48,22 +59,19 @@ msgstr ""
 #. Type: text
 #. Description
 #. TRANSLATORS: This is a menu entry. Keep in under 55 columns/characters
-#. The string replacing ${DEVICE} may be very long, so make your translation
-#. as short as possible and keep the variable AT THE END
-#. for example "Erase entire disk and use LVM: IDE0 master - Maxtor 46L489"
-#: ../partman-auto-lvm.templates:7
-msgid "Erase entire disk and use LVM: ${DEVICE}"
-msgstr "Borrar disco completo y usar LVM: ${DEVICE}"
+#: ../partman-auto-lvm.templates:4
+msgid "Guided - use entire disk and set up LVM"
+msgstr "Guiado - utilizar el disco completo y configurar LVM"
 
 #. Type: string
 #. Description
-#: ../partman-auto-lvm.templates:16
+#: ../partman-auto-lvm.templates:12
 msgid "Name of the volume group for the new system:"
 msgstr "Introduzca el nombre del grupo de volumen para el nuevo sistema:"
 
 #. Type: string
 #. Description
-#: ../partman-auto-lvm.templates:16
+#: ../partman-auto-lvm.templates:12
 msgid ""
 "The selected volume group name is already in use. Please choose another name."
 msgstr ""
@@ -72,13 +80,13 @@ msgstr ""
 
 #. Type: error
 #. Description
-#: ../partman-auto-lvm.templates:22
+#: ../partman-auto-lvm.templates:18
 msgid "Failed to partition the selected disk"
 msgstr "Falló el particionado en el disco seleccionado"
 
 #. Type: error
 #. Description
-#: ../partman-auto-lvm.templates:22
+#: ../partman-auto-lvm.templates:18
 msgid ""
 "This happened because the selected recipe does not contain any partition "
 "that can be created on LVM volumes."
@@ -88,13 +96,13 @@ msgstr ""
 
 #. Type: boolean
 #. Description
-#: ../partman-auto-lvm.templates:28
+#: ../partman-auto-lvm.templates:24
 msgid "Continue installation without /boot partition?"
 msgstr "¿Desea continuar la instalación sin una partición /boot?"
 
 #. Type: boolean
 #. Description
-#: ../partman-auto-lvm.templates:28
+#: ../partman-auto-lvm.templates:24
 msgid ""
 "The recipe you selected does not contain a separate partition for /boot. "
 "This is normally needed to allow you to boot the system when using LVM."
@@ -105,7 +113,7 @@ msgstr ""
 
 #. Type: boolean
 #. Description
-#: ../partman-auto-lvm.templates:28
+#: ../partman-auto-lvm.templates:24
 msgid ""
 "You can choose to ignore this warning, but that may result in a failure to "
 "reboot the system after the installation is completed."
@@ -115,29 +123,13 @@ msgstr ""
 
 #. Type: error
 #. Description
-#: ../partman-auto-lvm.templates:37
-msgid "Existing physical volume on the selected device"
-msgstr "Ya existe un volumen físico en el dispositivo seleccionado"
-
-#. Type: error
-#. Description
-#: ../partman-auto-lvm.templates:37
-msgid ""
-"The device you selected already contains one or more physical volumes. It is "
-"not possible to automatically partition this device using LVM."
-msgstr ""
-"El dispositivo que ha seleccionado ya tiene uno o más volúmenes físicos. No "
-"se puede particionar automáticamente este dispositivo con LVM."
-
-#. Type: error
-#. Description
-#: ../partman-auto-lvm.templates:43
+#: ../partman-auto-lvm.templates:33
 msgid "Volume group name already in use"
 msgstr "Ya se está utilizando ese nombre de grupo de volúmenes"
 
 #. Type: error
 #. Description
-#: ../partman-auto-lvm.templates:43
+#: ../partman-auto-lvm.templates:33
 msgid ""
 "The volume group name used to automatically partition using LVM is already "
 "in use. Lowering the priority for configuration questions will allow you to "
@@ -149,23 +141,23 @@ msgstr ""
 
 #. Type: error
 #. Description
-#: ../partman-auto-lvm.templates:50
+#: ../partman-auto-lvm.templates:40
 msgid "Unexpected error while creating volume group"
 msgstr "Se ha producido un error al crear el grupo de volúmenes"
 
 #. Type: error
 #. Description
-#: ../partman-auto-lvm.templates:50
+#: ../partman-auto-lvm.templates:40
 msgid ""
 "Autopartitioning using LVM failed because an error occurred while creating "
 "the volume group."
 msgstr ""
-"Falló el autoparticionado con LVM porque se produjo un error cuando se creba "
-"el grupo de volúmenes."
+"Falló el autoparticionado con LVM porque se produjo un error cuando se "
+"creaba el grupo de volúmenes."
 
 #. Type: error
 #. Description
-#: ../partman-auto-lvm.templates:50
+#: ../partman-auto-lvm.templates:40
 msgid "Check /var/log/syslog or see virtual console 4 for the details."
 msgstr ""
 "Compruebe el fichero /var/log/syslog o la consola virtual número 4 para los "

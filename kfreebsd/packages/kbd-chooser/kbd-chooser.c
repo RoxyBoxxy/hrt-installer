@@ -70,7 +70,7 @@ mydebconf_default_set (char *template, char *value)
 		return res;
 
 	if (client->value == NULL || (strlen (client->value) == 0))
-		res = debconf_set (client, template, strdup (value));
+		res = debconf_set (client, template, value);
 	return res;
 }
 
@@ -219,6 +219,7 @@ char *
 insert_description (char *buf, char *description, int *first_entry)
 {
 	char *s = buf;
+	char *t = description;
 
 	if (*first_entry) {
 		*first_entry = 0;
@@ -226,8 +227,11 @@ insert_description (char *buf, char *description, int *first_entry)
 		strcpy (s, ", ");
 		s += 2;
 	}
-	strcpy (s, description);
-	s += strlen (description);
+	while (*t) {
+		if (*t == '\\' || *t == ',')
+			*s++ = '\\';
+		*s++ = *t++;
+	}
 	*s = '\0';
 	return s;
 }
@@ -529,7 +533,6 @@ keyboards_get (void)
 
 /**
  * @brief set debian-installer/uml-console as to whether we are using a user mode linux console
- * This is then passed via prebaseconfig to base-config
  * @return 1 if present, 0 if absent, 2 if unknown.
  */
 sercon_state
@@ -550,7 +553,6 @@ check_if_uml_console (void)
 
 /**
  * @brief set debian-installer/serial console as to whether we are using a serial console
- * This is then passed via prebaseconfig to base-config
  * @return 1 if present, 0 if absent, 2 if unknown.
  */
 sercon_state

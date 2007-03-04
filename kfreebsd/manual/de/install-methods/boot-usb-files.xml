@@ -1,5 +1,5 @@
 <!-- retain these comments for translator revision tracking -->
-<!-- original version: 32124 -->
+<!-- original version: 45616 -->
 
  <sect1 condition="bootable-usb" id="boot-usb-files">
  <title>Dateien vorbereiten für das Booten von einem USB-Memory-Stick</title>
@@ -16,7 +16,7 @@ müssen Sie eventuell noch den Schreibschutz-Schalter ausschalten.
 
 </para><para>
 
-Beachten Sie, dass der USB-Stick mindestens 128 MB groß sein sollte
+Beachten Sie, dass der USB-Stick mindestens 256 MB groß sein sollte
 (kleinere Setups sind möglich, wenn Sie sich nach <xref linkend="usb-copy-flexible"/>
 richten).
 
@@ -24,7 +24,7 @@ richten).
 
   <sect2 id="usb-copy-easy">
   <title>Die Dateien kopieren &ndash; der einfache Weg</title>
-<para arch="i386">
+<para arch="x86">
 
 Es gibt ein <quote>Alles-in-einem</quote>-Image <filename>hd-media/boot.img.gz</filename>,
 das alle Dateien des Installers enthält (inklusive des Kernels) wie auch
@@ -60,12 +60,12 @@ für Ihren USB-Stick verwenden.
 <para>
 
 Danach hängen Sie den USB-Memory-Stick ins Dateisystem ein
-(<userinput>mount <replaceable arch="i386">/dev/sda</replaceable>
+(<userinput>mount <replaceable arch="x86">/dev/sda</replaceable>
 <replaceable arch="powerpc">/dev/sda2</replaceable>
-/mnt</userinput>), der jetzt ein <phrase arch="i386">FAT-Dateisystem</phrase>
+/mnt</userinput>), der jetzt ein <phrase arch="x86">FAT-Dateisystem</phrase>
 <phrase arch="powerpc">HFS-Dateisystem</phrase> enthält, und kopieren ein
-Debian-<quote>netinst</quote>- oder -<quote>businesscard</quote>-ISO-Image dorthin.
-Achten Sie darauf,
+Debian-<quote>netinst</quote>- oder -<quote>businesscard</quote>-ISO-Image dorthin
+(siehe <xref linkend="usb-add-iso"/>). Achten Sie darauf,
 dass die Datei auf <filename>.iso</filename> endet. Hängen Sie den
 Stick aus dem Dateisystem aus (<userinput>umount /mnt</userinput>) &ndash; Sie
 haben es geschafft.
@@ -83,14 +83,19 @@ befördern:
 
 </para>
 
-&usb-setup-i386.xml;
+&usb-setup-x86.xml;
 &usb-setup-powerpc.xml;
 
-   <sect3>
+   </sect2>
+
+   <sect2 id="usb-add-iso">
    <title>Ein ISO-Image hinzufügen</title>
 <para>
 
-Jetzt sollten Sie ein Debian-ISO-Image (<quote>businesscard</quote>,
+Da der Stick die Quelle für zusätzliche Daten ist, die für die
+Installation benötigt werden, wird der Installer dort nach einem
+Debian-ISO-Image suchen. Sie müssen also als nächstes ein
+solches Image (<quote>businesscard</quote>,
 <quote>netinst</quote> oder
 sogar ein Komplett-Image) auf den Stick laden (wählen Sie eines, das
 auch auf den Stick passt). Der Dateiname des Images muss auf
@@ -112,11 +117,11 @@ Dateisystem aus (<userinput>umount /mnt</userinput>) und aktivieren
 den Schreibschutz.
 
 </para>
-   </sect3>
+  </sect2>
 
-   <!-- TODO: doesn't this section belong later? -->
-   <sect3 arch="i386">
-   <title>Vom USB-Stick booten</title>
+  <!-- TODO: doesn't this section belong later? -->
+  <sect2 arch="x86">
+  <title>Vom USB-Stick booten</title>
 <warning><para>
 
 Wenn Ihr System es ablehnt, von dem Memory-Stick zu booten, könnte
@@ -130,6 +135,5 @@ enthält. Um dies zu beheben, nutzen Sie den
 </screen></informalexample>
 
 </para></warning>
-   </sect3>
   </sect2>
  </sect1>

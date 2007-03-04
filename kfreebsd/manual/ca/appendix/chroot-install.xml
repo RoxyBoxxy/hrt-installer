@@ -1,8 +1,8 @@
 <!-- retain these comments for translator revision tracking -->
-<!-- original version: 34713 -->
+<!-- original version: 44410 -->
 
  <sect1 id="linux-upgrade">
- <title>Instal·lant &debian; des d'un sistema Unix/Linux</title>
+ <title>Instal·lar &debian; des d'un sistema Unix/Linux</title>
 
 <para>
 
@@ -28,22 +28,24 @@ diferents arrencades o mitjans d'instal·lació.
 </para>
 
   <sect2>
-  <title>Començant</title>
+  <title>Començar</title>
 <para>
 
 Amb les actuals eines *nix, es necessita reparticionar el disc,
 creant al menys un sistema de fitxers i una partició d'intercanvi.
-Necessitareu al menys 150 MiB d'espai per una instal·lació de consola,
-o bé al menys 300 MiB si voleu instal·lar X.
+Necessitareu al menys 350 MiB d'espai per una instal·lació de consola,
+o bé al menys 1 GiB si voleu instal·lar X (més si intenteu instal·lar
+algun entorn d'escriptori com el GNOME o el KDE).
 
 </para><para>
 
-Per exemple, per crear un sistema de fitxers ext3 a la partició
+A continuació, crear sistemes de fitxers a les vostres particions. Per
+exemple, per crear un sistema de fitxers ext3 a la partició
 <filename>/dev/hda6</filename> (que és el nostre exemple per la
 partició arrel):
 
 <informalexample><screen>
-# mke2fs -j /dev/hda6
+# mke2fs -j /dev/<replaceable>hda6</replaceable>
 </screen></informalexample>
 
 Si voleu crear un sistema de fitxers ext2, ometeu <userinput>-j</userinput>.
@@ -54,19 +56,19 @@ Inicialitzeu i activeu l'intercanvi (substituïu el nombre de la partició per
 la vostra partició d'intercanvi de Debian):
 
 <informalexample><screen>
-# mkswap /dev/hda5
+# mkswap /dev/<replaceable>hda5</replaceable>
 # sync; sync; sync
-# swapon /dev/hda5
+# swapon /dev/<replaceable>hda5</replaceable>
 </screen></informalexample>
 
 Munteu la partició a <filename>/mnt/debinst</filename> (el lloc
 d'instal·lació, per ser l'arrel (<filename>/</filename>) del sistema de
 fitxers del nou sistema). El punt de muntatge és arbitrari, i se'n farà
-ús desprès.
+ús després.
 
 <informalexample><screen>
 # mkdir /mnt/debinst
-# mount /dev/hda6 /mnt/debinst
+# mount /dev/<replaceable>hda6</replaceable> /mnt/debinst
 </screen></informalexample>
 
 </para>
@@ -83,7 +85,7 @@ manualment abans de procedir amb la següent fase.
   <title>Instal·lar <command>debootstrap</command></title>
 <para>
 
-L'eina que utilitza l'instal·lador de Debian, que és reconeguda
+L'eina que utilitza l'instal·lador de Debian, i que es reconeix
 oficialment com la manera d'instal·lar un sistema base de Debian, és
 <command>debootstrap</command>. Fa ús de <command>wget</command> i
 <command>ar</command>, i per altra part tan sols depèn de
@@ -127,22 +129,14 @@ El binari de <command>debootstrap</command> el podeu trobar a l'arxiu de
 Debian (assegureu-vos de seleccionar l'arxiu correcte per la vostra
 arquitectura). Descarregueu el .deb <command>debootstrap</command> del
 <ulink url="http://ftp.debian.org/debian/pool/main/d/debootstrap/">
-repositori</ulink>, copieu el paquet al directori i extraieu els fitxers del
-binari. Necessitareu tenir privilegis de root per instal·lar els binaris.
+repositori</ulink>, copieu el paquet al directori i extraieu-ne els fitxers.
+Necessitareu tenir privilegis de root per instal·lar els fitxers.
 
 <informalexample><screen>
-# ar -x debootstrap_0.X.X_arch.deb
+# ar -x debootstrap_0.X.X_all.deb
 # cd /
 # zcat /full-path-to-work/work/data.tar.gz | tar xv
 </screen></informalexample>
-
-</para><para>
-
-Tingueu en compte que executant <command>debootstrap</command> pot requerir
-que tingueu una versió mínima de <classname>glibc</classname> instal·lada
-(actualment GLIBC_2.3). <command>debootstrap</command> és un guió
-d'intèrpret d'ordres, però crida diverses utilitats que requereixen
-<classname>glibc</classname>.
 
 </para>
   </sect2>
@@ -153,7 +147,7 @@ d'intèrpret d'ordres, però crida diverses utilitats que requereixen
 
 Podeu descarregar els fitxers que necessiteu del <command>debootstrap</command>
 directament de l'arxiu quan l'executeu. Podeu substituir
-<userinput>ftp.es.debian.org/debian</userinput> per qualsevol rèplica de
+<userinput>&archive-mirror;/debian</userinput> per qualsevol rèplica de
 l'arxiu a l'ordre de l'exemple de baix, preferiblement per un que estigui
 a prop vostre. Teniu una llista de less rèpliques a
 <ulink url="http://www.debian.org/misc/README.mirrors"></ulink>.
@@ -170,6 +164,7 @@ Substituïu una de les següents per <replaceable>ARCH</replaceable>
 a l'ordre <command>debootstrap</command>:
 
 <userinput>alpha</userinput>,
+<userinput>amd64</userinput>,
 <userinput>arm</userinput>,
 <userinput>hppa</userinput>,
 <userinput>i386</userinput>,
@@ -197,7 +192,15 @@ Ara ja teniu un sistema Debian real al disc, això si, molt petit.
 Feu <command>chroot</command>:
 
 <informalexample><screen>
-# LANG= chroot /mnt/debinst /bin/bash
+# LANG=C chroot /mnt/debinst /bin/bash
+</screen></informalexample>
+
+Després d'entrar al chroot podríeu necessitar ajustar la definició
+de terminal per que siga compatible amb el sistema Debian base, per
+exemple:
+
+<informalexample><screen>
+# export TERM=<replaceable>xterm-color</replaceable>
 </screen></informalexample>
 
 </para>
@@ -225,8 +228,8 @@ necessitats:
 /dev/XXX         none          swap    sw                       0    0
 proc             /proc         proc    defaults                 0    0
 
-/dev/fd0         /mnt/floppy   auto    noauto,rw,sync,user,exec 0    0
-/dev/cdrom       /mnt/cdrom    iso9660 noauto,ro,user,exec      0    0
+/dev/fd0         /media/floppy auto    noauto,rw,sync,user,exec 0    0
+/dev/cdrom       /media/cdrom  iso9660 noauto,ro,user,exec      0    0
 
 /dev/XXX         /tmp          ext3    rw,nosuid,nodev          0    2
 /dev/XXX         /var          ext3    rw,nosuid,nodev          0    2
@@ -240,6 +243,19 @@ o bé munteu cada sistema de fitxers de forma individual:
 
 <informalexample><screen>
 # mount /path   # e.g.: mount /usr
+</screen></informalexample>
+
+Els sistemes Debian tenen punts de muntatge pels dispositius extraïbles
+a <filename>/media</filename>, però manté enllaços per raons de
+compatibilitat a <filename>/</filename>. Creeu aquests si els necessiteu,
+per exemple:
+
+<informalexample><screen>
+# cd /media
+# mkdir cdrom0
+# ln -s cdrom0 cdrom
+# cd /
+# ln -s media/cdrom
 </screen></informalexample>
 
 Podeu muntar el sistema de fitxers proc varies vegades i a llocs arbitraris,
@@ -265,19 +281,18 @@ del chroot:
    </sect3>
 
    <sect3>
-   <title>Configurar el teclat</title>
+   <title>Configurar la zona horària</title>
 <para>
 
-Per configurar el vostre teclat:
+Hi ha una opció al fitxer <filename>/etc/default/rcS</filename> que determina
+si el sistema interpretarà que el rellotge intern està en UTC o en
+horari local. L'ordre següent permetrà configurar i triar la vostra zona
+horària.
 
 <informalexample><screen>
-# dpkg-reconfigure console-data
+# editor /etc/default/rcS
+# tzconfig
 </screen></informalexample>
-
-</para><para>
-
-Tingueu en compte que no es pot establir el teclat mentre esteu dins
-del chroot, però serà configurat per al següent reinici.
 
 </para>
    </sect3>
@@ -288,8 +303,9 @@ del chroot, però serà configurat per al següent reinici.
 
 Per configurar la xarxa, editeu
 <filename>/etc/network/interfaces</filename>,
-<filename>/etc/resolv.conf</filename> i
-<filename>/etc/hostname</filename>.
+<filename>/etc/resolv.conf</filename>,
+<filename>/etc/hostname</filename> i
+<filename>/etc/hosts</filename>.
 
 <informalexample><screen>
 # editor /etc/network/interfaces
@@ -337,7 +353,7 @@ Introduïu el nom del(s) vostre(s) servidor(s) de noms a
 Un exemple senzill de <filename>/etc/resolv.conf</filename>:
 
 <informalexample><screen>
-search hqdom.local\000
+search hqdom.local
 nameserver 10.1.1.36
 nameserver 192.168.9.100
 </screen></informalexample>
@@ -348,31 +364,75 @@ Introduïu el nom del vostre sistema (de 2 a 63 caràcters):
 # echo DebianHostName &gt; /etc/hostname
 </screen></informalexample>
 
+I un fitxer <filename>/etc/hosts</filename> bàsic amb suport IPv6:
+
+<informalexample><screen>
+127.0.0.1 localhost DebianHostName
+
+# Les línies següents són les desitjables per màquines amb suport IPv6
+::1     ip6-localhost ip6-loopback
+fe00::0 ip6-localnet
+ff00::0 ip6-mcastprefix
+ff02::1 ip6-allnodes
+ff02::2 ip6-allrouters
+ff02::3 ip6-allhosts
+</screen></informalexample>
+
 Si teniu vàries targes de xarxa, ordeneu els noms dels mòduls dels
-controladors al fitxer <filename>/etc/modules</filename> amb l'ordre desitjat.
-A l'arrencada, cada targeta s'associarà amb el nom de l'interfície 
-(eth0, eth1, etc.) que esperàveu.
+controladors al fitxer <filename>/etc/modules</filename> amb l'ordre
+desitjat. A l'arrencada, cada targeta s'associarà amb el nom de
+l'interfície (eth0, eth1, etc.) que esperàveu.
 
 </para>
    </sect3>
 
    <sect3>
-   <title>Configurar locals</title>
+   <title>Configurar Apt</title>
+<para>
+
+El debootstrap haurà creat un fitxer <filename>/etc/apt/sources.list</filename>
+molt bàsic que permetrà instal·lar paquets addicionals. Per altra banda,
+potser voldreu afegir alguns fonts addicionals, per exemple per
+el codi font des paquets i les actualitzacions de seguretat:
+
+<informalexample><screen>
+deb-src http://ftp.es.debian.org/debian etch main
+
+deb http://security.debian.org/ etch/updates main
+deb-src http://security.debian.org/ etch/updates main
+</screen></informalexample>
+
+Recordeu d'executar <userinput>aptitude update</userinput> després de
+fer els canvis a la llista de fonts.
+
+</para>
+   </sect3>
+
+   <sect3>
+   <title>Configurar el teclat i els locales</title>
 <para>
 
 Per configurar els vostres paràmetres locals per utilitzar un idioma
-que no sigui l'anglès, instal·leu el paquet per suportar els locals i
-configureu-lo:
+que no sigui l'anglès, instal·leu el paquet de suport
+<classname>locales</classname> i configureu-lo. En aquest moment es recomana
+utilitzar els locales amb UTF-8.
 
 <informalexample><screen>
-# apt-get install locales
+# aptitude install locales
 # dpkg-reconfigure locales
 </screen></informalexample>
 
-AVÍS: L'apt s'ha de configurar abans, creant un sources.list i executant
-apt-get update.
-Abans d'utilitzar locals amb altres conjunts de caràcters diferents de
-ASCII o latin1, consulteu el COM ES FA de localització apropiat.
+Per configurar el vostre teclat (si fa falta):
+
+<informalexample><screen>
+# aptitude install console-data
+# dpkg-reconfigure console-data
+</screen></informalexample>
+
+</para><para>
+
+Mireu que el teclat no es pot configurar mentre esteu al chroot, sinó que
+estarà configurat quan reinicieu de nou.
 
 </para>
    </sect3>
@@ -384,49 +444,110 @@ ASCII o latin1, consulteu el COM ES FA de localització apropiat.
 
 Si intenteu arrencar aquest sistema, probablement voldreu un nucli Linux i
 una carregador d'arrencada. Identifiqueu si hi ha algun nucli
-pre-empaquetat amb
+pre-empaquetat amb:
 
 <informalexample><screen>
-# apt-cache search kernel-image
+# apt-cache search linux-image
 </screen></informalexample>
 
-Aleshores instal·leu la vostra elecció utilitzant el nom del paquet.
+</para><para>
+
+Si intenteu fer ús d'un nucli pre-empaquetat, potser voldreu crear un
+fitxer de configuració <filename>/etc/kernel-img.conf</filename> abans
+de fer-ho. Ací teniu un fitxer d'exemple:
 
 <informalexample><screen>
-# apt-get install kernel-image-<replaceable>2.X.X-arch-etc</replaceable>
+# Substitució de l'administració d'imatges del nucli
+# Trobareu més detalls a kernel-img.conf(5)
+do_symlinks = yes
+relative_links = yes
+do_bootloader = yes
+do_bootfloppy = no
+do_initrd = yes
+link_in_boot = no
 </screen></informalexample>
+
+</para><para>
+
+Trobareu informació detallada d'aquests fitxers i de les seves opcions a
+la seva pàgina de manual, que podeu trobar-la després d'instal·lar el
+paquet <classname>kernel-package</classname>. Us recomanem que comproveu
+que els valors són els apropiats pel vostre sistema.
+
+</para><para arch="x86">
+
+Si voleu utilitzar el <classname>grub</classname> com a carregador
+d'arrencada, podeu donar-li el valor <quote>no</quote> a l'opció
+<literal>do_bootloader</literal>. Per actualitzar automàticament el
+vostre <filename>/boot/grub/menu.lst</filename> quan instal·leu o
+esborreu un nucli de Debian, afegiu les línies següents:
+
+<informalexample><screen>
+postinst_hook = update-grub
+postrm_hook   = update-grub
+</screen></informalexample>
+
+Pel carregador de l'arrencada <classname>lilo</classname>, s'ha de donar
+el valor <quote>yes</quote> a l'opció <literal>do_bootloader</literal>.
+
+</para><para>
+
+Aleshores instal·leu el paquet del nucli que trieu fent ús del nom del
+paquet.
+
+<informalexample><screen>
+# aptitude install linux-image-<replaceable>&kernelversion;-arch-etc</replaceable>
+</screen></informalexample>
+
+Si no creeu un fitxer <filename>/etc/kernel-img.conf</filename> abans
+d'instal·lar un nucli pre-empaquetat, aleshores se us farà algunes
+preguntes a la instal·lació que van dirigides a fer-ho.
 
 </para>
   </sect2>
 
   <sect2>
-<title>Configurant el carregador d'arrencada</title>
+<title>Configuració del carregador d'arrencada</title>
 <para>
 
-Per fer que el vostre sistema &debian; es pugui arrencar, configureu el
-vostre carregador d'arrencada per que carregui el nucli instal·lat a la
-vostra nova partició arrel. Adoneu-vos que el debootstrap no instal·la un
-carregador d'arrencada, encara que podeu utilitzar l'apt-get dins del
-vostre chroot per fer-ho.
+Per aconseguir que el vostre sistema &debian; arrenqui, configureu
+el carregador d'arrencada per que carregui el nucli instal·lat a
+la partició. Fixeu-vos que <command>debootstrap</command>
+no instal·la cap carregador d'arrencada, encara que podeu utilitzar
+l'<command>aptitude</command> dins el chroot per tal de fer-ho.
 
-</para><para arch="i386">
+</para><para arch="x86">
 
-Comproveu l'informació de <userinput>info grub</userinput> o <userinput>man
-lilo.conf</userinput> per com configurar el carregador d'arrencada. Si el
-vostre sistema era ja Debian, afegiu una entrada per la instal·lació al
-vostre fitxer existent <filename>menu.lst</filename> o
+Comproveu la informació de <userinput>info grub</userinput> o
+<userinput>man lilo.conf</userinput> per com configurar el carregador
+d'arrencada. Si el vostre sistema era ja Debian, afegiu una entrada per
+la instal·lació al vostre fitxer existent <filename>menu.lst</filename> o
 <filename>lilo.conf</filename>. Pel <filename>lilo.conf</filename>,
 podeu copiar-lo al nou sistema i editar-lo allí. Després de editar-lo,
-executeu lilo (recordeu que utilitzarà el <filename>lilo.conf</filename>
-relatiu al sistema des d'on el crideu).
+executeu <command>lilo</command> (recordeu que utilitzarà el
+<filename>lilo.conf</filename> relatiu al sistema des d'on el crideu).
 
-</para><para arch="i386">
+</para><para arch="x86">
+
+Instal·lar i configurar el <classname>grub</classname> és tan fàcil com:
+
+<informalexample><screen>
+# aptitude install grub
+# grub-install /dev/<replaceable>hda</replaceable>
+# update-grub
+</screen></informalexample>
+
+La segona ordre instal·larà el <command>grub</command> (en aquest cas al
+MBR de <literal>hda</literal>). L'última ordre crearà un fitxer correcte
+i funcional a <filename>/boot/grub/menu.lst</filename>.
+
+</para><para arch="x86">
 
 Ací teniu un exemple bàsic de <filename>/etc/lilo.conf</filename>:
 
 <informalexample><screen>
-boot=/dev/hda6
-root=/dev/hda6
+boot=/dev/<replaceable>hda6</replaceable>
+root=/dev/<replaceable>hda6</replaceable>
 install=menu
 delay=20
 lba32
@@ -434,13 +555,33 @@ image=/vmlinuz
 label=Debian
 </screen></informalexample>
 
+</para><para arch="x86">
+
+Depenent de quin carregador de l'arrencada seleccioneu, podeu fer
+alguns canvis addicionals a l'<filename>/etc/kernel-img.conf</filename>.
+
+</para><para arch="x86">
+
+Pel carregador <classname>grub</classname>, hauríeu de canviar l'opció
+<literal>do_bootloader</literal> a <quote>no</quote>.
+I per configurar automàticament el
+<filename>/boot/grub/menu.lst</filename> al instal·lar o esborrar
+nuclis de Debian, afegiu les línies següents:
+<informalexample><screen>
+postinst_hook = update-grub
+postrm_hook   = update-grub
+</screen></informalexample>
+
+Pel carregador <classname>lilo</classname>, el valor de
+<literal>do_bootloader</literal> s'ha de deixar en <quote>yes</quote>.
+
 </para><para arch="powerpc">
 
 Llegiu <userinput>man yaboot.conf</userinput> per tenir més informació de
 com configurar el carregador d'arrencada. Si esteu a un sistema on
 prèviament teníeu ja instal·lat Debian, copieu el vostre fitxer ja existent
 <filename>yaboot.conf</filename>. Podeu copiar-lo al nou sistema i
-editar-lo allí. Desprès d'editar-lo, executeu ybin (recordeu que utilitzarà
+editar-lo allí. Després d'editar-lo, executeu ybin (recordeu que utilitzarà
 el <filename>yaboot.conf</filename> relatiu al sistema des d'on l'executeu).
 
 </para><para arch="powerpc">
@@ -460,6 +601,34 @@ label=Debian
 
 A algunes màquines, podríeu necessitar utilitzar <userinput>ide0:</userinput>
 en comptes de <userinput>hd:</userinput>.
+
+</para>
+  </sect2>
+
+  <sect2>
+<title>Retocs finals</title>
+<para>
+
+Com ja s'ha dit abans, el sistema instal·lat serà molt bàsic. Si us
+agradaria tenir un sistema més madur, hi ha un mètode fàcil per
+instal·lar tots els paquets de prioritat <quote>standard</quote>:
+
+<informalexample><screen>
+# tasksel install standard
+</screen></informalexample>
+
+Per suposat, podeu utilitzar l'<command>aptitude</command> per instal·lar
+paquets de forma individual.
+
+</para><para>
+
+Després de la instal·lació hi ha un munt de paquets descarregats a
+<filename>/var/cache/apt/archives/</filename>. Podeu alliberar espai
+al disc executant:
+
+<informalexample><screen>
+# aptitude clean
+</screen></informalexample>
 
 </para>
   </sect2>

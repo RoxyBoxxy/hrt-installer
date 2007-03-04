@@ -7,17 +7,17 @@
 # Russian messages for debian-installer.
 # Copyright (C) 2003 Software in the Public Interest, Inc.
 # This file is distributed under the same license as debian-installer.
+#
 # Russian L10N Team <debian-l10n-russian@lists.debian.org>, 2004.
 # Yuri Kozlov <yuray@id.ru>, 2004, 2005.
 # Dmitry Beloglazov <dm-guest@alioth.debian.org>, 2005.
 # Yuri Kozlov <kozlov.y@gmail.com>, 2005, 2006.
-#
 msgid ""
 msgstr ""
 "Project-Id-Version: ru\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-04-07 23:43-0600\n"
-"PO-Revision-Date: 2006-04-08 13:35+0300\n"
+"Report-Msgid-Bugs-To: debian-boot@lists.debian.org\n"
+"POT-Creation-Date: 2007-01-06 22:47+0100\n"
+"PO-Revision-Date: 2006-09-15 21:57+0400\n"
 "Last-Translator: Yuri Kozlov <kozlov.y@gmail.com>\n"
 "Language-Team: Russian <debian-l10n-russian@lists.debian.org>\n"
 "MIME-Version: 1.0\n"
@@ -25,7 +25,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms:  nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%"
 "10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
-"X-Generator: KBabel 1.9.1\n"
+"X-Generator: KBabel 1.11.2\n"
 
 #. Type: boolean
 #. Description
@@ -64,8 +64,8 @@ msgstr ""
 "администрирования системы. Доступ к компьютеру с использованием этой учётной "
 "записи злонамеренных или низкоквалифицированных пользователей может привести "
 "к катастрофическим последствиям. Поэтому пароль суперпользователя не должен "
-"легко угадываться, не должен быть словарным слово, и он не должен быть "
-"связан с вашей личностью."
+"легко угадываться, подбираться по словарю, и он не должен быть связан с "
+"вашей личностью."
 
 #. Type: password
 #. Description
@@ -100,7 +100,7 @@ msgid ""
 msgstr ""
 "Использование учётной записи суперпользователя для выполнения повседневной "
 "работы, (чтения электронной почты, например), крайне нежелательно, так как в "
-"этом случае малейшая оплошность с Вашей стороны может привести к катастрофе. "
+"этом случае малейшая оплошность с вашей стороны может привести к катастрофе. "
 "Сейчас вы можете создать учётную запись обычного пользователя, от имени "
 "которого вы будете заниматься повседневной работой в системе."
 
@@ -109,7 +109,7 @@ msgstr ""
 #: ../user-setup-udeb.templates:49
 msgid ""
 "Note that you may create it later (as well as any additional account) by "
-"typing 'adduser <username>' as root, where <username> is an user name, like "
+"typing 'adduser <username>' as root, where <username> is an username, like "
 "'imurdock' or 'rms'."
 msgstr ""
 "Вы сможете создать пользовательскую запись (или даже несколько) и позже, "
@@ -146,7 +146,7 @@ msgstr ""
 "Вводите реальное имя этого пользователя. Эта информация будет использована в "
 "письмах в поле \"От кого\", посылаемых этим пользователем, а также всеми "
 "программами, которые показывают или используют реальное имя пользователя в "
-"своей работе. Ваше полное имя вполне подходят."
+"своей работе. Ваше имя и фамилия вполне подходят."
 
 #. Type: string
 #. Description
@@ -177,7 +177,7 @@ msgstr "Введено некорректное имя."
 #. Description
 #: ../user-setup-udeb.templates:79
 msgid ""
-"The user name you entered is invalid. Note that usernames must start with a "
+"The username you entered is invalid. Note that usernames must start with a "
 "lower-case letter, which can be followed by any combination of numbers and "
 "more lower-case letters."
 msgstr ""
@@ -185,15 +185,31 @@ msgstr ""
 "со строчной латинской буквы, за которой может следовать любое количество "
 "строчных латинских букв или цифр."
 
-#. Type: password
+#. Type: error
 #. Description
 #: ../user-setup-udeb.templates:86
+msgid "Reserved username"
+msgstr "зарезервированное имя пользователя"
+
+#. Type: error
+#. Description
+#: ../user-setup-udeb.templates:86
+msgid ""
+"The username you entered (${USERNAME}) is reserved for use by the system. "
+"Please select a different one."
+msgstr ""
+"Введённое вами имя пользователя (${USERNAME}) зарезервировано для системного "
+"использования. Введите другое."
+
+#. Type: password
+#. Description
+#: ../user-setup-udeb.templates:92
 msgid "Choose a password for the new user:"
 msgstr "Введите пароль для нового пользователя:"
 
 #. Type: password
 #. Description
-#: ../user-setup-udeb.templates:86
+#: ../user-setup-udeb.templates:92
 msgid ""
 "A good password will contain a mixture of letters, numbers and punctuation "
 "and should be changed at regular intervals."
@@ -203,13 +219,13 @@ msgstr ""
 
 #. Type: password
 #. Description
-#: ../user-setup-udeb.templates:92
+#: ../user-setup-udeb.templates:98
 msgid "Re-enter password to verify:"
 msgstr "Введите пароль ещё раз:"
 
 #. Type: password
 #. Description
-#: ../user-setup-udeb.templates:92
+#: ../user-setup-udeb.templates:98
 msgid ""
 "Please enter the same user password again to verify you have typed it "
 "correctly."
@@ -219,25 +235,25 @@ msgstr ""
 
 #. Type: error
 #. Description
-#: ../user-setup-udeb.templates:98
+#: ../user-setup-udeb.templates:104
 msgid "Password input error"
 msgstr "Ошибка ввода пароля"
 
 #. Type: error
 #. Description
-#: ../user-setup-udeb.templates:98
+#: ../user-setup-udeb.templates:104
 msgid "The two passwords you entered were not the same. Please try again."
 msgstr "Введённые вами пароли не совпадают. Попробуйте ещё раз."
 
 #. Type: error
 #. Description
-#: ../user-setup-udeb.templates:103
+#: ../user-setup-udeb.templates:109
 msgid "Empty password"
 msgstr "Пустой пароль"
 
 #. Type: error
 #. Description
-#: ../user-setup-udeb.templates:103
+#: ../user-setup-udeb.templates:109
 msgid ""
 "You entered an empty password, which is not allowed. Please choose a non-"
 "empty password."
@@ -245,13 +261,13 @@ msgstr "Был введён пустой пароль, что запрещено
 
 #. Type: boolean
 #. Description
-#: ../user-setup-udeb.templates:110
+#: ../user-setup-udeb.templates:116
 msgid "Enable shadow passwords?"
 msgstr "Включить поддержку теневых (shadow) паролей?"
 
 #. Type: boolean
 #. Description
-#: ../user-setup-udeb.templates:110
+#: ../user-setup-udeb.templates:116
 msgid ""
 "Shadow passwords make your system more secure because nobody is able to view "
 "even encrypted passwords. The passwords are stored in a separate file that "
@@ -267,13 +283,13 @@ msgstr ""
 
 #. Type: title
 #. Description
-#: ../user-setup-udeb.templates:118
+#: ../user-setup-udeb.templates:124
 msgid "Set up users and passwords"
 msgstr "Настройка учётных записей пользователей и паролей"
 
 #. Type: text
 #. Description
-#. Prebaseconfig progress bar item
-#: ../user-setup-udeb.templates:123
+#. finish-install progress bar item
+#: ../user-setup-udeb.templates:129
 msgid "Setting users and passwords..."
 msgstr "Настройка учётных записей пользователей и паролей..."

@@ -7,17 +7,17 @@
 # Russian messages for debian-installer.
 # Copyright (C) 2003 Software in the Public Interest, Inc.
 # This file is distributed under the same license as debian-installer.
+#
 # Russian L10N Team <debian-l10n-russian@lists.debian.org>, 2004.
 # Yuri Kozlov <yuray@id.ru>, 2004, 2005.
 # Dmitry Beloglazov <dm-guest@alioth.debian.org>, 2005.
 # Yuri Kozlov <kozlov.y@gmail.com>, 2005, 2006.
-#
 msgid ""
 msgstr ""
 "Project-Id-Version: ru\n"
 "Report-Msgid-Bugs-To: debian-boot@lists.debian.org\n"
-"POT-Creation-Date: 2006-02-23 16:19-0500\n"
-"PO-Revision-Date: 2006-02-11 09:44+0300\n"
+"POT-Creation-Date: 2007-01-06 22:47+0100\n"
+"PO-Revision-Date: 2006-12-02 13:22+0300\n"
 "Last-Translator: Yuri Kozlov <kozlov.y@gmail.com>\n"
 "Language-Team: Russian <debian-l10n-russian@lists.debian.org>\n"
 "MIME-Version: 1.0\n"
@@ -25,23 +25,30 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms:  nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%"
 "10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
-"X-Generator: KBabel 1.9.1\n"
+"X-Generator: KBabel 1.11.4\n"
 
 #. Type: select
 #. Choices
-#: ../ethdetect.templates:3
-msgid "no ethernet card, ${CHOICES}, none of the above"
-msgstr "нет сетевых карт, ${CHOICES}, ни один из перечисленных"
+#: ../ethdetect.templates:6
+msgid "no ethernet card"
+msgstr "нет сетевых карт"
+
+#. Type: select
+#. Choices
+#. "none of the above" should be understood as "none of the above choices"
+#: ../ethdetect.templates:6 ../disk-detect.templates:15
+msgid "none of the above"
+msgstr "ни одно из перечисленных"
 
 #. Type: select
 #. Description
-#: ../ethdetect.templates:5
+#: ../ethdetect.templates:8
 msgid "Driver needed by your Ethernet card:"
 msgstr "Драйвер, необходимый для вашей сетевой карты:"
 
 #. Type: select
 #. Description
-#: ../ethdetect.templates:5
+#: ../ethdetect.templates:8
 msgid ""
 "No Ethernet card was detected. If you know the name of the driver needed by "
 "your Ethernet card, you can select it from the list."
@@ -51,13 +58,13 @@ msgstr ""
 
 #. Type: boolean
 #. Description
-#: ../ethdetect.templates:12
+#: ../ethdetect.templates:15
 msgid "Do you intend to use FireWire Ethernet?"
 msgstr "Хотите использовать FireWire Ethernet?"
 
 #. Type: boolean
 #. Description
-#: ../ethdetect.templates:12
+#: ../ethdetect.templates:15
 msgid ""
 "No Ethernet card was detected, but a FireWire interface is present. It's "
 "possible, though unlikely, that with the right FireWire hardware connected "
@@ -70,26 +77,26 @@ msgstr ""
 
 #. Type: error
 #. Description
-#: ../ethdetect.templates:19
+#: ../ethdetect.templates:22
 msgid "Ethernet card not found"
 msgstr "Сетевая карта не найдена."
 
 #. Type: error
 #. Description
-#: ../ethdetect.templates:19
+#: ../ethdetect.templates:22
 msgid "No Ethernet card was found on the system."
 msgstr "В системе не найдено ни одной сетевой карты."
 
 #. Type: text
 #. Description
-#: ../ethdetect.templates:24
+#: ../ethdetect.templates:27
 msgid "Detecting network hardware"
 msgstr "Определение сетевого оборудования"
 
 #. Type: text
 #. Description
 #. Main menu item
-#: ../ethdetect.templates:29
+#: ../ethdetect.templates:32
 msgid "Detect network hardware"
 msgstr "Определение сетевой карты"
 
@@ -108,19 +115,19 @@ msgstr "Определение дисков и прочего оборудова
 
 #. Type: select
 #. Choices
-#: ../disk-detect.templates:12
-msgid "continue with no disk drive, ${CHOICES}, none of the above"
-msgstr "продолжить без дисков, ${CHOICES}, ни одно из перечисленных"
+#: ../disk-detect.templates:15
+msgid "continue with no disk drive"
+msgstr "продолжить без дисков"
 
 #. Type: select
 #. Description
-#: ../disk-detect.templates:14
+#: ../disk-detect.templates:17
 msgid "Driver needed for your disk drive:"
 msgstr "Драйвер, необходимый для диска:"
 
 #. Type: select
 #. Description
-#: ../disk-detect.templates:14
+#: ../disk-detect.templates:17
 msgid ""
 "No disk drive was detected. If you know the name of the driver needed by "
 "your disk drive, you can select it from the list."
@@ -130,19 +137,19 @@ msgstr ""
 
 #. Type: error
 #. Description
-#: ../disk-detect.templates:20
+#: ../disk-detect.templates:23
 msgid "No partitionable media"
 msgstr "Нет устройств, которые можно разметить"
 
 #. Type: error
 #. Description
-#: ../disk-detect.templates:20
+#: ../disk-detect.templates:23
 msgid "No partitionable media were found."
 msgstr "Не найдено устройств, которые можно разметить."
 
 #. Type: error
 #. Description
-#: ../disk-detect.templates:20
+#: ../disk-detect.templates:23
 msgid "Please check that a hard disk is attached to this machine."
 msgstr "Проверьте, подключён ли к компьютеру жёсткий диск."
 
@@ -179,9 +186,9 @@ msgid ""
 "load them. If you're unsure, you should leave them all selected."
 msgstr ""
 "Программа установки определила, что для работы с вашим оборудованием "
-"потребуются нижеперечисленные модули. Если вы точно знаете, что некоторые из "
-"них не нужны или вызывают проблемы, то укажите, что их загружать не нужно. "
-"Если вы не уверены, то оставьте всё как есть."
+"потребуются перечисленные ниже модули. Если вы точно знаете, что некоторые "
+"из них не нужны или вызывают проблемы, то укажите, что их загружать не "
+"нужно. Если вы не уверены, то оставьте всё как есть."
 
 #. Type: boolean
 #. Description
@@ -193,21 +200,21 @@ msgstr "Запустить сервисы PC-карт?"
 #. Description
 #: ../hw-detect.templates:25
 msgid ""
-"This computer may have a PCMCIA interface. Please choose whether PC card "
-"services should be started in order to allow the use of PCMCIA cards."
+"Please choose whether PC card services should be started in order to allow "
+"the use of PCMCIA cards."
 msgstr ""
-"Возможно, у этого компьютера есть разъём для подключения карт PCMCIA. Для их "
-"работы надо запускать специальные сервисы."
+"Выберите, нужно ли запускать сервисы PC карт для обеспечения работы карт "
+"PCMCIA."
 
 #. Type: string
 #. Description
-#: ../hw-detect.templates:32
+#: ../hw-detect.templates:31
 msgid "PCMCIA resource range options:"
 msgstr "Параметры диапазона ресурсов PCMCIA:"
 
 #. Type: string
 #. Description
-#: ../hw-detect.templates:32
+#: ../hw-detect.templates:31
 msgid ""
 "Some PCMCIA hardware needs special resource configuration options in order "
 "to work, and can cause the computer to freeze otherwise. For example, some "
@@ -218,25 +225,25 @@ msgstr ""
 "Для работы некоторых устройств PCMCIA требуется указать специальные "
 "параметры настройки ресурсов, а иначе компьютер перестанет работать. "
 "Например, для некоторых мобильных компьютеров Dell здесь нужно указать "
-"\"exclude port 0x800-0x8ff\". Эти параметры будут добавлены в/etc/pcmcia/"
+"\"exclude port 0x800-0x8ff\". Эти параметры будут добавлены в /etc/pcmcia/"
 "config.opts. Более подробную информацию смотрите в инструкции по установке "
 "или в PCMCIA HOWTO."
 
 #. Type: string
 #. Description
-#: ../hw-detect.templates:32
+#: ../hw-detect.templates:31
 msgid "For most hardware, you do not need to specify anything here."
 msgstr "Для большинства устройств здесь можно ничего не указывать."
 
 #. Type: string
 #. Description
-#: ../hw-detect.templates:43
+#: ../hw-detect.templates:42
 msgid "Additional parameters for module ${MODULE}:"
 msgstr "Введите дополнительные параметры для модуля ${MODULE}:"
 
 #. Type: string
 #. Description
-#: ../hw-detect.templates:43
+#: ../hw-detect.templates:42
 msgid ""
 "The module ${MODULE} failed to load. You may need to pass parameters to the "
 "module to make it work; this is common with older hardware. These parameters "
@@ -251,7 +258,7 @@ msgstr ""
 
 #. Type: string
 #. Description
-#: ../hw-detect.templates:43
+#: ../hw-detect.templates:42
 msgid ""
 "If you don't know what to enter, consult your documentation, or leave it "
 "blank to not load the module."
@@ -261,19 +268,19 @@ msgstr ""
 
 #. Type: error
 #. Description
-#: ../hw-detect.templates:55
+#: ../hw-detect.templates:54
 msgid "Error while running '${CMD_LINE_PARAM}'"
 msgstr "Ошибка при выполнении команды '${CMD_LINE_PARAM}'"
 
 #. Type: boolean
 #. Description
-#: ../hw-detect.templates:60
+#: ../hw-detect.templates:59
 msgid "Load missing drivers from a driver floppy?"
 msgstr "Загрузить отсутствующие драйверы с дискеты?"
 
 #. Type: boolean
 #. Description
-#: ../hw-detect.templates:60
+#: ../hw-detect.templates:59
 msgid ""
 "A driver for your hardware is not available. You may need to load drivers "
 "from a driver floppy. If you have such a floppy available now, put it in the "

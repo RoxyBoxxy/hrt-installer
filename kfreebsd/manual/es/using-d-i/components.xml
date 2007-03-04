@@ -1,17 +1,18 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<!-- original version: 35395 -->
+<!-- original version: 43965 -->
 <!-- Revisado Rudy Godoy, 22 feb. 2005 -->
+<!-- Revisado por Igor Tamara, enero 2007 -->
 
  <sect1 id="module-details">
- <title>Usando componentes individuales</title>
+ <title>Uso de componentes individuales</title>
 <para>
 
 En esta sección describiremos en detalle cada componente del
-instalador. Los componentes han sido agrupados en etapas que serán
-reconocibles por los usuarios. Éstos se presentan en el orden en
-el que aparecen durante la instalación. Note que no todos los módulos
-serán usados en cada instalación; los módulos que realmente son
-usados dependen del método de instalación que use y de su hardware.
+instalador. Los componentes han sido agrupados en etapas que los usuarios 
+podrán reconocer. Éstos se presentan en el orden en
+el que aparecen durante la instalación. Note que no se usarán todos 
+los módulos en cada instalación; los módulos que se usan realmente
+dependen del método de instalación que use y de su hardware.
 
 </para>
 
@@ -75,8 +76,9 @@ temas estrechamente relacionados como LVM o dispositivos RAID.
 &module-autopartkit.xml;
 &module-partitioner.xml;
 &module-partconf.xml;
-&module-lvmcfg.xml;
 &module-mdcfg.xml;
+&module-partman-lvm.xml;
+&module-partman-crypto.xml;
   </sect2>
 
 
@@ -113,8 +115,8 @@ lentos, esto podría tomar algún tiempo.
 <para>
 
 Una vez se haya instalado el sistema base tendrá un sistema usable
-pero limitado. La mayoría de los usuarios querrán añadir programas adicionales
-al sistema para ajustarlo a sus necesidades, y el instalador le permite 
+pero limitado. La mayoría de los usuarios querrán instalar programas adicionales
+en el sistema para ajustarlo a sus necesidades, y el instalador le permite 
 hacer esto. Este paso puede tardar más tiempo que la instalación del sistema
 base si tiene un ordenador lento o su red es lenta.
 
@@ -135,21 +137,13 @@ que esta etapa se saltará. <phrase arch="sparc">Tal vez quiera
 configurar «OpenBoot» para arrancar desde red en forma predeterminada,
 vea <xref linkend="boot-dev-select-sun"/>.</phrase>
 
-</para><para>
-
-Note que el arrancar múltiples sistemas operativos en una misma máquina
-todavía es un arte oscuro. Éste documento no intenta documentar
-los diferentes gestores de arranque, que varían por arquitectura e
-incluso por subarquitectura. Deberá consultar la documentación de
-su gestor de arranque para más detalles.
-
 </para>
 
 &module-os-prober.xml;
 &module-alpha-aboot-installer.xml;
 &module-hppa-palo-installer.xml;
-&module-i386-grub-installer.xml;
-&module-i386-lilo-installer.xml;
+&module-x86-grub-installer.xml;
+&module-x86-lilo-installer.xml;
 &module-ia64-elilo-installer.xml;
 &module-mips-arcboot-installer.xml;
 &module-mipsel-colo-installer.xml;
@@ -170,7 +164,7 @@ sistema. En su mayoría consiste en ordenar después del &d-i;.
 
 </para>
 
-&module-prebaseconfig.xml;
+&module-finish-install.xml;
   </sect2>
 
   <sect2 id="di-miscellaneous">

@@ -20,10 +20,10 @@
 #     MA 02111-1307 USA
 #
 
-TAR_FILE=all-po.tar.gz
+TAR_FILE=/var/lib/gforge/chroot/home/groups/d-i/htdocs/l10n-stats/all-po.tar.gz
+DEST=~/d-i/levels/
 
-rm -fr ~/d-i/*
-cd ~/d-i
-wget --non-verbose http://people.debian.org/~seppy/d-i/${TAR_FILE}
-tar xzf ${TAR_FILE}
-rm ${TAR_FILE}
+rm -fr ${DEST}/*
+
+tar xzf ${TAR_FILE} -C ${DEST}
+

@@ -3,20 +3,23 @@ Section: debian-installer
 Priority: optional
 Maintainer: Debian Install System Team <debian-boot@lists.debian.org>
 Uploaders: Petter Reinholdtsen <pere@debian.org>, Joey Hess <joeyh@debian.org>, Frans Pop <fjp@debian.org>
-Build-Depends-Indep: debhelper (>= 4.2.0), po-debconf (>= 0.5.0), dpkg-dev (>= 1.9)
+Build-Depends: debhelper (>= 4.2.0)
+Build-Depends-Indep: po-debconf (>= 0.5.0), dpkg-dev (>= 1.9)
 Standards-Version: 3.6.1
+XS-Vcs-Svn: svn://svn.debian.org/d-i/trunk/packages/installation-report
 
 Package: save-logs
 XC-Package-Type: udeb
 Architecture: all
 Priority: standard
+Depends: ${misc:Depends}
 XB-Installer-Menu-Item: 940
 Description: save logs and configuration for debug purposes
 
 Package: installation-report
 Architecture: all
 Section: misc
-Recommends: reportbug
+Recommends: reportbug, pciutils
 Description: system installation report
  This package contains instructions and programs for reporting on
  the installation of a new system. It can help you fill out an

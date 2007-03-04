@@ -7,16 +7,16 @@
 # Copyright (C) 2003 Software in the Public Interest, Inc.
 # This file is distributed under the same license as debian-installer.
 # Tommi Vainikainen <thv+debian@iki.fi>, 2003 - 2004
-# Tapio Lehtonen <tale@debian.org>, 2004 - 2005
+# Tapio Lehtonen <tale@debian.org>, 2004 - 2006
 # Thanks to lokalisointi-laatu@linux-aktivaattori.org.
-# 
-# 
+#
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: debian-installer\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-04-07 23:43-0600\n"
-"PO-Revision-Date: 2006-01-31 14:39+0200\n"
+"Report-Msgid-Bugs-To: debian-boot@lists.debian.org\n"
+"POT-Creation-Date: 2007-01-06 22:47+0100\n"
+"PO-Revision-Date: 2006-09-29 18:40+0300\n"
 "Last-Translator: Tapio Lehtonen <tale@debian.org>\n"
 "Language-Team: Finnish <debian-l10n-finnish@lists.debian.org>\n"
 "MIME-Version: 1.0\n"
@@ -27,7 +27,7 @@ msgstr ""
 #. Description
 #: ../user-setup-udeb.templates:22
 msgid "Allow login as root?"
-msgstr ""
+msgstr "Sallitaanko sisäänkirjautuminen root-käyttäjänä?"
 
 #. Type: boolean
 #. Description
@@ -36,6 +36,8 @@ msgid ""
 "If you choose not to allow root to log in, then a user account will be "
 "created and given the power to become root using the 'sudo' command."
 msgstr ""
+"Jos sisäänkirjautuminen root-käyttäjänä kielletään, luodaan tavallinen "
+"käyttäjätunnus jolle sallitaan siirtyminen rootiksi komennolla \"sudo\"."
 
 #. Type: password
 #. Description
@@ -101,7 +103,7 @@ msgstr ""
 #: ../user-setup-udeb.templates:49
 msgid ""
 "Note that you may create it later (as well as any additional account) by "
-"typing 'adduser <username>' as root, where <username> is an user name, like "
+"typing 'adduser <username>' as root, where <username> is an username, like "
 "'imurdock' or 'rms'."
 msgstr ""
 "Huomaa, että voit luoda sen myöhemmin (ja lisääkin tunnuksia) komennolla "
@@ -154,7 +156,7 @@ msgid ""
 msgstr ""
 "Valitse uusi käyttäjätunnus. Etunimesi on mielekäs vaihtoehto. Huomaa, että "
 "käyttäjätunnuksen täytyy alkaa pienaakkosella, jonka jälkeen tulee numeroita "
-"ja pienaakkosia."
+"ja pienaakkosia. Ei saa käyttää kirjaimia åäö."
 
 #. Type: error
 #. Description
@@ -166,22 +168,38 @@ msgstr "Virheellinen käyttäjätunnus"
 #. Description
 #: ../user-setup-udeb.templates:79
 msgid ""
-"The user name you entered is invalid. Note that usernames must start with a "
+"The username you entered is invalid. Note that usernames must start with a "
 "lower-case letter, which can be followed by any combination of numbers and "
 "more lower-case letters."
 msgstr ""
 "Syöttämäsi käyttäjätunnus on virheellinen. Huomaa, että käyttäjätunnuksen "
 "täytyy alkaa pienaakkosella, jonka jälkeen tulee numeroita ja pienaakkosia."
 
-#. Type: password
+#. Type: error
 #. Description
 #: ../user-setup-udeb.templates:86
+msgid "Reserved username"
+msgstr "Käyttäjätunnus on varattu"
+
+#. Type: error
+#. Description
+#: ../user-setup-udeb.templates:86
+msgid ""
+"The username you entered (${USERNAME}) is reserved for use by the system. "
+"Please select a different one."
+msgstr ""
+"Annettu käyttäjätunnus (${USERNAME}) on varattu järjestelmän käyttöön. "
+"Valitse toinen käyttäjätunnus."
+
+#. Type: password
+#. Description
+#: ../user-setup-udeb.templates:92
 msgid "Choose a password for the new user:"
 msgstr "Valitse uudelle käyttäjälle salasana:"
 
 #. Type: password
 #. Description
-#: ../user-setup-udeb.templates:86
+#: ../user-setup-udeb.templates:92
 msgid ""
 "A good password will contain a mixture of letters, numbers and punctuation "
 "and should be changed at regular intervals."
@@ -191,13 +209,13 @@ msgstr ""
 
 #. Type: password
 #. Description
-#: ../user-setup-udeb.templates:92
+#: ../user-setup-udeb.templates:98
 msgid "Re-enter password to verify:"
 msgstr "Syötä salasana uudelleen varmuuden vuoksi:"
 
 #. Type: password
 #. Description
-#: ../user-setup-udeb.templates:92
+#: ../user-setup-udeb.templates:98
 msgid ""
 "Please enter the same user password again to verify you have typed it "
 "correctly."
@@ -207,25 +225,25 @@ msgstr ""
 
 #. Type: error
 #. Description
-#: ../user-setup-udeb.templates:98
+#: ../user-setup-udeb.templates:104
 msgid "Password input error"
 msgstr "Salasanan syöttövirhe"
 
 #. Type: error
 #. Description
-#: ../user-setup-udeb.templates:98
+#: ../user-setup-udeb.templates:104
 msgid "The two passwords you entered were not the same. Please try again."
 msgstr "Syöttämäsi kaksi salasanaa eivät olleet sama. Yritä uudelleen."
 
 #. Type: error
 #. Description
-#: ../user-setup-udeb.templates:103
+#: ../user-setup-udeb.templates:109
 msgid "Empty password"
 msgstr "Tyhjä salasana"
 
 #. Type: error
 #. Description
-#: ../user-setup-udeb.templates:103
+#: ../user-setup-udeb.templates:109
 msgid ""
 "You entered an empty password, which is not allowed. Please choose a non-"
 "empty password."
@@ -235,13 +253,13 @@ msgstr ""
 
 #. Type: boolean
 #. Description
-#: ../user-setup-udeb.templates:110
+#: ../user-setup-udeb.templates:116
 msgid "Enable shadow passwords?"
 msgstr "Otetaanko varjosalasanat (/etc/shadow) käyttöön?"
 
 #. Type: boolean
 #. Description
-#: ../user-setup-udeb.templates:110
+#: ../user-setup-udeb.templates:116
 msgid ""
 "Shadow passwords make your system more secure because nobody is able to view "
 "even encrypted passwords. The passwords are stored in a separate file that "
@@ -256,13 +274,13 @@ msgstr ""
 
 #. Type: title
 #. Description
-#: ../user-setup-udeb.templates:118
+#: ../user-setup-udeb.templates:124
 msgid "Set up users and passwords"
 msgstr "Luo käyttäjätunnukset ja salasanat"
 
 #. Type: text
 #. Description
-#. Prebaseconfig progress bar item
-#: ../user-setup-udeb.templates:123
+#. finish-install progress bar item
+#: ../user-setup-udeb.templates:129
 msgid "Setting users and passwords..."
 msgstr "Tehdään käyttäjätunnukset ja salasanat..."

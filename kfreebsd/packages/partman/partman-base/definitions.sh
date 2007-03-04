@@ -24,6 +24,34 @@ basename () {
 	echo "${x##*/}"
 }
 
+can_escape () {
+	type debconf-escape >/dev/null 2>&1 || return 1
+	db_capb backup
+	for cap in $RET; do
+		case $cap in
+			escape)	return 0 ;;
+		esac
+	done
+	return 1
+}
+
+maybe_escape () {
+	local code saveret
+	text="$1"
+	shift
+	if can_escape; then
+		db_capb backup escape
+		code=0
+		"$@" "$(printf '%s' "$text" | debconf-escape -e)" || code=$?
+		saveret="$RET"
+		db_capb backup
+		RET="$saveret"
+		return $code
+	else
+		"$@" "$text"
+	fi
+}
+
 debconf_select () {
 	local IFS priority template choices default_choice default x u newchoices code
 	priority="$1"
@@ -44,8 +72,8 @@ debconf_select () {
 		else
 			debconf_select_lead="> "
 		fi
-		option=$(echo "${x#*$TAB}" | sed 's/ *$//g' | sed "s/^ /$debconf_select_lead/g")
-		newchoices="${newchoices}${NL}${key}${TAB}${option}"
+		option=$(echo "${x#*$TAB}" | sed "s/ *\$//g; s/^ /$debconf_select_lead/g")
+		newchoices="${newchoices:+${newchoices}${NL}}${key}${TAB}${option}"
 		if [ "$key" = "$default_choice" ]; then
 		    default="$option"
 		fi
@@ -56,9 +84,16 @@ debconf_select () {
 	# escape the commas and leading whitespace but keep them unescaped
 	# in $choices
         for x in $choices; do
-                u="$u, `echo ${x#*$TAB} | sed 's/,/\\\\,/g' | sed 's/^ /\\\\ /'`"
+                u="$u, `echo ${x#*$TAB} | sed 's/,/\\\\,/g; s/^ /\\\\ /'`"
         done
         u=${u#, }
+	restore_ifs
+	# TODO: This can be preseeded without having to use translated
+	# values (which are often inappropriate for preseeding across many
+	# machines due to including e.g. disk capacities) but it's nasty;
+	# you have to use runes like
+	# "20some_device__________/var/lib/partman/devices/=dev=sda". We
+	# could do with an abbreviated syntax.
 	if [ -n "$default" ]; then
 	        db_set $template "$default"
 	fi
@@ -74,6 +109,7 @@ debconf_select () {
 			break
 		fi
 	done
+	restore_ifs
 	return $code
 }
 
@@ -255,8 +291,6 @@ stop_parted_server () {
     open_infifo
     write_line "QUIT"
     close_infifo
-
-    rm /var/run/parted_server.pid
 }
 
 # Must call stop_parted_server before calling this.
@@ -412,7 +446,7 @@ error_handler () {
 	log error_handler: reading options
 	options=$(read_list)
 	db_subst partman/exception_handler TYPE "$type"
-	db_subst partman/exception_handler DESCRIPTION "$message"
+	maybe_escape "$message" db_subst partman/exception_handler DESCRIPTION
 	db_subst partman/exception_handler CHOICES "$options"
 	if
 	    expr "$options" : '.*,.*' >/dev/null \
@@ -426,7 +460,7 @@ error_handler () {
 	    fi
 	else
 	    db_subst partman/exception_handler_note TYPE "$type"
-	    db_subst partman/exception_handler_note DESCRIPTION "$message"
+	    maybe_escape "$message" db_subst partman/exception_handler_note DESCRIPTION
 	    db_input $priority partman/exception_handler_note || true
 	    db_go || true
 	    write_line "unhandled"
@@ -477,6 +511,22 @@ humandev () {
 	    host=`echo $1 | sed 's,/dev/ide/host\(.*\)/bus.*/target[01]/lun0/disc,\1,'`
 	    bus=`echo $1 | sed 's,/dev/ide/host.*/bus\(.*\)/target[01]/lun0/disc,\1,'`
 	    target=`echo $1 | sed 's,/dev/ide/host.*/bus.*/target\([01]\)/lun0/disc,\1,'`
+	    idenum=$((2 * $host + $bus + 1))
+	    linux=$(mapdevfs $1)
+	    linux=${linux#/dev/}
+	    if [ "$target" = 0 ]; then
+		db_metaget partman/text/ide_master_disk description
+		printf "$RET" ${idenum} ${linux}
+	    else
+		db_metaget partman/text/ide_slave_disk description
+		printf "$RET" ${idenum} ${linux}
+	    fi
+	    ;;
+	# Some drivers advertise the disk as "part", workaround for #404950
+	/dev/ide/host*/bus[01]/target[01]/lun0/part)
+	    host=`echo $1 | sed 's,/dev/ide/host\(.*\)/bus.*/target[01]/lun0/part,\1,'`
+	    bus=`echo $1 | sed 's,/dev/ide/host.*/bus\(.*\)/target[01]/lun0/part,\1,'`
+	    target=`echo $1 | sed 's,/dev/ide/host.*/bus.*/target\([01]\)/lun0/part,\1,'`
 	    idenum=$((2 * $host + $bus + 1))
 	    linux=$(mapdevfs $1)
 	    linux=${linux#/dev/}
@@ -592,11 +642,11 @@ humandev () {
 		echo "$1"
 	    fi
 	    ;;
-	/dev/cciss/*)
-	    # /dev/cciss/hostN/targetM/disc is 2.6 form
-	    # /dev/cciss/discM/disk seems to be 2.4 form
+	/dev/cciss/host*|/dev/cciss/disc*)
+	    # /dev/cciss/hostN/targetM/disc is 2.6 devfs form
+	    # /dev/cciss/discM/disk seems to be 2.4 devfs form
 	    line=`echo $1 | sed 's,/dev/cciss/\([a-z]*\)\([0-9]*\)/\(.*\),\1 \2 \3,'`
-	    cont=`echo "$line" | cut -d" " -f2`
+	    controller=`echo "$line" | cut -d" " -f2`
 	    host=`echo "$line" | cut -d" " -f1`
 	    line=`echo "$line" | cut -d" " -f3`
 	    if [ "$host" = host ] ; then
@@ -608,10 +658,10 @@ humandev () {
 	       line=`echo "$line" | sed 's,disc\([0-9]*\)/\([a-z]*\)\(.*\),\1 \2 \3,'`
 	       lun=`echo  "$line" | cut -d" " -f1`
 	       if [ "$lun" > 15 ] ; then
-	          cont=$(($lun / 16))
+	          controller=$(($lun / 16))
 		  lun=$(($lun % 16))
 	       else
-		  cont=0
+		  controller=0
 	       fi
 	       disc=`echo "$line" | cut -d" " -f2`
 	       part=`echo "$line" | cut -d" " -f3`
@@ -620,10 +670,36 @@ humandev () {
 	    linux=${linux#/dev/}
 	    if [ "$disc" = disc ] ; then
 	       db_metaget partman/text/scsi_disk description
-	       printf "$RET" ".CCISS" "-" ${cont} ${lun} ${linux}
+	       printf "$RET" ".CCISS" "-" ${controller} ${lun} ${linux}
 	    else
 	       db_metaget partman/text/scsi_partition description
-	       printf "$RET" ".CCISS" "-" ${cont} ${lun} ${part} ${linux}
+	       printf "$RET" ".CCISS" "-" ${controller} ${lun} ${part} ${linux}
+	    fi
+	    ;;
+	/dev/cciss/c*d*)
+	    # It would be a lot easier to parse the /sys/block/*/device
+	    # symlink. Unfortunately, unlike other block devices, this
+	    # doesn't seem to exist in this case, so we just have to live
+	    # with parsing the device name (note: added in upstream 2.6.18).
+	    controller="$(echo "$1" | sed 's,/dev/cciss/c\([0-9]*\).*,\1,')"
+	    lun="$(echo "$1" | sed 's,/dev/cciss/c[0-9]*d\([0-9]*\).*,\1,')"
+	    case $1 in
+		/dev/cciss/c*d*p*)
+		    # partition
+		    part="$(echo "$1" | sed 's,/dev/cciss/c[0-9]*d[0-9]*p\([0-9]*\).*,\1,')"
+		    ;;
+		*)
+		    part=
+		    ;;
+	    esac
+	    linux="$(mapdevfs "$1")"
+	    linux="${linux#/dev/}"
+	    if [ -z "$part" ]; then
+		db_metaget partman/text/scsi_disk description
+		printf "$RET" ".CCISS" "-" "$controller" "$lun" "$linux"
+	    else
+		db_metaget partman/text/scsi_partition description
+		printf "$RET" ".CCISS" "-" "$controller" "$lun" "$part" "$linux"
 	    fi
 	    ;;
 	/dev/md/*)
@@ -636,10 +712,10 @@ humandev () {
 	    # First of all, check if this is a dm-crypt device
 	    type=""
 	    if [ -x /sbin/dmsetup ]; then
-	        type=$(/sbin/dmsetup table "$1" | head -1 | cut -d " " -f3)
+	        type=$(/sbin/dmsetup table "$1" | head -n 1 | cut -d " " -f3)
 	    fi
 
-	    if [ $type = crypt ]; then
+	    if [ "$type" = crypt ]; then
 	        mapping=${1#/dev/mapper/}
 	        db_metaget partman/text/dmcrypt_volume description
 	        printf "$RET" $mapping
@@ -650,17 +726,30 @@ humandev () {
 	        # occurance of one single dash to split the string into vg and
 	        # lv, and then replace two dashes next to each other with one.
 	        vglv=${1#/dev/mapper/}
-	        vglv=`echo "$vglv" | sed -e 's/\([^-]\)-\([^-]\)/\1 \2/' | sed -e 's/--/-/g'`
+	        vglv=`echo "$vglv" | sed 's/\([^-]\)-\([^-]\)/\1 \2/; s/--/-/g'`
 	        vg=`echo "$vglv" | cut -d" " -f1`
 	        lv=`echo "$vglv" | cut -d" " -f2`
 	        db_metaget partman/text/lvm_lv description
 	        printf "$RET" $vg $lv
 	    fi
 	    ;;
-	/dev/loop/*)
-	    n=${1#/dev/loop/}
+	/dev/loop/*|/dev/loop*)
+	    n=${1#/dev/loop}
+	    n=${n#/}
 	    db_metaget partman/text/loopback description
 	    printf "$RET" $n
+	    ;;
+	# DASD partition, classic
+	/dev/dasd*[0-9]*)
+	    part="${1#/dev/}"
+	    disk="${part%%[0-9]*}"
+	    part="${part#$disk}"
+	    humandev_dasd_partition /sys/block/$disk/$(readlink /sys/block/$disk/device) $part
+	    ;;
+	# DASD disk, classic
+	/dev/dasd*)
+	    disk="${1#/dev/}"
+	    humandev_dasd_disk /sys/block/$disk/$(readlink /sys/block/$disk/device)
 	    ;;
 	*)
 	    # Check if it's an LVM1 device
@@ -674,6 +763,20 @@ humandev () {
 	    fi
 	    ;;
     esac
+}
+
+humandev_dasd_disk () {
+    dev=${1##*/}
+    discipline=$(cat $1/discipline)
+    db_metaget partman/text/dasd_disk description
+    printf "$RET" "$dev" "$discipline"
+}
+
+humandev_dasd_partition () {
+    dev=${1##*/}
+    discipline=$(cat $1/discipline)
+    db_metaget partman/text/dasd_partition description
+    printf "$RET" "$dev" "$discipline" "$part"
 }
 
 device_name () {
@@ -702,7 +805,9 @@ enable_swap () {
 	close_dialog
     done
     for path in $swaps; do
-	swapon $path || true
+	if ! grep -q "$path" /proc/swaps; then
+	    swapon $path 2>/dev/null || true
+	fi
     done
     cd "$startdir"
 }
@@ -733,24 +838,28 @@ default_disk_label () {
 	    else
 		echo msdos
 	    fi;;	    
-	arm)
+	arm|armel)
 	    case "$sub" in
+		iop32x)
+		    echo msdos;;
+		iop33x)
+		    echo msdos;;
+		ixp4xx)
+		    echo msdos;;
 		riscstation)
 		    echo msdos;;
 		netwinder)
 		    echo msdos;;
-		bast)
-		    echo msdos;;
 		ads)
 		    echo msdos;;
-		nslu2)
+		versatile)
 		    echo msdos;;
 		*)
 		    echo UNKNOWN;;
 	    esac;;
 	armeb)
 	    case "$sub" in
-		nslu2)
+		ixp4xx)
 		    echo msdos;;
 		*)
 		    echo UNKNOWN;;
@@ -794,6 +903,8 @@ default_disk_label () {
 		# Broadcom SB1 evaluation boards
 		sb1-bcm91250a | sb1a-bcm91480b)
 		    echo msdos;;
+		qemu-mips32)
+		    echo msdos;;
 		*)
 		    echo UNKNOWN;;
 	    esac;;
@@ -810,6 +921,8 @@ default_disk_label () {
 		cobalt)
 		    echo msdos;;
 		bcm947xx)
+		    echo msdos;;
+		qemu-mips32)
 		    echo msdos;;
 		*)
 		    echo UNKNOWN;;
@@ -836,12 +949,187 @@ default_disk_label () {
 		    echo UNKNOWN;;
 	    esac;;
 	s390)
-	    echo UNSUPPORTED;; # ibm is unsupported by parted
+	    echo msdos;;
 	sparc)
 	    echo sun;;
 	*)
 	    echo UNKNOWN;;
     esac
+}
+
+# Lock a device or partition against further modifications
+partman_lock_unit() {
+	local device message dev testdev
+	device="$1"
+	message="$2"
+
+	for dev in $DEVICES/*; do
+		[ -d "$dev" ] || continue
+		cd $dev
+
+		# First check if we should lock a device
+		if [ -e "device" ]; then
+			testdev=$(mapdevfs $(cat device))
+			if [ "$device" = "$testdev" ]; then
+				echo "$message" > locked
+				return 0
+			fi
+		fi
+
+		# Second check if we should lock a partition
+		open_dialog PARTITIONS
+		while { read_line num id size type fs path name; [ "$id" ]; }; do
+			testdev=$(mapdevfs $path)
+			if [ "$device" = "$testdev" ]; then
+				echo "$message" > $id/locked
+			fi
+		done
+		close_dialog
+	done
+}
+
+# Unlock a device or partition to allow further modifications
+partman_unlock_unit() {
+	local device dev testdev
+	device="$1"
+
+	for dev in $DEVICES/*; do
+		[ -d "$dev" ] || continue
+		cd $dev
+
+		# First check if we should unlock a device
+		if [ -e "device" ]; then
+			testdev=$(mapdevfs $(cat device))
+			if [ "$device" = "$testdev" ]; then
+				rm -f locked
+				return 0
+			fi
+		fi
+
+		# Second check if we should unlock a partition
+		open_dialog PARTITIONS
+		while { read_line num id size type fs path name; [ "$id" ]; }; do
+			testdev=$(mapdevfs $path)
+			if [ "$device" = "$testdev" ]; then
+				rm -f $id/locked
+			fi
+		done
+		close_dialog
+	done
+}
+
+# List the changes that are about to be committed and let the user confirm first
+confirm_changes () {
+	local template dev x part partitions num id size type fs path name filesystem partdesc partitems items formatted_previously
+	template="$1"
+
+	# Compute the changes we are going to do
+	partitems=''
+	items=''
+	formatted_previously=no
+	for dev in $DEVICES/*; do
+		[ -d "$dev" ] || continue
+		cd $dev
+
+		open_dialog IS_CHANGED
+		read_line x
+		close_dialog
+		if [ "$x" = yes ]; then
+			partitems="${partitems}   $(humandev $(cat device))
+"
+		fi
+
+		partitions=
+		open_dialog PARTITIONS
+		while { read_line num id size type fs path name; [ "$id" ]; }; do
+			[ "$fs" != free ] || continue
+			partitions="$partitions $id,$num"
+		done
+		close_dialog
+	
+		for part in $partitions; do
+			id=${part%,*}
+			num=${part#*,}
+			[ -f $id/method -a -f $id/format \
+			  -a -f $id/visual_filesystem ] || continue
+			# if no filesystem (e.g. swap) should either be not
+			# formatted or formatted before the method is specified
+			[ -f $id/filesystem -o ! -f $id/formatted \
+			  -o $id/formatted -ot $id/method ] || continue
+			# if it is already formatted filesystem it must be formatted 
+			# before the method or filesystem is specified
+			[ ! -f $id/filesystem -o ! -f $id/formatted \
+			  -o $id/formatted -ot $id/method \
+			  -o $id/formatted -ot $id/filesystem ] ||
+			{
+				formatted_previously=yes
+				continue
+			}
+			filesystem=$(cat $id/visual_filesystem)
+			# Special case d-m devices to use a different description
+			if cat device | grep -q "/dev/mapper" ; then
+				partdesc="partman/text/confirm_unpartitioned_item"
+			else
+				partdesc="partman/text/confirm_item"
+				db_subst $partdesc PARTITION "$num"
+			fi
+			db_subst $partdesc TYPE "$filesystem"
+			db_subst $partdesc DEVICE $(humandev $(cat device))
+			db_metaget $partdesc description
+		    
+			items="${items}   ${RET}
+"
+		done
+	done
+
+	if [ "$items" ]; then
+		db_metaget partman/text/confirm_item_header description
+		items="$RET
+$items"
+	fi
+    
+	if [ "$partitems" ]; then
+		db_metaget partman/text/confirm_partitem_header description
+		partitems="$RET
+$partitems"
+	fi
+
+	if [ "$partitems$items" ]; then
+		if [ -z "$items" ]; then
+			x="$partitems"
+		elif [ -z "$partitems" ]; then
+			x="$items"
+		else
+			x="$partitems
+$items"
+		fi
+		maybe_escape "$x" db_subst $template/confirm ITEMS
+		db_input critical $template/confirm
+		db_go || true
+		db_get $template/confirm
+		if [ "$RET" = false ]; then
+			db_reset $template/confirm
+			return 1
+		else
+			db_reset $template/confirm
+			return 0
+		fi
+	else
+		if [ "$formatted_previously" = no ]; then
+			db_input critical $template/confirm_nochanges
+			db_go || true
+			db_get $template/confirm_nochanges
+			if [ "$RET" = false ]; then
+				db_reset $template/confirm_nochanges
+				return 1
+			else
+				db_reset $template/confirm_nochanges
+				return 0
+			fi
+		else
+			return 0
+		fi
+	fi
 }
 
 log '*******************************************************'

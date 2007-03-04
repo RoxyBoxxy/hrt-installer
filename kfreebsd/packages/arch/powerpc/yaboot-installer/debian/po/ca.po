@@ -11,10 +11,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: debian-installer 1.1\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-11-20 18:34-0700\n"
-"PO-Revision-Date: 2006-04-02 21:56+0200\n"
+"Project-Id-Version: debian-installer etch\n"
+"Report-Msgid-Bugs-To: debian-boot@lists.debian.org\n"
+"POT-Creation-Date: 2007-01-06 22:48+0100\n"
+"PO-Revision-Date: 2006-10-11 11:20+0200\n"
 "Last-Translator: Jordi Mallach <jordi@debian.org>\n"
 "Language-Team: Catalan <debian-l10n-catalan@lists.debian.org>\n"
 "MIME-Version: 1.0\n"
@@ -47,9 +47,9 @@ msgid ""
 "boot loader is a required step.  The install problem might however be "
 "unrelated to Yaboot, so continuing the installation may be possible."
 msgstr ""
-"No s'ha pogut instal·lar el paquet yaboot en /target/. Instal·lar Yaboot com "
+"No s'ha pogut instal·lar el paquet yaboot a /target/. Instal·lar Yaboot com "
 "el carregador és un pas requerit. El problema d'instal·lació pot no estar "
-"relacionat amb Yaboot, així que continuar amb la instal·lació potser serà "
+"relacionat amb Yaboot, així doncs continuar amb la instal·lació potser serà "
 "possible."
 
 #. Type: text
@@ -71,7 +71,7 @@ msgid ""
 "No hard disks were found which have an \"Apple_Bootstrap\" partition.  You "
 "must create an 819200-byte partition with type \"Apple_Bootstrap\"."
 msgstr ""
-"No s'ha trobat cap dic que continga una partició «Apple_Bootstrap». Heu de "
+"No s'ha trobat cap disc que continga una partició «Apple_Bootstrap». Heu de "
 "crear una partició de 819200 octets de tipus «Apple_Bootstrap»."
 
 #. Type: text
@@ -126,7 +126,7 @@ msgstr ""
 #. Description
 #: ../yaboot-installer.templates:45
 msgid "Warning: this will erase all data on the selected partition!"
-msgstr "Avís: això esborrarà totes les dades en la partició seleccionada!"
+msgstr "Avís: això esborrarà totes les dades a la partició seleccionada!"
 
 #. Type: text
 #. Description
@@ -145,13 +145,6 @@ msgstr "No s'ha pogut crear la configuració de yaboot"
 #: ../yaboot-installer.templates:59
 msgid "The creation of the main yaboot configuration file failed."
 msgstr "La creació del fitxer de configuració principal de yaboot ha fallat."
-
-#. Type: error
-#. Description
-#: ../yaboot-installer.templates:59
-msgid "Please check the syslog for more information."
-msgstr ""
-"Si us plau, comproveu el registre del sistema per a obtenir més informació."
 
 #. Type: text
 #. Description
@@ -199,14 +192,14 @@ msgstr "No s'ha pogut muntar /target/proc"
 #. Description
 #: ../yaboot-installer.templates:88
 msgid "Mounting the proc file system on /target/proc failed."
-msgstr "Ha fallat el muntatge del sistema de fitxers proc en /target/proc."
+msgstr "Ha fallat el muntatge del sistema de fitxers proc a /target/proc."
 
 #. Type: error
 #. Description
 #: ../yaboot-installer.templates:88
-msgid "Please check the system log or the output on the third console (tty3)."
+msgid "Check /var/log/syslog or see virtual console 4 for the details."
 msgstr ""
-"Comproveu el registre del sistema o l'eixida en la tercera consola (tty3)."
+"Comproveu /var/log/syslog o vegeu la consola virtual 4 per als detalls."
 
 #. Type: error
 #. Description
@@ -216,7 +209,7 @@ msgstr "Avís: el vostre sistema pot no ser arrencable!"
 
 #. Type: note
 #. Description
-#: ../yaboot-installer.templates:97
+#: ../yaboot-installer.templates:98
 msgid "Setting firmware variables for automatic boot"
 msgstr ""
 "S'estan establint les variables del microprogramari per a l'arrencada "
@@ -224,61 +217,39 @@ msgstr ""
 
 #. Type: note
 #. Description
-#: ../yaboot-installer.templates:97
+#: ../yaboot-installer.templates:98
 msgid ""
-"Some variables need to be set in the Pegasos OpenFirmware in order for your "
+"Some variables need to be set in the Genesi firmware in order for your "
 "system to boot automatically.  At the end of the installation, the system "
-"will reboot.  At the Pegasos OpenFirmware prompt, set the following "
-"OpenFirmware variables to enable auto-booting:"
+"will reboot.  At the firmware prompt, set the following firmware variables "
+"to enable auto-booting:"
 msgstr ""
-"Es necessita establir algunes variables al Pegasos OpenFirmware per a poder "
-"arrencar el sistema automàticament. Al final de la instal·lació, el sistema "
-"arrencarà de nou. A l'indicatiu de Pegasos OpenFirmware, establiu les "
-"següents variables d'OpenFirmware per a habilitar l'arrencada automàtica:"
+"Es necessita establir algunes variables al microprogramari Genesi per a "
+"poder arrencar el sistema automàticament. Al final de la instal·lació, el "
+"sistema tornarà a arrencar. A l'indicador del microprogramari, establiu les "
+"següents variables del microprogramari per a habilitar l'arrencada "
+"automàtica:"
 
 #. Type: note
 #. Description
-#: ../yaboot-installer.templates:97
-msgid ""
-" setenv boot-device ${OF_BOOT_DEVICE}\n"
-" setenv boot-file ${OF_BOOT_FILE}\n"
-" setenv auto-boot-timeout 5000\n"
-" setenv auto-boot? true"
-msgstr ""
-" setenv boot-device ${OF_BOOT_DEVICE}\n"
-" setenv boot-file ${OF_BOOT_FILE}\n"
-" setenv auto-boot-timeout 5000\n"
-" setenv auto-boot? true"
-
-#. Type: note
-#. Description
-#: ../yaboot-installer.templates:97
+#: ../yaboot-installer.templates:98
 msgid ""
 "You will only need to do this once.  Afterwards, enter the \"boot\" command "
-"or reboot the system to proceed to the next stage of the installation."
+"or reboot the system to proceed to your newly installed system."
 msgstr ""
-"Només tindreu que fer això una vegada. Després, introduïu l'ordre «boot» o "
-"torneu a arrencar el sistema per a continuar amb el següent pas de la "
-"instal·lació."
+"Només us caldrà fer això una vegada. Després, introduïu l'ordre «boot» o "
+"torneu a arrencar el sistema per a iniciar el sistema que s'acaba "
+"d'instal·lar."
 
 #. Type: note
 #. Description
-#: ../yaboot-installer.templates:97
+#: ../yaboot-installer.templates:98
 msgid ""
-"Alternatively, you will be able to boot the system manually by entering:"
-msgstr "Alternativament, podreu arrencar el sistema manualment introduint:"
-
-#. Type: note
-#. Description
-#: ../yaboot-installer.templates:97
-msgid " ${BOOT}"
-msgstr " ${BOOT}"
-
-#. Type: note
-#. Description
-#: ../yaboot-installer.templates:97
-msgid "at the OpenFirmware prompt."
-msgstr "a l'indicatiu d'OpenFirmware."
+"Alternatively, you will be able to boot the kernel manually by entering, at "
+"the firmware prompt:"
+msgstr ""
+"Alternativament, podreu arrencar el nucli manualment introduint, a "
+"l'indicador del microprogramari:"
 
 #. Type: text
 #. Description

@@ -14,15 +14,19 @@ ifeq ($(DEB_HOST_ARCH_OS),)
   DEB_HOST_ARCH_OS    := $(shell dpkg-architecture -qDEB_HOST_GNU_SYSTEM)
 endif
 
-files = 
+files = \
+	S62directfb-hw-accel \
+	S62directfb-left-handed
 
 ifneq (,$(filter i386 amd64,$(DEB_HOST_ARCH_CPU)))
    files += \
+	S59check-vesa-x86 \
 	S61mouse-support-x86
 endif
 ifneq (,$(filter powerpc,$(DEB_HOST_ARCH_CPU)))
    files += \
-	S61mouse-support-powerpc
+	S61mouse-support-powerpc \
+	S63directfb-linux-powerpc
 endif
 
 include ../../../Makefile.inc

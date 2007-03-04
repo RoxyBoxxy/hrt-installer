@@ -8,34 +8,58 @@ addinfo () {
 	sed "s%^%$1: %"
 }
 
+addfile () {
+	if [ -r "$1" ]; then
+		cat "$1" | addinfo "$1"
+	fi
+}
+
+list_loaded_modules () {
+	for address in /sys/bus/pci/devices/*; do
+		if [ -d "$address/driver/module" ]; then
+			module=$(basename "$(readlink $address/driver/module)")
+			if grep -q "^$module " /proc/modules; then
+				address=$(basename "$address" | sed s/0000://)
+				echo "$(lspci -n -s "$address" | tail -n 1 | cut -d ' ' -f 3) $module"
+			fi
+		fi
+	done
+}
+
 uname -a 2>&1 | addinfo "umame -a"
-discover -f "%m;%S;%D;%V;%M;%d\n" all | addinfo "discover" || true
 
 if type lspci >/dev/null 2>&1; then
-	lspci -v -t 2>&1 | addinfo "lspci -v -t"
-	lspci -n 2>&1 | addinfo "lspci -n"
-	lspci -v 2>&1 | addinfo "lspci -v"
-	lspci -x 2>&1 | addinfo "lspci -x"
-elif /target/usr/bin/lspci >/dev/null; then
-	/target/usr/bin/lspci -v -t 2>&1 | addinfo "lspci -v -t"
-	/target/usr/bin/lspci -n 2>&1 | addinfo "lspci -n"
-	/target/usr/bin/lspci -v 2>&1 | addinfo "lspci -v"
-	/target/usr/bin/lspci -x 2>&1 | addinfo "lspci -x"
+	lspci -nn  2>&1 | addinfo "lspci -nn"
+	lspci -vnn 2>&1 | addinfo "lspci -vnn"
+
+	# List which modules are referring to which PCI devices
+	if [ -d /sys/bus/pci/devices ] ; then
+		list_loaded_modules | addinfo modulemap
+	fi
 else
-	cat /proc/pci 2>&1 | addinfo /proc/pci
-	cat /proc/bus/pci/devices 2>&1 | addinfo /proc/bus/pci/devices
+	addfile /proc/pci
+	addfile /proc/bus/pci/devices
 fi
 
 lsmod 2>&1 | addinfo lsmod
 df 2>&1 | addinfo df
 free 2>&1 | addinfo free
+
+pccardctl status 2>&1 | addinfo "cardctl status"
+pccardctl ident 2>&1 | addinfo "cardctl ident"
 cardctl status 2>&1 | addinfo "cardctl status"
 cardctl ident 2>&1 | addinfo "cardctl ident"
 
 for file in cpuinfo ioports iomem interrupts meminfo bus/usb/devices \
 	bus/input/devices; do
-	if [ -e /proc/$file ] ; then
-		cat /proc/$file 2>&1 | addinfo /proc/$file
-	fi
+	addfile /proc/$file
 done
 dmidecode 2>&1 | addinfo dmidecode
+
+if [ "$DEBIAN_FRONTEND" = gtk ]; then
+	addfile /proc/fb
+	addfile /etc/directfbrc
+	if [ -x /usr/lib/directfb-0.9.25/bin/dfbinfo ]; then
+		/usr/lib/directfb-0.9.25/bin/dfbinfo 2>&1 | addinfo dfbinfo
+	fi
+fi

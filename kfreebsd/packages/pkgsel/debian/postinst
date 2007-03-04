@@ -2,11 +2,10 @@
 set -e
 . /usr/share/debconf/confmodule
 
-# Avoid perl warnings in any of the chroot calls below.
-LANG=C
-export LANG
+# Avoid perl warnings in any of the chroot calls below
+export LANG=C
 
-DIVERTS='/usr/bin/scrollkeeper-update /usr/bin/scrollkeeper-rebuilddb'
+DIVERTS='/usr/bin/scrollkeeper-update /usr/bin/scrollkeeper-rebuilddb /usr/bin/fc-cache'
 
 log() {
 	logger -t pkgsel "$@"
@@ -28,7 +27,7 @@ debconf-copydb -p \
 	"^(debian-installer/language|debian-installer/country|debian-installer/keymap|passwd/username)$" \
 	configdb target_configdb
 
-# scrollkeeper takes forever, so divert it for the duration
+# temporarily divert programs that take a long time
 for divert in $DIVERTS; do
 	log-output -t pkgsel chroot /target dpkg-divert --package pkgsel \
 		--rename --quiet --add "$divert"
@@ -48,9 +47,16 @@ if in-target sh -c "$config debconf-apt-progress --from 1 --to 5 --logstderr -- 
 	fi
 fi
 
+db_get pkgsel/include
+if [ "$RET" ]; then
+	tasksel_end=90
+else
+	tasksel_end=95
+fi
+
 db_progress INFO pkgsel/progress/tasksel
 ret=0
-in-target sh -c "$config tasksel --new-install --debconf-apt-progress='--from 5 --to 95 --logstderr'" || ret=$?
+in-target sh -c "$config tasksel --new-install --debconf-apt-progress='--from 5 --to $tasksel_end --logstderr'" || ret=$?
 if [ "$ret" != 0 ]; then
 	# In case packages failed to install, try to clean up.
 	in-target dpkg --configure -a || true
@@ -64,6 +70,26 @@ if [ "$ret" != 0 ]; then
 	exit $ret
 fi
 
+db_get pkgsel/include
+if [ "$RET" ]; then
+	# Allow comma-separation so that this can more easily be preseeded
+	# at the kernel command line.
+	RET="$(printf '%s' "$RET" | sed 's/,/ /g')"
+	in-target sh -c "$config debconf-apt-progress --from 90 --to 95 --logstderr -- aptitude -q --without-recommends -y install $RET" || ret=$?
+	if [ "$ret" != 0 ]; then
+		# In case packages failed to install, try to clean up.
+		in-target dpkg --configure -a || true
+
+		# TODO useful error message here (for ret != 30)
+		db_progress INFO pkgsel/progress/cleanup
+		if ! cleanup; then
+			log "cleanup failed"
+		fi
+		db_progress STOP
+		exit $ret
+	fi
+fi
+
 db_progress INFO pkgsel/progress/cleanup
 if ! cleanup; then
 	log "cleanup failed"
@@ -72,6 +98,10 @@ db_progress STEP 2
 
 if [ -x /target/usr/bin/scrollkeeper-update ]; then
 	log-output -t pkgsel chroot /target scrollkeeper-update -q || true
+fi
+if [ -x /target/usr/bin/fc-cache ]; then
+	chroot /target fc-cache -f -v >/target/var/log/fontconfig.log 2>&1 \
+		|| true
 fi
 
 db_progress STEP 3

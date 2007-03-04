@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<!-- original version: 35130 -->
+<!-- original version: 43939 -->
 
  <sect1 id="needed-info">
  <title>Informations à connaître</title>
 
   <sect2>
-  <title>Documentation</title>
+  <title>La documentation</title>
 
    <sect3>
-   <title>Manuel d'installation</title>
+   <title>Le manuel d'installation</title>
 
-<para>
+<para  condition="for_cd">
 Le document que vous lisez, au format texte, HTML ou PDF.
 </para>
 <itemizedlist condition="for_cd">
@@ -37,18 +37,18 @@ dans différents formats.
 
 </sect3>
 
-   <sect3><title>Documentation du matériel</title>
+   <sect3><title>La documentation du matériel</title>
 <para>
 
-Elles contiennent souvent des informations utiles pour l'utilisation et la 
+Elle contient souvent des informations utiles pour l'utilisation et la 
 configuration de votre matériel.
 </para>
 
 <!-- We need the arch dependence for the whole list to ensure proper xml
       as long as not architectures have a paragraph -->
- <itemizedlist arch="i386;m68k;alpha;sparc;mips;mipsel">
+ <itemizedlist arch="x86;m68k;alpha;sparc;mips;mipsel">
 
-<listitem arch="i386"><para>
+<listitem arch="x86"><para>
 
 <ulink url="&url-hardware-howto;">HOWTO sur la compatibilité des matériels avec Linux</ulink>
 
@@ -83,7 +83,7 @@ configuration de votre matériel.
 
    <sect3 arch="s390">
    <title>Références pour le matériel &arch-title;</title>
-<para>q
+<para>
 Les instructions d'installation et les pilotes de périphériques
 (DASD, XPRAM, console, bande, crypto z90, chandev, réseau) pour Linux
 sur &arch-title; avec un noyau 2.4&nbsp;;
@@ -94,7 +94,7 @@ sur &arch-title; avec un noyau 2.4&nbsp;;
 <listitem><para>
 
 
-<ulink url="http://oss.software.ibm.com/developerworks/opensource/linux390/docu\/l390dd08.pdf">Pilotes de périphériques et commandes d'installation</ulink>
+<ulink url="http://oss.software.ibm.com/developerworks/opensource/linux390/docu/l390dd08.pdf">Pilotes de périphériques et commandes d'installation</ulink>
 
 </para></listitem>
 </itemizedlist>
@@ -145,18 +145,18 @@ commencer l'installation.
 </para>
 
 <para>
-On peut trouver des informations à partir de plusieurs sources&nbsp;:
+On peut trouver des informations sur plusieurs sources&nbsp;:
 </para>
 
 <itemizedlist>
 <listitem><para>
 
-Les manuels accompagnant chaque élément&nbsp;;
+les manuels accompagnant chaque élément&nbsp;;
 
 </para></listitem>
 <listitem><para>
 
-Les informations sur la configuration du BIOS de votre ordinateur.
+les informations sur la configuration du BIOS de votre ordinateur.
 Vous pouvez accéder à ces écrans pendant le démarrage de l'ordinateur
 en appuyant sur une combinaison de touches. Consultez votre manuel
 pour connaître cette combinaison. Il s'agit souvent de la touche
@@ -165,18 +165,18 @@ pour connaître cette combinaison. Il s'agit souvent de la touche
 </para></listitem>
 <listitem><para>
 
-Les boîtes et cartons de chaque pièce&nbsp;;
+les boîtes et cartons de chaque élément&nbsp;;
 
 </para></listitem>
-<listitem arch="i386"><para>
+<listitem arch="x86"><para>
 
-La fenêtre «&nbsp;Système&nbsp;» dans le panneau de configuration
+la fenêtre «&nbsp;Système&nbsp;» dans le panneau de configuration
     de Windows&nbsp;;
 
 </para></listitem>
 <listitem><para>
 
-Les commandes système ou les outils d'un autre système d'exploitation,
+les commandes système ou les outils d'un autre système d'exploitation,
 incluant les affichages d'un gestionnaire de fichiers.
 Cette source est particulièrement utile pour trouver des informations
 sur la mémoire vive et les disques durs&nbsp;;
@@ -184,7 +184,7 @@ sur la mémoire vive et les disques durs&nbsp;;
 </para></listitem>
 <listitem><para>
 
-Votre administrateur système ou votre fournisseur d'accès à internet.
+votre administrateur système ou votre fournisseur d'accès à internet.
 Ces sources peuvent vous indiquer les réglages nécessaires à la
 configuration du réseau et du courrier.
 
@@ -207,8 +207,9 @@ configuration du réseau et du courrier.
   <entry>Leur nombre</entry>
 </row>
 <row arch="not-s390"><entry>Leur ordre dans le système</entry></row>
-<row arch="not-s390;not-m68k">
-  <entry>S'ils sont IDE ou SCSI (la plupart sont en IDE)</entry>
+<!-- "not-m68k;not-s390" would really turn out to be everything... -->
+<row arch="alpha;arm;hppa;x86;ia64;mips;mipsel;powerpc;sparc">
+  <entry>S'ils sont IDE ou SCSI (la plupart sont IDE)</entry>
 </row>
 <row arch="m68k">
   <entry>S'ils sont IDE ou SCSI (la plupart des ordinateurs m68k sont SCSI).</entry>
@@ -220,7 +221,7 @@ configuration du réseau et du courrier.
 </row>
 
 <row arch="not-s390">
-  <entry morerows="5">Moniteur</entry>
+  <entry morerows="5">Écran</entry>
   <entry>Le modèle et la marque</entry>
 </row>
 <row arch="not-s390"><entry>Les résolutions acceptées</entry></row>
@@ -240,7 +241,7 @@ configuration du réseau et du courrier.
 <row arch="not-s390"><entry>Le nombre de boutons</entry></row>
 
 <row arch="not-s390">
-  <entry morerows="1">Réseau</entry>
+  <entry morerows="1">Carte réseau</entry>
   <entry>Le modèle et la marque</entry>
 </row>
 <row arch="not-s390"><entry>Le type d'interface</entry></row>
@@ -286,23 +287,23 @@ configuration du réseau et du courrier.
 <para>
 
 Beaucoup de produits de marques fonctionnent sans problème sous Linux.
-De plus, le matériel pour Linux est amélioré chaque jour. Cependant,
+Et la gestion des matériels est améliorée chaque jour. Cependant,
 Linux ne peut pas utiliser autant de matériels que d'autres
 systèmes d'exploitation.
 
-</para><para arch="i386">
+</para><para arch="x86">
 
 En particulier, Linux n'est pas compatible avec le matériel
 qui nécessite Windows pour fonctionner.
 
-</para><para arch="i386">
+</para><para arch="x86">
 
 Bien que Linux puisse faire fonctionner certains matériels spécifiques à
-Windows, le faire demande un effort supplémentaire. D'autre part, les
+Windows, cela demande un effort supplémentaire. D'autre part, les
 pilotes Linux pour ce type de matériel sont souvent dépendants d'une
-version du noyau, et sont donc rapidement obsolètes.
+version du noyau et deviennent rapidement obsolètes.
 
-</para><para arch="i386">
+</para><para arch="x86">
 
 Les dénommés <quote>win-modems</quote> sont le cas le plus courant de ce type de
 matériel. Mais des imprimantes et d'autres périphériques peuvent
@@ -314,25 +315,25 @@ Voici quelques pistes pour vérifier la compatibilité de votre matériel&nbsp;:
 <itemizedlist>
 <listitem><para>
 
-Cherchez de nouveaux pilotes sur le site web des fabricants&nbsp;;
+chercher de nouveaux pilotes sur le site web des fabricants&nbsp;;
 
 </para></listitem>
 <listitem><para>
 
-Cherchez des informations pour une possible émulation sur les
-    sites web ou les manuels. Des marques moins connues peuvent parfois
-    fournir des pilotes ou des réglages pour des marques plus connues&nbsp;;
+chercher des informations concernant une possible émulation sur les sites web ou dans
+les manuels. Des marques moins connues peuvent parfois fournir des pilotes ou des réglages
+pour des marques plus connues&nbsp;;
 
 </para></listitem>
 <listitem><para>
 
-Vérifiez les listes de matériel compatible avec Linux sur les
-    sites web dédiés à votre architecture&nbsp;;
+vérifier les listes de matériel compatible avec Linux sur les
+sites web dédiés à votre architecture&nbsp;;
 
 </para></listitem>
 <listitem><para>
 
-Cherchez sur internet l'expérience d'autres utilisateurs.
+chercher sur internet l'expérience des autres utilisateurs.
 
 </para></listitem>
 </itemizedlist>
@@ -344,34 +345,33 @@ Cherchez sur internet l'expérience d'autres utilisateurs.
   <title>Configuration du réseau</title>
 
 <para>
-
-Vous devriez demander à votre administrateur système si votre machine est 
-connectée à un réseau 24h/24 &mdash; avec une connexion Ethernet ou 
-équivalente, pas une connexion PPP.
+Si votre machine est connectée à un réseau 24h/24 &mdash; avec une connexion Ethernet ou 
+équivalente (pas une connexion PPP) &mdash;, vous devriez demander
+à votre administrateur système les éléments suivants&nbsp;:
 
 <itemizedlist>
 <listitem><para>
-Le nom de votre machine (à choisir vous-même)&nbsp;;
+le nom de votre machine (à choisir vous-même)&nbsp;;
 </para></listitem>
 <listitem><para>
-Le nom de votre domaine&nbsp;;
+le nom du domaine&nbsp;;
 </para></listitem>
 <listitem><para>
-L'adresse IP de votre machine&nbsp;;
+l'adresse IP de votre machine&nbsp;;
 </para></listitem>
 <listitem><para>
-Le masque-réseau à utiliser&nbsp;;
+le masque réseau à utiliser&nbsp;;
 </para></listitem>
 <listitem><para>
-L'adresse IP de la passerelle qui sert de routeur, <emphasis>si</emphasis>
+l'adresse IP de la passerelle qui sert de routeur, <emphasis>si</emphasis>
 votre réseau possède une passerelle&nbsp;;
 </para></listitem>
 <listitem><para>
-La machine de votre réseau qui servira de serveur DNS (Domain Name Service).
+la machine de votre réseau qui servira de serveur DNS (Domain Name Service).
 </para></listitem>
 </itemizedlist>
 </para>
-<para condition="supports-dhcp">
+<para>
 Si votre administrateur système vous a informé qu'un serveur DHCP était
 disponible, vous n'avez pas besoin de toutes ces informations. Le serveur
 DHCP les fournira directement pendant le processus d'installation.
@@ -382,21 +382,13 @@ Pour un réseau sans fil, vous aurez besoin des informations suivantes&nbsp;:
 <itemizedlist>
 <listitem><para>
 
-L'ESSID du réseau sans fil&nbsp;;
+l'ESSID du réseau sans fil&nbsp;;
 </para></listitem>
 <listitem><para>
-La clé WEP (si nécesaire).
+la clé WEP (si nécessaire).
 </para></listitem>
 </itemizedlist>
 
 </para>
   </sect2>
  </sect1>
-
-
-
-
-
-
-
-

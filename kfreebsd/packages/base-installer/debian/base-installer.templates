@@ -55,6 +55,7 @@ _Description: Base system installation error
 
 Template: base-installer/debootstrap/fallback-error
 Type: error
+#flag:translate!:3
 _Description: Debootstrap Error
  The following error occurred:
  .
@@ -95,7 +96,10 @@ _Description: Unable to install the selected kernel
 
 Template: base-installer/kernel/which-kernel
 Type: select
-_Choices: ${KERNELS}, none
+#flag:translate!:1
+# For base-installer, "none" is an additional choice to a list of kernels.
+# It means "no kernel"
+__Choices: ${KERNELS}, none[ Do not translate what's inside the brackets and just put the translation for the word "none" in your language without any brackets. This "none" means "no kernel" ]
 _Description: Kernel to install:
  The list shows the available kernels. Please choose one of them in order
  to make the system bootable from the hard drive.
@@ -391,7 +395,7 @@ Template: base-installer/section/pick_kernel
 Type: text
 _Description: Selecting the kernel to install...
 
-Template: base-installer/section/install_kernel
+Template: base-installer/section/install_linux
 Type: text
 _Description: Installing the kernel...
 

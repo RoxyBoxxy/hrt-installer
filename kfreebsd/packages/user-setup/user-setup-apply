@@ -48,22 +48,28 @@ fi
 if ! root_password; then
 	# Was the root password preseeded encrypted?
 	if db_get passwd/root-password-crypted && [ "$RET" ]; then
+		# The root password was preseeded encrypted.
 		ROOT_PW="$RET"
-		# The root password was preseeded encrypted. Clear it from
-		# the database, then set it.
-		db_set passwd/root-password-crypted ''
-		setpassword root "$ROOT_PW" true
-		ROOT_PW=
+		PRECRYPTED=true
 	else
 		db_get passwd/root-password
 		ROOT_PW="$RET"
-		# Clear the root password from the database, and set the
-		# password.
-		db_set passwd/root-password ''
-		db_set passwd/root-password-again ''
-		setpassword root "$ROOT_PW" false
-		ROOT_PW=
+		PRECRYPTED=false
 	fi
+	# Clear the root password from the database, and set the password.
+	db_set passwd/root-password-crypted ''
+	db_set passwd/root-password ''
+	db_set passwd/root-password-again ''
+	if [ "$ROOT_PW" ]; then
+		setpassword root "$ROOT_PW" "$PRECRYPTED"
+	fi
+	ROOT_PW=
+else
+	# Just in case, clear any preseeded root password from the database
+	# anyway.
+	db_set passwd/root-password-crypted ''
+	db_set passwd/root-password ''
+	db_set passwd/root-password-again ''
 fi
 
 db_get passwd/make-user
@@ -93,6 +99,11 @@ if [ "$RET" = true ] && ! is_system_user; then
 	USER="$RET"
 	db_get passwd/user-fullname
 
+	HOME_EXISTED=
+	if [ -d "$ROOT/home/$USER" ]; then
+		HOME_EXISTED=1
+	fi
+
 	if [ -x $ROOT/usr/sbin/adduser ]; then
 		$log $chroot $ROOT adduser --disabled-password --gecos "$RET" $UIDOPT "$USER" >/dev/null || true
 	else
@@ -100,16 +111,21 @@ if [ "$RET" = true ] && ! is_system_user; then
 	fi
 
 	# Clear the user password from the database.
-	if [ "$USER_PW_CRYPTED" = true ]; then
-		db_set passwd/user-password-crypted ''
-	else
-		db_set passwd/user-password ''
-		db_set passwd/user-password-again ''
-	fi
+	db_set passwd/user-password-crypted ''
+	db_set passwd/user-password ''
+	db_set passwd/user-password-again ''
 	setpassword "$USER" "$USER_PW" "$USER_PW_CRYPTED"
 
+	if [ "$HOME_EXISTED" ]; then
+		# The user's home directory already existed before we called
+		# adduser. This often means that a mount point under
+		# /home/$USER was selected in (and thus created by) partman,
+		# and the home directory may have ended up owned by root.
+		$log $chroot $ROOT chown "$USER:$USER" "/home/$USER" >/dev/null || true
+	fi
+
 	if [ -n "$USER" ]; then
-		for group in audio cdrom dialout floppy video plugdev; do
+		for group in audio cdrom dialout floppy video plugdev netdev powerdev; do
 			$log $chroot $ROOT adduser "$USER" $group >/dev/null 2>&1 || true
 		done
 	fi
@@ -129,7 +145,19 @@ if [ "$RET" = true ] && ! is_system_user; then
 			# sudo failed to install, system won't be usable
 			exit 1
 		fi
+		# Configure gksu to use sudo, via an alternative, if it's
+		# installed and the alternative is registered.
+		if $chroot update-alternatives --display libgksu-gconf-defaults >/dev/null 2>&1; then
+			$log $chroot update-alternatives --set libgksu-gconf-defaults /usr/share/libgksu/debian/gconf-defaults.libgksu-sudo
+			$log $chroot update-gconf-defaults
+		fi
 	fi
+else
+	# Just in case, clear any preseeded user password from the database
+	# anyway.
+	db_set passwd/user-password-crypted ''
+	db_set passwd/user-password ''
+	db_set passwd/user-password-again ''
 fi
 
 exit 0

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<!-- original version: 31619 -->
+<!-- original version: 42302 -->
 <!-- Revisado por Rudy Godoy -->
 
 <sect1 id="partition-programs">
@@ -22,7 +22,7 @@ pueden aplicar a su arquitectura.
 
 Herramienta original de Linux para particionar discos. Esta «navaja suiza»
 también puede ajustar el tamaño de las particiones,
-crear sistemas de ficheros <phrase arch="i386">
+crear sistemas de ficheros <phrase arch="x86">
 (como se llama en Windows a <quote>formatear</quote>) </phrase> y
 asignarlos a sus respectivos puntos de montaje.
 
@@ -42,7 +42,7 @@ Sea cuidadoso si tiene una partición de FreeBSD en su máquina.
 Los núcleos instalados traen soporte para este tipo de partición,
 pero la manera en que <command>fdisk</command> la representa, puede
 (o no) ser un poco diferente. Para más información, revise el
-<ulink url="&url-linux-freebsd;">CÓMO de Linux+FreeBSD</ulink>
+<ulink url="&url-linux-freebsd;">CÓMO de Linux+FreeBSD</ulink>.
 
 </para></listitem>
 </varlistentry>
@@ -117,49 +117,15 @@ mayor información.
 <para>
 
 Se ejecutará uno de estos programas por omisión cuando seleccione
-<guimenuitem>Particionar un disco duro</guimenuitem> en la instalación.
-Si el programa predeterminado no es el que desea usar,
-abandone el particionador, diríjase al intérprete de órdenes
-(<userinput>tty2</userinput>) presionando <keycap>Alt</keycap>
-y <keycap>F2</keycap> al mismo tiempo, y escriba el nombre
-del programa que desea usar para particionar (puede usar argumentos
-propios del programa si lo desea).  Luego, omita la sección
-<guimenuitem>Particionar un disco duro</guimenuitem> en el
-<command>debian-installer</command> y continúe hacia el siguiente paso.
+<guimenuitem>Particionar discos duros</guimenuitem> (o similar).
+Puede utilizar otro programa de particionado desde el intérprete
+de órdenes en VT2, pero esto no es recomendable.
 
 </para><para>
 
-Si va a trabajar con más de 20 particiones en su disco duro IDE,
-necesitará crear los dispositivos para todas las particiones a partir
-de la partición 21 (si es que existen, obviamente). Si los dispositivos
-no están configurados correctamente fallará el siguiente paso:
-«Inicialización de la particiones».
-Como ejemplo, aquí hay una lista de órdenes que puede usar en
-<userinput>tty2</userinput> o bajo el intérprete de órdenes para agregar
-un dispositivo, con el fín de que la partición número 21 pueda ser
-inicializada.
+</para><para arch="x86">No se olvide de marcar su partición
+como <quote>Bootable</quote> (arrancable).
 
-<informalexample><screen>
-# cd /dev
-# mknod hda21 b 3 21
-# chgrp disk hda21
-# chmod 660 hda21
-</screen></informalexample>
-
-
-Al momento de arrancar su nuevo sistema, tendrá problemas si los dispositivos
-no están presentes en el sistema de destino. Después de instalar el núcleo y
-sus módulos deberá ejecutar:
-
-<informalexample><screen>
-# cd /target/dev
-# mknod hda21 b 3 21
-# chgrp disk hda21
-# chmod 660 hda21
-</screen></informalexample>
-
-<phrase arch="i386">No se olvide de marcar su partición
-como <quote>Bootable</quote> (arrancable).</phrase>
 </para><para condition="mac-fdisk.txt">
 
 Es muy importante al particionar para discos de tipo Mac que la partición de
@@ -174,7 +140,7 @@ con MacOS.
 
 &partition-alpha.xml;
 &partition-hppa.xml;
-&partition-i386.xml;
+&partition-x86.xml;
 &partition-ia64.xml;
 &partition-mips.xml;
 &partition-powerpc.xml;

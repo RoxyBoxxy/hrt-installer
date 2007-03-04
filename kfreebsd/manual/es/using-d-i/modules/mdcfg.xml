@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<!-- original version: 33725 -->
+<!-- original version: 44026 -->
 <!-- Revisado por Rudy Godoy, 22 feb. 2005 -->
+<!-- Revisado por Igor Tamara, enero 2007 -->
 
    <sect3 id="mdcfg">
    <title>Configuración de dispositivos multidisco (RAID)</title>
@@ -25,7 +26,7 @@ formato con <command>partman</command>, asignarle un punto de montaje, etc.).
 
 </para><para>
 
-El beneficio obtenido depende del tipo de MD creado. Actualmente los tipos
+Los beneficios obtenidos dependen del tipo de MD creado. Actualmente los tipos
 soportados son:
 
 <variablelist>
@@ -43,7 +44,7 @@ en el disco que falló).
 
 </para><para>
 
-Es típico el uso de RAID 0 en una partición para edición de vídeo.
+El uso típico de RAID 0 en una partición para edición de vídeo.
 
 </para></listitem>
 </varlistentry>
@@ -51,7 +52,7 @@ Es típico el uso de RAID 0 en una partición para edición de vídeo.
 
 <term>RAID 1</term><listitem><para>
 
-Es adecuado para los casos en los que la seguridad sea lo primordial.
+Es adecuado para los casos en los que la fiabilidad sea lo primordial.
 Consiste en varias (normalmente dos) particiones del mismo tamaño donde
 cada partición contiene exactamente los mismos datos. Esto significa tres
 cosas. Primero, si un disco falla, todavía tiene una copia de los datos en los
@@ -74,7 +75,7 @@ del disco defectuoso en caso de fallo.
 <term>RAID 5</term><listitem><para>
 
 Es una buena elección entre velocidad, confiabilidad y redundancia
-de datos. RAID 5 divide todos los datos de entrada en tipos y los
+de datos. RAID 5 divide todos los datos de entrada en franjas y los
 distribuye igualmente en todos los discos (similar a RAID 0), a excepción
 de uno. A diferencia de RAID 0, RAID 5 también calcula la información de
 <firstterm>paridad</firstterm>, la cual se escribe en el disco
@@ -91,7 +92,7 @@ que falle dentro del array.
 </para><para>
 
 Como puede ver, RAID 5 tiene un grado similar de confiabilidad a
-RAID 1 logrando menos redundancia. Por otro lado podría ser un poco
+RAID 1 logrando menos redundancia. Por otro lado, podría ser un poco
 más lento en operaciones de escritura que RAID 0 debido al cálculo
 de la información de paridad.
 
@@ -145,7 +146,7 @@ Resumiendo:
 
 </para><para>
 
-Si quiere saberlo todo acerca de RAID, consulte el <ulink
+Si quiere saber más acerca de RAID, consulte el <ulink
 url="&url-software-raid-howto;">CÓMO de RAID</ulink>.
 
 </para><para>
@@ -163,13 +164,14 @@ Puede que experimente algún problema para algunos niveles RAID en
 combinación con algunos gestores de arranque si intenta usar MD para el sistema
 de ficheros raíz (<filename>/</filename>). Es posible que los usuarios
 experimentados puedan solucionar estos problemas ejecutando algún paso de
-configuración o instalación manualmente desde una shell.
+configuración o instalación manualmente desde una interfaz de órdenes.
 
 </para></warning><para>
 
 A continuación, debe elegir <guimenuitem>Configurar RAID software</guimenuitem>
 desde el menú principal de <command>partman</command>.
-
+(El menú sólo aparecerá una vez haya marcado al menos una partición
+para que se use como <guimenuitem>volumen físico para RAID</guimenuitem>.)
 En la primera pantalla de <command>mdcfg</command> simplemente seleccione
 <guimenu>Crear un dispositivo MD</guimenu>. Se le presentará una lista de tipos
 de MD soportados, de los que debe elegir uno (p. ej. RAID 1). Los siguientes
@@ -180,7 +182,7 @@ pasos dependen del tipo de MD seleccionado.
 <itemizedlist>
 <listitem><para>
 
-RAID0 es simple &mdash; se le presentará una lista de particiones RAID
+RAID 0 es simple &mdash; se le presentará una lista de particiones RAID
 disponibles y únicamente tendrá que seleccionar las particiones que formarán el
 MD.
 
@@ -198,7 +200,7 @@ particiones, &d-i; no le dejará continuar hasta que solucione el problema.
 </para></listitem>
 <listitem><para>
 
-RAID5 tiene un procedimiento de configuración similar al de RAID1, con la
+RAID 5 tiene un procedimiento de configuración similar al de RAID 1, con la
 excepción que necesita usar por lo menos <emphasis>tres</emphasis>
 particiones activas.
 

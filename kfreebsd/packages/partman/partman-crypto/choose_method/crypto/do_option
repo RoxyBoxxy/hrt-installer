@@ -11,7 +11,7 @@ part=$dev/$id
 rm -f $part/use_filesystem
 rm -f $part/format
 
+# Set defaults (this also downloads additional components)
+crypto_prepare_method $part dm-crypt || exit 1
+echo dm-crypt > $part/crypto_type
 echo crypto > $part/method
-echo loop-AES > $part/crypto_type
-
-crypto_set_defaults $part loop-AES

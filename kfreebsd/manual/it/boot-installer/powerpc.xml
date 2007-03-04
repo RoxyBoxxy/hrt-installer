@@ -1,5 +1,5 @@
 <!-- retain these comments for translator revision tracking -->
-<!-- original version: 33886 -->
+<!-- original version: 43923 -->
 
 
   <sect2 arch="powerpc" id="boot-cd">
@@ -12,16 +12,16 @@
 
 <!--
 Currently, the only &arch-title; subarchitectures that support CD-ROM
-booting are PReP and New World PowerMacs. On PowerMacs, hold the
-<keycap>c</keycap> key, or else the combination of
+booting are PReP (though not all systems) and New World PowerMacs.
+On PowerMacs, hold the <keycap>c</keycap> key, or else the combination of
 <keycap>Command</keycap>, <keycap>Option</keycap>,
 <keycap>Shift</keycap>, and <keycap>Delete</keycap>
 keys together while booting to boot from the CD-ROM.
 -->
 
-Attualmente le sole sotto architetture &arch-title; che supportano l'avvio
-da CD-ROM sono PReP e <quote>New World PowerMac</quote>. Sui PowerMac si
-deve premere il tasto <keycap>c</keycap> oppure la combinazione
+Attualmente le sole sotto architetture di &arch-title; che supportano l'avvio
+da CD-ROM sono PReP (non tutti i sistemi) e <quote>New World PowerMac</quote>.
+Sui PowerMac si deve premere il tasto <keycap>c</keycap> oppure la combinazione
 <keycap>Command</keycap>, <keycap>Option</keycap>, <keycap>Shift</keycap> e
 <keycap>Delete</keycap> contemporaneamente durante l'accensione per avviare
 da CD-ROM.
@@ -37,10 +37,10 @@ the installer, and then point the installer to the CD for the needed
 files.
 -->
 
-I PowerMac <quote>OldWorld</quote> non sono avviabili con i CD Debian perché
-questi computer si basano sul presupposto che il CD contenga il
-"Mac OS ROM CD boot driver", del quale non esiste una versione libera.
-Tutte le macchine OldWorld hanno dei lettori di dischetti, quindi
+I PowerMac <quote>OldWorld</quote> non sono avviabili con i CD Debian
+perché questi computer si basano sul presupposto che il CD contenga il
+<quote>Mac OS ROM CD boot driver</quote>, del quale non esiste una versione
+libera. Tutte le macchine OldWorld hanno dei lettori di dischetti, quindi
 questi possono essere usati per avviare l'installer che può poi
 proseguire leggendo i propri file da CD.
 
@@ -121,10 +121,9 @@ l'installatore.
 </para>
    </sect3>
 
-
    <sect3 id="boot-newworld">
    <!-- <title>Booting NewWorld Macs from OpenFirmware</title> -->
-   <title>Avvio Mac NewWorld con OpenFirmware</title>
+   <title>Avviare Mac NewWorld con OpenFirmware</title>
 <para>
 
 <!--
@@ -196,7 +195,7 @@ il programma d'installazione di Debian.
 
   <sect2 arch="powerpc" condition="bootable-usb" id="usb-boot">
   <!-- <title>Booting from USB memory stick</title> -->
-  <title>Avvio da penna USB</title>
+  <title>Avvio da chiavetta USB</title>
 <para>
 
 <!--
@@ -212,7 +211,7 @@ Make sure you have prepared everything from <xref
 linkend="boot-usb-files"/>. To boot a Macintosh system from a USB stick,
 you will need to use the Open Firmware prompt, since Open Firmware does
 not search USB storage devices by default.
-<!- TODO: although it could be made to; watch this space ->
+<!\-\- TODO: although it could be made to; watch this space \-\->
 To get to the prompt, hold down
 <keycombo><keycap>Command</keycap> <keycap>Option</keycap>
 <keycap>o</keycap> <keycap>f</keycap></keycombo> all together while
@@ -220,7 +219,7 @@ booting (see <xref linkend="invoking-openfirmware"/>).
 -->
 
 Assicurarsi di aver preparato tutto seguendo le indicazioni in <xref
-linkend="boot-usb-files"/>. Per avviare un sistema Macintosh da una penna
+linkend="boot-usb-files"/>. Per avviare un sistema Macintosh da una chiavetta
 USB è necessario usare il prompt di Open Firmware dato che Open Firmware
 non ricerca i dispositivi di memorizzazione USB autonomamente. Per ottenere
 il prompt tenere premuto i tasti <keycombo><keycap>Command</keycap>
@@ -290,8 +289,8 @@ arguments, or just hit &enterkey;.
 -->
 
 Il sistema si dovrebbe avviare e si dovrebbe presentare con il prompt
-<prompt>boot:</prompt>. Adesso è possibile inserire dei parametri d'avvio
-opzionali oppure premere &enterkey;.
+<prompt>boot:</prompt>. Adesso è possibile inserire dei parametri di
+avvio opzionali oppure premere &enterkey;.
 
 </para><warning><para>
 
@@ -310,7 +309,7 @@ come spiegato in <xref linkend="submit-bug"/>.
 
   <sect2 arch="powerpc" id="boot-tftp">
   <!-- <title>Booting with TFTP</title> -->
-  <title>Avvio via TFTP</title>
+  <title>Avvio con TFTP</title>
 
 &boot-installer-intro-net.xml;
 
@@ -331,6 +330,10 @@ boot monitor (see <xref linkend="invoking-openfirmware"/>) and
 use the command <command>boot enet:0</command>.  PReP and CHRP boxes
 may have different ways of addressing the network.  On a PReP machine,
 you should try
+<userinput>boot net:<replaceable>server_ipaddr</replaceable>,<replaceable>file</replaceable>,<replaceable>client_ipaddr</replaceable></userinput>.
+On some PReP systems (e.g. Motorola PowerStack machines) the command
+<userinput>help boot</userinput> may give a description of syntax and
+available options.
 -->
 
 Su macchine con Open Firmware, come i PowerMac NewWorld, si deve
@@ -339,8 +342,10 @@ accedere al <quote>boot monitor</quote> (si veda
 e usare il comando <command>boot enet:0</command>. Le macchine
 PReP e CHRP possono avere metodi diversi di indirizzare la rete.
 Su una macchina PReP si può provare
-
-<userinput>boot <replaceable>server_ipaddr</replaceable>,<replaceable>file</replaceable>,<replaceable>client_ipaddr</replaceable></userinput>.
+<userinput>boot net:<replaceable>server_ipaddr</replaceable>,<replaceable>file</replaceable>,<replaceable>client_ipaddr</replaceable></userinput>.
+Su alcuni sistemi PReP (come le macchine Motorola PowerStack) il comando
+<userinput>help boot</userinput> potrebbe visualizzare una descrizione
+della sintassi e delle opzioni disponibili.
 
 </para>
   </sect2>
@@ -423,7 +428,7 @@ il contenuto del dischetto sia stato caricato in memoria.
 
   <sect2 arch="powerpc">
   <!-- <title>PowerPC Boot Parameters</title> -->
-  <title>Parametri d'avvio per PowerPC</title>
+  <title>Parametri di avvio per PowerPC</title>
 <para>
 
 <!--
@@ -432,6 +437,7 @@ appears skewed on an older Apple monitor, try appending the boot
 argument <userinput>video=atyfb:vmode:6</userinput> , which will
 select that mode for most Mach64 and Rage video hardware. For Rage 128
 hardware, this changes to
+<userinput>video=aty128fb:vmode:6</userinput> .
 -->
 
 Se l'immagine appare distorta utilizzando un video Apple in modalità

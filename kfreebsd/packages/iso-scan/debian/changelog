@@ -1,3 +1,118 @@
+iso-scan (1.19) unstable; urgency=low
+
+  [ Updated translations ]
+  * Hebrew (he.po) by Lior Kaplan
+  * Malayalam (ml.po) by Praveen A
+
+ -- Frans Pop <fjp@debian.org>  Tue, 27 Feb 2007 16:52:38 +0100
+
+iso-scan (1.18) unstable; urgency=low
+
+  [ Frans Pop ]
+  * Suppress Lintian warning about missing standards version.
+  * Fix template for internal use without description.
+  * Add missing debconf dependencies.
+  * Add myself to uploaders.
+
+  [ Updated translations ]
+  * Arabic (ar.po) by Ossama M. Khayat
+  * Belarusian (be.po) by Pavel Piatruk
+  * Bulgarian (bg.po) by Damyan Ivaniv
+  * Danish (da.po) by Claus Hindsgaul
+  * Esperanto (eo.po) by Serge Leblanc
+  * Georgian (ka.po) by Aiet Kolkhi
+  * Kurdish (ku.po) by Amed Çeko Jiyan
+  * Latvian (lv.po) by Aigars Mahinovs
+  * Malayalam (ml.po) by Praveen A
+  * Norwegian Bokmål (nb.po) by Bjørn Steensrud
+  * Panjabi (pa.po) by A S Alam
+  * Polish (pl.po) by Bartosz Fenski
+  * Portuguese (Brazil) (pt_BR.po) by Felipe Augusto van de Wiel (faw)
+  * Romanian (ro.po) by Eddy Petrișor
+  * Slovenian (sl.po) by Matej Kovačič
+  * Swedish (sv.po) by Daniel Nylander
+
+ -- Frans Pop <fjp@debian.org>  Wed, 31 Jan 2007 11:38:36 +0100
+
+iso-scan (1.17) unstable; urgency=low
+
+  * Sometimes udev mis-detects usb sticks as floppies. For example, this
+    has been reported to happen with a corsair 2GB stick. This didn't matter,
+    but now that list-devices is used, it does. Add a hack to use list-devices
+    floppy and check those devices last.
+  * Fix code that re-scans for usb devices after a failure; this was still
+    using the (removed) block_devices function!
+
+  [ Updated translations ]
+  * Belarusian (be.po) by Andrei Darashenka
+  * Estonian (et.po) by Siim Põder
+  * Basque (eu.po) by Piarres Beobide
+  * Hebrew (he.po) by Lior Kaplan
+  * Hindi (hi.po) by Nishant Sharma
+  * Croatian (hr.po) by Josip Rodin
+  * Hungarian (hu.po) by SZERVÁC Attila
+  * Italian (it.po) by Stefano Canepa
+  * Kurdish (ku.po) by Erdal Ronahi
+  * Latvian (lv.po) by Aigars Mahinovs
+  * Norwegian Bokmål (nb.po) by Bjørn Steensrud
+  * Nepali (ne.po) by Shiva Prasad Pokharel
+  * Tamil (ta.po) by Damodharan Rajalingam
+  * Turkish (tr.po) by Recai Oktaş
+  * Vietnamese (vi.po) by Clytie Siddall
+
+ -- Joey Hess <joeyh@debian.org>  Sun, 22 Oct 2006 18:00:24 -0400
+
+iso-scan (1.16) unstable; urgency=low
+
+  * Put debhelper in Build-Depends rather than in Build-Depends-Indep.
+  * Use list-devices to look for block devices. Requires di-utils 1.34.
+
+  [ Updated translations ]
+  * Catalan (ca.po) by Jordi Mallach
+  * Greek, Modern (1453-) (el.po) by quad-nrg.net
+  * Spanish (es.po) by Javier Fernández-Sanguino Peña
+  * Estonian (et.po) by Siim Põder
+  * Gujarati (gu.po) by Kartik Mistry
+  * Panjabi (pa.po) by A S Alam
+  * Northern Sami (se.po) by Børre Gaup
+  * Swedish (sv.po) by Daniel Nylander
+  * Traditional Chinese (zh_TW.po) by Tetralet
+
+ -- Colin Watson <cjwatson@debian.org>  Thu, 31 Aug 2006 17:32:37 +0100
+
+iso-scan (1.15) unstable; urgency=low
+
+  * Deal with the case where the machine is so fast that iso-scan
+    scans for new devices before the USB disks become ready. Add a possible
+    second pass in the quick scan that sleepds, looks for new devices and,
+    if any new devices are found, rescans them all. Closes: #335093
+    (Note that rather than complex code to keep track of what devices are new,
+    I just rescan them all because this is supposed to happen only on very
+    fast machines anyway. KISS)
+  * Load hfsplus before hfs, since hfsplus filesystems show as an empty hfs
+    filesystem, which hides any iso on them. Loading hdsplus first should make
+    mount try it first. Closes: #337316
+
+ -- Joey Hess <joeyh@debian.org>  Thu, 15 Jun 2006 18:52:52 -0400
+
+iso-scan (1.14) unstable; urgency=low
+
+  * Change load-iso menu item number from 13 to 16. cdrom-detect, load-iso,
+    load-cdrom, ethdetect, and s390-netdevice are all changed due to this and
+    should transition together.
+    Closes: #373097
+
+ -- Joey Hess <joeyh@debian.org>  Tue, 13 Jun 2006 20:30:33 -0400
+
+iso-scan (1.13) unstable; urgency=low
+
+  * Fix name in log function.
+  * Remove unncecessary logging.
+  * Queue apt-cdrom-setup for install if the iso can install base, so that
+    the iso will be used after apt-setup.
+
+ -- Joey Hess <joeyh@debian.org>  Fri, 12 May 2006 17:32:16 -0500
+
 iso-scan (1.12) unstable; urgency=low
 
   [ Joey Hess ]

@@ -1,8 +1,16 @@
 #!/bin/bash
-ROOT=/home/fjp/projects/manual-build
 
-$ROOT/bin/build-manual
-$ROOT/bin/mail-logs
+[ -f ~/.di-manual-daily ] || exit 1
+. ~/.di-manual-daily
+
+RET=0
+# Pass all parameters to actual build script
+$ROOT/bin/build-manual $@ || RET=$?
+
+if [ $RET = 0 ] || [ $RET = 999 ]; then
+	$ROOT/bin/mail-logs
+else
+	echo "Build failed, not sending logs"
+fi
 
 exit 0
-

@@ -24,7 +24,7 @@ debian/short-tmp/shortlists: debian/iso-codes
 
 check-scripts:
 	if [ -x /bin/ash ] ; then SH=ash ; else SH=dash; fi ; \
-	for s in prebaseconfig debian/postinst languagemap localechooser ; do \
+	for s in finish-install debian/postinst languagemap localechooser ; do \
 		$$SH -n $$s ; \
 	done
 
@@ -33,7 +33,7 @@ check-utf8: $(L10NLIST)
 
 check-data:
 	# Check that the listed locale is supported, to make sure it will work.
-	@for locale in `grep -v "^#" $(LIST) | cut -d\; -f2 | grep _` ; do \
+	@for locale in `grep -v "^#" $(LIST) | cut -d\; -f5 | grep _` ; do \
 		if grep -q "^$$locale " /usr/share/i18n/SUPPORTED ; then \
 			: ; \
 		else \

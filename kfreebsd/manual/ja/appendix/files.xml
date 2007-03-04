@@ -1,31 +1,30 @@
 <?xml version="1.0" encoding="EUC-JP"?>
 <!-- retain these comments for translator revision tracking -->
-<!-- original version: 33887 -->
+<!-- original version: 44436 -->
 
 
  <sect1 id="linuxdevices"><title>Linux のデバイス</title>
 <para>
 
 <!--
-In Linux you have various special files in
-<filename>/dev</filename>. These files are called device files. In
-the Unix world accessing hardware is different.  There you have a
-special file which actually runs a driver which in turn accesses the
-hardware. The device file is an interface to the actual system
-component. Files under <filename>/dev</filename> also behave
-differently than ordinary files. Below are the most important device
-files listed.
+In Linux various special files can be found under the directory
+<filename>/dev</filename>. These files are called device files and
+behave unlike ordinary files. The most common types of device files
+are for block devices and character devices. These files are an
+interface to the actual driver (part of the Linux kernel) which in
+turn accesses the hardware. Another, less common, type of device file
+is the named <firstterm>pipe</firstterm>.
+The most important device files are listed in the tables below.
 -->
 Linux では、<filename>/dev</filename> に特別なファイルがいろいろとあります。
-このファイルはデバイスファイルと呼ばれます。
-Unix の世界ではハードウェアへのアクセスは風変わりです。
-そこではハードウェアにアクセスする際に、
-ドライバを実際に動かす特別なファイルがあります。
-デバイスファイルは、
-実際のシステムコンポーネントへのインターフェースとなります。
-また、<filename>/dev</filename> 以下のファイルは、
-さらに通常のファイルと異なる振る舞いをします。
-以下は、最も重要なデバイスファイルの一覧です。
+このファイルはデバイスファイルと呼ばれ、
+通常のファイルと異なる振る舞いをします。
+デバイスファイルの一般的なものは、ブロックデバイスとキャラクタデバイスです。
+このファイルは、ハードウェアにアクセスする実際のドライバ 
+(Linux カーネルの一部) へのインターフェースです。
+その他、あまり一般的ではありませんが、
+<firstterm>パイプ</firstterm> というデバイスファイルの形式もあります。
+以下に、最も重要なデバイスファイルを一覧します。
 
 </para><para>
 
@@ -119,7 +118,10 @@ Unix の世界ではハードウェアへのアクセスは風変わりです。
 <informaltable><tgroup cols="2"><tbody>
 <row>
   <entry><filename>null</filename></entry>
-  <entry>送られたものをすべて消してしまうデバイス</entry>
+<!--
+  <entry>Anything written to this device will disappear</entry>
+-->
+  <entry>書き込まれたものをすべて消してしまうデバイス</entry>
 </row><row>
   <entry><filename>zero</filename></entry>
   <entry>無限に 0 を読み出せるデバイス</entry>
@@ -128,92 +130,123 @@ Unix の世界ではハードウェアへのアクセスは風変わりです。
 
 </para>
 
-  <sect2>
-<title>マウスのセットアップ</title>
-
+  <sect2 arch="not-s390" id="device-mouse">
+<!--
+  <title>Setting Up Your Mouse</title>
+-->
+  <title>マウスのセットアップ</title>
 <para>
 
 <!--
-The mouse can be used in both the Linux console (with gpm) and the X window
-environment. The two uses can be made compatible if the gpm repeater is used
-to allow the signal to flow to the X server as shown:
+The mouse can be used in both the Linux console (with gpm) and the X
+window environment. Normally, this is a simple matter of installing
+<filename>gpm</filename> and the X server itself. Both should be
+configured to use <filename>/dev/input/mice</filename> as the mouse
+device. The correct mouse protocol is named <userinput>exps2</userinput>
+in gpm, and <userinput>ExplorerPS/2</userinput> in X. The respective
+configuration files are <filename>/etc/gpm.conf</filename> and
+<filename>/etc/X11/xorg.conf</filename>.
 -->
 (gpm が動いている) Linux コンソールと X ウィンドウ環境の両方で、
 マウスを使用できます。
-以下で示すような、gpm リピータの信号を X サーバに流れるようにすれば、
-双方で使用するような互換性を持つことができます。
-
-<informalexample><screen>
-mouse =&gt; /dev/psaux  =&gt; gpm =&gt; /dev/gpmdata -&gt; /dev/mouse =&gt; X
-         /dev/ttyS0             (repeater)        (symlink)
-         /dev/ttyS1
-</screen></informalexample>
-
-<!--
-Set the repeater protocol to be raw (in <filename>/etc/gpm.conf</filename>) while
-setting X to the original mouse protocol in <filename>/etc/X11/XF86Config</filename>
-or <filename>/etc/X11/XF86Config-4</filename>.
--->
-<filename>/etc/X11/XF86Config</filename> や 
-<filename>/etc/X11/XF86Config-4</filename> で元のマウスプロトコルを 
-X に設定するなら、リピータプロトコルを (<filename>/etc/gpm.conf</filename> で) 
-raw に設定してください。
+通常、<filename>gpm</filename> や X サーバ自体をインストールするだけです。
+どちらも、マウスデバイスとして <filename>/dev/input/mice</filename> 
+を使用するように設定されています。
+正しいマウスプロトコルは、gpm では <userinput>exps2</userinput>、
+X では <userinput>ExplorerPS/2</userinput> とされています。
+それぞれの設定ファイルは <filename>/etc/gpm.conf</filename> と
+<filename>/etc/X11/xorg.conf</filename> です。
 
 </para><para>
 
 <!--
-This approach to use gpm even in X has advantages when the mouse is
-unplugged inadvertently.  Simply restarting gpm with
+Certain kernel modules must be loaded in order for your mouse to work.
+In most cases the correct modules are autodetected, but not always for
+old-style serial and bus mice<footnote>
 
-<informalexample><screen>
-# /etc/init.d/gpm restart
-</screen></informalexample>
+<para>
+Serial mice usually have a 9-hole D-shaped connector; bus mice have an
+8-pin round connector, not to be confused with the 6-pin round connector
+of a PS/2 mouse or the 4-pin round connector of an ADB mouse.
+</para>
 
-will re-connect the mouse in software without restarting X.
+</footnote>, which are quite rare except on very old computers. Summary
+of Linux kernel modules needed for different mouse types:
 -->
-X の中で gpm を使用するこのアプローチは、
-マウスが不注意に抜かれた場合にも利点があります。
-単純に
+あなたのマウスが動作するには、
+特定のカーネルモジュールを読み込まなければなりません。
+ほとんどの場合、正しいモジュールを自動検出しますが、
+旧式のシリアルマウスや、バスマウスでは<footnote>
 
-<informalexample><screen>
-# /etc/init.d/gpm restart
-</screen></informalexample>
+<para>
+シリアルマウスには、通常 9 穴の D 型コネクタが、
+バスマウスには、8 ピン円形コネクタが付いており、
+PS/2 マウスの 6 ピン円形コネクタや、
+ADB マウスの 4 ピン円形コネクタと混同することはないでしょう。
+</para>
 
-として gpm を再起動すると、X を再起動しなくても、
-ソフトウェア的にマウスを再接続することができます。
+</footnote>いつもそうとは限りません。
+とはいえ、非常に古いコンピュータでなければ、かなり「まれ」です。
+以下に、マウスのタイプごとの、Linux カーネルモジュールをまとめます。
 
-</para><para>
+<informaltable><tgroup cols="2"><thead>
+<row>
+<!--
+  <entry>Module</entry>
+  <entry>Description</entry>
+-->
+  <entry>モジュール</entry>
+  <entry>説明</entry>
+</row>
+</thead><tbody>
+<row>
+  <entry>psmouse</entry>
+<!--
+  <entry>PS/2 mice (should be autodetected)</entry>
+-->
+  <entry>PS/2 マウス (自動検出可)</entry>
+</row>
+<row>
+  <entry>usbhid</entry>
+<!--
+  <entry>USB mice (should be autodetected)</entry>
+-->
+  <entry>USB マウス (自動検出可)</entry>
+</row>
+<row>
+  <entry>sermouse</entry>
+<!--
+  <entry>Most serial mice</entry>
+-->
+  <entry>ほとんどのシリアルマウス</entry>
+</row>
+<row>
+  <entry>logibm</entry>
+<!--
+  <entry>Bus mouse connected to Logitech adapter card</entry>
+-->
+  <entry>Logitech アダプタカードに接続するバスマウス</entry>
+</row>
+<row>
+  <entry>inport</entry>
+<!--
+  <entry>Bus mouse connected to ATI or Microsoft InPort card</entry>
+-->
+  <entry>ATI や Microsoft の InPort カードに接続するバスマウス</entry>
+</row>
+</tbody></tgroup></informaltable>
 
 <!--
-If gpm is disabled or not installed with some reason, make sure to set X to
-read directly from the mouse device such as /dev/psaux. For details, refer
-to the 3-Button Mouse mini-Howto at
-<filename>/usr/share/doc/HOWTO/en-txt/mini/3-Button-Mouse.gz</filename>,
-<userinput>man gpm</userinput>,
-<filename>/usr/share/doc/gpm/FAQ.gz</filename>, and
-<ulink url="&url-xorg;current/doc/html/mouse.html">README.mouse</ulink>.
+To load a mouse driver module, you can use the <command>modconf</command>
+command (from the package with the same name) and look in the category
+<userinput>kernel/drivers/input/mouse</userinput>.
 -->
-いろいろな理由で gpm が無効だったりインストールされていない場合、
-/dev/psaux といったマウスデバイスから直接読み込むよう X を設定するといいです。
-詳細は、
-<filename>/usr/share/doc/HOWTO/en-txt/mini/3-Button-Mouse.gz</filename> の
-3-Button Mouse mini-Howto や、<userinput>man gpm</userinput>、
-<filename>/usr/share/doc/gpm/FAQ.gz</filename>、
-<ulink url="&url-xfree86;current/mouse.html">README.mouse</ulink>
-をご覧ください。
+マウスドライバモジュールを読み込むのに、
+<command>modconf</command> コマンド (同名のパッケージに収録) を使用でき、
+<userinput>kernel/drivers/input/mouse</userinput> カテゴリから探せます。
 
 </para><para arch="powerpc">
-
-<!--
-For PowerPC, in <filename>/etc/X11/XF86Config</filename> or
-<filename>/etc/X11/XF86Config-4</filename>, set the mouse device to
-<userinput>"/dev/input/mice"</userinput>.
--->
-PowerPC では、<filename>/etc/X11/XF86Config</filename> や
-<filename>/etc/X11/XF86Config-4</filename>で、
-マウスデバイスを <userinput>"/dev/input/mice"</userinput> に設定してください。
-
-</para><para arch="powerpc">
+<!-- FJP 20070122: Unsure if this is still valid -->
 
 <!--
 Modern kernels give you the capability to emulate a three-button mouse
@@ -240,37 +273,42 @@ when your mouse only has one button. Just add the following lines to
  </sect1>
 
  <sect1 id="tasksel-size-list">
- <title>タスクに必要なディスクの空き容量</title>
-
-<!-- Note for d-i and manual maintainers
- Sizes of tasks should be determined by running "tasksel new" on a system
- that been fully installed without selecting any tasks. By selecting a
- task together with the "manual selection" option, aptitude will be started
- and show the sizes for the task. After deselecting the packages to be
- installed, quit aptitude and repeat for other tasks.
- Space requirements need to be determined from tasksel as tasksel will not
- install recommended packages while selecting a task from aptitude will.
-d-i・マニュアルメンテナ向け注
- いずれのタスクも選択せずにインストールした状態で "tasksel new" を実行して、
- タスクのサイズを決定するべきです。
- "manual selection" オプションを用いてタスクを選択しようとすると、
- aptitude がタスク用に起動して、サイズを示します。
- インストールするパッケージの選択を解除して、
- aptitude を終了しほかのタスクについて繰り返します。
- 必要な空き領域は、aptitude からタスクを選択した時のように、
- tasksel が推奨パッケージをインストールしない状態で決定する必要があります。
+<!--
+ <title>Disk Space Needed for Tasks</title>
 -->
-
+ <title>タスクに必要なディスクの空き容量</title>
 <para>
 
 <!--
-The base installation for i386 using the default 2.4 kernel,
-including all standard packages, requires 573MB of disk space.
+A standard installation for the i386 architecture, including all standard
+packages and using the default 2.6 kernel, takes up &std-system-size;MB of disk space.
+A minimal base installation, without the <quote>Standard system</quote>
+task selected, will take &base-system-size;MB.
 -->
-デフォルトの 2.4 カーネルを用いた i386 用の基本インストールは、
-全標準パッケージを含めると、573MB のディスク領域が必要です。
+i386 アーキテクチャの全標準パッケージを含む標準インストールで、
+デフォルトの 2.6 カーネルを用いると、&std-system-size;MB 以上のディスク領域を必要とします。
+<quote>標準システム</quote>タスクを選択しない最小の基本インストールでは、
+&base-system-size;MB 必要でしょう。
 
-</para><para>
+</para>
+<important><para>
+
+<!--
+In both cases this is the actual disk space used <emphasis>after</emphasis>
+the installation is finished and any temporary files deleted. It also does
+not take into account overhead used by the file system, for example for
+journal files. This means that significantly more disk space is needed both
+<emphasis>during</emphasis> the installation and for normal system use.
+-->
+どちらの場合も、
+インストールが完了し一時ファイルを削除した<emphasis>後</emphasis>の、
+実際のディスク領域です。ジャーナルファイルのような、
+ファイルシステムのオーバーヘッドで消費される量は含まれていません。
+これは、インストールの<emphasis>最中</emphasis>や通常のシステム利用では、
+もっと大量にディスク領域が必要だということです。
+
+</para></important>
+<para>
 
 <!--
 The following table lists sizes reported by aptitude for the tasks listed
@@ -288,15 +326,17 @@ aptitude が報告したサイズです。
 
 <!--
 Note that you will need to add the sizes listed in the table to the size
-of the base installation when determining the size of partitions.
+of the standard installation when determining the size of partitions.
 Most of the size listed as <quote>Installed size</quote> will end up in
-<filename>/usr</filename>; the size listed as <quote>Download size</quote>
+<filename>/usr</filename> and in <filename>/lib</filename>;
+the size listed as <quote>Download size</quote>
 is (temporarily) required in <filename>/var</filename>.
 -->
-パーティションのサイズを決定するとき、基本インストールのサイズに加え、
+パーティションのサイズを決定するとき、標準インストールのサイズに加え、
 以下の表に列挙したサイズが必要であるのに注意してください。
-<quote>Installed size</quote> はインストール完了時に <filename>/usr</filename>
-に必要なサイズを、<quote>Download size</quote> は <filename>/var</filename> に
+<quote>Installed size</quote> はインストール完了時に 
+<filename>/usr</filename> と <filename>/lib</filename> に必要なサイズを、
+<quote>Download size</quote> は <filename>/var</filename> に
 (一時的に) 必要なサイズを記述しています。
 
 </para><para>
@@ -320,12 +360,36 @@ is (temporarily) required in <filename>/var</filename>.
 <tbody>
 <row>
 <!--
-  <entry>Desktop</entry>
+  <entry>Desktop environment</entry>
 -->
-  <entry>デスクトップ</entry>
-  <entry>1392</entry>
-  <entry>460</entry>
-  <entry>1852</entry>
+  <entry>デスクトップ環境</entry>
+  <entry>&task-desktop-inst;</entry>
+  <entry>&task-desktop-dl;</entry>
+  <entry>&task-desktop-tot;</entry>
+</row>
+
+<row>
+<!--
+  <entry>Laptop<footnote>
+
+  <para>
+  There is a large overlap of the Laptop task with the Destop environment task.
+  If you install both, the Laptop task will only require a few MB additional
+  disk space.
+  </para>
+-->
+  <entry>ラップトップ<footnote>
+
+  <para>
+  ラップトップタスクとデスクトップタスクはかなり重複しています。
+  両方インストールした場合、ラップトップタスクはディスク領域を、
+  数 MB 追加で必要とするだけでしょう
+  </para>
+
+  </footnote></entry>
+  <entry>&task-laptop-inst;</entry>
+  <entry>&task-laptop-dl;</entry>
+  <entry>&task-laptop-tot;</entry>
 </row>
 
 <row>
@@ -333,9 +397,9 @@ is (temporarily) required in <filename>/var</filename>.
   <entry>Web server</entry>
 -->
   <entry>ウェブサーバ</entry>
-  <entry>36</entry>
-  <entry>12</entry>
-  <entry>48</entry>
+  <entry>&task-web-inst;</entry>
+  <entry>&task-web-dl;</entry>
+  <entry>&task-web-tot;</entry>
 </row>
 
 <row>
@@ -343,9 +407,9 @@ is (temporarily) required in <filename>/var</filename>.
   <entry>Print server</entry>
 -->
   <entry>印刷サーバ</entry>
-  <entry>168</entry>
-  <entry>58</entry>
-  <entry>226</entry>
+  <entry>&task-print-inst;</entry>
+  <entry>&task-print-dl;</entry>
+  <entry>&task-print-tot;</entry>
 </row>
 
 <row>
@@ -353,9 +417,9 @@ is (temporarily) required in <filename>/var</filename>.
   <entry>DNS server</entry>
 -->
   <entry>DNS サーバ</entry>
-  <entry>2</entry>
-  <entry>1</entry>
-  <entry>3</entry>
+  <entry>&task-dns-inst;</entry>
+  <entry>&task-dns-dl;</entry>
+  <entry>&task-dns-tot;</entry>
 </row>
 
 <row>
@@ -363,9 +427,9 @@ is (temporarily) required in <filename>/var</filename>.
   <entry>File server</entry>
 -->
   <entry>ファイルサーバ</entry>
-  <entry>47</entry>
-  <entry>24</entry>
-  <entry>71</entry>
+  <entry>&task-file-inst;</entry>
+  <entry>&task-file-dl;</entry>
+  <entry>&task-file-tot;</entry>
 </row>
 
 <row>
@@ -373,9 +437,9 @@ is (temporarily) required in <filename>/var</filename>.
   <entry>Mail server</entry>
 -->
   <entry>メールサーバ</entry>
-  <entry>10</entry>
-  <entry>3</entry>
-  <entry>13</entry>
+  <entry>&task-mail-inst;</entry>
+  <entry>&task-mail-dl;</entry>
+  <entry>&task-mail-tot;</entry>
 </row>
 
 <row>
@@ -383,9 +447,9 @@ is (temporarily) required in <filename>/var</filename>.
   <entry>SQL database</entry>
 -->
   <entry>SQL データベース</entry>
-  <entry>66</entry>
-  <entry>21</entry>
-  <entry>87</entry>
+  <entry>&task-sql-inst;</entry>
+  <entry>&task-sql-dl;</entry>
+  <entry>&task-sql-tot;</entry>
 </row>
 
 </tbody>
@@ -394,11 +458,11 @@ is (temporarily) required in <filename>/var</filename>.
 <note><para>
 
 <!--
-The <emphasis>Desktop</emphasis> task will install both the Gnome and KDE
-desktop environments.
+The <emphasis>Desktop</emphasis> task will install the GNOME desktop
+environment.
 -->
 <emphasis>デスクトップ</emphasis> タスクは、
-Gnome と KDE の両デスクトップ環境をインストールします。
+GNOME デスクトップ環境をインストールします。
 
 </para></note>
 
@@ -408,12 +472,12 @@ Gnome と KDE の両デスクトップ環境をインストールします。
 If you install in a language other than English, <command>tasksel</command>
 may automatically install a <firstterm>localization task</firstterm>, if one
 is available for your language. Space requirements differ per language;
-you should allow up to 200MB in total for download and installation.
+you should allow up to 350MB in total for download and installation.
 -->
 英語以外の言語でインストールする場合、その言語が有効なら 
 <command>tasksel</command> は <firstterm>地域化タスク</firstterm> を、
 自動的にインストールします。
 必要な容量は言語によって異なりますが、
-ダウンロードとインストールで最大 200MB 必要となります。
+ダウンロードとインストールで最大 350MB 必要となります。
 </para>
  </sect1>

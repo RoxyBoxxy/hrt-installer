@@ -1,11 +1,10 @@
 <!-- retain these comments for translator revision tracking -->
-<!-- original version: 36744 -->
+<!-- original version: 45291 -->
 
 
 <appendix id="installation-howto">
 <!-- <title>Installation Howto</title> -->
 <title>Installation Howto</title>
-
 <para>
 
 <!--
@@ -14,18 +13,16 @@ the &arch-title; (<quote>&architecture;</quote>) with the
 new &d-i;. It is a quick walkthrough of the installation process
 which should contain all the information you will need for most installs.
 When more information can be useful, we will link to more detailed
-explanations in the <link linkend="debian_installation_guide">&debian;
-Installation Guide</link>.
+explanations in other parts of this document.
 -->
 
-Questo documento descrive come installare &debian; &releasename; per
+Questo documento descrive come installare &debian; &releasename; su
 &arch-title; (<quote>&architecture;</quote>) con il nuovo &d-i;. È una
 guida rapida al processo d'installazione che dovrebbe contenere tutte le
-informazioni di cui avete bisogno per la maggioranza delle installazioni.
+informazioni necessarie per la maggioranza delle installazioni.
 Quando possono essere utili maggiori informazioni, è disponibile un
-collegamento alla spiegazione più dettagliata nella
-<link linkend="debian_installation_guide">Guida di installazione
-&debian;</link>.
+collegamento alla spiegazione più dettagliata nelle altri parti di
+questo documento.
 
 </para>
 
@@ -43,24 +40,24 @@ If you encounter bugs during your install, please refer to
 on how to report them. If you have questions which cannot be
 answered by this document, please direct them to the debian-boot
 mailing list (&email-debian-boot-list;) or ask on IRC (#debian-boot
-on the freenode network).
+on the OFTC network).
 -->
 
 <phrase condition="unofficial-build">
 Il debian-installer è ancora nello stato di beta.
 </phrase>
-Se durante l'installazione venite a conoscenza di qualche bug, per
-favore fate riferimento a <xref linkend="submit-bug" /> per le istruzioni
-su come segnalarne uno. Se avete domande che non trovano risposte in
-questo documento, chiedete alla mailing-list debian-boot
-(&email-debian-boot-list;) o su IRC (#debian-boot sulla rete freenode).
+Se durante l'installazione si scopre qualche bug, per
+favore si veda <xref linkend="submit-bug" /> per le istruzioni
+su come segnalarlo. Se si hanno domande che non trovano risposta in
+questo documento, chiedere sulla mailing-list debian-boot
+(&email-debian-boot-list;) o su IRC (#debian-boot sulla rete OFTC).
 
 </para>
  </sect1>
 
  <sect1 id="howto-getting-images">
  <!-- <title>Booting the installer</title> -->
- <title>Avviare il programma d'installazione</title>
+ <title>Avvio del programma d'installazione</title>
 <para>
 
 <!--
@@ -75,7 +72,7 @@ For more information on where to get CDs, see <xref linkend="official-cdrom" />.
 
 <phrase condition="unofficial-build">
 Per alcuni veloci collegamenti alle immagini dei CD, vedere la
-<ulink url="&url-d-i;">homepage del &d-i;</ulink>.
+<ulink url="&url-d-i;">pagina del &d-i;</ulink>.
 </phrase>
 Il team debian-cd si occupa della creazione delle immagini dei CD del
 &d-i; e le distribuisce sulla pagina <ulink url="&url-debian-cd;">Debian
@@ -97,7 +94,7 @@ mirrors.
 Alcuni metodi d'installazione richiedono altre immagini oltre a
 quelle dei CD.
 <phrase condition="unofficial-build">
-Nella <ulink url="&url-d-i;">homepage del &d-i;</ulink> ci sono i
+Nella <ulink url="&url-d-i;">pagina del &d-i;</ulink> ci sono i
 collegamenti anche per altre immagini.
 </phrase>
 In <xref linkend="where-files" /> è spiegato come trovare le immagini
@@ -146,7 +143,7 @@ il primo CD della serie.
 
 <!--
 Download whichever type you prefer and burn it to a CD.
-<phrase arch="i386">To boot the CD, you may need to change your BIOS
+<phrase arch="x86">To boot the CD, you may need to change your BIOS
 configuration, as explained in <xref linkend="bios-setup" />.</phrase>
 <phrase arch="powerpc">
 To boot a PowerMac from CD, press the <keycap>c</keycap> key while booting. See
@@ -155,7 +152,7 @@ To boot a PowerMac from CD, press the <keycap>c</keycap> key while booting. See
 -->
 
 Scaricare il tipo che si preferisce e masterizzare l'immagine su un CD.
-<phrase arch="i386">
+<phrase arch="x86">
 Per fare l'avvio da CD potrebbe essere necessario modificare la
 configurazione del BIOS del proprio computer come spiegato in
 <xref linkend="bios-setup" />.
@@ -177,13 +174,13 @@ per fare l'avvio da CD.
 <!--
 If you can't boot from CD, you can download floppy images to install
 Debian. You need the <filename>floppy/boot.img</filename>, the
-<filename>floppy/root.img</filename> and possibly one of the driver disks.
+<filename>floppy/root.img</filename> and one or more of the driver disks.
 -->
 
 Nel caso non sia possibile fare l'avvio da CD si possono scaricare le
 immagini dei dischetti per installare Debian. Sono necessarie le immagini
 <filename>floppy/boot.img</filename>, <filename>floppy/root.img</filename>
-e forse uno dei dischetti con i driver.
+e uno o più dischetti con i driver.
 
 </para><para>
 
@@ -203,13 +200,15 @@ si deve usare quello su cui è stato scritta l'immagine
 
 <!--
 If you're planning to install over the network, you will usually need
-the <filename>floppy/net-drivers.img</filename>, which contains additional
-drivers for many ethernet cards, and support for PCMCIA.
+the <filename>floppy/net-drivers-1.img</filename>. For PCMCIA or USB
+networking, and some less common network cards, you will also need a second
+driver floppy, <filename>floppy/net-drivers-2.img</filename>.
 -->
 
-Se si sta programmando un'installazione via rete, può essere necessario
-<filename>floppy/net-drivers.img</filename> poiché contiene driver
-aggiuntivi per molte schede ethernet e il supporto per PCMCIA.
+Se si sta programmando un'installazione via rete, è necessario
+<filename>floppy/net-drivers-1.img</filename>. Inoltre per avere anche
+la connettività tramite PCMCIA o USB può essere necessario un secondo
+dischetto con i driver, <filename>floppy/net-drivers-2.img</filename>.
 
 </para><para>
 
@@ -265,23 +264,23 @@ per un'installazione di Debian che è possibile trasportare ovunque.
 
 <!--
 The easiest way to prepare your USB memory stick is to download
-<filename>hd-media/boot.img.gz</filename>, and use gunzip to extract the 128 MB
+<filename>hd-media/boot.img.gz</filename>, and use gunzip to extract the 256 MB
 image from that file. Write this image directly to your memory stick, which
-must be at least 128 mb in size. Of course this will destroy anything already
+must be at least 256 mb in size. Of course this will destroy anything already
 on the memory stick. Then mount the memory stick, which will now have a FAT
 filesystem on it. Next, download a Debian netinst CD image, and copy that file
 to the memory stick; any filename is ok as long as it ends in
 <literal>.iso</literal>.
 -->
 
-Il modo più semplice per preparare una penna USB è scaricare
+Il modo più semplice per preparare una chiavetta USB è scaricare
 <filename>hd-media/boot.img.gz</filename> e usare gunzip per estrarre
-l'immagine da 128&nbsp;MB da quel file. Scrivere questa immagine direttamente
-sulla penna che deve essere da almeno 128&nbsp;MB, questa operazione
-distruggerà qualsiasi cosa si trovi sulla penna. Poi montare la penna (che
-adesso ha un filesystem FAT) e, dopo averla scaricata, copiarci l'immagine
-del CD netinst; l'immagine può essere rinominata a piacere, l'importante è
-che abbia estensione <literal>.iso</literal>.
+l'immagine da 256&nbsp;MB da quel file. Scrivere questa immagine
+direttamente sulla chiavetta che deve essere da almeno 256&nbsp;MB, questa
+operazione distruggerà qualsiasi cosa si trovi sulla chiavetta. Poi montare
+la chiavetta (che adesso ha un filesystem FAT) e, dopo averla scaricata,
+copiarci l'immagine del CD netinst; l'immagine può essere rinominata a
+piacere, l'importante è che abbia estensione <literal>.iso</literal>.
 
 </para><para>
 
@@ -291,11 +290,11 @@ debian-installer, and it's possible to get it to work with smaller memory
 sticks. For details, see <xref linkend="boot-usb-files" />.
 -->
 
-C'è un altro modo, più flessibile, per preparare una penna con il
+C'è un altro modo, più flessibile, per preparare una chiavetta con il
 debian-installer che permette anche l'uso di penne più piccole. Per i
 dettagli si veda <xref linkend="boot-usb-files" />.
 
-</para><para arch="i386">
+</para><para arch="x86">
 
 <!--
 Some BIOSes can boot USB storage directly, and some cannot. You may need to
@@ -325,7 +324,7 @@ l'uso manuale dell'Open Firmware. Per dei suggerimenti si veda
 
   <sect2 id="howto-getting-images-netboot">
   <!-- <title>Booting from network</title> -->
-  <title>Avvio dalla rete</title>
+  <title>Avvio da rete</title>
 <para>
 
 <!--
@@ -339,7 +338,7 @@ l'avvio da rete dipendono dall'architetettura e dalla configurazione.
 I file in <filename>netboot/</filename> possono essere usati per l'avvio
 dalla rete del &d-i;.
 
-</para><para arch="i386">
+</para><para arch="x86">
 
 <!--
 The easiest thing to set up is probably PXE netbooting. Untar the
@@ -374,7 +373,7 @@ existing hard disk, which can have a different OS on it. Download
 and a Debian CD image to the top-level directory of the hard disk. Make sure
 that the CD image has a filename ending in <literal>.iso</literal>. Now
 it's just a matter of booting linux with the initrd.
-<phrase arch="i386">
+<phrase arch="x86">
 <xref linkend="boot-initrd" /> explains one way to do it.
 </phrase>
 -->
@@ -386,7 +385,7 @@ Scaricare <filename>hd-media/initrd.gz</filename>,
 directory principale del disco fisso, assicurarsi che il nome del file
 con l'immagine abbia estensione <literal>.iso</literal>. Adesso si deve
 solamente avviare Linux con initrd.
-<phrase arch="i386">
+<phrase arch="x86">
 In <xref linkend="boot-initrd" /> è spiegato come farlo.
 </phrase>
 
@@ -403,31 +402,12 @@ In <xref linkend="boot-initrd" /> è spiegato come farlo.
 Once the installer starts, you will be greeted with an initial screen. Press
 &enterkey; to boot, or read the instructions for other boot
 methods and parameters (see <xref linkend="boot-parms" />).
-<phrase arch="i386">
-If you want a 2.4 kernel, type <userinput>install24</userinput> at the
-<prompt>boot:</prompt> prompt.
 -->
 
-Una volta che l'installatore parte è mostrata una schermata iniziale.
+Una volta avviato l'installatore viene mostrata una schermata iniziale.
 Premere &enterkey; per proseguire con l'installazione oppure leggere le
 istruzioni sugli altri metodi e i parametri di avvio (si consulti
 <xref linkend="boot-parms" />).
-<phrase arch="i386">
-Se si vuole usare un kernel 2.4, inserire <userinput>install24</userinput>
-al prompt <prompt>boot:</prompt>
-
-<footnote><para>
-
-<!--
-The 2.6 kernel is the default for most boot methods, but is not available
-when booting from a floppy.
--->
-
-Il kernel 2.6 è quello predefinito per la maggior parte dei metodi di
-installazione ma è disponibile non quando si esegue l'avvio da dischetto.
-
-</para></footnote>.
-</phrase>
 
 </para><para>
 
@@ -481,18 +461,20 @@ non si ha DHCP, è possibile configurare la rete manualmente.
 
 <!--
 Now it is time to partition your disks. First you will be given the
-opportunity to automatically partition either an entire drive, or free
-space on a drive. This is recommended for new users or anyone in a hurry,
-but if you do not want to autopartition, choose manual from the menu.
+opportunity to automatically partition either an entire drive, or available
+free space on a drive (guided partitioning).
+This is recommended for new users or anyone in a hurry. If you do not want
+to autopartition, choose <guimenuitem>Manual</guimenuitem> from the menu.
 -->
 
 Ora è il momento di partizionare i dischi. Per prima cosa viene proposto
-il partizionamento automatico dell'intero disco o del solo spazio libero.
-Questa procedura è quella raccomandata per gli utenti inesperti e per coloro
-che hanno fretta, ma se non si vuole eseguire il partizionamento automatico
-si deve scegliere <quote>manuale</quote> dal menu.
+di partizionare in automatico l'intero disco oppure il solo spazio libero
+disponibile (partizionamento guidato). Questa procedura è quella più adatta
+per gli utenti meno esperti e per coloro che hanno fretta, se non si desidera
+usare il partizionamento automatico si deve scegliere
+<guimenuitem>manuale</guimenuitem> dal menu.
 
-</para><para arch="i386">
+</para><para arch="x86">
 
 <!--
 If you have an existing DOS or Windows partition that you want to preserve,
@@ -511,20 +493,21 @@ partizione e specificarne la nuova dimensione.
 </para><para>
 
 <!--
-On the next screen you will see your partition table, how the partitions
-will be formatted, and where they will be mounted. Select a partition to
-modify or delete it. If you did automatic partitioning, you should just be
-able to choose <guimenuitem>Finished partitioning</guimenuitem> from the
-menu to use what it set up. Remember to assign at least one partition for
-swap space and to mount a partition on <filename>/</filename>.
+On the next screen you will see your partition table, how the partitions will
+be formatted, and where they will be mounted. Select a partition to modify or
+delete it. If you did automatic partitioning, you should just be able to choose
+<guimenuitem>Finish partitioning and write changes to disk</guimenuitem>
+from the menu to use what it set up. Remember to assign at least one partition
+for swap space and to mount a partition on <filename>/</filename>.
 <xref linkend="partitioning" /> has more information about partitioning.
 -->
 
 Nella schermata successiva è mostrata la tabella delle partizioni, come
 verranno formattare e dove verranno montate, selezionare una partizione
 per modificarla o rimuoverla. Se è stato fatto un partizionamento automatico
-allora nel menu è possibile scegliere <guimenuitem>Completa il
-partizionamento</guimenuitem> per confermare la configurazione proposta.
+allora nel menu è possibile scegliere <guimenuitem>Terminare il
+partizionamento e scrivere i cambiamenti sul disco</guimenuitem> per
+confermare la configurazione proposta.
 Ricordarsi di assegnare almeno una partizione come spazio per lo swap
 e di montare una partizione su <filename>/</filename>. In
 <xref linkend="partitioning" /> ci sono informazioni più dettagliate sul
@@ -544,10 +527,52 @@ viene installato il kernel.
 </para><para>
 
 <!--
+The next steps are setting up your time zone and clock. The installer will
+try to select the correct settings automatically and will only ask if it
+cannot. This is followed by setting up user accounts. By default you will
+need to provide a password for the <quote>root</quote> (administrator)
+account and information necessary to create one regular user account.
+-->
+
+I passi successivi consistono nella configurazione del fuso orario e
+dell'orologio. Poi l'installatore prova a effettuare la configurazione
+in modo automatico e chiede all'utente solo se non riesce. A queste
+impostazioni segue la configurazione degli account per gli utenti; di
+solito è necessario inserire la password dell'account per
+<quote>root</quote> (l'utente d'amministrazione) e le informazioni per
+creare l'account di un utente normale.
+
+</para><para>
+
+<!--
+The base system that was installed earlier is a working, but very minimal
+installation. To make the system more functional the next step allows you
+to install additional packages by selecting tasks. Before packages can be
+installed <classname>apt</classname> needs to be configured as that defines
+from where the packages will be retrieved.
+The <quote>Standard system</quote> task will be selected by default and
+should normally be installed. Select the <quote>Desktop environment</quote>
+task if you would like to have a graphical desktop after the installation.
+See <xref linkend="pkgsel"/> for additional information about this step.
+-->
+
+Il sistema di base, installato in precedenza, è un sistema funzionante ma
+minimale. Per rendere il sistema più funzionale il prossimo passo consiste
+nell'installazione di altri pacchetti tramite la scelta di task. Prima di
+poter installare i pacchetti è però necessario configurare
+<classname>apt</classname> specificando da dove devono essere recuperati
+i pacchetti. Il task <quote>Sistema standard</quote> è già selezionato e
+solitamente deve essere installato; il task <quote>Ambiente desktop</quote>
+mette a disposizione un desktop grafico al termine dell'installazione. Si
+veda <xref linkend="pkgsel"/> per altri dettagli su questa fase.
+
+</para><para>
+
+<!--
 The last step is to install a boot loader. If the installer detects
 other operating systems on your computer, it will add them to the boot menu
 and let you know.
-<phrase arch="i386">By default GRUB will be installed to the master boot
+<phrase arch="x86">By default GRUB will be installed to the master boot
 record of the first harddrive, which is generally a good choice. You'll be
 given the opportunity to override that choice and install it elsewhere.
 </phrase>
@@ -556,7 +581,7 @@ given the opportunity to override that choice and install it elsewhere.
 L'ultimo passo è installare un boot loader. Se l'installatore rileva la
 presenza di altri sistemi operativi sul computer è in grado di aggiungerli
 nel menu di avvio.
-<phrase arch="i386">
+<phrase arch="x86">
 GRUB viene installato nel master boot record del primo disco, normalmente
 questa è una buona scelta. Comunque viene data l'opportunità di cambiare
 questa scelta in modo da installarlo da qualche altra parte.
@@ -566,15 +591,16 @@ questa scelta in modo da installarlo da qualche altra parte.
 
 <!--
 &d-i; will now tell you that the installation has
-finished. Remove the cdrom or other boot media and hit &enterkey;
-to reboot your machine. It should boot up into the next stage of the install
-process, which is explained in <xref linkend="boot-new" />.
+finished. Remove the cdrom or other boot media and hit &enterkey; to reboot
+your machine. It should boot up into the newly installed system and
+allow you to log in. This is explained in <xref linkend="boot-new"/>.
 -->
 
 Infine &d-i; comunica il termine dell'installazione, rimuovere il CDROM
 o qualsiasi altro supporto sia stato usato per l'avvio e premere &enterkey;
-per riavviare la macchina. Dovrebbe ripartire con la fase successiva del
-processo d'installazione, che è descritto in <xref linkend="boot-new" />.
+per riavviare la macchina. Dovrebbe ripartire il sistema appena installato
+con la richiesta di login, questa fase è descritta in
+<xref linkend="boot-new"/>.
 
 </para><para>
 
@@ -598,15 +624,19 @@ consulti <xref linkend="d-i-intro" />.
 If you successfully managed an installation with &d-i;,
 please take time to provide us with a report.
 The simplest way to do so is to install the reportbug package
-(<command>apt-get install reportbug</command>), and run
-<command>reportbug installation-report</command>.
+(<command>aptitude install reportbug</command>), configure
+<classname>reportbug</classname> as explained in
+<xref linkend="mail-outgoing"/>, and run
+<command>reportbug installation-reports</command>.
 -->
 
 Se è stato possibile eseguire con successo un'installazione con il &d-i;,
 si spenda un minuto del proprio tempo per inviarci un resoconto.
 Il modo più semplice per inviare un rapporto d'installazione è installare
-il pacchetto reportbug (<command>apt-get install reportbug</command>) ed
-eseguire il comando <command>reportbug installation-report</command>.
+il pacchetto <classname>reportbug</classname> (<command>aptitude install
+reportbug</command>), configurarlo come spiegato in
+<xref linkend="mail-outgoing"/> ed eseguire il comando
+<command>reportbug installation-reports</command>.
 
 </para><para>
 
@@ -630,8 +660,8 @@ fallita si consulti <xref linkend="problem-report" />.
  </sect1>
 
  <sect1 id="howto-installation-finally">
- <!-- <title>And finally..</title> -->
- <title>E per finire...</title>
+ <!-- <title>And finally&hellip;</title> -->
+ <title>E per finire&hellip;</title>
 <para>
 
 <!--

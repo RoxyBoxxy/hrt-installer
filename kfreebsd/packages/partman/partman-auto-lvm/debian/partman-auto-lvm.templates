@@ -1,14 +1,10 @@
-Template: partman-auto-lvm/text/use_device
+Template: partman-auto-lvm/text/choice
 Type: text
 # TRANSLATORS: This is a menu entry. Keep in under 55 columns/characters
-# The string replacing ${DEVICE} may be very long, so make your translation
-# as short as possible and keep the variable AT THE END
-# for example "Erase entire disk and use LVM: IDE0 master - Maxtor 46L489"
-_Description: Erase entire disk and use LVM: ${DEVICE}
+_Description: Guided - use entire disk and set up LVM
 
 Template: partman-auto-lvm/new_vg_name
 Type: string
-Default: Debian
 _Description: Name of the volume group for the new system:
 
 Template: partman-auto-lvm/new_vg_name_exists
@@ -31,12 +27,6 @@ _Description: Continue installation without /boot partition?
  .
  You can choose to ignore this warning, but that may result in a failure to
  reboot the system after the installation is completed.
-
-Template: partman-auto-lvm/pv_on_device
-Type: error
-_Description: Existing physical volume on the selected device
- The device you selected already contains one or more physical volumes. It
- is not possible to automatically partition this device using LVM.
 
 Template: partman-auto-lvm/vg_exists
 Type: error

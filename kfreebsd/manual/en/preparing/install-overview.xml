@@ -75,7 +75,7 @@ Boot the installation system.
 </para></listitem>
 <listitem arch="not-s390"><para>
 
-Select installation language.
+Select the installation language.
 
 </para></listitem>
 <listitem arch="not-s390"><para>
@@ -91,7 +91,7 @@ Configure one network interface.
 </para></listitem>
 <listitem arch="s390"><para>
 
-Open a ssh connection to the new system.
+Open an ssh connection to the new system.
 
 </para></listitem>
 <listitem arch="s390"><para>
@@ -124,7 +124,15 @@ Load the newly installed system for the first time.
 </para></listitem>
 </orderedlist>
 
-<para>
+<para condition="gtk">
+
+For &arch-title; you have the option of using
+<phrase arch="x86">a</phrase>
+<phrase arch="powerpc">an experimental</phrase>
+graphical version of the installation system. For more information about
+this graphical installer, see <xref linkend="graphical"/>.
+
+</para><para>
 
 If you have problems during the installation, it helps to know which
 packages are involved in which steps. Introducing the leading software
@@ -135,8 +143,10 @@ actors in this installation drama:
 The installer software, <classname>debian-installer</classname>, is
 the primary concern of this manual. It detects hardware and loads
 appropriate drivers, uses <classname>dhcp-client</classname> to set up the
-network connection, and runs <classname>debootstrap</classname> to install
-the base system packages. Many more actors play smaller parts in this process,
+network connection, runs <classname>debootstrap</classname> to install
+the base system packages, and runs <classname>tasksel</classname> to allow
+you to install certain additional software.
+Many more actors play smaller parts in this process,
 but <classname>debian-installer</classname> has completed its task when
 you load the new system for the first time.
 
@@ -148,20 +158,22 @@ server or a Desktop environment.
 
 </para><para>
 
-When <classname>debian-installer</classname> finishes, before the
-first system load, you have only a very basic command line driven
-system. The graphical interface which displays windows on your monitor
-will not be installed unless you select it with <classname>tasksel</classname>.
-It's optional because many &debian; systems are servers which don't really
-have any need for a graphical user interface to do their job.
+One important option during the installation is whether or not to install
+a graphical desktop environment, consisting of the X Window System and
+one of the available graphical desktop environments.
+If you choose not to select the <quote>Desktop environment</quote> task,
+you will only have a relatively basic, command line driven system.
+Installing the Desktop environment task is optional because it requires a
+fairly large amount of disk space, and because many &debian; systems are
+servers which don't really have any need for a graphical user interface
+to do their job.
 
 </para><para arch="not-s390">
 
-Just be aware that the X system is completely separate from
+Just be aware that the X Window System is completely separate from
 <classname>debian-installer</classname>, and in fact is much more
-complicated. Installation and trouble shooting of the X window
-installation is not within the scope of this manual.
+complicated. Installation and troubleshooting of the X Window
+System is not within the scope of this manual.
 
 </para>
  </sect1>
-

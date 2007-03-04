@@ -1,86 +1,86 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
 <!-- retain these comments for translator revision tracking -->
-<!-- original version: 28997 -->
-<!-- reviewed by Felipe Augusto van de Wiel (faw) 2005.12.30 -->
+<!-- original version: 39614 -->
+<!-- revised by Herbert Parentes Fortes Neto (hpfn) 2006.05.02 -->
+<!-- revised by Felipe Augusto van de Wiel (faw) 2005.06.03 -->
 
  <sect1 condition="bootable-disk" id="boot-drive-files">
- <title>Preparando arquivos para a inicialização através do disco rígido</title>
+ <title>Preparando arquivos para a inicializaÃ§Ã£o atravÃ©s do disco rÃ­gido</title>
 <para>
 
-O programa de instalação poderá ser iniciado usando arquivos
-colocados em uma partição de disco rígido existente ou
+O programa de instalaÃ§Ã£o poderÃ¡ ser iniciado usando arquivos
+colocados em uma partiÃ§Ã£o de disco rÃ­gido existente ou
 carregados de outro sistema operacional ou chamando o gerenciador
 de partida diretamente pela BIOS.
 
 </para><para>
 
-Uma instalação completamente <quote>via rede</quote> pode ser feita usando
-esta técnica. Isto evita a chatice de mídias removíveis, como
+Uma instalaÃ§Ã£o completamente <quote>via rede</quote> pode ser feita usando
+esta tÃ©cnica. Isto evita a chatice de mÃ­dias removÃ­veis, como
 o trabalho de procurar e queimar imagens de CD ou ter uma grande quantidade
-de disquetes não confiáveis.
+de disquetes nÃ£o confiÃ¡veis.
 
-</para><para arch="i386">
-O programa de instalação não pode inicializar através de arquivos
+</para><para arch="x86">
+O programa de instalaÃ§Ã£o nÃ£o pode inicializar atravÃ©s de arquivos
 de um sistema NTFS.
 
 </para><para arch="powerpc">
 
-O programa de instalação não pode inicializar através de arquivos
+O programa de instalaÃ§Ã£o nÃ£o pode inicializar atravÃ©s de arquivos
 em um sistema de arquivos NFS+. O sistema MacOS 8.1 e superiores
 podem usar o sistema de arquivo HFS+. Para determinar se o
-sistema de arquivos existente é HFS+, selecione
-<userinput>Get Info</userinput> para o volume em questão. Os sistemas
+sistema de arquivos existente Ã© HFS+, selecione
+<userinput>Get Info</userinput> para o volume em questÃ£o. Os sistemas
 de arquivos HFS aparecem como <userinput>Mac OS Standard</userinput>,
 enquanto sistemas de arquivos HFS+ aparecem como
-<userinput>Mac OS Extended</userinput>. Você deverá ter
-uma partição HFS para trocar arquivos entre o MacOS e Linux,
-em particular a instalação dos arquivos que você baixou.
+<userinput>Mac OS Extended</userinput>. VocÃª deverÃ¡ ter
+uma partiÃ§Ã£o HFS para trocar arquivos entre o MacOS e Linux,
+em particular a instalaÃ§Ã£o dos arquivos que vocÃª baixou.
 
 </para><para arch="powerpc">
 
-Programas diferentes são usados para inicialização do sistema
-usando a instalação em disco rígido dependendo se o sistema é um 
+Programas diferentes sÃ£o usados para inicializaÃ§Ã£o do sistema
+usando a instalaÃ§Ã£o em disco rÃ­gido dependendo se o sistema Ã© um
 modelo <quote>NewWorld</quote> ou <quote>OldWorld</quote>.
 
 </para>
 
-  <sect2 arch="i386" id="files-lilo">
-  <title>Iniciando o programa de instalação via disco rígido usando o <command>LILO</command> ou o <command>GRUB</command></title>
+  <sect2 arch="x86" id="files-lilo">
+  <title>Iniciando o programa de instalaÃ§Ã£o via disco rÃ­gido usando o <command>LILO</command> ou o <command>GRUB</command></title>
 <para>
 
-Esta seção explica como adicionar ou até mesmo substituir uma 
-instalação existente do Linux usando o comando <command>LILO</command> ou o 
+Esta seÃ§Ã£o explica como adicionar ou atÃ© mesmo substituir uma
+instalaÃ§Ã£o existente do Linux usando o comando <command>LILO</command> ou o
 <command>GRUB</command>.
 
 </para><para>
 
-No momento da inicialização, ambos o gerenciadores de partida 
-suportam carregar na memória não somente do kernel mas também
-de uma imagem de disco. Este disco RAM poderá ser usado como 
-sistema de arquivos raíz pelo kernel. 
+No momento da inicializaÃ§Ã£o, ambos o gerenciadores de partida
+suportam carregar na memÃ³ria nÃ£o somente do kernel mas tambÃ©m
+de uma imagem de disco. Este disco RAM poderÃ¡ ser usado como
+sistema de arquivos raiz pelo kernel.
 
 </para><para>
 
-Copie os seguintes arquivos do repositório da Debian 
-para uma localização conveniente em seu disco rígido, por exemplo em
+Copie os seguintes arquivos do repositÃ³rio da Debian
+para uma localizaÃ§Ã£o conveniente em seu disco rÃ­gido, por exemplo em
 <filename>/boot/newinstall/</filename>.
 
 <itemizedlist>
 <listitem><para>
 
-<filename>vmlinuz</filename> (binário do kernel)
+<filename>vmlinuz</filename> (binÃ¡rio do kernel)
 
 </para></listitem>
 <listitem><para>
 
-<filename>initrd.gz</filename> (imagem raíz)
+<filename>initrd.gz</filename> (imagem raiz)
 
 </para></listitem>
 </itemizedlist>
 
 </para><para>
 
-Finalmente, vá até <xref linkend="boot-initrd"/> para configurar seu gerenciador
+Finalmente, vÃ¡ atÃ© <xref linkend="boot-initrd"/> para configurar seu gerenciador
 de partida.
 
 </para>
@@ -88,59 +88,59 @@ de partida.
 
 
   <sect2 arch="powerpc" id="files-oldworld">
-  <title>Inicialização do sistema de instalação usando Disco Rígido no Mac OldWorld</title>
+  <title>InicializaÃ§Ã£o do sistema de instalaÃ§Ã£o usando Disco RÃ­gido no Mac OldWorld</title>
 <para>
 
-O disquete <filename>boot-floppy-hfs</filename> usa o 
-<application>miBoot</application> para carregar a instalação do Linux, mas
-o <application>miBoot</application> não poderá ser usado com facilidade
-para dar partida usando o disco rígido. O <application>BootX</application>, 
-carregado a partir do MacOS, suporta a inicialização através de arquivos 
-colocados no disco rígido. O <application>BootX</application> poderá 
-também ser usado para dupla inicialização entre o MacOS e Linux após
-terminar a instalação da Debian. Para a Performa 6360, parece que o 
-<command>quik</command> não pode tornar o disco rígido inicializável. 
-Assim o <application>BootX</application> é requerido naquele modelo.
+O disquete <filename>boot-floppy-hfs</filename> usa o
+<application>miBoot</application> para carregar a instalaÃ§Ã£o do Linux, mas
+o <application>miBoot</application> nÃ£o poderÃ¡ ser usado com facilidade
+para dar partida usando o disco rÃ­gido. O <application>BootX</application>,
+carregado a partir do MacOS, suporta a inicializaÃ§Ã£o atravÃ©s de arquivos
+colocados no disco rÃ­gido. O <application>BootX</application> poderÃ¡
+tambÃ©m ser usado para dupla inicializaÃ§Ã£o entre o MacOS e Linux apÃ³s
+terminar a instalaÃ§Ã£o da Debian. Para a Performa 6360, parece que o
+<command>quik</command> nÃ£o pode tornar o disco rÃ­gido inicializÃ¡vel.
+Assim o <application>BootX</application> Ã© requerido naquele modelo.
 
 </para><para>
-Baixe e  descompacte os arquivos distribuídos com o
-<application>BootX</application>, disponíveis em 
-<ulink url="&url-powerpc-bootx;"></ulink>, ou no diretório
+Baixe e  descompacte os arquivos distribuÃ­dos com o
+<application>BootX</application>, disponÃ­veis em
+<ulink url="&url-powerpc-bootx;"></ulink>, ou no diretÃ³rio
 <filename>dists/woody/main/disks-powerpc/current/powermac</filename>
-dos CDs oficiais da Debian. Use o <application>Stuffit Expander</application> 
-para descompacta-lo de seus arquivos. Dentro do pacote 
-existirá uma pasta vazia chamada
+dos CDs oficiais da Debian. Use o <application>Stuffit Expander</application>
+para descompacta-lo de seus arquivos. Dentro do pacote
+existirÃ¡ uma pasta vazia chamada
 <filename>Linux Kernels</filename>. Copie os arquivos
 <filename>linux.bin</filename> e
 <filename>ramdisk.image.gz</filename> da pasta
-<filename>disks-powerpc/current/powermac</filename> e coloque-os na 
-pasta <filename>Linux Kernels</filename>. Então coloque a pasta
+<filename>disks-powerpc/current/powermac</filename> e coloque-os na
+pasta <filename>Linux Kernels</filename>. EntÃ£o coloque a pasta
 <filename>Linux Kernels</filename> na pasta ativa do sistema.
 
 </para>
   </sect2>
 
   <sect2 arch="powerpc" id="files-newworld">
-  <title>Inicialização do sistema de instalação a partir do Disco Rígido no Macintosh NewWorld</title>
+  <title>InicializaÃ§Ã£o do sistema de instalaÃ§Ã£o a partir do Disco RÃ­gido no Macintosh NewWorld</title>
 <para>
 
-Os PowerMacs NewWorld suportam a inicialização através de uma rede
-ou CD-ROM ISO9660 assim como carregar os binários ELF diretamente
-através do disco rígido. Estas máquinas inicializarão o Linux 
-diretamente através do <command>yaboot</command> que permitem
-carregar um kernel e disco RAM diretamente de uma partição
-ext2 assim como dupla inicialização com o MacOS. A inicialização
-através do disco rígido é particularmente apropriada para máquinas novas
-sem unidades de disquetes. O <command>BootX</command> não é 
-suportado e não deve ser usado em PowerMacs NewWorld.
+Os PowerMacs NewWorld suportam a inicializaÃ§Ã£o atravÃ©s de uma rede
+ou CD-ROM ISO9660 assim como carregar os binÃ¡rios ELF diretamente
+atravÃ©s do disco rÃ­gido. Estas mÃ¡quinas inicializarÃ£o o Linux
+diretamente atravÃ©s do <command>yaboot</command> que permitem
+carregar um kernel e disco RAM diretamente de uma partiÃ§Ã£o
+ext2 assim como dupla inicializaÃ§Ã£o com o MacOS. A inicializaÃ§Ã£o
+atravÃ©s do disco rÃ­gido Ã© particularmente apropriada para mÃ¡quinas novas
+sem unidades de disquetes. O <command>BootX</command> nÃ£o Ã©
+suportado e nÃ£o deve ser usado em PowerMacs NewWorld.
 
 </para><para>
 
-<emphasis>Copie</emphasis> (não mova) os seguintes quatro arquivos
-que copiou anteriormente do repositório da Debian para o diretório 
-raíz do seu disco rígido (isto poderá ser feito apertando a tecla
-<keycap>option</keycap> enquanto arrasta cada arquivo para o ícone
-do disco rígido).
+<emphasis>Copie</emphasis> (nÃ£o mova) os seguintes quatro arquivos
+que copiou anteriormente do repositÃ³rio da Debian para o diretÃ³rio
+raiz do seu disco rÃ­gido (isto poderÃ¡ ser feito apertando a tecla
+<keycap>option</keycap> enquanto arrasta cada arquivo para o Ã­cone
+do disco rÃ­gido).
 
 <itemizedlist>
 <listitem><para>
@@ -167,16 +167,16 @@ do disco rígido).
 
 </para><para>
 
-Anote o número da partição do MacOS onde colocou estes arquivo. 
-Se tiver o programa do MacOS <command>pdisk</command>, 
-você poderá usar o comando L para verificar o número da partição.
-Você precisará deste número de partição para o comando que digitar
+Anote o nÃºmero da partiÃ§Ã£o do MacOS onde colocou estes arquivo.
+Se tiver o programa do MacOS <command>pdisk</command>,
+vocÃª poderÃ¡ usar o comando <command>L</command> para verificar o nÃºmero da
+partiÃ§Ã£o. VocÃª precisarÃ¡ deste nÃºmero de partiÃ§Ã£o para o comando que digitar
 no aviso de comando do Open Firmware quando iniciar o programa
-de instalação.
+de instalaÃ§Ã£o.
 
 </para><para>
 
-Para iniciar o programa de instalação, siga até <xref linkend="boot-newworld"/>.
+Para iniciar o programa de instalaÃ§Ã£o, siga atÃ© <xref linkend="boot-newworld"/>.
 
 </para>
   </sect2>

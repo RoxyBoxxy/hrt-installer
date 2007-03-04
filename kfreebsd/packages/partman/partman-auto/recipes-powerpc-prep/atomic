@@ -5,16 +5,7 @@ partman-auto/text/atomic_scheme ::
 	$bootable{ }
 	method{ prep } .
 
-128 512 256 ext3
-	$defaultignore{ }
-	$primary{ }
-	method{ format }
-	format{ }
-	use_filesystem{ }
-	filesystem{ ext3 }
-	mountpoint{ /boot } .
-
-500 10000 1000000 ext3
+500 10000 1000000000 ext3
 	$lvmok{ }
 	$primary{ }
 	method{ format }
@@ -23,6 +14,7 @@ partman-auto/text/atomic_scheme ::
 	filesystem{ ext3 }
 	mountpoint{ / } .
 
-64 512 300% linux-swap
+96 512 300% linux-swap
+	$lvmok{ }
 	method{ swap }
 	format{ } .

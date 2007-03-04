@@ -1,5 +1,5 @@
 <!-- retain these comments for translator revision tracking -->
-<!-- original version: 28672 -->
+<!-- original version: 45453 -->
 
  <sect1 condition="supports-floppy-boot" id="create-floppy">
  <title>Floppys erstellen aus den Disk-Images</title>
@@ -31,9 +31,17 @@ der Daten aus der Datei auf die Floppy-Disk zu machen.
 
 </para><para>
 
-Es gibt unterschiedliche Techniken, Floppys aus Disk-Images zu erzeugen,
-abhängig von Ihrer Systemplattform. Dieses Kapitel beschreibt für verschiedene
-Plattformen, wie man aus Disk-Images Floppys erstellt.
+Es gibt unterschiedliche Techniken, Floppys aus Disk-Images zu erzeugen.
+Dieses Kapitel beschreibt für verschiedene Plattformen, wie man aus
+Disk-Images Floppys erstellt.
+
+</para><para>
+
+Bevor Sie die Floppys erstellen können, müssen Sie die Images von einem der
+Debian-Spiegelserver herunterladen, wie in <xref linkend="downloading-files"/>
+beschrieben. <phrase arch="i386">Falls Sie bereits eine Installations-CD-ROM
+oder -DVD vorliegen haben, könnten die Floppy-Images bereits auf dieser
+CD/DVD enthalten sein.</phrase>
 
 </para><para>
 
@@ -54,27 +62,26 @@ leere Floppy in das Laufwerk ein. Nutzen Sie dann den Befehl
 $ dd if=<replaceable>filename</replaceable> of=/dev/fd0 bs=1024 conv=sync ; sync
 </screen></informalexample>
 
-wobei <replaceable>filename</replaceable> eine der Floppy-Disk-Imagedateien ist
-(siehe <xref linkend="downloading-files"/> für Details, was Sie für
-<replaceable>filename</replaceable> einsetzen müssen).
+wobei <replaceable>filename</replaceable> eine der Floppy-Disk-Imagedateien ist.
+
 <filename>/dev/fd0</filename> ist eine allgemein benutzte Bezeichnung für
-das Floppy-Laufwerk; auf Ihrem Rechner könnte Sie sich jedoch unterscheiden
-<phrase arch="sparc">(auf Solaris-Maschinen ist es
-<filename>/dev/fd/0</filename>)</phrase>.
+das Floppy-Laufwerk; auf Ihrem Rechner könnte Sie sich jedoch
+unterscheiden<phrase arch="sparc">
+(auf Solaris-Maschinen ist es <filename>/dev/fd/0</filename>)</phrase>.
 Das Kommando könnte bereits auf den Prompt zurückkehren, bevor der
 Schreibvorgang abgeschlossen ist, also achten Sie auf die
 <quote>Disk-in-Benutzung</quote>-Lampe am Laufwerk und entfernen Sie die Disk erst,
 wenn die Lampe aus ist und nicht mehr auf die Floppy zugegriffen wird/
 wenn sie sich nicht mehr dreht.
 Auf einigen Systemen müssen Sie einen Befehl ausführen, um die Disk
-auszuwerfen <phrase arch="sparc">(auf Solaris-Maschinen benutzen Sie
+auszuwerfen<phrase arch="sparc"> (auf Solaris-Maschinen benutzen Sie
 dazu <command>eject</command>, siehe die entsprechende
 Handbuchseite)</phrase>.
 
 </para><para>
 
 Einige Systeme versuchen automatisch, die Floppy-Disk
-einzuhängen, wenn sie eingelegt wird. Sie müssen diese Funktion
+einzubinden, wenn sie eingelegt wird. Sie müssen diese Funktion
 unter Umständen deaktivieren, bevor der Rechner Ihnen erlaubt, eine
 Floppy im <emphasis>Roh-Modus</emphasis> zu beschreiben.
 Bedauerlicherweise hängt es von Ihrem Betriebssystem ab, wie Sie
@@ -82,7 +89,7 @@ dies bewältigen.
 <phrase arch="sparc">
 Auf Solaris-Maschinen können Sie das Volume Management
 umgehen, um Roh-Zugriff zur Floppy zu bekommen. Stellen Sie dazu zunächst
-sicher, dass die Floppy automatisch eingehangen wurde (benutzen Sie dafür
+sicher, dass die Floppy automatisch eingebunden wurde (benutzen Sie dafür
 den Befehl <command>volcheck</command> oder das entsprechende
 Äquivalent im Dateimanager). Führen Sie dann einen
 <command>dd</command>-Befehl wie oben angegeben aus; ersetzen Sie dabei

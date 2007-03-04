@@ -1,14 +1,14 @@
 # random-bits.xml
-# Changwoo Ryu <cwryu@debian.org>, 2005.
-# Jang Seok-moon <drssay97@gmail.com>, 2005.
+# Changwoo Ryu <cwryu@debian.org>, 2005, 2006, 2007.
+# Seok-moon Jang <drssay97@gmail.com>, 2005, 2006.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: random-bits.xml\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-04-28 19:33+0000\n"
-"PO-Revision-Date: 2006-04-29 10:18+0900\n"
-"Last-Translator: Jang Seok-moon <drssay97@gmail.com>\n"
+"Report-Msgid-Bugs-To: debian-boot@lists.debian.org\n"
+"POT-Creation-Date: 2007-02-26 16:32+0000\n"
+"PO-Revision-Date: 2007-01-23 23:41+0900\n"
+"Last-Translator: Changwoo Ryu <cwryu@debian.org>\n"
 "Language-Team: Korean <debian-l10n-korean@lists.debian.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: application/x-xml2pot; charset=UTF-8\n"
@@ -30,20 +30,21 @@ msgstr "리눅스 장치"
 #: random-bits.xml:12
 #, no-c-format
 msgid ""
-"In Linux you have various special files in <filename>/dev</filename>. These "
-"files are called device files. In the Unix world accessing hardware is "
-"different. There you have a special file which actually runs a driver which "
-"in turn accesses the hardware. The device file is an interface to the actual "
-"system component. Files under <filename>/dev</filename> also behave "
-"differently than ordinary files. Below are the most important device files "
-"listed."
+"In Linux various special files can be found under the directory <filename>/"
+"dev</filename>. These files are called device files and behave unlike "
+"ordinary files. The most common types of device files are for block devices "
+"and character devices. These files are an interface to the actual driver "
+"(part of the Linux kernel) which in turn accesses the hardware. Another, "
+"less common, type of device file is the named <firstterm>pipe</firstterm>. "
+"The most important device files are listed in the tables below."
 msgstr ""
-"리눅스에서는 <filename>/dev</filename> 안에 여러가지 특수한 파일이 들어 있습"
-"니다. 이 파일들을 장치 파일이라고 합니다. 유닉스 세계에서는 하드웨어를 접근하"
-"는 방법이 좀 다릅니다. 어떤 특수 파일에 접근하면 실제로는 거기에 해당하는 하"
-"드웨어에 접근하게 됩니다. 장치 파일은 실제 시스템의 구성 하드웨어에 대한 인터"
-"페이스입니다. <filename>/dev</filename>에 있는 파일은 일반 파일과 완전히 다르"
-"게 동작하기도 합니다. 다음은 중요한 장치 파일의 목록입니다."
+"리눅스에서는 <filename>/dev</filename> 디렉토리 아래에 여러가지 특수 파일들"
+"이 들어 있습니다. 이 파일을 장치 파일이라고 하고, 이 파일은 일반 파일과는 다"
+"르게 동작합니다. 장치 파일의 가장 흔한 종류는 블럭 장치와 캐릭터 장치를 위한 "
+"장치파일입니다. 이 파일은 (리눅스 커널에 들어 있는) 실제 드라이버에 대한 인터"
+"페이스 역할을 합니다. (그리고 리눅스 커널에 들어 있는 드라이버는 하드웨어에 "
+"접근합니다.) 흔하지는 않지만 또 다른 종류의 장치 파일은 <firstterm>파이프</"
+"firstterm>라고 합니다. 아래 표에 몇몇 중요한 장치 파일이 쓰여 있습니다."
 
 #. Tag: filename
 #: random-bits.xml:27
@@ -306,8 +307,8 @@ msgstr "null"
 #. Tag: entry
 #: random-bits.xml:115
 #, no-c-format
-msgid "Everything pointed to this device will disappear"
-msgstr "이 장치로 들어간 데이터는 모두 사라집니다"
+msgid "Anything written to this device will disappear"
+msgstr "이 장치로 들어가는 데이터는 모두 사라집니다"
 
 #. Tag: filename
 #: random-bits.xml:117
@@ -328,84 +329,68 @@ msgid "Setting Up Your Mouse"
 msgstr "마우스 설정하기"
 
 #. Tag: para
-#: random-bits.xml:127
+#: random-bits.xml:126
 #, no-c-format
 msgid ""
 "The mouse can be used in both the Linux console (with gpm) and the X window "
-"environment. The two uses can be made compatible if the gpm repeater is used "
-"to allow the signal to flow to the X server as shown: "
-"<informalexample><screen>\n"
-"mouse =&gt; /dev/psaux  =&gt; gpm =&gt; /dev/gpmdata -&gt; /dev/mouse =&gt; "
-"X\n"
-"         /dev/ttyS0             (repeater)        (symlink)\n"
-"         /dev/ttyS1\n"
-"</screen></informalexample> Set the repeater protocol to be raw (in "
-"<filename>/etc/gpm.conf</filename>) while setting X to the original mouse "
-"protocol in <filename>/etc/X11/XF86Config</filename> or <filename>/etc/X11/"
-"XF86Config-4</filename>."
+"environment. Normally, this is a simple matter of installing <filename>gpm</"
+"filename> and the X server itself. Both should be configured to use "
+"<filename>/dev/input/mice</filename> as the mouse device. The correct mouse "
+"protocol is named <userinput>exps2</userinput> in gpm, and "
+"<userinput>ExplorerPS/2</userinput> in X. The respective configuration files "
+"are <filename>/etc/gpm.conf</filename> and <filename>/etc/X11/xorg.conf</"
+"filename>."
 msgstr ""
-"마우스는 리눅스 콘솔에서 (gpm을 이용해) 사용할 수도 있고 X 윈도우 환경에서 사"
-"용할 수도 있습니다. 이 두가지를 동시에 사용하려면 다음과 같이 gpm 리피터를 사"
-"용해 마우스 신호를 X 서버에도 들어가도록 만들면 됩니다: "
-"<informalexample><screen>\n"
-"mouse =&gt; /dev/psaux  =&gt; gpm =&gt; /dev/gpmdata -&gt; /dev/mouse =&gt; "
-"X\n"
-"         /dev/ttyS0             (리피터)          (심볼릭 링크)\n"
-"         /dev/ttyS1\n"
-"</screen></informalexample> (<filename>/etc/gpm.conf</filename>에서) 리피터 "
-"프로토콜을 raw로 하고 <filename>/etc/X11/XF86Config</filename>이나 "
-"<filename>/etc/X11/XF86Config-4</filename>에서 X 설정은 원래의 마우스 프로토"
-"콜로 합니다."
+"마우스는 리눅스 콘솔(gpm이용)과 X윈도 환경 모두에서 사용할 수 있습니다. 일반"
+"적으로 <filename>gpm</filename>과 X서버 자체를 설치하는 것뿐입니다.두 환경 모"
+"두 마우스 장치로 <filename>/dev/input/mice</filename>를 사용합니다. 올바른 마"
+"우스 프로토콜은 gpm에서는 <userinput>exps2</userinput>, X환경에서는 "
+"<userinput>ExplorerPS/2</userinput>입니다. 설정 파일은 <filename>/etc/gpm."
+"conf</filename>와 <filename>/etc/X11/xorg.conf</filename>입니다."
 
 #. Tag: para
-#: random-bits.xml:139
+#: random-bits.xml:137
 #, no-c-format
 msgid ""
-"This approach to use gpm even in X has advantages when the mouse is "
-"unplugged inadvertently. Simply restarting gpm with "
-"<informalexample><screen>\n"
-"# /etc/init.d/gpm restart\n"
-"</screen></informalexample> will re-connect the mouse in software without "
-"restarting X."
+"Certain kernel modules must be loaded in order for your mouse to work. In "
+"most cases the correct modules are autodetected, but not always for old-"
+"style serial and bus mice<footnote> <para> Serial mice usually have a 9-hole "
+"D-shaped connector; bus mice have an 8-pin round connector, not to be "
+"confused with the 6-pin round connector of a PS/2 mouse or the 4-pin round "
+"connector of an ADB mouse. </para> </footnote>, which are quite rare except "
+"on very old computers. Summary of Linux kernel modules needed for different "
+"mouse types: <informaltable><tgroup cols=\"2\"><thead> <row> <entry>Module</"
+"entry> <entry>Description</entry> </row> </thead><tbody> <row> "
+"<entry>psmouse</entry> <entry>PS/2 mice (should be autodetected)</entry> </"
+"row> <row> <entry>usbhid</entry> <entry>USB mice (should be autodetected)</"
+"entry> </row> <row> <entry>sermouse</entry> <entry>Most serial mice</entry> "
+"</row> <row> <entry>logibm</entry> <entry>Bus mouse connected to Logitech "
+"adapter card</entry> </row> <row> <entry>inport</entry> <entry>Bus mouse "
+"connected to ATI or Microsoft InPort card</entry> </row> </tbody></tgroup></"
+"informaltable> To load a mouse driver module, you can use the "
+"<command>modconf</command> command (from the package with the same name) and "
+"look in the category <userinput>kernel/drivers/input/mouse</userinput>."
 msgstr ""
-"gpm을 X에서도 사용하는 이런 방법은 마우스가 갑자기 빠졌을 때도 좋은 점이 있습"
-"니다. gpm을 다음 명령으로 다시 시작하면, <informalexample><screen>\n"
-"# /etc/init.d/gpm restart\n"
-"</screen></informalexample> X를 다시 시작하지 않고도 소프트웨어적으로 마우스"
-"를 다시 연결합니다."
+"마우스를 사용하기 위해서는 특정 커널 모듈을 읽어들여야 할 수 있습니다. 대부분"
+"의 경우 올바른 모듈을 자동으로 찾아내지만, 예전 시리얼 마우스나 버스 마우스"
+"<footnote><para>시리얼마우스는 일반적으로 9핀 D형 커넥터를 가지고 있고 버스마"
+"우스는 8핀 둥근 커넥터를 가지고 있습니다. PS/2마우스의 6핀 커넥터나 ADB마우스"
+"의 4핀 커넥터와 혼동할 수 있습니다.</para></footnote>, 매우 오래된 컴퓨터의 "
+"마우스는 찾아내지 못 할 수 있습니다. 다른 마우스 타입의 리눅스 커널 모듈은 아"
+"래 표에 있습니다.<informaltable><tgroup cols=\"2\"><thead> <row> <entry>모듈"
+"</entry> <entry>설명</entry> </row> </thead><tbody> <row> <entry>psmouse</"
+"entry> <entry>PS/2 마우스 (자동으로 찾아냄)</entry> </row> <row> "
+"<entry>usbhid</entry> <entry>USB 마우스 (자동으로 찾아냄)</entry> </row> "
+"<row> <entry>sermouse</entry> <entry>대부분의 시리얼마우스</entry> </row> "
+"<row> <entry>logibm</entry> <entry>Logitech 어댑터카드에 연결된 버스 마우스</"
+"entry> </row> <row> <entry>inport</entry> <entry>ATI나 마이크로소프트 InPort"
+"카드에 연결된 버스마우스</entry> </row></tbody></tgroup></informaltable> 마우"
+"스 드라이버 모듈을 읽어들이기 위해서는 <command>modconf</command>명령(같은 이"
+"름의 패키지에 있는)을 사용할 수 있습니다.모듈은 <userinput>kernel/drivers/"
+"input/mouse</userinput> 분류에서 찾을 수 있습니다."
 
 #. Tag: para
-#: random-bits.xml:148
-#, no-c-format
-msgid ""
-"If gpm is disabled or not installed with some reason, make sure to set X to "
-"read directly from the mouse device such as /dev/psaux. For details, refer "
-"to the 3-Button Mouse mini-Howto at <filename>/usr/share/doc/HOWTO/en-txt/"
-"mini/3-Button-Mouse.gz</filename>, <userinput>man gpm</userinput>, "
-"<filename>/usr/share/doc/gpm/FAQ.gz</filename>, and <ulink url=\"&url-xorg;"
-"current/doc/html/mouse.html\">README.mouse</ulink>."
-msgstr ""
-"gpm을 사용하지 않거나 무언가의 이유로 설치하지 않았다면, X를 설정할 때 /dev/"
-"psaux같은 마우스 장치에서 직접 신호를 읽어들이도록 하십시오. 자세한 사항은 "
-"<filename>/usr/share/doc/HOWTO/en-txt/mini/3-Button-Mouse.gz</filename>의 3 "
-"단추 마우스 미니 하우투, <userinput>man gpm</userinput>, <filename>/usr/"
-"share/doc/gpm/FAQ.gz</filename>, <ulink url=\"&url-xorg;current/doc/html/"
-"mouse.html\">README.mouse</ulink>를 참고하십시오."
-
-#. Tag: para
-#: random-bits.xml:158
-#, no-c-format
-msgid ""
-"For PowerPC, in <filename>/etc/X11/XF86Config</filename> or <filename>/etc/"
-"X11/XF86Config-4</filename>, set the mouse device to <userinput>\"/dev/input/"
-"mice\"</userinput>."
-msgstr ""
-"PowerPC의 경우, <filename>/etc/X11/XF86Config</filename> 혹은 <filename>/etc/"
-"X11/XF86Config-4</filename> 파일에서 마우스 장치를 <userinput>\"/dev/input/"
-"mice\"</userinput>로 하십시오."
-
-#. Tag: para
-#: random-bits.xml:164
+#: random-bits.xml:184
 #, no-c-format
 msgid ""
 "Modern kernels give you the capability to emulate a three-button mouse when "
@@ -416,7 +401,7 @@ msgstr ""
 "습니다. 다음 줄을 <filename>/etc/sysctl.conf</filename> 파일에 추가하십시오."
 
 #. Tag: screen
-#: random-bits.xml:170
+#: random-bits.xml:191
 #, no-c-format
 msgid ""
 "# 3-button mouse emulation\n"
@@ -438,23 +423,42 @@ msgstr ""
 "# 다른 키의 경우에는, showkey로 그 키의 코드가 무엇인지 알 수 있습니다."
 
 #. Tag: title
-#: random-bits.xml:177
+#: random-bits.xml:198
 #, no-c-format
 msgid "Disk Space Needed for Tasks"
-msgstr "작업마다 필요한 디스크 공간"
+msgstr "태스크마다 필요한 디스크 공간"
 
 #. Tag: para
-#: random-bits.xml:189
+#: random-bits.xml:199
 #, no-c-format
 msgid ""
-"The base installation for i386 using the default 2.4 kernel, including all "
-"standard packages, requires 573MB of disk space."
+"A standard installation for the i386 architecture, including all standard "
+"packages and using the default 2.6 kernel, takes up &std-system-size;MB of "
+"disk space. A minimal base installation, without the <quote>Standard system</"
+"quote> task selected, will take &base-system-size;MB."
 msgstr ""
-"기본 2.4 커널을 사용해 i386에서 기본 설치를 하려면 표준 꾸러미를 모두 합쳐서 "
-"573MB의 디스크 공간을 차지합니다."
+"모든 표준 꾸러미를 포함하고 기본 2.6 커널을 사용하면, i386 아키텍쳐의 표준 설"
+"치 용량은 &std-system-size;MB의 디스크 공간을 차지합니다. <quote>표준 시스템"
+"</quote> 태스크를 선택하지 않은 최소의 베이스 시스템 설치는 &base-system-"
+"size;MB를 차지합니다."
 
 #. Tag: para
-#: random-bits.xml:194
+#: random-bits.xml:207
+#, no-c-format
+msgid ""
+"In both cases this is the actual disk space used <emphasis>after</emphasis> "
+"the installation is finished and any temporary files deleted. It also does "
+"not take into account overhead used by the file system, for example for "
+"journal files. This means that significantly more disk space is needed both "
+"<emphasis>during</emphasis> the installation and for normal system use."
+msgstr ""
+"두 경우 모두, 설치가 끝나고 임시 파일을 지운 <emphasis>후에</emphasis> 실제 "
+"차지하는 디스크 용량입니다. 저널링 파일과 같이 파일시스템에서 사용하는 오버헤"
+"드는 감안하지 않았습니다. 즉 이보다 더 큰 디스크 공간이 설치하는 <emphasis>도"
+"중에도</emphasis> 필요하고 시스템을 실제 사용할 때도 필요합니다."
+
+#. Tag: para
+#: random-bits.xml:216
 #, no-c-format
 msgid ""
 "The following table lists sizes reported by aptitude for the tasks listed in "
@@ -462,243 +466,284 @@ msgid ""
 "installed size for two tasks together may be less than the total obtained by "
 "adding up the numbers."
 msgstr ""
-"다음 표는 aptitude에서 표시하는 값으로 tasksel에 들어 있는 작업에 필요한 크기"
-"입니다. 작업 중에는 겹치는 부분이 있기 때문에 두 개의 작업을 같이 설치하면 숫"
-"자를 합친 전체 크기보다는 작을 수도 있습니다."
+"다음 표는 aptitude에서 표시하는 값으로 tasksel에 들어 있는 태스크에 필요한 크"
+"기입니다. 태스크 중에는 겹치는 부분이 있기 때문에 두 개의 태스크를 같이 설치"
+"하면 숫자를 합친 전체 크기보다는 작을 수도 있습니다."
 
 #. Tag: para
-#: random-bits.xml:201
+#: random-bits.xml:223
 #, no-c-format
 msgid ""
 "Note that you will need to add the sizes listed in the table to the size of "
-"the base installation when determining the size of partitions. Most of the "
-"size listed as <quote>Installed size</quote> will end up in <filename>/usr</"
-"filename>; the size listed as <quote>Download size</quote> is (temporarily) "
-"required in <filename>/var</filename>."
+"the standard installation when determining the size of partitions. Most of "
+"the size listed as <quote>Installed size</quote> will end up in <filename>/"
+"usr</filename> and in <filename>/lib</filename>; the size listed as "
+"<quote>Download size</quote> is (temporarily) required in <filename>/var</"
+"filename>."
 msgstr ""
-"파티션의 크기를 결정할 때, 베이스를 설치했을 때의 크기에다가 다음 표에 나온 "
-"크기를 더해야 합니다. <quote>설치 크기</quote>에 들어 있는 크기의 대부분은 "
-"<filename>/usr</filename>에 해당합니다. <quote>내려받기 크기</quote>는 (일시"
-"적으로) <filename>/var</filename>에 필요합니다."
+"파티션의 크기를 결정할 때, 표준 설치의 크기에 다음 표에 나온 크기를 더해야 합"
+"니다. <quote>설치 크기</quote>에 들어 있는 크기의 대부분은 <filename>/usr</"
+"filename> 및 <filename>/lib</filename>에서 차지합니다. <quote>다운로드 크기</"
+"quote>는 (일시적으로) <filename>/var</filename>에 필요합니다."
 
 #. Tag: entry
-#: random-bits.xml:214
+#: random-bits.xml:237
 #, no-c-format
 msgid "Task"
-msgstr "작업"
+msgstr "태스크"
 
 #. Tag: entry
-#: random-bits.xml:215
+#: random-bits.xml:238
 #, no-c-format
 msgid "Installed size (MB)"
 msgstr "설치 크기 (MB)"
 
 #. Tag: entry
-#: random-bits.xml:216
+#: random-bits.xml:239
 #, no-c-format
 msgid "Download size (MB)"
 msgstr "다운로드 크기 (MB)"
 
 #. Tag: entry
-#: random-bits.xml:217
+#: random-bits.xml:240
 #, no-c-format
 msgid "Space needed to install (MB)"
 msgstr "설치하는데 필요한 공간 (MB)"
 
 #. Tag: entry
-#: random-bits.xml:223
+#: random-bits.xml:246
 #, no-c-format
-msgid "Desktop"
-msgstr "데스크탑"
+msgid "Desktop environment"
+msgstr "데스크탑 환경"
 
 #. Tag: entry
-#: random-bits.xml:224
+#: random-bits.xml:247
 #, no-c-format
-msgid "1392"
-msgstr "1392"
+msgid "&task-desktop-inst;"
+msgstr "&task-desktop-inst;"
 
 #. Tag: entry
-#: random-bits.xml:225
+#: random-bits.xml:248
 #, no-c-format
-msgid "<entry>460</entry>"
-msgstr "<entry>460</entry>"
+msgid "&task-desktop-dl;"
+msgstr "&task-desktop-dl;"
 
 #. Tag: entry
-#: random-bits.xml:226
+#: random-bits.xml:249
 #, no-c-format
-msgid "1852"
-msgstr "1852"
+msgid "&task-desktop-tot;"
+msgstr "&task-desktop-tot;"
 
 #. Tag: entry
-#: random-bits.xml:230
+#: random-bits.xml:253
+#, no-c-format
+msgid "Laptop"
+msgstr "노트북 컴퓨터"
+
+#. Tag: para
+#: random-bits.xml:255
+#, no-c-format
+msgid ""
+"There is a large overlap of the Laptop task with the Destop environment "
+"task. If you install both, the Laptop task will only require a few MB "
+"additional disk space."
+msgstr ""
+"데스크탑 환경 태스크와 노트북 태스크는 많은 부분이 겹칩니다. 둘 다 설치한다"
+"면 노트북 태스트가 추가로 차지하는 디스크 공간은 수 MB에 불과할 것입니다."
+
+#. Tag: entry
+#: random-bits.xml:262
+#, no-c-format
+msgid "&task-laptop-inst;"
+msgstr "&task-laptop-inst;"
+
+#. Tag: entry
+#: random-bits.xml:263
+#, no-c-format
+msgid "&task-laptop-dl;"
+msgstr "&task-laptop-dl;"
+
+#. Tag: entry
+#: random-bits.xml:264
+#, no-c-format
+msgid "&task-laptop-tot;"
+msgstr "&task-laptop-tot;"
+
+#. Tag: entry
+#: random-bits.xml:268
 #, no-c-format
 msgid "Web server"
 msgstr "웹 서버"
 
 #. Tag: entry
-#: random-bits.xml:231
+#: random-bits.xml:269
 #, no-c-format
-msgid "<entry>36</entry>"
-msgstr "<entry>36</entry>"
+msgid "&task-web-inst;"
+msgstr "&task-web-inst;"
 
 #. Tag: entry
-#: random-bits.xml:232
+#: random-bits.xml:270
 #, no-c-format
-msgid "<entry>12</entry>"
-msgstr "<entry>12</entry>"
+msgid "&task-web-dl;"
+msgstr "&task-web-dl;"
 
 #. Tag: entry
-#: random-bits.xml:233
+#: random-bits.xml:271
 #, no-c-format
-msgid "<entry>48</entry>"
-msgstr "<entry>48</entry>"
+msgid "&task-web-tot;"
+msgstr "&task-web-tot;"
 
 #. Tag: entry
-#: random-bits.xml:237
+#: random-bits.xml:275
 #, no-c-format
 msgid "Print server"
 msgstr "인쇄 서버"
 
 #. Tag: entry
-#: random-bits.xml:238
+#: random-bits.xml:276
 #, no-c-format
-msgid "<entry>168</entry>"
-msgstr "<entry>168</entry>"
+msgid "&task-print-inst;"
+msgstr "&task-print-inst;"
 
 #. Tag: entry
-#: random-bits.xml:239
+#: random-bits.xml:277
 #, no-c-format
-msgid "<entry>58</entry>"
-msgstr "<entry>58</entry>"
+msgid "&task-print-dl;"
+msgstr "&task-print-dl;"
 
 #. Tag: entry
-#: random-bits.xml:240
+#: random-bits.xml:278
 #, no-c-format
-msgid "<entry>226</entry>"
-msgstr "<entry>226</entry>"
+msgid "&task-print-tot;"
+msgstr "&task-print-tot;"
 
 #. Tag: entry
-#: random-bits.xml:244
+#: random-bits.xml:282
 #, no-c-format
 msgid "DNS server"
 msgstr "DNS 서버"
 
 #. Tag: entry
-#: random-bits.xml:245
+#: random-bits.xml:283
 #, no-c-format
-msgid "<entry>2</entry>"
-msgstr "<entry>2</entry>"
+msgid "&task-dns-inst;"
+msgstr "&task-dns-inst;"
 
 #. Tag: entry
-#: random-bits.xml:246
+#: random-bits.xml:284
 #, no-c-format
-msgid "<entry>1</entry>"
-msgstr "<entry>1</entry>"
+msgid "&task-dns-dl;"
+msgstr "&task-dns-dl;"
 
 #. Tag: entry
-#: random-bits.xml:247 random-bits.xml:260
+#: random-bits.xml:285
 #, no-c-format
-msgid "<entry>3</entry>"
-msgstr "<entry>3</entry>"
+msgid "&task-dns-tot;"
+msgstr "&task-dns-tot;"
 
 #. Tag: entry
-#: random-bits.xml:251
+#: random-bits.xml:289
 #, no-c-format
 msgid "File server"
 msgstr "파일 서버"
 
 #. Tag: entry
-#: random-bits.xml:252
+#: random-bits.xml:290
 #, no-c-format
-msgid "<entry>47</entry>"
-msgstr "<entry>47</entry>"
+msgid "&task-file-inst;"
+msgstr "&task-file-inst;"
 
 #. Tag: entry
-#: random-bits.xml:253
+#: random-bits.xml:291
 #, no-c-format
-msgid "<entry>24</entry>"
-msgstr "<entry>24</entry>"
+msgid "&task-file-dl;"
+msgstr "&task-file-dl;"
 
 #. Tag: entry
-#: random-bits.xml:254
+#: random-bits.xml:292
 #, no-c-format
-msgid "<entry>71</entry>"
-msgstr "<entry>71</entry>"
+msgid "&task-file-tot;"
+msgstr "&task-file-tot;"
 
 #. Tag: entry
-#: random-bits.xml:258
+#: random-bits.xml:296
 #, no-c-format
 msgid "Mail server"
 msgstr "메일 서버"
 
 #. Tag: entry
-#: random-bits.xml:259
+#: random-bits.xml:297
 #, no-c-format
-msgid "<entry>10</entry>"
-msgstr "<entry>10</entry>"
+msgid "&task-mail-inst;"
+msgstr "&task-mail-inst;"
 
 #. Tag: entry
-#: random-bits.xml:261
+#: random-bits.xml:298
 #, no-c-format
-msgid "<entry>13</entry>"
-msgstr "<entry>13</entry>"
+msgid "&task-mail-dl;"
+msgstr "&task-mail-dl;"
 
 #. Tag: entry
-#: random-bits.xml:265
+#: random-bits.xml:299
+#, no-c-format
+msgid "&task-mail-tot;"
+msgstr "&task-mail-tot;"
+
+#. Tag: entry
+#: random-bits.xml:303
 #, no-c-format
 msgid "SQL database"
 msgstr "SQL 데이터베이스"
 
 #. Tag: entry
-#: random-bits.xml:266
+#: random-bits.xml:304
 #, no-c-format
-msgid "<entry>66</entry>"
-msgstr "<entry>66</entry>"
+msgid "&task-sql-inst;"
+msgstr "&task-sql-inst;"
 
 #. Tag: entry
-#: random-bits.xml:267
+#: random-bits.xml:305
 #, no-c-format
-msgid "<entry>21</entry>"
-msgstr "<entry>21</entry>"
+msgid "&task-sql-dl;"
+msgstr "&task-sql-dl;"
 
 #. Tag: entry
-#: random-bits.xml:268
+#: random-bits.xml:306
 #, no-c-format
-msgid "<entry>87</entry>"
-msgstr "<entry>87</entry>"
+msgid "&task-sql-tot;"
+msgstr "&task-sql-tot;"
 
 #. Tag: para
-#: random-bits.xml:274
+#: random-bits.xml:312
 #, no-c-format
 msgid ""
-"The <emphasis>Desktop</emphasis> task will install both the Gnome and KDE "
-"desktop environments."
+"The <emphasis>Desktop</emphasis> task will install the GNOME desktop "
+"environment."
 msgstr ""
-"<emphasis>Desktop</emphasis> 작업은 GNOME과 KDE 데스크탑 환경을 모두 설치합니"
-"다."
+"<emphasis>데스크탑</emphasis> 태스크는 그놈과 데스크탑 환경을 설치합니다."
 
 #. Tag: para
-#: random-bits.xml:281
+#: random-bits.xml:319
 #, no-c-format
 msgid ""
 "If you install in a language other than English, <command>tasksel</command> "
 "may automatically install a <firstterm>localization task</firstterm>, if one "
 "is available for your language. Space requirements differ per language; you "
-"should allow up to 200MB in total for download and installation."
+"should allow up to 350MB in total for download and installation."
 msgstr ""
 "영어가 아닌 언어로 설치한다면 <command>tasksel</command>에서 자동으로 "
-"<firstterm>지역화 작업</firstterm>을 (해당 언어에 대한 작업이 있다면) 설치합"
-"니다. 언어마다 필요한 공간이 다릅니다. 내려받고 설치하는데 최대 200MB까지의 "
-"공간이 있어야 합니다."
+"<firstterm>지역화 태스크</firstterm>를 (해당 언어에 대한 태스크가 있다면) 설"
+"치합니다. 언어마다 필요한 공간이 다릅니다. 내려받고 설치하는데 최대 350MB까지"
+"의 공간이 있어야 합니다."
 
 #. Tag: title
-#: random-bits.xml:296
+#: random-bits.xml:334
 #, no-c-format
 msgid "Installing &debian; from a Unix/Linux System"
 msgstr "유닉스/리눅스 시스템에서 &debian; 설치하기"
 
 #. Tag: para
-#: random-bits.xml:298
+#: random-bits.xml:336
 #, no-c-format
 msgid ""
 "This section explains how to install &debian; from an existing Unix or Linux "
@@ -720,7 +765,7 @@ msgstr ""
 "는 데비안 chroot에서 입력하는 명령어를 말합니다."
 
 #. Tag: para
-#: random-bits.xml:310
+#: random-bits.xml:348
 #, no-c-format
 msgid ""
 "Once you've got the new Debian system configured to your preference, you can "
@@ -735,51 +780,53 @@ msgstr ""
 "이 동작하지 않는 하드웨어에 설치하는 쉬운 방법이기도 합니다."
 
 #. Tag: title
-#: random-bits.xml:322
+#: random-bits.xml:360
 #, no-c-format
 msgid "Getting Started"
 msgstr "시작하기"
 
 #. Tag: para
-#: random-bits.xml:323
+#: random-bits.xml:361
 #, no-c-format
 msgid ""
 "With your current *nix partitioning tools, repartition the hard drive as "
-"needed, creating at least one filesystem plus swap. You need at least 150MB "
-"of space available for a console only install, or at least 300MB if you plan "
-"to install X."
+"needed, creating at least one filesystem plus swap. You need around 350MB of "
+"space available for a console only install, or about 1GB if you plan to "
+"install X (more if you intend to install desktop environments like GNOME or "
+"KDE)."
 msgstr ""
 "기존 유닉스용 파티션 도구를 이용해 하드 드라이브를 필요한 대로 다시 파티션하"
 "십시오. 최소한 파일 시스템 한 개를 스왑으로 만드십시오. 콘솔만 설치하는 경우"
-"는 최소 150MB의 공간이 필요하고 X를 설치한다면 최소 300MB가 필요합니다."
+"는 약 350MB의 공간이 필요하고 X를 설치한다면 약 1GB가 (그놈이나 KDE같은 데스"
+"크탑 환경을 설치한다면 이보다 더) 필요합니다."
 
 #. Tag: para
-#: random-bits.xml:330
+#: random-bits.xml:369
 #, no-c-format
 msgid ""
-"To create file systems on your partitions. For example, to create an ext3 "
+"Next, create file systems on the partitions. For example, to create an ext3 "
 "file system on partition <filename>/dev/hda6</filename> (that's our example "
 "root partition): <informalexample><screen>\n"
-"# mke2fs -j /dev/hda6\n"
+"# mke2fs -j /dev/<replaceable>hda6</replaceable>\n"
 "</screen></informalexample> To create an ext2 file system instead, omit "
 "<userinput>-j</userinput>."
 msgstr ""
-"파티션에 파일 시스템을 만드려면 다음과 같이 하십시오. 예를 들어 <filename>/"
-"dev/hda6</filename> 파티션에 ext3 파일 시스템을 만드는 경우라면 (여기 예제에"
-"서 루트 파티션입니다): <informalexample><screen>\n"
-"# mke2fs -j /dev/hda6\n"
+"그리고 파티션에 파일 시스템을 만드십시오. 예를 들어 <filename>/dev/hda6</"
+"filename> 파티션에 ext3 파일 시스템을 만드는 경우라면 (여기 예제에서 루트 파"
+"티션입니다): <informalexample><screen>\n"
+"# mke2fs -j /dev/<replaceable>hda6</replaceable>\n"
 "</screen></informalexample> ext2 파일 시스템을 만드는 경우라면 <userinput>-"
 "j</userinput> 옵션을 빼십시오."
 
 #. Tag: para
-#: random-bits.xml:340
+#: random-bits.xml:379
 #, no-c-format
 msgid ""
 "Initialize and activate swap (substitute the partition number for your "
 "intended Debian swap partition): <informalexample><screen>\n"
-"# mkswap /dev/hda5\n"
+"# mkswap /dev/<replaceable>hda5</replaceable>\n"
 "# sync; sync; sync\n"
-"# swapon /dev/hda5\n"
+"# swapon /dev/<replaceable>hda5</replaceable>\n"
 "</screen></informalexample> Mount one partition as <filename>/mnt/debinst</"
 "filename> (the installation point, to be the root (<filename>/</filename>) "
 "filesystem on your new system). The mount point name is strictly arbitrary, "
@@ -787,25 +834,25 @@ msgid ""
 msgstr ""
 "스왑을 초기화하고 활성화하십시오 (파티션을 사용하려는 데비안 스왑 파티션으로 "
 "바꾸십시오): <informalexample><screen>\n"
-"# mkswap /dev/hda5\n"
+"# mkswap /dev/<replaceable>hda5</replaceable>\n"
 "# sync; sync; sync\n"
-"# swapon /dev/hda5\n"
+"# swapon /dev/<replaceable>hda5</replaceable>\n"
 "</screen></informalexample> 한 파티션을 <filename>/mnt/debinst</filename>에 "
 "(루트 (<filename>/</filename>) 파일시스템을 설치할 위치) 마운트하십시오. 마운"
 "트 위치 이름은 마음대로 정한 것이고, 아래에서 계속 사용합니다."
 
 #. Tag: screen
-#: random-bits.xml:352
+#: random-bits.xml:391
 #, no-c-format
 msgid ""
 "# mkdir /mnt/debinst\n"
-"# mount /dev/hda6 /mnt/debinst"
+"# mount /dev/<replaceable>hda6</replaceable> /mnt/debinst"
 msgstr ""
 "# mkdir /mnt/debinst\n"
-"# mount /dev/hda6 /mnt/debinst"
+"# mount /dev/<replaceable>hda6</replaceable> /mnt/debinst"
 
 #. Tag: para
-#: random-bits.xml:355
+#: random-bits.xml:394
 #, no-c-format
 msgid ""
 "If you want to have parts of the filesystem (e.g. /usr) mounted on separate "
@@ -816,37 +863,37 @@ msgstr ""
 "로 넘어가기 전에 그 디렉토리를 수동으로 만들어서 마운트해야 합니다."
 
 #. Tag: title
-#: random-bits.xml:365
+#: random-bits.xml:404
 #, no-c-format
 msgid "Install <command>debootstrap</command>"
 msgstr "<command>debootstrap</command> 설치"
 
 #. Tag: para
-#: random-bits.xml:366
+#: random-bits.xml:405
 #, no-c-format
 msgid ""
-"The tool that the Debian installer uses, which is recognized as the official "
-"way to install a Debian base system, is <command>debootstrap</command>. It "
-"uses <command>wget</command> and <command>ar</command>, but otherwise "
-"depends only on <classname>/bin/sh</classname> and basic Unix/Linux "
-"tools<footnote> <para> These include the GNU core utilities and commands "
-"like <command>sed</command>, <command>grep</command>, <command>tar</command> "
-"and <command>gzip</command>. </para> </footnote>. Install <command>wget</"
-"command> and <command>ar</command> if they aren't already on your current "
-"system, then download and install <command>debootstrap</command>."
+"The utility used by the Debian installer, and recognized as the official way "
+"to install a Debian base system, is <command>debootstrap</command>. It uses "
+"<command>wget</command> and <command>ar</command>, but otherwise depends "
+"only on <classname>/bin/sh</classname> and basic Unix/Linux tools<footnote> "
+"<para> These include the GNU core utilities and commands like <command>sed</"
+"command>, <command>grep</command>, <command>tar</command> and <command>gzip</"
+"command>. </para> </footnote>. Install <command>wget</command> and "
+"<command>ar</command> if they aren't already on your current system, then "
+"download and install <command>debootstrap</command>."
 msgstr ""
-"데비안 설치 프로그램이 사용하는 도구로, 데비안 베이스 시스템을 설치하는 공식"
-"적인 방법은 <command>debootstrap</command>입니다. <command>debootstrap</"
-"command>은 <command>wget</command>과 <command>ar</command>을 사용하지만, 그 "
-"밖에는 <classname>/bin/sh</classname>와 기본 Unix/Linux도구들 "
-"<footnote><para> 여기엔 GNU 기본 유틸리티와 <command>sed</command>, "
-"<command>grep</command>, <command>tar</command>와<command>gzip</command>같은 "
-"명령을 포함합니다. </para> </footnote>만 있으면 됩니다. 기존 시스템에 "
-"<command>wget</command>과 <command>ar</command>이 없으면 설치하십시오. 그리"
-"고 <command>debootstrap</command>을 내려 받고 설치하십시오."
+"데비안 설치 프로그램이 사용하는 프로그램으로, 데비안 베이스 시스템을 설치하"
+"는 공식적인 방법은 <command>debootstrap</command>입니다. "
+"<command>debootstrap</command>은 <command>wget</command>과 <command>ar</"
+"command>을 사용하지만, 그 밖에는 <classname>/bin/sh</classname>와 기본 유닉"
+"스/리눅스도구들 <footnote><para> 여기엔 GNU 기본 유틸리티와 <command>sed</"
+"command>, <command>grep</command>, <command>tar</command>와<command>gzip</"
+"command>같은 명령을 포함합니다. </para> </footnote>만 있으면 됩니다. 기존 시"
+"스템에 <command>wget</command>과 <command>ar</command>이 없으면 설치하십시"
+"오. 그리고 <command>debootstrap</command>을 내려 받고 설치하십시오."
 
 #. Tag: para
-#: random-bits.xml:396
+#: random-bits.xml:435
 #, no-c-format
 msgid ""
 "Or, you can use the following procedure to install it manually. Make a work "
@@ -857,8 +904,8 @@ msgid ""
 "located in the Debian archive (be sure to select the proper file for your "
 "architecture). Download the <command>debootstrap</command> .deb from the "
 "<ulink url=\"http://ftp.debian.org/debian/pool/main/d/debootstrap/\"> pool</"
-"ulink>, copy the package to the work folder, and extract the binary files "
-"from it. You will need to have root privileges to install the binaries."
+"ulink>, copy the package to the work folder, and extract the files from it. "
+"You will need to have root privileges to install the files."
 msgstr ""
 "아니면, 다음 방법을 이용해 수동으로 설치할 수도 있습니다. 먼저 .deb 파일을 "
 "풀 작업용 폴더를 만드십시오: <informalexample><screen>\n"
@@ -868,59 +915,45 @@ msgstr ""
 "텍쳐에 맞는 파일을 선택하도록 하십시오) <ulink url=\"http://ftp.debian.org/"
 "debian/pool/main/d/debootstrap/\"> 꾸러미 풀</ulink>에서 "
 "<command>debootstrap</command> .deb 파일을 내려받으시고, 꾸러미를 작업용 폴더"
-"에 복사하고, 바이너리 파일을 풀어 내십시오. 이 바이너리를 설치하려면 루트 권"
-"한이 필요할 것입니다."
+"에 복사하고, 파일을 풀어 내십시오. 이 파일을 설치하려면 루트 권한이 필요할 것"
+"입니다."
 
 #. Tag: screen
-#: random-bits.xml:411
+#: random-bits.xml:450
 #, no-c-format
 msgid ""
-"# ar -x debootstrap_0.X.X_arch.deb\n"
+"# ar -x debootstrap_0.X.X_all.deb\n"
 "# cd /\n"
 "# zcat /full-path-to-work/work/data.tar.gz | tar xv"
 msgstr ""
-"# ar -x debootstrap_0.X.X_아키텍처.deb\n"
+"# ar -x debootstrap_0.X.X_all.deb\n"
 "# cd /\n"
 "# zcat /full-path-to-work/work/data.tar.gz | tar xv"
-
-#. Tag: para
-#: random-bits.xml:413
-#, no-c-format
-msgid ""
-"Note that running <command>debootstrap</command> may require you to have a "
-"minimal version of <classname>glibc</classname> installed (currently "
-"GLIBC_2.3). <command>debootstrap</command> itself is a shell script, but it "
-"calls various utilities that require <classname>glibc</classname>."
-msgstr ""
-"<command>debootstrap</command>을 실행하려면 <classname>glibc</classname>의 최"
-"소한의 버전은 (현재 GLIBC_2.3) 있어야 합니다. <command>debootstrap</command> "
-"자체는 쉘 스크립트이지만, 이 스크립트에서 glibc가 있어야 하는 여러 가지 유틸"
-"리티를 실행합니다."
 
 #. Tag: title
-#: random-bits.xml:424
+#: random-bits.xml:456
 #, no-c-format
 msgid "Run <command>debootstrap</command>"
 msgstr "<command>debootstrap</command> 실행"
 
 #. Tag: para
-#: random-bits.xml:425
+#: random-bits.xml:457
 #, no-c-format
 msgid ""
 "<command>debootstrap</command> can download the needed files directly from "
 "the archive when you run it. You can substitute any Debian archive mirror "
-"for <userinput>http.us.debian.org/debian</userinput> in the command example "
+"for <userinput>&archive-mirror;/debian</userinput> in the command example "
 "below, preferably a mirror close to you network-wise. Mirrors are listed at "
 "<ulink url=\"http://www.debian.org/misc/README.mirrors\"></ulink>."
 msgstr ""
 "<command>debootstrap</command>을 실행하면 필요한 파일들을 아카이브에서 직접 "
-"내려받습니다. 아래의 명령어 예제에서 <userinput>http.us.debian.org/debian</"
+"내려받습니다. 아래의 명령어 예제에서 <userinput>&archive-mirror;/debian</"
 "userinput>을 아무 데비안 아카이브 미러로 바꿀 수 있습니다. 네트워크에서 가까"
 "이 있는 미러로 하는 게 좋습니다. 미러 목록은 <ulink url=\"http://www.debian."
-"org/misc/README.mirror\"></ulink>에 있습니다."
+"org/misc/README.mirrors\"></ulink>에 있습니다."
 
 #. Tag: para
-#: random-bits.xml:434
+#: random-bits.xml:466
 #, no-c-format
 msgid ""
 "If you have a &releasename; &debian; CD mounted at <filename>/cdrom</"
@@ -932,64 +965,71 @@ msgstr ""
 "userinput>"
 
 #. Tag: para
-#: random-bits.xml:440
+#: random-bits.xml:472
 #, no-c-format
 msgid ""
 "Substitute one of the following for <replaceable>ARCH</replaceable> in the "
 "<command>debootstrap</command> command: <userinput>alpha</userinput>, "
-"<userinput>arm</userinput>, <userinput>hppa</userinput>, <userinput>i386</"
-"userinput>, <userinput>ia64</userinput>, <userinput>m68k</userinput>, "
-"<userinput>mips</userinput>, <userinput>mipsel</userinput>, "
-"<userinput>powerpc</userinput>, <userinput>s390</userinput>, or "
+"<userinput>amd64</userinput>, <userinput>arm</userinput>, <userinput>hppa</"
+"userinput>, <userinput>i386</userinput>, <userinput>ia64</userinput>, "
+"<userinput>m68k</userinput>, <userinput>mips</userinput>, <userinput>mipsel</"
+"userinput>, <userinput>powerpc</userinput>, <userinput>s390</userinput>, or "
 "<userinput>sparc</userinput>."
 msgstr ""
 "<command>debootstrap</command> 명령에서 <replaceable>ARCH</replaceable>를 다"
-"음 중의 하나로 바꾸십시오: <userinput>alpha</userinput>, <userinput>arm</"
-"userinput>, <userinput>hppa</userinput>, <userinput>i386</userinput>, "
-"<userinput>ia64</userinput>, <userinput>m68k</userinput>, <userinput>mips</"
-"userinput>, <userinput>mipsel</userinput>, <userinput>powerpc</userinput>, "
-"<userinput>s390</userinput>, <userinput>sparc</userinput>."
+"음 중의 하나로 바꾸십시오: <userinput>alpha</userinput>, <userinput>amd64</"
+"userinput>, <userinput>arm</userinput>, <userinput>hppa</userinput>, "
+"<userinput>i386</userinput>, <userinput>ia64</userinput>, <userinput>m68k</"
+"userinput>, <userinput>mips</userinput>, <userinput>mipsel</userinput>, "
+"<userinput>powerpc</userinput>, <userinput>s390</userinput>, "
+"<userinput>sparc</userinput>."
 
 #. Tag: screen
-#: random-bits.xml:457
+#: random-bits.xml:490
 #, no-c-format
 msgid ""
 "# /usr/sbin/debootstrap --arch ARCH &releasename; \\\n"
-"     /mnt/debinst http://http.us.debian.org/debian"
+"     /mnt/debinst http://ftp.us.debian.org/debian"
 msgstr ""
 "# /usr/sbin/debootstrap --arch ARCH &releasename; \\\n"
-"     /mnt/debinst http://http.us.debian.org/debian"
+"     /mnt/debinst http://ftp.us.debian.org/debian"
 
 #. Tag: title
-#: random-bits.xml:463
+#: random-bits.xml:496
 #, no-c-format
 msgid "Configure The Base System"
 msgstr "베이스 시스템 설정"
 
 #. Tag: para
-#: random-bits.xml:464
+#: random-bits.xml:497
 #, no-c-format
 msgid ""
 "Now you've got a real Debian system, though rather lean, on disk. "
-"<command>Chroot</command> into it:"
+"<command>chroot</command> into it: <informalexample><screen>\n"
+"# LANG=C chroot /mnt/debinst /bin/bash\n"
+"</screen></informalexample> After chrooting you may need to set the terminal "
+"definition to be compatible with the Debian base system, for example:"
 msgstr ""
-"이제 디스크에 작지만 진짜 데비안 시스템이 들어 있습니다. 이 데비안 시스템으"
-"로 <command>chroot</command>하십시오:"
+"그럼 디스크 안에 임시가 아니라 완전한 데비안 시스템이 갖춰졌습니다. "
+"<command>chroot</command>로 그 안에 들어갑니다: <informalexample><screen>\n"
+"# LANG=C chroot /mnt/debinst /bin/bash\n"
+"</screen></informalexample> chroot로 들어간 다음에 터미널 정의를 데비안 베이"
+"스 시스템과 맞게 맞춰야 할 것입니다. 예를 들어:"
 
 #. Tag: screen
-#: random-bits.xml:469
+#: random-bits.xml:507
 #, no-c-format
-msgid "# LANG= chroot /mnt/debinst /bin/bash"
-msgstr "# LANG= chroot /mnt/debinst /bin/bash"
+msgid "# export TERM=<replaceable>xterm-color</replaceable>"
+msgstr "# export TERM=<replaceable>xterm-color</replaceable>"
 
 #. Tag: title
-#: random-bits.xml:474
+#: random-bits.xml:512
 #, no-c-format
 msgid "Mount Partitions"
 msgstr "파티션 마운트하기"
 
 #. Tag: para
-#: random-bits.xml:475
+#: random-bits.xml:513
 #, no-c-format
 msgid ""
 "You need to create <filename>/etc/fstab</filename>. "
@@ -1006,8 +1046,8 @@ msgid ""
 "/dev/XXX         none          swap    sw                       0    0\n"
 "proc             /proc         proc    defaults                 0    0\n"
 "\n"
-"/dev/fd0         /mnt/floppy   auto    noauto,rw,sync,user,exec 0    0\n"
-"/dev/cdrom       /mnt/cdrom    iso9660 noauto,ro,user,exec      0    0\n"
+"/dev/fd0         /media/floppy auto    noauto,rw,sync,user,exec 0    0\n"
+"/dev/cdrom       /media/cdrom  iso9660 noauto,ro,user,exec      0    0\n"
 "\n"
 "/dev/XXX         /tmp          ext3    rw,nosuid,nodev          0    2\n"
 "/dev/XXX         /var          ext3    rw,nosuid,nodev          0    2\n"
@@ -1015,8 +1055,17 @@ msgid ""
 "/dev/XXX         /home         ext3    rw,nosuid,nodev          0    2\n"
 "</screen></informalexample> Use <userinput>mount -a</userinput> to mount all "
 "the file systems you have specified in your <filename>/etc/fstab</filename>, "
-"or to mount file systems individually use: <informalexample><screen>\n"
+"or, to mount file systems individually, use: <informalexample><screen>\n"
 "# mount /path   # e.g.: mount /usr\n"
+"</screen></informalexample> Current Debian systems have mountpoints for "
+"removable media under <filename>/media</filename>, but keep compatibility "
+"symlinks in <filename>/</filename>. Create these as as needed, for example: "
+"<informalexample><screen>\n"
+"# cd /media\n"
+"# mkdir cdrom0\n"
+"# ln -s cdrom0 cdrom\n"
+"# cd /\n"
+"# ln -s media/cdrom\n"
 "</screen></informalexample> You can mount the proc file system multiple "
 "times and to arbitrary locations, though <filename>/proc</filename> is "
 "customary. If you didn't use <userinput>mount -a</userinput>, be sure to "
@@ -1036,8 +1085,8 @@ msgstr ""
 "/dev/XXX         none          swap    sw                       0    0\n"
 "proc             /proc         proc    defaults                 0    0\n"
 "\n"
-"/dev/fd0         /mnt/floppy   auto    noauto,rw,sync,user,exec 0    0\n"
-"/dev/cdrom       /mnt/cdrom    iso9660 noauto,ro,user,exec      0    0\n"
+"/dev/fd0         /media/floppy auto    noauto,rw,sync,user,exec 0    0\n"
+"/dev/cdrom       /media/cdrom  iso9660 noauto,ro,user,exec      0    0\n"
 "\n"
 "/dev/XXX         /tmp          ext3    rw,nosuid,nodev          0    2\n"
 "/dev/XXX         /var          ext3    rw,nosuid,nodev          0    2\n"
@@ -1048,19 +1097,28 @@ msgstr ""
 "니면 다음 명령으로 파일시스템을 하나하나 마운트하십시오: "
 "<informalexample><screen>\n"
 "# mount /path   # 예를 들어: mount /usr\n"
+"</screen></informalexample> 현재 데비안 시스템은 탈부착이 가능한 미디어에 대"
+"해 <filename>/media</filename> 아래에 마운트 위치가 들어 있지만, <filename>/"
+"</filename>에 호환성 유지를 위해 심볼릭 링크를 만들어 놓았습니다. 필요하면 "
+"이 심볼릭 링크를 만드십시오. 예를 들어: <informalexample><screen>\n"
+"# cd /media\n"
+"# mkdir cdrom0\n"
+"# ln -s cdrom0 cdrom\n"
+"# cd /\n"
+"# ln -s media/cdrom\n"
 "</screen></informalexample> proc 파일시스템은 여러번 어느 위치에서든 마운트"
 "할 수 있습니다. (하지만 /proc을 관행적으로 사용합니다.) <userinput>mount -a</"
 "userinput> 명령을 사용하지 않았다면, 계속하시기 전에 꼭 proc을 마운트하십시"
 "오."
 
 #. Tag: screen
-#: random-bits.xml:495
+#: random-bits.xml:539
 #, no-c-format
 msgid "# mount -t proc proc /proc"
 msgstr "# mount -t proc proc /proc"
 
 #. Tag: para
-#: random-bits.xml:497
+#: random-bits.xml:541
 #, no-c-format
 msgid ""
 "The command <userinput>ls /proc</userinput> should now show a non-empty "
@@ -1072,47 +1130,48 @@ msgstr ""
 "있습니다."
 
 #. Tag: screen
-#: random-bits.xml:503
+#: random-bits.xml:547
 #, no-c-format
 msgid "# mount -t proc proc /mnt/debinst/proc"
 msgstr "# mount -t proc proc /mnt/debinst/proc"
 
 #. Tag: title
-#: random-bits.xml:509
+#: random-bits.xml:553
 #, no-c-format
-msgid "Configure Keyboard"
-msgstr "키보드 설정"
+msgid "Setting Timezone"
+msgstr "시간대 설정하기"
 
 #. Tag: para
-#: random-bits.xml:510
-#, no-c-format
-msgid "To configure your keyboard:"
-msgstr "키보드를 설정하려면:"
-
-#. Tag: screen
-#: random-bits.xml:514
-#, no-c-format
-msgid "# dpkg-reconfigure console-data"
-msgstr "# dpkg-reconfigure console-data"
-
-#. Tag: para
-#: random-bits.xml:516
+#: random-bits.xml:554
 #, no-c-format
 msgid ""
-"Note that the keyboard cannot be set while in the chroot, but will be "
-"configured for the next reboot."
+"An option in the file <filename>/etc/default/rcS</filename> determines "
+"whether the system will interpret the hardware clock as being set to UTC or "
+"local time. The following command allow you to set that and choose your "
+"timezone."
 msgstr ""
-"키보드는 chroot 안에 있을 때 설정할 수 없다는 데 유의하십시오. 다음에 다시 시"
-"작한 다음에 설정합니다."
+"<filename>/etc/default/rcS</filename>에 파일에 들어 있는 옵션으로 하드웨어 시"
+"계를 UTC로 설정할 지, 지역별 시간으로 설정할 지 판단합니다. 다음 명령으로 이 "
+"부분을 설정하고, 해당 지역의 시간대를 설정합니다."
+
+#. Tag: screen
+#: random-bits.xml:561
+#, no-c-format
+msgid ""
+"# editor /etc/default/rcS\n"
+"# tzconfig"
+msgstr ""
+"# editor /etc/default/rcS\n"
+"# tzconfig"
 
 #. Tag: title
-#: random-bits.xml:525
+#: random-bits.xml:567
 #, no-c-format
 msgid "Configure Networking"
 msgstr "네트워크 설정하기"
 
 #. Tag: para
-#: random-bits.xml:526
+#: random-bits.xml:568
 #, no-c-format
 msgid ""
 "To configure networking, edit <filename>/etc/network/interfaces</filename>, "
@@ -1149,14 +1208,25 @@ msgid ""
 "</screen></informalexample> Enter your nameserver(s) and search directives "
 "in <filename>/etc/resolv.conf</filename>: <informalexample><screen>\n"
 "# editor /etc/resolv.conf\n"
-"</screen></informalexample> A simple <filename>/etc/resolv.conf</filename>: "
-"<informalexample><screen>\n"
-"search hqdom.local\\000\n"
+"</screen></informalexample> A simple example <filename>/etc/resolv.conf</"
+"filename>: <informalexample><screen>\n"
+"search hqdom.local\n"
 "nameserver 10.1.1.36\n"
 "nameserver 192.168.9.100\n"
 "</screen></informalexample> Enter your system's host name (2 to 63 "
 "characters): <informalexample><screen>\n"
 "# echo DebianHostName &gt; /etc/hostname\n"
+"</screen></informalexample> And a basic <filename>/etc/hosts</filename> with "
+"IPv6 support: <informalexample><screen>\n"
+"127.0.0.1 localhost DebianHostName\n"
+"\n"
+"# The following lines are desirable for IPv6 capable hosts\n"
+"::1     ip6-localhost ip6-loopback\n"
+"fe00::0 ip6-localnet\n"
+"ff00::0 ip6-mcastprefix\n"
+"ff02::1 ip6-allnodes\n"
+"ff02::2 ip6-allrouters\n"
+"ff02::3 ip6-allhosts\n"
 "</screen></informalexample> If you have multiple network cards, you should "
 "arrange the names of driver modules in the <filename>/etc/modules</filename> "
 "file into the desired order. Then during boot, each card will be associated "
@@ -1164,7 +1234,8 @@ msgid ""
 msgstr ""
 "네트워크를 설정하려면, <filename>/etc/network/interfaces</filename>, "
 "<filename>/etc/resolv.conf</filename>, <filename>/etc/hostname</filename>과 "
-"<filename>/etc/hosts</filename> 파일을 편집하십시오. <informalexample><screen>\n"
+"<filename>/etc/hosts</filename> 파일을 편집하십시오. "
+"<informalexample><screen>\n"
 "# editor /etc/network/interfaces \n"
 "</screen></informalexample> 다음은 <filename>/usr/share/doc/ifupdown/"
 "examples</filename>에 들어 있는 예제입니다: <informalexample><screen>\n"
@@ -1196,106 +1267,217 @@ msgstr ""
 "</screen></informalexample> 네임서버와 search 명령을 <filename>/etc/resolv."
 "conf</filename>에 입력하십시오: <informalexample><screen>\n"
 "# editor /etc/resolv.conf\n"
-"</screen></informalexample> 간단한 <filename>/etc/resolv.conf</filename>: "
-"<informalexample><screen>\n"
-"search hqdom.local\\000\n"
+"</screen></informalexample> 간단한 예제 <filename>/etc/resolv.conf</"
+"filename>: <informalexample><screen>\n"
+"search hqdom.local\n"
 "nameserver 10.1.1.36\n"
 "nameserver 192.168.9.100\n"
 "</screen></informalexample> 시스템의 호스트이름을 입력하십시오 (2글자에서 63"
 "글자까지): <informalexample><screen>\n"
 "# echo DebianHostName &gt; /etc/hostname\n"
+"</screen></informalexample> 그리고 IPv6를 지원하는 기본적인 <filename>/etc/"
+"hosts</filename> 파일은: <informalexample><screen>\n"
+"127.0.0.1 localhost DebianHostName\n"
+"\n"
+"# The following lines are desirable for IPv6 capable hosts\n"
+"::1     ip6-localhost ip6-loopback\n"
+"fe00::0 ip6-localnet\n"
+"ff00::0 ip6-mcastprefix\n"
+"ff02::1 ip6-allnodes\n"
+"ff02::2 ip6-allrouters\n"
+"ff02::3 ip6-allhosts\n"
 "</screen></informalexample> 네트워크 카드가 여러개라면, <filename>/etc/"
 "modules</filename>에 드라이버 모듈 이름을 적당한 순서로 맞춰야 합니다. 그래"
 "야 부팅할 때 각 카드가 의도한 해당 인터페이스 이름으로 (eth0, eth1 등) 연결됩"
 "니다."
 
 #. Tag: title
-#: random-bits.xml:563
+#: random-bits.xml:609
 #, no-c-format
-msgid "Configure Locales"
-msgstr "로케일 설정하기"
+msgid "Configure Apt"
+msgstr "APT 설정하기"
 
 #. Tag: para
-#: random-bits.xml:564
+#: random-bits.xml:610
+#, no-c-format
+msgid ""
+"Debootstrap will have created a very basic <filename>/etc/apt/sources.list</"
+"filename> that will allow installing additional packages. However, you may "
+"want to add some additional sources, for example for source packages and "
+"security updates: <informalexample><screen>\n"
+"deb-src http://ftp.us.debian.org/debian etch main\n"
+"\n"
+"deb http://security.debian.org/ etch/updates main\n"
+"deb-src http://security.debian.org/ etch/updates main\n"
+"</screen></informalexample> Make sure to run <userinput>aptitude update</"
+"userinput> after you have made changes to the sources list."
+msgstr ""
+"debootstrap은 아주 기본적인 <filename>/etc/apt/sources.list</filename> 파일"
+"을 만들어서 추가 꾸러미를 설치할 수 있게 됩니다. 하지만 이 외에 소스를 추가해"
+"야 할 경우가 있습니다. 예를 들어 보안 업데이트의 소스 꾸러미를 설정할 수 있습"
+"니다: <informalexample><screen>\n"
+"deb-src http://ftp.us.debian.org/debian etch main\n"
+"\n"
+"deb http://security.debian.org/ etch/updates main\n"
+"deb-src http://security.debian.org/ etch/updates main\n"
+"</screen></informalexample> Make <filename>sources.list</filename> 파일을 고"
+"친 다음에 꼭 <userinput>aptitude update</userinput>를 실행하십시오."
+
+#. Tag: title
+#: random-bits.xml:626
+#, no-c-format
+msgid "Configure Locales and Keyboard"
+msgstr "로케일 및 키보드 설정하기"
+
+#. Tag: para
+#: random-bits.xml:627
 #, no-c-format
 msgid ""
 "To configure your locale settings to use a language other than English, "
-"install the locales support package and configure it: "
+"install the <classname>locales</classname> support package and configure it. "
+"Currently the use of UTF-8 locales is recommended. "
 "<informalexample><screen>\n"
-"# apt-get install locales\n"
+"# aptitude install locales\n"
 "# dpkg-reconfigure locales\n"
-"</screen></informalexample> NOTE: Apt must be configured beforehand by "
-"creating a sources.list and running apt-get update. Before using locales "
-"with character sets other than ASCII or latin1, please consult the "
-"appropriate localization HOWTO."
+"</screen></informalexample> To configure your keyboard (if needed):"
 msgstr ""
-"영어가 아닌 언어를 사용할 때 로케일을 설정하려면 로케일 지원 꾸러미를 설치하"
-"고 그 꾸러미를 설정하십시오: <informalexample><screen>\n"
-"# apt-get install locales\n"
+"영어가 아닌 언어를 사용할 때 로케일을 설정하려면 <classname>locales</"
+"classname> 지원 꾸러미를 설치하고 그 꾸러미를 설정하십시오. 지금은 UTF-8 로케"
+"일 사용을 권장합니다: <informalexample><screen>\n"
+"# aptitude install locales\n"
 "# dpkg-reconfigure locales\n"
-"</screen></informalexample> 주의: 이 명령을 실행하기 전에 source.list를 생성"
-"하고 apt-get update를 실행해서 apt를 설정해야 합니다. ASCII 혹은 latin1 이외"
-"의 문자셋을 사용하는 로케일을 사용하려면 그 전에 적당한 지역화 HOWTO를 참고하"
-"십시오."
+"</screen></informalexample> 키보드를 설정하려면 (키보드 설정이 필요한 경우):"
+
+#. Tag: screen
+#: random-bits.xml:637
+#, no-c-format
+msgid ""
+"# aptitude install console-data\n"
+"# dpkg-reconfigure console-data"
+msgstr ""
+"# aptitude install console-data\n"
+"# dpkg-reconfigure console-data"
+
+#. Tag: para
+#: random-bits.xml:639
+#, no-c-format
+msgid ""
+"Note that the keyboard cannot be set while in the chroot, but will be "
+"configured for the next reboot."
+msgstr ""
+"키보드는 chroot 안에 있을 때 설정할 수 없다는 데 유의하십시오. 다음에 다시 시"
+"작한 다음에 설정합니다."
 
 #. Tag: title
-#: random-bits.xml:581
+#: random-bits.xml:649
 #, no-c-format
 msgid "Install a Kernel"
 msgstr "커널 설치"
 
 #. Tag: para
-#: random-bits.xml:582
+#: random-bits.xml:650
 #, no-c-format
 msgid ""
 "If you intend to boot this system, you probably want a Linux kernel and a "
-"boot loader. Identify available pre-packaged kernels with "
-"<informalexample><screen>\n"
-"# apt-cache search <phrase condition=\"classic-kpkg\">kernel</phrase><phrase "
-"condition=\"common-kpkg\">linux</phrase>-image\n"
-"</screen></informalexample> Then install your choice using its package name."
+"boot loader. Identify available pre-packaged kernels with:"
 msgstr ""
 "이 시스템을 부팅하려면, 리눅스 커널과 부트로더가 있어야 합니다. 다음 명령으"
-"로 미리 꾸러미로 만들어져 있는 커널을 알아보십시오: "
-"<informalexample><screen>\n"
-"# apt-cache search <phrase condition=\"classic-kpkg\">kernel</phrase><phrase "
-"condition=\"common-kpkg\">linux</phrase>-image\n"
-"</screen></informalexample> 그리고 꾸러미 이름을 하나 골라서 설치하십시오."
+"로 미리 꾸러미로 만들어져 있는 커널을 알아보십시오:"
 
 #. Tag: screen
-#: random-bits.xml:591
+#: random-bits.xml:655
+#, no-c-format
+msgid "# apt-cache search linux-image"
+msgstr "# apt-cache search linux-image"
+
+#. Tag: para
+#: random-bits.xml:657
 #, no-c-format
 msgid ""
-"# apt-get install <phrase condition=\"classic-kpkg\">kernel</phrase><phrase "
-"condition=\"common-kpkg\">linux</phrase>-image-<replaceable>&kernelversion;-"
-"arch-etc</replaceable>"
+"If you intend to use a pre-packaged kernel, you may want to create the "
+"configuration file <filename>/etc/kernel-img.conf</filename> before you do "
+"so. Here's an example file:"
 msgstr ""
-"# apt-get install <phrase condition=\"classic-kpkg\">kernel</phrase><phrase "
-"condition=\"common-kpkg\">linux</phrase>-image-<replaceable>&kernelversion;-"
-"arch-etc</replaceable>"
+"이미 꾸러미로 만들어진 커널을 사용하려면, <filename>/etc/kernel-img.conf</"
+"filename> 설정 파일을 미리 만드십시오. 예제 파일은 다음과 같습니다:"
+
+#. Tag: screen
+#: random-bits.xml:663
+#, no-c-format
+msgid ""
+"# Kernel image management overrides\n"
+"# See kernel-img.conf(5) for details\n"
+"do_symlinks = yes\n"
+"relative_links = yes\n"
+"do_bootloader = yes\n"
+"do_bootfloppy = no\n"
+"do_initrd = yes\n"
+"link_in_boot = no"
+msgstr ""
+"# Kernel image management overrides\n"
+"# See kernel-img.conf(5) for details\n"
+"do_symlinks = yes\n"
+"relative_links = yes\n"
+"do_bootloader = yes\n"
+"do_bootfloppy = no\n"
+"do_initrd = yes\n"
+"link_in_boot = no"
+
+#. Tag: para
+#: random-bits.xml:665
+#, no-c-format
+msgid ""
+"For detailed information about this file and the various options, consult "
+"its man page which will be available after installing the <classname>kernel-"
+"package</classname> package. We recommend that you check that the values are "
+"appropriate for your system."
+msgstr ""
+"이 파일에 대한 자세한 정보 및 여러가지 옵션에 대한 설명은, <classname>kernel-"
+"package</classname> 꾸러미를 설치하면 생기는 해당 맨페이지를 참고하십시오. 해"
+"당 옵션 값들을 시스템에 맞추시기를 권장합니다."
+
+#. Tag: para
+#: random-bits.xml:672
+#, no-c-format
+msgid ""
+"Then install the kernel package of your choice using its package name. "
+"<informalexample><screen>\n"
+"# aptitude install linux-image-<replaceable>&kernelversion;-arch-etc</"
+"replaceable>\n"
+"</screen></informalexample> If you did not create a <filename>/etc/kernel-"
+"img.conf</filename> before installing a pre-packaged kernel, you may be "
+"asked some questions during its installation that refer to it."
+msgstr ""
+"그리고 설치하려는 커널 꾸러미를 꾸러미 이름을 이용해 설치하십시오. "
+"<informalexample><screen>\n"
+"# aptitude install linux-image-<replaceable>&kernelversion;-arch-etc</"
+"replaceable>\n"
+"</screen></informalexample> 이미 꾸러미로 만들어진 커널을 설치하기 전에 "
+"<filename>/etc/kernel-img.conf</filename> 파일을 만들지 않았다면, 설치하면서 "
+"몇 가지 질문을 받게 될 수 있습니다."
 
 #. Tag: title
-#: random-bits.xml:597
+#: random-bits.xml:686
 #, no-c-format
 msgid "Set up the Boot Loader"
 msgstr "부트로더 설정하기"
 
 #. Tag: para
-#: random-bits.xml:598
+#: random-bits.xml:687
 #, no-c-format
 msgid ""
 "To make your &debian; system bootable, set up your boot loader to load the "
-"installed kernel with your new root partition. Note that debootstrap does "
-"not install a boot loader, though you can use apt-get inside your Debian "
-"chroot to do so."
+"installed kernel with your new root partition. Note that "
+"<command>debootstrap</command> does not install a boot loader, though you "
+"can use <command>aptitude</command> inside your Debian chroot to do so."
 msgstr ""
 "&debian; 시스템을 부팅 가능하게 하려면, 부트로더를 설정해서 루트 파티션에서 "
-"설치한 커널을 읽어들이도록 하십시오. debootstrap은 부트로더를 설치하지 않는다"
-"는 점에 주의하십시오. 하지만 apt-get을 데비안 chroot 안에서 사용하면 부트로더"
-"를 설치할 수 있습니다."
+"설치한 커널을 읽어들이도록 하십시오. <command>debootstrap</command>은 부트로"
+"더를 설치하지 않는다는 점에 주의하십시오. 하지만 <command>aptitude</command>"
+"을 데비안 chroot 안에서 사용하면 부트로더를 설치할 수 있습니다."
 
 #. Tag: para
-#: random-bits.xml:605
+#: random-bits.xml:694
 #, no-c-format
 msgid ""
 "Check <userinput>info grub</userinput> or <userinput>man lilo.conf</"
@@ -1304,38 +1486,61 @@ msgid ""
 "install to your existing grub <filename>menu.lst</filename> or "
 "<filename>lilo.conf</filename>. For <filename>lilo.conf</filename>, you "
 "could also copy it to the new system and edit it there. After you are done "
-"editing, call lilo (remember it will use <filename>lilo.conf</filename> "
-"relative to the system you call it from)."
+"editing, call <command>lilo</command> (remember it will use <filename>lilo."
+"conf</filename> relative to the system you call it from)."
 msgstr ""
 "<userinput>info grub</userinput> 혹은 <userinput>man lilo.conf</userinput> 명"
 "령으로 부트로더 설정 방법을 미리 알아보십시오. 데비안을 설치할 때 사용했던 기"
 "존 시스템을 계속 유지하는 경우라면, 기존의 grub <filename>menu.lst</"
 "filename> 혹은 <filename>lilo.conf</filename>에 데비안에 해당하는 항목을 추가"
 "하십시오. <filename>lilo.conf</filename>의 경우, 파일을 새로운 시스템으로 복"
-"사해 와서 편집할 수도 있습니다. 편집을 마친 다음에는 lilo를 실행하십시오. "
-"(lilo를 실행하면 실행하는 시스템에 상대적인 <filename>lilo.conf</filename> 파"
-"일을 사용하게 됩니다.)"
+"사해 와서 편집할 수도 있습니다. 편집을 마친 다음에는 <command>lilo</command>"
+"를 실행하십시오. (<command>lilo</command>를 실행하면 실행하는 시스템에 상대적"
+"인 <filename>lilo.conf</filename> 파일을 사용하게 됩니다.)"
 
 #. Tag: para
-#: random-bits.xml:616
+#: random-bits.xml:706
+#, no-c-format
+msgid ""
+"Installing and setting up <classname>grub</classname> is as easy as: "
+"<informalexample><screen>\n"
+"# aptitude install grub\n"
+"# grub-install /dev/<replaceable>hda</replaceable>\n"
+"# update-grub\n"
+"</screen></informalexample> The second command will install <command>grub</"
+"command> (in this case in the MBR of <literal>hda</literal>). The last "
+"command will create a sane and working <filename>/boot/grub/menu.lst</"
+"filename>."
+msgstr ""
+"<classname>grub</classname> 설정은 다음과 같이 쉽습니다: "
+"<informalexample><screen>\n"
+"# aptitude install grub\n"
+"# grub-install /dev/<replaceable>hda</replaceable>\n"
+"# update-grub\n"
+"</screen></informalexample> 두 번째 명령이 <command>grub</command>을 설치합니"
+"다. (이 경우에는 <literal>hda</literal>의 MBR에 설치합니다.) 마지막 명령은 올"
+"바르게 동작하는 <filename>/boot/grub/menu.lst</filename> 파일을 만듭니다."
+
+#. Tag: para
+#: random-bits.xml:716
 #, no-c-format
 msgid "Here is a basic <filename>/etc/lilo.conf</filename> as an example:"
 msgstr "다음은 기본적인 <filename>/etc/lilo.conf</filename> 예제입니다:"
 
 #. Tag: screen
-#: random-bits.xml:620
+#: random-bits.xml:720
 #, no-c-format
 msgid ""
-"boot=/dev/hda6\n"
-"root=/dev/hda6\n"
+"boot=/dev/<replaceable>hda6</replaceable>\n"
+"root=/dev/<replaceable>hda6</replaceable>\n"
 "install=menu\n"
 "delay=20\n"
 "lba32\n"
 "image=/vmlinuz\n"
 "label=Debian"
 msgstr ""
-"boot=/dev/hda6\n"
-"root=/dev/hda6\n"
+"boot=/dev/<replaceable>hda6</replaceable>\n"
+"root=/dev/<replaceable>hda6</replaceable>\n"
 "install=menu\n"
 "delay=20\n"
 "lba32\n"
@@ -1343,7 +1548,41 @@ msgstr ""
 "label=Debian"
 
 #. Tag: para
-#: random-bits.xml:622
+#: random-bits.xml:722
+#, no-c-format
+msgid ""
+"Depending on which bootloader you selected, you can now make some additional "
+"changes in <filename>/etc/kernel-img.conf</filename>."
+msgstr ""
+"사용하는 부트로더에 따라서, <filename>/etc/kernel-img.conf</filename> 파일 내"
+"용을 약간 바꿀 수 있습니다."
+
+#. Tag: para
+#: random-bits.xml:727
+#, no-c-format
+msgid ""
+"For the <classname>grub</classname> bootloader, you should set the "
+"<literal>do_bootloader</literal> option to <quote>no</quote>. And to "
+"automatically update your <filename>/boot/grub/menu.lst</filename> on "
+"installation or removal of Debian kernels, add the following lines: "
+"<informalexample><screen>\n"
+"postinst_hook = update-grub\n"
+"postrm_hook   = update-grub\n"
+"</screen></informalexample> For the <classname>lilo</classname> bootloader, "
+"the value of <literal>do_bootloader</literal> needs to remain <quote>yes</"
+"quote>."
+msgstr ""
+"<classname>grub</classname> 부트로더의 경우, <literal>do_bootloader</"
+"literal> 옵션을 <quote>no</quote>로 만들 수 있습니다. 또 데비안 커널을 설치하"
+"거나 지울 때마다 자동으로 <filename>/boot/grub/menu.lst</filename> 파일을 업"
+"데이트하려면 다음 줄을 추가합니다: <informalexample><screen>\n"
+"postinst_hook = update-grub\n"
+"postrm_hook   = update-grub\n"
+"</screen></informalexample> <classname>lilo</classname> 부트로더의 경우, "
+"<literal>do_bootloader</literal>는 <quote>yes</quote>로 놔둬야 합니다."
+
+#. Tag: para
+#: random-bits.xml:739
 #, no-c-format
 msgid ""
 "Check <userinput>man yaboot.conf</userinput> for instructions on setting up "
@@ -1361,7 +1600,7 @@ msgstr ""
 "<filename>yaboot.conf</filename> 파일을 사용하게 됩니다.)"
 
 #. Tag: para
-#: random-bits.xml:632
+#: random-bits.xml:749
 #, no-c-format
 msgid ""
 "Here is a basic <filename>/etc/yaboot.conf</filename> as an example: "
@@ -1391,18 +1630,61 @@ msgstr ""
 "을 <userinput>hd:</userinput> 대신에 써야 할 수도 있습니다."
 
 #. Tag: title
-#: random-bits.xml:650
+#: random-bits.xml:762
+#, no-c-format
+msgid "Finishing touches"
+msgstr "마지막 처리"
+
+#. Tag: para
+#: random-bits.xml:763
+#, no-c-format
+msgid ""
+"As mentioned earlier, the installed system will be very basic. If you would "
+"like to make the system a bit more mature, there is an easy method to "
+"install all packages with <quote>standard</quote> priority: "
+"<informalexample><screen>\n"
+"# tasksel install standard\n"
+"</screen></informalexample> Of course, you can also just use "
+"<command>aptitude</command> to install packages individually."
+msgstr ""
+"앞에서 말한 것처럼, 설치한 시스템은 아주 기본적인 시스템입니다. 시스템을 좀 "
+"더 괜찮게 만드려면, 쉬운 방법으로 <quote>standard</quote> 우선 순위의 모든 꾸"
+"러미를 설치할 수 있습니다: <informalexample><screen>\n"
+"# tasksel install standard\n"
+"</screen></informalexample> 물론 <command>aptitude</command>를 이용해 꾸러미"
+"를 하나하나 선택해서 설치할 수도 있습니다."
+
+#. Tag: para
+#: random-bits.xml:774
+#, no-c-format
+msgid ""
+"After the installation there will be a lot of downloaded packages in "
+"<filename>/var/cache/apt/archives/</filename>. You can free up some "
+"diskspace by running:"
+msgstr ""
+"설치한 다음에 <filename>/var/cache/apt/archives/</filename> 밑에 내려받은 꾸"
+"러미들이 많이 들어 있게 됩니다. 다음 명령을 실행하면 디스크 공간을 좀 더 확보"
+"할 수 있습니다:"
+
+#. Tag: screen
+#: random-bits.xml:780
+#, no-c-format
+msgid "# aptitude clean"
+msgstr "# aptitude clean"
+
+#. Tag: title
+#: random-bits.xml:791
 #, no-c-format
 msgid "Installing &debian; over Parallel Line IP (PLIP)"
 msgstr "병렬 라인 IP를 (PLIP) 이용해 &debian; 설치하기"
 
 #. Tag: para
-#: random-bits.xml:652
+#: random-bits.xml:793
 #, no-c-format
 msgid ""
-"This section explains how to install &debian; on a computer without Ethernet "
-"card, but with just a remote gateway computer attached via a Null-Modem "
-"cable (also called Null-Printer cable). The gateway computer should be "
+"This section explains how to install &debian; on a computer without an "
+"Ethernet card, but with just a remote gateway computer attached via a Null-"
+"Modem cable (also called Null-Printer cable). The gateway computer should be "
 "connected to a network that has a Debian mirror on it (e.g. to the Internet)."
 msgstr ""
 "이 부분은 이더넷 카드가 없지만, 게이트웨이 컴퓨터에 널 모뎀 케이블을 (널 프린"
@@ -1411,7 +1693,7 @@ msgstr ""
 "어 인터넷에) 연결되어 있어야 합니다."
 
 #. Tag: para
-#: random-bits.xml:660
+#: random-bits.xml:801
 #, no-c-format
 msgid ""
 "In the example in this appendix we will set up a PLIP connection using a "
@@ -1426,7 +1708,7 @@ msgstr ""
 "에서 이 IP 주소는 사용하지 말아야 합니다.)"
 
 #. Tag: para
-#: random-bits.xml:668
+#: random-bits.xml:809
 #, no-c-format
 msgid ""
 "The PLIP connection set up during the installation will also be available "
@@ -1437,7 +1719,7 @@ msgstr ""
 "수 있습니다. (<xref linkend=\"boot-new\"/> 참고)"
 
 #. Tag: para
-#: random-bits.xml:673
+#: random-bits.xml:814
 #, no-c-format
 msgid ""
 "Before you start, you will need to check the BIOS configuration (IO base "
@@ -1450,13 +1732,13 @@ msgstr ""
 "<literal>io=0x378</literal>, <literal>irq=7</literal>입니다."
 
 #. Tag: title
-#: random-bits.xml:683
+#: random-bits.xml:824
 #, no-c-format
 msgid "Requirements"
 msgstr "요구 사항"
 
 #. Tag: para
-#: random-bits.xml:686
+#: random-bits.xml:827
 #, no-c-format
 msgid ""
 "A target computer, called <emphasis>target</emphasis>, where Debian will be "
@@ -1464,13 +1746,13 @@ msgid ""
 msgstr "데비안을 설치할 <emphasis>타겟</emphasis>이라고 하는 타겟 컴퓨터."
 
 #. Tag: para
-#: random-bits.xml:692
+#: random-bits.xml:833
 #, no-c-format
 msgid "System installation media; see <xref linkend=\"installation-media\"/>."
 msgstr "시스템 설치 미디어. <xref linkend=\"installation-media\"/> 참고."
 
 #. Tag: para
-#: random-bits.xml:697
+#: random-bits.xml:838
 #, no-c-format
 msgid ""
 "Another computer connected to the Internet, called <emphasis>source</"
@@ -1480,7 +1762,7 @@ msgstr ""
 "합니다."
 
 #. Tag: para
-#: random-bits.xml:703
+#: random-bits.xml:844
 #, no-c-format
 msgid ""
 "A DB-25 Null-Modem cable. See the <ulink url=\"&url-plip-install-howto;"
@@ -1492,13 +1774,13 @@ msgstr ""
 "시오."
 
 #. Tag: title
-#: random-bits.xml:715
+#: random-bits.xml:856
 #, no-c-format
 msgid "Setting up source"
 msgstr "소스 설정하기"
 
 #. Tag: para
-#: random-bits.xml:716
+#: random-bits.xml:857
 #, no-c-format
 msgid ""
 "The following shell script is a simple example of how to configure the "
@@ -1508,7 +1790,7 @@ msgstr ""
 "예제입니다."
 
 #. Tag: screen
-#: random-bits.xml:721
+#: random-bits.xml:862
 #, no-c-format
 msgid ""
 "#!/bin/sh\n"
@@ -1551,31 +1833,44 @@ msgstr ""
 "echo 1 > /proc/sys/net/ipv4/ip_forward"
 
 #. Tag: title
-#: random-bits.xml:727
+#: random-bits.xml:868
 #, no-c-format
 msgid "Installing target"
 msgstr "타겟 설치"
 
 #. Tag: para
-#: random-bits.xml:728
+#: random-bits.xml:869
 #, no-c-format
 msgid ""
 "Boot the installation media. The installation needs to be run in expert "
-"mode; enter <userinput>expert</userinput> at the boot prompt. Below are the "
-"answers that should be given during various stages of the installation."
+"mode; enter <userinput>expert</userinput> at the boot prompt. If you need to "
+"set parameters for kernel modules, you also need to do this at the boot "
+"prompt. For example, to boot the installer and set values for the <quote>io</"
+"quote> and <quote>irq</quote> options for the parport_pc module, enter the "
+"following at the boot prompt: <informalexample><screen>\n"
+"expert parport_pc.io=<replaceable>0x378</replaceable> parport_pc."
+"irq=<replaceable>7</replaceable>\n"
+"</screen></informalexample> Below are the answers that should be given "
+"during various stages of the installation."
 msgstr ""
-"설치 미디어로 부팅하십시오. 설치는 전문가 모드로 해야 합니다. 부팅 프롬프트에"
-"서 <userinput>expert</userinput>를 입력하십시오. 아래는 설치 단계에서 입력해"
-"야 할 사항들입니다."
+"설치 미디어를 부팅하십시오. 설치는 전문가 모드에서 실행해야 합니다. 부팅 프롬"
+"프트에서 <userinput>expert</userinput>를 입력하십시오. 커널 모듈의 파라미터"
+"를 설정하려면, 부팅 파라미터에도 설정해야 합니다. 예를 들어, 설치 프로그램을 "
+"부팅하고 partport_pc 모듈의 <quote>io</quote> 및 <quote>irq</quote> 파라미터"
+"의 값을 설정하려면, 다음을 부팅 파라미터에 입력하십시오: "
+"<informalexample><screen>\n"
+"expert parport_pc.io=<replaceable>0x378</replaceable> parport_pc."
+"irq=<replaceable>7</replaceable>\n"
+"</screen></informalexample> 아래는 설치 단계에서 입력해야 할 사항들입니다."
 
 #. Tag: guimenuitem
-#: random-bits.xml:740
+#: random-bits.xml:888
 #, no-c-format
-msgid "Load installer components"
-msgstr "설치 프로그램 구성 요소 읽어들이기"
+msgid "Load installer components from CD"
+msgstr "CD에서 설치 프로그램 구성 요소 읽어들이기"
 
 #. Tag: para
-#: random-bits.xml:742
+#: random-bits.xml:890
 #, no-c-format
 msgid ""
 "Select the <userinput>plip-modules</userinput> option from the list; this "
@@ -1585,13 +1880,13 @@ msgstr ""
 "치 시스템에서 PLIP 드라이버를 사용할 수 있습니다."
 
 #. Tag: guimenuitem
-#: random-bits.xml:750
+#: random-bits.xml:898
 #, no-c-format
 msgid "Detect network hardware"
 msgstr "네트워크 하드웨어 검색"
 
 #. Tag: para
-#: random-bits.xml:755
+#: random-bits.xml:903
 #, no-c-format
 msgid ""
 "If target <emphasis>does</emphasis> have a network card, a list of driver "
@@ -1605,13 +1900,7 @@ msgstr ""
 "은 표시하지 않습니다."
 
 #. Tag: para
-#: random-bits.xml:764
-#, no-c-format
-msgid "Prompt for module parameters: Yes"
-msgstr "모듈 파라미터에 대한 프롬프트: 예"
-
-#. Tag: para
-#: random-bits.xml:769
+#: random-bits.xml:912
 #, no-c-format
 msgid ""
 "Because no network card was detected/selected earlier, the installer will "
@@ -1621,43 +1910,27 @@ msgstr ""
 "앞에서 네트워크 카드를 찾지/검색하지 못했으므로, 목록에서 네트워크 드라이버"
 "의 모듈을 설치합니다. <userinput>plip</userinput> 모듈을 선택하십시오."
 
-#. Tag: para
-#: random-bits.xml:776
-#, no-c-format
-msgid ""
-"Additional parameters for module parport_pc: "
-"<userinput><replaceable>io=0x378 irq=7</replaceable></userinput>"
-msgstr ""
-"parport_pc 모듈의 추가 파라미터: <userinput><replaceable>io=0x378 irq=7</"
-"replaceable></userinput>"
-
-#. Tag: para
-#: random-bits.xml:782
-#, no-c-format
-msgid "Additional parameters for module plip: leave empty"
-msgstr "plip 모듈의 추가 파라미터: 비워둡니다"
-
 #. Tag: guimenuitem
-#: random-bits.xml:792
+#: random-bits.xml:924
 #, no-c-format
 msgid "Configure the network"
 msgstr "네트워크 설정"
 
 #. Tag: para
-#: random-bits.xml:795
+#: random-bits.xml:927
 #, no-c-format
 msgid "Auto-configure network with DHCP: No"
 msgstr "DHCP로 네트워크 자동 설정: 아니오"
 
 #. Tag: para
-#: random-bits.xml:800
+#: random-bits.xml:932
 #, no-c-format
 msgid ""
 "IP address: <userinput><replaceable>192.168.0.1</replaceable></userinput>"
 msgstr "IP 주소: <userinput><replaceable>192.168.0.1</replaceable></userinput>"
 
 #. Tag: para
-#: random-bits.xml:805
+#: random-bits.xml:937
 #, no-c-format
 msgid ""
 "Point-to-point address: <userinput><replaceable>192.168.0.2</replaceable></"
@@ -1667,7 +1940,7 @@ msgstr ""
 "userinput>"
 
 #. Tag: para
-#: random-bits.xml:811
+#: random-bits.xml:943
 #, no-c-format
 msgid ""
 "Name server addresses: you can enter the same addresses used on source (see "
@@ -1676,3 +1949,398 @@ msgstr ""
 "네임서버 주소: 소스에서 사용한 같은 주소를 입력합니다. (<filename>/etc/"
 "resolv.conf</filename> 파일 참고)"
 
+#. Tag: title
+#: random-bits.xml:962
+#, fuzzy, no-c-format
+msgid "Installing &debian; using PPP over Ethernet (PPPoE)"
+msgstr "병렬 라인 IP를 (PLIP) 이용해 &debian; 설치하기"
+
+#. Tag: para
+#: random-bits.xml:964
+#, no-c-format
+msgid ""
+"In some countries PPP over Ethernet (PPPoE) is a common protocol for "
+"broadband (ADSL or cable) connections to an Internet Service Provider. "
+"Setting up a network connection using PPPoE is not supported by default in "
+"the installer, but can be made to work very simply. This section explains "
+"how."
+msgstr ""
+
+#. Tag: para
+#: random-bits.xml:972
+#, fuzzy, no-c-format
+msgid ""
+"The PPPoE connection set up during the installation will also be available "
+"after the reboot into the installed system (see <xref linkend=\"boot-new\"/"
+">)."
+msgstr ""
+"설치한 시스템으로 다시 시작한 다음에도 설치할 때 사용한 PLIP 연결을 설정할 "
+"수 있습니다. (<xref linkend=\"boot-new\"/> 참고)"
+
+#. Tag: para
+#: random-bits.xml:977
+#, no-c-format
+msgid ""
+"To have the option of setting up and using PPPoE during the installation, "
+"you will need to install using one of the CD-ROM/DVD images that are "
+"available. It is not supported for other installation methods (e.g. "
+"netboot<phrase condition=\"supports-floppy-boot\"> or floppy</phrase>)."
+msgstr ""
+
+#. Tag: para
+#: random-bits.xml:984
+#, no-c-format
+msgid ""
+"Installing over PPPoE is mostly the same as any other installation. The "
+"following steps explain the differences."
+msgstr ""
+
+#. Tag: para
+#: random-bits.xml:992
+#, no-c-format
+msgid ""
+"Boot the installer with <userinput>modules=ppp-udeb</userinput> as boot "
+"parameter. This means that at the boot prompt you should enter: "
+"<informalexample><screen>\n"
+"install modules=ppp-udeb\n"
+"</screen></informalexample> or, if you prefer using the graphical installer: "
+"<informalexample><screen>\n"
+"installgui modules=ppp-udeb\n"
+"</screen></informalexample> This will ensure the component responsible for "
+"the setup of PPPoE (<classname>ppp-udeb</classname>) will be loaded and run "
+"automatically."
+msgstr ""
+
+#. Tag: para
+#: random-bits.xml:1007
+#, no-c-format
+msgid ""
+"Follow the regular initial steps of the installation (language, country and "
+"keyboard selection; the loading of additional installer components<footnote> "
+"<para> The <classname>ppp-udeb</classname> component is loaded as one of the "
+"additional components in this step. If you want to install at medium or low "
+"priority (expert mode), you can also manually select the <classname>ppp-"
+"udeb</classname> instead of entering the <quote>modules</quote> parameter at "
+"the boot prompt. </para> </footnote>)."
+msgstr ""
+
+#. Tag: para
+#: random-bits.xml:1026
+#, no-c-format
+msgid ""
+"The next step is the detection of network hardware, in order to identify any "
+"Ethernet cards present in the system."
+msgstr ""
+
+#. Tag: para
+#: random-bits.xml:1032
+#, no-c-format
+msgid ""
+"After this the actual setup of PPPoE is started. The installer will probe "
+"all the detected Ethernet interfaces in an attempt to find a PPPoE "
+"concentrator (a type of server which handles PPPoE connections)."
+msgstr ""
+
+#. Tag: para
+#: random-bits.xml:1038
+#, no-c-format
+msgid ""
+"It is possible that the concentrator will not to be found at the first "
+"attempt. This can happen occasionally on slow or loaded networks or with "
+"faulty servers. In most cases a second attempt to detect the concentrator "
+"will be successful; to retry, select <guimenuitem>Configure and start a "
+"PPPoE connection</guimenuitem> from the main menu of the installer."
+msgstr ""
+
+#. Tag: para
+#: random-bits.xml:1047
+#, no-c-format
+msgid ""
+"After a concentrator is found, the user will be prompted to type the login "
+"information (the PPPoE username and password)."
+msgstr ""
+
+#. Tag: para
+#: random-bits.xml:1053
+#, no-c-format
+msgid ""
+"At this point the installer will use the provided information to establish "
+"the PPPoE connection. If the correct information was provided, the PPPoE "
+"connection should be configured and the installer should be able to use it "
+"to connect to the Internet and retrieve packages over it (if needed). If the "
+"login information is not correct or some error appears, the installer will "
+"stop, but the configuration can be attempted again by selecting the menu "
+"entry <guimenuitem>Configure and start a PPPoE connection</guimenuitem>."
+msgstr ""
+
+#. Tag: title
+#: random-bits.xml:1073
+#, no-c-format
+msgid "The Graphical Installer"
+msgstr "그래픽 설치 프로그램"
+
+#. Tag: para
+#: random-bits.xml:1074
+#, no-c-format
+msgid ""
+"The graphical version of the installer is only available for a limited "
+"number of architectures, including &arch-title;. The functionality of the "
+"graphical installer is essentially the same as that of the regular installer "
+"as it basically uses the same programs, but with a different frontend."
+msgstr ""
+"그래픽 버전의 설치 프로그램은 일부의 아키텍쳐에서만 (&arch-title; 포함)사용"
+"할 수 있습니다. 그래픽 설치 프로그램은 그 기능은 일반적인 설치 프로그램과 완"
+"전히 동일하지만 (기본적으로 동일한 프로그램들을 이용합니다) 프론트엔드만 다릅"
+"니다."
+
+#. Tag: para
+#: random-bits.xml:1082
+#, no-c-format
+msgid ""
+"Although the functionality is identical, the graphical installer still has a "
+"few significant advantages. The main advantage is that it supports more "
+"languages, namely those that use a character set that cannot be displayed "
+"with the regular <quote>newt</quote> frontend. It also has a few usability "
+"advantages such as the option to use a mouse, and in some cases several "
+"questions can be displayed on a single screen."
+msgstr ""
+"기능이 동일하긴 하지만, 그래픽 설치 프로그램은 분명한 장점이 몇가지 있습니"
+"다. 가장 큰 장점은 더 많은 언어를 지원한다는 점입니다. 즉 일반적인 "
+"<quote>newt</quote> 프론트엔드에서 표시할 수 없는 문자셋을 사용하는 언어까지 "
+"지원합니다. 또 마우스를 사용하기 때문에 사용하기 편리하고, 경우에 따라서는 여"
+"러 개의 질문을 한 화면에 표시할 수도 있습니다."
+
+#. Tag: para
+#: random-bits.xml:1091
+#, no-c-format
+msgid ""
+"The graphical installer is available with all CD images and with the hd-"
+"media installation method. As the graphical installer uses a separate (much "
+"larger) initrd than the regular installer, it has to be booted using "
+"<userinput>installgui</userinput> instead of <userinput>install</userinput>. "
+"Analogous, the expert and rescue modes are booted using "
+"<userinput>expertgui</userinput> and <userinput>rescuegui</userinput> "
+"respectively."
+msgstr ""
+"그래픽 설치 프로그램은 모든 CD 이미지 및 hd-media 설치 방법에서 사용할 수 있"
+"습니다. 그래픽 설치 프로그램은 일반적인 설치 프로그램과는 다른 분리된 (훨씬 "
+"크기가 큰) initrd를 사용하기 때문에, <userinput>install</userinput>이 아니라 "
+"<userinput>installgui</userinput>를 사용해 부팅해야 합니다. 마찬가지로, 전문"
+"가 모드 및 응급 복구 모드는 <userinput>expertgui</userinput> 및 "
+"<userinput>rescuegui</userinput>로 부팅합니다."
+
+#. Tag: para
+#: random-bits.xml:1101
+#, no-c-format
+msgid ""
+"It is also available as a special <quote>mini</quote> ISO image<footnote id="
+"\"gtk-miniiso\"> <para> The mini ISO image can be downloaded from a Debian "
+"mirror as described in <xref linkend=\"downloading-files\"/>. Look for "
+"<quote>gtk-miniiso</quote>. </para> </footnote>, which is mainly useful for "
+"testing; in this case the image is booted just using <userinput>install</"
+"userinput>. There is no graphical installer image that can be netbooted."
+msgstr ""
+"특별히 <quote>미니</quote> ISO 이미지<footnote id=\"gtk-miniiso\"> <para> 미"
+"니 ISO 이미지는 <xref linkend=\"downloading-files\"/>에 설명된 데비안 미러에"
+"서 내려받을 수 있습니다. <quote>gtk-miniiso</quote>를 찾아 보십시오. </para> "
+"</footnote>가 있어서 테스트할 때 유용하게 쓸 수 있습니다. 이 경우에는 "
+"<userinput>install</userinput>만 사용해서 부팅합니다. 네트워크 부팅이 가능한 "
+"그래픽 설치 이미지는 없습니다."
+
+#. Tag: para
+#: random-bits.xml:1115
+#, no-c-format
+msgid ""
+"For &arch-title;, currently only an experimental <quote>mini</quote> ISO "
+"image is available<footnote id=\"gtk-miniiso\"> <para> The mini ISO image "
+"can be downloaded from a Debian mirror as described in <xref linkend="
+"\"downloading-files\"/>. Look for <quote>gtk-miniiso</quote>. </para> </"
+"footnote>. It should work on almost all PowerPC systems that have an ATI "
+"graphical card, but is unlikely to work on other systems."
+msgstr ""
+"&arch-title; 아키텍쳐의 경우, 실험적인 <quote>미니</quote> ISO 이미지밖에 없"
+"습니다<footnote id=\"gtk-miniiso\"> <para> 미니 ISO 이미지는 <xref linkend="
+"\"downloading-files\"/>에 설명된 데비안 미러에서 내려받을 수 있습니다. "
+"<quote>gtk-miniiso</quote>를 찾아 보십시오. </para> </footnote>. ATI 그래픽 "
+"카드를 사용하는 거의 모든 PowerPC 시스템에서 동작하지만, 그 외의 시스템에서"
+"는 동작하지 않을 것입니다."
+
+#. Tag: para
+#: random-bits.xml:1128
+#, no-c-format
+msgid ""
+"The graphical installer requires significantly more memory to run than the "
+"regular installer: &minimum-memory-gtk;. If insufficient memory is "
+"available, it will automatically fall back to the regular <quote>newt</"
+"quote> frontend."
+msgstr ""
+"그래픽 설치 프로그램은 일반적인 설치 프로그램보다 훨씬 많은 메모리를 "
+"(&minimum-memory-gtk;) 차지합니다. 충분한 메모리가 없는 경우, 자동으로 보통"
+"의 <quote>newt</quote> 프론트엔드로 실행합니다."
+
+#. Tag: para
+#: random-bits.xml:1135
+#, no-c-format
+msgid ""
+"You can add boot parameters when starting the graphical installer, just as "
+"with the regular installer. One of those parameters allows you to configure "
+"the mouse for left-handed use. See <xref linkend=\"boot-parms\"/> for valid "
+"parameters."
+msgstr ""
+"그래픽 설치 프로그램을 시작할 때 보통의 설치 프로그램과 마찬가지로 부팅 파라"
+"미터를 추가할 수 있습니다. 그러한 파라미터 중의 하나를 이용하면 마우스를 왼손"
+"으로 사용하도록 설정할 수 있습니다. 파라미터에 대한 정보는 <xref linkend="
+"\"boot-parms\"/> 부분을 참고하십시오."
+
+#. Tag: title
+#: random-bits.xml:1145
+#, no-c-format
+msgid "Using the graphical installer"
+msgstr "그래픽 설치 프로그램 사용하기"
+
+#. Tag: para
+#: random-bits.xml:1146
+#, no-c-format
+msgid ""
+"As already mentioned, the graphical installer basically works the same as "
+"the regular installer and thus the rest of this manual can be used to guide "
+"you through the installation process."
+msgstr ""
+"앞에서 말한 것처럼, 그래픽 설치 프로그램은 보통의 설치 프로그램과 동일하게 동"
+"작합니다. 그러므로 이 안내서를 그대로 이용해 설치를 마칠 수 있습니다."
+
+#. Tag: para
+#: random-bits.xml:1152
+#, no-c-format
+msgid ""
+"If you prefer using the keyboard over the mouse, there are two things you "
+"need to know. To expand a collapsed list (used for example for the selection "
+"of countries within continents), you can use the <keycap>+</keycap> and "
+"<keycap>-</keycap> keys. For questions where more than one item can be "
+"selected (e.g. task selection), you first need to tab to the "
+"<guibutton>Continue</guibutton> button after making your selections; hitting "
+"enter will toggle a selection, not activate <guibutton>Continue</guibutton>."
+msgstr ""
+"마우스보다 키보드를 사용하고 싶다면, 두 가지를 미리 알아둬야 합니다. 접힌 목"
+"록을 펼치려면 (예를 들어 대륙별로 묶여진 국가를 선택할 때), <keycap>+</"
+"keycap>와 <keycap>-</keycap> 키를 이용합니다. 질문에 대해 여러 개의 항목을 선"
+"택하려면 (예를 들어 태스크를 선택할 때), 선택한 다음에 먼저 탭을 눌러 "
+"<guibutton>계속</guibutton> 단추로 이동하고 엔터를 누르면 해당 선택을 토글합"
+"니다. (<guibutton>계속</guibutton> 버튼이 눌려지는 게 아니라)"
+
+#. Tag: para
+#: random-bits.xml:1162
+#, no-c-format
+msgid ""
+"To switch to another console, you will also need to use the <keycap>Ctrl</"
+"keycap> key, just as with the X Window System. For example, to switch to VT1 "
+"you would use: <keycombo> <keycap>Ctrl</keycap> <keycap>Left Alt</keycap> "
+"<keycap>F1</keycap> </keycombo>."
+msgstr ""
+"다른 콘솔로 이동하려면, X 윈도우 시스템과 마찬가지로 <keycap>Ctrl</keycap> 키"
+"를 이용할 수 있습니다. 예를 들어, VT1으로 이동하려면: <keycombo> "
+"<keycap>Ctrl</keycap> <keycap>왼쪽 Alt</keycap> <keycap>F1</keycap> </"
+"keycombo>를 누릅니다."
+
+#. Tag: title
+#: random-bits.xml:1173
+#, no-c-format
+msgid "Known issues"
+msgstr "알려진 문제점"
+
+#. Tag: para
+#: random-bits.xml:1174
+#, no-c-format
+msgid ""
+"Etch is the first release that includes the graphical installer and uses "
+"some relatively new technology. There are a few known issues that you may "
+"run into during the installation. We expect to be able to fix these issues "
+"for the next release of &debian;."
+msgstr ""
+"Etch는 그래픽 설치 프로그램이 들어 있는 첫 번째 릴리스로 비교적 새로운 기술들"
+"을 사용합니다. 설치하면서 알려진 문제점이 몇 가지 있을 수 있습니다. 다음 릴리"
+"스에서 이 문제점들을 고칠 예정입니다."
+
+#. Tag: para
+#: random-bits.xml:1184
+#, no-c-format
+msgid ""
+"Information on some screens is not nicely formatted into columns as it "
+"should be. The most obvious example is the first screen where you select "
+"your language. Another example is the main screen of partman."
+msgstr ""
+"일부 화면에서는 열들이 예상과는 다르게 모양이 좋지 않습니다. 가장 단적인 예"
+"는 언어를 선택할 때 나오는 첫 번째 화면입니다. 또 다른 예는 파티션 프로그램"
+"의 주 화면입니다."
+
+#. Tag: para
+#: random-bits.xml:1191
+#, no-c-format
+msgid ""
+"Typing some characters may not work and in some cases the wrong character "
+"may be printed. For example, \"composing\" a character by typing an accent "
+"and then the letter over/under which the accent should appear does not work."
+msgstr ""
+"어떤 문자는 입력했을 때 동작하지 않고, 경우에 따라서는 잘못된 문자가 표시될 "
+"수 있습니다. 예를 들어 액센트와 그 아래/위에 쓰여질 문자를 입력하는 것과 같"
+"이 문자를 \"조합\"하는 경우 동작하지 않습니다."
+
+#. Tag: para
+#: random-bits.xml:1198
+#, no-c-format
+msgid "Support for touchpads is not yet optimal."
+msgstr "터치패드 지원은 아직 완전하지 않습니다."
+
+#. Tag: para
+#: random-bits.xml:1203
+#, no-c-format
+msgid ""
+"You should not switch to a different console while the installer is busy; "
+"this may cause the frontend to crash. The frontend will be restarted "
+"automatically, but this may still cause problems with the installation. "
+"Switching to another console while the installer is waiting for input should "
+"work without causing any problems."
+msgstr ""
+"설치 프로그램이 동작하는 중에 다른 콘솔로 전환하면 안 됩니다. 이렇게 하면 프"
+"론트엔드가 멎을 수 있습니다. 이 경우에도 프론트엔드가 다시 시작하겠지만, 설치"
+"에서 문제가 발생할 수 있습니다. 설치 프로그램이 입력을 기다리는 동안에 다른 "
+"콘솔로 전환할 때는 문제가 일어나지 않습니다."
+
+#. Tag: para
+#: random-bits.xml:1212
+#, no-c-format
+msgid ""
+"Support for creating encrypted partitions is limited as it is not possible "
+"to generate a random encryption key. It is possible to set up an encrypted "
+"partition using a passphrase as encryption key."
+msgstr ""
+"랜덤 암호화 키를 생성하는 게 불가능할 경우, 암호화한 파티션을 만드는 작업이 "
+"제한됩니다. 암호를 암호화 키로 사용해서 암호화 파티션을 설정할 수도 있습니다."
+
+#. Tag: para
+#: random-bits.xml:1219
+#, no-c-format
+msgid ""
+"Starting a shell from the graphical frontend is currently not supported. "
+"This means that relevant options to do that (which are available when you "
+"use the textual frontend), will not be shown in the main menu of the "
+"installation system and in the menu for the rescue mode. You will instead "
+"have to switch (as described above) to the shells that are available on "
+"virtual consoles VT2 and VT3."
+msgstr ""
+
+#. Tag: para
+#: random-bits.xml:1228
+#, no-c-format
+msgid ""
+"After booting the installer in rescue mode, it may be useful to start a "
+"shell in the root partition of an already installed system. This is possible "
+"(after you have selected the partition to be mounted as the root partition) "
+"by switching to VT2 or VT3 and entering the following command:"
+msgstr ""
+
+#. Tag: screen
+#: random-bits.xml:1235
+#, no-c-format
+msgid "# chroot /target"
+msgstr ""

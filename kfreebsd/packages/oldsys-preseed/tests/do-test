@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 . ../functions
 
@@ -12,16 +12,19 @@ log() {
 NONINTERACTIVE="yes"
 
 test="$1"
+DIR=$PWD
 TEST_DIR=$PWD/$(dirname "$test")
 tmp=$(tempfile)
 . $test.test "$tmp"
-generate_preseed_file $tmp
+cd $DIR
 if $(cmp -s $test.preseed $tmp); then
+	rm -f $tmp
 	exit 0
 else
 	if [ $TEST_VERBOSE ]; then
 		diff -urN $test.preseed $tmp 1>&2
 	fi
+	rm -f $tmp
 	exit 1
 fi
 

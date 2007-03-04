@@ -26,12 +26,12 @@ ifeq ($(DEB_HOST_ARCH_OS),linux)
   ifneq (,$(filter i386 amd64,$(DEB_HOST_ARCH_CPU)))
     files += \
 	S05acpi-linux-x86 \
-	S40framebuffer-module-linux-x86 \
-	S04countcpus-linux-x86
+	S40framebuffer-module-linux-x86
    endif
   
   ifeq ($(DEB_HOST_ARCH_CPU),powerpc)
     files += \
+	S05fancontrol-linux-powerpc \
 	S45keyboard-linux-powerpc
   endif
   

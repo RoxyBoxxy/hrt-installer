@@ -9,10 +9,10 @@
 */
 /*
    autopartkit.c - Module to partition devices for debian-installer.
-   Author - Raphaël Hertzog
+   Author - RaphaÃ«l Hertzog
 
-   Copyright (C) 2001  Logidée (http://www.logidee.com)
-   Copyright (C) 2001  Raphaël Hertzog <hertzog@debian.org>
+   Copyright (C) 2001  LogidÃ©e (http://www.logidee.com)
+   Copyright (C) 2001  RaphaÃ«l Hertzog <hertzog@debian.org>
 
    This program is free software; you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -65,9 +65,11 @@
 #define _GNU_SOURCE /* To enable vasprintf() */
 #include <stdio.h>
 #include <stdarg.h>
+#include <stdlib.h>
 #include <unistd.h>
 #include <string.h>
 #include <parted/parted.h>
+#include <debian-installer/system/devfs.h>
 #if defined(TEST)
 #include "dummydebconfclient.h"
 #else /* not TEST */
@@ -97,6 +99,8 @@
 
 #define PART_SIZE_BYTE(device, part) ((part)->geom.length * (device)->sector_size)
 
+#define NBSP 160
+
 /* Write /etc/windows_part?
 #define WRITE_WINDOWS_PART
 */
@@ -105,9 +109,9 @@
 /* Ignore devfs devices, used in choose_dev */
 #define IGNORE_DEVFS_DEVICES 1
 
-#if 0
+#if 1
 #define log_line() \
-  autopartkit_log("  Error bounding: %s %d\n",__FILE__,__LINE__)
+  autopartkit_log(2, "  Error bounding: %s %d\n",__FILE__,__LINE__)
 #else
 #define log_line()
 #endif
@@ -142,7 +146,7 @@ static void autopartkit_handle_timer(PedTimer* timer, void* context);
 /* update the debconf progress bar when given notice by autopartkit */
 /* No longer used after rewrite to use /sbin/mkfs.*. [pere 2005-03-19] */
 static void
-autopartkit_handle_timer(PedTimer* timer, void* context)
+autopartkit_handle_timer(PedTimer* timer, void* context ATTRIBUTE_UNUSED)
 {
     int minutes_left = (timer->predicted_end - timer->now) / 60;
     char hours[16], minutes[16];
@@ -326,14 +330,17 @@ static PedDevice* choose_device(void)
 #if defined(fordebian)
     char       device_list[LIST_SIZE], default_device[128], table[TABLE_SIZE];
     char      *ptr_list, *ptr_table;
+    int        num_devices = 0;
     DeviceStats *stats;
 #endif /* fordebian */
 
+    autopartkit_log( 1, "Trying to select device to partition\n");
     disable_kmsg(1);
     ped_device_probe_all();
     disable_kmsg(0);
 
-    dev = ped_device_get_next(NULL);
+    autopartkit_log( 1, "Checking each available device\n");
+    dev = my_ped_device_get_next_rw(NULL);
 
     if (dev == NULL)
     {
@@ -351,24 +358,22 @@ static PedDevice* choose_device(void)
 	}
 	return dev;
     }
+    autopartkit_log( 1, "Selected device %s\n", dev->path);
 #if defined(fordebian)
-    if (dev->next == NULL)
-    {
-	/* There's only a single device detected */
-	return dev;
-    }
-
-
     default_device[0] = '\0';
     device_list[0] = '\0';
     ptr_list = device_list;
     ptr_table = table;
-    for(; dev; dev = ped_device_get_next(dev))
+    for(; dev; dev = my_ped_device_get_next_rw(dev))
     {
 #ifdef IGNORE_DEVFS_DEVICES
-	if (strstr(dev->path, "dev/ide/") || strstr(dev->path, "dev/scsi/"))
+	if (strstr(dev->path, "dev/ide/") || strstr(dev->path, "dev/scsi/")) {
+	    autopartkit_log( 1, "Skipping devfs device %s\n", dev->path);
 	    continue;
+	}
 #endif
+
+	++num_devices;
 	stats = get_device_stats(dev);
 	/*
 	 * This is the right way to do unfortunately I want insecable
@@ -380,23 +385,24 @@ static PedDevice* choose_device(void)
 	*/
 	ptr_table += snprintf(ptr_table, TABLE_SIZE + table - ptr_table,
 		"%s", dev->path);
+	log_line();
 	if (10 > strlen(dev->path))
 	{
-	    memset(ptr_table, ' ', 10 - strlen(dev->path));
+	    memset(ptr_table, NBSP, 10 - strlen(dev->path));
 	    ptr_table += 10 - strlen(dev->path);
 	}
 	ptr_table += snprintf(ptr_table, TABLE_SIZE + table - ptr_table,
 		"%s", dev->model);
 	if (20 > strlen(dev->model))
 	{
-	    memset(ptr_table, ' ', 20 - strlen(dev->model));
+	    memset(ptr_table, NBSP, 20 - strlen(dev->model));
 	    ptr_table += 20 - strlen(dev->model);
 	}
 
 	ptr_table += snprintf(ptr_table, TABLE_SIZE + table - ptr_table,
-		"%05dM %05dM %05dM  %-d\n",
-		stats->size, stats->free_space,
-		stats->free_space_in_fat, stats->nb_part);
+		"%05dM%c%05dM%c%05dM%c%c%-d\n",
+		stats->size, NBSP, stats->free_space, NBSP,
+		stats->free_space_in_fat, NBSP, NBSP, stats->nb_part);
 
 	if (strlen(device_list))
 	{
@@ -413,6 +419,14 @@ static PedDevice* choose_device(void)
 	free(stats);
     }
 
+    log_line();
+    if (num_devices == 1)
+    {
+	/* There's only a single usable device detected */
+	return ped_device_get(default_device);
+    }
+
+    log_line();
     dev = NULL;
     nb_try = 0;
     while (dev == NULL)
@@ -721,6 +735,7 @@ normalize_requirements(diskspace_req_t *dest, const diskspace_req_t *source,
 static char *get_device_path(PedDevice *dev, PedPartition *freepart)
 {
 #if defined(HAVE_PED_PARTITION_GET_PATH)
+    (void) dev;
     return ped_partition_get_path(freepart);
 #else /* not HAVE_PED_PARTITION_GET_PATH */
     char *retval;
@@ -754,6 +769,8 @@ static char *get_device_path(PedDevice *dev, PedPartition *freepart)
 static void
 fix_mounting(device_mntpoint_map_t mountmap[], int partcount)
 {
+    static char buf[256];
+    const char *rootpath;
     int i;
 
     /* Mount partitions and write fstab */
@@ -762,8 +779,11 @@ fix_mounting(device_mntpoint_map_t mountmap[], int partcount)
 
     /* Find and mount the root fs */
 
-    autopartkit_log( 1, "device for /: %s\n",
-		     normalize_devfs(find_partition_by_mountpoint(mountmap,"/")));
+    rootpath = find_partition_by_mountpoint(mountmap,"/");
+    if (di_system_devfs_map_from(rootpath, buf, sizeof(buf)))
+        autopartkit_log(1, "device for /: %s\n", buf);
+    else
+        autopartkit_error(0, "Unable to devfs-map device for /: %s\n", rootpath);
 
     /* FIXME Should use fstype for /, not DEFAULT_FS */
     if (mount(find_partition_by_mountpoint(mountmap,"/"),
@@ -798,7 +818,6 @@ fix_mounting(device_mntpoint_map_t mountmap[], int partcount)
     for (i = 0; i < partcount; i++)
     {
         char *tmpmnt;
-	char *devpath;
 	if ( is_root(mountmap[i].mountpoint->mountpoint)
 #if defined(LVM_HACK)
 	     || (strcmp(mountmap[i].mountpoint->fstype,"lvm") == 0)
@@ -812,8 +831,6 @@ fix_mounting(device_mntpoint_map_t mountmap[], int partcount)
 			 ( mountmap[i].mountpoint->mountpoint ?
 			   mountmap[i].mountpoint->mountpoint : "[null]" ),
 			 mountmap[i].mountpoint->fstype);
-
-	devpath = normalize_devfs(mountmap[i].devpath);
 
 	asprintf(&tmpmnt, "/target%s", mountmap[i].mountpoint->mountpoint);
 	make_path(tmpmnt, 0755);
@@ -843,7 +860,7 @@ nuke_all_partitions(void)
     PedDevice *dev;
 
     /* Loop over all devices, and nuke the partition table on each one. */
-    dev = ped_device_get_next(NULL);
+    dev = my_ped_device_get_next_rw(NULL);
     do {
         PedDisk *p;
 	p = ped_disk_new_fresh(dev, ped_disk_type_get(default_disk_label()));
@@ -851,7 +868,7 @@ nuke_all_partitions(void)
 	ped_disk_commit(p);
 #endif
 	ped_disk_destroy(p);
-	dev = ped_device_get_next(dev);
+	dev = my_ped_device_get_next_rw(dev);
     } while (dev != NULL);
 }
 
@@ -948,7 +965,6 @@ make_partitions(const diskspace_req_t *space_reqs, PedDevice *devlist)
     PedFileSystemType *fs_type = NULL;
     PedDevice *dev_tmp = NULL;
     PedDisk *disk_tmp = NULL, *disk_maybe = NULL;
-    PedFileSystem *fs;
     device_mntpoint_map_t mountmap[MAX_PARTITIONS];
     diskspace_req_t requirements[MAX_PARTITIONS], *req_tmp = NULL;
     int partcount = 0;
@@ -1138,6 +1154,7 @@ make_partitions(const diskspace_req_t *space_reqs, PedDevice *devlist)
                  * sure the device file is available when we need it.
                 */
                 ped_disk_commit(disk_maybe);
+                system("update-dev"); /* persuade the kernel to create the device */
 
                 makefs(mountmap[partcount].devpath, req_tmp->fstype);
 	    }
@@ -1168,6 +1185,7 @@ make_partitions(const diskspace_req_t *space_reqs, PedDevice *devlist)
 		   make sure the device file is available when we need
 		   it. */
 		ped_disk_commit(disk_maybe);
+		system("update-dev"); /* persuade the kernel to create the device */
 
 		lvm_pv_stack_push(lvm_pv_stack, req_tmp->mountpoint, devpath);
 	    }
@@ -1196,7 +1214,7 @@ make_partitions(const diskspace_req_t *space_reqs, PedDevice *devlist)
        device is in an unknown state when we return from this function, or
        rather, it is closed when returning.  This is _bad_. */
     for (dev_tmp = devlist; dev_tmp;
-	 dev_tmp = ped_device_get_next(dev_tmp))
+	 dev_tmp = my_ped_device_get_next_rw(dev_tmp))
     {
         log_line();
 	disk_tmp = ped_disk_new(dev_tmp);
@@ -1246,6 +1264,7 @@ make_partitions(const diskspace_req_t *space_reqs, PedDevice *devlist)
         free(vgname);
         free(devpath);
     }
+    system("update-dev"); /* persuade the kernel to create the devices */
 
     /* Distribute logical volumes (andread@linpro.no) */
     lvm_vg_stack = lvm_vg_stack_new();
@@ -1305,9 +1324,9 @@ make_partitions(const diskspace_req_t *space_reqs, PedDevice *devlist)
 				lvm_reqs[lvm_reqs_index].maxsize);
                 lvm_reqs_index++;
             }
-            lvm_reqs[lvm_reqs_index].mountpoint = NULL;
             free(identmatch);
         }
+	lvm_reqs[lvm_reqs_index].mountpoint = NULL;
 
         /* Reduce vg size by LVM_SPEND_FACTOR... */
 	autopartkit_log(1, "Vg %s - %d to use\n",
@@ -1343,6 +1362,7 @@ make_partitions(const diskspace_req_t *space_reqs, PedDevice *devlist)
 		autopartkit_log(1, "  LVM lv created ok, devpath=%s\n",
 				devpath);
 		autopartkit_log(1, "  LVM creating fs: %s\n", fstype);
+		system("update-dev"); /* persuade the kernel to create the device */
 		if (0 == makefs(devpath, fstype))
 		  { /* Replace devpath placeholder with real path */
 		    char buf[1024];
@@ -1406,6 +1426,7 @@ int main (int argc, char *argv[])
 		    default_disk_label());
 
 #if defined(LVM_HACK)
+    autopartkit_log(1, "Initializing LVM framework.\n");
     if (0 != lvm_init())
         autopartkit_log(1, "Unable to initialize LVM support.  "
 			"Continuing anyway.\n");
@@ -1413,6 +1434,7 @@ int main (int argc, char *argv[])
 
     disable_kmsg(1);
     ped_exception_set_handler(exception_handler);
+    autopartkit_log(1, "Initializing libparted.\n");
     PED_INIT();
     disable_kmsg(0);
 
