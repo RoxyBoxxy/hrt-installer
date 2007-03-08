@@ -699,6 +699,13 @@ ask_user <var>a_menu_directory</var> <var>aditional_optional_arguments</var>...
   Otherwise it returns with the exit code of the script
   <prgn>do_option</prgn>.
 
+<p> If <prgn>ask_user</prgn> is called re-entrantly from within a
+<prgn>do_option</prgn> script, then the calling <prgn>do_option</prgn>
+script should typically be careful to handle or discard exit code 255
+itself (and sometimes other codes, depending on the protocol in force)
+to avoid a backup operation inadvertently backing up out of several
+nested menus at once.
+
 <p> The script <prgn>choices</prgn> is invoked with
 <var><tt>aditional_optional_arguments</tt></var> as arguments.  The
 first argument given to <prgn>do_option</prgn> is the
@@ -1249,6 +1256,17 @@ end_dialog
 After this command the name of <var><tt>partition_id</tt></var> will
 be <var><tt>new_name</tt></var>.  It is an error to use this command with
 a partition table that doesn't support partition names.
+
+<sect> Get the maximum number of primary partitions
+
+<p> Synopsis:
+<example>
+cd <var>device_directory</var>
+open_dialog GET_MAX_PRIMARY
+read_line primaries
+close_dialog
+logger "This disk may contain up to $primaries primary partitions"
+</example>
 
 <sect> Check if extended and logical partitions are supported
 
