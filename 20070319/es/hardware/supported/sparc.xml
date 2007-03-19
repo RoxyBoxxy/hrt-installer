@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!-- original version: 43528 -->
+<!-- Revisado por Rudy Godoy -->
+
+
+  <sect2 arch="sparc" id="sparc-cpus">
+<title>Soporte de CPU, placas base y vídeo</title>
+<para>
+
+Los equipos basados en Sparc se dividen en un conjunto de distintas
+subarquitecturas identificadas por alguno de los nombres siguientes:
+sun4, sun4c, sun4d, sun4m, sun4u o sun4v. A continuación se
+proporciona una lista que describe los distintos equipos y el nivel de
+soporte que se puede esperar para cada uno.
+
+</para>
+
+<variablelist>
+<varlistentry>
+<term>sun4, sun4c, sun4d</term>
+
+<listitem><para>
+
+Estas subarquitecturas incluyen algunos equipos muy antiguos de 32
+bits que ya no están soportados. Si quiere una lista completa puede
+consultar la <ulink
+url="http://en.wikipedia.org/wiki/SPARCstation">página de SPARCstation
+en la Wikipedia</ulink>.
+ 
+</para></listitem>
+</varlistentry>
+ 
+<varlistentry>
+<term>sun4m</term>
+
+<listitem><para>
+
+La única subarquitectura de 32 bits (sparc32) que se soporta
+actualmente es sun4um. Las máquinas más populares que pertenecen a
+esta clase son las Sparcstation 4, 5, 10 y 20.
+
+ </para><para>
+
+Tenga en cuenta que no se soporta la configuración en múltiples
+procesadores (también llamado <quote>multi-procesamiento
+simétrico</quote> o SMP) en estos equipos debido a problemas de
+estabilidad con estas configuraciones. El núcleo de sparc32
+uniprocesador (UP) debería funcionar correctamente en sistemas
+multiprocesador, aunque activará y sólo utilizará la primera CPU.
+ 
+</para></listitem>
+</varlistentry>
+ 
+<varlistentry>
+<term>sun4u</term>
+ 
+<listitem><para>
+
+Esta subarquitectura incluye todos los  equipos de 64 bits (sparc64)
+basados en el procesador UltraSparc y sus clones. La mayoría de estos
+equipos están bien soportados, aunque puede que tenga algunos
+problemas con el arranque de CD debido a erratas en el firmware o en
+el cargador de arranque (puede evitar estos problemas si utiliza el
+arranque vía red). Utilice el núcleo sparc64 o sparc64-smp en
+configuraciones UP y SMP respectivamente.
+</para></listitem>
+</varlistentry>
+ 
+<varlistentry>
+<term>sun4v</term>
+ 
+<listitem><para>
+
+Esta es el miembro más nuevo de la familia Sparc e incluye a los
+equipos basados en las CPUs multi-core Niagara. De momento estas CPUs
+sólo están disponibles en los servidores T1000 y T2000 de Sun y están
+bien soportados. Utilice el núcleo sparc64-smp.
+
+</para></listitem>
+</varlistentry>
+</variablelist>
+
+<para>
+
+Tenga en cuenta que las CPUs SPARC64 de Fujitsu utilizadas en la
+familia de servidores PRIMEPOWER no están soportadas porque no existe
+soporte para éstas en el núcleo de Linux.
+
+</para>
+
+  </sect2>

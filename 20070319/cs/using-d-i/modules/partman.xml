@@ -1,0 +1,273 @@
+<!-- $Id$ -->
+<!-- original version: 45238 -->
+
+   <sect3 id="partman">
+   <title>Rozdělení disků</title>
+<para>
+
+Nyní nastal čas rozdělit pevné disky. Pokud se náhodou něco pokazí,
+nebo pokud chcete o rozdělování disků dozvědět více, podívejte se do
+dodatku <xref linkend="partitioning"/>.
+
+</para><warning arch="sparc"><para>
+
+Jestliže byl disk původně použit v Solarisu, dělení disků nemusí
+rozpoznat správnou velikost disku. Vytvoření nové tabulky oblastí
+nepomůže. Pomůže však <quote>vynulování</quote> několika prvních
+sektorů disku:
+
+<informalexample><screen>
+<prompt>#</prompt> <userinput>dd if=/dev/zero of=/dev/hd<replaceable>X</replaceable> bs=512 count=2; sync</userinput>
+</screen></informalexample>
+
+Mějte na paměti, že tímto znepřístupníte všechna data, která se na
+disku dosud nacházela.
+
+</para></warning><para>
+
+Nejprve vám bude nabídnuta možnost automaticky rozdělit buď celý disk,
+nebo dostupné volné místo na disku. Tato volba se někdy nazývá
+<quote>asistované</quote> rozdělení, protože do dělení můžete sami
+zasáhnout. Pokud nechcete využít automatické dělení disku, zvolte
+z nabídky <guimenuitem>Ručně</guimenuitem>.
+
+</para><para>
+
+Zvolíte-li automatické rozdělování, měli byste mít na výběr několik
+možností: vytvořit oblasti přímo na disku (klasický způsob), použít
+Logical Volume Management (LVM), nebo použít šifrované LVM<footnote>
+
+<para>
+
+Instalátor zašifruje skupinu svazků pomocí 256 bitového klíče AES a
+využije pro to <quote>dm-crypt</quote>, který je součástí linuxového
+jádra.
+
+</para></footnote>. Ve druhém
+a třetím případě vytvoří instalátor většinu oblastí uvnitř jedné
+veliké; výhoda je ta, že oblasti uvnitř této veliké oblasti pak můžete
+relativně jednoduše zvětšovat a případně zmenšovat. U šifrovaného LVM
+bude tato veliká oblast šifrovaná a pro přístup k datům na ní uloženým
+budete muset znát přístupovou frázi. Šifrované LVM má ještě jednu
+výhodu, a to tu, že před použitím se celá oblast přepíše náhodnými
+daty, takže nebude možné rozeznat, které části oblasti se aktivně
+používají, a také tím zrušíte stopy po předchozích instalacích. Musíte
+však počítat s tím, že mazání zabere určitý čas, který může být u
+větších oblastí docela značný.
+
+</para><note><para>
+
+(Šifrované) LVM nemusí být k dispozici na všech architekturách.
+
+</para></note><note><para>
+
+Při automatickém rozdělení pomocí LVM (nebo šifrovaného LVM), se budou
+muset na zvolený disk zapsat některé změny provedené v tabulce
+oblastí. Tyto změny z disku efektivně smažou všechna stávající data a
+tento krok nebudete moci vrátit zpět. Před samotným zápisem však
+budete pro jistotu dotázáni.
+
+</para></note><para>
+
+Pokračujete-li v automatickém rozdělování (klasickém nebo LVM) celého
+disku, budete nejprve požádáni, abyste vybrali disk, který chcete
+použít. Máte-li více disků, dejte dobrý pozor, který disk zvolíte,
+protože pořadí, ve kterém jsou vypsány, se může lišit od toho, na
+které jste zvyklí. V identifikaci disků může pomoci i jejich velikost.
+Dále si budete moci vybrat z několika připravených schémat rozdělení
+disku (viz tabulka
+níže). Všechny možnosti mají svá pro a proti, některé argumenty jsou
+zmíněny v dodatku <xref linkend="partitioning"/>. Pokud si nejste
+jisti, zvolte první možnost. Pamatujte však, že asistované dělení
+vyžaduje určitou minimální velikost volného místa, se kterým může
+pracovat. Nemáte-li k dispozici zhruba 1GB volného místa (závisí na
+zvoleném způsobu dělení), asistované dělení selže.
+
+</para>
+
+<informaltable>
+<tgroup cols="3">
+<thead>
+<row>
+  <entry>Způsob dělení</entry>
+  <entry>Minimální místo</entry>
+  <entry>Vytvořené oblasti</entry>
+</row>
+</thead>
+
+<tbody>
+<row>
+  <entry>Všechny soubory v jedné oblasti</entry>
+  <entry>600MB</entry>
+  <entry><filename>/</filename>, swap</entry>
+</row><row>
+  <entry>Samostatná oblast pro /home</entry>
+  <entry>500MB</entry>
+  <entry>
+    <filename>/</filename>, <filename>/home</filename>, swap
+  </entry>
+</row><row>
+  <entry>Samostatné oblasti pro /home, /usr, /var a /tmp</entry>
+  <entry>1GB</entry>
+  <entry>
+    <filename>/</filename>, <filename>/home</filename>,
+    <filename>/usr</filename>, <filename>/var</filename>,
+    <filename>/tmp</filename>, swap
+  </entry>
+</row>
+</tbody></tgroup></informaltable>
+
+<para>
+
+Pokud jste zvolili automatické rozdělení pomocí (šifrovaného) LVM,
+vytvoří se také malá oblast pro <filename>/boot</filename>. Ostatní
+oblasti, včetně odkládací, budou vytvořeny uvnitř LVM.
+
+</para><para>
+
+Na další obrazovce se zobrazí tabulka rozdělení disku(ů) společně
+s informacemi o souborových systémech a přípojných bodech. Pokud jste
+provedli automatické rozdělení disku a jste s navrženým rozdělením
+spokojeni, stačí z nabídky vybrat <guimenuitem>Ukončit
+rozdělování</guimenuitem>.
+
+</para><para arch="ia64">
+
+Na architektuře &arch-title; se při automatickém rozdělení disku
+vytvoří malá zaváděcí oblast pro zavaděč <command>EFI</command>,
+formátovaná souborovým systémem FAT16. Při ručním dělení disku přibude
+ve formátovacím menu položka <guimenuitem>Použít oblast jako zaváděcí
+EFI oblast</guimenuitem>.
+
+</para><para arch="alpha">
+
+Na Alpha systémech se při automatickém rozdělení disku alokuje na
+začátku disku malá nenaformátovaná oblast pro zavaděč
+<command>aboot</command>.
+
+</para><para>
+
+Seznam oblastí může vypadat třeba takto:
+
+<informalexample><screen>
+  IDE1 master (hda) - 6.4 GB WDC AC36400L
+       1. primární   16.4 MB  B f ext2       /boot
+       2. primární  551.0 MB      swap       swap
+       3. primární    5.8 GB      ntfs
+          pri/log     8.2 MB      VOLNÉ MÍSTO
+
+  IDE1 slave (hdb) - 80.0 GB ST380021A
+       1. primární   15.9 MB      ext3
+       2. primární  996.0 MB      fat16
+       3. primární    3.9 GB      xfs        /home
+       5. logická     6.0 GB    f ext3       /
+       6. logická     1.0 GB    f ext3       /var
+       7. logická   498.8 MB      ext3
+       8. logická   551.5 MB    f swap       swap
+       9. logická    65.8 GB      ext2
+</screen></informalexample>
+
+Jak je vidět, v počítači jsou dva pevné disky rozdělené na několik
+oblastí. Každý řádek popisující oblast zobrazuje její pořadí, typ,
+velikost, volitelné příznaky, souborový systém a (pokud existuje)
+přípojný bod. Na prvním disku je ještě kousek volného místa.
+
+</para><para>
+
+Pokud chcete v tabulce něco změnit, vyberte ze seznamu objekt, který
+chcete upravit a stiskněte &enterkey;. Objektem je míněn disk, oblast
+nebo volné místo. S každým objektem můžete provádět různé
+akce.
+
+</para><para>
+
+Jestliže vyberete dosud nedotčený disk, na kterém nejsou ani oblasti
+ani volné místo, bude vám nabídnuta možnost vytvoření nové tabulky
+oblastí (to je nutné k tomu, abyste mohli vytvářet oblasti). Po této
+akci se pod vybraným diskem zobrazí řádka nadepsaná <quote>VOLNÉ
+MÍSTO</quote>.
+
+</para><para>
+
+Vyberete-li volné místo, <command>partman</command> vám nabídne
+vytvoření nové oblasti. Nejprve musíte odpovědět několik základních
+otázek jako velikost nové oblasti, typ (primární nebo logická)
+a umístění (na začátku nebo na konci volného místa). Poté se zobrazí
+detailní pohled na novou oblast. Naleznete zde položky jako přípojný
+bod, volby připojení, zaváděcí příznak nebo způsob použití. Pokud vám
+nevyhovují přednastavené hodnoty, můžete je upravit dle
+libosti. Nejdůležitější volbou <guimenuitem>Použít
+jako:</guimenuitem> můžete změnit souborový systém dané oblasti včetně
+možnosti použít oblast jako odkládací prostor, softwarový RAID, LVM
+nebo ji nepoužít vůbec. Další příjemnou vlastností je možnost
+zkopírovat na oblast stávající data z jiné oblasti. Až budete
+s oblastí spokojeni, vyberte položku <guimenuitem>Skončit
+s nastavováním oblasti</guimenuitem>, což vás vrátí zpět do hlavní
+obrazovky rozdělování disků.
+
+</para><para>
+
+Pokud se rozhodnete, že chcete něco změnit na stávající oblasti,
+jednoduše ji vyberte a stiskněte &enterkey;. Ocitnete se ve stejné
+obrazovce jako při vytváření nové oblasti a tedy máte i stejné
+možnosti nastavení. Jedna věc, která nemusí být na první pohled zcela
+zřejmá je fakt, že u většiny oblastí můžete změnit jejich velikost -
+stačí vybrat položku, která zobrazuje velikost oblasti. Změna
+velikosti by měla fungovat minimálně se souborovými systémy fat16,
+fat32, ext2, ext3 a swap. Pokud se vám oblast nelíbí, můžete ji
+z tohoto menu i smazat.
+
+</para><para>
+
+Nezapomeňte vytvořit aspoň dvě oblasti &mdash; jednu pro
+<emphasis>odkládací prostor</emphasis> (<quote>swap</quote>) a jednu
+pro <emphasis>kořenový souborový systém</emphasis> (který musí být
+připojen jako <filename>/</filename>). Bez připojeného kořenového
+souborového systému vám <command>partman</command> nedovolí
+pokračovat. Chcete-li s rozdělováním pomoci, můžete kdykoliv
+z rozdělovacího menu vybrat možnost <guimenuitem>Automaticky rozdělit
+disk</guimenuitem> nebo <guimenuitem>Automaticky rozdělit volné
+místo</guimenuitem>.
+
+</para><para arch="ia64">
+
+Pokud zapomenete vytvořit a nastavit zaváděcí EFI oblast,
+<command>partman</command> to zjistí a dokud vše nespravíte, nenechá
+vás pokračovat.
+
+</para><para>
+
+Jestliže budete ve vytváření své tabulky oblastí příliš kreativní
+a uvedete ji do nepoužitelného stavu, můžete se vždy vrátit do
+výchozího bodu volbou <guimenuitem>Vrátit zpět změny provedené na
+oblastech</guimenuitem><footnote>
+
+<para>
+
+V určitých případech (jako je použití LVM) nebudete moci
+vrátit <emphasis>všechny</emphasis> změny, protože některé z nich jsou
+již zapsány na disku. Naštěstí vás však instalační program bude před
+každou trvalou změnou varovat.
+
+</para></footnote>.
+
+</para><para>
+
+<command>partman</command> samotný je poměrně malý a hloupý program,
+avšak jeho schopnosti mohou být rozšiřovány moduly instalačního
+programu. Pokud tedy nevidíte všechny slibované vlastnosti, přesvědčte
+se, že máte nahrány příslušné moduly
+(např. <filename>partman-ext3</filename>,
+<filename>partman-xfs</filename> nebo
+<filename>partman-lvm</filename>).
+
+</para><para>
+
+Až budete s rozdělením disků hotovi, vyberte z nabídky
+<guimenuitem>Ukončit rozdělování a zapsat změny na
+disk</guimenuitem>. Zobrazí se seznam provedených změn a budete
+požádáni o potvrzení, zda opravdu chcete vytvořit nové souborové
+systémy.
+
+</para>
+   </sect3>

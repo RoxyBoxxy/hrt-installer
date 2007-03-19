@@ -1,0 +1,88 @@
+<!-- retain these comments for translator revision tracking -->
+<!-- original version: 43528 -->
+<!-- revised by Felipe Augusto van de Wiel (faw) 2006.01.01 -->
+<!-- updated 28997:43528 by Felipe Augusto van de Wiel (faw) 2007.01.21 -->
+
+  <sect2 arch="sparc" id="sparc-cpus">
+  <title>CPU e Placas Mãe suportadas</title>
+<para>
+
+Hardware baseado em Sparc é dividido em um número de diferentes subarquiteturas,
+identificadas por um dos seguintes nomes: sun4, sun4c, sun4d, sun4m, sun4u
+ou sun4v. A seguinte lista descreve quais máquinas elas incluem e qual o
+nível de suporte que pode ser esperado para cada uma delas.
+
+</para>
+
+<variablelist>
+<varlistentry>
+<term>sun4, sun4c, sun4d</term>
+
+<listitem><para>
+
+Estas subarquiteturas incluem algumas máquinas 32-bit bem antigas, que
+não são mais suportadas. Para uma lista completa, por favor, consulte a
+<ulink url="http://en.wikipedia.org/wiki/SPARCstation">página 
+SPARCstation na Wikipedia</ulink> (em inglês).
+
+</para></listitem>
+</varlistentry>
+
+<varlistentry>
+<term>sun4m</term>
+
+<listitem><para>
+
+sun4m é a única subarquitetura 32-bit (sparc32) que é atualmente suportada.
+As máquinas mais populares pertencentes a esta classe são 
+Sparcstation 4, 5, 10 e 20.
+
+</para><para>
+
+Note que o <quote>symmetric multiprocessing (SMP)</quote> &mdash; a habilidade
+de executar processos em múltiplos processadores &mdash; não é suportado
+neste hardware, devido a problemas de estabilidade com tais configurações. O
+kernel sparc32 para um processador (UP) inicializará sem problemas em
+máquinas multiprocessadas, no entanto ele ativará e usará somente a
+primeira CPU.
+
+</para></listitem>
+</varlistentry>
+
+<varlistentry>
+<term>sun4u</term>
+
+<listitem><para>
+
+Esta subarquitetura inclui todas as máquinas 64-bit (sparc64) baseadas no
+processador UltraSparc e seus clones. A maioria das máquinas são bem
+suportadas, mesmo que alguns possam experimentar problemas de inicialização
+a partir do CD devido a bugs do firmware ou do carregador de inicialização
+(este problema pode ser contornado usando inicialização via rede). Use o
+kernel sparc64 ou sparc64-smp para configurações de um processador (UP) ou
+para SMP, respectivamente.
+
+</para></listitem>
+</varlistentry>
+
+<varlistentry>
+<term>sun4v</term>
+
+<listitem><para>
+
+Esta é a mais nova adição à família Sparc, que inclui máquinas baseadas
+nas CPUs <quote>Niagara multi-core</quote>. No momento tais CPUs estão
+disponíveis somente em servidor T1000 e T2000 da Sun, e são bem suportados.
+Use o kernel sparc64-smp.
+
+</para></listitem>
+</varlistentry>
+</variablelist>
+
+<para>
+
+Note que as CPUs SPARC64 da Fujitsu usadas na família PRIMEPOWER de servidores
+não são suportados devido à falta de suporte no kernel Linux.
+
+</para>
+  </sect2>
