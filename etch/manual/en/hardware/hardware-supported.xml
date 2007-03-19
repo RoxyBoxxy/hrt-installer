@@ -1,0 +1,393 @@
+<!-- retain these comments for translator revision tracking -->
+<!-- $Id$ -->
+
+ <sect1 id="hardware-supported">
+ <title>Supported Hardware</title>
+<para>
+
+Debian does not impose hardware requirements beyond the requirements
+of the Linux kernel and the GNU tool-sets.  Therefore, any
+architecture or platform to which the Linux kernel, libc,
+<command>gcc</command>, etc. have been ported, and for which a Debian
+port exists, can run Debian. Please refer to the Ports pages at
+<ulink url="&url-ports;"></ulink> for
+more details on &arch-title; architecture systems which have been
+tested with Debian.
+
+</para><para>
+
+Rather than attempting to describe all the different hardware
+configurations which are supported for &arch-title;, this section
+contains general information and pointers to where additional
+information can be found.
+
+</para>
+
+  <sect2><title>Supported Architectures</title>
+<para>
+
+Debian &release; supports twelve major architectures and several
+variations of each architecture known as <quote>flavors</quote>.
+
+</para><para>
+
+<informaltable>
+<tgroup cols="4">
+<thead>
+<row>
+  <entry>Architecture</entry><entry>Debian Designation</entry>
+  <entry>Subarchitecture</entry><entry>Flavor</entry>
+</row>
+</thead>
+
+<tbody>
+<row>
+  <entry>Intel x86-based</entry>
+  <entry>i386</entry>
+  <entry></entry>
+  <entry></entry>
+</row>
+
+<row>
+  <entry>AMD64 &amp; Intel EM64T</entry>
+  <entry>amd64</entry>
+  <entry></entry>
+  <entry></entry>
+</row>
+
+<row>
+  <entry>DEC Alpha</entry>
+  <entry>alpha</entry>
+  <entry></entry>
+  <entry></entry>
+</row>
+
+<row>
+  <entry morerows="3">ARM and StrongARM</entry>
+  <entry morerows="3">arm</entry>
+  <entry>Netwinder and CATS</entry>
+  <entry>netwinder</entry>
+</row><row>
+  <entry>Intel IOP32x</entry>
+  <entry>iop32x</entry>
+</row><row>
+  <entry>Intel IXP4xx</entry>
+  <entry>ixp4xx</entry>
+</row><row>
+  <entry>RiscPC</entry>
+  <entry>rpc</entry>
+</row>
+
+<row>
+  <entry morerows="1">HP PA-RISC</entry>
+  <entry morerows="1">hppa</entry>
+  <entry>PA-RISC 1.1</entry>
+  <entry>32</entry>
+</row><row>
+  <entry>PA-RISC 2.0</entry>
+  <entry>64</entry>
+</row>
+
+<row>
+  <entry>Intel IA-64</entry>
+  <entry>ia64</entry>
+  <entry></entry>
+  <entry></entry>
+</row>
+
+<row>
+  <entry morerows="3">MIPS (big endian)</entry>
+  <entry morerows="3">mips</entry>
+  <entry>SGI IP22 (Indy/Indigo 2)</entry>
+  <entry>r4k-ip22</entry>
+</row><row>
+  <entry>SGI IP32 (O2)</entry>
+  <entry>r5k-ip32</entry>
+</row><row>
+  <entry>Broadcom BCM91250A (SWARM)</entry>
+  <entry>sb1-bcm91250a</entry>
+</row><row>
+  <entry>Broadcom BCM91480B (BigSur)</entry>
+  <entry>sb1a-bcm91480b</entry>
+</row>
+
+<row>
+  <entry morerows="4">MIPS (little endian)</entry>
+  <entry morerows="4">mipsel</entry>
+  <entry>Cobalt</entry>
+  <entry>cobalt</entry>
+</row><row>
+  <entry morerows="1">DECstation</entry>
+  <entry>r4k-kn04</entry>
+</row><row>
+  <entry>r3k-kn02</entry>
+</row><row>
+  <entry>Broadcom BCM91250A (SWARM)</entry>
+  <entry>sb1-bcm91250a</entry>
+</row><row>
+  <entry>Broadcom BCM91480B (BigSur)</entry>
+  <entry>sb1a-bcm91480b</entry>
+</row>
+
+<row>
+  <entry morerows="5">Motorola 680x0</entry>
+  <entry morerows="5">m68k</entry>
+  <entry>Atari</entry>
+  <entry>atari</entry>
+</row><row>
+  <entry>Amiga</entry>
+  <entry>amiga</entry>
+</row><row>
+  <entry>68k Macintosh</entry>
+  <entry>mac</entry>
+</row><row>
+  <entry morerows="2">VME</entry>
+  <entry>bvme6000</entry>
+</row><row>
+  <entry>mvme147</entry>
+</row><row>
+  <entry>mvme16x</entry>
+</row>
+
+<row>
+  <entry morerows="2">IBM/Motorola PowerPC</entry>
+  <entry morerows="2">powerpc</entry>
+  <entry>CHRP</entry>
+  <entry>chrp</entry>
+</row><row>
+  <entry>PowerMac</entry>
+  <entry>pmac</entry>
+</row><row>
+  <entry>PReP</entry>
+  <entry>prep</entry>
+</row>
+
+<row>
+  <entry morerows="2">Sun SPARC</entry>
+  <entry morerows="2">sparc</entry>
+  <entry>sun4m</entry>
+  <entry>sparc32</entry>
+</row><row>
+  <entry>sun4u</entry>
+  <entry morerows="1">sparc64</entry>
+</row><row>
+  <entry>sun4v</entry>
+</row>
+
+<row>
+  <entry morerows="1">IBM S/390</entry>
+  <entry morerows="1">s390</entry>
+  <entry>IPL from VM-reader and DASD</entry>
+  <entry>generic</entry>
+</row><row>
+  <entry>IPL from tape</entry>
+  <entry>tape</entry>
+</row>
+
+</tbody></tgroup></informaltable>
+
+</para><para>
+
+This document covers installation for the
+<emphasis>&arch-title;</emphasis> architecture.  If you are looking
+for information on any of the other Debian-supported architectures
+take a look at the
+<ulink url="http://www.debian.org/ports/">Debian-Ports</ulink> pages.
+
+</para><para condition="new-arch">
+
+This is the first official release of &debian; for the &arch-title;
+architecture.  We feel that it has proven itself sufficiently to be
+released. However, because it has not had the exposure (and hence
+testing by users) that some other architectures have had, you may
+encounter a few bugs. Use our
+<ulink url="&url-bts;">Bug Tracking System</ulink> to report any
+problems; make sure to mention the fact that the bug is on the
+&arch-title; platform. It can be necessary to use the
+<ulink url="&url-list-subscribe;">debian-&arch-listname; mailing list</ulink>
+as well.
+
+</para>
+  </sect2>
+
+<!-- supported cpu docs -->
+&supported-alpha.xml;
+&supported-amd64.xml;
+&supported-arm.xml;
+&supported-hppa.xml;
+&supported-i386.xml;
+&supported-ia64.xml;  <!-- FIXME: currently missing -->
+&supported-m68k.xml;
+&supported-mips.xml;
+&supported-mipsel.xml;
+&supported-powerpc.xml;
+&supported-s390.xml;
+&supported-sparc.xml;
+
+  <sect2 id="gfx" arch="not-s390"><title>Graphics Card Support</title>
+<para arch="x86">
+
+You should be using a VGA-compatible display interface for the console
+terminal. Nearly every modern display card is compatible with
+VGA. Ancient standards such CGA, MDA, or HGA should also work,
+assuming you do not require X11 support.  Note that X11 is not used
+during the installation process described in this document.
+
+</para><para>
+
+Debian's support for graphical interfaces is determined by the
+underlying support found in X.Org's X11 system.  Most AGP, PCI and
+PCIe video cards work under X.Org.  Details on supported graphics
+buses, cards, monitors, and pointing devices can be found at
+<ulink url="&url-xorg;"></ulink>.  Debian &release; ships
+with X.Org version &x11ver;.
+
+</para><para arch="mips">
+
+<!-- FIXME: mention explicit graphics chips and not system names -->
+The X.Org X Window System is only supported on the SGI Indy and the O2.  The
+Broadcom BCM91250A and BCM91480B evaluation boards have standard 3.3v PCI
+slots and support VGA emulation or Linux framebuffer on a selected range
+of graphics cards.  A <ulink url="&url-bcm91250a-hardware;">compatibility
+listing</ulink> for Broadcom evaluation boards is available.
+
+</para><para arch="mipsel">
+
+The X.Org X Window System is supported on some DECstation models.  The
+Broadcom BCM91250A and BCM91480B evaluation boards have standard 3.3v PCI
+slots and support VGA emulation or Linux framebuffer on a selected range
+of graphics cards.  A <ulink url="&url-bcm91250a-hardware;">compatibility
+listing</ulink> for Broadcom evaluation boards is available.
+
+</para><para arch="sparc">
+
+Most graphics options commonly found on Sparc-based machines are supported.
+X.org graphics drivers are available for sunbw2, suncg14, suncg3, suncg6,
+sunleo and suntcx framebuffers, Creator3D and Elite3D cards (sunffb driver),
+PGX24/PGX64 ATI-based video cards (ati driver), and PermediaII-based cards
+(glint driver). To use an Elite3D card with X.org you additionally need to
+install the <classname>afbinit</classname> package, and read the documentation
+included with it on how to activate the card.
+
+</para><para arch="sparc">
+
+It is not uncommon for a Sparc machine to have two graphics cards in a
+default configuration. In such a case there is a possibility that the
+Linux kernel will not direct its output to the card initially used by the
+firmware. The lack of output on the graphical console may then be mistaken
+for a hang (usually the last message seen on console is 'Booting Linux...').
+One possible solution is to physically remove one of the video cards;
+another option is to disable one of the cards using a kernel boot parameter.
+Also, if graphical output is not required or desired, serial console may be
+used as an alternative. On some systems use of serial console can be
+activated automatically by disconnecting the keyboard before booting the
+system.
+
+</para>
+  </sect2>
+
+  <sect2 arch="x86" id="laptops"><title>Laptops</title>
+<para>
+
+Laptops are also supported.  Laptops are often specialized or contain
+proprietary hardware.  To see if your particular laptop works well
+with GNU/Linux, see the
+<ulink url="&url-x86-laptop;">Linux Laptop pages</ulink>
+
+</para>
+   </sect2>
+
+  <sect2 condition="defaults-smp">
+  <title>Multiple Processors</title>
+<para>
+
+Multiprocessor support &mdash; also called <quote>symmetric multiprocessing</quote>
+or SMP &mdash; is available for this architecture.  The standard Debian
+&release; kernel image was compiled with SMP support.  This should not
+prevent installation, since the SMP kernel should boot on non-SMP systems;
+the kernel will simply cause a bit more overhead.
+
+</para><para>
+
+In order to optimize the kernel for single CPU systems, you'll have to
+replace the standard Debian kernel.  You can find a discussion of how
+to do this in <xref linkend="kernel-baking"/>.  At this time
+(kernel version &kernelversion;) the way you disable SMP is to deselect
+<quote>&smp-config-option;</quote> in the <quote>&smp-config-section;</quote>
+section of the kernel config.
+
+</para>
+  </sect2>
+
+  <sect2 condition="smp-alternatives">
+<title>Multiple Processors</title>
+
+<para>
+
+Multiprocessor support &mdash; also called <quote>symmetric
+multiprocessing</quote> or SMP &mdash; is available for this architecture.
+The standard Debian &release; kernel image was compiled with
+<firstterm>SMP-alternatives</firstterm> support. This means that the kernel
+will detect the number of processors (or processor cores) and will
+automatically deactivate SMP on uniprocessor systems.
+
+</para><para arch="i386">
+
+The 486 flavour of the Debian kernel image packages for &arch-title;
+is not compiled with SMP support.
+
+</para>
+  </sect2>
+
+  <sect2 condition="supports-smp">
+  <title>Multiple Processors</title>
+<para>
+
+Multiprocessor support &mdash; also called <quote>symmetric
+multiprocessing</quote> or SMP &mdash; is available for this architecture.
+However, the standard Debian &release; kernel image does not support
+SMP.  This should not prevent installation, since the standard,
+non-SMP kernel should boot on SMP systems; the kernel will simply use
+the first CPU.
+
+</para><para>
+
+In order to take advantage of multiple processors, you'll have to
+replace the standard Debian kernel.  You can find a discussion of how
+to do this in <xref linkend="kernel-baking"/>.  At this time
+(kernel version &kernelversion;) the way you enable SMP is to select
+<quote>&smp-config-option;</quote> in the <quote>&smp-config-section;</quote>
+section of the kernel config.
+
+</para>
+  </sect2>
+
+  <sect2 condition="supports-smp-sometimes">
+  <title>Multiple Processors</title>
+<para>
+
+Multiprocessor support &mdash; also called <quote>symmetric
+multiprocessing</quote> or SMP &mdash; is available for this architecture,
+and is supported by a precompiled Debian kernel image. Depending on your
+install media, this SMP-capable kernel may or may not be installed by
+default. This should not prevent installation, since the standard,
+non-SMP kernel should boot on SMP systems; the kernel will simply use
+the first CPU.
+
+</para><para>
+
+In order to take advantage of multiple processors, you should check to see
+if a kernel package that supports SMP is installed, and if not, choose an
+appropriate kernel package.
+
+</para><para>
+
+You can also build your own customized kernel to support SMP. You can find
+a discussion of how to do this in <xref linkend="kernel-baking"/>.  At this
+time (kernel version &kernelversion;) the way you enable SMP is to select
+<quote>&smp-config-option;</quote> in the <quote>&smp-config-section;</quote>
+section of the kernel config.
+
+</para>
+  </sect2>
+ </sect1>

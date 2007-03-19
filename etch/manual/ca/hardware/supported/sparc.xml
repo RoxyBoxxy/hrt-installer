@@ -1,0 +1,88 @@
+<!-- retain these comments for translator revision tracking -->
+<!-- original version: 43528 -->
+
+  <sect2 arch="sparc" id="sparc-cpus">
+    <title>Suport de CPU i plaques base</title>
+<para>
+
+Existeixen nombroses subarquitectures diferents pel maquinari basat
+en Sparc, identificades pels següents noms: sun4, sun4c, sun4d, sun4m,
+sun4u o sun4v. A continuació es mostra una llista que descriu quines
+màquines inclouen i quin nivell de suport s'espera per cada una d'elles.
+
+</para>
+
+<variablelist>
+<varlistentry>
+<term>sun4, sun4c, sun4d</term>
+
+<listitem><para>
+
+Aquestes subarquitectures inclouen algunes de les màquines antigues de
+32 bits, les quals ja no estan suportades. Per a una llista completa,
+consulteu si us plau la
+<ulink url="http://en.wikipedia.org/wiki/SPARCstation">pàgina de
+la Viquipèdia SPARCstation</ulink>.
+
+</para></listitem>
+</varlistentry>
+
+<varlistentry>
+<term>sun4m</term>
+
+<listitem><para>
+
+Actualment, sun4m és la única subarquitectura de 32 bits (sparc32) que
+se suporta. Les màquines més populars d'aquesta classe són l'Sparcstation
+4, 5, 10 i 20.
+
+</para><para>
+
+Noteu que el multiprocés simètric (SMP) &mdash; la capacitat d'executar
+processos en múltiples processadors &mdash; no està suportat en aquest
+maquinari, degut a problemes d'estabilitat amb aquestes configuracions.
+El nucli uniprocessador (UP) per a l'sparc32 que hi ha disponible
+funcionarà correctament en màquines multiprocessador, si bé només
+activarà i utilitzarà la primera CPU.
+
+</para></listitem>
+</varlistentry>
+
+<varlistentry>
+<term>sun4u</term>
+
+<listitem><para>
+
+Aquesta subarquitectura inclou totes les màquines de 64 bits (sparc64)
+basades en el processador UltraSparc i els seus clons. La majoria de
+les màquines estan ben suportades, si bé per algunes podeu tenir algun
+problema quan arrenqueu des del CD degut a errors al microprogramari o
+al gestor d'arrencada (problema que es pot evitar utilitzant l'arrencada
+via xarxa). Utilitzeu el nucli sparc64 o sparc64-smp en les configuracions
+UP i SMP respectivament.
+
+</para></listitem>
+</varlistentry>
+
+<varlistentry>
+<term>sun4v</term>
+
+<listitem><para>
+
+Aquesta és la darrera inclusió a la família Sparc, la qual inclou màquines
+basades en les CPU Niagara multinucli. De moment, aquestes CPU només estan
+disponibles als servidors T1000 i T2000 de Sun, i estan ben suportades.
+Utilitzeu el nucli sparc64-smp.
+
+</para></listitem>
+</varlistentry>
+</variablelist>
+
+<para>
+
+Noteu que les CPU SPARC64 de Fujitsu utilitzades per la família de
+servidors PRIMEPOWER no estan suportades degut a la manca de suport per
+part del nucli Linux.
+
+</para>
+  </sect2>

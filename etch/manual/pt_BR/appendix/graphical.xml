@@ -1,0 +1,184 @@
+<!-- retain these comments for translator revision tracking -->
+<!-- original version: 44580 -->
+<!-- translated by Felipe Augusto van de Wiel (faw) 2007.01.21 -->
+<!-- revised by Herbert Parentes Fortes Neto (hpfn) 2007.02.22 -->
+<!-- revised by Felipe Augusto van de Wiel (faw) 2007.03.11 -->
+
+ <sect1 condition="gtk" id="graphical">
+ <title>O Instalador Gráfico</title>
+<para>
+
+A versão gráfica do instalador está disponível somente para um número
+limitado de arquiteturas, incluindo &arch-title;. A funcionalidade do
+instalador gráfico é essencialmente a mesma do instalador regular pois
+basicamente usa os mesmos programas, mas com uma interface diferente.
+
+</para><para>
+
+Embora a funcionalidade seja idêntica, o instalador gráfico tem algumas
+algumas vantagens significativas. A principal vantagem é que ele suporta
+mais idiomas, nominalmente aquelas que usam um conjunto de caracteres que
+não pode ser exibido com a interface regular <quote>newt</quote>. Ele também
+tem algumas vantagens de usabilidade como a opção de usar um mouse e, em
+alguns casos, várias questões podem ser exibidas numa única tela.
+
+</para><para arch="x86">
+
+O instalador gráfico está disponível em todas as imagens de CD e no
+método de instalação via hd-media. Como o instalador gráfico usa um
+initrd separado (muito maior) do instalador regular, ele tem que ser
+inicializado usando <userinput>installgui</userinput> ao invés de
+<userinput>install</userinput>. De forma análoga, os modos expert e
+rescue podem ser inicializados usando <userinput>expertgui</userinput>
+e <userinput>rescuegui</userinput>, respectivamente.
+
+</para><para arch="x86">
+
+Também está disponível uma imagem <quote>mini</quote> ISO
+especial<footnote id="gtk-miniiso">
+
+<para>
+A imagem mini ISO pode ser baixada a partir de um espelho Debian como
+descrito em <xref linkend="downloading-files"/>. Procure por
+<quote>gtk-miniiso</quote>.
+</para>
+
+</footnote>, que é principalmente útil para testes, neste caso a imagem
+é inicializada apenas usando <userinput>install</userinput>. Não há
+imagem do instalador gráfico que possa ser inicializada pela rede.
+
+</para><para arch="powerpc">
+
+Para &arch-title; atualmente apenas uma imagem <quote>mini</quote> ISO
+experimental está disponível<footnote id="gtk-miniiso">
+
+<para>
+A imagem mini ISO pode ser baixada a partir de um espelho Debian como
+descrito em <xref linkend="downloading-files"/>. Procure por
+<quote>gtk-miniiso</quote>.
+</para>
+
+</footnote>. Deveria funcional em quase todos os sistemas PowerPC que
+têm uma placa gráfica ATI, mas é improvável que funcione em outros
+sistemas.
+
+</para><para>
+
+O instalador gráfico requer significativamente mais memória para ser
+executado do que o instalador regular: &minimum-memory-gtk;. Se não
+há memória suficiente disponível, o instalador automaticamente mudará
+para a interface regular <quote>newt</quote>.
+
+</para><para>
+
+Você pode adicionar parâmetros de inicialização quando estiver iniciando
+o instalador gráfico, da mesma forma que faz com o instalador regular. Um
+destes parâmetros permite que você configure o mouse para uso por canhotos.
+Veja <xref linkend="boot-parms"/> para parâmetros válidos.
+
+</para>
+
+  <sect2 id="gtk-using">
+  <title>Usando o instalador gráfico</title>
+<para>
+
+Como já foi mencionado, o instalador gráfico basicamente funciona da mesma
+forma que o instalador regular e portanto o resto deste manual pode ser
+usado para guiá-lo através do processo de instalação.
+
+</para><para>
+
+Se você preferir usar o teclado ao invés do mouse, há duas coisas que você
+precisa saber. Para expandir uma lista condensada (usada por exemplo para a
+seleção de países dentro de continentes), você pode usar as teclas
+<keycap>+</keycap> e <keycap>-</keycap>. Para questões onde mais de um item
+pode ser selecionado (e.g. seleção de tarefas), você primeiro precisa usar
+o tab para pular até o botão <guibutton>Continuar</guibutton> após fazer
+suas seleções; pressionando enter irá alternar uma seleção, não irá ativar
+<guibutton>Continuar</guibutton>.
+
+</para><para>
+
+Para mudar para outro console, você também precisará usar a tecla
+<keycap>Ctrl</keycap>, da mesma forma que o X Window System. Por exemplo,
+para mudar para o VT1 você usará: <keycombo> <keycap>Ctrl</keycap>
+<keycap>Alt Esquerdo</keycap> <keycap>F1</keycap> </keycombo>.
+
+</para>
+  </sect2>
+
+  <sect2 id="gtk-issues">
+  <title>Problemas conhecidos</title>
+<para>
+
+Etch é o primeiro lançamento que inclui o instalador gráfico e usa
+tecnologia relativamente nova. Há alguns poucos problemas conhecidos
+que você pode encontrar durante a instalação. Nós esperamos ser capazes
+de corrigir estes problemas para o próximo lançamento do &debian;.
+
+</para>
+
+<itemizedlist>
+<listitem><para>
+
+Informação em algumas telas não é agradavelmente formatada em colunas
+como deveria ser. O exemplo mais óbvio é a primeira tela onde você
+seleciona seu idioma. Outro exemplo é a tela principal do partman.
+
+</para></listitem>
+<listitem><para>
+
+Digitar alguns caracteres pode não funcionar e em alguns casos o caracter
+errado pode ser impresso. Por exemplo, "compor" um caracter digitando um
+acento e então uma letra sob/sobre a qual o acento deveria aparecer não
+funciona.
+
+</para></listitem>
+<listitem><para>
+
+Suporte para <quote>touchpads</quote> ainda não é ótimo.
+
+</para></listitem>
+<listitem><para>
+
+Você não deveria trocar para um console diferente enquanto o instalador
+está ocupado; iso pode causar a quebra (<quote>crash</quote>) da interface.
+A interface será reiniciada automaticamente, mas isto pode ainda causar
+problemas com a instalação. Mudar para outro console enquanto o instalador
+está esperado por informações deveria funcionar sem causar quaisquer problemas.
+
+</para></listitem>
+<listitem><para>
+
+Suporte para a criação de partições criptografadas é limitado pois não é
+possível gerar uma chave de criptografia aleatória. É possível definir uma
+partição criptografada usando uma <quote>passphrase</quote> como chave
+criptográfica.
+
+</para></listitem>
+<listitem><para>
+
+Iniciar um shell a partir da interface gráfica não é suportado atualmente.
+Isso significa que opções relevantes para fazer isso (as quais estão
+disponíveis quando você usa uma interface no modo texto), não serão exibidas
+no menu principal do sistema de instalação e no menu para o modo de resgate
+(<quote>rescue</quote>). Ao invés disso, você terá que alternar (como
+descrito acima) entre os shells que estão disponíveis nos consoles virtuais
+VT2 e VT3.
+
+</para><para>
+
+Após iniciar o instalador no modo de resgate (<quote>rescue</quote>), pode
+ser útil iniciar um shell na partição raiz de um sistema já instalado. Isso é
+possível (após você ter selecionado a partição a ser montada como partição
+raiz) alternando para VT2 ou VT3 e digitando o seguinte comando:
+
+<informalexample><screen>
+# chroot /target
+</screen></informalexample>
+
+</para></listitem>
+</itemizedlist>
+
+  </sect2>
+ </sect1>
