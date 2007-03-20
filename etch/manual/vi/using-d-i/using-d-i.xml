@@ -1,0 +1,2557 @@
+<!-- Start of file using-d-i/using-d-i.xml -->
+<!-- $Id: using-d-i.xml 44026 2007-01-07 20:00:41Z fjp $ -->
+
+
+ <chapter id="d-i-intro"
+><title
+>Sử dụng trình cài đặt Debian</title>
+
+ <sect1
+><title
+>Trình cài đặt hoạt động như thế nào</title>
+<para
+>Trình cài đặt Debian là bao gồm một số thành phần nhằm mục đích đặc biệt, để thực hiện mỗi công việc cài đặt. Mỗi thành phần thi hành tác vụ riêng của nó, hỏi người dùng những câu cần thiết. Mỗi câu hỏi được gán ưu tiên, còn ưu tiên các câu cần hỏi có được đặt vào lúc khởi chạy trình cài đặt. </para
+><para
+>Khi chạy tiến trình cài đặt mặc định, chỉ hỏi những câu chủ yếu (ưu tiên cao). Kết quả là tiến trình cài đặt rất tự động, tương tác ít với người dùng. Các thành phần được chạy tự động theo thứ tự; thành phần nào cần chạy phụ thuộc chính vào phương pháp cài đặt được dùng, cũng vào phần cứng riêng của bạn. Trình cài đặt sẽ dùng giá trị mặc định cho mỗi câu chưa hỏi. </para
+><para
+>Nếu tiến trình cài đặt gặp lỗi, trình cài đặt hiển thị màn hình lỗi, có lẽ cũng là trình đơn cài đặt để chọn hành động xen kẽ. Còn nếu không gặp lỗi, người dùng sẽ không bao giờ xem trình đơn cài đặt, họ sẽ đơn giản trả lời câu hỏi về mỗi thành phần lần lượt. Thông báo lỗi nghiêm trọng có ưu tiên <quote
+>tới hạn</quote
+> thì người dùng sẽ luôn luôn xem. </para
+><para
+>Trình cài đặt dùng một số giá trị mặc định có thể được sửa đổi bằng cách gởi đối số khởi động vào lúc khởi chạy &d-i;. Chẳng hạn, nếu bạn muốn ép buộc cấu hình mạng kiểu tĩnh (DHCP được dùng theo mặc định nếu sẵn sàng), bạn có khả năng thêm tham số khởi động <userinput
+>netcfg disable_dhcp=true</userinput
+> (tắt DHCP=đúng). Xem <xref linkend="installer-args"/> để tìm các tùy chọn có sẵn. </para
+><para
+>Người dùng thành thạo có thể thấy thoải mái hơn khi dùng giao diện do trình đơn điều khiển, trong đó người dùng điều khiển mỗi bước thay vì trình cài đặt thực hiện tự động mỗi bước theo thứ tự. Để tự điều khiển trình cài đặt bằng trình đơn, bạn hãy thêm đối số khởi động <userinput
+>priority=medium</userinput
+> (ưu tiên=vừa). </para
+><para
+>Nếu phần cứng riêng cần thiết bạn gởi tùy chọn cho mô-đun hạt nhân vào lúc cài đặt, bạn cần phải khởi chạy trình cài đặt trong chế độ <quote
+>nhà chuyên môn</quote
+>. Làm như thế bằng cách hoặc nhập lệnh <command
+>expert</command
+> (nhà chuyên môn) để khởi chạy trình cài đặt, hoặc thêm đối số khởi động <userinput
+>priority=low</userinput
+> (ưu tiên=thấp). Chế độ nhà chuyên môn cho bạn khả năng điều khiển đầy đủ &d-i;. </para
+><para
+>Trình cài đặt hiển thị dữ liệu bình thường dựa vào ký tự (như trái ngược với giao diện đồ họa thông thường hơn). Con chuột không hoạt động được trong môi trường này. Đây là các phím bạn có thể sử dụng để di chuyển bên trong những hộp thoại khác nhau. Phím <keycap
+>Tab</keycap
+> hay phím mũi tên bên <keycap
+>phải</keycap
+> di <quote
+>tới</quote
+>, còn tổ hợp phím <keycombo
+> <keycap
+>Shift</keycap
+> <keycap
+>Tab</keycap
+> </keycombo
+> hay phím mũi tên bên <keycap
+>trái</keycap
+> di <quote
+>lùi</quote
+>, giữa các cái nút và vùng chọn được hiển thị. Phím mũi tên <keycap
+>lên</keycap
+> và <keycap
+>xuống</keycap
+> chọn mục khác nhau bên trong danh sách cuộn được, cũng cuộn danh sách đó. Hơn nữa, trong danh sách dài, bạn có khả năng gõ chữ nào để gây ra danh sách cuộn trực tiếp tới phần chứa mục bắt đầu với chữ đó, cũng sử dụng phím <keycap
+>Pg-Up</keycap
+> (trang lên) và <keycap
+>Pg-Down</keycap
+> (trang xuống) để cuộn danh sách theo phần riêng. <keycap
+>Phím dài</keycap
+> chọn mục như hộp chọn. Hãy sử dụng phím &enterkey; để kích hoạt điều đã chọn. </para
+><para arch="s390"
+>Máy kiểu S/390 không hỗ trợ bàn giao tiếp ảo. Bạn có khả năng mở phiên chạy SSH thứ hai và thứ ba để xem những bản ghi được diễn tả bên dưới. </para
+><para
+>Các thông điệp lỗi và bản ghi lỗi được chuyển tiếp tới bàn giao tiếp thứ tư. Bạn có khả năng truy cập bàn giao tiếp này bằng cách bấm tổ hợp phím <keycombo
+><keycap
+>Alt trái</keycap
+><keycap
+>F4</keycap
+></keycombo
+> (bấm giữ phím <keycap
+>Alt</keycap
+> bên trái trong khi bấm phím chức năng <keycap
+>F4</keycap
+>); còn có thể trở về tiến trình cài đặt chính bằng tổ hợp phím <keycombo
+><keycap
+>Alt trái</keycap
+><keycap
+>F1</keycap
+></keycombo
+>. </para
+><para
+>Các thông điệp này cũng nằm trong bản ghi hệ thống <filename
+>/var/log/syslog</filename
+>. Một khi cài đặt xong, bản ghi này được sao chép vào thư mục <filename
+>/var/log/installer/syslog</filename
+> trong hệ thống mới. Thông điệp cài đặt kiểu khác cũng nằm trong thư mục <filename
+>/var/log/</filename
+> trong khi cài đặt, rồi trong thư mục <filename
+>/var/log/installer/</filename
+> sau khi máy tính đã khởi động vào hệ thống mới cài đặt. </para>
+ </sect1>
+
+
+  <sect1 id="modules-list"
+><title
+>Giới thiệu về thành phần</title>
+<para
+>Đây là danh sách các thành phần cài đặt, cùng với mô tả ngắn về mục đích của mỗi điều. Chi tiết về cách sử dụng thành phần riêng nào nằm trong <xref linkend="module-details"/>. </para>
+
+<variablelist>
+<varlistentry>
+
+<term
+>main-menu</term
+><listitem
+><para
+>Thành phần này hiển thị danh sách các thành phần cho người dùng xem trong khi chạy trình cài đặt, rồi khởi chạy mỗi thành phần đã được chọn. Các câu hỏi của thành phần « main-menu » được đặt là ưu tiên vừa, vậy nếu bạn đã đặt ưu tiên cài đặt cao hay tới hạn (cao là giá trị mặc định), bạn sẽ không xem trình đơn. Mặt khác, nếu tiến trình gặp lỗi cần thiết bạn can thiệp, ưu tiên của câu hỏi có thể được hạ cấp tạm thời để cho bạn khả năng giải quyết vấn đề: trong trường hợp đó, trình đơn có thể xuất hiện. </para
+><para
+>Bạn có khả năng tới trình đơn chính bằng cách bấm cái nút <quote
+>Lùi</quote
+> nhiều lần để lùi lại hoàn toàn ra thành phần đang chạy. </para
+></listitem>
+</varlistentry>
+<varlistentry>
+
+<term
+>localechooser</term
+><listitem
+><para
+>Thành phần này cho bạn khả năng chọn tùy chọn địa phương hoá cho tiến trình cài đặt, cũng cho hệ thống sẽ cài đặt: ngôn ngữ, quốc gia và miền địa phương (locale). Trình cài đặt sẽ hiển thị thông điệp trong ngôn ngữ đã chọn, trừ có bản dịch chưa hoàn toàn sang ngôn ngữ đó, trong trường hợp đó một số thông điệp riêng vẫn còn có thể được hiển thị bằng tiếng Anh. </para
+></listitem>
+</varlistentry>
+<varlistentry>
+
+<term
+>kbd-chooser</term
+><listitem
+><para
+>Thành phần này hiển thị danh sách các bàn phím, trong đó người dùng họn điều thích hợp. </para
+></listitem>
+</varlistentry>
+<varlistentry>
+
+<term
+>hw-detect</term
+><listitem
+><para
+>Thành phần này phát hiện tự động hậu hết phần cứng của máy tính, gồm thẻ mạng, ổ đĩa và PCMCIA. </para
+></listitem>
+</varlistentry>
+<varlistentry>
+
+<term
+>cdrom-detect</term
+><listitem
+><para
+>Thành phần này phát hiện và gắn kết đĩa CD cài đặt Debian. </para
+></listitem>
+</varlistentry>
+<varlistentry>
+
+<term
+>netcfg</term
+><listitem
+><para
+>Thành phần này cấu hình các sự kết nối mạng của máy tính để cho nó có khả năng liên lạc qua Mạng. </para
+></listitem>
+</varlistentry>
+<varlistentry>
+
+<term
+>iso-scan</term
+><listitem
+><para
+>Thành phần này tìm hệ thống tập tin kiểu ISO, mà có thể nằm hoặc trên đĩa CD-ROM hoặc trên đĩa cứng. </para
+></listitem>
+</varlistentry>
+<varlistentry>
+
+<term
+>choose-mirror</term
+><listitem
+><para
+>Thành phần này hiển thị danh sách các máy nhân bản Debian. Vậy người dùng có thể chọn nguồn của các gói cài đặt. </para
+></listitem>
+</varlistentry>
+<varlistentry>
+
+<term
+>cdrom-checker</term
+><listitem
+><para
+>Thành phần này kiểm tra sự nguyên vẹn của đĩa CD-ROM. Bằng cách này, người dùng có khả năng kiểm tra xem đĩa CD-ROM cài đặt chưa bị hỏng. </para
+></listitem>
+</varlistentry>
+<varlistentry>
+
+<term
+>lowmem</term
+><listitem
+><para
+>Thành phần này thử phát hiện hệ thống không có đủ bộ nhớ, rồi thực hiện một số việc đặc biệt để gỡ bỏ phần &d-i; không cần thiết ra bộ nhớ đó (cũng mất vài tính năng). </para
+></listitem>
+</varlistentry>
+<varlistentry>
+
+<term
+>anna</term
+><listitem
+><para
+>APT: thành phần này cài đặt gói được lấy từ máy nhân bản đã chọn, hay từ đĩa CD. </para
+></listitem>
+</varlistentry>
+<varlistentry>
+
+<term
+>partman</term
+><listitem
+><para
+>Thành phần này cho người dùng khả năng phân vùng đĩa được gắn kết vào hệ thống, tạo hệ thống tập tin trên những phân vùng đã chọn, và gắn kết chúng vào những điểm lắp. Cũng gồm có một số tính năng có ích như chế độ tự động hoàn toàn hay khả năng hỗ trợ LVM (bộ quản lý khối tin hợp lý). Thành phần partman là công cụ phân vùng ưa thích trong Debian. </para
+></listitem>
+</varlistentry>
+<varlistentry>
+
+<term
+>autopartkit</term
+><listitem
+><para
+>Thành phần này phân vùng tự động toàn bộ đĩa tùy theo tùy thích người dùng định sẵn. </para
+></listitem>
+</varlistentry>
+<varlistentry>
+
+<term
+>partitioner</term
+><listitem
+><para
+>Thành phần này cho người dùng khả năng phân vùng đĩa được gắn kết vào hệ thống. Nó chọn chương trình thích hợp với kiến trúc của mỗi máy tính. </para
+></listitem>
+</varlistentry>
+<varlistentry>
+
+<term
+>partconf</term
+><listitem
+><para
+>Thành phần này hiển thị danh sách các phân vùng, cũng tạo hệ thống tập tin trên những phân vùng đã chọn, tùy theo những hướng dẫn của người dùng. </para
+></listitem>
+</varlistentry>
+<varlistentry>
+
+<term
+>lvmcfg</term
+><listitem
+><para
+>Thành phần này giúp đỡ người dùng cấu hình <firstterm
+>LVM</firstterm
+> (bộ quản lý khối tin hợp lý). </para
+></listitem>
+</varlistentry>
+<varlistentry>
+
+<term
+>mdcfg</term
+><listitem
+><para
+>Thành phần này cho người dùng khả năng thiết lập <firstterm
+>RAID</firstterm
+> kiểu phần mềm. RAID phần mềm này thường là tốt hơn các bộ điều khiển RAID IDE (phần cứng giả) rẻ nằm trên bo mạch chủ mới hơn. </para
+></listitem>
+</varlistentry>
+<varlistentry>
+	
+<term
+>tzsetup</term
+><listitem
+><para
+>Thành phần này chọn múi giờ, dựa vào địa điểm đã chọn trước. </para
+></listitem>
+</varlistentry>
+<varlistentry>
+
+<term
+>clock-setup</term
+><listitem
+><para
+>Thành phần này xác định nếu đồng hồ được đặt theo UTC (thời gian thế giới) hay không. </para
+></listitem>
+</varlistentry>
+<varlistentry>
+	
+<term
+>user-setup</term
+><listitem
+><para
+>Thành phần này thiết lập mật khẩu chủ (root), cũng thêm một người dùng khác người chủ. </para
+></listitem>
+</varlistentry>
+<varlistentry>
+
+<term
+>base-installer</term
+><listitem
+><para
+>Thành phần này cài đặt bộ gói cơ bản nhất cho máy tính khả năng hoạt động được dưới Linux khi được khởi động lại. </para
+></listitem>
+</varlistentry>
+<varlistentry>
+	
+<term
+>apt-setup</term
+><listitem
+><para
+>Thành phần này cấu hình chương trình « apt », một cách phần lớn tự động, dựa vào vật chứa nơi trình cài đặt chạy. </para
+></listitem>
+</varlistentry>
+<varlistentry>
+	
+<term
+>pkgsel</term
+><listitem
+><para
+>Thành phần này sử dụng chương trình <classname
+>tasksel</classname
+> để chọn và cài đặt phần mềm thêm. </para
+></listitem>
+</varlistentry>
+<varlistentry>
+	
+<term
+>os-prober</term
+><listitem
+><para
+>Thành phần này phát hiện hệ thống đã được cài đặt trên máy tính và gởi thông tin này cho trình cài đặt bộ tải khởi động, mà có thể cung cấp cho bạn khả năng thêm hệ thống đã có vào trình đơn bắt đầu của bộ tải khởi động. Bằng cách này, vào lúc khởi động người dùng có thể chọn dễ dàng hệ điều hành nào cần khởi chạy. </para
+></listitem>
+</varlistentry>
+<varlistentry>
+
+<term
+>bootloader-installer</term
+><listitem
+><para
+>Mỗi trình cài đặt bộ tải khởi động có cài đặt một chương trình tải khởi động vào đĩa cứng, mà cần thiết để máy tính khởi động được bằng Linux, không dùng đĩa mềm hay đĩa CD-ROM. Nhiều bộ tải khởi động cho người dùng có khả năng chọn hệ điều hành xen kẽ vào lúc khởi động máy tính. </para
+></listitem>
+</varlistentry>
+<varlistentry>
+
+<term
+>shell</term
+><listitem
+><para
+>Thành phần này cho người dùng khả năng thực hiện trình bao từ trình đơn, hoặc trong bàn giao tiếp thứ hai. </para
+></listitem>
+</varlistentry>
+<varlistentry>
+
+<term
+>save-logs</term
+><listitem
+><para
+>Thành phần này cung cấp cho người dùng có khả năng ghi thông tin vào đĩa mềm, qua mạng, vào đĩa cứng hay vào vật chứa khác khi gặp lỗi, để thông báo chính xác các vấn đề phần mềm cài đặt cho nhà phát triển xem vào lúc sau. </para
+></listitem>
+</varlistentry>
+
+</variablelist>
+
+ </sect1>
+
+
+<!-- Start of file using-d-i/components.xml -->
+<!-- $Id: components.xml 43965 2007-01-06 20:12:52Z fjp $ -->
+
+ <sect1 id="module-details">
+ <title
+>Sử dụng thành phần riêng</title>
+<para
+>Trong phần này có diễn tả mỗi thành phần cài đặt một cách chi tiết. Các thành phần đã được nhóm lại theo giai đoạn riêng dễ hiểu, được trình diễn theo thứ tự xuất hiện trong tiến trình cài đặt. Ghi chú rằng không phải tất cả các mô-đun sẽ được dùng trong mọi việc cài đặt; những mô-đun thật sự được dùng phụ thuộc vào phương pháp cài đặt và phần cứng riêng. </para>
+
+  <sect2 id="di-setup">
+  <title
+>Thiết lập trình cài đặt Debian và cấu hình phần cứng</title>
+<para
+>Giả sử là trình cài đặt Debian mới khởi động, và bạn xem màn hình thứ nhất. Vào lúc đó, khả năng của &d-i; vẫn còn hơi bị hạn chế. Nó chưa biết đủ về phần cứng, về ngôn ngữ ưa thích của bạn, hay ngay cả về công việc cần thực hiện. Không có sao đó, vì &d-i; hơi thông minh. Nó có khả năng thăm dò tự động phần cứng, tìm các thành phần còn lại của nó, và nâng cấp tự nó lên một hệ thống cài đặt có đủ khả năng. Tuy nhiên, bạn vẫn còn cần phải giúp đỡ &d-i; tập hợp vài thông tin nó không thể quyết định tự động (v.d. bằng cách chọn ngôn ngữ ưa thích, bố trí bàn phím thích hợp hay máy nhân bản riêng trên mạng). </para
+><para
+>Bạn sẽ thấy biết rằng &d-i; thực hiện việc <firstterm
+>phát hiện phần cứng</firstterm
+> vài lần trong giao đoạn này. Lần đầu tiên nhằm mục đích tìm phần cứng cần thiết để tải các thành phần cài đặt (v.d. ổ đĩa CD-ROM hay thẻ mạng). Vì không phải tất cả các trình điều khiển luôn luôn sẵn sàng trong việc chạy đầu tiên này, việc phát hiện phần cứng cần phải được lặp lại vào điểm sau trong tiến trình. </para>
+
+
+<!-- Start of file using-d-i/modules/lowmem.xml -->
+<!-- $Id: lowmem.xml 43603 2006-12-27 18:00:48Z fjp $ -->
+
+  <sect3 id="lowmem">
+  <title
+>Kiểm tra bộ nhớ có sẵn / chế độ thiếu bộ nhớ</title>
+
+<para
+>Một của những hành động thứ nhất của &d-i; là việc kiểm tra số lượng bộ nhớ có sẵn. Nếu không có đủ bộ nhớ có sẵn, thành phần này sẽ sửa đổi tiến trình cài đặt để (mong muốn) cho bạn khả năng cài đặt &debian; trên máy tính của mình. </para
+><para
+>Để giảm bộ nhớ được chiếm, bộ cài đặt trước tiên sẽ tắt các bản dịch nên chỉ có khả năng cài đặt bằng tiếng Anh. Tất nhiên, bạn vẫn còn có khả năng chạy hệ thống đã bản địa hoá sau khi cài đặt xong.  </para
+><para
+>Để giảm bộ nhớ thêm, bộ cài đặt sẽ nạp chỉ những thành phần chủ yếu để chạy xong tiến trình cài đặt cơ bản. Việc này cũng giảm khả năng của hệ thống cài đặt. Bạn sẽ có dịp tự nạp các thành phần thêm, nhưng ghi chú rằng mỗi thành phần bạn chọn sẽ chiếm bộ nhớ thêm thì có thể gây ra tiến trình cài đặt bị lỗi do hết bộ nhớ. </para
+><para
+>Nếu bộ cài đặt chạy trong chế độ thiếu bộ nhớ, khuyên bạn tạo một vùng trao đổi tương đối lớn (64&ndash;128MB). Vùng trao đổi này sẽ được dùng như là bộ nhớ ảo thì tăng số lượng bộ nhớ sẵn sàng cho hệ thống. Bộ cài đặt sẽ kích hoạt vùng trao đổi càng sớm càng có thể trong tiến trình cài đặt. Ghi chú rằng cách sử dụng vùng trao đổi nặng sẽ giảm hiệu suất của hệ thống và có thể đưa tới hoạt động đĩa cao. </para
+><para
+>Bất chấp những biện pháp này, vẫn còn có thể gặp hệ thống đông đặc, lỗi bất thường hay tiến trình bị giết bởi hạt nhân do hệ thống hết bộ nhớ (kết quả là thông điệp <quote
+>Hết bộ nhớ</quote
+> trên VT4 và trong bản ghi hệ thống). </para
+><para
+>Chẳng hạn, người dùng đã thông báo rằng việc tạo một hệ thống tập tin dạng ext3 lớn bị lỗi trong chế độ thiếu bộ nhớ khi không có đủ sức chứa trao đổi. Nếu vùng trao đổi lớn hơn không quyết định vấn đề này, hãy thử tạo hệ thống tập tin dạng ext2 (thành phần chủ yếu của bộ cài đặt) thay thế. Vẫn có thể thay đổi phân vùng ext2 sang ext3 sa khi cài đặt. </para>
+   </sect3>
+<!--   End of file using-d-i/modules/lowmem.xml -->
+
+<!-- Start of file using-d-i/modules/localechooser.xml -->
+<!-- $Id: localechooser.xml 33725 2006-01-03 19:39:07Z fjp $ -->
+
+
+   <sect3 id="localechooser">
+   <title
+>Chọn tùy chọn địa phương hoá</title>
+
+<para
+>Trong phần lớn trường hợp, trước tiên bạn sẽ được nhắc chọn các tùy chọn địa phương hoá cần dùng trong cả tiến trình cài đặt lẫn hệ thống đã cài đặt. Những tùy chọn địa phương hoá là ngôn ngữ, quốc gia và miền địa phương. </para
+><para
+>Ngôn ngữ bạn chọn sẽ được dùng trong phần còn lại của tiến trình cài đặt, miễn là có sẵn bản dịch của các hộp thoại khác nhau. Nếu chưa có bản dịch sang ngôn ngữ đã chọn, trình cài đặt sẽ trở về ngôn ngữ mặc định: tiếng Anh. </para
+><para
+>Vào điểm sau trong tiến trình cài đặt, quốc gia đã chọn sẽ được dùng để chọn múi giờ mặc định và một máy nhân bản Debian thích hợp với chỗ địa lý của bạn. Cả ngôn ngữ lẫn quốc gia đều sẽ được dùng để đặt miền địa phương mặc định cho hệ thống của bạn, cũng để giúp đỡ chọn bố trí bàn phím. </para
+><para
+>Trước tiên, bạn sẽ được nhắc chọn ngôn ngữ ưa thích. Các tên ngôn ngữ được liệt kê bằng cả tiếng Anh (bên trái) lẫn tiếng gốc (bên phải); các tên bên phải cũng được in ra bằng chữ viết đúng của ngôn ngữ đó. Danh sách đó được sắp xếp theo tên tiếng Anh. Bên trên danh sách có một tùy chọn thêm cho bạn khả năng chọn miền địa phương <quote
+>C</quote
+> thay cho ngôn ngữ riêng. Việc chọn miền địa phương <quote
+>C</quote
+> sẽ gây ra tiến trình cài đặt tiếp tục lại bằng chỉ tiếng Anh; hệ thống đã cài đặt sẽ không có khả năng hỗ trợ địa phương hoá (không có ngôn ngữ khác v.v.) vì gói <classname
+>locales</classname
+> sẽ không được cài đặt. </para
+><para
+>Nếu bạn chọn ngôn ngữ được chấp nhận là ngôn ngữ chính thức của nhiều quốc gia<footnote
+> <para
+> Tức là khi có nhiều miền địa phương với mã quốc gia khác nhau cho cùng một ngôn ngữ. </para
+> </footnote
+>, lần kế tiếp bạn sẽ được nhắc chọn quốc gia riêng. Nếu bạn chọn mục <guimenuitem
+>Khác</guimenuitem
+> bên dưới danh sách đó, trình cài đặt sẽ hiển thị danh sách mọi quốc gia, được nhóm lại theo châu. Nếu ngôn ngữ đã chọn chỉ có một quốc gia tương ứng với nó, quốc gia đó sẽ được chọn tự động. </para
+><para
+>Miền địa phương sẽ được chọn, dựa vào ngôn ngữ và quốc gia đã chọn. Nếu bạn đang cài đặt tại ưu tiên vừa hay thấp, bạn có khả năng chọn một miền địa phương mặc định khác, và một số miền địa phương thêm để được tạo ra cho hệ thống được cài đặt. </para>
+   </sect3>
+<!--   End of file using-d-i/modules/localechooser.xml -->
+
+<!-- Start of file using-d-i/modules/kbd-chooser.xml -->
+<!-- $Id: kbd-chooser.xml 42302 2006-10-28 23:28:36Z fjp $ -->
+
+   <sect3 id="kbd-chooser">
+   <title
+>Chọn bàn phím</title>
+
+<para
+>Bàn phím thường được thiết kế để nhập các ký tự đại diện ngôn ngữ riêng. Hãy chọn một bố trí bàn phím thích hợp với bàn phím hàng ngày của bạn, hoặc chọn điều tương tự nếu không có bố trí trùng. Một khi cài đặt xong hệ thống, bạn có khả năng chọn bố trí bàn phím trong phạm vị sự chọn rộng hơn (chạy tiện ích <command
+>kbdconfig</command
+> với tư cách người chủ, một khi cài đặt xong). </para
+><para
+>Hãy di chuyển vùng tô sáng tới bố trí bàn phím đã muốn, rồi bấm phím &enterkey;. Dùng các phím mũi tên để di chuyển vùng tô sáng &mdash; chúng nằm tại cùng một vị trí trên mọi bố trí bàn phím ngôn ngữ quốc gia, vậy chúng không phụ thuộc vào cấu hình bàn phím. Bàn phím « đã mở rộng » ('extended') có các phím chức năng <keycap
+>F1</keycap
+> đến <keycap
+>F10</keycap
+> nằm bên trên. </para
+><para arch="mipsel"
+>Trên máy DECstation, hiện thời không có bố trí bàn phím có thể tải, thì bạn cần phải bỏ qua việc chọn bàn phím, và giữ lại bố trí hạt nhân mặc định (LK201 US). Trường hợp này có thể thay đổi trong trương lai, vì nó phụ thuộc vào sự phát triển hạt nhân Linux/MIPS thêm. </para
+><para arch="powerpc"
+>Có hai bố trí bàn phím Mỹ: bố trí kiểu « qwerty/mac-usb-us » gán chức năng Alt với phím Cmd <keycap
+>trái tao ⌘</keycap
+> (bên trái <keycap
+>phím dài</keycap
+> giống như phím <keycap
+>Alt</keycap
+> trên bàn phím PC), còn bố trí kiểu « qwerty/us » gán chức năng Alt với phím <keycap
+>Option</keycap
+> (cũng có từ viết tắt 'alt' trên phần lớn bàn phím Mac). Bằng các cách khác, hai bố trí này là tương tự. </para>
+   </sect3>
+<!--   End of file using-d-i/modules/kbd-chooser.xml -->
+
+<!-- Start of file using-d-i/modules/s390/netdevice.xml -->
+<!-- $Id: netdevice.xml 11648 2004-03-22 00:37:46Z joeyh $ -->
+<!--   End of file using-d-i/modules/s390/netdevice.xml -->
+
+<!-- Start of file using-d-i/modules/ddetect.xml -->
+<!-- $Id: ddetect.xml 11648 2004-03-22 00:37:46Z joeyh $ -->
+<!--   End of file using-d-i/modules/ddetect.xml -->
+
+<!-- Start of file using-d-i/modules/cdrom-detect.xml -->
+<!-- $Id: cdrom-detect.xml 11648 2004-03-22 00:37:46Z joeyh $ -->
+<!--   End of file using-d-i/modules/cdrom-detect.xml -->
+
+<!-- Start of file using-d-i/modules/iso-scan.xml -->
+<!-- $Id: iso-scan.xml 23058 2004-10-12 23:51:17Z cjwatson $ -->
+
+   <sect3 id="iso-scan">
+   <title
+>Tìm ảnh ISO cài đặt Debian</title>
+<para
+>Trong tiến trình cài đặt bằng phương pháp <emphasis
+>hd-media</emphasis
+>, có thời điểm khi bạn cần phải tìm và gắn kết ảnh ISO của trình cài đặt Debian, để lấy các tập tin cài đặt còn lại. Thành phần <command
+>iso-scan</command
+> thực hiện chính xác công việc này. </para
+><para
+>Trước tiên, thành phần <command
+>iso-scan</command
+> gắn kết tự động mọi thiết bị khối tin (v.d. phân vùng) chứa hệ thống tập tin đã biết, rồi tìm kiếm tính liên tục tên tập tin nào kết thúc bằng <filename
+>.iso</filename
+> (hay <filename
+>.ISO</filename
+>). Ghi chú rằng việc thử đầu tiên quét chỉ tập tin nằm trong thư mục gốc và lớp đầu của thư mục con (tức là nó tìm <filename
+>/<replaceable
+>cái_gì</replaceable
+>.iso</filename
+> và <filename
+>/data/<replaceable
+>cái_gì</replaceable
+>.iso</filename
+>, nhưng không phải <filename
+>/data/tmp/<replaceable
+>cái_gì</replaceable
+>.iso</filename
+>). Sau khi tìm ảnh ISO, thành phần <command
+>iso-scan</command
+> kiểm tra nội dung của nó, để quyết định nếu nó là ảnh ISO Debian hợp lệ hay không. Nếu có, thì việc đã xong, còn nếu không thì thành phần <command
+>iso-scan</command
+> tìm ảnh khác. </para
+><para
+>Trong trường hợp việc thử tìm ảnh ISO cài đặt không phải là thành công, thành phần <command
+>iso-scan</command
+> sẽ hỏi nếu bạn muốn thực hiện việc tìm kiếm tường tận hơn. Việc tìm kiếm đó không phải chỉ tìm trong những thư mục lên trên: nó thật sự đi qua toàn bộ hệ thống tập tin. </para
+><para
+>Nếu thành phần <command
+>iso-scan</command
+> không tìm được ảnh ISO cài đặt của bạn, hãy khởi động lại về hệ điều hành đã có, rồi kiểm tra xem nếu ảnh có tên đúng (kết thúc bằng <filename
+>.iso</filename
+>), nếu nó nằm trong hệ thống tập tin do &d-i; chấp nhận, và nếu nó bị hỏng (thẩm tra tổng kiểm checksum). Người dùng UNIX kinh nghiệm có thể làm như thế, không cần khởi động lại, bằng bàn giao tiếp thứ hai. </para>
+   </sect3>
+<!--   End of file using-d-i/modules/iso-scan.xml -->
+
+<!-- Start of file using-d-i/modules/anna.xml -->
+<!-- $Id: anna.xml 11648 2004-03-22 00:37:46Z joeyh $ -->
+<!--   End of file using-d-i/modules/anna.xml -->
+
+<!-- Start of file using-d-i/modules/netcfg.xml -->
+<!-- $Id: netcfg.xml 44026 2007-01-07 20:00:41Z fjp $ -->
+
+   <sect3 id="netcfg">
+   <title
+>Cấu hình mạng</title>
+
+<para
+>Khi bạn vào bước này, nếu trình cài đặt phát hiện nhiều thiết bị mạng trong máy tính, nó sẽ nhắc bạn chọn thiết bị nào là giao diện mạng <emphasis
+>chính</emphasis
+>, tức là điều bạn muốn sử dụng để cài đặt. Các giao diện khác sẽ không được cấu hình vào lúc đó. Bạn có khả năng cấu hình giao diện thêm một khi cài đặt xong; xem trang hướng dẫn « man » <citerefentry
+> <refentrytitle
+>interfaces</refentrytitle
+> <manvolnum
+>5</manvolnum
+> </citerefentry
+>. </para
+><para
+>Mặc định là &d-i; thử tự động cấu hình mạng của máy tính bằng DHCP. Việc thăm dò DHCP là thành công thì bạn đã làm xong. Thăm dò bị lỗi có thể được gây ra bởi nhiều nhân tố khác nhau, từ cáp mạng chưa cắm phít được, đến thiết lập DHCP cấu hình sai. Hoặc có lẽ bạn chưa có trình phục vụ DHCP chạy trên mạng cục bộ. Để tìm biết nguyên nhân, hãy kiểm tra xem các thông điệp lỗi trên bàn giao tiếp thứ tư. Trong bất kỳ trường hợp nào, bạn sẽ được hỏi nếu bạn muốn thử lại hoặc tự thiết lập. Trình phục vụ DHCP đôi khi đáp ứng rất chậm, vậy nếu bạn có chắc là mọi thứ ổn, hãy thử lại. </para
+><para
+>Lần lượt, tiến trình tự thiết lập mạng sẽ hỏi bạn một số câu về mạng, đặc biệt về <computeroutput
+>địa chỉ IP</computeroutput
+>, <computeroutput
+>mặt nạ mạng (netmask)</computeroutput
+>, <computeroutput
+>cổng ra (gateway)</computeroutput
+>, <computeroutput
+>các địa chỉ máy phục vụ tên</computeroutput
+>, và <computeroutput
+>tên máy</computeroutput
+>. Hơn nữa, nếu bạn có giao diện mạng vô tuyến, nó sẽ nhắc bạn nhập <computeroutput
+>ESSID vô tuyến</computeroutput
+> và <computeroutput
+>khoá WEP</computeroutput
+>. Hãy điền vào các trả lời từ <xref linkend="needed-info"/>. </para
+><note
+><para
+>Có vài chi tiết kỹ thuật có thể có ích: chương trình giả sử là địa chỉ IP trên mạng là giá trị VÀ cách một ví trị bit (bitwise AND) của địa chỉ IP hệ thống và mặt nạ mạng. Nó sẽ đoán rằng địa chỉ quảng bá là HAY cách một vị trí bit (bitwise OR) của địa chỉ IP hệ thống với sự phủ định của mặt nạ mạng. Nó sẽ cũng đoán cổng ra. Nếu bạn không tìm thấy thông tin trong các trả lời này, hãy sử dụng các sự đoán của hệ thống &mdash; bạn vẫn còn có khả năng thay đổi chúng một khi hệ thống được cài đặt, nếu cần thiết, bằng cách chỉnh sửa tập tin <filename
+>/etc/network/interfaces</filename
+>. </para
+></note>
+   </sect3>
+<!--   End of file using-d-i/modules/netcfg.xml -->
+
+<!-- Start of file using-d-i/modules/choose-mirror.xml -->
+<!-- $Id: choose-mirror.xml 43658 2006-12-29 18:52:39Z fjp $ -->
+
+<!--
+Hmm. This really does need documenting :-/
+
+- Component is only selected and executed if the installer needs to load
+  installer components or the base system from the network
+  (either local or the internet).
+- This means you first have to configure a network interface.
+- Mirror selection is delayed until apt-setup for CD-based installs (except
+  businesscard)
+- A list of countries is displayed with the default based on the country you
+  selected earlier.
+- Selection of a local mirror (at top of the list: manual selection).
+- After selecting a country, a list of mirrors in the country will be shown.
+  (not for ftp)
+- Forcing to ftp can be done using "protocol=ftp"
+- Note that not all mirrors are equal (see http://www.nl.debian.org/mirror/list)
+
+- The selected mirror will be tested.
+- How to handle problems with mirrors.
+-->
+<!--   End of file using-d-i/modules/choose-mirror.xml -->
+
+  </sect2>
+
+  <sect2 id="di-partition">
+  <title
+>Phân vùng và chọn điểm lắp</title>
+<para
+>Vào thời điểm này, sau khi việc phát hiện phần cứng đã được thực hiện lần cuối cùng, &d-i; nên có khả năng đầy đủ, được tùy chỉnh thích hợp với sự cần của người dùng riêng và sẵn sàng làm việc thực. Như tên phần này ngụ ý, những công việc chính của vài thành phần kế tiếp là phân vùng đĩa, tạo hệ thống tập tin, gán điểm lắp và (tùy chọn) cấu hình vấn đề rất liên quan đến nhau như LVM hay thiết bị RAID. </para>
+
+
+<!-- Start of file using-d-i/modules/s390/dasd.xml -->
+<!-- $Id: dasd.xml 11648 2004-03-22 00:37:46Z joeyh $ -->
+<!--   End of file using-d-i/modules/s390/dasd.xml -->
+
+<!-- Start of file using-d-i/modules/partman.xml -->
+<!-- $Id: partman.xml 45238 2007-02-18 19:31:55Z fjp $ -->
+
+   <sect3 id="partman">
+   <title
+>Phân vùng đĩa</title>
+
+<para
+>Lúc này nên phân vùng các đĩa của bạn. Nếu bạn chưa quen với công việc phân vùng, hoặc chỉ muốn biết thêm, xem <xref linkend="partitioning"/>. </para>
+<warning arch="sparc"
+><para
+>Nếu đĩa cứng đã được dùng dưới hệ điều hành Solaris, trình phân vùng có thể không phát hiện đúng kích cỡ của ổ đĩa. Việc tạo một bảng phân vùng mới không quyết định vấn đề này. Việc quyết định là <quote
+>làm số không</quote
+> vài rãnh ghi đầu của ổ đĩa: <informalexample
+><screen>
+# dd if=/dev/zero of=/dev/hd<replaceable
+>X</replaceable
+> bs=512 count=2; sync
+</screen
+></informalexample
+> Ghi chú rằng việc này sẽ làm cho dữ liệu nào tồn tại trên cùng đĩa không còn có khả năng truy cấp lại. </para
+></warning>
+<para
+>Trước tiên, bạn sẽ nhận dịp phân vùng tự động hoặc toàn bộ đĩa, hoặc sức chứa còn rảnh có sẵn trên đĩa. Tiến trình này cũng được gọi như là phân vùng <quote
+>đã hướng dẫn</quote
+>. Nếu bạn không muốn phân vùng tự động, hãy chọn mục <guimenuitem
+>Bằng tay</guimenuitem
+> trong trình đơn. </para
+><para
+>Nếu bạn chọn tiến trình phân vùng đã hướng dẫn, có lẽ bạn có ba tùy chọn nữa: tạo phân vùng một cách trực tiếp trên đĩa cứng (phương pháp truyền thống), hoặc tạo phân vùng bằng khả năng quản lý khối tin hợp lý (LVM), hoặc tạo phân vùng bằng LVM đã mật mã<footnote
+> <para
+> Bộ cài đặt sẽ mật mã hoá nhóm khối tin LVM bằng một khoá AES 256 bit, và sử dụng khả năng hỗ trợ <quote
+>dm-crypt</quote
+> của hạt nhân. </para
+> </footnote
+>. </para>
+<note
+><para
+>Tùy chọn sử dụng LVM (đã mật mã) có lẽ không sẵn sàng trên mọi kiến trúc. </para
+></note>
+<para
+>Khi sử dụng LVM hoặc LVM đã mật mã, bộ cài đặt sẽ tạo phần lớn phân vùng bên trong cùng một phân vùng lớn; lợi ích của phương pháp này là các phân vùng bên trong phân vùng lớn này có thể được thay đổi kích cỡ hơi dễ dàng về sau. Trong trường hợp LVM đã mật mã, phân vùng lớn sẽ không có khả năng đọc nếu người dùng không có cụm từ khoá đặc biệt, thì cung cấp bảo mật thêm cho dữ liệu (riêng) của bạn. </para
+><para
+>Khi sử dụng LVM đã mật mã, bộ cài đặt sẽ cũng tự động xoá đĩa bằng cách ghi dữ liệu ngẫu nhiên vào nó. Việc này cải tiến thêm bảo mật (vì nó tạo trường hợp không thể tìm biết phần đĩa nào hoạt động và đảm bảo mọi vết của bản cài đặt trước đã được xoá hoàn toàn), nhưng có thể kéo dài một lát phụ thuộc vào kích cỡ của đĩa. </para>
+<note
+><para
+>Nếu bạn chọn tiến trình phân vùng đã hướng dẫn bằng LVM hoặc LVM đã mật mã, một số thay đổi trong bảng phân vùng sẽ cần phải được ghi vào đĩa đã chọn trong khi LVM được thiết lập. Các thay đổi này có kết quả là xoá hết dữ liệu nằm trên đĩa cứng đã chọn, và bạn không thể hủy bước này. Tuy niên, bộ cài đặt sẽ nhắc bạn xác nhận các thay đổi này trước khi ghi vào đĩa. </para
+></note>
+<para
+>Nếu bạn chọn tiến trình phân vùng đã hướng dẫn (hoặc truyền thống hoặc bằng LVM (đã mật mã)) cho toàn bộ đĩa, trước tiên bạn sẽ được nhắc chọn đĩa bạn muốn sử dụng. Hãy kiểm tra xem tất cả các đĩa được liệt kê và, nếu bạn có vài đĩa, xem bạn đã chọn điều đúng. Thứ tự danh sách có thể khác với thứ tự bạn thường xem. Kích cỡ của đĩa có thể giúp đỡ bạn nhận diện mỗi điều. </para
+><para
+>Mọi dữ liệu nằm trên đĩa bạn chọn sẽ cuối cùng bị mất hoàn toàn, nhưng bạn sẽ luôn luôn được nhắc xác nhận thay đổi nào trước khi ghi vào đĩa. Nếu bạn đã chọn phương pháp phân vùng truyền thống, bạn sẽ có khả năng hủy bước thay đổi nào đúng đến kết thúc; còn khi sử dụng LVM (đã mật mã), không có. </para
+><para
+>Sau đó, bạn có khả năng chọn trong những giản đồ được liệt kê trong bảng bên dưới. Mọi giản đồ có thuận và chống, một số điều này được thảo luận trong <xref linkend="partitioning"/>. Nếu bạn chưa chắc, hãy chọn giản đồ thứ nhất. Ghi nhớ rằng tiến trình phân vùng đã hướng dẫn cần thiết một sức chứa còn rảnh tối thiểu để thao tác. Nếu bạn không gán cho nó ít nhất khoảng 1 GB sức chứa (phụ thuộc vào giản đồ đã chọn), tiến trình phân vùng đã hướng dẫn sẽ không thành công. </para>
+
+<informaltable>
+<tgroup cols="3">
+<thead>
+<row>
+  <entry
+>Bố trí phân vùng</entry>
+  <entry
+>Chỗ tối thiểu</entry>
+  <entry
+>Phân vùng đã tạo</entry>
+</row>
+</thead>
+
+<tbody>
+<row>
+  <entry
+>Mọi tập tin trên một phân vùng</entry>
+  <entry
+>600MB</entry>
+  <entry
+><filename
+>/</filename
+>, trao đổi</entry>
+</row
+><row>
+  <entry
+>Phân vùng /home riêng</entry>
+  <entry
+>500MB</entry>
+  <entry
+><filename
+>/</filename
+>, <filename
+>/home</filename
+>, trao đổi </entry>
+</row
+><row>
+  <entry
+>Các phân vùng /home, /usr, /var, và /tmp riêng</entry>
+  <entry
+>1GB</entry>
+  <entry
+><filename
+>/</filename
+>, <filename
+>/home</filename
+>, <filename
+>/usr</filename
+>, <filename
+>/var</filename
+>, <filename
+>/tmp</filename
+>, trao đổi </entry>
+</row>
+
+</tbody
+></tgroup
+></informaltable>
+
+<para
+>Nếu bạn chọn tiến trình phân vùng đã hướng dẫn bằng LVM (đã mật mã), bộ cài đặt sẽ cũng tạo một phân vùng <filename
+>/boot</filename
+> riêng. Các phân vùng khác, trừ phân vùng trao đổi, sẽ được tạo bên trong phân vùng LVM. </para
+><para arch="ia64"
+>Nếu bạn chọn công việc phân vùng đã hướng dẫn trên máy tính kiểu IA64, một phân vùng thêm được tạo, được định dạng làm hệ thống tập tin FAT16 có khả năng khởi động, cho bộ tải khởi động EFI. Cũng có một mục trình đơn thêm trong trình đơn định dạng, để tự thiết lập một phân vùng như là phân vùng khởi động EFI. </para
+><para arch="alpha"
+>Nếu bạn chọn công việc phân vùng đã hướng dẫn trên máy tính kiểu Alpha, một phân vùng thêm chưa định dạng sẽ được cấp phát tại đầu của đĩa, để dành riêng sức chứa này cho bộ tải khởi động « aboot ». </para
+><para
+>Sau khi bạn chọn bố trí, màn hình kế tiếp sẽ hiển thị bảng phân vùng mới, gồm có thông tin về trạng thái kiểu định dạng và gắn kết của mỗi phân vùng. </para
+><para
+>Danh sách các phân vùng có thể hình như : <informalexample
+><screen>
+  IDE1 master (hda) - 6.4 GB WDC AC36400L
+        #1 primary   16.4 MB  B f ext2       /boot
+        #2 primary  551.0 MB      swap       swap
+        #3 primary    5.8 GB      ntfs
+           pri/log    8.2 MB      FREE SPACE
+
+  IDE1 slave (hdb) - 80.0 GB ST380021A
+        #1 primary   15.9 MB      ext3
+        #2 primary  996.0 MB      fat16
+        #3 primary    3.9 GB      xfs        /home
+        #5 logical    6.0 GB    f ext3       /
+        #6 logical    1.0 GB    f ext3       /var
+        #7 logical  498.8 MB      ext3
+        #8 logical  551.5 MB      swap       swap
+        #9 logical   65.8 GB      ext2
+</screen
+></informalexample>
+[primary=chính; swap=trao đổi; FREE SPACE=sức chứa còn rảnh; logical=hợp lý (không phải vật lý)]
+
+Mẫu này hiển thị hai đĩa cứng kiểu IDE được chia ra vài phân vùng;
+đĩa thứ nhất có sức chứa còn rảnh. Mỗi dòng phân vùng có dạng:
+số hiệu phân vùng, kiểu nó, kích cỡ nó, cờ tùy chọn nào,
+hệ thống tập tin, điểm láp (nếu có).
+
+Ghi chú : thiết lập riêng này không thể được tạo khi dùng khả năng
+phân vùng đã hướng dẫn, nhưng nó có phải hiển thị trường hợp khác
+có thể được đạt khi tự phân vùng. </para
+><para
+>Ở đây kết thúc tiến trình phân vùng đã hướng dẫn. Nếu bạn thấy bảng phân vùng đã tạo ra là ổn định, sau đó bạn có khả năng chọn mục <guimenuitem
+>Phân vùng xong và ghi các thay đổi vào đĩa</guimenuitem
+> trong trình đơn, để thực hiện bảng phân vùng mới (như được diễn tả tại cuối phần này). Còn nếu bạn chưa thỏa chí, bạn có thể chọn mục <guimenuitem
+>Hủy các bước thay đổi phân vùng</guimenuitem
+> để chay lại tiến trình phân vùng đã hướng dẫn, hoặc sửa đổi các thay đổi đã đề nghị (như được diễn tả bên dưới) cho việc tự phân vùng. </para
+><para
+>Một màn hình tương tự với điều được hiển thị đúng trên đây sẽ được hiển thị nếu bạn chọn tự phân vùng, trừ là bảng phân vùng đã có sẽ được diễn tả, không có điểm lắp. Phần còn lại của tiết đoạn này sẽ diễn tả cách tự thiết lập bảng phân vùng và cách sử dụng phân vùng cho hệ thống Debian mới. </para
+><para
+>Nếu bạn chọn một đĩa rỗng không có phân vùng, cũng không có sức chứa rảnh, bạn sẽ được nhắc tạo một bảng phân vùng mới (cần thiết để tạo phân vùng mới). Sau đó, một dòng mới tên <quote
+>CHỖ RỖNG</quote
+> nên xuất hiện trong bảng, bên dưới tên đĩa đã chọn. </para
+><para
+>Nếu bạn chọn một phần sức chứa còn rảnh, bạn sẽ có dịp tạo một phân vùng mới. Tiến trình sẽ hỏi vài câu về kích cỡ, kiểu (chính hay hợp lý) và vị trí (đầu hay cuối của sức chứa còn rảnh) của phân vùng mới này. Sau đó, bạn sẽ xem toàn cảnh chi tiết về phân vùng mới. Thiết lập chính là <guimenuitem
+>Dùng làm:</guimenuitem
+>, mà quyết định nếu phân vùng sẽ chứa hệ thống tập tin, được dùng như là vùng trao đổi, RAID phần mềm, LVM, hệ thống tập tin đã mật mã, hoặc không được dùng bằng cách nào cả. Các thiết lập khác gồm điểm lắp, các tùy chọn lắp, cờ khả năng khởi động; những thiết lập được hiển thị phụ thuộc vào mục đích của phân vùng. Nếu bạn không thích những giá trị mặc định định sẵn, chỉnh sửa nhé. Chẳng hạn, bằng cách chọn tùy chọn <guimenuitem
+>Dùng làm:</guimenuitem
+>, bạn có khả năng chọn hệ thống tập tin khác cho phân vùng này, gồm tùy chọn dùng phân vùng cho vùng trao đổi, RAID phần mềm, LVM, hoặc không dùng nó bằng cách nào cả. Một tính năng đẹp khác là khả năng sao chép dữ liệu từ phân vùng tồn tại sang điều mới. Khi phân vùng mới ổn thỏa, hãy chọn <guimenuitem
+>Phân vùng đã được thiết lập</guimenuitem
+> rồi tiến trình sẽ trở về màn hình chính của <command
+>partman</command
+>. </para
+><para
+>Muốn sửa đổi phân vùng này thì đơn giản hãy chọn phân vùng, việc đó hiển thị trình đơn cấu hình phân vùng. Đây là cùng một màn hình với điều cho khả năng tạo phân vùng mới, vì thế bạn có thể sửa đổi cùng những tùy chọn. Bạn cũng có khả năng thay đổi kích cỡ của phân vùng bằng cách chọn mục hiển thị kích cỡ phân vùng. Những hệ thống tập tin được biết là hoạt động được trong trường hợp này là ít nhất fat16, fat32, ext2, ext3 và vùng trao đổi. Trình đơn này cũng cho bạn có khả năng xoá phân vùng. </para
+><para
+>Hãy kiểm tra xem bạn đã tạo ít nhất hai phân vùng: một điều cho hệ thống tập tin <emphasis
+>gốc</emphasis
+> (mà phải được gắn kết như là <filename
+>/</filename
+>) và điều khác cho bộ nhớ <emphasis
+>trao đổi</emphasis
+>. Nếu bạn quên gắn kết hệ thống tập tin gốc, chương trình <command
+>partman</command
+> sẽ không cho phép bạn tiếp tục, cho đến khi bạn sửa trường hợp này. </para
+><para arch="ia64"
+>Nếu bạn quên chọn và định dạng một phân vùng khởi động EFI, chương trình <command
+>partman</command
+> sẽ phát hiện lỗi này, không cho phép bạn tiếp tục, cho đến khi bạn cấp phát một điều. </para
+><para
+>Các khả năng của chương trình <command
+>partman</command
+> có thể được kéo dài bằng mô-đun cài đặt, phụ thuộc vào kiến trúc của hệ thống bạn. Vì vậy nếu bạn không thể xem mọi tính năng đã diễn tả, hãy kiểm tra xem nếu bạn đã tải mọi mô-đun cần thiết chưa (v.d. <filename
+>partman-ext3</filename
+>, <filename
+>partman-xfs</filename
+>, hay <filename
+>partman-lvm</filename
+>). </para
+><para
+>Sau khi bạn thấy trường hợp phân vùng là ổn thỏa, hãy chọn <guimenuitem
+>Phân vùng xong và ghi các thay đổi vào đĩa</guimenuitem
+> trong trình đơn phân vùng. Bạn sẽ xem bản tóm tắt các thay đổi trên đĩa, và được nhắc xác nhận các hệ thống tập tin nên được tạo như được yêu cầu. </para>
+   </sect3>
+<!--   End of file using-d-i/modules/partman.xml -->
+
+<!-- Start of file using-d-i/modules/autopartkit.xml -->
+<!-- $Id: autopartkit.xml 11648 2004-03-22 00:37:46Z joeyh $ -->
+<!--   End of file using-d-i/modules/autopartkit.xml -->
+
+<!-- Start of file using-d-i/modules/partitioner.xml -->
+<!-- $Id: partitioner.xml 11648 2004-03-22 00:37:46Z joeyh $ -->
+
+<!--   End of file using-d-i/modules/partitioner.xml -->
+
+<!-- Start of file using-d-i/modules/partconf.xml -->
+<!-- $Id: partconf.xml 11648 2004-03-22 00:37:46Z joeyh $ -->
+<!--   End of file using-d-i/modules/partconf.xml -->
+
+<!-- Start of file using-d-i/modules/mdcfg.xml -->
+<!-- $Id: mdcfg.xml 44026 2007-01-07 20:00:41Z fjp $ -->
+
+   <sect3 id="mdcfg">
+   <title
+>Cấu hình thiết bị đa đĩa (RAID phần mềm)</title>
+<para
+>Nếu bạn có nhiều đĩa cứng<footnote
+><para
+> Thực ra bạn có thể cấu tạo thiết bị đa đĩa ngay cả từ phân vùng nằm trên cùng một đĩa vật lý, nhưng mà việc đó sẽ không gây ra kết quả có ích. </para
+></footnote
+> nằm trong máy tính của mình, bạn có thể sử dụng tiện ích  <command
+>mdcfg</command
+> để thiết lập các đĩa đó để làm hiệu suất tốt hơn và/hay duy trì dữ liệu tin cây hơn. Kết quả được gọi là <firstterm
+>Thiết Bị Đa Đĩa</firstterm
+> (hay theo biến thể phổ biến nhất, <firstterm
+>RAID phần mềm</firstterm
+>). </para
+><para
+>Thiết bị đa đĩa là cơ bản một bộ phân vùng nằm trên nhiều đĩa khác nhau, được kết hợp với nhau để tạo một thiết bị <emphasis
+>hợp lý</emphasis
+>. Vì vậy thiết bị này có thể được dùng như một phân vùng chuẩn (tức là trong chương trình <command
+>partman</command
+> bạn có thể định dạng nó, gán điểm lắp v.v.). </para
+><para
+>Lợi ích được nhận phụ thuộc vào kiểu thiết bị đa đích bạn đang tạo. HIện thời có hỗ trợ : <variablelist
+> <varlistentry
+> <term
+>RAID0</term
+><listitem
+><para
+> được thiết kế chính cho hiệu suất tốt. RAID0 chia tách các dữ liệu được gửi đến ra nhiều <firstterm
+>lát</firstterm
+> rồi phân phối chúng một cách bằng nhau ra mỗi đĩa nằm trong mảng đó. Cấu trúc này có thể tăng tốc độ của thao tác đọc/ghi, nhưng mà khi đĩa nào hỏng hóc, bạn sẽ mất <emphasis
+>tất cả</emphasis
+> (phần thông tin vẫn còn nằm trên [những] đĩa hoạt động được, nhưng phần khác <emphasis
+>đã</emphasis
+> nằm trên đĩa mới hỏng hóc). </para
+><para
+> Cách sử dụng điển hình RAID0 là một phân vùng riêng để soạn thảo ảnh động. </para
+></listitem
+> </varlistentry
+> <varlistentry
+> <term
+>RAID1</term
+><listitem
+><para
+> thích hợp với thiết lập gán ưu tiên cao nhất cho sự đáng tin cậy. Nó gồm có vài (thường là hai) phân vùng cùng kích cỡ mà mỗi phân vùng chứa chính xác cùng dữ liệu. Trường hợp này có ba kết quả chính:<orderedlist
+> <listitem
+><para
+>nếu đĩa nào hỏng hóc, bạn vẫn còn có cùng dữ liệu được nhân đôi trên các đĩa còn lại;</para
+></listitem
+><listitem
+><para
+>bạn có thể sử dụng chỉ một phân số của sức chứa sẵn sàng (chính xác hơn, nó là kích cỡ của phân vùng nhỏ nhất trong RAID đó);</para
+></listitem
+><listitem
+><para
+>các việc đọc tập tin được chia bằng nhau ra các đĩa khác nhau, mà có thể tăng hiệu suất trên máy phục vụ, như máy phục vụ tập tin mà thường phải thực hiện nhiều việc đọc đĩa hơn việc ghi.</para
+></listitem
+></orderedlist
+> Tùy chọn mảng có thể gồm một đĩa thêm sẽ thay thế đĩa mới hỏng hóc trong trường hợp đó. </para
+></listitem
+> </varlistentry
+> <varlistentry
+> <term
+>RAID5</term
+><listitem
+><para
+> là thoả hiệp hữu ích tốc độ, sự đáng tin cậy và sự thừa dữ liệu. RAID5 chia tách tất cả các dữ liệu được gửi đến ra nhiều lát rồi phân phối bằng nhau ra cả đĩa trừ một (tương tự với RAID0). Không như RAID0, RAID5 cũng tính thông tin <firstterm
+>chẵn lẻ</firstterm
+>, mà được ghi vào đĩa còn lại. Đĩa tính chẵn lẻ không phải tĩnh (có phải thì RAID4): nó thay đổi theo định kỷ, vì thế thông tin tính chẵn lẻ được phân phối bằng nhau trên mọi đĩa. Khi đĩa nào hỏng hóc, phần thông tin bị thiếu có thể được tính từ dữ liệu còn lại và tính chẵn lẻ của nó. RAID5 phải gồm có ít nhất ba phân vùng hoạt động. Tùy chọn mảng có một đĩa thêm sẽ thay thế đĩa mới hỏng hóc. </para
+><para
+> Như bạn thấy được, RAID5 có độ đáng tin cây tương tự với RAID1 còn đạt được ít sự thừa hơn. Mặt khác, có lẽ nó chạy ít chậm trong thao tác ghi hơn RAID0 do việc tính thông tin chẵn lẻ. </para
+></listitem
+> </varlistentry
+> </variablelist
+> Để tóm tắt: <informaltable
+> <tgroup cols="5">
+<thead>
+<row>
+  <entry
+>Kiểu</entry>
+  <entry
+>Thiết bị tối thiểu</entry>
+  <entry
+>Thiết bị phụ tùng</entry>
+  <entry
+>Vẫn còn hoạt động sau khi đĩa thất bại ?</entry>
+  <entry
+>Chỗ sẵn sàng</entry>
+</row>
+</thead>
+
+<tbody>
+<row>
+  <entry
+>RAID0</entry>
+  <entry
+>2</entry>
+  <entry
+>không</entry>
+  <entry
+>không</entry>
+  <entry
+>Kích cỡ của phân vùng nhỏ nhất được nhân số thiết bị trong RAID</entry>
+</row>
+
+<row>
+  <entry
+>RAID1</entry>
+  <entry
+>2</entry>
+  <entry
+>tùy chọn</entry>
+  <entry
+>có</entry>
+  <entry
+>Kích cỡ của phân vùng nhỏ nhất trong RAID</entry>
+</row>
+
+<row>
+  <entry
+>RAID5</entry>
+  <entry
+>3</entry>
+  <entry
+>tùy chọn</entry>
+  <entry
+>có</entry>
+  <entry
+>Kích cỡ của phân vùng nhỏ nhất được nhận (số thiết bị trong RAID trừ một) </entry>
+</row>
+
+</tbody
+></tgroup
+></informaltable>
+
+</para
+><para
+>Muốn biết thêm về RAID kiểu phần mềm, hãy xem tài liệu RAID phần mềm Thế Nào <ulink url="&url-software-raid-howto;"
+>Software RAID HOWTO</ulink
+>. </para
+><para
+>Để tạo một thiết bị đa đĩa, bạn cần phải chuẩn bị bằng cách đánh dấu các phân vùng đã muốn. (Làm như thế trong trình <command
+>partman</command
+>, trong trình đơn <guimenu
+>Thiết lập phân vùng</guimenu
+> nơi bạn nên chọn mục <menuchoice
+> <guimenu
+>Dùng làm:</guimenu
+> <guimenuitem
+>khối tin vật lý cho RAID</guimenuitem
+> </menuchoice
+>.) </para
+><warning
+><para
+>Khả năng hỗ trợ thiết bị đa đĩa vừa được thêm vào trình cài đặt. Có lẽ bạn sẽ gặp vấn đề với một số lớp RAID và cùng với một số bộ tải khởi động nếu bạn cố gắng sử dụng thiết bị đa đĩa là hệ thống tập tin gốc (<filename
+>/</filename
+>). Có lẽ người dùng giàu kinh nghiệm có khả năng chỉnh sửa một số vấn đề như thế bằng cách tự thực hiện một số bước cấu hình hay cài đặt trong hệ vỏ. </para
+></warning
+><para
+>Sau đó, bạn nên chọn mục <guimenuitem
+>Cấu hình RAID phần mềm</guimenuitem
+> trong trình đơn <command
+>partman</command
+> chính. (Trình đơn này sẽ xuất hiện chỉ sau khi bạn đánh dấu ít nhất một phân vùng sẽ được dùng là <guimenuitem
+>khối tin vật lý cho RAID</guimenuitem
+>.) Trên màn hình thứ nhất của tiện ích <command
+>mdcfg</command
+>, đơn giản hãy chọn mục <guimenuitem
+>Tạo thiết bị đa đĩa (MD)</guimenuitem
+>. Bạn sẽ xem danh sách các thiết bị đa đĩa được hỗ trợ, trong đó bạn nên chọn một thiết bị (v.d. RAID1). Kết quả phụ thuộc vào kiểu thiết bị đa đĩa bạn đã chọn. </para>
+
+<itemizedlist>
+<listitem
+><para
+>RAID0 là đơn giản &mdash; bạn sẽ xem danh sách các phân vùng RAID sẵn sàng, và công việc duy nhất của bạn là việc chọn những phân vùng sẽ tạo thành thiết bị đa đĩa. </para
+></listitem>
+<listitem
+><para
+>RAID1 là phức tạp hơn một chút. Trước tiên, bạn sẽ được nhắc nhập số thiết bị hoạt động, và số thiết bị phụ tùng sẽ tạo thành thiết bị đa đĩa. Sau đó, trong danh sách các phân vùng RAID sẵn sàng, bạn cần phải chọn những phân vùng sẽ là hoạt động, và những phân vùng sẽ là phụ tùng. Số đếm phân vùng đã chọn phải bằng số được cung cấp vài giây trước. Đừng lo lăng: nếu bạn làm lỗi, chọn số phân vùng khác, &d-i; sẽ không cho phép bạn tiếp tục cho đến khi bạn sửa vấn đề. </para
+></listitem>
+<listitem
+><para
+>RAID5 có thủ tục thiết lập tương tự với RAID1, trừ bạn cần phải sử dụng ít nhất <emphasis
+>ba</emphasis
+> phân vùng hoạt động. </para
+></listitem>
+</itemizedlist>
+
+<para
+>Rất có thể sử dụng đồng thời vài kiểu thiết bị đa đĩa (MD). Chẳng hạn, nếu bạn có ba đĩa cứng 200 GB cả dành cho thiết bị đa đĩa, mỗi đĩa chứa hai phân vùng 100 GB, trong trường hợp này bạn có khả năng kết hợp phân vùng thứ nhất trên cả ba đĩa cứng để tạo RAID0 (phân vùng soạn thảo ảnh động 300 GB nhanh) và sử dụng ba phân vùng khác (2 hoạt động và 1 phụ tùng) như là RAID1 (phân vùng 100 GB hơi đáng tin cậy cho <filename
+>/home</filename
+>). </para
+><para
+>Sau khi bạn thiết lập được các thiết bị đa đĩa, bạn có thể <guimenuitem
+>Kết thúc</guimenuitem
+> tiện ích <command
+>mdcfg</command
+> để lùi lại về trình <command
+>partman</command
+>, để tạo hệ thống tập tin trên các thiết bị đa đĩa mới, và gán cho chúng những thuộc tính thường như điểm lắp. </para>
+   </sect3>
+<!--   End of file using-d-i/modules/mdcfg.xml -->
+
+<!-- Start of file using-d-i/modules/partman-lvm.xml -->
+<!-- $Id: partman-lvm.xml 43577 2006-12-27 03:54:20Z fjp $ -->
+
+   <sect3 id="partman-lvm">
+   <title
+>Cấu hình Bộ Quản lý Khối Tin Hợp Lý (LVM)</title>
+<para
+>Nếu bạn làm việc với máy tính tại lớp quản trị hệ thống hay người dùng <quote
+>cấp cao</quote
+>, chắc là bạn đã xem trường hợp mà phân vùng nào (thường điều quan trọng nhất) không có đủ sức chứa còn rảnh, còn phân vùng khác nào được dùng rất ít, nên bạn phải quản lý trường hợp đó bằng cách di chuyển các thứ, tạo liên kết tượng trưng v.v. </para
+><para
+>Để tránh trường hợp như vậy, bạn có thể sử dụng Bộ Quản Lý Khối Tin Hợp Lý (LVM). Nói đơn giản, bằng LVM bạn có thể kết hợp các phân vùng (<firstterm
+>khối tin vật lý</firstterm
+> trong thuật ngữ LVM) để tạo một đĩa ảo (được gọi như là <firstterm
+>nhóm khối tin</firstterm
+>), mà do đó có thể được chia cho nhiều phân vùng ảo (<firstterm
+>khối tin hợp lý</firstterm
+>). Điểm có ích là khối tin hợp lý (và các nhóm khối tin cơ sở) có thể chiều dài qua vài đĩa vật lý. </para
+><para
+>Như thế thì khi bạn thấy biết cần thiết sức chứa thêm cho phân vùng <filename
+>/home</filename
+> 160GB cũ, bạn có thể thêm đơn giản một đĩa 300GB mới vào máy tính, nối lại nó với nhóm khối tin tồn tại, rồi thay đổi kích cỡ của khối tin hợp lý chứa hệ thống tập tin <filename
+>/home</filename
+> và thì đấy &mdash; các người dùng lại có chỗ còn rảnh trên phân vùng 460GB đã gia hạn. (Mẫu này là hơi đơn giản.) Có thông tin chi tiết trong tài liệu LVM Thế Nào <ulink url="&url-lvm-howto;"
+>LVM HOWTO</ulink
+>. </para
+><para
+>Tiến trình thiết lập LVM trong &d-i; là hơi đơn giản, hoàn toàn được hỗ trợ bên trong <command
+>partman</command
+>. Đầu tiên, bạn cần phải đánh dấu (những) phân vùng cần dùng như là khối tin vật lý cho LVM.. (Làm như thế trong trình đơn <guimenu
+>Thiết lập phân vùng</guimenu
+> nơi bạn nên chọn mục <menuchoice
+> <guimenu
+>Dùng làm:</guimenu
+> <guimenuitem
+>khối tin vật lý cho LVM</guimenuitem
+> </menuchoice
+>.) </para
+><para
+>Khi bạn trở về màn hình <command
+>partman</command
+> chính, bạn sẽ xem một tùy chọn mới <guimenuitem
+>Cấu hình Bộ Quản lý Khốí tin Hợp lý</guimenuitem
+>. Khi bạn chọn mục đó, tiến trình sẽ nhắc bạn xác nhận thay đổi nào sắp làm trong bảng phân vùng, sau đó sẽ hiển thị trình đơn cấu hình LVM. Bên trên trình đơn có hiển thị một bản tóm tắt cấu hình LVM. Trình đơn chính nó tùy thuộc ngữ cảnh, chỉ hiển thị những hành động hợp lệ. Những hành động có thể là: <itemizedlist>
+  <listitem
+><para
+><guimenuitem
+>Hiển thị chi tiết cấu hình</guimenuitem
+>: hiển thị cấu trúc thiết bị LVM, các tên và kích cỡ của khối tin hợp lý, v.v. </para
+></listitem>
+  <listitem
+><para>
+    <guimenuitem
+>Tạo nhóm khối tin</guimenuitem>
+  </para
+></listitem>
+  <listitem
+><para>
+    <guimenuitem
+>Tạo khối tin hợp lệ</guimenuitem>
+  </para
+></listitem>
+  <listitem
+><para>
+    <guimenuitem
+>Xóa bỏ nhóm khối tin</guimenuitem>
+  </para
+></listitem>
+  <listitem
+><para>
+    <guimenuitem
+>Xóa bỏ khối tin hợp lệ</guimenuitem>
+  </para
+></listitem>
+  <listitem
+><para>
+    <guimenuitem
+>Kéo dài nhóm khối tin</guimenuitem>
+  </para
+></listitem>
+  <listitem
+><para>
+    <guimenuitem
+>Giảm nhóm khối tin</guimenuitem>
+  </para
+></listitem>
+  <listitem
+><para
+><guimenuitem
+>Kết thúc</guimenuitem
+>: trở về màn hình <command
+>partman</command
+> chính </para
+></listitem>
+</itemizedlist>
+
+</para
+><para
+>Hãy sử dụng những tùy chọn trong trình đơn đó để tạo một nhóm khối tin, rồi tạo các khối tin hợp lý bên trong nó. </para
+><para
+>Sau khi bạn lùi lại về màn hình <command
+>partman</command
+> chính, khối tin hợp lý đã tạo nào sẽ được hiển thị đúng như phân vùng chuẩn (bạn cũng nên thao tác nó như vậy). </para>
+   </sect3>
+<!--   End of file using-d-i/modules/partman-lvm.xml -->
+
+<!-- Start of file using-d-i/modules/partman-crypto.xml -->
+<!-- $Id: partman-crypto.xml 44026 2007-01-07 20:00:41Z fjp $ -->
+
+   <sect3 id="partman-crypto">
+   <title
+>Cấu hình khối tin được mật mã</title>
+<para
+>&d-i; cho bạn khả năng thiết lập khối tin được mật mã. Mỗi tập tin bạn ghi vào phân vùng như vậy được lưu mật mã ngay vào thiết bị đó. Chỉ người dùng nhập <firstterm
+>cụm từ mật khẩu</firstterm
+> được nhập để tạo phân vùng gốc có quyền truy cập dữ liệu đã mật mã trên nó. Tính năng này bảo vệ dữ liệu nhạy cảm, trong trường hợp máy tính xách tay hay đĩa cứng bị mất cắp. Kẻ trộm có thể truy cập đĩa cứng một cách vật lý, nhưng mà nếu ta không biết cụm từ mật khẩu đúng, dữ liệu nằm trên đĩa cứng sẽ hình như ký tự ngẫu nhiên thôi. </para
+><para
+>Hai phân vùng quan trọng nhất cần mật mã là phân vùng chính (chứa dữ liệu riêng của bạn) và phiên bản trao đổi (có thể chứa dữ liệu nhạy cảm trong khi thao tác). Tất nhiên, bạn cũng có thể mật mã phân vùng khác. Chẳng hạn, <filename
+>/var</filename
+> (nơi trình phục vụ co sở dữ liệu, thư tín và in ấn cất giữ dữ liệu) hay <filename
+>/tmp</filename
+> (do chương trình khác nhau dùng để cất giữ tập tin tạm thời có thể hấp dẫn). Một số người riêng có thể muốn mật mã toàn bộ hệ thống. Ngoại lệ duy nhất là phân vùng <filename
+>/boot</filename
+> (khởi động) mà phải còn lại không được mật mã, vì hiện thời không có khả năng tải hạt nhân từ phân vùng được mật mã. </para
+><note
+><para
+>Ghi chú rằng phân vùng được mật mã có hiệu suất ít hơn phân vùng không mật mã, vì dữ liệu cần phải được giải mật mã hay mật mã trong mỗi việc đọc hay ghi. Tác động hiệu suất phụ thuộc vào tốc độ của CPU, kiểu mật mã và độ dài của khoá. </para
+></note
+><para
+>Để sử dụng khả năng mật mã, bạn cần phải tạo một phân vùng mới bằng cách chọn một phần sức chứa còn rảnh trong trình đơn phân vùng chính. Hoặc có thể chọn một phân vùng tồn tại (v.d. một phân vùng chuẩn, một khối tin hợp lý LVM hay một khối tin RAID). Trong trình đơn <guimenu
+>Thiết lập phân vùng</guimenu
+>, bạn cần chọn mục <guimenuitem
+>khối tin vật lý cho sự mật mã</guimenuitem
+> tại tùy chọn <menuchoice
+> <guimenu
+>Dùng làm:</guimenu
+> </menuchoice
+>. Trình đơn lúc đó thay đổi để hiển thị vài tùy chọn mật mã cho phân vùng đó. </para
+><para
+>&d-i; hỗ trợ vài phương pháp mật mã. Phương pháp mặc định là <firstterm
+>dm-crypt</firstterm
+> (được gồm trong hạt nhân Linux mới hơn, có khả năng hỗ trợ khối tin vật lý LVM); phương pháp khác là <firstterm
+>loop-AES</firstterm
+> (cũ hơn, được bảo tồn riêng với cây hạt nhân Linux). Khuyên bạn dùng phương pháp mặc định, nếu bạn không bắt buộc phải làm khác. </para
+><para
+>Trước tiên, hãy thấy những tùy chọn sẵn sàng khi bạn chọn <userinput
+>Device-mapper (dm-crypt)</userinput
+> là phương pháp mật mã. Lúc nào cũng dùng mặc định, khi bạn chưa chắc, vì mỗi giá trị mặc định đã được chọn cẩn thận tùy theo bảo mật. <variablelist>
+
+<varlistentry>
+<term
+>Mật mã: <userinput
+>aes</userinput
+></term>
+
+<listitem
+><para
+>Tùy chọn này cho bạn khả năng chọn thuật toán mật mã (<firstterm
+>cipher</firstterm
+>) sẽ được dùng để mật mã dữ liệu nằm trên phân vùng đó. &d-i; hiện thời hỗ trợ những thuật toán mật mã khối này: <firstterm
+>aes</firstterm
+>, <firstterm
+>blowfish</firstterm
+>, <firstterm
+>serpent</firstterm
+>, <firstterm
+>twofish</firstterm
+>. Khả năng của mỗi thuật toán ở ngoại phạm vị của tài liệu này, nhưng mà thông tin có thê giúp đỡ bạn quyết định là trong năm 2000, <emphasis
+>AES</emphasis
+> được chọn bởi Viện Tiêu Chuẩn và Kỹ Thuật Quốc Gia Mỹ (American National Institute of Standards and Technology) là thuật toán mật mã tiêu chuẩn để bảo vệ thông tin nhạy cảm trong thế kỷ thứ hai mươi mốt. </para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+>Dài khoá:<userinput
+>256</userinput
+></term>
+
+<listitem
+><para
+>Ở đây bạn có khả năng xác định độ dài của khoá mật mã. Khoá dài hơn thường mật mã mạnh hơn. Mặt khác, khoá dài hơn thường cũng giảm hiệu suất. Những độ dài khoá sẵn sàng phụ thuộc vào thuật toán mật mã. </para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+>Thuật toán IV: <userinput
+>cbc-essiv:sha256</userinput
+></term>
+
+<listitem
+><para
+>Thuật toán <firstterm
+>Véc-tơ sở khởi</firstterm
+> hay <firstterm
+>IV</firstterm
+> được dùng khi mật mã để đảm bảo việc áp dụng thuật toán cho cùng một <firstterm
+>đoạn thô</firstterm
+> với cùng một khoá sẽ luôn luôn tạo <firstterm
+>đoạn mật mã</firstterm
+> duy nhất. Mục đích là chặn người tấn công suy luận thông tin nào ra mẫu xảy ra nhiều lần trong dữ liệu đã mật mã. </para
+><para
+>Trong những xen kẽ được cung cấp, <userinput
+>cbc-essiv:sha256</userinput
+> hiện thời khó nhất bị tấn công bằng cách được biết. Hãy dùng xen kẽ khác chỉ khi bạn cần phải chắc là tương thích với hệ thống được cài đặt trước mà không có khả năng dùng thuật toán mới hơn. </para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+>Khoá mật mã: <userinput
+>Cụm từ mật khẩu</userinput
+></term>
+
+<listitem
+><para
+>Ở đây bạn có thể chọn kiểu khoá mật mã cho phân vùng này. <variablelist>
+ <varlistentry>
+ <term
+>Cụm từ mật khẩu</term>
+ <listitem
+><para
+>Khoá mật mã sẽ được tính<footnote
+> <para
+> Dùng cụm từ mật khẩu là khoá hiện thời có nghĩa là phân vùng sẽ được thiết lập bằng <ulink url="&url-luks;"
+>LUKS</ulink
+>. </para
+></footnote
+> dựa vào cụm từ mật khẩu bạn có thể nhập vào lúc sau trong tiến trình. </para
+></listitem>
+ </varlistentry>
+
+ <varlistentry>
+ <term
+>Khoá ngẫu nhiên</term>
+ <listitem
+><para
+>Một khoá mật mã mới sẽ được tạo ra từ dữ liệu ngẫu nhiên khi nào bạn thử lắp phân vùng được mật mã. Tức là khi nào tắt máy tính, nội dung của phân vùng này sẽ bị mất khi khoá bị xoá bỏ ra bộ nhớ. (Tất nhiên, bạn có thể thử đoán khoá đó, dùng chương trình đoán, sự tấn công sức mạnh vũ phu, nhưng mà nếu thuật toán mật mã không có sở đoản chưa được biết, sự tấn công kiểu này không thể thành công trong đời sống của bạn.) </para
+><para
+>Khoá ngẫu nhiên có ích đối với phân vùng trao đổi, vì bạn không cần nhớ cụm từ mật khẩu hoặc nhớ xoá sạch thông tin nhạy cảm ra phân vùng trao đổi trước khi tắt máy tính. Tuy nhiên, bạn sẽ cũng <emphasis
+>không</emphasis
+> có khả năng dùng chức năng <quote
+>ngưng đến đĩa</quote
+> (suspend-to-disk) do hạt nhân Linux mới hơn cung cấp, vì không thể phục hồi dữ liệu được ngưng đã được ghi vào phân vùng trao đổi, khi khởi động lại. </para
+></listitem>
+ </varlistentry>
+ </variablelist>
+
+</para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+>Xoá bỏ dữ liệu : <userinput
+>có</userinput
+></term>
+
+<listitem
+><para
+>Quyết định nếu nội dung của phân vùng này nên được ghi đè bằng dữ liệu ngẫu nhiên trước khi thiết lập mật mã. Khuyên bạn dùng tính năng này, nếu không thì người tấn công có thể tím biết phần nào của phân vùng đang được dùng hay không. Hơn nữa, tính năng này làm cho khó hơn việc phục hồi dữ liệu còn lại của bản cài đặt trước.<footnote
+><para
+> Tuy nhiên, đừng giả sử nhà chuyên môn không thể phục hồi dữ liệu, ngay cả sau khi vật chứa quang từ bị ghi lại vài lần.</para
+></footnote
+>. </para
+></listitem>
+</varlistentry>
+
+</variablelist>
+
+</para
+><para
+>Nếu bạn chọn mục  <menuchoice
+> <guimenu
+>Encryption method:</guimenu
+><guimenuitem
+>Vòng lặp (loop-AES)</guimenuitem
+> </menuchoice
+>, trình đơn thay đổi để cung cấp những tùy chọn này: <variablelist>
+<varlistentry>
+<term
+>Mật mã: <userinput
+>AES256</userinput
+></term>
+
+<listitem
+><para
+>Đối với loop-AES, không giống như dm-crypt, kết hợp những tùy chọn về thuật toán mật mã và độ dài khoá, cho phép bạn chọn cả hai điều cùng lúc. Để tìm thông tin thêm, xem những tiết đoạn bên trên diễn tả thuật toán mật mã và độ dài khoá. </para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+>Khoá mật mã: <userinput
+>Tập tin khoá (GnuPG)</userinput
+></term>
+
+<listitem
+><para
+>Ở đây bạn có thể chọn kiểu mật mã cho phân vùng này. <variablelist>
+ <varlistentry>
+ <term
+>Tập tin khoá (GnuPG)</term>
+ <listitem
+><para
+>Khoá mật mã sẽ được tạo ra từ dữ liệu ngẫu nhiên trong khi cài đặt. Hơn nữa, khoá này sẽ do <application
+>GnuPG</application
+> mật mã, vậy để sử dụng nó, bạn cần phải nhập cụm từ mật khẩu đúng (bạn sẽ được nhắc cung cấp một điều vào lúc sau trong tiến trình). </para
+></listitem>
+ </varlistentry>
+
+ <varlistentry>
+ <term
+>Khoá ngẫu nhiên</term>
+ <listitem
+><para
+>Xem phần bên trên diễn tả khoá ngẫu nhiên. </para
+></listitem>
+ </varlistentry>
+ </variablelist>
+
+</para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+>Xoá bỏ dữ liệu : <userinput
+>có</userinput
+></term>
+
+<listitem
+><para
+>Xem tiết đoạn bên trên diễn tả cách xoá sạch dữ liệu. </para
+></listitem>
+</varlistentry>
+
+</variablelist>
+
+</para>
+<note condition="gtk"
+><para
+>Ghi chú rằng phiên bản <emphasis
+>đồ họa</emphasis
+> của bộ cài đặt vẫn còn bị hạn chế, so với phiên bản kiểu văn bản. Đối với mật mã, có nghĩa là bạn có khả năng thiết lập khối tin chỉ dùng <emphasis
+>cụm từ mật khẩu</emphasis
+> như là khoá mật mã. </para
+></note>
+<para
+>Sau khi bạn chọn những tham số thích hợp với những phân vùng đã mật mã, hãy trở về trình đơn phân vùng chính. Lúc đó, nên có một mục trình đơn mới: <guimenu
+>Cấu hình khối tin đã mật mã</guimenu
+>. Sau khi chọn nó, bạn sẽ được nhắc xác nhận việc xoá bỏ dữ liệu nằm trên phân vùng nào được đánh dấu để bị xoá sạch, cũng có lẽ một số hành động khác, như việc ghi một bảng phân vùng mới. Đối với phân vùng lớn, có thể kéo dài một lát. </para
+><para
+>Sau đó, bạn sẽ được nhắc nhập một cụm từ mật khẩu cho phân vùng nào được cấu hình để sử dụng nó. Cụm từ mật khẩu tốt:<itemizedlist
+> <listitem
+><para
+>có độ dài hơn 8 ký tự (dài hơn là mạnh hơn)</para
+></listitem
+><listitem
+><para
+>phối hợp với nhau cả chữ hoa/thường, chữ số và ký tự khác</para
+></listitem
+><listitem
+><para
+>không chứa từ nào nằm trong từ điển, hay từ nào liên quan dễ đến bạn (v.d. ngày sinh, sở thích, tên của gia đình hay bạn bè): không chứa từ nào chương trình có thể tìm kiếm hoặc người khác có thể đoán.</para
+></listitem
+> </itemizedlist
+> </para
+><warning
+><para
+>Trước khi nhập cụm từ mật khẩu nào, bạn nên chắc là bàn phím được cấu hình đúng, để tạo ra những ký tự thích hợp. Nếu chưa chắc, bạn có thể chuyển đổi sang bàn giao tiếp ảo thứ hai, rồi gõ một số chữ tại dấu nhắc. Sự thử ra này đảm bảo bạn sẽ không bị ngạc nhiên sau này, chẳng hạn bằng cách thử nhập cụm từ mật khẩu bằng bố trí bàn phím tiếng Việt, khi bạn đã sử dụng bố trí tiếng Anh (hay bố trí tiếng Việt khác) để nhập cụm từ mật khẩu gốc trong khi cài đặt. Có lẽ bạn đã chuyển đổi sang bố trí khác vào lúc nào trong tiến trình cài đặt, hoặc bố trí thường dùng chưa được thiết lập khi bạn nhập cụm từ mật khẩu cho hệ thống tập tin gốc. Khuyên bạn luôn luôn kiểm tra xem bố trí bàn phím nào được dùng, trước khi nhập mật khẩu kiểu nào. </para
+></warning
+><para
+>Nếu bạn đã chọn dùng phương pháp khác với cụm từ mật khẩu để tạo những khoá mật mã, chúng sẽ được tạo ra vào lúc này. Vì hạt nhân có lẽ chưa tập hợp đủ dữ liệu ngẫu nhiên trong giai đoạn cài đặt sớm này, tiến trình này có thể mất nhiều thời gian. Bạn có thể tăng tốc độ bằng cách tạo ra dữ liệu ngẫu nhiên: v.d. bấm phím ngẫu nhiên, hoặc chuyển đổi sang trình bao trên bàn giao tiếp ảo thứ nhất rồi tạo ra giao thông trên mạng và đĩa (tải về tập tin, nạp tập tin lớn vào <filename
+>/dev/null</filename
+>). Tiến trình này được lặp lại cho mỗi phân vùng cần mật mã. </para
+><para
+>Sau khi trở về trình đơn phân vùng chính, bạn se xem mọi khối tin đã mật mã như là phân vùng thêm có thể được cấu hình bằng cùng một cách với phân vùng chuẩn. Mẫu theo đây hiển thị hai khối tin khác nhau : điều thứ nhất được mật mã bằng dm-crypt, điều thứ hai bằng loop-AES.<informalexample
+><screen>
+Encrypted volume (<replaceable
+>sda2_crypt</replaceable
+>) - 115.1 GB Linux device-mapper
+     #1 115.1 GB  F ext3
+
+Loopback (<replaceable
+>loop0</replaceable
+>) - 515.2 MB AES256 keyfile
+     #1 515.2 MB  F ext3
+</screen
+></informalexample
+> Bay giờ là giải đoạn gán điểm lắp cho mỗi khối tin, và tùy chọn thay đổi các kiểu hệ thống nếu giá trị mặc định chưa thích hợp. </para
+><para
+>Hãy ghi lưu những dấu nhận diện nằm trong dấu ngoặc (<replaceable
+>sda2_crypt</replaceable
+> và <replaceable
+>loop0</replaceable
+> trong trường hợp này), và điểm lắp bạn đã gán cho mỗi khối tin đã mật mã. Bạn sẽ cần biết thông tin này vào lúc sau, khi khởi động hệ thống mới. Những sự khác nhau giữa tiến trình khởi động chuẩn và tiến trình khởi động với khả năng mật mã sẽ được diễn tả sau này trong <xref linkend="mount-encrypted-volumes"/>. </para
+><para
+>Một khi bạn thấy sơ đồ phân vùng là ổn thoả, hãy tiếp tục cài đặt. </para>
+   </sect3>
+<!--   End of file using-d-i/modules/partman-crypto.xml -->
+  </sect2>
+  
+  <sect2 id="di-system-setup">
+  <title
+>Thiết lập Hệ thống</title>
+<para
+>Sau khi phân vùng, trình cài đặt hỏi vài câu thêm sẽ được dùng để thiết lập hệ thống nó sắp cài đặt. </para>
+
+
+<!-- Start of file using-d-i/modules/tzsetup.xml -->
+<!-- $Id: tzsetup.xml 35518 2006-03-17 22:11:35Z tbm $ -->
+
+   <sect3 id="tzsetup">
+   <title
+>Cấu hình Múi giờ Cục bộ</title>
+
+<para
+>Phụ thuộc vào địa điểm được chọn tại đầu của tiến trình cài đặt, bạn có thể xem danh sách các múi giờ thích hợp với địa điểm đó. Nếu chỗ bạn chỉ có một múi giờ, trình cài đặt sẽ không hỏi gì và hệ thống sẽ giả sử múi giờ đó. </para>
+
+   </sect3>
+<!--   End of file using-d-i/modules/tzsetup.xml -->
+
+<!-- Start of file using-d-i/modules/clock-setup.xml -->
+<!-- $Id: clock-setup.xml 39614 2006-08-07 15:50:11Z fjp $ -->
+
+   <sect3 id="clock-setup">
+   <title
+>Cấu hình Đồng hồ</title>
+
+<para
+>Có lẽ trình cài đặt sẽ hỏi bạn nếu đồng hồ của máy tính được đặt thành thời gian thế giới (UTC) không. Bình thường trình đó tránh hỏi câu này, nếu có thể, và cố gắng tính biết nếu đồng hồ được đặt thành thời gian thế giới (UTC) dựa vào thứ như hệ điều hành khác đã được cài đặt. </para
+><para
+>Trong chế độ nhà chuyên môn, bạn luôn luôn có khả năng chọn nếu đồng hồ của máy tính được đặt thành thời gian thế giới (UTC) không. <phrase arch="m68k;powerpc"
+>Đồng hồ phần cứng của máy Mac thường được đặt thành giờ cục bộ. Nếu bạn muốn khởi động đôi, hãy chọn giờ cục bộ hơn GMT (hay UTC)</phrase
+> <phrase arch="x86"
+>Hệ thống (cũng) chạy DOS hay Windows thường được đặt thành giờ cục bộ. Nếu bạn muốn khởi động đôi, hãy chọn giờ cục bộ hơn GMT (hay UTC).</phrase
+> </para
+><para
+>Ghi chú rằng trình cài đặt hiện thời không cho phép bạn thật đặt giờ trong đồng hồ của máy tính. Bạn có thể đặt đồng hồ thành giờ hiện thời sau khi cài đặt, nếu nó không đúng, hay nếu nó chưa được đặt thành giờ UTC. </para>
+
+   </sect3>
+<!--   End of file using-d-i/modules/clock-setup.xml -->
+
+<!-- Start of file using-d-i/modules/user-setup.xml -->
+<!-- $Id: user-setup.xml 43741 2007-01-01 13:26:51Z fjp $ -->
+
+   <sect3 id="user-setup">
+   <title
+>Thiết lập Người và Mật khẩu</title>
+
+    <sect4 id="user-setup-root">
+    <title
+>Đặt mật khẩu chủ</title>
+
+<!-- TODO: Document sudo setup (no root password); medium/low prio only -->
+
+<para
+>Tài khoản <emphasis
+>chủ</emphasis
+> (root) cũng được gọi là <emphasis
+>siêu người dùng</emphasis
+>; nó là cách đăng nhập mà đi qua toàn bộ sự bảo vệ bảo mật trên máy tính. Tài khoản chủ nên được dùng chỉ để quản trị hệ thống, và trong thời lượng càng ngắn càng có thể. </para
+><para
+>Mỗi mật khẩu bạn tạo phải chứa ít nhất 6 ký tự (nhiều hơn là mạnh hơn), gồm chữ cả hoa lẫn thường, cùng với ký tự chấm câu. Hãy rất cẩn thận khi đặt mật khẩu chủ (root) vì tài khoản đó có nhiều quyền quan trọng. Bạn nên tránh chọn từ nằm trong bất kỳ từ điển hay thông tin cá nhân có thể được đoán. </para
+><para
+>Nếu người nào xin mật khẩu chủ của bạn, hãy rất cẩn thận. Bình thường, đừng cho ai biết mật khẩu chủ, trừ bạn quản lý máy có nhiều quản trị hệ thống. </para>
+   </sect4>
+
+   <sect4 id="make-normal-user">
+   <title
+>Tạo người dùng chuẩn</title>
+
+<para
+>Hệ thống sẽ hỏi nếu bạn muốn tạo một tài khoản người dùng chuẩn tại điểm thời này. Tài khoản này nên là sự đăng nhập cá nhân chính của bạn. Bạn <emphasis
+>không</emphasis
+> nên dùng tài khoản người chủ để làm việc hàng ngày hay như là sự đăng nhập cá nhân. </para
+><para
+>Tại sao không? Một lý do là để tránh sử dụng các quyền của người chủ, vì các quyền này làm cho rất dễ dàng làm hại không thể sửa chữa. Một lý do khác là bạn có thể bị mắc mưu chạy chương trình <emphasis
+>Trojan</emphasis
+> mà nhớ dịp các quyền của siêu người dùng để hại thậm sự bảo mật của hệ thống bạn một cách bí mật. Bất kỳ cuốn sách tốt về cách quản lý hệ thống UNIX sẽ diễn tả chủ đề này bằng chi tiết: đề nghị bạn đọc nó nếu bạn chưa quen với vấn đề này. </para
+><para
+>Trước tiên, bạn sẽ được nhắc nhập họ tên của người dùng. Sau đó, bạn cần nhập tên của tài khoản người dùng, như tên của bạn hay tên riêng khác nào (tên của bạn là giá trị mặc định). Cuối cùng, bạn nên nhập mật khẩu dành cho tài khoản này. </para
+><para
+>Nếu tại bất kỳ điểm thời sau khi cài đặt, bạn muốn tạo tài khoản thêm, hãy sử dụng lệnh <command
+>adduser</command
+> (thêm người dùng). </para>
+    </sect4>
+   </sect3>
+<!--   End of file using-d-i/modules/user-setup.xml -->
+</sect2>
+
+  <sect2 id="di-install-base">
+  <title
+>Cài đặt Hệ thống Cơ bản</title>
+<para
+>Mặc dù giai đoạn này là đơn giản nhất, nó chiếm một phần đáng kể của tiến trình cài đặt vì nó tải về, thẩm tra và giải nén toàn bộ hệ thống cơ bản. Nếu máy tính hay sự kết nối mạng của bạn có chạy chậm, giai đoạn này có thể kéo dài một lát. </para>
+
+
+<!-- Start of file using-d-i/modules/base-installer.xml -->
+<!-- $Id: base-installer.xml 43573 2006-12-27 02:20:58Z fjp $ -->
+
+<para
+>Trong khi cài đặt hệ thống cơ bản, các thông điệp về cách giải nén gói và thiết lập được chuyển tiếp tới thiết bị cuối <userinput
+>tty4</userinput
+>. Có thể truy cập nó bằng cách bấm tổ hợp phím <keycombo
+><keycap
+>Alt trái</keycap
+><keycap
+>F4</keycap
+></keycombo
+>, và lùi lại về tiến trình cài đặt chính bằng <keycombo
+><keycap
+>Alt trái</keycap
+><keycap
+>F1</keycap
+></keycombo
+>. </para
+><para
+>Các thông điệp kiểu giải nén/thiết lập được tạo ra trong giải đoạn này cũng được lưu vào bản ghi hệ thống <filename
+>/var/log/syslog</filename
+>. Bạn vẫn có khả năng kiểm tra những thông điệp ở đó nếu tiến trình cài đặt được chạy qua bàn giao tiếp nối tiếp. </para
+><para
+>Trong khi cài đặt cơ bản, một hạt nhân Linux sẽ được cài đặt. Tại ưu tiên mặc định, trình cài đặt sẽ chọn cho bạn hạt nhân khớp tốt nhất phần cứng của bạn. Trong chế độ ưu tiên thấp hơn, bạn có khả năng chọn trong danh sách các hạt nhân có sẵn. </para>
+<!--   End of file using-d-i/modules/base-installer.xml -->
+  </sect2>
+  
+  <sect2 id="di-install-software">
+  <title
+>Cài đặt phần mềm thêm</title>
+<para
+>Sau khi cài đặt hệ thống cơ bản, bạn có một hệ thống có ích nhưng còn bị hạn chế. Phần lớn người dùng sẽ muốn cài đặt phần mềm thêm vào hệ thống, để điều hưởng tinh nó để tương thích với những nhu cầu của họ, và bộ cài đặt cho khả năng đó. Bước này có thể mất ngay cả lâu hơn việc cài đặt hệ thống cơ bản nếu máy tính hay mạng chạy chậm. </para>
+
+<!-- Start of file using-d-i/modules/apt-setup.xml -->
+<!-- $Id: apt-setup.xml 43573 2006-12-27 02:20:58Z fjp $ -->
+
+   <sect3 id="apt-setup">
+   <title
+>Cấu hình apt</title>
+
+<para
+>Một của những công cụ dùng để cài đặt gói vào hệ thống &debian; là một chương trình tên <command
+>apt-get</command
+>, thuộc về gói <classname
+>apt</classname
+><footnote
+> <para
+> Ghi chú rằng chương trình thật cài đặt các gói có tên <command
+>dpkg</command
+>. Tuy nhiên, chương trình này là công cụ chạy ở cấp thấp hơn. <command
+>apt-get</command
+> là công cụ chạy ở cấp cao hơn, và sẽ gọi <command
+>dpkg</command
+> trong trường hợp thích hợp. Nó có khả năng lấy các gói từ đĩa CD, mạng hay nơi khác nào. Nó cũng có thể tự động cài đặt các gói khác cần thiết để cho gói đã chọn đầu tiên hoạt động được.</para
+> </footnote
+>. Cũng có giao diện quản lý gói như <command
+>aptitude</command
+> và <command
+>synaptic</command
+>. Khuyên người dùng (nhất là người dùng mới) sử dụng giao diện như thế, vì nó hợp nhất một số tính năng thêm trong giao diện đẹp và dễ dùng. <command
+>aptitude</command
+> đặc biệt là tiện ích quản lý gói khuyến khích. </para
+><para
+>Chương trình <command
+>apt</command
+> phải được cấu hình để biết nơi nên lấy gói. Trình cài đặt làm tự động phần chính của công việc này, dựa vào thông tin đã biết về vật chứa trình cài đặt. Kết quả của việc cấu hình này được ghi vào tập tin <filename
+>/etc/apt/sources.list</filename
+>, và bạn có thể xem lại nó và sửa đổi nó sau khi cài đặt xong. </para>
+   </sect3>
+<!--   End of file using-d-i/modules/apt-setup.xml -->
+
+<!-- Start of file using-d-i/modules/pkgsel.xml -->
+<!-- $Id: pkgsel.xml 43734 2007-01-01 10:55:17Z fjp $ -->
+
+   <sect3 id="pkgsel">
+   <title
+>Lựa chọn và Cài đặt Phần mềm</title>
+
+<para
+>Trong tiến trình cài đặt, bạn có dịp chọn phần mềm thêm cần cài đặt. Hơn là chọn mỗi gói phần mềm riêng trong &num-of-distrib-pkgs; gói sẵn sàng, giai đoạn này của tiến trình cài đặt tập trung vào công việc chọn và cài đặt tập hợp phần mềm định sẵn để thiết lập nhanh máy tính của bạn để thực hiện nhiều tác vụ khác nhau. </para
+><para
+>Vậy bạn có khả năng chọn <emphasis
+>công việc</emphasis
+> vào lúc trước, rồi thêm gói riêng về sau. Mỗi công việc đại diện việc đặc biệt bạn muốn làm bằng máy tính, như <quote
+>môi trường làm việc</quote
+>, <quote
+>trình phục vụ Mạng</quote
+>, hay <quote
+>trình phục vụ in</quote
+><footnote
+> <para
+> Để hiển thị danh sách các công việc này, trình cài đặt đơn giản gọi chương trình <command
+>tasksel</command
+>. Vẫn có thể chạy nó vào bất cứ điểm thời nào sau khi cài đặt hệ thống, để cài đặt (hay gỡ bỏ) gói thêm, hoặc bạn có thể sử dụng một công cụ xử lý mỗi gói như <command
+>aptitude</command
+>. Nếu bạn tìm một gói riêng, sau khi cài đặt hệ thống, đơn giản hãy chạy lệnh <userinput
+>aptitude install <replaceable
+>gói</replaceable
+></userinput
+>, mà <replaceable
+>gói</replaceable
+> là tên của gói bạn tìm. </para
+> </footnote
+>. <xref linkend="tasksel-size-list"/> xác định sức chứa cần thiết cho các công việc có sẵn. </para
+><para
+>Một số công việc riêng có thể được chọn sẵn, dựa vào các đặc tính của máy tính vào đó bạn cài đặt hệ thống. Không đồng ý với các công việc chọn sẵn thì có khả năng bỏ chọn điều nào. Tại điểm thời này, bạn vẫn còn có thể chọn không cài đặt gì cả. </para>
+<note
+><para
+>Công việc <quote
+>môi trường làm việc</quote
+> sẽ cài đặt môi trường làm việc GNOME. Những tùy chọn được cung cấp bởi tiến trình cài đặt hiện thời không cho phép người dùng chọn môi trường làm việc khác (v.d. KDE, Xfce). </para
+><para
+>Vẫn còn có thể cài đặt KDE trong tiến trình cài đặt, dùng khả năng chèn sẵn (xem <xref linkend="preseed-pkgsel"/>), hoặc bằng cách thêm <literal
+>tasks="standard, kde-desktop"</literal
+> ở dấu nhắc khởi động khi khởi chạy trình cài đặt. Tuy nhiên, việc này sẽ chỉ hoạt động được nếu những gói cần thiết cho KDE thực sự sẵn sàng. Nếu bạn cài đặt từ ảnh đĩa CD đầy đủ, cần phải tải các gói này xuống một máy nhân bản Debian, vì các gói KDE không nằm trong đĩa CD đầy thứ nhất; sử dụng ảnh DVD hay phương pháp cài đặt khác thì việc cài đặt KDE bằng cách này nên chạy tốt. </para
+><para
+>Những công việc trình phục vụ khác nhau sẽ cài đặt phần mềm khoảng như theo:<classname
+>bind9</classname
+>; Trình phục vụ tập tin: <classname
+>samba</classname
+>, <classname
+>nfs</classname
+>; Trình phục vụ thư tín: <classname
+>exim4</classname
+>, <classname
+>spamassassin</classname
+>, <classname
+>uw-imap</classname
+>; Trình phục vụ in ấn: <classname
+>cups</classname
+>; Cơ sở dữ liệu SQL: <classname
+>postgresql</classname
+>; Trình phục vụ Mạng: <classname
+>apache</classname
+>. </para
+></note>
+<para
+>Một khi chọn các công việc, hãy bấm cái nút <guibutton
+>Được</guibutton
+>. Tại điểm thời này, chương trình <command
+>aptitude</command
+> sẽ cài đặt các gói thuộc về những công việc đã chọn. </para>
+<note
+><para
+>Trong giao diện người dùng chuẩn của trình cài đặt, bạn có thể sử dụng phím dài để (bỏ) chọn công việc nào. </para
+></note>
+<para
+>Ghi chú rằng công việc « Môi trường làm việc » rất lớn. Đặc biệt khi cài đặt từ đĩa CD-ROM chuẩn cũng với máy nhân bản cho các gói không nằm trên đĩa CD-ROM, trình cài đặt có thể lấy rất nhiều gói qua mạng. Kết nối Mạng chạy hơi chậm thì việc này mất nhiều thời gian. Không có tùy chọn dừng chạy tiến trình cài đặt gói một khi khởi chạy được. </para
+><para
+>Ngay cả khi các gói nằm trên đĩa CD-ROM, trình cài đặt vẫn còn có thể lấy từ máy nhân bản nếu máy nhân bản có gói phiên bản mới hơn điều trên đĩa CD-ROM. Nếu bạn đang cài đặt bản phân phối ổn định (stable), trường hợp này có thể xảy ra sau khi phân phối bản « điểm » (bản cập nhật bản phân phối ổn định chính). Còn nếu bạn đang cài đặt bản phân phối thử ra (testing), nó có thể xảy ra nếu bạn sử dụng ảnh cũ. </para
+><para
+>Mỗi gói bạn đã chọn bằng <command
+>tasksel</command
+> sẽ được tải về, giải nén rồi cài đặt lần lượt bởi chương trình <command
+>apt-get</command
+> và <command
+>dpkg</command
+>. Nếu chương trình nào cần thiết thông tin thêm, nó sẽ nhắc bạn trong tiến trình này. </para>
+   </sect3>
+<!--   End of file using-d-i/modules/pkgsel.xml -->
+  </sect2>
+	
+  <sect2 id="di-make-bootable">
+  <title
+>Cho hệ thống khả năng khởi động</title>
+
+<para condition="supports-nfsroot"
+>Cài đặt máy trạm không có đĩa thì rõ ràng không có ích khi khởi động từ đĩa cục bộ nên bước này sẽ bị bỏ qua. <phrase arch="sparc"
+>Có lẽ bạn muốn đặt OpenBoot khởi động qua mạng theo mặc định; xem <xref linkend="boot-dev-select-sun"/>.</phrase
+> </para>
+
+
+<!-- Start of file using-d-i/modules/os-prober.xml -->
+<!-- $Id: os-prober.xml 33725 2006-01-03 19:39:07Z fjp $ -->
+
+   <sect3 id="os-prober">
+   <title
+>Phát hiện hệ điều hành khác</title>
+
+<para
+>Trước khi tải bộ tải khởi động, trình cài đặt sẽ cố gắng thăm dò hệ điều hành khác đã được cài đặt trên máy tính này. Nếu nó tìm được hệ điều hành được hỗ trợ, nó sẽ báo bạn biết như thế trong bước cài đặt bộ tải khởi động, và máy tính sẽ được cấu hình để khởi động hệ điều hành khác này thêm vào Debian. </para
+><para
+>Ghi chú rằng nhiều hệ điều hành khởi động trên cùng một máy chưa được hiểu hoàn toàn. Cách hỗ trợ tự động khả năng phát hiện và thiết lập bộ tải khởi động để khởi động hệ điều hành khác có thay đổi theo kiến trúc và ngay cả theo kiến trúc phụ. Nếu nó không hoạt động được, bạn nên xem tài liệu hướng dẫn sử dụng bộ tải khởi động riêng để tìm thông tin thêm. </para>
+   </sect3>
+<!--   End of file using-d-i/modules/os-prober.xml -->
+
+<!-- Start of file using-d-i/modules/alpha/aboot-installer.xml -->
+<!-- $Id: aboot-installer.xml 43573 2006-12-27 02:20:58Z fjp $ -->
+
+  <sect3 arch="alpha">
+  <title
+>Cài đặt <command
+>aboot</command
+> vào đĩa cứng</title>
+<para
+>Khởi động từ SRM và bật tùy chọn này thì trình cài đặt sẽ ghi <command
+>aboot</command
+> vào rãnh ghi thứ nhất của đĩa vào đó bạn đã cài đặt Debian. Hãy <emphasis
+>rất</emphasis
+> cẩn thận &mdash; <emphasis
+>không</emphasis
+> thể khởi động nhiều hệ điều hành (v.d. GNU/Linux, Free/Open/NetBSD, OSF/1 cũng tên Digital Unix cũng tên Tru64 Unix, hay OpenVMS) từ cùng một đĩa. Có một hệ điều hành khác đã cài đặt vào cùng một đĩa vào đó bạn mới cài đặt Debian thì phải khởi động GNU/Linux từ đĩa mềm thay thế. </para>
+  </sect3>
+<!--   End of file using-d-i/modules/alpha/aboot-installer.xml -->
+
+<!-- Start of file using-d-i/modules/hppa/palo-installer.xml -->
+<!-- $Id: palo-installer.xml 14602 2004-05-02 16:31:59Z mck-guest $ -->
+
+  <sect3 arch="hppa">
+  <title
+>Trình cài đặt <command
+>palo</command
+></title>
+<para
+>Bộ tải khởi động trên PA-RISC là <quote
+>palo</quote
+>. <command
+>PALO</command
+> tương tự bằng cấu hình và bằng cách sử dụng với <command
+>LILO</command
+>, trừ một số điều. Trước tiên, <command
+>PALO</command
+> cho bạn khả năng khởi động bất kỳ ảnh hạt nhân nằm trên phân vùng khởi động. Đó là vì <command
+>PALO</command
+> thật có thể đọc phân vùng Linux. </para
+><para condition="FIXME"
+>hppa SỬA ĐI (cần thông tin thêm) </para>
+  </sect3>
+<!--   End of file using-d-i/modules/hppa/palo-installer.xml -->
+
+<!-- Start of file using-d-i/modules/x86/grub-installer.xml -->
+<!-- $Id: grub-installer.xml 39622 2006-08-07 21:03:18Z fjp $ -->
+
+  <sect3 arch="x86">
+  <title
+>Cài đặt bộ tải khởi động <command
+>Grub</command
+> vào đĩa cứng</title>
+<para
+>Bộ tải khởi động chính cho kiến trúc &architecture; có tên <quote
+>grub</quote
+>. GRUB là một bộ tải khởi động dẻo và mạnh, một sự chọn mặc định hữu ích cho cả người dùng mới lẫn nhà chuyên môn. </para
+><para
+>Mặc định là GRUB sẽ được cài đặt vào Mục Ghi Khởi Động Cái (MBR) nơi nó sẽ điều khiển hoàn toàn tiến trình khởi động. Hoặc bạn có thể cài đặt nó vào nơi khác. Xem sổ tay GRUB để tìm thông tin đầy đủ. </para
+><para
+>Nếu bạn không muốn cài đặt GRUB, hãy bấm cái nút Lùi để trở về trình đơn chính, và từ đó, chọn bộ tải khởi động đã muốn. </para>
+  </sect3>
+<!--   End of file using-d-i/modules/x86/grub-installer.xml -->
+
+<!-- Start of file using-d-i/modules/x86/lilo-installer.xml -->
+<!-- $Id: lilo-installer.xml 43573 2006-12-27 02:20:58Z fjp $ -->
+
+  <sect3 arch="x86">
+  <title
+>Cài đặt bộ tải khởi động <command
+>LILO</command
+> vào đĩa cứng</title>
+<para
+>Bộ tải khởi động thứ nhất cho kiến trúc &architecture; có tên <quote
+>LILO</quote
+>. Nó là một chương trình phức tạp cũ mà cung cấp nhiều khả năng, gồm cách quản lý cách khởi động hệ điều hành DOS, Windows, và OS/2. Hãy đọc cẩn thận những hướng dẫn trong thư mục <filename
+>/usr/share/doc/lilo/</filename
+> nếu bạn cần gì đặc biệt, cũng xem tài liệu nhỏ LILO Thế Nào <ulink url="&url-lilo-howto;"
+>LILO mini-HOWTO</ulink
+>. </para>
+<note
+><para
+>Hiện thời, việc cài đặt LILO sẽ tạo mục trình đơn cho hệ điều hành khác chỉ nếu chúng có thể được <firstterm
+>tải dây</firstterm
+>. Có nghĩa là có lẽ bạn phải tự thêm mục trình đơn cho hệ điều hành như GNU/Linux và GNU/Hurd, sau khi cài đặt. </para
+></note>
+<para
+>&d-i; cung cấp ba sự chọn về nơi vào đó cần cài đặt bộ tải khởi động <command
+>LILO</command
+>: <variablelist>
+<varlistentry>
+<term
+>Mục ghi khởi động cái (MBR)</term
+><listitem
+><para
+>Cách này, <command
+>LILO</command
+> sẽ điều khiển hoàn toàn tiến trình khởi động. </para
+></listitem
+></varlistentry>
+<varlistentry>
+<term
+>phân vùng Debian mới</term
+><listitem
+><para
+>Hãy chọn điều này nếu bạn muốn sử dụng bộ tải khởi động khác. <command
+>LILO</command
+> sẽ cài đặt chính nó tại đầu của phân vùng Debian mới, và sẽ làm việc như bộ tảo khởi động phụ. </para
+></listitem
+></varlistentry>
+<varlistentry>
+<term
+>Khác</term
+><listitem
+><para
+>Có ích cho người dùng cấp cao mà muốn cài đặt <command
+>LILO</command
+> vào nơi khác. Trong trường hợp này, bạn sẽ được nhắc nhập địa điểm đã muốn. Bạn có thể nhập tên kiểu devfs, như điều bắt đầu với <filename
+>/dev/ide</filename
+>, <filename
+>/dev/scsi</filename
+>, và <filename
+>/dev/discs</filename
+>, cũng như tên truyền thống, như <filename
+>/dev/hda</filename
+> hay <filename
+>/dev/sda</filename
+>. </para
+></listitem
+></varlistentry>
+</variablelist>
+
+</para
+><para
+>Không còn có thể khởi động lại vào Windows 9x (hay DOS) sau bước này thì bạn sẽ cần phải sử dụng đĩa khởi động Windows 9x (MS-DOS), và chạy lệnh <userinput
+>fdisk /mbr</userinput
+> để cài đặt lại mục ghi khởi động cái MS-DOS &mdash; tuy nhiên, có nghĩa là bạn cần phải sử dụng phương pháp khác để trở về Debian. </para>
+  </sect3>
+<!--   End of file using-d-i/modules/x86/lilo-installer.xml -->
+
+<!-- Start of file using-d-i/modules/ia64/elilo-installer.xml -->
+<!-- $Id: elilo-installer.xml 43573 2006-12-27 02:20:58Z fjp $ -->
+
+  <sect3 arch="ia64">
+  <title
+>Cài đặt bộ tải khởi động <command
+>ELILO</command
+> vào đĩa cứng</title>
+<para
+>Bộ tải khởi động cho kiến trúc &architecture; có tên <quote
+>elilo</quote
+>. Nó dựa vào bộ tải khởi động <quote
+>lilo</quote
+> của kiến trúc x86, và dùng tập tin cấu hình tương tự. Tuy nhiên, thay vào ghi mục ghi khởi động cái hay phân vùng vào đĩa, nó sao chép các tập tin cần thiết vào một phân vùng đĩa riêng đã định dạng FAT, và sửa đổi trình đơn <guimenuitem
+>EFI Boot Manager</guimenuitem
+> (Bộ quản lý khởi động EFI) trong phần vững để chỉ tới các tập tin nằm trên phân vùng EFI. Bộ tải khởi động <command
+>elilo</command
+> thật có hai phần. Lệnh <filename
+>/usr/sbin/elilo</filename
+> quản lý phân vùng và sao chép tập tin vào nó. Chương trình <filename
+>elilo.efi</filename
+> được sao chép vào phân vùng EFI, rồi được chạy bởi <quote
+>EFI Boot Manager</quote
+> để làm việc thật tải và khởi chạy hạt nhân Linux. </para
+><para
+>Việc cấu hình và cài đặt <quote
+>elilo</quote
+> được thực hiện là bước cuối cùng của tiến trình cài đặt các gói của bản cài đặt cơ bản. &d-i; sẽ hiển thị danh sách các phân vùng đĩa có thể mà làm phân vùng EFI thích hợp. Hãy chọn phân vùng bạn đã thiết lập vào điểm thời trước trong tiến trình cài đặt, thường là một phân vùng trên cùng một đĩa chứa hệ thống tập tin <emphasis
+>gốc</emphasis
+> của máy tính. </para>
+
+  <warning
+><title
+>Chọn phân vùng đúng đi.</title>
+
+<para
+>Tiêu chuẩn để chọn phân vùng là nó chứa hệ thống tập tin định dạng FAT với cờ <emphasis
+>khả năng khởi động</emphasis
+> được đặt. &d-i; có thể hiển thị nhiều sự chọn, phụ thuộc vào kết quả của việc quét mọi đĩa của hệ thống, gồm các phân vùng EFI của những đĩa hệ điều hành khác và những phân vùng chẩn đoán EFI. Ghi nhớ rằng trong khi cài đặt, <command
+>elilo</command
+> có thể định dạng phân vùng nên xoá hoàn toàn nội dung đã có ! </para
+></warning>
+
+  </sect3>
+
+  <sect3 arch="ia64">
+  <title
+>Nội dung phân vùng EFI</title>
+
+<para
+>Phân vùng EFI là một phân vùng chứa hệ thống tập tin dạng thức FAT nằm trên một của những đĩa cứng của hệ thống, thường là cùng một đĩa chứa hệ thống tập tin <emphasis
+>gốc</emphasis
+>. Nó thường không được lắp vào hệ thống đang chạy, vì nó cần thiết chỉ để <quote
+>EFI Boot Manager</quote
+> (Bộ quản lý khởi động EFI) tải hệ thống, và phần trình cài đặt của <command
+>elilo</command
+> ghi trực tiếp vào hệ thống tập tin. Tiện ích <command
+>/usr/sbin/elilo</command
+> ghi những tập tin theo đây vào thư mục <filename
+>efi/debian</filename
+> của phân vùng EFI trong khi cài đặt. Ghi chú rằng <quote
+>EFI Boot Manager</quote
+> tìm được các tập tin đó bằng đường dẫn <filename
+>fs<replaceable
+>n</replaceable
+>:\efi\debian</filename
+>. Hệ thống tập tin này có thể chứa tập tin khác sau một thời gian, sau khi hệ thống được cập nhật hay cấu hình lại. </para>
+
+<variablelist>
+
+<varlistentry>
+<term
+><filename
+>elilo.conf</filename
+></term>
+<listitem
+><para
+>Đây là tập tin cấu hình được đọc bởi bộ tải khởi động khi nó khởi chạy. Nó là một bản sao của tập tin <filename
+>/etc/elilo.conf</filename
+>, với các tên tập tin được ghi lại vào tập tin nằm trên phân vùng EFI. </para
+></listitem
+></varlistentry>
+
+<varlistentry>
+<term
+><filename
+>elilo.efi</filename
+></term>
+<listitem
+><para
+>Đây là chương trình tảo khởi động mà <quote
+>EFI Boot Manager</quote
+> chạy để khởi động hệ thống. Nó là chương trình phía sau của mục trình đơn <guimenuitem
+>Debian GNU/Linux</guimenuitem
+> của trình đơn lệnh <quote
+>EFI Boot Manager</quote
+>. </para
+></listitem
+></varlistentry>
+
+<varlistentry>
+<term
+><filename
+>initrd.img</filename
+></term>
+<listitem
+><para
+>Đây là hệ thống gốc đầu tiên được dùng để khởi động hạt nhân. Nó là một bản sao của tập tin được tham chiếu trong tập tin cấu hình <filename
+>/etc/elilo.conf</filename
+>. Trong bản cài đặt Debian chuẩn, nó là tập tin trong <filename
+>/boot</filename
+> được chỉ tới bởi liên kết tượng trưng <filename
+>/initrd.img</filename
+>. </para
+></listitem
+></varlistentry>
+
+<varlistentry>
+<term
+><filename
+>readme.txt</filename
+></term>
+<listitem
+><para
+>Đây là một tập tin văn bản nhỏ cảnh báo bạn rằng nội dung của thư mục đó được điều khiển bởi <command
+>elilo</command
+> và thay đổi cục bộ nào sẽ được mất hoàn toàn vào lần kế tiếp chạy <filename
+>/usr/sbin/elilo</filename
+>. </para
+></listitem
+></varlistentry>
+
+<varlistentry>
+<term
+><filename
+>vmlinuz</filename
+></term>
+<listitem
+><para
+>Đây là hạt nhân đã nén. Nó là một bản sao của tập tin được tham chiếu trong tập tin cấu hình <filename
+>/etc/elilo.conf</filename
+>. Trong bản cài đặt Debian chuẩn, nó là tập tin trong <filename
+>/boot</filename
+> được chỉ tới bởi liên kết tượng trưng <filename
+>/vmlinuz</filename
+>. </para
+></listitem
+></varlistentry>
+
+</variablelist>
+
+  </sect3>
+<!--   End of file using-d-i/modules/ia64/elilo-installer.xml -->
+
+<!-- Start of file using-d-i/modules/mips/arcboot-installer.xml -->
+<!-- $Id: arcboot-installer.xml 35613 2006-03-19 04:18:28Z tbm $ -->
+
+  <sect3 arch="mips">
+  <title
+>Bộ cài đặt <command
+>arcboot</command
+></title>
+<para
+>Bộ tải khởi động trên máy kiểu SGI là <command
+>arcboot</command
+>. Nó phải được cài đặt vào cùng một đĩa cứng với hạt nhân (trình cài đặt tự động làm như thế). Arcboot hỗ trợ các cấu hình khác nhau được thiết lập trong tập tin <filename
+>/etc/arcboot.conf</filename
+>. Mỗi cấu hình có tên riêng, thiết lập mặc định như được tạo bởi trình cài đặt là <quote
+>linux</quote
+>. Sau khi cài đặt Arcboot, hệ thống có thể được khởi động từ đĩa cứng bằng cách đặt một số biến môi trường phần vững, nhập: <informalexample
+><screen>
+<userinput
+> setenv SystemPartition scsi(<replaceable
+>scsi</replaceable
+>)disk(<replaceable
+>đĩa</replaceable
+>)rdisk(0)partition(0)</userinput>
+<userinput
+> setenv OSLoadPartition scsi(<replaceable
+>scsi</replaceable
+>)disk(<replaceable
+>đĩa</replaceable
+>)rdisk(0)partition(<replaceable
+>số_phân</replaceable
+>)</userinput>
+<userinput
+> setenv OSLoader arcboot</userinput>
+<userinput
+> setenv OSLoadFilename <replaceable
+>cấu_hình</replaceable
+></userinput>
+<userinput
+> setenv AutoLoad yes</userinput>
+</screen
+></informalexample
+> tại dấu nhắc phần vứng, rồi gõ lệnh khởi động <command
+>boot</command
+>. </para>
+
+<variablelist>
+<varlistentry>
+<term
+> <replaceable
+>scsi</replaceable
+> </term>
+<listitem
+><para
+>là mạch nối SCSI từ đó cần khởi động: nó là <userinput
+>0</userinput
+> cho bộ điều khiển có sẵn </para
+></listitem>
+</varlistentry>
+<varlistentry>
+<term
+> <replaceable
+>đĩa</replaceable
+> </term>
+<listitem
+><para
+>là SCSI ID (mã nhận diện SCSI) của đĩa cứng nơi <command
+>arcboot</command
+> được cài đặt </para
+></listitem>
+</varlistentry>
+<varlistentry>
+<term
+> <replaceable
+>số_phân</replaceable
+> </term>
+<listitem
+><para
+>là số hiệu phân vùng chứa tập tin cấu hình <filename
+>/etc/arcboot.conf</filename
+> </para
+></listitem>
+</varlistentry>
+<varlistentry>
+<term
+> <replaceable
+>cấu_hình</replaceable
+> </term>
+<listitem
+><para
+>là tên của mục nhập cấu hình trong tập tin <filename
+>/etc/arcboot.conf</filename
+>, mà là <quote
+>linux</quote
+> theo mặc định. </para
+></listitem>
+</varlistentry>
+</variablelist>
+
+  </sect3>
+<!--   End of file using-d-i/modules/mips/arcboot-installer.xml -->
+
+<!-- Start of file using-d-i/modules/mipsel/colo-installer.xml -->
+<!-- $Id: colo-installer.xml 14337 2004-04-24 15:05:40Z mck-guest $ -->
+<!--   End of file using-d-i/modules/mipsel/colo-installer.xml -->
+
+<!-- Start of file using-d-i/modules/mipsel/delo-installer.xml -->
+<!-- $Id: delo-installer.xml 24663 2004-12-31 18:38:22Z fjpop-guest $ -->
+
+  <sect3 arch="mipsel">
+  <title
+>Bộ cài đặt <command
+>delo</command
+></title>
+<para
+>Bộ tải khởi động trên máy kiểu DECstations là <command
+>DELO</command
+>. Nó phải được cài đặt vào cùng một đĩa cứng với hạt nhân (trình cài đặt tự động làm như thế). DELO hỗ trợ các cấu hình khác nhau được thiết lập trong tập tin <filename
+>/etc/delo.conf</filename
+>. Mỗi cấu hình có tên riêng, thiết lập mặc định như được tạo bởi trình cài đặt là <quote
+>linux</quote
+>. Sau khi cài đặt DELO, hệ thống có thể được khởi động từ đĩa cứng bằng cách nhập: <informalexample
+><screen>
+<userinput
+>boot <replaceable
+>#</replaceable
+>/rz<replaceable
+>mã</replaceable
+> <replaceable
+>số_phân</replaceable
+>/<replaceable
+>tên</replaceable
+></userinput>
+</screen
+></informalexample
+> tại dấu nhắc phần vững. </para>
+
+<variablelist>
+<varlistentry>
+<term
+> <replaceable
+>#</replaceable
+> </term>
+<listitem
+><para
+>là thiết bị TurboChannel từ đó cần khởi động, trên phần lớn máy DECstation nó là <userinput
+>3</userinput
+> cho bộ điều khiển có sẵn </para
+></listitem>
+</varlistentry>
+<varlistentry>
+<term
+> <replaceable
+>mã</replaceable
+> </term>
+<listitem
+><para
+>là SCSI ID (mã nhận diện SCSI) của đĩa cứng nơi <command
+>DELO</command
+> đã được cài đặt </para
+></listitem>
+</varlistentry>
+<varlistentry>
+<term
+> <replaceable
+>số_phân</replaceable
+> </term>
+<listitem
+><para
+>(số_phân) là số hiệu phân vùng chứa tập tin cấu hình <filename
+>/etc/delo.conf</filename
+> </para
+></listitem>
+</varlistentry>
+<varlistentry>
+<term
+> <replaceable
+>tên</replaceable
+> </term>
+<listitem
+><para
+>là tên của mục nhập cấu hình trong <filename
+>/etc/delo.conf</filename
+>, mà là <quote
+>linux</quote
+> theo mặc định. </para
+></listitem>
+</varlistentry>
+</variablelist>
+
+<para
+>Trong trường hợp mà tập tin cấu hình <filename
+>/etc/delo.conf</filename
+> nằm trên phân vùng thứ nhất trên đĩa và cấu hình mặc định sẽ được khởi động, đủ là dùng <informalexample
+><screen
+><userinput
+>boot #/rz<replaceable
+>mã</replaceable
+></userinput
+>
+</screen
+></informalexample>
+
+</para>
+  </sect3>
+<!--   End of file using-d-i/modules/mipsel/delo-installer.xml -->
+
+<!-- Start of file using-d-i/modules/powerpc/yaboot-installer.xml -->
+<!-- $Id: yaboot-installer.xml 14975 2004-05-08 13:28:15Z mck-guest $ -->
+
+  <sect3 arch="powerpc">
+  <title
+>Cài đặt <command
+>Yaboot</command
+> vào đĩa cứng</title>
+<para
+>Máy PowerMac mới hơn (ở giữa năm 1998 và sau) sử dụng <command
+>yaboot</command
+> là bộ tải khởi động. Trình cài đặt sẽ thiết lập tự động <command
+>yaboot</command
+>, vậy bạn chỉ cần có một phân vùng 820k nhỏ có tên <quote
+>bootstrap</quote
+> với kiểu <emphasis
+>Apple_Bootstrap</emphasis
+> được tạo trước trong thành phần phân vùng. Nếu bước này chạy xong thành công, lúc đó đĩa nên có khả năng khởi động và OpenFirmware sẽ được đặt để khởi động &debian;. </para>
+  </sect3>
+<!--   End of file using-d-i/modules/powerpc/yaboot-installer.xml -->
+
+<!-- Start of file using-d-i/modules/powerpc/quik-installer.xml -->
+<!-- $Id: quik-installer.xml 14975 2004-05-08 13:28:15Z mck-guest $ -->
+
+  <sect3 arch="powerpc">
+  <title
+>Cài đặt <command
+>Quik</command
+> vào đĩa cứng</title>
+<para
+>Bộ tải khởi động cho máy PowerMac kiểu cũ là <command
+>quik</command
+>. Bạn cũng có thể sử dụng nó trên CHRP. Trình cài đặt sẽ cố gắng thiết lập tự động <command
+>quik</command
+>. Thiết lập này được biết là hoạt động được trên máy PowerMac 7200, 7300, và 7600, và trên một số máy bắt chước Power Computing. </para>
+  </sect3>
+<!--   End of file using-d-i/modules/powerpc/quik-installer.xml -->
+
+<!-- Start of file using-d-i/modules/s390/zipl-installer.xml -->
+<!-- $Id: zipl-installer.xml 14602 2004-05-02 16:31:59Z mck-guest $ -->
+
+  <sect3 arch="s390">
+  <title
+>Bộ cài đặt <command
+>zipl</command
+></title>
+<para
+>Bộ tải khởi động trên kiến trúc &arch-title; là <quote
+>zipl</quote
+>. <command
+>ZIPL</command
+> có cấu hình và cách sử dụng tương tự với <command
+>LILO</command
+>, trừ vài thứ. Hãy xem tài liệu <quote
+>LINUX for &arch-title; Device Drivers and Installation Commands</quote
+> tại nơi Mạng developerWorks của công ty IBM nếu bạn muốn biết thêm về <command
+>ZIPL</command
+>. </para>
+  </sect3>
+<!--   End of file using-d-i/modules/s390/zipl-installer.xml -->
+
+<!-- Start of file using-d-i/modules/sparc/silo-installer.xml -->
+<!-- $Id: silo-installer.xml 24582 2004-12-27 02:16:29Z cjwatson $ -->
+
+  <sect3 arch="sparc">
+  <title
+>Cài đặt bộ tải khởi động <command
+>SILO</command
+> vào đĩa cứng</title>
+<para
+>Bộ tải khởi động chuẩn cho kiến trúc &architecture; có tên <quote
+>silo</quote
+>. Nó được diễn tả trong <filename
+>/usr/share/doc/silo/</filename
+>. <command
+>SILO</command
+> có cấu hình và cách sử dụng tương tự với <command
+>LILO</command
+>, trừ vài thứ. Trước tiên, <command
+>SILO</command
+> cho bạn khả năng khởi động bất kỳ ảnh hạt nhân trên đĩa cứng, thậm chí nếu nó không được liệt kê trong tập tin cấu hình <filename
+>/etc/silo.conf</filename
+>. Đó là vì <command
+>SILO</command
+> thật có khả năng đọc phân vùng Linux. Hơn nữa, <filename
+>/etc/silo.conf</filename
+> được đọc vào lúc khởi động, vậy không cần phải chạy lại <command
+>silo</command
+> sau khi cài đặt hạt nhân mới, như bạn phải làm với <command
+>LILO</command
+>. <command
+>SILO</command
+> cũng có khả năng đọc phân vùng UFS, vì thế nó cũng có thể khởi động phân vùng kiểu SunOS/Solaris. Có ích nếu bạn muốn cài đặt hệ điều hành GNU/Linux kế bên bản cài đặt SunOS/Solaris đã có. </para>
+  </sect3>
+<!--   End of file using-d-i/modules/sparc/silo-installer.xml -->
+
+<!-- Start of file using-d-i/modules/nobootloader.xml -->
+<!-- $Id: nobootloader.xml 25513 2005-02-07 23:43:27Z fjpop-guest $ -->
+
+   <sect3 id="nobootloader">
+   <title
+>Tiếp tục không có bộ tải khởi động</title>
+
+<para
+>Tùy chọn này có thể được dùng để làm xong tiến trình cài đặt ngay cả khi không có bộ tải khởi động cần cài đặt, hoặc vì kiến trúc/kiến trúc phụ không cung cấp, hoặc vì không muốn nó (v.d. bạn sẽ dùng bộ tải khởi động đã có). <phrase arch="m68k"
+>Tùy chọn này có ích đặc biệt cho hệ thống kiểu Macintosh, Atari và Amiga, nơi hệ điều hành gốc phải được duy trì trên máy đó và được dùng để khởi động hệ điều hành GNU/Linux.</phrase
+> </para
+><para
+>Nếu bạn định tự cấu hình bộ tải khởi động, bạn nên kiểm tra xem tên của hạt nhân đã được cài đặt vào <filename
+>/target/boot</filename
+>. Bạn cũng nên kiểm tra xem nếu thư mục đó chứa <firstterm
+>initrd</firstterm
+> không; nếu có, bạn rất có thể phải báo bộ tải khởi động sử dụng nó. Thông tin khác cần thiết là tên đĩa và phân vùng đã chọn cho hệ thống tập tin <filename
+>/</filename
+>, và nếu bạn đã chọn cài đặt <filename
+>/boot</filename
+> vào phân vùng riêng, tên hệ thống tập tin <filename
+>/boot</filename
+>. </para>
+   </sect3>
+<!--   End of file using-d-i/modules/nobootloader.xml -->
+  </sect2>
+
+  <sect2 id="di-finish">
+  <title
+>Cài đặt xong</title>
+<para
+>Đây là các bước cuối cùng trước khi khởi động lại vào hệ thống mới: phần chính là làm sạch theo sau &d-i;. </para>
+
+
+<!-- Start of file using-d-i/modules/finish-install.xml -->
+<!-- $Id: finish-install.xml 37253 2006-05-13 04:01:56Z joeyh $ -->
+
+   <sect3 id="finish-install">
+   <title
+>Cài đặt xong và khởi động lại</title>
+
+<para
+>Đây là bước cuối cùng trong tiến trình cài đặt Debian đầu tiên. Bạn sẽ được nhắc gỡ bỏ vật chứa khởi động (đĩa CD, đĩa mềm v.v.) được dùng để khởi động trình cài đặt. Trình cài đặt sẽ làm công việc cuối cùng nào, rồi khởi động lại vào hệ thống Debian mới. </para
+><para arch="s390"
+>Hãy chọn mục trình đơn <guimenuitem
+>Cài đặt xong</guimenuitem
+> mà sẽ tạm dừng lại hệ thống vì khả năng khởi động lại không được hỗ trợ trên kiến trúc &arch-title; trong trường hợp này. Sau đó, bạn cần phải khởi động hệ điều hành GNU/Linux từ vật chứa truy cập trực tiếp mà bạn đã chọn cho hệ thống tập tin gốc trong những bước đầu tiên của tiến trình cài đặt. </para>
+   </sect3>
+<!--   End of file using-d-i/modules/finish-install.xml -->
+  </sect2>
+
+  <sect2 id="di-miscellaneous">
+  <title
+>Lặt vặt</title>
+<para
+>Những thành phần được liệt kê trong phần này thường không được dùng trong tiến trình cài đặt, vì chúng đợi phía sau để giúp đỡ người dùng nếu họ gặp khó khăn. </para>
+
+
+<!-- Start of file using-d-i/modules/save-logs.xml -->
+<!-- $Id: save-logs.xml 33725 2006-01-03 19:39:07Z fjp $ -->
+
+   <sect3 id="save-logs">
+   <title
+>Lưu bản ghi cài đặt</title>
+
+<para
+>Nếu việc cài đặt là thành công, các tập tin bản ghi đượ tạo trong tiến trình cài đặt sẽ được lưu tự động vào thư mục <filename
+>/var/log/installer/</filename
+> trong hệ thống Debian mới. </para
+><para
+>Việc chọn mục <guimenuitem
+>Lưu các bản ghi gỡ lỗi</guimenuitem
+> trong trình đơn chính sẽ cho bạn khả năng lưu các bản ghi đó vào đĩa mềm, mạng, đĩa cứng hay vật chứa khác. Tính năng này có ích nếu bạn gặp lỗi nghiêm trọng trong tiến trình cài đặt và muốn xem lại bản ghi trên máy tính khác, hay đính nó kèm báo cáo cài đặt. </para>
+   </sect3>
+<!--   End of file using-d-i/modules/save-logs.xml -->
+
+<!-- Start of file using-d-i/modules/cdrom-checker.xml -->
+<!-- $Id: cdrom-checker.xml 14337 2004-04-24 15:05:40Z mck-guest $ -->
+<!--   End of file using-d-i/modules/cdrom-checker.xml -->
+
+<!-- Start of file using-d-i/modules/shell.xml -->
+<!-- $Id: shell.xml 43573 2006-12-27 02:20:58Z fjp $ -->
+
+   <sect3 id="shell">
+   <title
+>Sử dụng hệ vỏ và xem bản ghi</title>
+
+<para
+>Có vài phương pháp khác nhau cho bạn sử dụng để tuy cấp trình bao trong khi chạy tiến trình cài đặt. Trên phần lớn hệ thống, nếu bạn không cài đặt qua bàn giao tiếp nối tiếp, phương pháp dễ nhất là chuyển đổi sang <emphasis
+>bàn giao tiếp ảo</emphasis
+> thứ hai bằng cách bấm tổ hợp phím <keycombo
+><keycap
+>Alt trái</keycap
+> <keycap
+>F2</keycap
+></keycombo
+><footnote
+> <para
+> Tức là: bấm đồng thời phím sửa đổi <keycap
+>Alt</keycap
+> bên trái <keycap
+>phím dài</keycap
+> và phím chức năng <keycap
+>F2</keycap
+>. </para
+> </footnote
+> (trên bàn phím Mac, tổ hợp phím <keycombo
+><keycap
+>option</keycap
+> <keycap
+>F2</keycap
+></keycombo
+>: các máy Mac mới hơn cũng có từ « alt » trên phím <keycap
+>option</keycap
+>.). Rồi bấm tổ hợp phím <keycombo
+><keycap
+>Alt trái</keycap
+> <keycap
+>F1</keycap
+></keycombo
+> để trở về bộ cài đặt chính nó. </para
+><para
+>Nếu bạn không thể chuyển đổi bàn giao tiếp, trình đơn chính vẫn còn có mục <guimenuitem
+>Chạy trình bao</guimenuitem
+> có thể dùng để khởi chạy một trình bao. Để trở về bộ cài đặt chính nó, gõ lệnh <userinput
+>exit</userinput
+> (thoát) để đóng trình bao đó. </para
+><para
+>Vào lúc này, bạn được khởi động từ đĩa RAM nên có sẵn một bộ tiện ích UNIX bị hạn chế để sử dụng. Có thể xem các chương trình sẵn sàng bằng cách chạy lệnh <command
+>ls /bin /sbin /usr/bin /usr/sbin</command
+> (ls = liệt kê) hay <command
+>help</command
+> (trợ giúp). Trình bao này là bộ nhái trình bao Bourne tên <command
+>ash</command
+> có một số tính năng tốt đẹp như khả năng tự động gõ và lược sử. </para
+><para
+>Để soạn thảo và xem tập tin, hãy dùng trình soạn thảo văn bản <command
+>nano</command
+>. Các tập tin ghi lưu cho hệ thống cài đặt nằm trong thư mục <filename
+>/var/log</filename
+>. </para>
+<note
+><para
+>Mặc dù bạn có thể sử dụng bất cứ lệnh có sẵn trong trình bao, tùy chọn dùng trình bao chỉ sẵn sàng để giúp đỡ trong trường hợp bị lỗi hay gỡ lỗi. </para
+><para
+>Việc tự chạy lệnh từ trình bao có thể gây trở ngạy cho tiến trình cài đặt nên gây ra lỗi hay việc cài đặt chưa hoàn thành. Đặc biệt bạn phải cho phép trình cài đặt kích hoạt vùng trao đổi, không bao giờ tự làm như thế từ trình bao. </para
+></note>
+   </sect3>
+<!--   End of file using-d-i/modules/shell.xml -->
+
+<!-- Start of file using-d-i/modules/network-console.xml -->
+<!-- $Id: network-console.xml 31173 2005-10-05 12:03:55Z holger-guest $ -->
+
+   <sect3 id="network-console">
+   <title
+>Cài đặt qua mạng</title>
+
+<para arch="not-s390"
+>Một của những thành phần hay hơn là <firstterm
+>network-console</firstterm
+>. Nó cho bạn khả năng làm phần lớn tiến trình cài đặt qua mạng thông qua SSH. Việc sử dụng mạng ngụ ý là bạn sẽ phải thực hiện những bước cài đặt đâù tiên từ bàn điều khiển, ít nhất đến khi thiết lập khả năng chạy mạng (dù bạn có thể tự động hoá phần đó bằng phần <xref linkend="automatic-install"/>.) </para
+><para arch="not-s390"
+>Thành phần này không được tải vào trình cài đặt chính theo mặc định, vậy bạn phải yêu cầu nó một cách dứt khoát. Nếu bạn đang cài đặt từ đĩa CD, bạn cần phải khởi động tại ưu tiên vừa, hay nếu không, gọi trình đơn cài đặt chính và chọn mục <guimenuitem
+>Tải thành phần cài đặt từ đĩa CD</guimenuitem
+>, và trong danh sách các thành phần thêm hãy chọn mục <guimenuitem
+>Tùy chọn bàn giao tiếp mạng: Tiếp tục lại cài đặt từ xa bằng SSH</guimenuitem
+>. Việc tải thành công được ngụ ý bằng một mục nhập trình đơn mới : <guimenuitem
+>Tiếp tục lại cài đặt từ xa bằng SSH</guimenuitem
+>. </para
+><para arch="s390"
+>Đối với việc cài đặt vào máy có kiến trúc &arch-title;, đây là phương pháp mặc định sau khi thiết lập mạng. </para
+><para
+><phrase arch="not-s390"
+>Sau khi chọn mục nhập mới này, bạn</phrase
+> <phrase arch="s390"
+>Bạn</phrase
+> sẽ được nhắc nhập một mật khẩu mới sẽ được sử dụng để kết nối đến hệ thống cài đặt và để xác nhận nó. Đó là tất cả thôi. Lúc này bạn nên xem màn hình hướng dẫn bạn đăng nhập từ xa với tư cách là người dùng <emphasis
+>installer</emphasis
+> với mật khẩu mới cung cấp. Một chi tiết quan trọng khác cần thấy biết trên màn hình này là vân tay của hệ thống này. Bạn cần phải truyền vân tay này một cách bảo mật cho <quote
+>người sẽ tiếp tục cài đặt từ xa</quote
+>. </para
+><para
+>Nếu bạn chọn tiếp tục cài đặt cục bộ, vào lúc nào bạn có thể bấm phím &enterkey;, mà sẽ mang bạn về trình đơn chính nơi bạn có thể chọn thành phần khác. </para
+><para
+>Tại đầu khác, bạn cần phải cấu hình thiết bị cuối để sử dụng bảng mã UTF-8, vì hệ thống cài đặt sử dụng đó. Nếu bạn không làm như thế, vẫn còn có thể cài đặt từ xa, nhưng mà bạn có thể gặp một số đồ tạo tác lạ như viền hộp thoại bị hủy hay ký tự khác ASCII không thể đọc. Cách kết nối đến hệ thống cài đặt là dễ như gõ : <informalexample
+><screen>
+<prompt
+>$</prompt
+> <userinput
+>ssh -l installer <replaceable
+>máy_cài_đặt</replaceable
+></userinput>
+</screen
+></informalexample
+> mà <replaceable
+>máy_cài_đặt</replaceable
+> là hoặc tên hoặc địa chỉ IP của máy tính đang được cài đặt. Trước khi thật đăng nhập, vân tay của hệ thống ở xa sẽ được hiển thị, và bạn sẽ phải xác nhận nếu nó là đúng không. </para
+><note
+><para
+>Nếu bạn cài đặt vài máy tính lần lượt, và chúng có cùng một địa chỉ IP hay tên máy, phần mềm <command
+>ssh</command
+> sẽ từ chối kết nối đến máy như vậy. Lý do là nó sẽ có vân tay khác, mà thường ngụ ý sự tấn công lừa gạt. Nếu bạn có chắc là nó không phải ngụ ý sự tấn công, bạn sẽ cần phải xoá bỏ dòng thích hợp ra tập tin liệt kê các máy được biết <filename
+>~/.ssh/known_hosts</filename
+> rồi thử lại. </para
+></note
+><para
+>Sau khi đăng nhập, bạn sẽ xem màn hình đầu tiên chứa hai khả năng: <guimenuitem
+>Khởi chạy trình đơn</guimenuitem
+> và <guimenuitem
+>Khởi chạy hệ vỏ</guimenuitem
+>. Điều thứ nhất mang bạn tới trình đơn cài đặt chính, nơi bạn có thể tiếp tục cài đặt như thường. Còn điều thứ hai khởi chạy một hệ vỏ nơi bạn có thể thẩm tra và có lẽ sửa chữa hệ thống ở xa. Bạn nên sở khởi chỉ một phiên chạy SSH cho trình đơn cài đặt, nhưng có thể chạy nhiều phiên chạy cho các hệ vỏ. </para
+><warning
+><para
+>Sau khi bạn đã khởi chạy tiến trình cài đặt một cách từ xa thông qua SSH. bạn không nên trở về phiên chạy cài đặt đang chạy trên bàn điều khiển cục bộ. Làm như thế có thể hỏng cơ sở dữ liệu chứa cấu hình của hệ thống mới, mà lần lượt có thể gây ra việc cài đặt bị lỗi hay lỗi trong hệ thống đã được cài đặt. </para
+><para
+>Hơn nữa, nếu bạn làm phiên chạy SSH từ thiết bị cuối X, bạn không nên thay đổi kích cỡ của cửa sổ, vì làm như thế sẽ gây ra sự kết nối bị kết thúc. </para
+></warning>
+
+   </sect3>
+<!--   End of file using-d-i/modules/network-console.xml -->
+  </sect2>
+ </sect1>
+<!--   End of file using-d-i/components.xml -->
+
+</chapter>
+
+<!--   End of file using-d-i/using-d-i.xml -->

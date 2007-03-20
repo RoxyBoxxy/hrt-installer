@@ -1,0 +1,635 @@
+<!-- Start of file post-install/post-install.xml -->
+<!-- $Id: post-install.xml 43623 2006-12-29 03:47:48Z fjp $ -->
+
+<chapter id="post-install">
+ <title
+>Bước tiếp và đi đâu vậy?</title>
+
+
+<!-- Start of file post-install/shutdown.xml -->
+<!-- $Id: shutdown.xml 39942 2006-08-18 01:43:34Z nabetaro-guest $ -->
+
+
+ <sect1 id="shutdown">
+ <title
+>Tắt hệ thống</title>
+
+<para
+>Để tắt hệ thống Linux đang chạy, bạn <emphasis
+>không</emphasis
+> nên khởi động lại bằng cái nút đặt lại trên mặt hoặc về sau máy tính, hoặc đơn giản tắt điện. Hệ thống Linux nên được tắt bằng cách được điều khiển, không thì tập tin có thể bị mất và/hoặc đĩa bị hỏng. Nếu bạn chạy môi trường ở trên (v.d. GNOME, KDE, Xfce), thường có tùy chọn <quote
+>Đăng xuất</quote
+> nằm trong trình đơn ứng dụng mà cho bạn có khả năng tắt (hoặc khởi động lại) hệ thống. </para
+><para
+>Hoặc bạn có khả năng bấm tổ hợp phím <keycombo
+> <keycap
+>Ctrl</keycap
+> <keycap
+>Alt</keycap
+> <keycap
+>Del</keycap
+> </keycombo
+> <phrase arch="powerpc;m68k"
+> hoặc <keycombo
+> <keycap
+>Ctrl</keycap
+> <keycap
+>Shift</keycap
+> <keycap
+>điện</keycap
+> </keycombo
+> trên máy tính kiểu Macintosh</phrase
+>. Một tùy chọn cuối cùng là việc đăng nhập như là người chủ (root) và gõ một của những lệnh này: <command
+>poweroff</command
+> (tắt điện), <command
+>halt</command
+> (dừng) hoặc <command
+>shutdown -h now</command
+> (tắt máy -h bây giờ), nếu tổ hợp phím không hoạt động được, hoặc nếu bạn thích gõ lệnh hơn; hãy sử dụng lệnh <command
+>reboot</command
+> (khởi động lại) để khởi động lại hệ thống. </para>
+ </sect1>
+<!--   End of file post-install/shutdown.xml -->
+
+<!-- Start of file post-install/new-to-unix.xml -->
+<!-- $Id: new-to-unix.xml 28672 2005-06-26 10:06:30Z fjp $ -->
+
+
+ <sect1 id="unix-intro">
+ <title
+>Cho người dùng UNIX mới</title>
+<para
+>Nếu bạn chưa quen với UNIX, khuyên bạn đọc một số cuốn sách và tài liệu. Rất nhiều thông tin hữu ích nằm trong Tham Khảo Debian <ulink url="&url-debian-reference;"
+>Debian Reference</ulink
+>. Danh sách các Hỏi Đáp UNIX <ulink url="&url-unix-faq;"
+>list of Unix FAQs</ulink
+> này chứa một số tài liệu UseNet cung cấp tham khảo lịch sử tốt. </para
+><para
+>Linux là một bản thực hiện UNIX riêng. Dự án tài liệu Linux <ulink url="&url-ldp;"
+>Linux Documentation Project (LDP)</ulink
+> tập hợp một số tài liệu Thế Nào và cuốn sách trực tuyến liên quan đến Linux. Phần lớn tài liệu này có thể được cài đặt một cách cục bộ: chỉ đơn giản hãy cài đặt gói <classname
+>doc-linux-html</classname
+> (kiểu HTML) hay gói <classname
+>doc-linux-text</classname
+> (kiểu ASCII), rồi tìm trong thư mục Thế Nào <filename
+>/usr/share/doc/HOWTO</filename
+>. Phiên bản đã dịch của những tài liệu Thế Nào LDP (nếu có) cũng được công bố dạng gói Debian. </para>
+
+ </sect1>
+<!--   End of file post-install/new-to-unix.xml -->
+
+<!-- Start of file post-install/orientation.xml -->
+<!-- $Id: orientation.xml 43576 2006-12-27 03:35:13Z fjp $ -->
+
+
+ <sect1 id="debian-orientation"
+><title
+>Giới thiệu về Debian</title>
+<para
+>Debian khác một ít với những bản phát hành khác. Thậm chí nếu bạn quen với Linux trong bản phát hành khác, có một số điều cần biết về Debian để giúp đỡ bạn bảo quản một hệ thống tốt đẹp. Chương này chứa thông tin để giúp đỡ bạn bắt đầu dùng Debian; nó không phải là trợ lý hướng dẫn về cách sử dụng Debian, chỉ là tóm tắt rất vắn cho người quá bận thôi. </para>
+
+  <sect2
+><title
+>Hệ thống quản lý gói Debian</title>
+<para
+>Khái niệm quan trọng nhất cần hiểu được là hệ thống gói Debian. Về cơ bản thì nhiều phần lớn của hệ thống của bạn được điều khiển bởi hệ thống quản lý gói này. Những phần này gồm: <itemizedlist
+> <listitem
+><para
+> <filename
+>/usr</filename
+> (trừ <filename
+>/usr/local</filename
+>) </para
+></listitem
+> <listitem
+><para
+> <filename
+>/var</filename
+> (bạn có thể làm <filename
+>/var/local</filename
+> và hoạt động trong đó một cách an toàn) </para
+></listitem
+> <listitem
+><para
+> <filename
+>/bin</filename
+> </para
+></listitem
+> <listitem
+><para
+> <filename
+>/sbin</filename
+> </para
+></listitem
+> <listitem
+><para
+> <filename
+>/lib</filename
+> </para
+></listitem
+> </itemizedlist
+> Lấy thí dụ, bạn có thể thay thế <filename
+>/usr/bin/perl</filename
+> được, nhưng mà nếu bạn nâng cấp gói <classname
+>perl</classname
+>, tập tin bạn đã chèn sẽ bị thay thế. Nhà chuyên môn có thể tránh sự khó này bằng cách đặt gói riêng đã <quote
+>giữ lại</quote
+> trong chương trình <command
+>aptitude</command
+>. </para
+><para
+>Một của những phương pháp cài đặt tốt nhất là « apt ». Bạn có thể sử dụng phiên bản kiểu dòng lệnh <command
+>apt-get</command
+> hoặc phiên bản nhập chữ toàn màn hình <application
+>aptitude</application
+>. Hãy ghi chú rằng apt sẽ cũng cho phép bạn hợp nhất phân loại Chính (main), Đóng góp (contrib.) và Khác tự do (non-free) để cho bạn truy cập gói bị hạn chế khi xuất, cũng như phiên bản chuẩn. </para>
+  </sect2>
+
+  <sect2
+><title
+>Quản lý phiên bản ứng dụng</title>
+<para
+>Phiên bản ứng dụng khác nhau được quản lý bởi « update-alternatives ». Nếu bạn có bảo tồn đồng thời nhiều phiên bản khác nhau của cùng một ứng dụng, xem trang hướng dẫn cho chương trình này, bằng lệnh: « man update-alternatives ». </para>
+  </sect2>
+
+  <sect2
+><title
+>Quản lý công việc định kỳ</title>
+<para
+>Công việc nào nằm trong phạm vị hoạt động của quản trị hệ thống nên được ghi vào thư mục <filename
+>/etc</filename
+>, vì chúng là tập tin cấu hình. Nếu bạn tạo công việc định kỳ (cron) với quyền người chủ (root) cần chạy hàng ngày (daily), hàng tuần (weekly) hay hàng tháng (monthly), hãy chèn chúng vào <filename
+>/etc/cron.{daily,weekly,monthly}</filename
+>. Những công việc này được gọi từ <filename
+>/etc/crontab</filename
+>: chúng sẽ chạy theo thứ tự abc, mà sắp xếp chúng. </para
+><para
+>Mặt khác, nếu bạn tạo một công việc định kỳ (cron job):<itemizedlist
+> <listitem
+><para
+>cần chạy với tư cách người dùng đặc biệt, hay</para
+></listitem
+><listitem
+><para
+>cần chạy vào lúc đặc biệt hoặc với tần số đặc biệt,</para
+></listitem
+> </itemizedlist
+> bạn vẫn có khả năng sử dụng hoặc <filename
+>/etc/crontab</filename
+>, hoặc còn tốt hơn, <filename
+>/etc/cron.d/cái_nào</filename
+>. Những tập tin riêng này cũng có một trường thêm cho phép bạn qui định tài khoản người dùng dưới đó công việc định kỳ sẽ chạy. </para
+><para
+>Trong mỗi trường hợp, bạn chỉ hiệu chỉnh những tập tin đó, rồi chương trình cron sẽ nhận biết chúng một cách tự động. Không cần chạy lệnh đặc biệt nào. Để tìm thông tin thêm, xem hai trang hướng dẫn cron(8) và crontab(5), và tập tin Đọc Đi <filename
+>/usr/share/doc/cron/README.Debian</filename
+>. </para>
+  </sect2>
+ </sect1>
+<!--   End of file post-install/orientation.xml -->
+
+<!-- Start of file post-install/further-reading.xml -->
+<!-- $Id: further-reading.xml 30719 2005-09-21 21:05:48Z stappers $ -->
+
+ <sect1 id="further-reading"
+><title
+>Thông tin thêm</title>
+<para
+>Để tìm thông tin về chương trình riêng nào, trước tiên bạn hãy thử nhập lệnh <userinput
+>man <replaceable
+>tên_chương_trình</replaceable
+></userinput
+>, hoặc <userinput
+>info <replaceable
+>tên_chương_trình</replaceable
+></userinput
+>. </para
+><para
+>Cũng có rất nhiều tài liệu hữu ích nằm trong thư mục <filename
+>/usr/share/doc</filename
+>. Cụ thể là thư mục con Thế Nào <filename
+>/usr/share/doc/HOWTO</filename
+> và Hỏi Đáp <filename
+>/usr/share/doc/FAQ</filename
+> chứa nhiều thông tin hữu dụng. Để thông báo lỗi, xem <filename
+>/usr/share/doc/debian/bug*</filename
+>. Để đọc thông tin về vấn đề đặc trưng cho Debian trong chương trình riêng, xem tập tin Đọc Đi <filename
+>/usr/share/doc/(tên_gói)/README.Debian</filename
+>. </para
+><para
+><ulink url="http://www.debian.org/"
+>Nơi Mạng Debian</ulink
+> chứa rất nhiều tài liệu về Debian. Cụ thể là Hỏi Đáp <ulink url="http://www.debian.org/doc/FAQ/"
+>Debian GNU/Linux FAQ</ulink
+> và tham khảo <ulink url="http://www.debian.org/doc/user-manuals#quick-reference"
+>Debian Reference</ulink
+>. Có một bảng liệt kê nhiều tài liệu hướng dẫn Debian thêm nằm tại dự án tài liệu Debian <ulink url="http://www.debian.org/doc/ddp"
+>Debian Documentation Project</ulink
+>. Cộng đồng Debian hỗ trợ với nhau : để đăng ký tham gia một hay nhiều hộp thư chung Debian, xem trang <ulink url="http://www.debian.org/MailingLists/subscribe"
+> Mail List Subscription</ulink
+>. Cuối cùng nhưng không kém phần quan trọng là khi hộp thư chung Debian <ulink url="http://lists.debian.org/"
+>Debian Mailing List Archives</ulink
+> mà chứa rất nhiều thông tin phong phú về Debian. </para
+><para
+>Một nguồn thông tin tổng quát về GNU/LInux là dự án tài liệu Debian <ulink url="http://www.tldp.org/"
+>Linux Documentation Project</ulink
+>. Tại đó, bạn sẽ tìm các tài liệu Thế Nào và liên kết chỉ đến thông tin rất qúy giá khác về nhiều phần của hệ thống GNU/Linux. </para>
+
+ </sect1>
+<!--   End of file post-install/further-reading.xml -->
+
+<!-- Start of file post-install/mail-setup.xml -->
+<!-- $Id: mail-setup.xml 43774 2007-01-02 23:11:40Z fjp $ -->
+
+ <sect1 id="mail-setup">
+ <title
+>Thiết lập thư điện tử trên hệ thống</title>
+<para
+>Thư điện tử là việc hàng ngày cho rất nhiều người trên khắp thế giới. Vì có nhiều tùy chọn thiết lập, và thiết lập đúng có tác động một số tiện ích Debian, phần này giải thích những điểm cơ bản về cách thiết lập khả năng thư điện tử. </para
+><para
+>Có ba chức năng chính cấu tạo một hệ thống thư điện tử. Điều thứ nhất là <firstterm
+>Tác nhân người dùng thư tín</firstterm
+> (MUA), chương trình người dùng thật sử dụng để viết và đọc các bài thư. Điều thứ hai là <firstterm
+>Tác nhân truyền thư tín</firstterm
+> (MTA) mà truyền các bài thư từ máy này sang máy khác. Điều thứ ba là <firstterm
+>Tác nhân phát thư tín</firstterm
+> (MDA) mà truyền các bài thư gửi đến vào Hộp Đến của người dùng. </para
+><para
+>Ba chức năng này có thể được thực hiện bằng chương trình khác nhau, nhưng cũng có thể được kết hợp trong một hay hai chương trình. Cũng có thể thiết lập chương trình khác nhau quản lý những chức năng này cho các kiểu thư khác nhau. </para
+><para
+>Trên hệ thống kiểu Linux và Unix, rất nhiều người đã dùng <command
+>mutt</command
+> như là MUA. Giống như phần lớn chương trình Linux truyền thống, nó dựa vào văn bản. Nó thường được dùng cùng với <command
+>exim</command
+> hay <command
+>sendmail</command
+> như là MTA và <command
+>procmail</command
+> như là MDA. </para
+><para
+>Tuy nhiên, rất nhiều người hiện thời thích sử dụng chương trình đồ họa hơn chương trình dựa vào văn bản. Vậy chương trình thư điện tử đồ họa như  <command
+>evolution</command
+> của GNOME, <command
+>kmail</command
+> của KDE hay <command
+>thunderbird</command
+> của Mozilla (trong Debian có sẵn như là <command
+>icedove</command
+><footnote
+> <para
+><command
+>thunderbird</command
+> có tên <command
+>icedove</command
+> trong Debian vì lý do cấp quyền; chi tiết về trường hợp này nằm ở ngoại phạm vị của sổ tay này.</para
+> </footnote
+>) đã trở thành rất  phổ biến hơn. Những chương trình này kết hợp chức năng của MUA, MTA và MDA, nhưng vẫn có thể được dùng cùng với công cụ LInux truyền thống. </para>
+
+  <sect2 id="mail-default">
+  <title
+>Cấu hình thư điện tử mặc định</title>
+<para
+>Thậm chí nếu bạn định sử dụng chương trình thư điện tử đồ họa, quan trọng là một MTA/MDA truyền thống cũng được cài đặt và thiết lập đúng trên hệ thống Linux. Lý do là những tiện ích khác nhau chạy trên hệ thống<footnote
+> <para
+> Chẳng hạn, <command
+>cron</command
+>, <command
+>quota</command
+>, <command
+>logcheck</command
+>, <command
+>aide</command
+>, &hellip; </para
+> </footnote
+>cũng có khả năng gửi thông báo quan trọng qua thư điện tử, để báo quản trị hệ thống biết về vấn đề hay thay đổi. </para
+><para
+>Vì lý do này, hai gói <classname
+>exim4</classname
+> và <classname
+>mutt</classname
+> sẽ được cài đặt theo mặc định (miễn là bạn đã không bỏ chọn công việc <quote
+>chuẩn</quote
+> trong khi cài đặt). <classname
+>exim4</classname
+> là chương trình cả hai MTA/MDA hơi nhỏ còn rất dẻo. Mặc định là nó sẽ được cấu hình để thao tác chỉ những thư cục bộ với hệ thống chính nó, và các thư được gửi cho quản trị hệ thống (tài khoản người chủ) sẽ được phát cho tài khoản người dùng chuẩn được tạo trong tiến trình cài đặt<footnote
+> <para
+> Khả năng chuyển đổi thư cho người chủ tới tài khoản người dùng chuẩn được cấu hình trong <filename
+>/etc/aliases</filename
+>. Nếu chưa tạo tài khoản người dùng chuẩn nào, các thư như vậy sẽ được phát cho tài khoản người chủ.</para
+> </footnote
+>. </para
+><para
+>Khi các thư hệ thống được phát, chúng được thêm vào một tập tin trong <filename
+>/var/mail/<replaceable
+>tên_tài_khoản</replaceable
+></filename
+>. Có thể đọc các thư này bằng <command
+>mutt</command
+>. </para>
+  </sect2>
+
+  <sect2 id="mail-outgoing">
+  <title
+>Gửi thư ra hệ thống</title>
+<para
+>Như nói trên, hệ thống Debian đã cài đặt chỉ được thiết lập để thao tác các thư cục bộ với hệ thống, không phải để gửi thư cho người khác, cũng không phải để nhận thư từ người khác. </para
+><para
+>Nếu bạn muốn chương trình <classname
+>exim4</classname
+> quản lý các thư bên ngoài, xem phần phụ kế tiếp tìm những tùy chọn cấu hình cơ bản. Hãy thử ra việc gửi và nhận thư chạy đúng không. </para
+><para
+>Nếu bạn định sử dụng chương trình thư điện tử kiểu đồ họa và sử dụng máy phục vụ thư tín của nhà cung cấp dịch vụ Mạng (ISP) hay chỗ làm, không cần cấu hình <classname
+>exim4</classname
+> để quản lý các thư bên ngoài. Chỉ cần cấu hình chương trình thư đồ họa để sử dụng những máy phục vụ đúng để gửi và nhận thư điện tử (các hướng dẫn này nằm ở ngoại phạm vị của sổ tay này). </para
+><para
+>Tuy nhiên, trong trường hợp đó, bạn có thể cần phải cần cấu hình tiện ích riêng để gửi đúng thư điện tử. Một tiện ích như vậy là <command
+>reportbug</command
+>, một chương trình làm cho dễ dàng việc thông báo lỗi trong gói Debian. Mặc định là nó chờ đợi gửi thư qua <classname
+>exim4</classname
+>.  </para
+><para
+>Để thiết lập đúng <command
+>reportbug</command
+> để sử dụng máy phục vụ thư tín bên ngoài, hãy chạy lệnh cấu hình <command
+>reportbug --configure</command
+> và trả lời <quote
+>không</quote
+> khi hỏi nếu có sẵn MTA không. Sau đó, bạn sẽ được nhắc nhập máy phục vụ SMTP (gửi thư) cần dùng để đệ trình báo cáo lỗi. </para>
+  </sect2>
+
+  <sect2 id="config-mta">
+  <title
+>Cấu hình tác nhân truyền thư tín Exim4</title>
+<para
+>Muốn hệ thống cũng thao tác các thư điện tử bên ngoài thì cần phải cấu hình lại gói <classname
+>exim4</classname
+><footnote
+> <para
+> Cũng có thể gỡ bỏ gói <classname
+>exim4</classname
+> và thay thế bằng MTA/MDA khác. </para
+> </footnote
+>: <informalexample
+><screen
+># dpkg-reconfigure exim4-config
+</screen
+></informalexample>
+
+</para
+><para
+>Sau khi nhập lệnh này (dưới người chủ), tiến trình sẽ hỏi nếu bạn muốn chia cấu hình ra nhiều tập tin nhỏ. Chưa chắc thì bặt tùy chọn mặc định. </para
+><para
+>Tiếp theo hiển thị vài trường hợp thư tín thường gặp. Hãy chọn điều thích hợp với những nhu cầu của bạn. </para>
+
+<variablelist>
+<varlistentry>
+<term
+>nơi Mạng</term>
+<listitem
+><para
+>Hệ thống của bạn có kết nối đến mạng, và thư tín được gởi và nhận trực tiếp bằng SMTP. Trên những màn hình theo sau, bạn sẽ được hỏi vài câu cơ bản, như tên thư tín của máy tính này, hay danh sách miền cho chúng bạn chấp nhận hay chuyển tiếp lại thư tín. </para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+>thư được gởi bởi máy thông minh</term>
+<listitem
+><para
+>Trong trường hợp này, các thư gửi đi được chuyển tiếp tới máy khác, tên <quote
+>máy khéo</quote
+>, mà gửi thư đó cho đích. Máy khéo cũng thường cất giữ các thư gửi đến máy tính của bạn, vậy bạn không cần lên Mạng suốt. Cũng cần tải các thư xuống máy khéo bằng chương trình như <classname
+>fetchmail</classname
+>. </para
+><para
+>Trong nhiều trường hợp, máy khéo là máy phục vụ thư tín của nhà cung cấp dịch vụ Mạng (ISP) thì tùy chọn này rất thích hợp với người dùng quay số. Máy khéo cũng có thể là máy phục vụ thư tín ở chỗ làm, hoặc ngay cả một hệ thống khác trên cùng mạng. </para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+>thư gửi bởi máy khéo; không có thư cục bộ</term>
+<listitem
+><para
+>Tùy chọn này cơ bản bằng điều trước, trừ hệ thống sẽ không được thiết lập để thao tác thư cho miền thư điện tử cục bộ. Các thư trên hệ thống chính nó (v.d. cho quản trị hệ thống) vẫn còn sẽ được xử lý. </para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+>chỉ phát cục bộ</term>
+<listitem
+><para
+>Đây là tùy chọn mặc định trong cấu hình hệ thống. </para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+>chưa cấu hình</term>
+<listitem
+><para
+>Hãy chọn điều này chỉ nếu bạn biết chính xác bạn làm gì. Nó sẽ để lại hệ thống thư chưa cấu hình: trước khi bạn cấu hình nó, bạn không có khả năng gởi hay nhận thư nào, thì có thể mất một số thông điệp quan trong từ tiện ích hệ thống. </para
+></listitem>
+</varlistentry>
+</variablelist>
+
+<para
+>Nếu không có trường hợp trong những trường hợp này là thích hợp với những nhu cầu của bạn, hoặc nếu bạn cần một thiết lập chi tiết hơn, cần phải chỉnh sửa tập tin cấu hình nằm dưới thư mục <filename
+>/etc/exim4</filename
+> sau khi cài đặt xong. Thông tin thêm về <classname
+>exim4</classname
+> nằm dưới thư mục <filename
+>/usr/share/doc/exim4</filename
+>; tập tin Đọc Đi <filename
+>README.Debian.gz</filename
+> chứa chi tiết thêm về cách thiết lập <classname
+>exim4</classname
+>, và giải thích tìm tài liệu thêm như thế nào. </para
+><para
+>Ghi chú rằng việc gửi thư trực tiếp cho Mạng khi bạn không có tên miền chính thức có thể gây ra thư bị từ chối do biện pháp chống thư rác trên máy phục vụ nhận thư. Tốt hơn khi dùng máy phục vụ thư tín của nhà cung cấp dịch vụ Mạng (ISP). Nếu bạn vẫn còn muốn gửi thư một cách trực tiếp, có lẽ bạn muốn sử dụng một địa chỉ thư điện tử khác với điều được tạo ra theo mặc định. Dùng <classname
+>exim4</classname
+> như là MTA, thì có thể làm như thế bằng cách thêm một mục nhập vào tập tin <filename
+>/etc/email-addresses</filename
+>. </para>
+  </sect2>
+ </sect1>
+<!--   End of file post-install/mail-setup.xml -->
+
+<!-- Start of file post-install/kernel-baking.xml -->
+<!-- $Id: kernel-baking.xml 40980 2006-09-26 00:27:16Z fjp $ -->
+
+ <sect1 id="kernel-baking"
+><title
+>Biên dịch hạt nhân mới</title>
+<para
+>Tại sao biên dịch hạt nhân mới? Thường không cần, vì hạt nhân mặc định có sẵn trong Debian có khả năng quản lý được hậu hết cấu hình máy tính. Hơn là Debian cung cấp vài hạt nhân xen kẽ. Vậy trước tiên, khuyên bạn kiểm tra xem nếu có gói ảnh hạt nhân xen kẽ thích hợp hơn với phần cứng của bạn. Tuy nhiên, một số người sẽ muốn biên dịch một hạt nhân mới để: <itemizedlist>
+<listitem
+><para
+>quản lý vấn đề phần cứng đặc biệt, hoặc chỉnh sửa sự xung đột giữa phần cứng và hạt nhân có sẵn </para
+></listitem>
+<listitem
+><para
+>sử dụng tùy chọn hạt nhân nào chưa được hỗ trợ trong hạt nhân có sẵn (như khả năng hỗ trợ bộ nhớ cao) </para
+></listitem>
+<listitem
+><para
+>tối ưu hóa hạt nhân bằng cách gỡ bỏ các trình điều khiển vô ích, để tăng tốc độ khởi động </para
+></listitem>
+<listitem
+><para
+>tạo hạt nhân cả một phần, thay cho hạt nhân chứa nhiều mô-đun riêng </para
+></listitem>
+<listitem
+><para
+>chạy hạt nhân đã cập nhật hay hạt nhân phiên bản phát triển </para
+></listitem>
+<listitem
+><para
+>học biết thêm về hạt nhân Linux </para
+></listitem>
+</itemizedlist>
+
+</para>
+
+  <sect2
+><title
+>Quản lý ảnh hạt nhân</title>
+<para
+>Đừng sợ thử biên dịch hạt nhân: kinh nghiệm này là thú vị và hữu dụng. </para
+><para
+>Để biên dịch hạt nhân bằng cách Debian, bạn cần lấy một số gói: <classname
+>fakeroot</classname
+>, <classname
+>kernel-package</classname
+>, <classname
+>linux-source-2.6</classname
+> và một số điều khác rất có thể đã được cài đặt (xem tài liệu Đọc Đi <filename
+>/usr/share/doc/kernel-package/README.gz</filename
+> để tìm danh sách đầy đủ). </para
+><para
+>Phương pháp này sẽ tạo gói dạng .deb chứa mã nguồn hạt nhân riêng của bạn, cũng tạo một gói dạng .deb kiểu phụ thuộc vào đã đồng bộ chứa mỗi mô-đun khác chuẩn (nếu có). Nó là phương pháp tốt hơn để quản lý ảnh hạt nhân; <filename
+>/boot</filename
+> sẽ chứa hạt nhân, tập tin « System.map », và bản ghi của tập tin cấu hình hoạt động của bản xâu dựng đó. </para
+><para
+>Ghi chú rằng bạn không <emphasis
+>cần phải</emphasis
+> biên dịch hạt nhân bằng <quote
+>cách Debian</quote
+>; nhưng mà chúng tôi cho là dễ hơn và an toàn hơn khi sử dụng hệ thống quản lý gói để quản lý hạt nhân riêng. Tức là, bạn có thể lấy mã nguồn hạt nhân một cách trực tiếp từ bắc Linus thay cho <classname
+>linux-source-2.6</classname
+>, còn vẫn sử dụng phương pháp biên dịch <classname
+>kernel-package</classname
+>. </para
+><para
+>Ghi chú rằng tài liệu hướng dẫn hoàn toàn về cách sử dụng <classname
+>kernel-package</classname
+> nằm dưới thư mục <filename
+>/usr/share/doc/kernel-package</filename
+>. Tiết đoạn này chỉ chứa trợ lý hướng dẫn vắn thôi. </para
+><para
+>Kể từ câu này, giả sử là bạn điều khiển hoàn toàn máy tính, cũng sẽ giải nén mã nguồn hạt nhân vào nơi nào trong thư mục chính của mình. <footnote
+> <para
+> Có một số vị trí khác vào đó bạn có thể giải nén mã nguồn hạt nhân rồi xây dựng hạt nhân riêng, nhưng mà dễ nhất khi giải nén vào thư mục chính vì không cần thiết quyền truy cập đặc biệt. </para
+> </footnote
+>. Cũng giả sử là phiên bản hạt nhân là &kernelversion;. Hãy chắc là (trên dòng lệnh) bạn nằm trong thư mục vào đó bạn muốn giải nén mã nguồn hạt nhân, rồi giải nén nó bằng lệnh <userinput
+>tar xjf /usr/src/linux-source-&kernelversion;.tar.bz2</userinput
+> và chuyển đổi sang thư mục <filename
+>linux-source-&kernelversion;</filename
+> mới tạo. </para
+><para
+>Lúc đó bạn có khả năng cấu hình hạt nhân mới. Nếu bạn đã cài đặt và cấu hình X11, mà hoạt động, hãy chạy lệnh <userinput
+>make xconfig</userinput
+>; nếu không thì chạy lệnh <userinput
+>make menuconfig</userinput
+> (cần thiết cài đặt gói <classname
+>libncurses5-dev</classname
+>). Bạn nên mất thời gian để đọc trợ giúp trực tuyến: bạn hãy cẩn thận khi chọn cấu hình hạt nhân. Khi chưa chắc, khuyên bạn bao gồm trình điều khiển thiết bị (phần mềm quản lý phần cứng ngoại vi: thẻ Ethernet, bộ điều khiển SCSI v.v.) về đó bạn chưa chắc. Lại cẩn thận: các tùy chọn khác, không liên quan đến phần cứng đặc trưng, nên vẫn giữ giá trị mặc định nếu bạn không hiểu chúng. Đừng quên chọn <quote
+>Kernel module loader</quote
+> (bộ tải mô-đun hạt nhân) trong phần <quote
+>Loadable module support</quote
+> (khả năng hỗ trợ mô-đun tải được): mặc định là nó chưa chọn. Nếu không gồm thì bản cài đặt Debian đó sẽ gặp lỗi. </para
+><para
+>Sau đó, bạn nên làm sạch cây nguồn và đặt lại các tham số <classname
+>kernel-package</classname
+>. Để làm như thế, hãy chạy lệnh <userinput
+>make-kpkg clean</userinput
+>. </para
+><para
+>Bước theo, hãy biên dịch hạt nhân, bằng lệnh <userinput
+>fakeroot make-kpkg --initrd --revision=custom.1.0 kernel_image</userinput
+>. Số hiệu phiên bản <quote
+>1.0</quote
+> có thể thay đổi: nó chỉ là số phiên bản dùng để theo dõi các bản xây dựng hạt nhân. Hơn là bạn có khả năng thay thế từ <quote
+>custom</quote
+> (riêng) bằng bất cứ từ khác nào (v.d. tên máy). Tiến trình biên dịch hạt nhân có thể hơi lâu, tùy thuộc vào tốc độ của máy tính. </para
+><para
+>Một khi biên dịch xong, bạn có khả năng cài đặt hạt nhân riêng giống như bất cứ gói phần mềm nào. Như là người chủ, hãy chạy lệnh <userinput
+>dpkg -i ../linux-image-&kernelversion;-<replaceable
+>kiến trúc phụ</replaceable
+>_custom.1.0_&architecture;.deb</userinput
+>. Phần <replaceable
+>kiến trúc phụ</replaceable
+> là một kiến trúc phụ tùy chọn, <phrase arch="i386"
+> v.d. <quote
+>686</quote
+>, </phrase
+> phụ thuộc vào những tùy chọn hạt nhân nào bạn đặt. <userinput
+>dpkg -i</userinput
+> sẽ cài đặt hạt nhân, cùng với một số tập tin hỗ trợ tốt đẹp khác. Chẳng hạn, tập tin <filename
+>System.map</filename
+> sẽ được cài đặt đúng (có ích để gỡ lỗi hạt nhân), và <filename
+>/boot/config-&kernelversion;</filename
+> sẽ được cài đặt, chứa bộ cấu hình hiện thời của bạn. Gói hạt nhân mới cũng có khả năng cập nhật tự động bộ tải khởi động để sử dụng hạt nhân mới. Nếu bạn đã tạo một gói modules (các mô-đun), bạn cũng cần phải cài đặt nó. </para
+><para
+>Lúc này cần khởi động lại hệ thống: hãy đọc cẩn thận cảnh báo nào mà bước trước mới tạo, rồi chạy lệnh <userinput
+>shutdown -r now</userinput
+> (tắt bây giờ, rồi khởi động lại). </para
+><para
+>Để tìm thông tin thêm về hạt nhân Debian và phương pháp biên dịch hạt nhân, xem Sổ Tay Hạt Nhân Linux Debian <ulink url="&url-kernel-handbook;"
+>Debian Linux Kernel Handbook</ulink
+>. Còn để tìm chi tiết về gói hạt nhân <classname
+>kernel-package</classname
+>, đọc những tài liệu hướng dẫn tốt đẹp nằm trong thư mục <filename
+>/usr/share/doc/kernel-package</filename
+>. </para>
+  </sect2>
+ </sect1>
+<!--   End of file post-install/kernel-baking.xml -->
+
+<!-- Start of file post-install/rescue.xml -->
+<!-- $Id: rescue.xml 39614 2006-08-07 15:50:11Z fjp $ -->
+
+ <sect1 id="rescue">
+ <title
+>Phục hồi hệ thống bị hỏng</title>
+<para
+>Thỉnh thoảng gặp lỗi nên hệ thống được cài đặt cẩn thận không còn khởi động được lại. Có lẽ cấu hình bộ tải khởi động bị hỏng trong khi thử ra sự thay đổi, hoặc có lẽ một hạt nhân mới cài đặt sẽ không khởi động được, hoặc gì đó rất lạ đã xảy ra, bạn chưa biết sao. Trong mọi trường hợp đều, bạn cần có hệ thống hoạt động trong khi sửa điều bị hỏng thì chế độ cứu có ích. </para
+><para
+>Để truy cập chế độ cứu, hãy gõ <userinput
+>rescue</userinput
+> (cứu) tại dấu nhắc <prompt
+>boot:</prompt
+>, hoặc khởi động với tham số <userinput
+>rescue/enable=true</userinput
+> (cứu bật là đúng). Bạn sẽ xem vài màn hình đầu của trình cài đặt, góc màn hình hiển thị chú thích ngụ ý là chế độ cứu, không phải tiến trình cài đặt đầy đủ. Đừng lo, hệ thống của bạn đâu có sắp bị ghi đè. Chế độ cứu đơn giản sử dụng những khả năng phát hiện phần cứng có sẵn trong trình cài đặt để chắc là các đĩa, thiết bị mạng v.v. sẵn sàng cho bạn trong khi sửa chữa hệ thống. </para
+><para
+>Thay cho công cụ phân vùng, màn hình kế tiếp nên hiển thị danh sách các phân vùng nằm trong hệ thống, yêu cầu bạn chọn một điều. Bình thường, bạn nên chọn phân vùng chứa hệ thống tập tin gốc mà bạn cần phải sửa chữa. Bạn có khả năng chọn phân vùng nằm trên thiết bị kiểu RAID và LVM cũng như điều được tạo trực tiếp trên đĩa. </para
+><para
+>Nếu có thể, trình cài đặt lúc bây giờ hiển thị dấu nhắc trình bao trong hệ thống tập tin mới chọn, cho bạn thực hiện việc sửa chữa. <phrase arch="x86"
+>Ví dụ, nếu bạn cần phải cài đặt lại bộ tải khởi động GRUB vào mục ghi khởi động chính của đĩa cứng thứ nhất, bạn có thể gõ lệnh <userinput
+>grub-install '(hd0)'</userinput
+> để làm như thế. </phrase
+> </para
+><para
+>Nếu trình cài đặt không thể chạy trình bao có ích trong hệ thống tập tin gốc đã chọn, có lẽ vì hệ thống tập tin bị hỏng, nó sẽ hiển thị cảnh báo và đưa ra trình bao trong môi trường cài đặt thay thế. Môi trường này có thể cung cấp số công cụ ít hơn, mà thường vẫn còn là đủ để sửa chữa hệ thống. Hệ thống tập tin gốc mới chọn sẽ được gắn kết vào thư mục <filename
+>/target</filename
+>. </para
+><para
+>Trong mỗi trường hợp, sau khi bạn thoát khỏi trình bao, hệ thống sẽ khởi động lại. </para
+><para
+>Cuối cùng, ghi chú rằng tiến trình sửa chữa hệ thống bị hỏng có thể là khó : tài liệu hướng dẫn này không phải nhắm diễn tả mọi lỗi có thể hay cách sửa nó. Nếu bạn gặp lỗi, hãy hỏi nhà chuyên môn. </para>
+ </sect1>
+<!--   End of file post-install/rescue.xml -->
+
+</chapter>
+<!--   End of file post-install/post-install.xml -->

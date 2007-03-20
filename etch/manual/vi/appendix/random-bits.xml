@@ -1,0 +1,1455 @@
+<!-- Start of file appendix/random-bits.xml -->
+<!-- $Id: random-bits.xml 45239 2007-02-18 19:38:12Z fjp $ -->
+
+<appendix id="random-bits"
+><title
+>Lặt vặt</title>
+
+
+<!-- Start of file appendix/files.xml -->
+<!-- $Id: files.xml 44436 2007-01-23 19:23:09Z fjp $ -->
+
+
+ <sect1 id="linuxdevices"
+><title
+>Thiết bị Linux</title>
+<para
+>Trong hệ thống Linux, một số tập tin đặc biệt nằm dưới thư mục <filename
+>/dev</filename
+>. Những tập tin này được gọi là tập tin thiết bị (device files), có ứng xử khác với tập tin chuẩn. Kiểu tập tin thiết bị thường nhất thuộc về thiết bị khối và thiết bị ký tự. Những tập tin này là giao diện với trình điều khiển thật (phần của hạt nhân Linux) mà lần lượt truy cập phần cứng. Một kiểu tập tin thiết bị khác, ít thường hơn, có tên <firstterm
+>pipe</firstterm
+> (ống dẫn). Những tập tin thiết bị quan trọng nhất được liệt kê trong các bảng bên dưới. </para
+><para>
+
+<informaltable
+><tgroup cols="2"
+><tbody>
+<row>
+  <entry
+><filename
+>fd0</filename
+></entry>
+  <entry
+>Ổ đĩa mềm thứ nhất</entry>
+</row
+><row>
+  <entry
+><filename
+>fd1</filename
+></entry>
+  <entry
+>Ổ đĩa mềm thứ hai</entry>
+</row>
+</tbody
+></tgroup
+></informaltable>
+
+<informaltable
+><tgroup cols="2"
+><tbody>
+<row>
+  <entry
+><filename
+>hda</filename
+></entry>
+  <entry
+>Đĩa cứng/CD-ROM kiểu IDE nằm trên cổng IDE thứ nhất (chính)</entry>
+</row
+><row>
+  <entry
+><filename
+>hdb</filename
+></entry>
+  <entry
+>Đĩa cứng/CD-ROM kiểu IDE nằm trên cổng IDE thứ nhất (phụ)</entry>
+</row
+><row>
+  <entry
+><filename
+>hdc</filename
+></entry>
+  <entry
+>Đĩa cứng/CD-ROM kiểu IDE nằm trên cổng IDE thứ hai (chính)</entry>
+</row
+><row>
+  <entry
+><filename
+>hdd</filename
+></entry>
+  <entry
+>Đĩa cứng/CD-ROM kiểu IDE nằm trên cổng IDE thứ hai (phụ)</entry>
+</row
+><row>
+  <entry
+><filename
+>hda1</filename
+></entry>
+  <entry
+>Phân vùng thứ nhất nằm trên đĩa cứng KDE thứ nhất</entry>
+</row
+><row>
+  <entry
+><filename
+>hdd15</filename
+></entry>
+  <entry
+>Phân vùng thứ mười năm nằm trên đĩa cứng KDE thứ tư</entry>
+</row>
+</tbody
+></tgroup
+></informaltable>
+
+<informaltable
+><tgroup cols="2"
+><tbody>
+<row>
+  <entry
+><filename
+>sda</filename
+></entry>
+  <entry
+>Đĩa cứng kiểu SCSI với mã nhận diện ID SCSI thấp nhất (v.d. 0)</entry>
+</row
+><row>
+  <entry
+><filename
+>sdb</filename
+></entry>
+  <entry
+>Đĩa cứng SCSI với ID SCSI cao hơn kế tiếp (v.d. 1)</entry>
+</row
+><row>
+  <entry
+><filename
+>sdc</filename
+></entry>
+  <entry
+>Đĩa cứng SCSI với ID SCSI cao hơn kế tiếp (v.d. 2)</entry>
+</row
+><row>
+  <entry
+><filename
+>sda1</filename
+></entry>
+  <entry
+>Phân vùng thứ nhất nằm trên đĩa cứng kiểu SCSI thứ nhất</entry>
+</row
+><row>
+  <entry
+><filename
+>sdd10</filename
+></entry>
+  <entry
+>Phân vùng thứ mười nằm trên đĩa cứng SCSI thứ tư</entry>
+</row>
+</tbody
+></tgroup
+></informaltable>
+
+<informaltable
+><tgroup cols="2"
+><tbody>
+<row>
+  <entry
+><filename
+>sr0</filename
+></entry>
+  <entry
+>Đĩa CD-ROM kiểu SCSI với ID SCSI thấp nhất</entry>
+</row
+><row>
+  <entry
+><filename
+>sr1</filename
+></entry>
+  <entry
+>Đĩa CD-ROM SCSI với ID SCSI cao hơn kế tiếp</entry>
+</row>
+</tbody
+></tgroup
+></informaltable>
+
+<informaltable
+><tgroup cols="2"
+><tbody>
+<row>
+  <entry
+><filename
+>ttyS0</filename
+></entry>
+  <entry
+>Cổng nối tiếp 0, COM1 dưới MS-DOS</entry>
+</row
+><row>
+  <entry
+><filename
+>ttyS1</filename
+></entry>
+  <entry
+>Cổng nối tiếp 1, COM2 dưới MS-DOS</entry>
+</row
+><row>
+  <entry
+><filename
+>psaux</filename
+></entry>
+  <entry
+>Thiết bị con chuột PS/2</entry>
+</row
+><row>
+  <entry
+><filename
+>gpmdata</filename
+></entry>
+  <entry
+>Thiết bị giả, dữ liệu lặp lại từ trình nền GPM (con chuột)</entry>
+</row>
+</tbody
+></tgroup
+></informaltable>
+
+<informaltable
+><tgroup cols="2"
+><tbody>
+<row>
+  <entry
+><filename
+>cdrom</filename
+></entry>
+  <entry
+>Liên kết tượng trưng đến ổ đĩa CD-ROM</entry>
+</row
+><row>
+  <entry
+><filename
+>mouse</filename
+></entry>
+  <entry
+>Liên kết tượng trưng đến tập tin thiết bị con chuột</entry>
+</row>
+</tbody
+></tgroup
+></informaltable>
+
+<informaltable
+><tgroup cols="2"
+><tbody>
+<row>
+  <entry
+><filename
+>null</filename
+></entry>
+  <entry
+>Mọi gì được ghi vào thiết bị này sẽ biến mất</entry>
+</row
+><row>
+  <entry
+><filename
+>zero</filename
+></entry>
+  <entry
+>Có thể đọc vô hạn số không ra thiết bị này</entry>
+</row>
+</tbody
+></tgroup
+></informaltable>
+
+</para>
+
+  <sect2>
+<title
+>Thiết lập con chuột</title>
+
+<para
+>Con chuột được dùng trong cả bàn giao tiếp Linux (bằng GPM) lẫn môi trường cửa sổ X. Hai cách sử dụng này có thể được làm tương thích với nhau nếu bộ lặp lại GPM được dùng để cho phép tín hiệu luồng đến trình phục vụ X như được hiển thị: <informalexample
+><screen>
+mouse =&gt; /dev/psaux  =&gt; gpm =&gt; /dev/gpmdata -&gt; /dev/mouse =&gt; X
+         /dev/ttyS0             (bộ lặp lại)        (liên kết tượng trưng)
+         /dev/ttyS1
+</screen
+></informalexample
+> Hãy đặt giao thức lặp lại là thô [<quote
+>raw</quote
+>] (trong tập tin cấu hình <filename
+>/etc/gpm.conf</filename
+>), còn đặt X với giao thức con chuột gốc trong tập tin cấu hình X <filename
+>/etc/X11/XF86Config</filename
+> hay <filename
+>/etc/X11/XF86Config-4</filename
+>. </para
+><para
+>Phương pháp này, để dùng GPM ngay cả trong X, có ích khi con chuột bị tháo nút ra không chú ý. Việc đơn giản khởi chạy lại GPM bằng lệnh<informalexample
+><screen>
+# /etc/init.d/gpm restart
+</screen
+></informalexample
+> sẽ kết nối lại con chuột trong phần mềm, không cần khởi chạy lại X. </para
+><para
+>Nếu vì lý do nào GPM bị tắt hay chưa được cài đặt, hãy đảm bảo đặt X sẽ đọc trực tiếp từ thiết bị con chuột, v.d. <filename
+>/dev/psaux</filename
+>. Để tìm chi tiết, xem tài liệu nhỏ con chuột có ba cái nút Thế Nào tại <filename
+>/usr/share/doc/HOWTO/en-txt/mini/3-Button-Mouse.gz</filename
+>, trang hướng dẫn <userinput
+>man gpm</userinput
+>, Hỏi Đáp <filename
+>/usr/share/doc/gpm/FAQ.gz</filename
+>, và tài liệu Đọc Đi <ulink url="&url-xorg;current/doc/html/mouse.html"
+>README.mouse</ulink
+>. </para
+><para arch="powerpc"
+>Đối với máy kiểu PowerPC, trong tập tin cấu hình X <filename
+>/etc/X11/XF86Config</filename
+> hay <filename
+>/etc/X11/XF86Config-4</filename
+>, bạn đặt thiết bị con chuột thành <userinput
+>"/dev/input/mice"</userinput
+>. </para
+><para arch="powerpc"
+>Hạt nhân hiện đại cho bạn khả năng mô phỏng con chuột có ba cái nút khi con chuột vật lý có chỉ một nút riêng lẻ. Đơn giản hãy thêm những dòng theo đây vào tập tin cấu hình <filename
+>/etc/sysctl.conf</filename
+>. <informalexample
+><screen
+># Mô phỏng con chuột có ba cái nút:
+# bật khả năng mô phỏng
+/dev/mac_hid/mouse_button_emulation = 1
+# Gởi tín hiệu của cái nút nằm giữa trên con chuột bằng phím chức năng F11
+/dev/mac_hid/mouse_button2_keycode = 87
+# Gởi tín hiệu của cái nút bên phải trên con chuột bằng phím F12
+/dev/mac_hid/mouse_button3_keycode = 88
+# Đối với phím khác, dùng công cụ showkey để báo bạn biết mã thích hợp.
+</screen
+></informalexample>
+
+</para>
+  </sect2>
+ </sect1>
+
+ <sect1 id="tasksel-size-list">
+ <title
+>Sức chứa trên đĩa cần thiết cho công việc</title>
+<para
+>Bản cài đặt chuẩn trên máy kiểu i386, gồm các gói chuẩn và dùng hạt nhân phiên bản 2.6 mặc định, chiếm &std-system-size; MB sức chứa trên đĩa. Còn một bản cài đặt tối thiểu, không có công việc  <quote
+>Hệ thống chuẩn</quote
+> được chọn, chiếm &base-system-size; MB. </para>
+<important
+><para
+>Trong cả hai trường hợp, số lượng này là sức chứa thật được dùng trên đĩa <emphasis
+>sau khi</emphasis
+> cài đặt xong và tập tin tạm thời nào được xoá. Số này cũng không tính tài nguyên thêm được chiếm bởi hệ thống tập tin, chẳng hạn cho các tập tin nhật ký. Có nghĩa là cần thiết sức chứa nhiều hơn, cả <emphasis
+>trong khi</emphasis
+> cài đặt lẫn khi sử dụng hệ thống hàng ngày. </para
+></important>
+<para
+>Theo đây có bảng hiển thị các kích cỡ do trình aptitude thông báo cho những công việc được liệt kê trong trình <quote
+>tasksel</quote
+>. Ghi chú rằng một số công việc riêng có nội dung chung, vì vậy tổng số kích cỡ đã cài đặt của hai công việc với nhau có thể là nhỏ hơn tổng hai số đó. </para
+><para
+>Ghi chú rằng bạn cần phải cộng các kích cỡ được liệt kê trong bảng này với kích cỡ của bản cài đặt chuẩn, khi tính kích cỡ của phân vùng. Phần lớn sức chứa được hiển thị trong cột <quote
+>Kích cỡ đã cài đặt</quote
+> sẽ nằm trong thư mục <filename
+>/usr</filename
+> và  <filename
+>/lib</filename
+>; sức chứa trong cột <quote
+>Kích cỡ tải về</quote
+> cần thiết (tạm thời) trong thư mục <filename
+>/var</filename
+>. </para
+><para>
+
+<informaltable
+><tgroup cols="4">
+<thead>
+<row>
+  <entry
+>Công việc</entry>
+  <entry
+>Kích cỡ đã cài đặt (MB)</entry>
+  <entry
+>Kích cỡ tải về (MB)</entry>
+  <entry
+>Sức chứa cần thiết để cài đặt (MB)</entry>
+</row>
+</thead>
+
+<tbody>
+<row>
+  <entry
+>Môi trường làm việc</entry>
+  <entry
+>&task-desktop-inst;</entry>
+  <entry
+>&task-desktop-dl;</entry>
+  <entry
+>&task-desktop-tot;</entry>
+</row>
+
+<row>
+  <entry
+>Máy tính xách tay<footnote
+> <para
+>Công việc Máy tính xách tay chồng lấp nhiều với công việc Môi trường làm việc. Cài đặt cả hai thì công việc Máy tính xách tay sẻ chiếm chỉ vài MB thêm sức chứa trên đĩa. </para>
+
+  </footnote
+></entry>
+  <entry
+>&task-laptop-inst;</entry>
+  <entry
+>&task-laptop-dl;</entry>
+  <entry
+>&task-laptop-tot;</entry>
+</row>
+
+<row>
+  <entry
+>Trình phục vụ Mạng</entry>
+  <entry
+>&task-web-inst;</entry>
+  <entry
+>&task-web-dl;</entry>
+  <entry
+>&task-web-tot;</entry>
+</row>
+
+<row>
+  <entry
+>Trình phục vụ in</entry>
+  <entry
+>&task-print-inst;</entry>
+  <entry
+>&task-print-dl;</entry>
+  <entry
+>&task-print-tot;</entry>
+</row>
+
+<row>
+  <entry
+>Trình phục vụ DNS</entry>
+  <entry
+>&task-dns-inst;</entry>
+  <entry
+>&task-dns-dl;</entry>
+  <entry
+>&task-dns-tot;</entry>
+</row>
+
+<row>
+  <entry
+>Trình phục vụ tập tin</entry>
+  <entry
+>&task-file-inst;</entry>
+  <entry
+>&task-file-dl;</entry>
+  <entry
+>&task-file-tot;</entry>
+</row>
+
+<row>
+  <entry
+>Trình phục vụ thư</entry>
+  <entry
+>&task-mail-inst;</entry>
+  <entry
+>&task-mail-dl;</entry>
+  <entry
+>&task-mail-tot;</entry>
+</row>
+
+<row>
+  <entry
+>Cơ sở dữ liệu SQL</entry>
+  <entry
+>&task-sql-inst;</entry>
+  <entry
+>&task-sql-dl;</entry>
+  <entry
+>&task-sql-tot;</entry>
+</row>
+
+</tbody>
+</tgroup
+></informaltable>
+
+<note
+><para
+>Công việc <emphasis
+>Môi trường làm việc</emphasis
+> sẽ cài đặt môi trường làm việc GNOME. </para
+></note>
+
+</para
+><para
+>Nếu bạn cài đặt bằng ngôn ngữ khác tiếng Anh, <command
+>tasksel</command
+> có thể tự động cài đặt một <firstterm
+>công việc địa phương hoá</firstterm
+>, nếu có, cho ngôn ngữ của bạn (có một công việc dành cho tiếng Việt). Sức chứa cần thiết khác biệt giữa những ngôn ngữ khác nhau; bạn nên tính đến tổng là 350 MB để tải về và cài đặt công việc này. </para>
+ </sect1>
+<!--   End of file appendix/files.xml -->
+
+<!-- Start of file appendix/chroot-install.xml -->
+<!-- $Id: chroot-install.xml 44410 2007-01-22 19:23:47Z fjp $ -->
+
+ <sect1 id="linux-upgrade">
+ <title
+>Cài đặt &debian; từ hệ thống UNIX/Linux</title>
+
+<para
+>Phần này diễn tả phương pháp cài đặt &debian; từ một hệ thống UNIX hay Linux đã có, không cần dùng trình cài đặt dựa vào trình đơn như được diễn tả trong phần sổ tay còn lại. Tài liệu <quote
+>cài đặt chéo</quote
+> Thế Nào này đã được yêu cầu bởi người dùng chuyển đổi sang &debian; từ hệ thống Red Hat, Mandrake, và SUSE. Trong phần này giả sử là bạn quen với cách nhập lệnh *nix và cách duyệt qua hệ thống tập tin. Trong phần này, dấu đồng <prompt
+>$</prompt
+> đại diện lệnh cần nhập vào hệ thống hiện thời của người dùng, còn dấu băm <prompt
+>#</prompt
+> đại diện lệnh được nhập vào chroot của Debian. </para
+><para
+>Một khi bạn cấu hình hệ thống Debian mới một cách thích hợp, bạn có khả năng nâng cấp các dữ liệu người dùng tồn tại (nếu có) lên nó, rồi tiếp tục làm việc như bình thường. Vì vậy, tiến trình cài đặt &debian; này <quote
+>không có thời gian chết</quote
+>. Nó cũng là phương pháp thông minh để quản lý phần cứng thường không hợp tác với vật chứa khác nhau kiểu khởi động hay cài đặt. </para>
+
+  <sect2>
+  <title
+>Bắt đầu</title>
+<para
+>Bằng các công cụ phân vùng *nix hiện thời, hãy phân vùng lại đĩa cứng như cần thiết, cũng tạo ít nhất một hệ thống tập tin cộng với vùng trao đổi (swap). Bạn cần có khoảng 350 MB sức chứa còn rảnh khi cài đặt chỉ với bàn giao tiếp, hay khoảng 1 GB nếu bạn định cài đặt hệ thống cửa sổ X (còn nhiều hơn nếu bạn định cài đặt môi trường làm việc như GNOME hay KDE). </para
+><para
+>Sau đó, hãy tạo hệ thống tập tin trên những phân vùng. Chẳng hạn, để tạo một hệ thống tập tin kiểu ext3 trên phân vùng <filename
+>/dev/hda6</filename
+> (phân vùng gốc mẫu): <informalexample
+><screen>
+# mke2fs -j /dev/<replaceable
+>hda6</replaceable>
+</screen
+></informalexample
+> Còn để tạo hệ thống tập tin kiểu ext2, chỉ cần bỏ đoạn <userinput
+>-j</userinput
+> đi. </para
+><para
+>Sở khởi và kích hoạt vùng trao đổi (thay thế số hiệu phân vùng của phân vùng trao đổi Debian đã dự định): <informalexample
+><screen>
+# mkswap /dev/<replaceable
+>hda5</replaceable>
+# sync; sync; sync
+# swapon /dev/<replaceable
+>hda5</replaceable>
+</screen
+></informalexample
+> Hãy lắp một phân vùng như là <filename
+>/mnt/debinst</filename
+> (điểm cài đặt, để là hệ thống tập tin gốc (<filename
+>/</filename
+>) trên hệ thống mới). Tên của điểm lắp là tùy ý chặt chẽ: nó được diễn tả lại sau bên dưới. <informalexample
+><screen
+># mkdir /mnt/debinst
+# mount /dev/<replaceable
+>hda6</replaceable
+> /mnt/debinst
+</screen
+></informalexample>
+
+</para>
+<note
+><para
+>Nếu bạn muốn đặt phần nào của hệ thống tập tin (v.d. <filename
+>/usr</filename
+>) được gắn kết vào phân vùng riêng, bạn cần phải tự tạo và gắn kết những thư mục này trước khi tiếp tục tới giao đoạn kế tiếp. </para
+></note>
+  </sect2>
+
+  <sect2>
+  <title
+>Cài đặt <command
+>debootstrap</command
+></title>
+<para
+>Tiện ích được dùng bởi trình cài đặt Debian, cũng được chấp nhận như là phương pháp chính thức để cài đặt hệ thống cơ bản Debian, là <command
+>debootstrap</command
+>. Nó dùng chương trình <command
+>wget</command
+> và <command
+>ar</command
+>, nhưng về mặt khác thì phụ thuộc chỉ vào <classname
+>/bin/sh</classname
+> và công cụ Unix/Linux cơ bản<footnote
+> <para
+> Những công cụ này gồm có các tiện ích lõi của GNU và lệnh như <command
+>sed</command
+>, <command
+>grep</command
+>, <command
+>tar</command
+> và <command
+>gzip</command
+>. </para
+> </footnote
+>. Hãy cài đặt hai trình <command
+>wget</command
+> và <command
+>ar</command
+>, nếu chúng chưa nằm trên hệ thống của bạn, rồi tải về và cài đặt <command
+>debootstrap</command
+>. </para>
+
+<!-- The files linked to here are from 2004 and thus currently not usable
+<para>
+
+If you have an rpm-based system, you can use alien to convert the
+.deb into .rpm, or download an rpm-ized version at
+<ulink url="http://people.debian.org/~blade/install/debootstrap"
+></ulink>
+
+</para>
+-->
+
+<para
+>Hoặc bạn có thể tự cài đặt nó bằng thủ tục theo đây. Hãy tạo một thư mục <filename
+>work</filename
+> vào đó cần giải nén .deb: <informalexample
+><screen>
+# mkdir work
+# cd work
+</screen
+></informalexample
+> Tập tin nhị phân <command
+>debootstrap</command
+> nằm trong kho Debian (hãy chắc là bạn chọn tập tin thích hợp với kiến trúc của mình). Tải tập tin dạng .deb <command
+>debootstrap</command
+> xuống <ulink url="http://ftp.debian.org/debian/pool/main/d/debootstrap/"
+> pool</ulink
+>, sao chép gói đó vào thư mục <filename
+>work</filename
+>, rồi giải thích các tập tin nhị phân ra nó. Bạn cần phải có quyền người chủ để cài đặt các tập tin nhị phân này. <informalexample
+><screen
+># ar -x debootstrap_0.X.X_all.deb
+# cd /
+# zcat /đường_dẫn_đầy_đủ_đến_work/work/data.tar.gz | tar xv
+</screen
+></informalexample>
+
+</para>
+  </sect2>
+
+  <sect2>
+  <title
+>Chạy <command
+>debootstrap</command
+></title>
+<para
+>Khi bạn chạy phần mềm <command
+>debootstrap</command
+>, nó cũng có khả năng tải các tập tin cần thiết xuống kho một cách trực tiếp. Trong mẫu lệnh bên dưới, bạn có khả năng thay thế địa chỉ máy nhân bản <userinput
+>http.us.debian.org/debian</userinput
+> bằng địa chỉ của bất cứ máy nhân bản kho Debian nào, tốt hơn là máy nhân bản gần chỗ bạn trên mạng. Các máy nhân bản được liệt kê trong tài liệu Đọc Đi <ulink url="http://www.debian.org/misc/README.mirrors"
+></ulink
+>. </para
+><para
+>Nếu bạn có đĩa CD &debian; &releasename; được gắn kết vào <filename
+>/cdrom</filename
+>, bạn có khả năng thay thế địa chỉ Mạng kiểu HTTP bằng địa chỉ kiểu tập tin: <userinput
+>file:/cdrom/debian/</userinput
+> </para
+><para
+>Hãy thay thế một của những tên sau cho <replaceable
+>KIẾN_TRÚC</replaceable
+> trong lệnh <command
+>debootstrap</command
+>: <userinput
+>alpha</userinput
+>, <userinput
+>amd64</userinput
+>, <userinput
+>arm</userinput
+>, <userinput
+>hppa</userinput
+>, <userinput
+>i386</userinput
+>, <userinput
+>ia64</userinput
+>, <userinput
+>m68k</userinput
+>, <userinput
+>mips</userinput
+>, <userinput
+>mipsel</userinput
+>, <userinput
+>powerpc</userinput
+>, <userinput
+>s390</userinput
+>, or <userinput
+>sparc</userinput
+>. <informalexample
+><screen
+># /usr/sbin/debootstrap --arch KIẾN_TRÚC &releasename; \
+     /mnt/debinst http://ftp.us.debian.org/debian
+</screen
+></informalexample>
+
+</para>
+  </sect2>
+
+  <sect2>
+  <title
+>Cấu hình hệ thống cơ bản</title>
+<para
+>Lúc bây giờ bạn có hệ thống Debian thật, dù hơi gầy, trên đĩa. Hãy <command
+>chroot</command
+> vào nó : <informalexample
+><screen>
+# LANG=C chroot /mnt/debinst /bin/bash
+</screen
+></informalexample
+>Sau khi chroot, bạn có thể cần phải đặt lời định nghĩa thiết bị cuối tương thích với hệ thống cơ bản Debian, chẳng hạn: <informalexample
+><screen
+># export TERM=<replaceable
+>xterm-color</replaceable
+>
+</screen
+></informalexample>
+
+</para>
+
+   <sect3>
+   <title
+>Gắn kết phân vùng</title>
+<para
+>Bạn cần phải tạo tập tin <filename
+>/etc/fstab</filename
+>. <informalexample
+><screen>
+# editor /etc/fstab
+</screen
+></informalexample
+> Đây là mẫu bạn có thể sửa đổi để thích hợp với hệ thống: <informalexample
+><screen>
+# /etc/fstab: thông tin tĩnh về hệ thống tập tin.
+#
+# hệ thống tệp    điểm lắp   kiểu    tùy chọn                  lần đổ
+/dev/XXX         /             ext3    defaults                 0    1
+/dev/XXX         /boot         ext3    ro,nosuid,nodev          0    2
+
+/dev/XXX         none          swap    sw                       0    0
+proc             /proc         proc    defaults                 0    0
+
+/dev/fd0         /media/floppy auto    noauto,rw,sync,user,exec 0    0
+/dev/cdrom       /media/cdrom  iso9660 noauto,ro,user,exec      0    0
+
+/dev/XXX         /tmp          ext3    rw,nosuid,nodev          0    2
+/dev/XXX         /var          ext3    rw,nosuid,nodev          0    2
+/dev/XXX         /usr          ext3    rw,nodev                 0    2
+/dev/XXX         /home         ext3    rw,nosuid,nodev          0    2
+</screen
+></informalexample
+> Hãy dùng lệnh <userinput
+>mount -a</userinput
+> để lắp mọi hệ thống tập tin bạn đã xác định trong tập tin <filename
+>/etc/fstab</filename
+>, hoặc để lắp mỗi hệ thống tập tin riêng, dùng: <informalexample
+><screen>
+# mount /đường_dẫn   # v.d.: mount /usr
+</screen
+></informalexample
+>  Các hệ thống Debian hiện thời có những điểm lắp cho vật chứa rời dưới <filename
+>/media</filename
+>, còn giữ các liên kết tương trưng để tương thích trong <filename
+>/</filename
+>. Hãy tạo chúng như yêu cầu, chẳng hạn: <informalexample
+><screen>
+# cd /media
+# mkdir cdrom0
+# ln -s cdrom0 cdrom
+# cd /
+# ln -s media/cdrom
+</screen
+></informalexample
+> Bạn có khả năng lắp hệ thống tập tin proc nhiều lần và vào nhiều vị trí, dù <filename
+>/proc</filename
+> thường dùng. Nếu bạn chưa dùng lệnh <userinput
+>mount -a</userinput
+>, kiểm tra xem bạn đã lắp proc trước khi tiếp tục. <informalexample
+><screen
+># mount -t proc proc /proc
+</screen
+></informalexample>
+
+</para
+><para
+>Sau đó, lệnh liệt kê <userinput
+>ls /proc</userinput
+> nên hiển thị thư mục khác rỗng. Nếu nó bị lỗi, có lẽ bạn có khả năng gắn kết <filename
+>proc</filename
+> từ bên ngoài chroot đó. <informalexample
+><screen
+># mount -t proc proc /mnt/debinst/proc
+</screen
+></informalexample>
+
+</para>
+   </sect3>
+
+   <sect3>
+   <title
+>Đặt múi giờ</title>
+<para
+>Tập tin <filename
+>/etc/default/rcS</filename
+> chứa một tùy chọn xác định nếu hệ thống sẽ giải thích đồng hồ phần cứng như là giờ thế giới (UTC) hay giờ địa phương. Lệnh sau cho bạn có khả năng đặt nó và chọn múi giờ riêng. <informalexample
+><screen
+># editor /etc/default/rcS
+# tzconfig
+</screen
+></informalexample>
+
+</para>
+   </sect3>
+
+   <sect3>
+   <title
+>Cấu hình khả năng chạy mạng</title>
+<para
+>Để cấu hình cách chạy mạng, hãy chỉnh sửa các tập tin <filename
+>/etc/network/interfaces</filename
+>, <filename
+>/etc/resolv.conf</filename
+>, <filename
+>/etc/hostname</filename
+> và <filename
+>/etc/hosts</filename
+>. <informalexample
+><screen>
+# editor /etc/network/interfaces
+</screen
+></informalexample
+> Ở đây có một số mẫu thí dụ đơn giản từ <filename
+>/usr/share/doc/ifupdown/examples</filename
+>: <informalexample
+><screen>
+######################################################################
+# /etc/network/interfaces -- tập tin cấu hình cho ifup(8), ifdown(8)
+# Xem trang hướng dẫn về interfaces(5) để tìm thông tin về những tùy chọn nào sẵn sàng.
+######################################################################
+
+# Luôn luôn muốn có giao diện mạch.
+#
+auto lo
+iface lo inet loopback
+
+# Để sử dụng dịch v ụ DHCP:
+#
+# auto eth0
+# iface eth0 inet dhcp
+
+# Một thiết lập IP tĩnh mẫu: (tùy chọn là quảng bá [broadcast] và cổng ra [gateway])
+#
+# auto eth0
+# iface eth0 inet static
+#     address 192.168.0.42
+#     network 192.168.0.0
+#     netmask 255.255.255.0
+#     broadcast 192.168.0.255
+#     gateway 192.168.0.1
+</screen
+></informalexample
+> Hãy nhập các máy phục vụ tên và chỉ thị tìm kiếm vào tập tin cấu hình <filename
+>/etc/resolv.conf</filename
+>: <informalexample
+><screen>
+# editor /etc/resolv.conf
+</screen
+></informalexample
+> Một tập tin <filename
+>/etc/resolv.conf</filename
+> mẫu đơn giản: <informalexample
+><screen>
+search hqdom.local\000
+nameserver 10.1.1.36
+nameserver 192.168.9.100
+</screen
+></informalexample
+> Nhập tên máy của hệ thống (2 đến 63 ký tự): <informalexample
+><screen>
+# echo tên_máy_Debian &gt; /etc/hostname
+</screen
+></informalexample
+> Tập tin <filename
+>/etc/hosts</filename
+> cơ bản với khả năng hỗ trợ IPv6: <informalexample
+><screen>
+127.0.0.1 localhost tên_máy_Debian
+
+# Khuyên bạn gồm những dòng sau cho máy có khả năng IPv6
+::1     ip6-localhost ip6-loopback
+fe00::0 ip6-localnet
+ff00::0 ip6-mcastprefix
+ff02::1 ip6-allnodes
+ff02::2 ip6-allrouters
+ff02::3 ip6-allhosts
+</screen
+></informalexample
+> Có nhiều thẻ mạng thì bạn nên sắp xếp nhưng tên mô-đun trình điều khiển theo thứ tự đã muốn trong tập tin <filename
+>/etc/modules</filename
+>. Sau đó, trong khi khởi động, mỗi thẻ sẽ được lắp với tên giao diện (eth0, eth1, v.v.) mong đợi. </para>
+   </sect3>
+
+   <sect3>
+   <title
+>Cấu hình Apt</title>
+<para
+>Lúc đó, Debootstrap đã tạo một tập tin liệt kê các nguồn <filename
+>/etc/apt/sources.list</filename
+> rất cơ bản sẽ cho bạn có khả năng cài đặt các gói thêm. Tuy nhiên, bạn có thể muốn thêm một số nguồn nữa, chẳng hạn cho gói nguồn và bản cập nhật bảo mật: <informalexample
+><screen>
+deb-src http://ftp.us.debian.org/debian etch main
+
+deb http://security.debian.org/ etch/updates main
+deb-src http://security.debian.org/ etch/updates main
+</screen
+></informalexample
+> Đảm bảo bạn chạy <userinput
+>aptitude update</userinput
+> sau khi thay đổi danh sách các nguồn. </para>
+   </sect3>
+
+   <sect3>
+   <title
+>Cấu hình miền địa phương và bàn phím</title>
+<para
+>Để cấu hình thiết lập miền địa phương để sử dụng ngôn ngữ khác tiếng Anh, hãy cài đặt gói hỗ trợ <filename
+>locales</filename
+> và cấu hình nó. Khuyên bạn sử dụng miền địa phương UTF8.<informalexample
+><screen>
+# aptitude install locales
+# dpkg-reconfigure locales
+</screen
+></informalexample
+> Để cấu hình bàn phím (nếu cần): <informalexample
+><screen
+># aptitude install console-data
+# dpkg-reconfigure console-data
+</screen
+></informalexample>
+
+</para
+><para
+>Ghi chú rằng bàn phím không thể được đặt trong khi nằm trong chroot, nhưng sẽ được cấu hình cho lần khởi động lại kế tiếp. </para>
+   </sect3>
+  </sect2>
+
+  <sect2>
+  <title
+>Cài đặt hạt nhân</title>
+<para
+>Nếu bạn dự định khởi động hệ thống này, bạn rất có thể muốn có một hạt nhân (kernel) Linux và một bộ tải khởi động (boot loader). Có thể nhận diện các hạt nhân đóng gói sẵn bằng lệnh: <informalexample
+><screen
+># apt-cache search linux-image
+</screen
+></informalexample>
+
+</para
+><para
+>Nếu bạn định sử dụng một hạt nhân đóng gói sẵn, đề nghị bạn tạo tập tin cấu hình <filename
+>/etc/kernel-img.conf</filename
+> trước đó. Đây là một tập tin thí dụ : <informalexample
+><screen
+># Các việc ghi đè khả năng quản lý ảnh hạt nhân
+# Xem kernel-img.conf(5) để tìm chi tiết
+do_symlinks = yes
+relative_links = yes
+do_bootloader = yes
+do_bootfloppy = no
+do_initrd = yes
+link_in_boot = no# [do	làm
+# symlinks	các liên kết tượng trưng
+# relative links	các liên kết tương đối
+# bootloader	bộ tải khởi động
+# bootfloppy	đĩa mềm khởi động
+# link in boot	liên kết vào khởi động]
+</screen
+></informalexample>
+
+</para
+><para
+>Để tìm thông tin chi tiết về tập tin này và các tùy chọn khác nhau, xem trang hướng dẫn của nó mà sẵn sàng sau khi cài đặt gói <classname
+>kernel-package</classname
+>. Khuyên bạn kiểm tra xem những giá trị trong nó cũng thích hợp với hệ thống của bạn. </para
+><para
+>Sau đó, hãy cài đặt gói hạt nhân đã muốn, dùng tên gói cua nó.<informalexample
+><screen>
+# aptitude install linux-image-<replaceable
+>&kernelversion;-kiến_trúc-v.v.</replaceable>
+</screen
+></informalexample>
+[install	cài đặt
+linux-image	ảnh linux]
+Nếu bạn chưa tạo tập tin cấu hình <filename
+>/etc/kernel-img.conf</filename
+> trước khi cài đặt hạt nhân đã đóng gói sẵn, bạn có thể được hỏi một số câu về nó trong tiến trình cài đặt. </para>
+  </sect2>
+
+  <sect2>
+<title
+>Thiết lập bộ tải khởi động</title>
+<para
+>Để làm cho hệ thống &debian; có khả năng khởi động, bạn hãy thiết lập bộ tải khởi động để tải hạt nhân đã cài đặt cùng với phân vùng gốc mới. Ghi chú rằng <command
+>debootstrap</command
+> không cài đặt bộ tải khởi động, dù bạn có khả năng sử dụng lệnh <userinput
+>aptitude</userinput
+> bên trong chroot Debian để làm như thế. </para
+><para arch="x86"
+>Xem trang thông tin <userinput
+>info grub</userinput
+> hay trang hướng dẫn <userinput
+>man lilo.conf</userinput
+> để tìm hướng dẫn về phương pháp thiết lập bộ tải khởi động. Nếu bạn muốn giữ lại hệ thống đã dùng để cài đặt Debian, đơn giản hãy thêm một mục nhập cho bản cài đặt Debian vào tập tin <filename
+>menu.lst</filename
+> grub đã có, hoặc vào tập tin cấu hình <filename
+>lilo.conf</filename
+>. Đối với tập tin <filename
+>lilo.conf</filename
+>, bạn cũng có khả năng sao chép nó vào hệ thống mới để chỉnh sửa nó ở đó. Sau khi chỉnh sửa xong, hãy gọi <command
+>lilo</command
+> (ghi nhớ rằng nó sẽ dùng tập tin cấu hình <filename
+>lilo.conf</filename
+> tương đối so với hệ thống từ đó bạn gọi nó). </para
+><para arch="x86"
+>Việc cài đặt và thiết lập <classname
+>grub</classname
+> là dễ dàng:<informalexample
+><screen>
+# aptitude install grub
+# grub-install /dev/<replaceable
+>hda</replaceable>
+# update-grub
+</screen
+></informalexample
+> Lệnh thứ hai sẽ cài đặt <command
+>grub</command
+> (trong trường hợp này, vào MBR của <literal
+>hda</literal
+>). Lệnh cuối cùng sẽ tạo một tập tin <filename
+>/boot/grub/menu.lst</filename
+> hợp lý và hoạt động được. </para
+><para arch="x86"
+>Ở đây có mẫu <filename
+>/etc/lilo.conf</filename
+> cơ bản: <informalexample
+><screen
+>boot=/dev/<replaceable
+>hda6</replaceable>
+root=/dev/<replaceable
+>hda6</replaceable>
+install=menu
+delay=20
+lba32
+image=/vmlinuz
+label=Debian
+</screen
+></informalexample>
+
+</para
+><para arch="x86"
+>Phụ thuộc vào bộ tải khởi động đã chọn, bạn lúc bây giờ có khả năng tạo một số thay đổi thêm trong tập tin cấu hình <filename
+>/etc/kernel-img.conf</filename
+>. </para
+><para arch="x86"
+>Cho bộ tải khởi động <classname
+>grub</classname
+>, hãy đặt tùy chọn <literal
+>do_bootloader</literal
+> thành <quote
+>no</quote
+> (không). Để tự động cập nhật tập tin <filename
+>/boot/grub/menu.lst</filename
+> khi cài đặt hay gỡ bỏ hạt nhân Debian nào, hãy thêm những dòng này:<informalexample
+><screen>
+postinst_hook = update-grub
+postrm_hook   = update-grub
+</screen
+></informalexample>
+[postinst		viết tắt "post-installation", sau khi cài đặt
+postrm		viết tắt "post-removal", sau khi gỡ bỏ
+hook		móc (vào)
+update		cập nhật]
+Còn cho bộ tải khởi động <classname
+>lilo</classname
+>, giá trị của <literal
+>do_bootloader</literal
+> nên là <quote
+>yes</quote
+> (có). </para
+><para arch="powerpc"
+>Chạy lệnh <userinput
+>man yaboot.conf</userinput
+> để xem hướng dẫn về cách thiết lập bộ tải khởi động. Nếu bạn giữ lại hệ thống bạn đã dùng để cài đặt Debian, đơn giản hãy thêm mục nhập cho bản cài đặt Debian vào tập tin cấu hình <filename
+>yaboot.conf</filename
+> đã có. Bạn cũng có khả năng sao chép nó vào hệ thống mới rồi hiệu chỉnh nó tại đó. Sau khi hiệu chỉnh xong, hãy gọi chức năng <command
+>ybin</command
+> (ghi nhớ rằng nó sẽ dùng tập tin cấu hình <filename
+>yaboot.conf</filename
+> tương đối so với hệ thống từ đó bạn gọi nó). </para
+><para arch="powerpc"
+>Ở đây có mẫu <filename
+>/etc/yaboot.conf</filename
+> cơ bản: <informalexample
+><screen>
+boot=/dev/hda2
+device=hd:
+partition=6
+root=/dev/hda6
+magicboot=/usr/lib/yaboot/ofboot
+timeout=50
+image=/vmlinux
+label=Debian
+</screen
+></informalexample
+>[boot=khởi động; device=thiết bị; partition=phân vùng; root=gốc; magicboot=khởi động ma thuật; timeout=thời hạn; image=ảnh; label=nhãn]
+
+Trên một số máy riêng, có lẽ bạn cần phải sử dụng <userinput
+>ide0:</userinput
+> thay cho <userinput
+>hd:</userinput
+>. </para>
+  </sect2>
+
+  <sect2>
+<title
+>Đòn kết liễu</title>
+<para
+>Như nói trước, hệ thống đã cài đặt là rất cơ bản. Nếu bạn muốn làm cho hệ thống ít rộng rãi hơn, dễ cài đặt các gói có ưu tiên  <quote
+>chuẩn</quote
+> priority: <informalexample
+><screen>
+# tasksel install standard
+</screen
+></informalexample
+> Tất nhiên, bạn cũng có khả năng sử dụng <command
+>aptitude</command
+> để cài đặt mỗi gói riêng. </para
+><para
+>Sau khi cài đặt xong, có rất nhiều gói đã tải về nằm trong thư mục kho lưu <filename
+>/var/cache/apt/archives/</filename
+>. Vậy bạn có dịp giải phóng thêm chỗ trống trên đĩa bằng cách chạy lệnh « làm sạch »:  <informalexample
+><screen
+># aptitude clean
+</screen
+></informalexample>
+
+</para>
+  </sect2>
+ </sect1>
+<!--   End of file appendix/chroot-install.xml -->
+
+<!-- Start of file appendix/plip.xml -->
+<!-- $Id: plip.xml 39644 2006-08-08 22:08:57Z jfs $ -->
+
+ <sect1 id="plip" arch="x86">
+ <title
+>Cài đặt &debian; qua IP đường song song (PLIP)</title>
+
+<para
+>Phần này diễn tả phương pháp cài đặt &debian; vào máy tính không có thẻ Ethernet, chỉ có máy tính cổng ra từ xa được gắn nối bằng cáp Null-Modem (bộ điều giải rỗng, cũng được gọi như là cáp Null-Printer, máy in rỗng). Máy tính cổng ra nên được kết nối đến mạng chứa máy nhân bản Debian (v.d. có kết nối đến Mạng). </para
+><para
+>Mẫu trong phụ lục này sẽ hiển thị phương pháp thiết lập sự kết nối PLIP, dùng cổng ra được kết nối đến Mạng qua sự kết nối quay số (ppp0). Nó sẽ dùng địa chỉ IP <userinput
+>192.168.0.1</userinput
+> và <userinput
+>192.168.0.2</userinput
+> cho hai giao diện PLIP trên hệ thống đích và hệ thống nguồn riêng từng cái (những địa chỉ này nên là không dùng bên trong miền địa chỉ của mạng của bạn). </para
+><para
+>Sự kết nối PLIP được thiết lập trong khi cài đặt sẽ cũng sẵn sàng sau khi khởi động lại vào hệ thống đã cài đặt (xem <xref linkend="boot-new"/>). </para
+><para
+>Trước khi bắt đầu, bạn cần phải xem cấu hình BIOS (địa chỉ cơ bản IO và IRQ) để tìm cổng song song của hệ thống cả đích lẫn nguồn. Giá trị thường nhất là <literal
+>io=0x378</literal
+>, <literal
+>irq=7</literal
+>. </para>
+
+  <sect2>
+  <title
+>Nhu cầu</title>
+
+<itemizedlist>
+<listitem
+><para
+>Máy tính đích, được gọi như là <emphasis
+>target</emphasis
+> (đích), vào đó Debian sẽ được cài đặt. </para
+></listitem>
+<listitem
+><para
+>Vật chứa phần mềm cài đặt hệ thống; xem <xref linkend="installation-media"/>. </para
+></listitem>
+<listitem
+><para
+>Máy tính khác được kết nối đến Mạng, được gọi như là <emphasis
+>source</emphasis
+> (nguồn), mà sẽ hoạt động là cổng ra. </para
+></listitem>
+<listitem
+><para
+>Một cáp Null-Modem DB-25. Xem tài liệu cài đặt PLIP Thế Nào <ulink url="&url-plip-install-howto;"
+>PLIP-Install-HOWTO</ulink
+> để tìm thông tin thêm về cáp kiểu này, gồm hướng dẫn về cách tạo điều riêng. </para
+></listitem>
+</itemizedlist>
+
+  </sect2>
+
+  <sect2>
+  <title
+>Thiết lập nguồn</title>
+<para
+>Theo đây có một tập lệnh trình bao là mẫu đơn giản về phương pháp cấu hình máy tính nguồn như là cổng ra Mạng dùng ppp0. <informalexample
+><screen
+>#!/bin/sh
+
+# Gỡ bỏ các mô-đun đang chạy ra hạt nhân để tránh xung đột,
+# cũng để tự cấu hình lại.
+modprobe -r lp parport_pc
+modprobe parport_pc io=<replaceable
+>0x378</replaceable
+> irq=<replaceable
+>7</replaceable>
+modprobe plip
+
+# Cấu hình giao diện PLIP (chọn « plip0 », xem « dmesg | grep plip »)
+ifconfig <replaceable
+>plip0 192.168.0.2</replaceable
+> pointopoint <replaceable
+>192.168.0.1</replaceable
+> netmask 255.255.255.255 up
+
+# Cấu hình cổng ra
+modprobe iptable_nat
+iptables -t nat -A POSTROUTING -o <replaceable
+>ppp0</replaceable
+> -j MASQUERADE
+echo 1 
+> /proc/sys/net/ipv4/ip_forward
+</screen
+></informalexample>
+
+</para>
+  </sect2>
+
+  <sect2>
+  <title
+>Cài đặt đích</title>
+<para
+>Khởi động vật chứa cài đặt. Cần phải chạy tiến trình cài đặt bằng chế độ nhà chuyên môn: hãy nhập <userinput
+>expert</userinput
+> vào dấu nhắc khởi động. Nếu bạn cần đặt tham số cho mô-đun hạt nhân, cũng cần phải làm như thế tại dấu nhắc khởi động. Chẳng hạn, để khởi động trình cài đặt và đặt giá trị cho những tùy chọn <quote
+>io</quote
+> và <quote
+>irq</quote
+> cho mô-đun <filename
+>partport_pc</filename
+>, hãy nhập dãy dưới vào dấu nhắc khởi động:<informalexample
+><screen>
+expert parport_pc.io=<replaceable
+>0x378</replaceable
+> parport_pc.irq=<replaceable
+>7</replaceable>
+</screen
+></informalexample
+>Bên dưới có những trả lời cần nhập trong những giai đoạn khác nhau của tiến trình cài đặt. </para>
+
+<orderedlist>
+<listitem
+><para>
+
+<guimenuitem
+>Tải các thành phần cài đặt từ đĩa CD</guimenuitem>
+
+</para
+><para
+>Chọn mục <userinput
+>plip-modules</userinput
+> trong danh sách: nó sẽ làm cho các trình điều khiển PLIP sẵn sàng cho hệ thống cài đặt. </para
+></listitem>
+<listitem
+><para>
+
+<guimenuitem
+>Phát hiện phần cứng mạng</guimenuitem>
+
+</para>
+
+ <itemizedlist>
+ <listitem
+><para
+>Nếu máy đích <emphasis
+>có phải</emphasis
+> chứa thẻ mạng, trình cài đặt sẽ hiển thị danh sách các mô-đun trình điều khiển cho những thẻ được phát hiện. Nếu bạn muốn ép buộc &d-i; dùng PLIP thay thế, bạn cần phải bỏ chọn mọi mô-đun trình điều khiển đã liệt kê. Tất nhiên, nếu máy đích không có thẻ mạng, trình cài đặt sẽ không hiển thị danh sách này. </para
+></listitem>
+ <listitem
+><para
+>Vì chưa phát hiện thẻ mạng, trình cài đặt sẽ nhắc bạn chọn trình điều khiển mạng trong danh sách. Hãy chọn mô-đun <userinput
+>plip</userinput
+>. </para
+></listitem>
+ </itemizedlist>
+
+</listitem>
+<listitem
+><para>
+
+<guimenuitem
+>Cấu hình mạng</guimenuitem>
+ 
+ <itemizedlist>
+ <listitem
+><para
+>Tự động cấu hình mạng bằng DHCP không? : Không </para
+></listitem>
+ <listitem
+><para
+>Địa chỉ IP: <userinput
+><replaceable
+>192.168.0.1</replaceable
+></userinput
+> </para
+></listitem>
+ <listitem
+><para
+>Địa chỉ điểm-đến-điểm: <userinput
+><replaceable
+>192.168.0.2</replaceable
+></userinput
+> </para
+></listitem>
+ <listitem
+><para
+>Các địa chỉ của máy phục vụ tên: bạn có khả năng nhập cùng những địa chỉ được dùng trên máy tính nguồn (xem tập tin cấu hình <filename
+>/etc/resolv.conf</filename
+>) </para
+></listitem>
+ </itemizedlist>
+
+</para
+></listitem>
+</orderedlist>
+
+  </sect2>
+ </sect1>
+<!--   End of file appendix/plip.xml -->
+
+<!-- Start of file appendix/graphical.xml -->
+<!-- $Id: graphical.xml 44580 2007-01-29 04:37:14Z fjp $ -->
+
+ <sect1 condition="gtk" id="graphical">
+ <title
+>Bộ cài đặt đồ họa</title>
+<para
+>Phiên bản đồ họa của bộ cài đặt chỉ sẵn sàng cho một số kiến trúc bị hạn chế, gồm &arch-title;. Bộ cài đặt đồ họa thật có cùng chức năng với bộ cài đặt chuẩn, vì nó sử dụng cùng những chương trình thông qua giao diện khác. </para
+><para
+>Mặc dù có chức năng trùng, bộ cài đặt đồ họa vẫn còn có vài lợi ích đáng kể. Lợi ích chính là nó hỗ trợ số ngôn ngỡ lớn hơn, đặc biệt những ngôn ngữ được viết bằng bộ ký tự không thể được hiển thị bằng giao diện <quote
+>newt</quote
+> chuẩn. Nó cũng có vài lợi ích trong cách sử dụng, như (tùy chọn) khả năng sử dụng con chuột, và trong một số trường hợp riêng, vài câu hỏi có thể được hiển thị trên cùng một màn hình. </para
+><para arch="x86"
+>Bộ cài đặt đồ họa có sẵn cùng với mọi ảnh đĩa CD, cũng với phương pháp cài đặt vào vật chứa đĩa cứng. Vì bộ cài đặt đồ họa sử dụng một initrd riêng rất lớn hơn bộ cài đặt chuẩn, nó cần phải được khởi động bằng <userinput
+>installgui</userinput
+> thay cho <userinput
+>install</userinput
+>. Tương tự, những chế độ chuyên môn và cứư được khởi động bằng <userinput
+>expertgui</userinput
+> và <userinput
+>rescuegui</userinput
+> riêng từng cái. </para
+><para arch="x86"
+>Bộ cài đặt đồ họa cũng có sẵn dạng ảnh ISO <quote
+>nhỏ</quote
+> đặc biệt<footnote id="gtk-miniiso"
+> <para
+>Ảnh ISO nhỏ này có thể được tải xuống máy nhân bản Debian nào như được diễn tả trong <xref linkend="downloading-files"/>. Tìm tên <quote
+>gtk-miniiso</quote
+>. </para
+> </footnote
+>, mà có ích chính để thử ra; trong trường hợp này, ảnh được khởi động chỉ bằng <userinput
+>install</userinput
+>. Chưa có ảnh bộ cài đặt đồ họa có thể được khởi động qua mạng. </para
+><para arch="powerpc"
+>Cho &arch-title;, hiện thời chỉ có sẵn một ảnh ISO <quote
+>mini</quote
+> thử nghiệm<footnote id="gtk-miniiso"
+> <para
+>Ảnh ISO nhỏ này có thể được tải xuống máy nhân bản Debian nào như được diễn tả trong <xref linkend="downloading-files"/>. Tìm tên <quote
+>gtk-miniiso</quote
+>. </para
+> </footnote
+>. Nó nên hoạt động được trên gần tất cả các hệ thống PowerPC có thẻ đồ họa kiểu ATI, nhưng rất có thể sẽ không hoạt động được trên hệ thống khác. </para
+><para
+>Việc chạy vộ cài đặt đồ họa cần thiết bộ nhớ hơi nhiều hơn bộ cài đặt chuẩn: &minimum-memory-gtk;. Không đủ bộ nhớ thì nó tự động sẽ dùng lại giao diện <quote
+>newt</quote
+>. </para
+><para
+>Bạn có khả năng thêm các tham số khởi động khi khởi chạy bộ cài đặt đồ họa, đúng như khi khởi động bộ cài đặt chuẩn. Một của những tham số này cũng cho bạn có khả năng cấu hình con chuột để sử dụng tay trái. Xem <xref linkend="boot-parms"/> để tìm các tham số hợp lệ. </para>
+
+  <sect2 id="gtk-using">
+  <title
+>Cách sử dụng bộ cài đặt đồ họa</title>
+<para
+>Như nói trên, bộ cài đặt thật hoạt động đúng như bộ cài đặt chuẩn, thì phần còn lại của sổ tay này có thể được dùng để hướng dẫn bạn qua tiến trình cài đặt. </para
+><para
+>Thích sử dụng bàn phím hơn là con chuột thì có hai thứ bạn cần biết. Để bung danh sách đã co lại (dùng chẳng hạn khi chọn quốc gia bên trong châu), bạn có thể sử dụng hai phím dấu cộng <keycap
+>+</keycap
+> và dấu trừ <keycap
+>-</keycap
+>. Đối với câu hỏi yêu cầu bạn chọn một mục trong nhiều điều (v.d. chọn công việc), trước tiên bạn cần phải bấm phím Tab tới cái nút <guibutton
+>Tiếp tục</guibutton
+> sau khi chọn mục thích hợp, rồi bám phím <keycap
+>Enter</keycap
+> sẽ bật/tắt sự chọn, không phải kích hoạt cái nút <guibutton
+>Tiếp tục</guibutton
+>. </para
+><para
+>Để chuyển đổi sang bàn giao tiếp khác, bạn cũng cần phải sử dụng phím <keycap
+>Ctrl</keycap
+>, đúng như trong hệ thống cửa sổ X. Lấy thí dụ, để chuyển đổi sang VT1, bạn cần dùng tổ hợp phím: <keycombo
+> <keycap
+>Ctrl</keycap
+> <keycap
+>Alt trái</keycap
+> <keycap
+>F1</keycap
+> </keycombo
+>. </para>
+  </sect2>
+
+  <sect2 id="gtk-issues">
+  <title
+>Vấn đề đã biết</title>
+<para
+><quote
+>Etch</quote
+> là bản phát hành thứ nhất hợp nhất bộ cài đặt đồ họa, cũng sử dụng một số kỹ thuật hơi mới. Có vài vấn đề đã biết có thể gặp trong khi cài đặt. Chúng tôi ngờ có khả năng sửa chữa các vấn đề này trong bản phát hành &debian; kế tiếp. </para>
+
+<itemizedlist>
+<listitem
+><para
+>Thông tin trên một số màn hình không có định dạng cột đẹp. Trường hợp thường nhất là màn hình thứ nhất trên đó bạn chọn ngôn ngữ. Một trường hợp khác là màn hình chính của chương trình <filename
+>partman</filename
+>. </para
+></listitem>
+<listitem
+><para
+>Việc gõ một số ký tự riêng có thể không hoạt động được: trong một số trường hợp riêng, ký tự sai được in ra. Chẳng hạn, việc cấu tạo nguyên âm có dấu bằng cách bấm phím chết nhập dấu phụ, rồi bấm nguyên âm, không in ra được. (Ghi chú : người dùng muốn đọc/viết tiếng Việt không cần dùng bộ cài đặt đồ họa.) </para
+></listitem>
+<listitem
+><para
+>Khả năng hỗ trợ vùng sờ chưa tối ưu. </para
+></listitem>
+<listitem
+><para
+>Bạn không nên chuyển đổi sang bàn giao tiếp khác trong khi bộ cài đặt vẫn bận; có thể gây ra giao diện sụp đổ. Giao diện sẽ tự động được khởi chạy lại, nhưng việc sụp đổ vẫn còn có thể gây ra lỗi trong tiến trình cài đặt. Việc chuyển đổi sang bàn giao tiếp khác trong khi bộ cài đặt đợi dữ liệu nhập nên hoạt động được, không gây ra lỗi nào. </para
+></listitem>
+<listitem
+><para
+>Khả năng tạo phân vùng đã mật mã bị hạn chế vì không thể tạo ra một khoá mật mã ngẫu nhiên. Vẫn có thể thiết lập một phân vùng đã mật mã, dùng cụm từ mật khẩu như là khoá mật mã. </para
+></listitem>
+</itemizedlist>
+
+  </sect2>
+ </sect1>
+<!--   End of file appendix/graphical.xml -->
+
+</appendix>
+<!--   End of file appendix/random-bits.xml -->

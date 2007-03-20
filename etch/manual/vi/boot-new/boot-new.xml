@@ -1,0 +1,494 @@
+<!-- Start of file boot-new/boot-new.xml -->
+<!-- $Id: boot-new.xml 45438 2007-02-26 19:19:19Z wouter $ -->
+
+<chapter id="boot-new">
+ <title
+>Khởi động vào hệ thống Debian mới</title>
+
+ <sect1 id="base-boot"
+><title
+>Giờ phút thử thách</title>
+<para
+>Việc khởi động một mình ban đầu của hệ thống là trường hợp do kỹ sư điện tử gọi <quote
+>thử thách khói</quote
+>. </para
+><para arch="x86"
+>Nếu bạn đã chạy một tiến trình cài đặt kiểu mặc định, khi khởi động hệ thống trước hết bạn nên thấy trình đơn của <classname
+>grub</classname
+> hay bộ tải khởi động <classname
+>lilo</classname
+>. Những mục đầu trong trình đơn này dành cho hệ thống Debian mới của bạn. Nếu tiến trình cài đặt đã phát hiện hệ điều hành khác nào trên cùng máy (v.d. Windows hay Mac), chúng sẽ được liệt kê bên dưới trong trình đơn. </para
+><para
+>Nếu hệ thống không khởi động được, hãy bình tĩnh. Nếu tiến trình cài đặt đã chạy thành công, rất có thể có chỉ một lỗi nhỏ hiện thời ngăn cản hệ thống khởi động Debian. Trong phần lớn trường hợp, vấn đề như vậy có thể được sửa, không cần chạy lại tiến trình cài đặt. Một tùy chọn sẵn sàng để sửa vấn đề khởi động là sử dụng chế độ cứu (rescue mode) có sẵn của bộ cài đặt (xem <xref linkend="rescue"/>). </para
+><para
+>Nếu bạn chưa quen với Debian và Linux, có lẽ bạn cần có sự giúp đỡ của những người dùng kinh nghiệm. <phrase arch="x86"
+>Để được trợ giúp trực tuyến trực tiếp, hãy vào kênh IRC <classname
+>#debian</classname
+> hay <classname
+>#debian-boot</classname
+> trên mạng OFTC. Hoặc bạn có thể đăng ký với hộp thư chung của người dùng Debian <ulink url="&url-list-subscribe;"
+>debian-user</ulink
+>.</phrase
+> <phrase arch="not-x86"
+>Đối với kiến trúc ít thường gặp hơn như &arch-title;, khuyên bạn đăng ký với hộp thư chung <ulink url="&url-list-subscribe;"
+>debian-&arch-listname;</ulink
+>.</phrase
+> Bạn cũng có dịp gửi một báo cáo cài đặt, như được diễn tả trong <xref linkend="submit-bug"/>.  </para
+><para arch="x86"
+>Nếu tiến trình cài đặt đã không phát hiện được hệ điều hành khác nào cũng nằm trên máy tính đó, hãy gửi một báo cáo cài đặt. </para>
+
+  <sect2 arch="m68k"
+><title
+>Khởi Động BVME 6000</title>
+<para
+>Nếu bạn mới cài đặt không đĩa vào máy kiểu BVM hay Motorola VMEbus: một khi hệ thống tải chương trình <command
+>tftplilo</command
+> từ trình phục vụ TFTP, hãy gõ vào dấu nhắc <prompt
+>LILO Boot:</prompt
+> một của: <itemizedlist>
+<listitem
+><para
+><userinput
+>b6000</userinput
+> rồi &enterkey; để khởi động máy kiểu BVME 4000/6000 </para
+></listitem
+><listitem
+><para
+><userinput
+>b162</userinput
+> rồi &enterkey; để khởi động máy kiểu MVME162 </para
+></listitem
+><listitem
+><para
+><userinput
+>b167</userinput
+> rồi &enterkey; để khởi động máy kiểu MVME166/167 </para
+></listitem>
+</itemizedlist>
+
+</para>
+
+   </sect2>
+
+  <sect2 arch="m68k"
+><title
+>Khởi động Macintosh</title>
+
+<para
+>Chuyển đổi sang thư mục chứa những tập tin cài đặt, rồi khởi chạy bộ khởi động <command
+>Penguin</command
+> trong khi nhấn giữ phím <keycap
+>command</keycap
+> (trái tao ⌘). Tới hộp thoại <userinput
+>Settings</userinput
+> (Thiết lập) (dùng tổ hợp phím <keycombo
+> <keycap
+>command</keycap
+> <keycap
+>T</keycap
+> </keycombo
+>), và tìm dòng tùy chọn hạt nhân nên hình như <userinput
+>root=/dev/ram video=font:VGA8x16</userinput
+> hay tương tự. </para
+><para
+>Bạn cần phải thay đổi mục nhập đó thành <userinput
+>root=/dev/<replaceable
+>yyyy</replaceable
+></userinput
+>. Hãy thay thế <replaceable
+>yyyy</replaceable
+> bằng tên Linux của phân vùng nơi bạn đã cài đặt hệ thống (v.d. <filename
+>/dev/sda1</filename
+>); bạn đã ghi tên này trước. Mục nhập <userinput
+>video=font:VGA8x8</userinput
+> khuyến khích đặc biệt cho người dùng có màn hình rất nhỏ. Hạt nhân sẽ chọn phông chữ xinh hơn (6x11) nhưng trình điều khiển bàn giao tiếp cho phông chữ này có thể treo máy, vì vậy giá trị 8x16 hay 8x8 là an toàn hơn trong giải đoạn này. Bạn có khả năng thay đổi mục nhập này vào bất cứ lúc nào. </para
+><para
+>Nếu bạn không muốn khởi chạy GNU/LInux ngay mỗi lần khởi động, hãy tắt tùy chọn <userinput
+>Auto Boot</userinput
+> (khởi động tự động). Lưu các thiết lập vào tập tin <filename
+>Prefs</filename
+> (tùy thích) bằng tùy chọn <userinput
+>Save Settings As Default</userinput
+> (lưu thiết lập là mặc định). </para
+><para
+>Lúc này hãy chọn mục <userinput
+>Boot Now</userinput
+> (khởi động ngay bây giờ) (phím tắt là <keycombo
+> <keycap
+>command</keycap
+> <keycap
+>B</keycap
+> </keycombo
+>) để khởi chạy hệ thống GNU/Linux mới cài đặt thay cho hệ thống cài đặt đĩa bộ nhớ RAMdisk. </para
+><para
+>Debian nên khởi động, rồi bạn nên xem cùng những thông điệp với lần đầu khởi động hệ thống cài đặt, với một số thông điệp mới theo sau. </para>
+   </sect2>
+
+
+  <sect2 arch="powerpc"
+><title
+>PowerMac kiểu cũ</title>
+<para
+>Nếu máy không khởi động được sau khi cài đặt xong, đừng với dấu nhắc <prompt
+>boot:</prompt
+>, hãy thử gõ <userinput
+>Linux</userinput
+> rồi bấm phím &enterkey;. (Cấu hình khởi động mặc định <filename
+>quik.conf</filename
+> có nhãn « Linux »). Những nhãn được xác định trong <filename
+>quik.conf</filename
+> sẽ được hiển thị nếu bạn bấm phím <keycap
+>Tab</keycap
+> tại dấu nhắc <prompt
+>boot:</prompt
+>. Bạn cũng có thể thử khởi động lại vào trình cài đặt, và sửa đổi tập tin <filename
+>/target/etc/quik.conf</filename
+> được để vào đó trong bước <guimenuitem
+>Cài đặt quik vào đĩa cứng</guimenuitem
+>. Mẹo về cách sử dụng <command
+>quik</command
+> có sẵn sàng trong <ulink url="&url-powerpc-quik-faq;"
+>Hỏi đáp Quik-PowerPC</ulink
+>. </para
+><para
+>Để khởi động lại về hệ điều hành MacOS, không có lập lại bộ nhớ nvram, hãy gõ <userinput
+>bye</userinput
+> (tạm biệt) tại dấu nhắc OpenFirmware (giả sử hệ điều hành MacOS chưa bị gỡ bỏ ra máy đó). Để giành dấu nhắc OpenFirmware, hãy nhấn giữ tổ hợp phím <keycombo
+> <keycap
+>command</keycap
+> <keycap
+>option</keycap
+> <keycap
+>o</keycap
+> <keycap
+>f</keycap
+> </keycombo
+> trong khi khởi động lạnh máy đó. Nếu bạn cần phải lập lại các thay đổi của giá trị mặc định MacOS trong nvram OpenFirmware, để khởi động lại về MacOS, hãy nhấn giữ tổ hợp phím <keycombo
+> <keycap
+>command</keycap
+> <keycap
+>option</keycap
+> <keycap
+>p</keycap
+> <keycap
+>r</keycap
+> </keycombo
+> trong khi khởi động lạnh máy đó. </para
+><para
+>Nếu bạn dùng <command
+>BootX</command
+> để khởi động vào hệ thống đã cài đặt, chỉ đơn giản hãy chọn hạt nhân ưa thích trong thư mục <filename
+>Linux Kernels</filename
+> (các hạt nhân Linux), tắt tùy chọn RAMdisk (đĩa bộ nhớ tạm), và thêm một thiết bị gốc tương ứng với bản cài đặt hiện thời, v.d. <userinput
+>/dev/hda8</userinput
+>. </para>
+   </sect2>
+
+
+  <sect2 arch="powerpc"
+><title
+>PowerMac kiểu mới</title>
+<para
+>Trên máy tính (PowerMac, iMac, eMac) và máy tính xách tay (PowerBook, iBook) có bộ xử lý kiểu G4, bạn có thể nhấn giữ phím <keycap
+>option</keycap
+> để xem màn hình đồ họa có một cái nút dành cho mỗi hệ điều hành khởi động được: &debian; sẽ là cái nút có hình chím cụt nhỏ. </para
+><para
+>Nếu bạn đã giữ lại hệ điều hành MacOS, và vào lúc nào nó thay đổi biến OpenFirmware <envar
+>boot-device</envar
+>, bạn nên lập lại OpenFirmware thành cấu hình mặc định. Để làm như thế, hãy nhấn giữ tổ hợp phím <keycombo
+> <keycap
+>command</keycap
+> <keycap
+>option</keycap
+> <keycap
+>p</keycap
+> <keycap
+>r</keycap
+> </keycombo
+> trong khi khởi động lạnh máy đó. </para
+><para
+>Những nhãn được xác định trong tập tin cấu hình <filename
+>yaboot.conf</filename
+> sẽ được hiển thị nếu bạn bấm phím <keycap
+>Tab</keycap
+> tại dấu nhắc<prompt
+>boot:</prompt
+>. </para
+><para
+>Việc lập lại OpenFirmware trên phần cứng kiểu G3 hay G4 sẽ gây ra nó khởi động &debian; theo mặc định (nếu bạn đã phân vùng và định vị phân vùng <filename
+>Apple_Bootstrap</filename
+> cho đúng trước đó). Nếu bạn có &debian; nằm trên một đĩa kiểu SCSI còn có MacOS nằm trên một đĩa kiểu IDE, việc này có lẽ sẽ không hoạt động được, vậy bạn sẽ cần phải vào OpenFirmware để lập biến <envar
+>boot-device</envar
+> (thiết bị khởi động); lệnh <command
+>ybin</command
+> bình thường làm như thế một cách tự động. </para
+><para
+>Sau khi bạn khởi động &debian; lần đầu tiên, bạn có khả năng thêm bất cứ tùy chọn thêm nào bạn muốn (v.d. tùy chọn khởi động đôi) vào tập tin cấu hình <filename
+>/etc/yaboot.conf</filename
+>, rồi chạy lệnh <command
+>ybin</command
+> để cập nhật phân vùng khởi động với cấu hình đã thay đổi. Xem tài liệu Cách Làm <ulink url="&url-powerpc-yaboot-faq;"
+>yaboot HOWTO</ulink
+> để tìm thông tin thêm. </para>
+   </sect2>
+ </sect1>
+
+
+<!-- Start of file boot-new/mount-encrypted.xml -->
+<!-- $Id: mount-encrypted.xml 41817 2006-10-16 18:45:07Z mck-guest $ -->
+
+ <sect1 id="mount-encrypted-volumes">
+ <title
+>Gắn kết khối tin đã mật mã</title>
+
+<para
+>Nếu bạn đã tạo khối tin đã mật mã trong tiến trình cài đặt, cũng đã gán chúng cho điểm lắp, bạn sẽ được nhắc nập cụm từ mật khẩu dành cho mỗi khối tin trong khi khởi động. Thu tục thật khác biệt một ít giữa <filename
+>dm-crypt</filename
+> và <filename
+>loop-AES</filename
+>. </para>
+
+  <sect2 id="mount-dm-crypt">
+  <title
+>dm-crypt</title>
+
+<para
+>Đối với phân vùng được mật mã thông qua <filename
+>dm-crypt</filename
+>, tiến trình khởi động sẽ hiển thị dấu nhắc này: <informalexample
+><screen>
+Starting early crypto disks... <replaceable
+>phần</replaceable
+>_crypt(starting)
+Enter LUKS passphrase:
+</screen
+></informalexample
+> (đang khởi động các đĩa mật mã sớm... mật mã [phần] (đang khởi động) Nhập cụm từ mật khẩu LUKS:) Trên dòng đầu tiên của đoạn này, <replaceable
+>phần</replaceable
+> là tên phân vùng cơ sở, v.d. « sda2 » hoặc « md0 ». Rất có thể là bạn tự hỏi <emphasis
+>dành cho khối tin nào</emphasis
+> bạn thực sự nhập cụm từ mật khẩ nàyu? Nó có liên quan đến phân vùng <filename
+>/home</filename
+> của bạn? Hoặc đến phân vùng <filename
+>/var</filename
+>? Tất nhiên, nếu bạn có chỉ một khối tin được mật mã, đơn giản hãy nhập cụm từ mật khẩu bạn đã dùng khi thiết lập khối tin đó. Còn nếu bạn đã thiết lập nhiều khối tin đã mật mã trong khi cài đặt, bạn cũng đã ghi nhớ thông tin trong bước cuối cùng của <xref linkend="partman-crypto"/> sẽ có ích. Nếu bạn chưa ghi nhớ sự ánh xạ giữa <filename
+><replaceable
+>phần</replaceable
+>_crypt</filename
+> và nhưng điểm lắp, bạn vẫn còn có thể tìm nó trong tập tin <filename
+>/etc/crypttab</filename
+> và <filename
+>/etc/fstab</filename
+> của hệ thống mới. </para
+><para
+>Dấu nhắc có thể có hình khác khi hệ thống tập tin gốc đã mật mã được gắn kết. Hình này phụ thuộc vào bộ tạo ra initramfs nào được dùng để tạo ra initrd được dùng lần lượt để khởi động hệ thống đó. Mẫu bên dưới thuộc về initrd được tạo ra bằng <classname
+>initramfs-tools</classname
+>: <informalexample
+><screen
+>Begin: Mounting <emphasis
+>root file system</emphasis
+>... ...
+Begin: Running /scripts/local-top ...
+Enter LUKS passphrase:
+[Bắt đầu : Đang gắn kết hệ thống tập tin gốc ... ...
+Bắt đầu : Đang chạy /tập_lệnh/local-top ...
+Nhập cụm từ mật khẩu LUKS:]
+</screen
+></informalexample>
+
+</para
+><para
+>Không có ký tự nào (ngay cả dấu sao) sẽ được hiển thị trong khi nhập cụm từ mật khẩu. Nếu bạn nhập sai, bạn có hai lần thử lại để sửa nó. Sau lần thử thứ ba, tiến trình khởi động sẽ bỏ qua khối tin này, tiếp tục lại gắn kết hệ thống tập tin tới. Xem <xref linkend="crypto-troubleshooting"/> để tìm thông tin thêm. </para
+><para
+>Sau khi nhập tất cả các cụm từ mật khẩu, tiến trình khởi động nên tiếp tục như bình thường. </para>
+  </sect2>
+
+  <sect2 id="mount-loop-aes">
+  <title
+>loop-AES</title>
+
+<para
+>Đối với phân vùng được mật mã bằng loop-AES, bạn sẽ xem dấu nhắc này trong khi khởi động: <informalexample
+><screen
+>Checking loop-encrypted file systems.
+Setting up /dev/loop<replaceable
+>X</replaceable
+> (/<replaceable
+>mountpoint</replaceable
+>)
+Password:
+[Đang kiểm tra các hệ thống tập tin tập tin được mật mã bằng loop.
+Đang thiết lập X
+Mật khẩu :]
+</screen
+></informalexample>
+
+</para
+><para
+>Không có ký tự nào (ngay cả dấu sao) sẽ được hiển thị trong khi nhập cụm từ mật khẩu. Nếu bạn nhập sai, bạn có hai lần thử lại để sửa nó. Sau lần thử thứ ba, tiến trình khởi động sẽ bỏ qua khối tin này, tiếp tục lại gắn kết hệ thống tập tin tới. Xem <xref linkend="crypto-troubleshooting"/> để tìm thông tin thêm. </para
+><para
+>Sau khi nhập tất cả các cụm từ mật khẩu, tiến trình khởi động nên tiếp tục như bình thường. </para>
+  </sect2>
+
+  <sect2 id="crypto-troubleshooting">
+  <title
+>Giải đáp thắc mắc</title>
+
+<para
+>Nếu tiến trình khởi động không thể gắn kết khối tin đã mật mã nào, vì cụm từ mật khẩu bị nhập sai, bạn sẽ cần phải tự gắn kết mỗi khối tin như vậy sau khi khởi động. Có vài trường hợp có thể. </para>
+
+<itemizedlist>
+<listitem
+><para
+>Trường hợp thứ nhất liên quan đến phân vùng gốc. Khi nó không được gắn kết đúng, tiến trình khởi động sẽ tạm dừng lại nên bạn cần phải khởi động lại máy tính để thử lại. </para
+></listitem>
+<listitem
+><para
+>Trường hợp dễ nhất liên quan đến khối tin đã mật mã chứa dữ liệu, v.d. <filename
+>/home</filename
+> hay <filename
+>/srv</filename
+>. Bạn có khả năng đơn giản tự gắn kết mỗi khối tin sau khi khởi động. Đối với <filename
+>loop-AES</filename
+>, đây là thao tác bước đơn:<informalexample
+><screen>
+<prompt
+>#</prompt
+> <userinput
+>mount <replaceable
+>/điểm_lắp</replaceable
+></userinput>
+<prompt
+>Password:</prompt>
+</screen
+></informalexample
+> (gắn kết; mật khẩu) mà <replaceable
+>/điểm_lắp</replaceable
+> nên được thay thế bằng thư mục riêng (v.d. <filename
+>/home</filename
+>). Sự khác duy nhất với việc gắn kết bình thường là bạn sẽ được nhắc nhập cụm từ mật khẩu dành cho khối tin này. </para
+><para
+>Đối với <filename
+>dm-crypt</filename
+>, trường hợp là phức tạp hơn một ít. Trước tiên, bạn cần phải đăng ký những khối tin với ứng dụng <application
+>device mapper</application
+> bằng cách chạy: <informalexample
+><screen>
+<prompt
+>#</prompt
+> <userinput
+>/etc/init.d/cryptdisks start</userinput>
+</screen
+></informalexample
+> (đường dẫn; bắt đầu) Tiến trình này sẽ quét mọi khối tin được liệt kê trong tập tin <filename
+>/etc/crypttab</filename
+>, và sẽ tạo những thiết bị thích hợp dưới thư mục <filename
+>/dev</filename
+> sau khi nhập những cụm từ mật khẩu đúng. (Khối tin đã được đăng ký sẽ bị bỏ qua, vì vậy bạn có thể chạy lệnh này vài lần, không có sao.) Sau khi đăng ký được, bạn có khả năng đơn giản gắn kết những khối tin bằng cách bình thường. <informalexample
+><screen
+><prompt
+>#</prompt
+> <userinput
+>mount <replaceable
+>/điểm_lắp</replaceable
+></userinput
+>
+</screen
+></informalexample>
+
+</para
+></listitem>
+<listitem
+><para
+>Nếu khối tin nào chứa tập tin hệ thống khác tới hạn không thể được gắn kết (<filename
+>/usr</filename
+> hay <filename
+>/var</filename
+>), hệ thống vẫn còn nên khởi động được; bạn cũng vẫn nên có khả năng tự gắn kết mỗi khối tin giống như trong trường hợp trước. Tuy nhiên, bạn cũng cần phải khởi chạy (lại) dịch vụ nào thường chạy tại cấp chạy mặc định của bạn, vì rất có thể là nó chưa được khởi chạy. Phương pháp dễ nhất để làm như thế là chuyển đổi sang cấp chạy thứ nhất rồi ngược lại bằng cách nhập <informalexample
+><screen>
+<prompt
+>#</prompt
+> <userinput
+>init 1</userinput>
+</screen
+></informalexample
+> vào dấu nhắc trình bao, rồi bấm tổ hợp phím <keycombo
+> <keycap
+>Control</keycap
+> <keycap
+>D</keycap
+> </keycombo
+> khi mật khẩu chủ được yêu cầu. </para
+></listitem>
+</itemizedlist>
+
+  </sect2>
+ </sect1>
+<!--   End of file boot-new/mount-encrypted.xml -->
+
+ <sect1 id="login">
+ <title
+>Đăng nhập</title>
+
+<para
+>Một khi hệ thống khởi động được, bạn sẽ thấy dấu nhắc đăng nhập. Hãy đăng nhập, dùng tên đăng nhập cá nhân và mật khẩu bạn đã chọn trong tiến trình cài đặt. Hệ thống của bạn lúc bây giờ sẵn sàng sử dụng. </para
+><para
+>Nếu bạn là người mới dùng Debian, khuyên bạn đọc tài liệu hướng dẫn có sẵn liên quan đến mỗi bước mới. Hiện thời có vài hệ thống tài liệu, cũng có tiến trình cố gắng hợp nhất những kiểu tài liệu khác nhau. Đây là một số điểm bắt đầu đọc. </para
+><para
+>Tài liệu hướng dẫn cách sử dụng chương trình nào đã được cài đặt thì nằm trong thư mục <filename
+>/usr/share/doc/</filename
+>, dưới một thư mục con có tên theo tên của gói Debian chứa chương trình đó. Tuy nhiên, tài liệu rộng rãi hơn thường được đóng gói riêng trong gói tài liệu đặc biệt thường không được cài đặt theo mặc định. Chẳng hạn, tài liệu về công cụ quản lý gói <command
+>apt</command
+> nằm trong những gói <classname
+>apt-doc</classname
+> và <classname
+>apt-howto</classname
+>. </para
+><para
+>Hơn nữa, có một số thư mục đặc biệt ở trong phân cấp <filename
+>/usr/share/doc/</filename
+>. Những tài liệu Linux Thế Nào được cài đặt dạng nén <emphasis
+>.gz</emphasis
+> vào thư mục <filename
+>/usr/share/doc/HOWTO/en-txt/</filename
+>. Sau khi cài đặt gói gói <command
+>dhelp</command
+>, bạn sẽ tìm thấy một mục lục tài liệu có khả năng duyệt qua nằm trong <filename
+>/usr/share/doc/HTML/index.html</filename
+>. </para
+><para
+>Có thể xem dễ dàng các tài liệu này bằng trình duyệt dựa vào văn bản, bằng cách nhập những lệnh này:<informalexample
+><screen>
+$ cd /usr/share/doc/
+$ w3c .
+</screen
+></informalexample
+> Dấu chấm nằm sau lệnh <command
+>w3c</command
+> thì báo nó hiển thị nội dung của thư mục hiện có. </para
+><para
+>Nếu máy tính có môi trường đồ họa được cài đặt, bạn cũng có khả năng sử dụng trình duyệt Mạng để xem tài liệu. Hãy khởi chạy trình duyệt Mạng từ trình đơn ứng dụng, rồi gõ địa chỉ <userinput
+>/usr/share/doc/</userinput
+> vào thanh địa chỉ. </para
+><para
+>Bạn cũng có thể gõ <userinput
+>info <replaceable
+>lệnh</replaceable
+></userinput
+> hay <userinput
+>man <replaceable
+>lệnh</replaceable
+></userinput
+> để xem tài liệu hướng dẫn về phần lớn lệnh sẵn sàng ở dấu nhắc lệnh. Việc gõ lệnh <userinput
+>help</userinput
+> (trợ giúp) sẽ hiển thị trợ giúp về các lệnh trình bao. Hơn nữa, việc gõ lệnh nào với <userinput
+>--help</userinput
+> theo sau sẽ thường hiển thị bản tóm tắt ngắn về cách sử dụng lệnh đó. Nếu kết quả của lệnh cuộn qua cạnh trên của màn hình, hãy gõ <userinput
+>| more</userinput
+> sau lệnh đó để dùng chương trình <filename
+>more</filename
+> để gây ra kết quả tạm dừng trước khi cuộn qua cạnh trên của màn hình. Để xem danh sách các lệnh sẵn sàng bắt đầu với một chữ nào đó, hãy gõ chữ đó rồi hai dấu cách kiểu Tab. </para>
+
+ </sect1>
+</chapter>
+<!--   End of file boot-new/boot-new.xml -->

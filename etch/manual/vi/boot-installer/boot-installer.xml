@@ -1,0 +1,3414 @@
+<!-- Start of file boot-installer/boot-installer.xml -->
+<!-- $Id: boot-installer.xml 44407 2007-01-22 17:02:07Z fjp $ -->
+
+<chapter id="boot-installer"
+><title
+>Khởi động hệ thống cài đặt</title>
+
+<!-- Include only archs that are documented to avoid build-errors -->
+<!-- The arch="..." condition can be deleted when al archs are present -->
+ <sect1 arch="alpha;arm;x86;ia64;m68k;mips;mipsel;s390;powerpc;sparc">
+ <title
+>Khởi động trình cài đặt trên &arch-title;</title>
+
+<!-- This info is so architecture dependent, that I have turned the   -->
+<!-- structure inside out for this chapter. Each arch has a document. -->
+<!-- Note: archs hppa and mipsel are currently missing -->
+
+<note condition="gtk"
+><para
+>Để tìm thông tin thêm về cách khởi động bộ cài đặt đồ họa, xem <xref linkend="graphical"/>. </para
+></note>
+
+
+<!-- Start of file boot-installer/alpha.xml -->
+<!-- $Id: alpha.xml 43789 2007-01-03 09:27:39Z vorlon $ -->
+
+ <sect2 arch="alpha" id="alpha-firmware">
+ <title
+>Phần vững bàn điều khiển Alpha</title>
+<para
+>Phần vững bàn điều khiển được cất giữ trong bộ nhớ ROM cực nhanh, và được khởi chạy khi hệ thống Alpha được mở điện hay được đặt lại. Có hai đặc tả bàn điều khiển khác nhau được dùng trên hệ thống Alpha, vì vậy có sẵn sàng hai hạng phần vững bàn điều khiển: </para>
+
+<itemizedlist>
+<listitem
+><para
+><emphasis
+>Bàn điều khiển SRM</emphasis
+>, dựa vào đặc tả hệ thống con bàn điều khiển Alpha, mà cung cấp môi trường thao tác cho OpenVMS, Tru64 UNIX, và hệ điều hành Linux. </para
+></listitem>
+<listitem
+><para
+><emphasis
+>Bàn điều khiển ARC, AlphaBIOS, hay ARCSBIOS</emphasis
+>, dựa vào đặc tả máy tính RISC cấp cao (ARC), ma cung cấp môi trường thao tác cho hệ điều hành Windows NT. </para
+></listitem>
+</itemizedlist>
+
+<para
+>Đứng trên quan điểm người dùng, sự khác nhau quan trọng nhất giữa SRM và ARC là việc chọn bàn điều khiển rành buộc giản đồ phân vùng đĩa có thể cho đĩa cứng nơi bạn muốn khởi động. </para
+><para
+>ARC cần thiết bạn dùng một bảng phân vùng kiểu MS-DOS (như được tạo bởi <command
+>cfdisk</command
+>) cho đĩa khởi động. Vì vậy bảng phân vùng MS-DOS là dạng thức phân vùng <quote
+>sở hữu</quote
+> khi khởi động từ ARC. Tức là, vì AlphaBIOS chứa một tiện ích phân vùng đĩa, bạn có thể thích phân vùng các đĩa từ trình đơn phần vững, trước khi cài đặt Linux. </para
+><para
+>Ngược lại, SRM <emphasis
+>không tương thích</emphasis
+><footnote
+> <para
+> Chi tiết là dạng thức rãnh ghi khởi động cần thiết bởi Đặc tả hệ thống con bàn điều khiển xung đột với cách định vị bảng phân vùng DOS.</para
+> </footnote
+> với bảng phân vùng MS-DOS. Vì UNIX kiểu Tru64 dùng dạng thức nhãn đĩa BSD, nó là dạng thức phân vùng <quote
+>sở hữu</quote
+> cho việc cài đặt kiểu SRM. </para
+><para
+>GNU/LInux là hệ điều hành duy nhất trên Alpha có thể được khởi động từ cả hai kiểu bàn điều khiển, nhưng &debian; &release; hỗ trợ khả năng khởi động chỉ trên hệ thống dựa vào SRM. Nếu bạn có máy Alpha không có phiên bản SRM tương ứng, nếu bạn sẽ khởi động hệ thống đôi (với Windows NT), hoặc nếu thiết bị khởi động cần thiết khả năng hỗ trợ bàn điều khiển ARC để khởi động BIOS, bạn sẽ không thể sử dụng trình cài đặt &debian; &release;. Bạn vẫn còn có khả năng chạy &debian; &release; trên hệ thống như vậy, bằng cách dùng vật chứa cài đặt khác, v.d. bạn có thể cài đặt Debian Woody bằng MILO, rồi nâng cấp lên bản phát hành hiện thời. </para
+><para
+>Vì <command
+>MILO</command
+> không sẵn sàng cho hệ thống Alpha hiện thời nào (kể từ tháng 2/2000), và vì không còn cần thiết lại mua một giấy phép kiểu OpenVMS hay Tru64 UNIX để chạy phần vững SRM trên máy Alpha cũ hơn, khuyên bạn dùng SRM khi nào có thể. </para
+><para
+>Bảng sau đây tóm tắt các tổ hợp hệ thống/bàn điều khiển sẵn sàng và được hỗ trợ (xem <xref linkend="alpha-cpus"/> để tìm các tên kiểu hệ thống). Từ viết tắt <quote
+>ARC</quote
+> bên dưới ngụ ý bất kỳ bàn điều khiển nào tuân theo ARC. </para
+><para>
+
+<informaltable
+><tgroup cols="2">
+<thead>
+<row>
+  <entry
+>Kiểu hệ thống</entry>
+  <entry
+>Kiểu bàn điều khiển được hỗ trợ</entry>
+</row>
+</thead>
+
+<tbody>
+<row>
+  <entry
+>alcor</entry>
+  <entry
+>ARC hay SRM</entry>
+</row
+><row>
+  <entry
+>avanti</entry>
+  <entry
+>ARC hay SRM</entry>
+</row
+><row>
+  <entry
+>book1</entry>
+  <entry
+>Chỉ SRM</entry>
+</row
+><row>
+  <entry
+>cabriolet</entry>
+  <entry
+>ARC hay SRM</entry>
+</row
+><row>
+  <entry
+>dp264</entry>
+  <entry
+>Chỉ SRM</entry>
+</row
+><row>
+  <entry
+>eb164</entry>
+  <entry
+>ARC hay SRM</entry>
+</row
+><row>
+  <entry
+>eb64p</entry>
+  <entry
+>ARC hay SRM</entry>
+</row
+><row>
+  <entry
+>eb66</entry>
+  <entry
+>ARC hay SRM</entry>
+</row
+><row>
+  <entry
+>eb66p</entry>
+  <entry
+>ARC hay SRM</entry>
+</row
+><row>
+  <entry
+>jensen</entry>
+  <entry
+>Chỉ SRM</entry>
+</row
+><row>
+  <entry
+>lx164</entry>
+  <entry
+>ARC hay SRM</entry>
+</row
+><row>
+  <entry
+>miata</entry>
+  <entry
+>ARC hay SRM</entry>
+</row
+><row>
+  <entry
+>mikasa</entry>
+  <entry
+>ARC hay SRM</entry>
+</row
+><row>
+  <entry
+>mikasa-p</entry>
+  <entry
+>Chỉ SRM</entry>
+</row
+><row>
+  <entry
+>nautilus</entry>
+  <entry
+>ARC (xem sổ tay của bo mạch chủ) hay SRM</entry>
+</row
+><row>
+  <entry
+>vô tên</entry>
+  <entry
+>ARC hay SRM</entry>
+</row
+><row>
+  <entry
+>noritake</entry>
+  <entry
+>Chỉ SRM</entry>
+</row
+><row>
+  <entry
+>noritake-p</entry>
+  <entry
+>Chỉ SRM</entry>
+</row
+><row>
+  <entry
+>pc164</entry>
+  <entry
+>ARC hay SRM</entry>
+</row
+><row>
+  <entry
+>rawhide</entry>
+  <entry
+>Chỉ SRM</entry>
+</row
+><row>
+  <entry
+>ruffian</entry>
+  <entry
+>Chỉ ARC</entry>
+</row
+><row>
+  <entry
+>sable</entry>
+  <entry
+>Chỉ SRM</entry>
+</row
+><row>
+  <entry
+>sable-g</entry>
+  <entry
+>Chỉ SRM</entry>
+</row
+><row>
+  <entry
+>sx164</entry>
+  <entry
+>ARC hay SRM</entry>
+</row
+><row>
+  <entry
+>takara</entry>
+  <entry
+>ARC hay SRM</entry>
+</row
+><row>
+  <entry
+>xl</entry>
+  <entry
+>Chỉ ARC</entry>
+</row
+><row>
+  <entry
+>xlt</entry>
+  <entry
+>Chỉ ARC</entry>
+</row>
+
+</tbody>
+</tgroup>
+</informaltable>
+
+</para
+><para
+>Nói chung, không có bàn điều khiển trong nhóm này có khả năng khởi động Linux một cách trực tiếp nên cần thiết một bộ tải khởi động trung gian. Đối với bàn điều khiển SRM, có dùng <command
+>aboot</command
+>, một bộ tải khởi động nhỏ không phụ thuộc vào nền tảng. Xem tài liệu SRM thế nào <ulink url="&url-srm-howto;"
+>SRM HOWTO</ulink
+> (tiếc là cũ) để tìm thông tin thêm về <command
+>aboot</command
+>. </para
+><para condition="FIXME"
+>Những đoạn văn sau đây thuộc về Sổ Tay Cài Đặt của Debian Woody, được gồm vào đây để cung cấp thông tin tham chiếu. Mong muốn thông tin này có ích trong tương lai khi Debian lại hỗ trợ khả năng cài đặt dựa vào MILO. </para
+><para condition="FIXME"
+>Nói chung, không có bàn điều khiển trong nhóm này có khả năng khởi động Linux một cách trực tiếp nên cần thiết một bộ tải khởi động trung gian. Có hai bộ tải Linux chính: <command
+>MILO</command
+> và <command
+>aboot</command
+>. </para
+><para condition="FIXME"
+><command
+>MILO</command
+> cũng là bàn điều khiển, mà thay thế ARC hay SRM trong bộ nhớ. <command
+>MILO</command
+> có thể được khởi động từ cả ARC lẫn SRM và cung cấp cách duy nhất tải và khởi động Linux từ bàn điều khiển ARC. <command
+>MILO</command
+> đặc trưng cho nền tảng (cần thiết một <command
+>MILO</command
+> khác dành cho mỗi kiểu hệ thống) và tồn tại dành cho mỗi hệ thống cho đó đại diện khả năng hỗ trợ ARC trong bảng bên trên. Xem thêm tài liệu MILO Thế Nào <ulink url="&url-milo-howto;"
+>MILO HOWTO</ulink
+> (tiếc là cũ). </para
+><para condition="FIXME"
+><command
+>aboot</command
+> là một bộ tải khởi động nhỏ, không phụ thuộc vào nền tảng, mà chạy chỉ từ SRM. Xem tài liệu SRM Thế Nào <ulink url="&url-srm-howto;"
+>SRM HOWTO</ulink
+> (tiếc là cũ) để tìm thông tin thêm về <command
+>aboot</command
+>. </para
+><para condition="FIXME"
+>Như thế thì có ba thủ tục có thể, phụ thuộc vào phần vững bàn điều khiển của mỗi hệ thống, cũng vào khả năng hoạt động của <command
+>MILO</command
+>:<informalexample
+><screen>
+SRM -&gt; aboot
+SRM -&gt; MILO
+ARC -&gt; MILO
+</screen
+></informalexample
+> Vì <command
+>MILO</command
+> không sẵn sàng cho hệ thống Alpha hiện thời nào (kể từ tháng 2/2000), cũng vì không còn cần thiết lại mua một giấy phép OpenVMS hay Tru64 Unix để chạy phần vững SRM trên máy Alpha cũ hơn, khuyên bạn sử dụng SRM và <command
+>aboot</command
+> khi cài đặt hệ thống GNU/Linux mới, nếu bạn không muốn khởi động đôi với Windows NT. </para
+><para
+>Phần lớn máy AlphaServer và mọi sản phẩm máy phục vụ và máy trạm hiện thời chứa cả SRM lẫn AlphaBIOS trong phần vững. Đối với máy <quote
+>nửa cực nhanh</quote
+>, như những bo mạch ước lượng khác nhau, có thể chuyển đổi từ phiên bản này sang phiên bản khác, bằng cách chớp lại phần vững. Hơn nữa, một khi cài đặt SRM, có thể chạy ARC/AlphaBIOS từ đĩa mềm (dùng lệnh <command
+>arc</command
+>). Vì những lý do nêu trên, khuyên bạn chuyển đổi sang SRM trước khi cài đặt &debian;. </para
+><para
+>Cũng như trên những kiến trúc khác, bạn nên cài đặt bản sửa đổi phần vững mới nhất sẵn sàng<footnote
+> <para
+> Trừ trên Jensen, mà Linux không được hỗ trợ trên phiên bản phần vững mới hơn 1.7 &mdash; xem tài liệu <ulink url="&url-jensen-howto;"
+></ulink
+> để tìm thông tin thêm. </para
+> </footnote
+> trước khi cài đặt &debian;. Đối với Alpha, bản cập nhật phần vững có thể được lấy từ <ulink url="&url-alpha-firmware;"
+>Bản Cập Nhật Phần Vững Alpha</ulink
+>. </para>
+ </sect2>
+
+
+  <sect2 arch="alpha"
+><title
+>Khởi động bằng TFTP</title>
+<para
+>Trong SRM, các giao diện kiểu Ethernet được đặt tên với tiền tố <userinput
+>ewa</userinput
+>, cũng sẽ được liệt kê trong kết xuất của lệnh <userinput
+>show dev</userinput
+> (hiển thị thiết bị), như bên dưới (được sửa đổi một ít): <informalexample
+><screen>
+&gt;&gt;&gt; show dev
+ewa0.0.0.9.0               EWA0              08-00-2B-86-98-65
+ewb0.0.0.11.0              EWB0              08-00-2B-86-98-54
+ewc0.0.0.2002.0            EWC0              00-06-2B-01-32-B0
+</screen
+></informalexample
+>Trước tiên bạn cần phải đặt giao thức khởi động:<informalexample
+><screen>
+&gt;&gt;&gt; set ewa0_protocols bootp
+</screen
+></informalexample
+>Sau đó, hãy kiểm tra kiểu vật chứa là đúng: <informalexample
+><screen>
+&gt;&gt;&gt; set ewa0_mode <replaceable
+>mode</replaceable>
+</screen
+></informalexample
+>Bạn có thể đạt được một danh sách các chế độ hợp lệ bằng <userinput
+>&gt;&gt;&gt;set ewa0_mode</userinput
+>. </para
+><para
+>Sau đó, để khởi động từ giao diện Ethernet thứ nhất, bạn nên gõ :<informalexample
+><screen>
+&gt;&gt;&gt; boot ewa0 -flags ""
+</screen
+></informalexample
+>Việc này sẽ khởi động bằng những tham số hạt nhân mặc định, như được gồm trong ảnh khởi động qua mạng (netboot). </para
+><para
+>Nếu bạn muốn dùng bàn điều khiển nối tiếp, bạn <emphasis
+>cần phải</emphasis
+> gởi tham số <userinput
+>console=</userinput
+> (bàn điều khiển=) qua cho hạt nhân. Có thể làm như thế bằng cách dùng đối số <userinput
+>-flags</userinput
+> (các cờ) tới lệnh <userinput
+>boot</userinput
+> (khởi động) SRM. Những cổng nối tiếp có cùng tên với những tập tin tương ứng nằm trong thư mục <userinput
+>/dev</userinput
+>. Hơn nữa, khi xác định tham số hạt nhân thêm, bạn cần phải lặp lại một số tùy chọn mặc định riêng cần thiết bởi ảnh &d-i;. Lấy thí dụ, để khởi động từ <userinput
+>ewa0</userinput
+>, cũng dùng bàn điều khiển trên cổng nối tiếp thứ nhất, bạn nên gõ : <informalexample
+><screen
+>&gt;&gt;&gt; boot ewa0 -flags &quot;root=/dev/ram ramdisk_size=16384 console=ttyS0&quot;
+</screen
+></informalexample>
+
+</para>
+  </sect2>
+
+  <sect2 arch="alpha"
+><title
+>Khởi động từ đĩa CD-ROM bằng bàn điều khiển SRM</title>
+<para
+>Các đĩa CD cài đặt &debian; chứa vài tùy chọn khởi động cấu hình sẵn cho bàn giao tiếp kiểu VGA và nối tiếp. Gõ <informalexample
+><screen>
+&gt;&gt;&gt; boot xxxx -cờ 0
+</screen
+></informalexample
+> để khởi động bằng bàn giao tiếp VGA, mà <replaceable
+>xxxx</replaceable
+> là ổ đĩa CD-ROM theo cách ghi SRM. Để sử dụng bàn giao tiếp nối tiếp trên thiết bị nối tiếp thứ nhất, hãy gõ <informalexample
+><screen>
+&gt;&gt;&gt; boot xxxx -cờ 1
+</screen
+></informalexample
+>, còn để sử dụng bàn giao tiếp trên thiết bị nối tiếp thứ hai, gõ : <informalexample
+><screen
+>&gt;&gt;&gt; boot xxxx -cờ 2
+</screen
+></informalexample>
+
+</para>
+  </sect2>
+
+  <sect2 arch="alpha" condition="FIXME">
+  <title
+>Khởi động từ đĩa CD-ROM bằng bàn điều khiển ARC hay AlphaBIOS</title>
+<para
+>Để khởi động một đĩa CD-ROM từ bàn điều khiển ARC, hãy tìm tên mã kiến trúc phụ của máy bạn (xem <xref linkend="alpha-cpus"/>), rồi nhập <filename
+>\milo\linload.exe</filename
+> như là bộ tải khởi động, và <filename
+>\milo\<replaceable
+>kiến_trúc_phụ</replaceable
+></filename
+> (mà <replaceable
+>kiến_trúc_phụ</replaceable
+> là tên kiến trúc phụ đúng) như là đường dẫn hệ điều hành trong trình đơn « OS Selection Setup » (Thiết lập chọn HĐH). Máy Ruffian là ngoài lệ: cần phải dùng <filename
+>\milo\ldmilo.exe</filename
+> như là bộ tải khởi động. </para>
+  </sect2>
+
+
+  <sect2 arch="alpha" condition="supports-floppy-boot">
+  <title
+>Khởi động từ đĩa mềm bằng bàn điều khiển SRM</title>
+<para
+>Tại dấu nhắc SRM (<prompt
+>&gt;&gt;&gt;</prompt
+>), hãy nhập lệnh này: <informalexample
+><screen>
+&gt;&gt;&gt; boot dva0 -flags 0
+</screen
+></informalexample
+> có thể thay thế <filename
+>dva0</filename
+> bằng tên thiết bị thật. Bình thường, <filename
+>dva0</filename
+> là ổ đĩa mềm; hãy gõ <informalexample
+><screen>
+&gt;&gt;&gt; show dev
+</screen
+></informalexample
+> để xem danh sách các thiết bị (v.d. nếu bạn muốn khởi động từ đĩa CD). Ghi chú rằng nếu bạn khởi động thông qua MILO, đối số các cờ <command
+>-flags</command
+> bị bỏ qua, vậy bạn có thể gõ chỉ <command
+>boot dva0</command
+>. Nếu mọi thứ hoạt động được, cuối cùng bạn sẽ xem việc khởi động hạt nhân Linux. </para
+><para
+>Nếu bạn muốn xác định một số tham số hạt nhân khi khởi động bằng <command
+>aboot</command
+>, hãy dùng lệnh này: <informalexample
+><screen>
+&gt;&gt;&gt; boot dva0 -file linux.bin.gz -flags "root=/dev/fd0 load_ramdisk=1 đối_số"
+</screen
+></informalexample
+> (gõ vào cùng một dòng), thay thế, nếu cần thiết, tên thiết bị khởi động SRM thật cho <filename
+>dva0</filename
+>, tên thiết bị khởi động Linux cho <filename
+>fd0</filename
+>, và những tham số hạt nhân đã muốn thay cho <filename
+>đối_số</filename
+>. </para
+><para
+>Nếu bạn muốn xác định một số tham số hạt nhân khi khởi động bằng <command
+>MILO</command
+>, bạn sẽ cần phải ngắt tiến trình tải và khởi động, một khi bạn truy cập MILO. Xem <xref linkend="booting-from-milo"/>. </para>
+  </sect2>
+
+
+  <sect2 arch="alpha" condition="supports-floppy-boot">
+  <title
+>Khởi động từ đĩa mềm bằng bàn điều khiển ARC hay AlphaBIOS</title>
+
+<para
+>Trong trình đơn 'OS Selection' (chọn HĐH), hãy đặt <command
+>linload.exe</command
+> là bộ tải khởi động (boot loader), và <command
+>milo</command
+> là đường dẫn HĐH (OS Path). Sau đó, hãy tải và khởi động bằng mục nhập mới tạo. </para>
+  </sect2>
+
+ <sect2 arch="alpha" condition="FIXME" id="booting-from-milo"
+><title
+>Khởi động bằng MILO</title>
+<para
+>MILO nằm trên vật chứa tải và khởi động có được cấu hình để tiếp tục tự động tới Linux. Nếu bạn muốn thay đổi ứng xử này, chỉ cần bấm phím dài trong tiến trình đếm ngược của MILO. </para
+><para
+>Nếu bạn muốn xác định riêng mỗi thứ (v.d. để cung cấp tham số thêm), bạn có thể dùng lệnh như đây:<informalexample
+><screen>
+MILO
+> boot fd0:linux.bin.gz root=/dev/fd0 load_ramdisk=1 <!-- các_đối_số -->
+</screen
+></informalexample
+> Nếu bạn khởi động từ vật chứa khác đĩa mềm, hãy thay thế <filename
+>fd0</filename
+> trong lời thí dụ bên trên bằng tên thiết bị thích hợp bằng kiểu ghi Linux. Lệnh <command
+>help</command
+> (trợ giúp) sẽ cung cấp một tham chiếu lệnh MILO ngắn. </para>
+ </sect2>
+<!--   End of file boot-installer/alpha.xml -->
+
+<!-- Start of file boot-installer/arm.xml -->
+<!-- $Id: arm.xml 36639 2006-04-23 06:26:34Z jfs $ -->
+
+  <sect2 arch="arm" id="boot-tftp"
+><title
+>Khởi động từ TFTP</title>
+
+
+<!-- Start of file boot-installer/intro-net.xml -->
+<!-- $Id: intro-net.xml 11648 2004-03-22 00:37:46Z joeyh $ -->
+
+<para
+>Việc khởi động từ mạng cần thiết bạn có sự kết nối mạng và máy phục vụ khởi động mạng kiểu TFTP (DHCP, RARP, hay BOOTP). </para
+><para arch="hppa"
+>Hệ thống cũ hơn như 715 có thể cần thiết bạn dùng máy phục vụ kiểu RBOOT thay cho BOOTP. </para
+><para
+>Phương pháp cài đặt để hỗ trợ khả năng khởi động qua mạng được diễn tả trong <xref linkend="install-tftp"/>. </para>
+<!--   End of file boot-installer/intro-net.xml -->
+
+   <sect3 arch="arm"
+><title
+>Khởi động từ TFTP trên Netwinder</title>
+<para
+>Máy Netwinder có hai giao diện mạng: một thẻ tương thích với NE2000 10Mbps (thường được gọi như là <literal
+>eth0</literal
+>) và một thẻ Tulip 100Mbps. Có thể gặp khó khăn khi tải ảnh thông qua TFTP bằng thẻ 100Mbps, vì vậy khuyên bạn dùng giao diện 10Mbps (điều có nhãn <literal
+>10 Base-T</literal
+>). </para>
+<note
+><para
+>Bạn cần thiết NeTTrom phiên bản 2.2.1 hay sau để khởi động hệ thống cài đặt: khuyên bạn dùng phiên bản 2.3.3. Tiếc là tập tin phần vững hiện thời không sẵn sàng để tải xuống do vấn đề bản quyền. Nếu trường hợp này thay đổi, bạn có thể tìm ảnh mới tại <ulink url="http/www.netwinder.org/"
+></ulink
+>. </para
+></note>
+<para
+>Khi bạn khởi động máy Netwinder, bạn cần phải ngắt tiến trình khởi động trong khi đếm ngược. Việc ngắt này cho bạn khả năng đặt một số giá trị phần vững cần thiết để khởi động bộ cài đặt. Trước tiên, bạn hãy tải thiết lập mặc định<informalexample
+><screen>
+    NeTTrom command-&gt; load-defaults
+</screen
+></informalexample
+> Hơn nữa, bạn cần phải cấu hình mạng, hoặc bằng một địa chỉ tĩnh: <informalexample
+><screen>
+    NeTTrom command-&gt; setenv netconfig_eth0 flash
+    NeTTrom command-&gt; setenv eth0_ip 192.168.0.10/24
+</screen
+></informalexample
+> mà 24 là số bit được đặt trong mặt nạ mạng, hoặc một địa chỉ động: <informalexample
+><screen>
+    NeTTrom command-&gt; setenv netconfig_eth0 dhcp
+</screen
+></informalexample
+> Bạn cũng có thể cần phải cấu hình thiết lập <userinput
+>route1</userinput
+> nếu máy phục vụ TFTP không nằm trên mạng phụ cục bộ. Sau thiết lập này, bạn cần phải xác định máy phục vụ TFTP và vị trí của ảnh. Sau đó, bạn có thể lưu toàn bộ thiết lập vào bộ nhớ cực nhanh. <informalexample
+><screen>
+    NeTTrom command-&gt; setenv kerntftpserver 192.168.0.1
+    NeTTrom command-&gt; setenv kerntftpfile boot.img
+    NeTTrom command-&gt; save-all
+</screen
+></informalexample
+> Sau đó, bạn cần phải báo phần vững khởi động ảnh TFTP: <informalexample
+><screen>
+    NeTTrom command-&gt; setenv kernconfig tftp
+    NeTTrom command-&gt; setenv rootdev /dev/ram
+</screen
+></informalexample
+> Nếu bạn dùng bàn điều khiển nối tiếp để cài đặt máy Netwinder, bạn cần phải thêm thiết lập này: <informalexample
+><screen>
+    NeTTrom command-&gt; setenv cmdappend root=/dev/ram console=ttyS0,115200
+</screen
+></informalexample
+> Hoặc, dành cho bản cài đặt dùng bàn phím và bộ trình bày, bạn cần phải đặt: <informalexample
+><screen>
+    NeTTrom command-&gt; setenv cmdappend root=/dev/ram
+</screen
+></informalexample
+> Bạn có thể dùng lệnh <command
+>printenv</command
+> (in ra môi trường) để xem lại thiết lập môi trường. Một khi bạn thẩm tra thiết lập là đúng, bạn có thể tải ảnh: <informalexample
+><screen>
+    NeTTrom command-&gt; boot
+</screen
+></informalexample
+> Trong trường hợp gặp khó khăn, có sẵn một tài liệu <ulink url="http://www.netwinder.org/howto/Firmware-HOWTO.html"
+>Cách Làm chi tiết</ulink
+>. </para>
+   </sect3>
+
+   <sect3 arch="arm"
+><title
+>Khởi động từ TFTP trên CATS</title>
+<para
+>Trên máy CATS, hãy dùng lệnh <command
+>boot de0:</command
+> hay tương tự, tại dấu nhắc Cyclone. </para>
+   </sect3>
+  </sect2>
+
+
+  <sect2 arch="arm"
+><title
+>Khởi động từ đĩa CD-ROM</title>
+
+
+<!-- Start of file boot-installer/intro-cd.xml -->
+<!-- $Id: intro-cd.xml 39614 2006-08-07 15:50:11Z fjp $ -->
+
+<para
+>Phương pháp dễ nhất cho phần lớn người là sử dụng một bộ đĩa CD Debian. Nếu bạn có một bộ đĩa CD như vậy, và nếu máy của bạn có hỗ trợ khả năng khởi động trực tiếp từ đĩa CD, hay quá ! Đơn giản hãy <phrase arch="x86"
+> cấu hình hệ thống để khởi động từ đĩa CD, như được diễn tả trong <xref linkend="boot-dev-select"/>, </phrase
+> nạp đĩa CD, khởi động lại, và tiếp tục lại đến chương kế tiếp. </para
+><para
+>Ghi chú rằng một số ổ đĩa CD riêng có thể cần thiết trình điều khiển đặc biệt, vì vậy không thể được truy cập trong giao đoạn cài đặt ở đầu. Nếu phương pháp chuẩn khởi động từ đĩa CD không thích hợp với phần cứng của bạn, hãy xem lại chương này và đọc về hạt nhân xen kẽ và phương pháp cài đặt có thể là thích hợp hơn. </para
+><para
+>Thậm chí nếu bạn không thể khởi động từ đĩa CD-ROM, bạn thường có thể cài đặt các thành phần của hệ thống Debian và các gói phần mềm đã muốn từ đĩa CD-ROM đó. Đơn giản hãy khởi động bằng một vật chứa khác, như đĩa mềm. Vào lúc nên cài đặt hệ điều hành, hệ thống cơ bản và gói phần mềm thêm nào, hãy chỉ hệ thống cài đặt tới ổ đĩa CD-ROM. </para
+><para
+>Nếu bạn gặp khó khăn trong việc khởi động, xem <xref linkend="boot-troubleshooting"/>. </para>
+<!--   End of file boot-installer/intro-cd.xml -->
+
+<para
+>Để khởi động đĩa CD-ROM từ dấu nhắc bàn điều khiển Cyclone, hãy dùng lệnh <command
+>boot cd0:cats.bin</command
+>. </para>
+  </sect2>
+
+
+  <sect2 arch="arm" id="boot-firmware"
+><title
+>Khởi động từ phần vững</title>
+
+
+<!-- Start of file boot-installer/intro-firmware.xml -->
+<!-- $Id: intro-firmware.xml 35309 2006-03-07 19:31:05Z tbm $ -->
+
+<para
+>Có số tăng dần, những thiết bị người tiêu dùng mà khởi động trực tiếp từ phiến tinh thể cực nhanh trên thiết bị đó. Bộ cài đặt có thể được ghi vào cực nhanh, để khởi chạy tự động khi bạn khởi đông lại máy. </para
+><note
+><para
+>Trong nhiều trường hợp, việc thay đổi phần vững của thiết bị nhúng sẽ bãi bỏ bảo hành. Đôi khi bạn cũng không thể phục hồi thiết bị nếu gặp khó khăn trong việc chớp. Vì vậy, hãy cẩn thận và theo những bước một cách chính xác. </para
+></note>
+
+<!--   End of file boot-installer/intro-firmware.xml -->
+
+   <sect3 arch="arm" id="boot-firmware-nslu2"
+><title
+>Khởi động NSLU2</title>
+<para
+>Có ba phương pháp chèn phần vững cài đặt vào bộ nhớ cực nhanh: </para>
+
+    <sect4 arch="arm"
+><title
+>Dùng giao diện Mạng của NSLU2</title>
+<para
+>Đi tới phần quản lý và chọn mục trình đơn <literal
+>Upgrade</literal
+> (Nâng cấp). Sau đó bạn có thể duyệt qua đĩa tìm ảnh cài đặt đã được tải về trước. Một khi tìm nó, hãy bấm cái nút <literal
+>Start Upgrade</literal
+> (bắt đầu nâng cấp), xác nhận, đợi vài phút rồi xác nhận lần nữa. Sau đó, hệ thống sẽ khởi động trực tiếp vào trình cài đặt. </para>
+    </sect4>
+
+    <sect4 arch="arm"
+><title
+>Qua mạng bằng Linux/UNIX</title>
+<para
+>Bạn có thể dùng tiện ích <command
+>upslug2</command
+> từ bất kỳ máy Linux hay UNIX nào, để nâng cấp máy qua mạng. Phần mềm này đã được đóng gói dành cho Debian. Trước hết, bạn cần phải đặt máy NSLU2 trong chế độ nâng cấp: <orderedlist
+> <listitem
+><para
+> Ngắt kết nối các đĩa và/hay thiết bị ra cổng USB. </para
+></listitem
+> <listitem
+><para
+> Tắt điện của máy NSLU2 </para
+></listitem
+> <listitem
+><para
+> Bấm giữ cái nút đặt lại (có thể truy cập nó qua lỗ nhỏ về sau hộp, đúng bên trên cổng điện vào).</para
+></listitem
+> <listitem
+><para
+> Trong khi giữ nút đặt lại, bấm rồi buông cái nút điện để mở điện của máy NSLU2. </para
+></listitem
+> <listitem
+><para
+> Tiếp tục giữ nút đặt lại, đợi 10 giây trong khi theo dõi LED (đèn nhỏ) sẵn sàng/trạng thái. Sau 10 giây, nó sẽ thay đổi từ màu vàng thành màu đỏ. Lúc đó, bạn hãy buông ngay cái nút đặt lại. </para
+></listitem
+> <listitem
+><para
+> Sau đó, đèn LED sẵn sàng/trạng thái của máy NSLU2 sẽ chớp xen kẽ màu đỏ/xanh lá cây (có sự trễ 1 giây trước nó trở thành màu xanh lá cây lần đầu tiên). Lúc đó, máy NSLU2 đã vào chế độ nâng cấp. </para
+></listitem
+> </orderedlist
+> Xem các trang <ulink url="http://www.nslu2-linux.org/wiki/OpenSlug/UsingTheBinary"
+>NSLU2-Linux</ulink
+> nếu bạn gặp khó khan trong tiến trình này. Một khi máy NSLU2 đã vào chế độ nâng cấp, bạn có thể chớp ảnh mới: <informalexample
+><screen>
+sudo upslug2 -i di-nslu2.bin
+</screen
+></informalexample
+> Ghi chú rằng công cụ này cũng hiển thị địa chỉ MAC của máy NSLU2 của bạn, thông tin có ích khi bạn cấu hình trình phục vụ DHCP. Sau khi toàn bộ ảnh đã được ghi và thẩm tra, hệ thống sẽ khởi động lại tự động. Hãy kiểm tra xem bạn đã kết nối lại đĩa USB, nếu không thì trình cài đặt không tìm thấy nó. </para>
+    </sect4>
+
+    <sect4 arch="arm"
+><title
+>Qua mạng bằng Windows</title>
+<para
+>Có một <ulink url="http://www.everbesthk.com/8-download/sercomm/firmware/all_router_utility.zip"
+>công cụ</ulink
+> Windows để nâng cấp phần vững qua mạng. </para>
+    </sect4>
+   </sect3>
+  </sect2>
+<!--   End of file boot-installer/arm.xml -->
+<!-- &boot-installer-hppa.xml; -->
+
+<!-- Start of file boot-installer/x86.xml -->
+<!-- $Id: x86.xml 44002 2007-01-07 12:31:29Z fjp $ -->
+
+  <sect2 arch="x86"
+><title
+>Khởi động từ đĩa CD-ROM</title>
+
+
+<!-- Start of file boot-installer/intro-cd.xml -->
+<!-- $Id: intro-cd.xml 39614 2006-08-07 15:50:11Z fjp $ -->
+
+<para
+>Phương pháp dễ nhất cho phần lớn người là sử dụng một bộ đĩa CD Debian. Nếu bạn có một bộ đĩa CD như vậy, và nếu máy của bạn có hỗ trợ khả năng khởi động trực tiếp từ đĩa CD, hay quá ! Đơn giản hãy <phrase arch="x86"
+> cấu hình hệ thống để khởi động từ đĩa CD, như được diễn tả trong <xref linkend="boot-dev-select"/>, </phrase
+> nạp đĩa CD, khởi động lại, và tiếp tục lại đến chương kế tiếp. </para
+><para
+>Ghi chú rằng một số ổ đĩa CD riêng có thể cần thiết trình điều khiển đặc biệt, vì vậy không thể được truy cập trong giao đoạn cài đặt ở đầu. Nếu phương pháp chuẩn khởi động từ đĩa CD không thích hợp với phần cứng của bạn, hãy xem lại chương này và đọc về hạt nhân xen kẽ và phương pháp cài đặt có thể là thích hợp hơn. </para
+><para
+>Thậm chí nếu bạn không thể khởi động từ đĩa CD-ROM, bạn thường có thể cài đặt các thành phần của hệ thống Debian và các gói phần mềm đã muốn từ đĩa CD-ROM đó. Đơn giản hãy khởi động bằng một vật chứa khác, như đĩa mềm. Vào lúc nên cài đặt hệ điều hành, hệ thống cơ bản và gói phần mềm thêm nào, hãy chỉ hệ thống cài đặt tới ổ đĩa CD-ROM. </para
+><para
+>Nếu bạn gặp khó khăn trong việc khởi động, xem <xref linkend="boot-troubleshooting"/>. </para>
+<!--   End of file boot-installer/intro-cd.xml -->
+
+<!-- We'll comment the following section until we know exact layout -->
+<!--
+CD #1 of official Debian CD-ROM sets for &arch-title; will present a
+<prompt
+>boot:</prompt
+> prompt on most hardware. Press
+<keycap
+>F4</keycap
+> to see the list of kernel options available
+from which to boot. Just type your chosen flavor name (idepci,
+vanilla, compact, bf24) at the <prompt
+>boot:</prompt
+> prompt
+followed by &enterkey;.
+
+</para
+><para>
+
+If your hardware doesn't support booting of multiple images, put one
+of the other CDs in the drive. It appears that most SCSI CD-ROM drives
+do not support <command
+>isolinux</command
+> multiple image booting, so users
+with SCSI CD-ROMs should try either CD2 (vanilla) or CD3 (compact),
+or CD5 (bf2.4).
+
+</para
+><para>
+
+CD's 2 through 5 will each boot a
+different ``flavor'' depending on which CD-ROM is
+inserted. See <xref linkend="kernel-choice"/> for a discussion of the
+different flavors.  Here's how the flavors are laid out on the
+different CD-ROMs:
+
+<variablelist>
+<varlistentry>
+<term
+>CD 1</term
+><listitem
+><para>
+
+Allows a selection of kernel images to boot from (the idepci flavor is
+the default if no selection is made).
+
+</para
+></listitem
+></varlistentry>
+<varlistentry>
+<term
+>CD 2</term
+><listitem
+><para>
+
+Boots the <quote
+>vanilla</quote
+> flavor.
+
+</para
+></listitem
+></varlistentry>
+<varlistentry>
+<term
+>CD 3</term
+><listitem
+><para>
+
+Boots the <quote
+>compact</quote
+> flavor.
+
+</para
+></listitem
+></varlistentry>
+<varlistentry>
+<term
+>CD 4</term
+><listitem
+><para>
+
+Boots the <quote
+>idepci</quote
+> flavor.
+
+</para
+></listitem
+></varlistentry>
+<varlistentry>
+<term
+>CD 5</term
+><listitem
+><para>
+
+Boots the <quote
+>bf2.4</quote
+> flavor.
+
+</para
+></listitem
+></varlistentry>
+
+ </variablelist>
+
+</para
+><para>
+
+-->
+
+  </sect2>
+
+<!-- FIXME the documented procedure does not exactly work, commented out
+     until fixes
+
+  <sect2 arch="x86" id="install-from-dos">
+  <title
+>Booting from a DOS partition</title>
+
+
+<para>
+
+Boot into DOS (not Windows) without any drivers being loaded.  To do
+this, you have to press <keycap
+>F8</keycap
+> at exactly the right
+moment (and optionally select the <quote
+>safe mode command prompt only</quote>
+option).  Enter the subdirectory for the flavor you chose, e.g.,
+
+<informalexample
+><screen
+>
+cd c:\install
+</screen
+></informalexample
+>.
+
+Next, execute <command
+>install.bat</command
+>.
+The kernel will load and launch the installer system.
+
+</para
+><para>
+
+Please note, there is currently a loadlin problem (#142421) which
+precludes <filename
+>install.bat</filename
+> from being used with the
+bf2.4 flavor. The symptom of the problem is an
+<computeroutput
+>invalid compressed format</computeroutput
+> error.
+
+</para>
+  </sect2>
+
+END FIXME -->
+
+  <sect2 arch="x86" id="boot-initrd">
+  <title
+>Khởi động từ Linux bằng <command
+>LILO</command
+> hay <command
+>GRUB</command
+></title>
+
+<para
+>Để khởi động trình cài đặt từ đĩa cứng, trước tiên bạn cần phải tải về và để các tập tin cần thiết, như được diễn tả trong <xref linkend="boot-drive-files"/>. </para>
+
+<para
+>Nếu bạn định dùng đĩa cứng chỉ để khởi động, rồi tải về mọi thứ qua mạng, bạn nên tải về tập tin <filename
+>netboot/debian-installer/&architecture;/initrd.gz</filename
+> và hạt nhân tương ứng <filename
+>netboot/debian-installer/&architecture;/linux</filename
+>. Việc này sẽ cho bạn khả năng phân vùng lại đĩa cứng nơi bạn khởi động bộ cài đặt, dù bạn nên làm như thế một cách cẩn thận. </para>
+
+<para
+>Hoặc, nếu bạn định bao tồn một phân vùng đã có trên đĩa cứng, không thay đổi nó trong khi cài đặt, bạn có thể tải về tập tin <filename
+>hd-media/initrd.gz</filename
+> và hạt nhân tương ứng, cũng sao chép ảnh ISO đĩa CD vào ổ đĩa (kiểm tra xem tập tin có tên kết thúc bằng <literal
+>.iso</literal
+>). Sau đó, trình cài đặt có thể khởi động từ ổ đĩa đó, cũng cài đặt từ ảnh đĩa CD, không cần chạy mạng. </para>
+
+<para
+>Đối với <command
+>LILO</command
+>, bạn sẽ cần phải cấu hình hai thứ chủ yếu trong tập tin <filename
+>/etc/lilo.conf</filename
+>: <itemizedlist
+> <listitem
+><para
+> để tải trình cài đặt <filename
+>initrd.gz</filename
+> vào lúc khởi động; </para
+></listitem
+> <listitem
+><para
+> làm cho hạt nhân <filename
+>vmlinuz</filename
+> dùng đĩa RAM như là phân vùng gốc. </para
+></listitem
+> </itemizedlist
+> Đây là một lời thí dụ <filename
+>/etc/lilo.conf</filename
+>: </para
+><para>
+
+<informalexample
+><screen
+>image=/boot/newinstall/vmlinuz
+       label=newinstall
+       initrd=/boot/newinstall/initrd.gz
+</screen
+></informalexample
+> Để tìm chi tiết, xem trang hướng dẫn (man) <citerefentry
+><refentrytitle
+>initrd</refentrytitle
+> <manvolnum
+>4</manvolnum
+></citerefentry
+> và <citerefentry
+><refentrytitle
+>lilo.conf</refentrytitle
+> <manvolnum
+>5</manvolnum
+></citerefentry
+>. Bây giờ hãy chạy <userinput
+>lilo</userinput
+> rồi khởi động lại. </para
+><para
+>Thủ tục đối với <command
+>GRUB</command
+> là hơi tương tự. Hãy tìm tập tin <filename
+>menu.lst</filename
+> nằm trong thư mục <filename
+>/boot/grub/</filename
+> (đôi khi nằm trong thư mục <filename
+>/boot/boot/grub/</filename
+>), và thêm những dòng này: <informalexample
+><screen>
+title  New Install
+kernel (hd0,0)/boot/newinstall/vmlinuz
+initrd (hd0,0)/boot/newinstall/initrd.gz
+</screen
+></informalexample
+> rồi khởi động lại. </para
+><para
+>Ghi chú rằng giá trị của <userinput
+>ramdisk_size</userinput
+> (kích cỡ của đĩa RAM) có lẽ cần phải được điều chỉnh để thích hợp với ảnh initrd. Kể từ điểm này, không nên có sự khác nhau giữa tiến trình <command
+>GRUB</command
+> và <command
+>LILO</command
+>. </para>
+  </sect2>
+
+  <sect2 arch="x86" condition="bootable-usb" id="usb-boot">
+  <title
+>Khởi động từ thanh bộ nhớ USB</title>
+<para
+>Giả sử bạn đã chuẩn bị mọi thứ được diễn tả trong <xref linkend="boot-dev-select"/> và <xref linkend="boot-usb-files"/>. Sau đó, hãy cầm thanh USB vào cổng USB còn rảnh nào, và khởi động lại máy tính. Hệ thống nên khởi động được, và bạn nên thấy dấu nhắc <prompt
+>boot:</prompt
+>. Vào đó bạn có thể nhập các đối số khởi động tùy chọn, hoặc chỉ bấm phím &enterkey;. </para>
+  </sect2>
+
+  <sect2 arch="x86" condition="supports-floppy-boot" id="floppy-boot">
+  <title
+>Khởi động từ đĩa mềm</title>
+<para
+>Trong bước <xref linkend="create-floppy"/>, bạn đã tải về các ảnh đĩa mềm cần thiết và tạo đĩa mềm từ ảnh đó. </para
+><para
+>Để khởi động từ đĩa mềm khởi động trình cài đặt, hãy nạp nó vào ổ đĩa mềm chính, tắt hệ thống một cách bình thường, rồi mở nó lần nữa. </para
+><para
+>Để cài đặt từ ổ đĩa kiểu LS-120 (phiên bản ATAPI) với một bộ đĩa mềm, bạn cần phải xác định vị trí ảo cho thiết bị đĩa mềm. Việc này được làm bằng đối số khởi động <emphasis
+>root=</emphasis
+>, mà cung cấp tên thiết bị tới đó trình điều khiển ide-floppy (đĩa mềm IDE) ánh xạ thiết bị. Lấy thí dụ, nếu ổ đĩa LS-120 của bạn được kết nối như là thiết bị IDE thứ nhất (chủ) qua cáp thứ hai, bạn hãy nhập lệnh <userinput
+>install root=/dev/hdc</userinput
+> ở dấu nhắc khởi động. </para
+><para
+>Ghi chú rằng trên một số máy nào đó, tổ hợp phím <keycombo
+><keycap
+>Control</keycap
+> <keycap
+>Alt</keycap
+> <keycap
+>Delete</keycap
+></keycombo
+> không phải đặt lại được máy tính, vậy khuyên bạn khởi động lại một cách <quote
+>cứng</quote
+>. Nếu bạn cài đặt từ một hệ điều hành đã có (v.d. từ một hộp DOS nào đó), bạn không thể chọn khác. Nếu không, hãy khởi động lại cứng khi khởi động máy. </para
+><para
+>Lúc đó, đĩa mềm sẽ được truy cập, vậy bạn nên thấy màn hình giới thiệu đĩa mềm khởi động mà kết thúc bằng dấu nhắc khởi động <prompt
+>boot:</prompt
+>. </para
+><para
+>Một khi bạn bấm phím &enterkey;, bạn nên thấy thông điệp <computeroutput
+>Loading...</computeroutput
+> (Đang tải...), với đoạn <computeroutput
+>Uncompressing Linux...</computeroutput
+> (Đang giải nén Linux) theo sau, rồi một màn hình đầy chứa thông tin về phần cứng của hệ thống đó. Thông tin thêm về giải đoạn này của tiến trình khởi động nằm bên dưới trong <xref linkend="kernel-msgs"/>. </para
+><para
+>Sau khi khởi động từ đĩa mềm khởi động, đĩa mềm gốc được yêu cầu. Hãy nạp đĩa mềm gốc rồi bấm phím &enterkey;, vậy nội dung của nó được tải vào bộ nhớ. Chương trình cài đặt <command
+>debian-installer</command
+> được khởi chạy tự động. </para>
+  </sect2>
+
+  <sect2 arch="x86" id="boot-tftp"
+><title
+>Khởi động bằng TFTP</title>
+
+
+<!-- Start of file boot-installer/intro-net.xml -->
+<!-- $Id: intro-net.xml 11648 2004-03-22 00:37:46Z joeyh $ -->
+
+<para
+>Việc khởi động từ mạng cần thiết bạn có sự kết nối mạng và máy phục vụ khởi động mạng kiểu TFTP (DHCP, RARP, hay BOOTP). </para
+><para arch="hppa"
+>Hệ thống cũ hơn như 715 có thể cần thiết bạn dùng máy phục vụ kiểu RBOOT thay cho BOOTP. </para
+><para
+>Phương pháp cài đặt để hỗ trợ khả năng khởi động qua mạng được diễn tả trong <xref linkend="install-tftp"/>. </para>
+<!--   End of file boot-installer/intro-net.xml -->
+
+<para
+>Có vài cách khác nhau để khởi động qua TFTP trên i386. </para>
+
+   <sect3
+><title
+>NIC hay bo mạch chủ có hỗ trợ PXE</title>
+<para
+>Có lẽ thẻ giao diện mạng (NIC) hay bo mạch chủ của bạn cung cấp chức năng khởi động kiểu PXE. Nó là cách thực hiện lại chức năng khởi động qua TFTP của công ty <trademark class="trade"
+>Intel</trademark
+>. Nếu máy bạn có chức năng này, có lẽ bạn có khả năng cấu hình BIOS để khởi động qua mạng. </para>
+   </sect3>
+
+   <sect3
+><title
+>NIC với BootROM mạng</title>
+<para
+>Có lẽ thẻ giao diện mạng (NIC) của bạn cung cấp chức năng khởi động qua TFTP. </para
+><para condition="FIXME"
+>Vui lòng cho chúng tôi (<email
+>&email-debian-boot-list;</email
+>) biết về phương pháp do bạn dùng, cũng tham khảo tài liệu này. </para>
+   </sect3>
+
+   <sect3
+><title
+>Etherboot</title>
+<para
+><ulink url="http://www.etherboot.org"
+>Dự án Etherboot</ulink
+> cung cấp đĩa mềm khởi động, ngay cả bộ nhớ ROM khởi động, mà khởi động được qua TFTP. </para>
+   </sect3>
+  </sect2>
+
+  <sect2 arch="x86"
+><title
+>Dấu nhắc khởi động</title>
+<para
+>Khi trình cài đặt khởi động, bạn nên thấy màn hình đồ họa thân thiện hiển thị biểu hình Debian và dấu nhắc khởi động:<informalexample
+><screen>
+Press F1 for help, or ENTER to boot:
+</screen
+></informalexample
+> (Hãy bấm phím chức năng F1 để xem trợ giúp, hay bấm phím ENTER để khởi động:) Tại dấu nhắc khởi động, bạn có thể hoặc bấm phím &enterkey; để khởi động trình cài đặt với các tùy chọn mặc định, hoặc nhập một phương pháp khởi động riêng với (tùy chọn) một số tham số khởi động. </para
+><para
+>Thông tin về các phương pháp khởi động sẵn sàng, cũng về các tham số khởi động có ích, sẽ được hiển thị khi bạn bấm phím chức năng nằm trong phạm vị <keycap
+>F2</keycap
+> đến <keycap
+>F8</keycap
+>. Nếu bạn thêm tham số nào vào dòng lệnh khởi động, hãy kiểm tra xem bạn đã gõ phương pháp khởi động (mặc định là <userinput
+>install</userinput
+>) và một dấu cách trước khi nhập tham số thứ nhất (v.d. <userinput
+>install fb=false</userinput
+>). <note
+><para
+>Nếu bạn cài đặt hệ thống thông qua một thiết bị quản lý từ xa mà cung cấp giao diện kiểu chữ với bàn điều khiển VGA, có lẽ bạn không thể thấy màn hình đồ họa giật gân ban đầu khi khởi động trình cài đặt; có lẽ bạn ngay cả không thấy dấu nhắc khởi động. Những thiết bị quản lý từ xa này gồm bàn điều khiển kiểu chữ của <quote
+>integrated Lights Out</quote
+> (iLO) của công ty Compaq, và <quote
+>Integrated Remote Assistant</quote
+> (IRA) của HP. Bạn có thể bấm phím chức năng F1<footnote
+> <para
+> Trong một số trường hợp, những thiết bị này cần thiết bạn gõ dãy phím thoát đặc biệt để thực hiện việc bấm phím này, v.d. IRA sử dụng <keycombo
+> <keycap
+>Ctrl</keycap
+> <keycap
+>F</keycap
+> </keycombo
+>,&nbsp;<keycap
+>1</keycap
+>. </para
+> </footnote
+> để đi vòng màn hình này và xem đoạn trợ giúp. Một khi bạn đã qua màn hình giật gân và tới đoạn trợ giúp, các cú bấm phím sẽ được phản hồi tại dấu nhắc như bình thường. Để ngăn cản trình cài đặt sử dụng bộ đệm khung trong phần còn lại của tiến trình cài đặt, bạn cũng cần phải thêm mục <userinput
+>fb=false</userinput
+> vào dấu nhắc khởi đông, như được diễn tả trong đoạn trợ giúp. </para
+></note>
+</para>
+
+  </sect2>
+<!--   End of file boot-installer/x86.xml -->
+
+<!-- Start of file boot-installer/ia64.xml -->
+<!-- $Id: ia64.xml 43841 2007-01-04 01:45:08Z fjp $ -->
+
+  <sect2 arch="ia64"
+><title
+>Khởi động từ đĩa CD-ROM</title>
+
+
+<!-- Start of file boot-installer/intro-cd.xml -->
+<!-- $Id: intro-cd.xml 39614 2006-08-07 15:50:11Z fjp $ -->
+
+<para
+>Phương pháp dễ nhất cho phần lớn người là sử dụng một bộ đĩa CD Debian. Nếu bạn có một bộ đĩa CD như vậy, và nếu máy của bạn có hỗ trợ khả năng khởi động trực tiếp từ đĩa CD, hay quá ! Đơn giản hãy <phrase arch="x86"
+> cấu hình hệ thống để khởi động từ đĩa CD, như được diễn tả trong <xref linkend="boot-dev-select"/>, </phrase
+> nạp đĩa CD, khởi động lại, và tiếp tục lại đến chương kế tiếp. </para
+><para
+>Ghi chú rằng một số ổ đĩa CD riêng có thể cần thiết trình điều khiển đặc biệt, vì vậy không thể được truy cập trong giao đoạn cài đặt ở đầu. Nếu phương pháp chuẩn khởi động từ đĩa CD không thích hợp với phần cứng của bạn, hãy xem lại chương này và đọc về hạt nhân xen kẽ và phương pháp cài đặt có thể là thích hợp hơn. </para
+><para
+>Thậm chí nếu bạn không thể khởi động từ đĩa CD-ROM, bạn thường có thể cài đặt các thành phần của hệ thống Debian và các gói phần mềm đã muốn từ đĩa CD-ROM đó. Đơn giản hãy khởi động bằng một vật chứa khác, như đĩa mềm. Vào lúc nên cài đặt hệ điều hành, hệ thống cơ bản và gói phần mềm thêm nào, hãy chỉ hệ thống cài đặt tới ổ đĩa CD-ROM. </para
+><para
+>Nếu bạn gặp khó khăn trong việc khởi động, xem <xref linkend="boot-troubleshooting"/>. </para>
+<!--   End of file boot-installer/intro-cd.xml -->
+
+  <note>
+  <title
+>Nội dung đĩa CD</title>
+
+<para
+>Có ba kiểu khác nhau của đĩa CD cài đặt Debian. Đĩa CD <emphasis
+>Thẻ kinh doanh</emphasis
+> (Business Card) chứa bản cài đặt tối thiểu sẽ vừa được trên vật chứa kiểu đĩa CD thích hợp với kích cỡ thiết bị nhỏ. Nó cần thiết sự kết nối đến mạng để cài đặt phần còn lại của bản cài đặt cơ sở, xây dựng hệ thống có ích. Đĩa CD <emphasis
+>Cài đặt qua mạng</emphasis
+> (Network Install) chứa tất cả các gói cấu thành bản cài đặt cơ sở, còn cần thiết sự kết nối mạng đến máy nhân bản Debian để cài đặt các gói thêm cần thiết để xây dựng hệ thống hoàn toàn. Bộ đĩa CD Debian có khả năng cài đặt hệ thống hoàn toàn từ phạm vị gói rộng, không cần truy cập mạng nào. </para>
+  </note>
+
+<para
+>Kiến trúc IA-64 dùng giao diện phần vững có khả năng kéo dài (EFI) thế hệ tới của công ty Intel&trade;. Không như BIOS kiểu x86 truyền thống mà biết ít về thiết bị khởi động, trừ bảng phân vùng và rãnh ghi khởi động chủ (MBR), EFI có khả năng đọc và ghi tập tin từ phân vùng đĩa đã định dạng bằng FAT16 hay FAT32. Vậy nó giản dị hoá tiến trình khởi chạy hệ thống mà thường cần thiết kiến thức rất đặc biệt. Bộ tải khởi động hệ thống và phần vững EFI hỗ trợ nó có thể truy cập hệ thống tập tin đầy đủ để cất giữ các tập tin cần thiết để khởi động máy đó. Có nghĩa là đĩa hệ thống trên máy kiểu IA-64 chứa một phân vùng đĩa thêm dành cho EFI, thay cho MBR hay khối tin khởi động đơn giản trên hệ thống quy ước hơn. </para
+><para
+>Đĩa CD cài đặt Debian chứa một phân vùng EFI nhỏ chứa bộ tải khởi động <command
+>ELILO</command
+>, tập tin cấu hình của nó, hạt nhân của trình cài đặt, và hệ thống tập tin ban đầu (initrd). Hệ thống đang chạy cũng chứa một phân vùng EFI chứa những tập tin cần thiết để khởi động hệ thống. Các tập tin này có thể được đọc từ trình bao EFI như được diễn tả bên dưới. </para
+><para
+>Phần lớn chi tiết về phương pháp tải và khởi chạy hệ thống của <command
+>ELILO</command
+> là trong suốt cho trình cài đặt hệ thống. Tuy nhiên, trình cài đặt phải thiết lập một phân vùng EFI trước khi cài đặt hệ thống cơ bản. Nếu không, tiến trình cài đặt <command
+>ELILO</command
+> sẽ bị lỗi nên hệ thống không thể được khởi động. Phân vùng EFI được cấp phát và định dạng trong bước phân vùng của tiến trình cài đặt, trước khi tải gói nào vào đĩa hệ thống. Tác vụ phân vùng cũng thẩm tra có một phân vùng EFI thích hợp, trước khi cho phép tiến trình cài đặt tiếp tục lại. </para
+><para
+>Bộ quản lý khởi động EFI được chạy như là bước cuối cùng trong tiến trình sở khởi phần vững. Nó hiển thị danh sách mục trình đơn nơi bạn có thể tuyển lựa một tùy chọn. Phụ thuộc vào mô hình hệ thống và phần mềm khác đã được tải vào hệ thống, trình đơn này có thể là khác nhau từ hệ thống này đến hệ thống đó. Nên có ít nhất hai mục trình đơn được hiển thị : <command
+>Boot Option Maintenance Menu</command
+> (Trình đơn bảo dưỡng tùy chọn khởi động) và <command
+>EFI Shell (Built-in)</command
+> (Trình bao EFI [có sẵn]). Đề nghị bạn bật tùy chọn thứ nhất; nếu nó không sẵn sàng, hoặc nếu đĩa CD vì lý do nào không khởi động được với nó, hãy bật tùy chọn thứ hai.  </para>
+
+  <warning>
+  <title
+>QUAN TRỌNG</title>
+<para
+>Bộ quản lý khởi động EFI sẽ bật một hành động khởi động mặc định, thường là mục trình đơn thứ nhất, trong vòng số giây định sẵn. Thời gian này được ngụ ý bằng con số đếm ngược bên dưới màn hình. Một khi bộ đếm thời gian này hết hạn, có lẽ bạn cần phải khởi động lại máy để tiếp tục lại cài đặt. Nếu hành động mặc định là Trình bao EFI, bạn có khả năng trở về Bộ quản lý khởi động bằng cách chạy lệnh <command
+>exit</command
+> (thoát) tại dấu nhắc trình bao. </para>
+  </warning>
+
+  <sect3 arch="ia64" id="bootable-cd">
+  <title
+>Tùy chọn 1: khởi động từ Trình đơn bảo dưỡng tùy chọn khởi động</title>
+ 
+
+<itemizedlist>
+
+<listitem
+><para
+>Hãy nạp đĩa CD vào ổ đĩa CD/DVD rồi khởi động lại máy. Phần vững sẽ hiển thị trang và trình đơn của Bộ quản lý khởi động EFI sau khi nó sở khởi xong hệ thống. </para
+></listitem>
+
+<listitem
+><para
+>Hãy chọn mục <command
+>Boot Maintenance Menu</command
+> (Trình đơn bảo dưỡng khởi động) trong trình đơn bằng phím mũi tên, rồi bấm phím &enterkey;. Việc này sẽ hiển thị một trình đơn mới. </para
+></listitem>
+
+<listitem
+><para
+>Hãy chọn mục <command
+>Boot From a File</command
+> (Khởi động từ tập tin) trong trình đơn bằng phím mũi tên, rồi bấm phím &enterkey;. Việc này sẽ hiển thị danh sách các thiết bị được thăm dò bởi phần vững. Bạn nên thấy hai dòng trình đơn chứa hoặc nhãn <command
+>Debian Inst [Acpi ...</command
+> hoặc <command
+>Removable Media Boot</command
+> (Khởi động từ vật chứa rời). Nếu bạn xem lại phần còn lại của dòng trình đơn, bạn nên thấy biết rằng thông tin về thiết bị và thông tin về trình điều khiển là trùng. </para
+></listitem>
+
+<listitem
+><para
+>Bạn có thể chọn mục nhập nào tham chiếu đến ổ đĩa CD/DVD. Hãy chọn nó bằng phím mũi tên rồi bấm phím &enterkey;. Nếu bạn chọn mục <command
+>Removable Media Boot</command
+> (Khởi động từ vật chứa rời), máy sẽ bất đầu ngay tiến trình tải khởi động. Còn nếu bạn chọn mục <command
+>Debian Inst [Acpi ...</command
+>, nõ sẽ hiển thị danh sách các thư mục nằm trên phần đĩa CD có khả năng khởi động, cần thiết bạn tiếp tục đến bước kế tiếp (thêm). </para
+></listitem>
+
+<listitem
+><para
+>Bạn sẽ cần phải theo bước này chỉ nếu bạn đã chọn mục <command
+>Debian Inst [Acpi ...</command
+>. Danh sách thư mục sẽ cũng hiển thị mục <command
+>[Treat like Removable Media Boot]</command
+> (Xử lý như là việc khởi động từ vật chứa rời) trên dòng giáp cuối. Hãy chọn dòng này bằng phím mũi tên rồi bấm phím &enterkey;. Việc này sẽ khởi chạy tiến trình tải khởi động. </para
+></listitem>
+
+</itemizedlist>
+
+<para
+>Những bước này khởi chạy bộ tải khởi Debian mà sẽ hiển thị một trang trình đơn cho bạn chọn một hạt nhân khởi động và các tùy chọn tương ứng. Hãy tiếp tục tới giai đoạn đó. </para>
+  </sect3>
+
+  <sect3 arch="ia64" id="boot-with-efi">
+  <title
+>Tùy chọn 2: khởi động từ trình bao EFI</title>
+<para
+>Nếu, vì lý do nào, tùy chọn 1 bị lỗi, bạn hãy khởi động lại máy, và khi màn hình của bộ quản lý khởi động EFI xuất hiện, nên có một tùy chọn tên <command
+>EFI Shell [Built-in]</command
+> (Trình bao EFI [có sẵn]). Hãy khởi động đĩa CD cài đặt Debian bằng cách theo những bước này: </para>
+
+<itemizedlist>
+
+<listitem
+><para
+>Nạp đĩa CD vào ổ đĩa CD/DVD và khởi động lại máy. Phần vững sẽ hiển thị trang và trình đơn của Bộ quản lý khởi động EFI sau khi nó sở khởi xong hệ thống. </para
+></listitem>
+
+<listitem
+><para
+>Chọn <command
+>EFI Shell</command
+> (Trình bao EFI) trong trình đơn bằng phím mũi tên, rồi bấm phím &enterkey;. Trình bao EFI sẽ quét tất cả các thiết bị có khả năng khởi động và hiển thị chúng trên bàn điều khiển trước khi hiển thị dấu nhắc lệnh của nó. Những phân vùng thiết bị có khả năng khởi động đã được nhận diện sẽ hiển thị tên thiết bị <filename
+>fs<replaceable
+>n</replaceable
+>:</filename
+>. Các phân vùng khác đã được nhận diện sẽ có tên <filename
+>blk<replaceable
+>n</replaceable
+>:</filename
+>. Nếu bạn đã nạp đĩa CD đúng trước khi vào trình bao, việc này có thể mất vài giây thêm trong khi nó sở khởi ổ đĩa CD. </para>
+</listitem>
+
+<listitem
+><para
+>Khám xét kết xuất của trình bao tìm ổ đĩa CD. Rất có thể nó là thiết bị <filename
+>fs0:</filename
+>, dù thiết bị khác có phân vùng khởi động được sẽ cũng hiển thị như là <filename
+>fs<replaceable
+>n</replaceable
+></filename
+>. </para
+></listitem>
+
+<listitem
+><para
+>Nhập <command
+>fs<replaceable
+>n</replaceable
+>:</command
+> rồi bấm phím &enterkey; để chọn thiết bị có số hiệu phân vùng của đĩa CD-ROM là <replaceable
+>n</replaceable
+>. Sau đó, trình bao sẽ hiển thị số hiệu phân vùng như là dấu nhắc. </para
+></listitem>
+
+<listitem
+><para
+>Nhập <command
+>elilo</command
+> rồi bấm phím &enterkey;. Việc này sẽ bắt đầu tiến trình tải khởi động. </para
+></listitem>
+
+</itemizedlist>
+
+<para
+>Cũng như tùy chọn 1, những bước này khởi chạy bộ tải khởi động Debian mà sẽ hiển thị trang trình đơn cho bạn chọn hạt nhân và các tùy chọn tương ứng. Bạn cũng có khả năng nhập lệnh ngắn hơn <command
+>fs<replaceable
+>n</replaceable
+>:elilo</command
+> vào dấu nhắc trình bao. Hãy tiếp tục đến giai đoạn chọn hạt nhân khởi động và các tùy chọn tương ứng. </para>
+
+  </sect3>
+
+  <sect3 arch="ia64" id="serial-console">
+  <title
+>Cài đặt bằng bàn điều khiển nối tiếp</title>
+
+<para
+>Bạn có thể chọn thực hiện tiến trình cài đặt bằng bộ trình bày và bàn phím, hay bằng sự kết nối kiểu nối tiếp. Để sử dụng thiết lập bộ trình bày và bàn phím, hãy bật một tùy chọn chứa chuỗi [VGA console] (bàn điều khiển VGA). Để cài đặt qua sự kết nối kiểu nối tiếp, hãy bật một tùy chọn chứa chuỗi [<replaceable
+>BỐT</replaceable
+> baud serial console], (bàn điều khiển nối tiếp bốt) mà <replaceable
+>BỐT</replaceable
+> là tốc độ truyền của bàn điều khiển nối tiếp đó. Trên thiết bị ttyS0, mục trình đơn cho những giá trị tốc độ truyền thường nhất đã được định sẵn. </para
+><para
+>Trong phần lớn hoàn cảnh, bạn sẽ muốn đặt bộ cài đặt sử dụng cùng một tốc độ truyền với sự kết nối đến bàn điều khiển EFI. Nếu bạn chưa biết được giá trị này, bạn có thể lấy nó bằng cách nhập lệnh <command
+>baud</command
+> (bốt) vào trình bao EFI. </para
+><para
+>Nếu không có tùy chọn sẵn sàng đã được cấu hình cho thiết bị nối tiếp hay tốc độ truyền bạn muốn dùng, bạn có khả năng đặt quyền cao hơn thiết lập bàn điều khiển dành cho một của những tùy chọn trình đơn đã có. Chẳng hạn, để dùng bàn điều khiển 57600 bốt qua thiết bị ttyS1, hãy nhập lệnh <command
+>console=ttyS1,57600n8</command
+> vào cửa sổ nhập thô <classname
+>Boot:</classname
+> (khởi động). </para>
+
+<note
+><para
+>Phần lớn máy kiểu IA-64 có sẵn giá trị bàn điều khiển là 9600 bốt. Giá trị này hơi chậm nên tiến trình cài đặt bình thường sẽ mất thời gian đáng kể để vẽ mỗi màn hình. Đề nghị bạn hoặc tăng lên tốc độ truyền (bốt) được dùng để thi hành tiến trình cài đặt, hoặc thực hiện việc cài đặt kiểu Chế Độ Nhập Thô (Text Mode). Xem trình đơn trợ giúp <classname
+>Params</classname
+> (Tham số) để tìm hướng dẫn về cách khởi chạy trình cài đặt trong Chế Độ Nhập Thô. </para
+></note>
+
+<warning
+><para
+>Nếu bạn chọn kiểu bàn điều khiển không đúng, bạn vẫn còn có khả năng chọn hạt nhân và nhập tham số tương ứng, nhưng mà cả bộ trình bày lẫn cách nhập đều sẽ bị tắt một khi hạt nhân khởi chạy, nên cần thiết bạn khởi động lại để bất đầu cài đặt. </para
+></warning>
+  </sect3>
+
+  <sect3 arch="ia64" id="kernel-option-menu">
+  <title
+>Chọn hát nhân khởi động và các tùy chọn tương ứng</title>
+
+<para
+>Bộ tải khởi động sẽ hiển thị đơn chứa danh sách trình đơn và cửa sổ nhập thô chứa dấu nhắc <classname
+>Boot:</classname
+> (khởi động). Phím mũi tên cho bạn chọn mục nào trong trình đơn, và đoạn nào được gõ bằng bàn phím sẽ xuất hiện trong cửa sổ nhập thô. Cũng có một số màn hình trợ giúp có thể được hiển thị bằng cách bấm phím chức năng (F1 ...) thích hợp. Màn hình trợ giúp <classname
+>General</classname
+> (Chung) diễn tả mỗi mục chọn trong trình đơn, còn màn hình  <classname
+>Params</classname
+> (Tham số) giải thích những tùy chọn dòng lệnh thường dùng. </para
+><para
+>Xem màn hình <classname
+>General</classname
+> (Chung) để tìm mô tả về các hạt nhân và chế độ cài đặt thích hợp nhất với tiến trình cài đặt vào máy của bạn. Xem thêm <xref linkend="boot-parms"/> bên dưới, để tìm tham số thêm nào bạn muốn đặt trong cửa sổ nhập thô <classname
+>Boot:</classname
+> (khởi động). Bạn sẽ chọn một phiên bản hạt nhân quyết định phiên bản hạt nhân được dùng trong cả tiến trình cài đặt lẫn hệ thống sẽ được cài đặt. Nếu bạn gặp khó khăn trong tiến trình cài đặt, bạn sẽ có thể gặp cùng khó khăn khi chạy hệ thống được cài đặt. </para>
+
+<itemizedlist>
+
+<listitem
+><para
+>Bằng phím mũi tên, hãy chọn phiên bản hạt nhân và chế độ cài đặt thích hợp nhất với điều kiện của máy tính của bạn. </para
+></listitem>
+
+<listitem
+><para
+>Sau đó, hãy nhập tham số khởi động nào đã muốn bằng cách gõ vào bàn phím. Đoạn đã gõ sẽ được hiển thị trực tiếp trong cửa sổ nhập thô. Ở đây bạn có thể xác định tham số hạt nhân như thiết lập bàn điều khiển nối tiếp. </para
+></listitem>
+
+<listitem
+><para
+>Bấm phím &enterkey;. Cú này sẽ tải và khởi chạy hạt nhân. Hạt nhân sẽ hiển thị thông điệp sở khởi thường rồi màn hình thứ nhất của tiến trình cài đặt Debian. </para
+></listitem>
+
+</itemizedlist>
+
+<para
+>Sau đó, hãy tới chương kế tiếp, để tiếp tục tiến trình cài đặt bằng cách thiết lập miền địa phương (gồm ngôn ngữ), mạng và phân vùng đĩa. </para>
+  </sect3>
+  </sect2>
+
+  <sect2 arch="ia64" id="boot-tftp"
+><title
+>Khởi động bằng TFTP</title>
+
+<para
+>Việc khởi động hệ thống kiểu IA-64 qua mạng giống như việc khởi động từ đĩa CD. Sự khác nhau duy nhất là cách nạp hạt nhân cài đặt. Bộ quản lý khởi động EFI có khả năng nạp và khởi chạy chương trình từ máy phục vụ trên mạng. Một khi hạt nhân cài đặt đã được nạp và khởi động được, tiến trình cài đặt hệ thống sẽ tiếp tục qua cùng những bước với tiến trình cài đặt từ đĩa CD, với ngoài lệ là các gói của bản cài đặt cơ sở sẽ được nạp qua mạng hơn là qua ổ đĩa CD. </para>
+
+
+<!-- Start of file boot-installer/intro-net.xml -->
+<!-- $Id: intro-net.xml 11648 2004-03-22 00:37:46Z joeyh $ -->
+
+<para
+>Việc khởi động từ mạng cần thiết bạn có sự kết nối mạng và máy phục vụ khởi động mạng kiểu TFTP (DHCP, RARP, hay BOOTP). </para
+><para arch="hppa"
+>Hệ thống cũ hơn như 715 có thể cần thiết bạn dùng máy phục vụ kiểu RBOOT thay cho BOOTP. </para
+><para
+>Phương pháp cài đặt để hỗ trợ khả năng khởi động qua mạng được diễn tả trong <xref linkend="install-tftp"/>. </para>
+<!--   End of file boot-installer/intro-net.xml -->
+
+<para
+>Việc khởi động hệ thống kiểu IA64 qua mạng cần thiết hai hành động đặc trưng cho kiến trúc đó. Trên máy phục vụ khởi động, hai dịch vụ DHCP và TFTP phải được cấu hình để phát <command
+>elilo</command
+>. Còn trên máy khách, một tùy chọn khởi động mới phải được xác định trong bộ quản lý khởi động EFI để hiệu lực khả năng nạp qua mạng. </para>
+
+  <sect3 arch="ia64" id="boot-tftp-server">
+  <title
+>Cấu hình máy phục vụ</title>
+<para
+>Một mục nhập TFTP thích hợp với khả năng khởi động hệ thống kiểu IA64 qua mạng có vẻ như :<informalexample
+><screen>
+host banhdauxanh {
+        hardware ethernet 00:30:6e:1e:0e:83;
+        fixed-address 10.0.0.21;
+        filename "debian-installer/ia64/elilo.efi";
+}
+</screen
+></informalexample
+> Ghi chú rằng mục đích là làm cho <command
+>elilo.efi</command
+> chạy được trên máy khách. </para
+><para
+>Hãy giải nén tập tin <filename
+>netboot.tar.gz</filename
+> vào thư mục được dùng như là gốc của trình phục vụ TFTP. Các thư mục gốc TFTP thường bao gồm <filename
+>/var/lib/tftp</filename
+> và <filename
+>/tftpboot</filename
+>. Việc giải nén này sẽ tạo cây thư mục <filename
+>debian-installer</filename
+> (bản cài đặt Debian) chứa các tập tin khởi động thích hợp với hệ thống kiểu IA-64. </para
+><para>
+
+<informalexample
+><screen
+># cd /var/lib/tftp
+# tar xvfz /home/user/netboot.tar.gz
+./
+./debian-installer/
+./debian-installer/ia64/
+[...]
+</screen
+></informalexample
+> Kho nén <filename
+>netboot.tar.gz</filename
+> chứa tập tin cấu hình <filename
+>elilo.conf</filename
+> nên hoạt động được với phần lớn tổ hợp phần cứng. Tuy nhiên, nếu bạn cần phải sửa đổi tập tin này, nó nằm trong thư mục <filename
+>debian-installer/ia64/</filename
+>. Có thể duy trì tập tin cấu hình riêng cho mỗi máy khách, bằng cách đặt tên là địa chỉ IP dạng thập lục của máy khách, cộng hậu tố <filename
+>.conf</filename
+> (cấu hình) thay cho tên tập tin gốc <filename
+>elilo.conf</filename
+>. Xem tài liệu có sẵn trong gói <classname
+>elilo</classname
+> để tìm chi tiết. </para>
+  </sect3>
+
+  <sect3 arch="ia64" id="boot-tftp-client">
+  <title
+>Cấu hình máy khách</title>
+<para
+>Để cấu hình máy khách để hỗ trợ khả năng khởi động qua dịch vụ TFTP, hãy bắt đầu bằng cách khởi động tới EFI rồi vào <guimenu
+>Boot Option Maintenance Menu</guimenu
+> (trình đơn bảo dưỡng tùy chọn khởi động). <itemizedlist
+> <listitem
+><para
+> Thêm một tùy chọn khởi động. </para
+></listitem
+> <listitem
+><para
+> Sau đó, bạn nên thấy đoạn (một hay nhiều dòng) dạng <guimenuitem
+>Load File [Acpi()/.../Mac()]</guimenuitem
+>. Nếu có nhiều mục nhập như thế, hãy chọn điều chứa địa chỉ MAC của giao diện từ đó bạn sẽ khởi động. Dùng phím mũi tên để tô sáng sự chọn riêng, rồi bấm &enterkey;.</para
+></listitem
+> <listitem
+><para
+> Đặt mục nhập có tên <userinput
+>Netboot</userinput
+> (khởi động qua mạng) hay tương tự, lưu, rồi thoát về trình đơn tùy chọn khởi động. </para
+></listitem
+> </itemizedlist
+> Lúc đó, bạn nên thấy tùy chọn khởi động mới đã được tạo. Việc chọn nó nên khởi đầu truy vấn DHCP, chỉ dẫn đến việc tải tập tin <filename
+>elilo.efi</filename
+> qua TFTP từ máy phục vụ. </para
+><para
+>Bộ tải khởi động sẽ hiển thị dấu nhắc riêng sau khi nó tải về và xử lý tập tin cấu hình riêng. Tại điểm thời này, tiến trình cài đặt theo cùng những bước với sự cài đặt từ đĩa CD. Hãy chọn một tùy chọn khởi động (như nêu trên) và, khi hạt nhân đã cài đặt chính nó qua mạng, nó sẽ khởi chạy trình cài đặt Debian. </para
+><para
+>Sau đó, hãy tới chương kế tiếp, để tiếp tục tiến trình cài đặt bằng cách thiết lập miền địa phương (gồm ngôn ngữ), mạng và phân vùng đĩa. </para>
+  </sect3>
+  </sect2>
+<!--   End of file boot-installer/ia64.xml -->
+
+<!-- Start of file boot-installer/m68k.xml -->
+<!-- $Id: m68k.xml 45435 2007-02-26 18:29:36Z wouter $ -->
+
+  <sect2 arch="m68k"
+><title
+>Chọn phương pháp cài đặt</title>
+
+<para
+>Một số kiến trúc phụ kiểu &arch-title; có tùy chọn khởi động bằng hạt nhân phiên bản hoặc 2.4.x hoặc 2.2.x. Khi bạn gặp tùy chọn này, hãy thử dùng hạt nhân 2.4.x. Tiến trình cài đặt dùng hạt nhân 2.4.x nên cần thiết bộ nhớ ít hơn, vì khả năng hỗ trợ hạt nhân 2.2.x cần thiết đĩa RAM có kích cỡ cố định, còn 2.4.x dùng hệ thống tập tin tạm thời (tmpfs). </para
+><para
+>Nếu bạn dùng hạt nhân Linux phiên bản 2.2.x, bạn cũng cần phải xác định tham số hạt nhân kích cỡ đĩa bộ nhớ RAM &ramdisksize;. </para
+><para
+>Hãy kiểm tra xem bạn đã chọn tham số hạt nhân <userinput
+>root=/dev/ram</userinput
+>. </para
+><para
+>Nếu bạn gặp khó khăn, xem Hỏi Đáp <ulink url="&url-m68k-cts-faq;"
+>cts's &arch-title; debian-installer FAQ</ulink
+>. </para>
+
+<itemizedlist>
+	<listitem
+><para
+><xref linkend="m68k-boot-amiga"/></para
+></listitem>
+	<listitem
+><para
+><xref linkend="m68k-boot-atari"/></para
+></listitem>
+	<listitem
+><para
+><xref linkend="m68k-boot-bvme6000"/></para
+></listitem>
+	<listitem
+><para
+><xref linkend="m68k-boot-mac"/></para
+></listitem>
+	<listitem
+><para
+><xref linkend="m68k-boot-mvme"/></para
+></listitem>
+	<listitem
+><para
+><xref linkend="m68k-boot-q40"/></para
+></listitem>
+</itemizedlist>
+
+
+    <sect3 id="m68k-boot-amiga"
+><title
+>Amiga</title>
+<para
+>Khi dùng máy kiểu Amiga, chỉ có sẵn sàng một phương pháp cài đặt: bằng đĩa cứng (xem <xref linkend="m68k-boot-hd"/>). <emphasis
+>Tức là không thể khởi động từ đĩa CD-ROM.</emphasis
+> </para
+><para
+>Máy kiểu Amiga hiện thời không hoạt động được với bogl, vậy nếu bạn gặp lỗi bogl, bạn cần phải nhập tham số hạt nhân <userinput
+>fb=false</userinput
+>. </para>
+    </sect3>
+
+    <sect3 id="m68k-boot-atari"
+><title
+>Atari</title>
+<para
+>Khi dùng máy kiểu Atari, bạn có thể khởi chạy trình cài đặt Debian hoặc từ đĩa cứng (xem <xref linkend="m68k-boot-hd"/>) hoặc từ đĩa mềm (xem <xref linkend="boot-from-floppies"/>). <emphasis
+>Tức là không thể khởi động từ đĩa CD-ROM.</emphasis
+> </para
+><para
+>Máy kiểu Atari hiện thời không hoạt động được với bogl, vậy nếu bạn gặp lỗi bogl, bạn cần phải nhập tham số hạt nhân <userinput
+>fb=false</userinput
+>. </para>
+    </sect3>
+
+    <sect3 id="m68k-boot-bvme6000"
+><title
+>BVME6000</title>
+<para
+>Đối với máy kiểu BVME6000, trình cài đặt có thể được khởi chạy hoặc từ đĩa CD-ROM (xem <xref linkend="m68k-boot-cdrom"/>), hoặc từ đĩa mềm (xem <xref linkend="boot-from-floppies"/>), hoặc qua mạng (xem <xref linkend="boot-tftp"/>). </para>
+    </sect3>
+
+    <sect3 id="m68k-boot-mac"
+><title
+>Macintosh (Apple Mac)</title>
+<para
+>Phương pháp cài đặt duy nhất sẵn sàng cho máy Mac là từ đĩa cứng (xem <xref linkend="m68k-boot-hd"/>). <emphasis
+>Tức là không có khả năng khởi động được từ đĩa CD-ROM.</emphasis
+> Chưa có hạt nhân phiên bản 2.4.x hoạt động được với máy kiểu Mac. </para
+><para
+>Nếu phần cứng của bạn sử dụng một mạch nối SCSI dựa vào 53c9x, có lẽ bạn cần phải nhập tham số hạt nhân <userinput
+>mac53c9x=1,0</userinput
+>. Phần cứng có hai mạch nối SCSI như vậy, v.d. máy Quadra 950, cần thiết bạn nhập tham số <userinput
+>mac53c9x=2,0</userinput
+> thay thế. Hoặc có thể xạc định tham số <userinput
+>mac53c9x=-1,0</userinput
+>, mà duy trì khả năng phát hiện tự động, còn tắt khả năng ngắt kết nối SCSI. Ghi chú rằng việc xác định tham số này cần thiết chỉ nếu bạn có nhiều đĩa cứng; nếu không (chỉ có một đĩa), hệ thống sẽ chạy nhanh hơn nếu bạn không xác định nó. </para>
+    </sect3>
+
+    <sect3 id="m68k-boot-mvme"
+><title
+>MVME147 và MVME16x</title>
+<para
+>Đối với máy kiểu MVME147 và MVME16x, trình cài đặt có thể được khởi chạy hoặc từ đĩa mềm (xem <xref linkend="boot-from-floppies"/>) hoặc qua mạng (xem phần <xref linkend="boot-tftp"/>). <emphasis
+>Tức là không có khả năng khởi động được từ đĩa CD-ROM.</emphasis
+> </para>
+    </sect3>
+
+    <sect3 id="m68k-boot-q40"
+><title
+>Q40/Q60</title>
+<para
+>Phương pháp cài đặt duy nhất sẵn sàng cho máy kiểu Q40/Q60 là từ đĩa cứng (xem <xref linkend="m68k-boot-hd"/>). <emphasis
+>Tức là không có khả năng khởi động được từ đĩa CD-ROM.</emphasis
+> </para>
+    </sect3>
+
+  </sect2>
+
+  <sect2 arch="m68k" id="m68k-boot-hd"
+><title
+>Khởi động từ đĩa cứng</title>
+
+
+<!-- Start of file boot-installer/intro-hd.xml -->
+<!-- $Id: intro-hd.xml 28672 2005-06-26 10:06:30Z fjp $ -->
+
+<para
+>Việc khởi động từ hệ điều hành tồn tại thường là một tùy chọn có ích; còn đối với một số hệ thống riêng, nó là phương pháp cài đặt duy nhất được hỗ trợ. </para
+><para
+>Trong <xref linkend="boot-drive-files"/>), bạn đã tải về và định vị những tập tin cần thiết để khởi chạy trình cài đặt từ đĩa cứng. </para>
+<!--   End of file boot-installer/intro-hd.xml -->
+
+<para
+>Ít nhất sáu đĩa bộ nhớ RAM khác nhau có thể được dùng để khởi động từ đĩa cứng: ba kiểu khác nhau, mỗi kiểu có và không có khả năng hỗ trợ hạt nhân phiên bản 2.2.x (xem <ulink url="&disturl;/main/installer-&architecture;/current/images/MANIFEST"
+>bản kê khai</ulink
+> để tìm chi tiết). </para
+><para
+>Ba kiểu đĩa RAM khác nhau là <filename
+>cdrom</filename
+> (đĩa CD-ROM), <filename
+>hd-media</filename
+> (vật chứa đĩa cứng), và <filename
+>nativehd</filename
+> (đĩa cứng sở hữu). Những đĩa RAM này chỉ khác biệt trong nguồn của những gói cài đặt. Đĩa RAM kiểu <filename
+>cdrom</filename
+> sử dụng một đĩa CD-ROM để lấy các gói cài đặt Debian. Còn đĩa RAM kiểu <filename
+>hd-media</filename
+> sử dụng một tập tin ảnh ISO của đĩa CD-ROM hiện thời nằm trên đĩa cứng. Cuối cùng, đĩa RAM kiểu <filename
+>nativehd</filename
+> cài đặt gói qua mạng. </para>
+
+<itemizedlist>
+	<listitem
+><para
+><xref linkend="m68k-boothd-amiga"/></para
+></listitem>
+	<listitem
+><para
+><xref linkend="m68k-boothd-atari"/></para
+></listitem>
+	<listitem
+><para
+><xref linkend="m68k-boothd-mac"/></para
+></listitem>
+	<listitem
+><para
+><xref linkend="m68k-boothd-q40"/></para
+></listitem>
+</itemizedlist>
+
+
+    <sect3 id="m68k-boothd-amiga"
+><title
+>Khởi động từ AmigaOS</title>
+<para
+>Trong <command
+>Workbench</command
+>, hãy khởi chạy tiến trình cài đặt Linux bằng cách nhấn đôi vào biểu tượng <guiicon
+>StartInstall</guiicon
+> (bất đầu cài đặt) nằm trong thư mục <filename
+>debian</filename
+>. </para
+><para
+>Có lẽ bạn cần phải bấm phím &enterkey; hai lần sau khi chương trình cài đặt Amiga đã xuất vài thông tin gỡ lỗi vào cửa sổ. Sau đó, màn hình xảy ra màu xám, cần phải đợi vài giây. Tiếp sau, màn hình màu đen với đoạn màu trắng nên xuất hiện, hiển thị nhiều kiểu thông tin gỡ lỗi hạt nhân. Các thông điệp này có thể cuộn ra quá nhanh để đọc được: không có sao. Sau một hai giây, chương trình cài đặt nên khởi chạy tự động, vậy bạn có thể tiếp tục tới <xref linkend="d-i-intro"/>. </para>
+    </sect3>
+
+
+    <sect3 id="m68k-boothd-atari"
+><title
+>Khởi động từ Atari TOS</title>
+<para
+>Trong môi trường làm việc GEM, hãy khởi chạy tiến trình cài đặt Linux bằng cách nhấn đôi vào biểu tượng <guiicon
+>bootstra.prg</guiicon
+> nằm trong thư mục <filename
+>debian</filename
+>, rồi nhấn vào cái nút <guibutton
+>Ok</guibutton
+> (Được) trong hộp thoại tùy chọn chương trình. </para
+><para
+>Có lẽ bạn cần phải bấm phím &enterkey; sau khi chương trình tải khởi động Atari đã xuất vài thông tin gỡ lỗi vào cửa sổ. Sau đó, màn hình xảy ra màu xám, cần phải đợi vài giây. Tiếp sau, màn hình màu đen với đoạn màu trắng nên xuất hiện, hiển thị nhiều kiểu thông tin gỡ lỗi hạt nhân. Các thông điệp này có thể cuộn ra quá nhanh để đọc được: không có sao. Sau một hai giây, chương trình cài đặt nên khởi chạy tự động, vậy bạn có thể tiếp tục tới <xref linkend="d-i-intro"/>. </para>
+    </sect3>
+
+
+    <sect3 id="m68k-boothd-mac"
+><title
+>Khởi động từ MacOS</title>
+<para
+>Bạn cần phải giữ lại hệ điều hành Mac gốc và khởi động từ nó. <emphasis
+>Chủ yếu</emphasis
+> rằng khi bạn khởi động hệ điều hành MacOS để chuẩn bị khởi động bộ tải Linux Penguin, bạn bấm giữ  <keycap
+>phím dài</keycap
+> để ngăn cản tải các phần mở rộng của HĐH Mac. Nếu bạn không sử dụng HĐH MacOS, trừ khi khởi động Linux, bạn có thể làm cùng công việc đó bằng cách gỡ bỏ mọi phần mở rộng (Extensions) và bảng điều khiển (Control Panels) ra thư mục hệ thống (System Folder) của HĐH MacOS. Nếu không, có lẽ một số phần mở rộng còn chạy lại thì gây ra lỗi ngẫu nhiên với hạt nhân Linux đang chạy. </para
+><para
+>Máy kiểu Mac cần thiết bộ tải khởi động <command
+>Penguin</command
+>. Nếu bạn không có công cụ giải nén kho kiểu <command
+>Stuffit</command
+> (phần mở rộng tập tin <filename
+>.sit</filename
+>), &penguin19.hfs; là một ảnh đĩa cung cấp <command
+>Penguin</command
+> đã được giải nén. <xref linkend="create-floppy"/> diễn tả cách sao chép ảnh này vào đĩa mềm. </para
+><para
+>Trong môi trường Desktop của MacOS, hãy khởi chạy tiến trình cài đặt Linux bằng cách nhấn đôi vào biểu tượng <guiicon
+>Penguin Prefs</guiicon
+> (tùy thích Penguin) nằm trong thư mục<filename
+>Penguin</filename
+>. Bộ khởi động <command
+>Penguin</command
+> sẽ khởi chạy. Hãy tới mục <guimenuitem
+>Settings</guimenuitem
+> (thiết lập) nằm trong trình đơn <guimenu
+>File</guimenu
+> (tập tin), nhấn vào thanh nhỏ <guilabel
+>Kernel</guilabel
+> (hạt nhân). Chọn ảnh kiểu hạt nhân (<filename
+>vmlinuz</filename
+>) và đĩa RAM (<filename
+>initrd.gz</filename
+>) đều nằm trong thư mục <filename
+>install</filename
+> (cài đặt) bằng cách nhấn vào cái nút tương ứng bên phải, góc trên, rồi duyệt qua hộp thoại chọn tập tin để tìm tập tin thích hợp. </para
+><para
+>Để đặt các tham số khởi động trong Penguin, hãy đi tới trình đơn <guimenu
+>File</guimenu
+> (tập tin) và chọn mục <guimenuitem
+>Settings...</guimenuitem
+> (thiết lập), rồi bật thanh nhỏ <guilabel
+>Options</guilabel
+> (tùy chọn). Các tham số khởi động có thể được gõ vào vùng nhập chữ. Nếu bạn muốn sử dụng luôn thiết lập này, trong trình đơn <guimenu
+>File</guimenu
+> hãy chọn mục <guimenuitem
+>Save Settings as Default</guimenuitem
+> (lưu thiết lập này là mặc định). </para
+><para
+>Hãy đóng hộp thoại <guilabel
+>Settings</guilabel
+>, lưu thiết lập đó và khởi chạy tiến trình tải khởi động bằng cách chọn mục <guimenuitem
+>Boot Now</guimenuitem
+> (khởi động ngay bây giờ) nằm trong trình đơn <guimenu
+>File</guimenu
+>. </para
+><para
+>Bộ khởi động <command
+>Penguin</command
+> sẽ xuất vài thông tin gỡ lỗi vào cửa sổ. Sau đó, màn hình xảy ra màu xám, cần phải đợi vài giây. Tiếp sau, màn hình màu đen với đoạn màu trắng nên xuất hiện, hiển thị nhiều kiểu thông tin gỡ lỗi hạt nhân. Các thông điệp này có thể cuộn ra quá nhanh để đọc được: không có sao. Sau một hai giây, chương trình cài đặt nên khởi chạy tự động, vậy bạn có thể tiếp tục tới <xref linkend="d-i-intro"/>. </para>
+
+    </sect3>
+
+    <sect3 id="m68k-boothd-q40"
+><title
+>Khởi động từ Q40/Q60</title>
+
+<para
+>FIXME (sửa đi: phần tiếng Anh chưa tạo) </para
+><para
+>Chương trình cài đặt nên khởi chạy tự động, vậy bạn có thể tiếp tục tới <xref linkend="d-i-intro"/> bên dưới. </para>
+
+    </sect3>
+  </sect2>
+
+
+  <sect2 arch="m68k" id="m68k-boot-cdrom"
+><title
+>Khởi động từ đĩa CD-ROM</title>
+<para
+>Hiện thời, kiến trúc phụ kiểu &arch-title; duy nhất hỗ trợ được khả năng khởi động từ đĩa CD-ROM là máy BVME6000. </para>
+
+
+<!-- Start of file boot-installer/intro-cd.xml -->
+<!-- $Id: intro-cd.xml 39614 2006-08-07 15:50:11Z fjp $ -->
+
+<para
+>Phương pháp dễ nhất cho phần lớn người là sử dụng một bộ đĩa CD Debian. Nếu bạn có một bộ đĩa CD như vậy, và nếu máy của bạn có hỗ trợ khả năng khởi động trực tiếp từ đĩa CD, hay quá ! Đơn giản hãy <phrase arch="x86"
+> cấu hình hệ thống để khởi động từ đĩa CD, như được diễn tả trong <xref linkend="boot-dev-select"/>, </phrase
+> nạp đĩa CD, khởi động lại, và tiếp tục lại đến chương kế tiếp. </para
+><para
+>Ghi chú rằng một số ổ đĩa CD riêng có thể cần thiết trình điều khiển đặc biệt, vì vậy không thể được truy cập trong giao đoạn cài đặt ở đầu. Nếu phương pháp chuẩn khởi động từ đĩa CD không thích hợp với phần cứng của bạn, hãy xem lại chương này và đọc về hạt nhân xen kẽ và phương pháp cài đặt có thể là thích hợp hơn. </para
+><para
+>Thậm chí nếu bạn không thể khởi động từ đĩa CD-ROM, bạn thường có thể cài đặt các thành phần của hệ thống Debian và các gói phần mềm đã muốn từ đĩa CD-ROM đó. Đơn giản hãy khởi động bằng một vật chứa khác, như đĩa mềm. Vào lúc nên cài đặt hệ điều hành, hệ thống cơ bản và gói phần mềm thêm nào, hãy chỉ hệ thống cài đặt tới ổ đĩa CD-ROM. </para
+><para
+>Nếu bạn gặp khó khăn trong việc khởi động, xem <xref linkend="boot-troubleshooting"/>. </para>
+<!--   End of file boot-installer/intro-cd.xml -->
+
+  </sect2>
+
+
+  <sect2 arch="m68k" id="boot-tftp"
+><title
+>Khởi động bằng TFTP</title>
+
+
+<!-- Start of file boot-installer/intro-net.xml -->
+<!-- $Id: intro-net.xml 11648 2004-03-22 00:37:46Z joeyh $ -->
+
+<para
+>Việc khởi động từ mạng cần thiết bạn có sự kết nối mạng và máy phục vụ khởi động mạng kiểu TFTP (DHCP, RARP, hay BOOTP). </para
+><para arch="hppa"
+>Hệ thống cũ hơn như 715 có thể cần thiết bạn dùng máy phục vụ kiểu RBOOT thay cho BOOTP. </para
+><para
+>Phương pháp cài đặt để hỗ trợ khả năng khởi động qua mạng được diễn tả trong <xref linkend="install-tftp"/>. </para>
+<!--   End of file boot-installer/intro-net.xml -->
+
+<para
+>Sau khi khởi động hệ thống kiểu VMEbus, bạn sẽ xem dấu nhắc <prompt
+>Boot:</prompt
+> (khởi động) của LILO. Tại dấu nhắc đó, hãy nhập một của những đoạn theo đây, để khởi động Linux và bắt đầu tiến trình cài đặt phần mềm Debian chính bằng khả năng mô phỏng thiết bị cuối VT102: <itemizedlist>
+<listitem
+><para
+>gõ <screen
+>i6000 &enterkey;</screen
+> để cài đặt vào máy kiểu BVME4000/6000 </para
+></listitem>
+<listitem
+><para
+>gõ <screen
+>i162 &enterkey;</screen
+> để cài đặt vào máy kiểu MVME162 </para
+></listitem>
+<listitem
+><para
+>gõ <screen
+>i167 &enterkey;</screen
+> để cài đặt vào máy kiểu MVME166/167 </para
+></listitem>
+    </itemizedlist>
+
+</para
+><para
+>Bạn cũng có thể phụ thêm chuỗi <screen
+>TERM=vt100</screen
+> để sử dụng khả năng mô phỏng thiết bị cuối VT100, v.d. <screen
+>i6000 TERM=vt100 &enterkey;</screen
+>. </para>
+  </sect2>
+
+
+  <sect2 arch="m68k" id="boot-from-floppies">
+  <title
+>Khởi động từ đĩa mềm</title>
+<para
+>Đối với phần lớn kiến trúc kiểu &arch-title;, phương pháp khuyến khích là khởi động từ hệ thống tập tin cục bộ. </para
+><para
+>Khả năng khởi động từ đĩa mềm khởi động được hỗ trợ chỉ trên máy kiểu Atari và VME (với ổ đĩa mềm SCSI trên VME) vào lúc này. </para>
+ </sect2>
+<!--   End of file boot-installer/m68k.xml -->
+
+<!-- Start of file boot-installer/mips.xml -->
+<!-- $Id: mips.xml 35613 2006-03-19 04:18:28Z tbm $ -->
+
+
+  <sect2 arch="mips" id="boot-tftp"
+><title
+>Khởi động bằng TFTP</title>
+
+   <sect3>
+   <title
+>Khởi động SGI qua TFTP</title>
+<para
+>Sau khi vào bộ theo dõi lệnh, hãy nhập <informalexample
+><screen>
+bootp():
+</screen
+></informalexample
+> trên máy kiểu SGI để khởi động Linux và bất đầu cài đặt phần mềm Debian. Để làm cho việc này hoạt động được, có lẽ bạn cần phải bỏ đặt biến môi trường <envar
+>netaddr</envar
+> (địa chỉ mạng). Hãy gõ lệnh <informalexample
+><screen>
+unsetenv netaddr
+</screen
+></informalexample
+> trong bộ theo dõi lệnh để làm như thế. </para>
+  </sect3>
+
+   <sect3>
+   <title
+>Khởi động qua TFTP trên máy BCM91250A và BCM91480B Broadcom</title>
+<para
+>Trên bo mạch ước lượng BCM91250A và BCM91480B của Broadcom, bạn cần phải tải bộ tải khởi động SiByl thông qua TFTP, mà lần lượt sẽ tải và khởi chạy trình cài đặt Debian. Trong phần lớn trường hợp, trước tiên bạn sẽ lấy một địa chỉ IP thông qua dịch vụ DHCP; cũng có thể cấu hình một địa chỉ tĩnh. Để sử dụng DHCP, bạn có khả năng nhập lệnh này tại dấu nhắc CFE: <informalexample
+><screen>
+ifconfig eth0 -auto
+</screen
+></informalexample
+> Một khi bạn giành một địa chỉ IP, bạn có thể tải SiByl bằng lệnh này: <informalexample
+><screen>
+boot 192.168.1.1:/boot/sibyl
+</screen
+></informalexample
+> Bạn cần phải thay thế địa chỉ IP của lời thí dụ này bằng hoặc tên hoặc địa chỉ IP của máy phục vụ TFTP của bạn. Một khi bạn thực hiện lệnh này, trình cài đặt sẽ được tải tự động. </para>
+</sect3>
+  </sect2>
+
+  <sect2 arch="mips"
+><title
+>Tham số khởi động</title>
+
+   <sect3>
+   <title
+>Khởi động SGI qua TFTP</title>
+<para
+>Trên máy kiểu SGI, bạn có khả năng phụ thêm một số tham số khởi động vào lệnh <command
+>bootp():</command
+> trong bộ theo dõi lệnh. </para
+><para
+>Sau khi thực hiện lệnh <command
+>bootp():</command
+>, bạn có khả năng nhập đường dẫn và tên của tập tin cần khởi động, nếu bạn chưa đưa ra một tên riêng thông qua máy phục vụ BOOTP/DHCP. Ví dụ : <informalexample
+><screen>
+bootp():/boot/tftpboot.img
+</screen
+></informalexample
+> Tham số hạt nhân thêm có thể được gởi bằng lệnh <command
+>append</command
+> (phụ thêm): <informalexample
+><screen
+>bootp(): append="root=/dev/sda1"
+</screen
+></informalexample>
+
+</para>
+  </sect3>
+
+   <sect3>
+   <title
+>Khởi động qua TFTP trên máy BCM91250A và BCM91480B Broadcom</title>
+<para
+>Bạn không thể gởi tham số hạt nhân nào một cách trực tiếp từ dấu nhắc CFE. Thay thế, bạn cần phải sửa đổi tập tin cấu hình <filename
+>/boot/sibyl.conf</filename
+> trên máy phục vụ TFTP, và thêm các tham số riêng của bạn vào biến <replaceable
+>extra_args</replaceable
+> (đối số thêm) trong nó. </para>
+  </sect3>
+
+  </sect2>
+<!--   End of file boot-installer/mips.xml -->
+
+<!-- Start of file boot-installer/mipsel.xml -->
+<!-- $Id: mipsel.xml 35612 2006-03-19 03:34:30Z tbm $ -->
+
+  <sect2 arch="mipsel" id="boot-tftp"
+><title
+>Khởi động bằng TFTP</title>
+
+   <sect3>
+   <title
+>Khởi động TFTP Cobalt</title>
+<para
+>Nói chính xác, máy kiểu Cobalt không sử dụng dịch vụ TFTP để khởi động: nó dùng NFS. Bạn cần phải cài đặt trình phục vụ NFS và chèn các tập tin cài đặt vào thư mục <filename
+>/nfsroot</filename
+>. Khi bạn khởi động máy Cobalt đó, bạn cần phải bấm cả hai cái nút con chạy (bên trái và bên phải) cùng lúc, rồi máy sẽ khởi động qua mạng từ NFS. Sau đó, nó sẽ hiển thị vài tùy chọn trên màn hình. Có những phương pháp cài đặt này: <itemizedlist>
+<listitem
+><para
+>Bằng SSH (mặc định): trong trường hợp này, trình cài đặt sẽ cấu hình mạng bằng dịch vụ DHCP, và khởi chạy trình phục vụ SSH. Sau đó, nó sẽ hiển thị một mật khẩu ngẫu nhiên và thông tin đăng nhập khác (như địa chỉ IP) trên màn hình LCD (phẳng) của máy Cobalt. Khi bạn kết nối đến máy đó bằng ứng dụng khách SSH, bạn có thể khởi chạy tiến trình cài đặt. </para
+></listitem>
+<listitem
+><para
+>Bằng bàn điều khiển nối tiếp: dùng một cáp bộ điều giải vô giá trị (null modem), bạn có thể kết nối đến cổng nối tiếp của máy Cobalt (bằng 115200 bps) và thực hiện tiến trình cài đặt bằng cách này này. Tùy chọn này không sẵn sàng trên máy Qube 2700 (Qube1) vì máy kiểu này không có cổng nối tiếp. </para
+></listitem>
+</itemizedlist>
+
+</para>
+  </sect3>
+
+   <sect3>
+<!-- Note to translators: this is the same section as in mips.xml -->
+   <title
+>Khởi động qua TFTP trên máy BCM91250A và BCM91480B Broadcom</title>
+<para
+>Trên bo mạch ước lượng BCM91250A và BCM91480B của Broadcom, bạn cần phải tải bộ tải khởi động SiByl thông qua TFTP, mà lần lượt sẽ tải và khởi chạy trình cài đặt Debian. Trong phần lớn trường hợp, trước tiên bạn sẽ lấy một địa chỉ IP thông qua dịch vụ DHCP; cũng có thể cấu hình một địa chỉ tĩnh. Để sử dụng DHCP, bạn có khả năng nhập lệnh này tại dấu nhắc CFE: <informalexample
+><screen>
+ifconfig eth0 -auto
+</screen
+></informalexample
+> Một khi bạn giành một địa chỉ IP, bạn có thể tải SiByl bằng lệnh này: <informalexample
+><screen>
+boot 192.168.1.1:/boot/sibyl
+</screen
+></informalexample
+> Bạn cần phải thay thế địa chỉ IP của lời thí dụ này bằng hoặc tên hoặc địa chỉ IP của máy phục vụ TFTP của bạn. Một khi bạn thực hiện lệnh này, trình cài đặt sẽ được tải tự động. </para>
+</sect3>
+  </sect2>
+
+  <sect2 arch="mipsel"
+><title
+>Tham số khởi động</title>
+
+   <sect3>
+   <title
+>Khởi động TFTP Cobalt</title>
+<para
+>Bạn không thể gởi trực tiếp tham số khởi động nào. Thay thế, bạn cần phải sửa đổi tập tin <filename
+>/nfsroot/default.colo</filename
+> trên máy phục vụ NFS, và thêm các tham số riêng của bạn vào biến <replaceable
+>args</replaceable
+> (đối số) trong nó. </para>
+  </sect3>
+
+   <sect3>
+<!-- Note to translators: this is the same section as in mips.xml -->
+   <title
+>Khởi động qua TFTP trên máy BCM91250A và BCM91480B Broadcom</title>
+<para
+>Bạn không thể gởi tham số hạt nhân nào một cách trực tiếp từ dấu nhắc CFE. Thay thế, bạn cần phải sửa đổi tập tin cấu hình <filename
+>/boot/sibyl.conf</filename
+> trên máy phục vụ TFTP, và thêm các tham số riêng của bạn vào biến <replaceable
+>extra_args</replaceable
+> (đối số thêm) trong nó. </para>
+  </sect3>
+
+  </sect2>
+<!--   End of file boot-installer/mipsel.xml -->
+
+<!-- Start of file boot-installer/s390.xml -->
+<!-- $Id: s390.xml 43745 2007-01-01 13:52:38Z fjp $ -->
+
+  <sect2 arch="s390"
+><title
+>Hạn chế S/390</title>
+<para
+>Để chạy hệ thống cài đặt trên máy kiểu S/390, cần thiết một thiết lập mạng và phiên chạy SSH hoạt động. </para
+><para
+>Tiến trình khởi động bắt đầu với bước thiết lập mạng mà nhắc bạn với vài tham số mạng. Nếu việc thiết lập này là thành công, bạn sẽ đăng nhập vào hệ thống bằng cách sở khởi một phiên chạy SSH mà sẽ khởi chạy hệ thống cài đặt chuẩn. </para>
+  </sect2>
+
+
+  <sect2 arch="s390"
+><title
+>Tham số khởi động S/390</title>
+<para
+>Trên máy kiểu S/390, bạn có thể phụ thêm các tham số khởi động vào tập tin <filename
+>parm</filename
+>. Tập tin này có định dạng hoặc ASCII hoặc EBCDIC. Một tập tin parm mẫu được cung cấp cùng với ảnh cài đặt. </para>
+  </sect2>
+<!--   End of file boot-installer/s390.xml -->
+
+<!-- Start of file boot-installer/powerpc.xml -->
+<!-- $Id: powerpc.xml 43923 2007-01-06 11:49:12Z fjp $ -->
+
+  <sect2 arch="powerpc" id="boot-cd"
+><title
+>Khởi động từ đĩa CD-ROM</title>
+
+
+<!-- Start of file boot-installer/intro-cd.xml -->
+<!-- $Id: intro-cd.xml 39614 2006-08-07 15:50:11Z fjp $ -->
+
+<para
+>Phương pháp dễ nhất cho phần lớn người là sử dụng một bộ đĩa CD Debian. Nếu bạn có một bộ đĩa CD như vậy, và nếu máy của bạn có hỗ trợ khả năng khởi động trực tiếp từ đĩa CD, hay quá ! Đơn giản hãy <phrase arch="x86"
+> cấu hình hệ thống để khởi động từ đĩa CD, như được diễn tả trong <xref linkend="boot-dev-select"/>, </phrase
+> nạp đĩa CD, khởi động lại, và tiếp tục lại đến chương kế tiếp. </para
+><para
+>Ghi chú rằng một số ổ đĩa CD riêng có thể cần thiết trình điều khiển đặc biệt, vì vậy không thể được truy cập trong giao đoạn cài đặt ở đầu. Nếu phương pháp chuẩn khởi động từ đĩa CD không thích hợp với phần cứng của bạn, hãy xem lại chương này và đọc về hạt nhân xen kẽ và phương pháp cài đặt có thể là thích hợp hơn. </para
+><para
+>Thậm chí nếu bạn không thể khởi động từ đĩa CD-ROM, bạn thường có thể cài đặt các thành phần của hệ thống Debian và các gói phần mềm đã muốn từ đĩa CD-ROM đó. Đơn giản hãy khởi động bằng một vật chứa khác, như đĩa mềm. Vào lúc nên cài đặt hệ điều hành, hệ thống cơ bản và gói phần mềm thêm nào, hãy chỉ hệ thống cài đặt tới ổ đĩa CD-ROM. </para
+><para
+>Nếu bạn gặp khó khăn trong việc khởi động, xem <xref linkend="boot-troubleshooting"/>. </para>
+<!--   End of file boot-installer/intro-cd.xml -->
+
+<para
+>Hiện thời, những kiến trúc phụ kiểu &arch-title; duy nhất hỗ trợ khả năng khởi động từ đĩa CD-ROM là máy PReP (dù không phải mọi hệ thống) và PowerMac kiểu mới. Trên máy PowerMac, hãy bấm giữ hoặc phím <keycap
+>c</keycap
+>, hoặc tổ hợp phím <keycap
+>Cmd</keycap
+>, <keycap
+>Option</keycap
+>, <keycap
+>Shift</keycap
+>, và <keycap
+>Delete</keycap
+> đồng thời trong khi khởi động, để khởi động từ đĩa CD-ROM. </para
+><para
+>Máy PowerMac kiểu cũ sẽ không khởi động từ đĩa CD-ROM Debian, vì máy kiểu cũ này ngờ một trình điều khiển khởi động đĩa CD bộ nhớ ROM của MacOS nằm trên đĩa CD khởi động, và chưa có phiên bản phần mềm tự do của trình điều khiển này. Mọi hệ thống kiểu cũ có ổ đĩa mềm, vậy bạn hãy sử dụng ổ đĩa mềm để khởi chạy trình cài đặt, rồi chỉ trình cài đặt tới đĩa CD để lấy các tập tin cần thiết. </para
+><para
+>Nếu hệ thống của bạn không khởi động trực tiếp từ đĩa CD-ROM, vẫn còn có khả năng sử dụng đĩa CD đó để cài đặt hệ thống. Trên máy Mac kiểu mới, bạn cũng có thể nhập một lệnh OpenFirmware để tự khởi động từ đĩa CD-ROM. Hãy theo hướng dẫn trong <xref linkend="boot-newworld"/> để khởi động từ đĩa cứng, trừ tại dấu nhắc OpenFirmware cần phải nhập đường dẫn đến <command
+>yaboot</command
+> nằm trên đĩa CD đó. <informalexample
+><screen
+>0 &gt; boot cd:,\install\yaboot
+</screen
+></informalexample>
+
+</para>
+  </sect2>
+
+  <sect2 arch="powerpc" id="install-drive">
+  <title
+>Khởi động từ đĩa cứng</title>
+
+
+<!-- Start of file boot-installer/intro-hd.xml -->
+<!-- $Id: intro-hd.xml 28672 2005-06-26 10:06:30Z fjp $ -->
+
+<para
+>Việc khởi động từ hệ điều hành tồn tại thường là một tùy chọn có ích; còn đối với một số hệ thống riêng, nó là phương pháp cài đặt duy nhất được hỗ trợ. </para
+><para
+>Trong <xref linkend="boot-drive-files"/>), bạn đã tải về và định vị những tập tin cần thiết để khởi chạy trình cài đặt từ đĩa cứng. </para>
+<!--   End of file boot-installer/intro-hd.xml -->
+
+  <sect3
+><title
+>Khởi động CHRP từ OpenFirmware</title>
+
+<para>
+
+  <emphasis
+>Chưa ghi.</emphasis>
+
+</para>
+   </sect3>
+
+   <sect3
+><title
+>Khởi động PowerMac kiểu cũ từ MacOS</title>
+<para
+>Nếu bạn đã thiết lập BootX trong <xref linkend="files-oldworld"/>, lúc này bạn có thể sử dụng nó để khởi động vào hệ thống cài đặt. Hãy nhấn đôi vào biểu tượng ứng dụng <guiicon
+>BootX</guiicon
+>. Nhấn vào cái nút <guibutton
+>Options</guibutton
+> (tùy chọn) rồi chọn <guilabel
+>Use Specified RAM Disk</guilabel
+> (dùng đĩa bộ nhớ RAM đã xác định). Việc này cũng sẽ cho bạn có dịp chọn tập tin <filename
+>ramdisk.image.gz</filename
+>. Có lẽ bạn cần phải bật hộp chọn <guilabel
+>No Video Driver</guilabel
+> (không có trình điều khiển ảnh động), phụ thuộc vào phần cứng riêng của bạn. Sau đó, hãy nhấn vào cái nút <guibutton
+>Linux</guibutton
+> để tắt hệ điều hành MacOS và khởi chạy trình cài đặt &d-i;. </para>
+   </sect3>
+
+
+  <sect3 id="boot-newworld">
+  <title
+>Khởi động Mac kiểu mới từ OpenFirmware</title>
+<para
+>Trong <xref linkend="files-newworld"/>, bạn đã chèn những tập tin <filename
+>vmlinux</filename
+>, <filename
+>initrd.gz</filename
+>, <filename
+>yaboot</filename
+>, và <filename
+>yaboot.conf</filename
+> tại lớp gốc của phân vùng HFS. Hãy khởi động lại máy tính, và bấm giữ ngay (trong khi máy tính rung chuông) tổ hợp phím <keycap
+>Option</keycap
+>, <keycap
+>Command (⌘)</keycap
+>, <keycap
+>o</keycap
+>, và <keycap
+>f</keycap
+> đều cùng lúc. Sau vài giây, bạn sẽ xem dấu nhắc Open Firmware (phần vững mở). Tại dấu nhắc đó, hãy gõ <informalexample
+><screen>
+0 &gt; boot hd:<replaceable
+>x</replaceable
+>,yaboot
+</screen
+></informalexample
+> thay thế<replaceable
+>x</replaceable
+> bằng số hiệu phân vùng HFS nơi bạn đã để tập tin hạt nhân và yaboot, rồi bấm phím &enterkey;. Trên một số máy riêng, có lẽ bạn cần phải nhập <userinput
+>ide0:</userinput
+> thay cho <userinput
+>hd:</userinput
+>. Sau vài giây nữa, bạn sẽ xem dấu nhắc yaboot <informalexample
+><screen>
+boot:
+</screen
+></informalexample
+> Tại dấu nhắc <prompt
+>boot:</prompt
+> (khởi động) của yaboot, hãy gõ hoặc <userinput
+>install</userinput
+> (cài đặt) hoặc <userinput
+>install video=ofonly</userinput
+> (cài đặt ảnh động=của chỉ) rồi bấm phím &enterkey;. Đối số <userinput
+>video=ofonly</userinput
+> có ích để tương thích tối đa; bạn có thể thử nó nếu lệnh <userinput
+>install</userinput
+> độc lập không hoạt động được. Sau đó, chương trình cài đặt Debian nên khởi chạy. </para>
+   </sect3>
+  </sect2>
+
+  <sect2 arch="powerpc" condition="bootable-usb" id="usb-boot">
+  <title
+>Khởi động từ thanh bộ nhớ USB</title>
+<para
+>Hiện thời, máy PowerMac kiểu mới được biết là hỗ trợ khả năng khởi động bằng USB. </para>
+
+<para
+>Hãy kiểm tra xem bạn đã chuẩn bị mọi thứ được diễn tả trong <xref linkend="boot-usb-files"/>. Để khởi động hệ thống Mac từ thanh USB, bạn sẽ cần phải sử dụng dấu nhắc Open Firmware, vì Open Firmware không tìm kiếm qua thiết bị sức chứa USB theo mặc định. Để truy cập dấu nhắc đó, hãy bấm giữ tổ hợp phím <keycombo
+><keycap
+>Cmd</keycap
+> <keycap
+>Option</keycap
+> <keycap
+>o</keycap
+> <keycap
+>f</keycap
+></keycombo
+> đều cùng lúc trong khi khởi động (xem <xref linkend="invoking-openfirmware"/>). </para
+><para
+>Bạn sẽ cần phải tìm biết vị trí của thiết bị sức chứa USB trong cây thiết bị, vì hiện thời công cụ <command
+>ofpath</command
+> không thể tính tự động thông tin này. Hãy gõ lệnh <userinput
+>dev / ls</userinput
+> (liệt kê thiết bị) và <userinput
+>devalias</userinput
+> (bí danh thiết bị) tại dấu nhắc Open Firmware, để xem danh sách các thiết bị và bí danh thiết bị đã biết. Trên máy tính của tác giả, dùng nhiều kiểu thanh USB khác nhau, đường dẫn như <filename
+>usb0/disk</filename
+>, <filename
+>usb0/hub/disk</filename
+>, <filename
+>/pci@f2000000/usb@1b,1/disk@1</filename
+> và <filename
+>/pci@f2000000/usb@1b,1/hub@1/disk@1</filename
+> hoạt động được. </para
+><para
+>Một khi bạn đã tìm biết đường dẫn thiết bị, để khởi động trình cài đặt hãy nhập lệnh như : <informalexample
+><screen>
+boot <replaceable
+>usb0/disk</replaceable
+>:<replaceable
+>2</replaceable
+>,\\:tbxi
+</screen
+></informalexample
+> Con số thay thế <replaceable
+>2</replaceable
+> khớp phân vùng kiểu <filename
+>Apple_HFS</filename
+> hay <filename
+>Apple_Bootstrap</filename
+> nơi bạn đã sao chép ảnh khởi động, còn phần <userinput
+>,\\:tbxi</userinput
+> báo Open Firmware khởi động từ tập tin có kiểu tập tin HFS « tbxi » (tức là <command
+>yaboot</command
+>) nằm trong thư mục đã được hiệu lực bằng lệnh <command
+>hattrib -b</command
+>. </para
+><para
+>Sau đó, hệ thống nên khởi động được, và bạn nên thấy dấu nhắc <prompt
+>boot:</prompt
+> (khởi động). Vào đây bạn có thể nhập một số đối số khởi động tùy chọn, hoặc chỉ bấm phím &enterkey;. </para
+><warning
+><para
+>Phương pháp khởi động này là mới, có lẽ bạn sẽ gặp khó khăn khi thử dùng nó trên một số hệ thống kiểu mới riêng. Nếu bạn có phải gặp khó khăn, xin hãy gởi báo cáo cài đặt, như được diễn tả trong <xref linkend="submit-bug"/>. </para
+></warning>
+  </sect2>
+
+  <sect2 arch="powerpc" id="boot-tftp"
+><title
+>Khởi động bằng TFTP</title>
+
+
+<!-- Start of file boot-installer/intro-net.xml -->
+<!-- $Id: intro-net.xml 11648 2004-03-22 00:37:46Z joeyh $ -->
+
+<para
+>Việc khởi động từ mạng cần thiết bạn có sự kết nối mạng và máy phục vụ khởi động mạng kiểu TFTP (DHCP, RARP, hay BOOTP). </para
+><para arch="hppa"
+>Hệ thống cũ hơn như 715 có thể cần thiết bạn dùng máy phục vụ kiểu RBOOT thay cho BOOTP. </para
+><para
+>Phương pháp cài đặt để hỗ trợ khả năng khởi động qua mạng được diễn tả trong <xref linkend="install-tftp"/>. </para>
+<!--   End of file boot-installer/intro-net.xml -->
+
+<para
+>Hiện thời, các hệ thống PReP và PowerMac kiểu mới có hỗ trợ khả năng khởi động qua mạng. </para
+><para
+>Trên máy chạy Open Firmware, như PowerMac kiểu mới, hãy vào bộ theo dõi khởi động (xem <xref linkend="invoking-openfirmware"/>) và nhập lệnh <command
+>boot enet:0</command
+>. Máy kiểu PReP và CHRP có lẽ liên lạc với mạng bằng cách khác nhau. Trên máy kiểu PReP, bạn nên thử nhập lệnh <userinput
+>boot net:<replaceable
+>địa_chỉ_IP_máy_phục_vụ</replaceable
+>,<replaceable
+>tập_tin</replaceable
+>,<replaceable
+>địa_chỉ_IP_ứng_dụng_khách</replaceable
+></userinput
+>. Trên một số hệ thống PReP riêng (v.d. máy Motorola PowerStack), lệnh gọi trợ giúp về việc khởi động  <userinput
+>help boot</userinput
+> có thể diễn tả cú pháp và các tùy chọn sẵn sàng. </para>
+  </sect2>
+
+
+  <sect2 arch="powerpc" condition="supports-floppy-boot">
+  <title
+>Khởi động từ đĩa mềm</title>
+<para
+>Khả năng khởi động từ đĩa mềm được hỗ trợ trên kiến trúc kiểu &arch-title;, dù nó thường thích hợp chỉ trên máy kiểu cũ. Máy kiểu mới không có ổ đĩa mềm, và khả năng khởi động từ ổ đĩa mềm USB đã gắn kết không được hỗ trợ. </para
+><para
+>Trong bước <xref linkend="create-floppy"/>, bạn đã tải về các ảnh đĩa mềm cần thiết và tạo đĩa mềm từ ảnh đó. </para
+><para
+>Để khởi động từ đĩa mềm <filename
+>boot-floppy-hfs.img</filename
+>, hãy nạp nó vào ổ đĩa mềm sau khi tắt hệ thống, còn trước khi bấm cái nút mở điện. </para
+><note
+><para
+>Khi khởi động máy Apple Mac có ổ đĩa mềm: đĩa mềm được nạp vào ổ đĩa trước khi khởi động sẽ có ưu tiên khởi động cao nhất. Đĩa mềm không chứa hệ thống khởi động hợp lệ sẽ bị đẩy ra, sau đó máy sẽ kiểm tra tìm phân vùng đĩa cứng có khả năng khởi động. </para
+></note
+><para
+>Sau khi khởi động, đĩa mềm <filename
+>root.bin</filename
+> được yêu cầu. Hãy nạp đĩa mềm gốc đó, rồi bấm phím &enterkey;. Chương trình cài đặt được khởi chạy tự động sau khi hệ thống gốc đã được tải vào bộ nhớ. </para>
+  </sect2>
+
+
+  <sect2 arch="powerpc"
+><title
+>Tham số khởi động máy PowerPC</title>
+<para
+>Nhiều bộ trình bày Apple cũ hơn sử dụng chế độ 640x480 67Hz. Nếu ảnh động có vẻ lệch trên một bộ trình bày Apple cũ hơn, hãy thử phụ thêm đối số khởi động <userinput
+>video=atyfb:vmode:6</userinput
+>, mà sẽ chọn chế độ đó cho phần lớn phần cứng ảnh động kiểu Mach64 và Rage. Đối với phần cứng kiểu Rage 128, đối số này thay đổi thành <userinput
+>video=aty128fb:vmode:6</userinput
+> . </para>
+  </sect2>
+<!--   End of file boot-installer/powerpc.xml -->
+
+<!-- Start of file boot-installer/sparc.xml -->
+<!-- $Id: sparc.xml 43841 2007-01-04 01:45:08Z fjp $ -->
+
+  <sect2 arch="sparc" id="boot-tftp"
+><title
+>Khởi động bằng TFTP</title>
+
+
+<!-- Start of file boot-installer/intro-net.xml -->
+<!-- $Id: intro-net.xml 11648 2004-03-22 00:37:46Z joeyh $ -->
+
+<para
+>Việc khởi động từ mạng cần thiết bạn có sự kết nối mạng và máy phục vụ khởi động mạng kiểu TFTP (DHCP, RARP, hay BOOTP). </para
+><para arch="hppa"
+>Hệ thống cũ hơn như 715 có thể cần thiết bạn dùng máy phục vụ kiểu RBOOT thay cho BOOTP. </para
+><para
+>Phương pháp cài đặt để hỗ trợ khả năng khởi động qua mạng được diễn tả trong <xref linkend="install-tftp"/>. </para>
+<!--   End of file boot-installer/intro-net.xml -->
+
+<para
+>Trên máy có OpenBoot, đơn giản hãy vào bộ theo dõi khởi động trên máy vào đó đang cài đặt (xem <xref linkend="invoking-openboot"/>). Chạy lệnh <userinput
+>boot net</userinput
+> (khởi động mạng) để khởi động từ máy phục vụ TFTP và RARP, hoặc thử nhập <userinput
+>boot net:bootp</userinput
+> hay <userinput
+>boot net:dhcp</userinput
+> để khởi động từ máy phục vụ TFTP và BOOTP hay DHCP. </para>
+  </sect2>
+
+
+  <sect2 arch="sparc"
+><title
+>Khởi động từ đĩa CD-ROM</title>
+
+
+<!-- Start of file boot-installer/intro-cd.xml -->
+<!-- $Id: intro-cd.xml 39614 2006-08-07 15:50:11Z fjp $ -->
+
+<para
+>Phương pháp dễ nhất cho phần lớn người là sử dụng một bộ đĩa CD Debian. Nếu bạn có một bộ đĩa CD như vậy, và nếu máy của bạn có hỗ trợ khả năng khởi động trực tiếp từ đĩa CD, hay quá ! Đơn giản hãy <phrase arch="x86"
+> cấu hình hệ thống để khởi động từ đĩa CD, như được diễn tả trong <xref linkend="boot-dev-select"/>, </phrase
+> nạp đĩa CD, khởi động lại, và tiếp tục lại đến chương kế tiếp. </para
+><para
+>Ghi chú rằng một số ổ đĩa CD riêng có thể cần thiết trình điều khiển đặc biệt, vì vậy không thể được truy cập trong giao đoạn cài đặt ở đầu. Nếu phương pháp chuẩn khởi động từ đĩa CD không thích hợp với phần cứng của bạn, hãy xem lại chương này và đọc về hạt nhân xen kẽ và phương pháp cài đặt có thể là thích hợp hơn. </para
+><para
+>Thậm chí nếu bạn không thể khởi động từ đĩa CD-ROM, bạn thường có thể cài đặt các thành phần của hệ thống Debian và các gói phần mềm đã muốn từ đĩa CD-ROM đó. Đơn giản hãy khởi động bằng một vật chứa khác, như đĩa mềm. Vào lúc nên cài đặt hệ điều hành, hệ thống cơ bản và gói phần mềm thêm nào, hãy chỉ hệ thống cài đặt tới ổ đĩa CD-ROM. </para
+><para
+>Nếu bạn gặp khó khăn trong việc khởi động, xem <xref linkend="boot-troubleshooting"/>. </para>
+<!--   End of file boot-installer/intro-cd.xml -->
+
+<para
+>Phần lớn phiên bản OpenBoot hỗ trợ lệnh <userinput
+>boot cdrom</userinput
+> (khởi động đĩa CD-ROM) mà đơn giản là bí danh để khởi động từ thiết bị SCSI trên ID 6 (hay cái chủ phụ trên máy dựa vào IDE). </para>
+  </sect2>
+
+
+  <sect2 arch="sparc" condition="supports-floppy-boot">
+  <title
+>Khởi động từ đĩa mềm</title>
+<para
+>Ảnh địa mềm hiện thời chỉ sẵn sàng cho kiến trúc sparc32, nhưng vì lý do kỹ thuật, không phải cho các bản phát hành chính thức. (Lý do là chúng xây dựng được chỉ với quyền người chủ, mà không hỗ trợ bởi trình nền xây dựng của chúng tôi.) Xem dưới <quote
+>daily built images</quote
+> (các ảnh xây dựng hàng ngày) trên <ulink url="&url-d-i;"
+>nơi Mạng của dự án bộ cài đặt Debian</ulink
+> tìm liên kết tới ảnh đĩa mềm cho sparc32. </para
+><para
+>Để khởi động từ đĩa mềm trên máy kiểu Sparc, hãy chạy lệnh: <informalexample
+><screen>
+Stop-A -&gt; OpenBoot: "boot floppy"
+</screen
+></informalexample
+> Cảnh báo : kiến trúc Sun4u (ultra) mới hơn không hỗ trợ khả năng khởi động từ đĩa mềm. Thông điệp lỗi thường là <computeroutput
+>Bad magic number in disk label - Can't open disk label package</computeroutput
+> (gặp số ma thuật sai trong nhãn đĩa nên không thể mở gói nhãn đĩa). </para
+><para
+>Vài máy kiểu Sparc (v.d. Ultra 10) có lỗi OBP chặn khởi động (thay vào không hỗ trợ khả năng khởi động bằng cách nào cả). Bản cập nhật OBP thích hợp có thể được tải như là mã nhận diện sản phẩm ID 106121 xuống <ulink url="http://sunsolve.sun.com"
+></ulink
+>. </para
+><para
+>Nếu bạn đang khởi động từ đĩa mềm, và xem thông điệp như <informalexample
+><screen>
+Fatal error: Cannot read partition
+Illegal or malformed device name
+</screen
+></informalexample
+> (lỗi nghiêm trọng: không thể đọc phân vùng, tên thiết bị bất hợp pháp hay dạng sai), có lẽ khả năng khởi động từ đĩa mềm đơn giản không được hỗ trợ trên máy đó. </para>
+  </sect2>
+
+  <sect2 arch="sparc"
+><title
+>Thông điệp IDPROM</title>
+<para
+>Nếu bạn không thể khởi động vì nhận thông điệp lỗi <quote
+>IDPROM</quote
+>, có lẽ pin NVRAM, mà chứa thông tin cấu hình phần vững, đã hết điện. Xem Hỏi Đáp <ulink url="&url-sun-nvram-faq;"
+>Sun NVRAM FAQ</ulink
+> để tìm thông tin thêm. </para>
+  </sect2>
+<!--   End of file boot-installer/sparc.xml -->
+
+ </sect1>
+
+
+<!-- Start of file boot-installer/parameters.xml -->
+<!-- $Id: parameters.xml 45239 2007-02-18 19:38:12Z fjp $ -->
+
+ <sect1 id="boot-parms"
+><title
+>Tham số khởi động</title>
+<para
+>Tham số khởi động là tham số hạt nhân Linux thường được dùng để đảm bảo thiết bị ngoại vi được xử lý cho đúng. Bình thường, hạt nhân có khả năng phát hiện tự động thông tin về các ngoại của máy tính. Tuy nhiên, trong một số trường hợp, bạn cần phải giúp đỡ hạt nhân một ít. </para
+><para
+>Nếu đây là lần đầu tiên khởi động hệ thống này, hãy thử nhập các tham số khởi động mặc định (tức là không thử đặt tham số thêm) và theo dõi hoạt động. Rất có thể là máy sẽ hoạt động được vậy bạn không cần thêm gì. Nếu không, bạn có thể khởi động lại sau, cũng tìm tham số đặc biệt có thể báo hệ thống biết về phần cứng đó. </para
+><para
+>Thông tin về nhiều tham số khởi động khác nhau nằm trong tài liệu dấu nhắc khởi động Linux Thế Nào <ulink url="http://www.tldp.org/HOWTO/BootPrompt-HOWTO.html"
+> Linux BootPrompt HOWTO</ulink
+>, gồm có mẹo về phần cứng không thường. Phần này chứa chỉ bản tóm tắt các tham số nổi bật nhất. Một số vấn đề thường cũng được bao gồm bên dưới trong <xref linkend="boot-troubleshooting"/>. </para
+><para
+>Khi hạt nhân khởi động, thông điệp <informalexample
+><screen>
+Memory:<replaceable
+>rảnh</replaceable
+>k/<replaceable
+>tổng</replaceable
+>k available
+</screen
+></informalexample
+> (bộ nhớ có rảnh) nên được hiển thị sớm trong tiến trình. Số <replaceable
+>tổng</replaceable
+> nên khớp với tổng số RAM theo kilobyte. Nếu nó không phải khớp với số lượng RAM thật đã được cài đặt, bạn cần phải nhập tham số <userinput
+>mem=<replaceable
+>tổng_RAM</replaceable
+></userinput
+>, mà <replaceable
+>tổng_RAM</replaceable
+> được đặt thành số lượng bộ nhớ RAM, với hậu tố <quote
+>k</quote
+> đại diện kilobyte, hay <quote
+>m</quote
+> đại diện megabyte. Ví dụ, mỗi chuỗi <userinput
+>mem=65536k</userinput
+> và <userinput
+>mem=64m</userinput
+> có nghĩa là 64MB bộ nhớ RAM. </para
+><para condition="supports-serial-console"
+>Nếu bạn khởi động bằng bàn điều khiển nối tiếp, thường hạt nhân sẽ phát hiện tự động trường hợp này<phrase arch="mipsel"
+> (dù không phải trên máy kiểu DECstation)</phrase
+>. Nếu bạn có thẻ ảnh động (bộ đệm khung) và bàn phím cũng được gắn kết với máy tính bạn muốn khởi động bằng bàn điều khiển nối tiếp, có lẽ bạn cần phải gởi đối số bàn điều khiển <userinput
+>console=<replaceable
+>thiết_bị</replaceable
+></userinput
+> cho hạt nhân, mà <replaceable
+>thiết_bị</replaceable
+> là thiết bị nối tiếp, mà thường như <filename
+>ttyS0</filename
+>. </para
+><para arch="sparc"
+>Đối với kiến trúc kiểu &arch-title; các thiết bị nối tiếp là <filename
+>ttya</filename
+> hay <filename
+>ttyb</filename
+>. Hoặc, hãy đặt biến OpenPROM thiết bị nhập <envar
+>input-device</envar
+> và thiết bị xuất <envar
+>output-device</envar
+> thành <filename
+>ttya</filename
+>. </para>
+
+
+  <sect2 id="installer-args"
+><title
+>Tham số trình cài đặt Debian</title>
+<para
+>Hệ thống cài đặt này chấp nhận vài tham số khởi động thêm<footnote
+> <para
+> Đối với các hạt nhân hiện thời (2.6.9 hay mới hơn), bạn có khả năng sử dụng 32 tùy chọn dòng lệnh và 32 tùy chọn môi trường. Vượt quá số này thì hạt nhân không thể phục hồi.</para
+> </footnote
+> có thể hữu ích. </para
+><para
+>Một số tham số có <quote
+>dạng ngắn</quote
+> giúp đỡ tránh sự hạn chế của các tùy chọn dòng lệnh hạt nhân và làm cho dễ hơn nhập tham số. Tham số có dạng ngắn thì được hiển thị trong dấu ngoặc đúng sau dạng dài (chuẩn). Các mẫu thí dụ trong sổ tay này cũng thường dùng dạng ngắn. </para>
+
+<variablelist>
+<varlistentry>
+<term
+>debconf/priority (priority)</term>
+<listitem
+><para
+>Tham số này đặt ưu tiên thấp nhất cho những thông điệp cần hiển thị. </para
+><para
+>Bản cài đặt mặc định tùy theo ưu tiên cao <userinput
+>debconf/priority=high</userinput
+>. Có nghĩa là hiển thị những thông điệp có ưu tiên cả cao lẫn tới hạn, còn bỏ qua những thông điệp ưu tiên vừa và thấp. Nếu gặp lỗi, trình cài đặt điều chỉnh ưu tiên như cần thiết. </para
+><para
+>Nếu bạn thêm ưu tiên vừa <userinput
+>debconf/priority=medium</userinput
+> là tham số khởi động, bạn sẽ thấy trình đơn cài đặt, giành thêm khả năng điều khiển tiến trình cài đặt. Còn khi dùng ưu tiên thấp <userinput
+>debconf/priority=low</userinput
+>, mọi thông điệp được hiển thị (nó tương đương với phương pháp khởi động <emphasis
+>nhà chuyên môn</emphasis
+>). Với ưu tiên tới hạn <userinput
+>debconf/priority=critical</userinput
+>, hệ thống cài đặt sẽ hiển thị chỉ những thông điệp nghiêm trọng, sẽ cố gắng làm việc đúng, không tương tác nhiều. </para
+></listitem>
+</varlistentry>
+
+
+<varlistentry>
+<term
+>DEBIAN_FRONTEND</term>
+<listitem
+><para
+>Tham số khởi động này điều khiển kiểu giao diện người dùng được dùng cho bộ cài đặt. Các giá trị tham số hiện thời có thể: <itemizedlist
+> <listitem
+> <para
+><userinput
+>DEBIAN_FRONTEND=noninteractive</userinput
+> (không tương tác)</para
+> </listitem
+><listitem
+> <para
+><userinput
+>DEBIAN_FRONTEND=text</userinput
+> (văn bản)</para
+> </listitem
+><listitem
+> <para
+><userinput
+>DEBIAN_FRONTEND=newt</userinput
+> (trình newt)</para
+> </listitem
+><listitem
+> <para
+><userinput
+>DEBIAN_FRONTEND=gtk</userinput
+> (trình gtk)</para
+> </listitem
+> </itemizedlist
+>  Giao diện mặc định là <userinput
+>DEBIAN_FRONTEND=newt</userinput
+>. <userinput
+>DEBIAN_FRONTEND=text</userinput
+> có lẽ thích hợp hơn cho tiến trình cài đặt bằng bàn điều khiển nối tiếp. Thường chỉ giao diện <userinput
+>newt</userinput
+> có sẵn trên vật chứa cài đặt mặc định. Trên các kiến trúc có phải hỗ trợ nó, bộ cài đặt kiểu đồ họa thì sử dụng giao diện <userinput
+>gtk</userinput
+>. </para
+></listitem>
+</varlistentry>
+
+
+<varlistentry>
+<term
+>BOOT_DEBUG</term>
+<listitem
+><para
+>Việc đặt tham số khởi động này (gỡ lỗi khởi động) thành 2 sẽ gây ra tiến trình khởi động trình cài đặt sẽ được ghi lưu một cách chi tiết. Còn việc đặt nó thành 3 làm cho trình bao gỡ lỗi sẵn sàng tại một số điểm thời có ích trong tiến trình khởi động. (Hãy thoát khỏi trình bao để tiếp tục lại tiến trình khởi động.) <variablelist>
+<varlistentry>
+<term
+><userinput
+>BOOT_DEBUG=0</userinput
+></term>
+<listitem
+><para
+>Đây là giá trị mặc định.</para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><userinput
+>BOOT_DEBUG=1</userinput
+></term>
+<listitem
+><para
+>Chi tiết hơn cấp thường.</para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><userinput
+>BOOT_DEBUG=2</userinput
+></term>
+<listitem
+><para
+>Xuất rất nhiều thông tin gỡ lỗi.</para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><userinput
+>BOOT_DEBUG=3</userinput
+></term>
+<listitem
+><para
+>Chạy trình bao tại một số điểm thời khác nhau trong tiến trình khởi động, để cho khả năng gỡ lỗi chi tiết. Hãy thoát khỏi trình bao để tiếp tục lại khởi động. </para
+></listitem>
+</varlistentry>
+</variablelist>
+
+</para
+></listitem>
+</varlistentry>
+
+
+<varlistentry>
+<term
+>INSTALL_MEDIA_DEV</term>
+<listitem
+><para
+>Giá trị của tham số này (thiết bị vật chứa cài đặt) là đường dẫn đến thiết bị từ đó cần tải trình cài đặt Debian. Ví dụ, <userinput
+>INSTALL_MEDIA_DEV=/dev/floppy/0</userinput
+> </para
+><para
+>Đĩa mềm khởi động, mà thường quét mọi đĩa mềm có thể để tìm đĩa mềm gốc, có thể bị lọc bởi tham số này để phát hiện chỉ một thiết bị thôi. </para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+>debian-installer/framebuffer (fb)</term>
+<listitem
+><para
+>Một số kiến trúc riêng sử dụng bộ đệm khung (framebuffer) của hạt nhân để cung cấp khả năng cài đặt bằng nhiều ngôn ngữ khác nhau. Nếu bộ đếm khung gây ra lỗi trên hệ thống, bạn vẫn có thể tắt tính năng này bằng tham số <userinput
+>fb=false</userinput
+>. Trường hợp ngụ ý sự khó là thông điệp lỗi về <filename
+>bterm</filename
+> hay <filename
+>bogl</filename
+>, màn hình trống hay hệ thống đông đặc trong vòng vài phút sau khi khởi chạy tiến trình cài đặt. </para
+><para arch="x86"
+>Đối số <userinput
+>video=vga16:off</userinput
+> cũng có thể được dùng để tắt khả năng dùng bộ đếm khung của hạt nhân. Lỗi như vậy đã được thông báo trên máy kiểu Dell Inspiron chứa thẻ Mobile Radeon. </para
+><para arch="m68k"
+>Lỗi như vậy đã được thông báo trên máy kiểu Amiga 1200 và SE/30. </para
+><para arch="hppa"
+>Lỗi như vậy đã được thông báo trên máy kiểu hppa. </para
+><note arch="sparc"
+><para
+>Do vấn đề trình bày trên một số hệ thống riêng, khả năng hỗ trợ bộ đếm khung <emphasis
+>bị tắt theo mặc định</emphasis
+> đối với kiến trúc kiểu &arch-title;. Trường hợp này có thể gây ra sự trình bày không đẹp trên hệ thống không hỗ trợ đúng bộ đếm khung, v.d. máy chứa thẻ đồ họa ATI. Nếu bạn gặp lỗi trình bày trong tiến trình cài đặt, bạn có thể thử khởi động với tham số <userinput
+>debian-installer/framebuffer=true</userinput
+> (bộ đếm khung là đúng); dạng ngắn là <userinput
+>fb=true</userinput
+>. </para
+></note
+></listitem>
+</varlistentry>
+
+<varlistentry arch="not-s390">
+<term
+>debian-installer/theme (theme)</term>
+<listitem
+><para
+>Sắc thái xác định diện mạo của giao diện người dùng (màu sắc, biểu tượng v.v.). Những sắc thái có sẵn đặc trưng cho lối vào. HIện thời lối vào kiểu cả newt lẫn gtk đều chỉ có một sắc thái <quote
+>dark</quote
+> (tối) được thiết kế cho những người dùng thị lực kém. Hãy đặt sắc thái bằng cách khởi động với tham số <userinput
+>theme=<replaceable
+>dark</replaceable
+></userinput
+>. </para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+>debian-installer/probe/usb</term>
+<listitem
+><para
+>Đặt thành <userinput
+>false</userinput
+> (thăm dò USB là sai) để ngăn cản thăm dò USB khi khởi động, nếu tính năng này gây ra lỗi. </para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+>netcfg/disable_dhcp</term>
+<listitem
+><para
+>Mặc định là &d-i; thăm dò tự động cấu hình mạng qua dịch vụ DHCP. Nếu việc thăm dò là thành công, bạn sẽ không có dịp xem lại và thay đổi thiết lập được lấy. Bạn có thể tới bước tự thiết lập mạng chỉ trong trường hợp gặp lỗi thăm dò DCHP. </para
+><para
+>Nếu bạn có máy DHCP chạy trên mạng cục bộ, nhưng muốn tránh nó vì, lấy thí dụ, nó trả lời sai, bạn có khả năng nhập tham số <userinput
+>netcfg/disable_dhcp=true</userinput
+> (tắt DHCP là đúng) để ngăn cản cấu hình mạng bằng DHCP, cũng để tự nhập thông tin đó. </para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+>hw-detect/start_pcmcia</term>
+<listitem
+><para
+>Đặt thành <userinput
+>false</userinput
+> (khởi chạy PCMCIA là sai) để ngăn cản khởi chạy dịch vụ PCMCIA, nếu nó gây ra lỗi. Một số máy tính xách tay là nổi tiếng do trường hợp lỗi này. </para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+>preseed/url (url)</term>
+<listitem
+><para
+>Hãy xác định địa chỉ Mạng của tập tin cấu hình sẵn cần tải về và sử dụng để tự động hoá tiến trình cài đặt. Xem <xref linkend="automatic-install"/>. </para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+>preseed/file (file)</term>
+<listitem
+><para
+>Hãy xác định đường dẫn đến tập tin cấu hình sẵn cần nạp để tự động hoá tiến trình cài đặt. Xem <xref linkend="automatic-install"/>. </para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+>auto-install/enable (auto)</term>
+<listitem
+><para
+>Hoãn các câu bình thường được hỏi trước khi có khả năng chèn sẵn, đến sau khi mạng được cấu hình. Xem <xref linkend="preseed-auto"/> để tìm chi tiết về cách sử dụng tùy chọn này để tự động hoá tiến trình cài đặt. </para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+>cdrom-detect/eject</term>
+<listitem
+><para
+>(Phát hiện đĩa CD-ROM/đẩy ra) Mặc định là, trước khi khởi động lại, &d-i; đẩy ra tự động vật chứa quang được dùng trong khi cài đặt. Ứng xử này có thể không phải cần thiết nếu hệ thống không khởi động tự động từ đĩa CD. Trong một số trường hợp riêng, ứng xử này ngay cả gây ra lỗi, ví dụ nếu ổ đĩa quang không có khả năng nạp lại vật chứa còn người dùng không tại chỗ để tự nạp. Nhiều ổ đĩa nạp khe, hình thon, và kiểu ngăn kéo không thể tải lại tự động vật chứa. </para
+><para
+>Đặt thành <userinput
+>false</userinput
+> (sai) để tắt khả năng đầy ra tự động; cũng ghi nhớ rằng bạn có lẽ sẽ cần phải đảm bảo hệ thống không khởi động tự động từ ổ đĩa quang sau khi việc cài đặt ban đầu. </para
+></listitem>
+</varlistentry>
+
+<varlistentry arch="alpha;m68k;mips;mipsel">
+<term
+>ramdisk_size</term>
+<listitem
+><para
+>Tham số nên đã được đặt thành giá trị đúng khi cần thiết; bạn hãy đặt nó chỉ nếu việc khởi động gặp lỗi ngụ ý rằng đĩa RAM không thể được nạp hoàn toàn. (Giá trị theo kB.) </para
+></listitem>
+</varlistentry>
+
+<varlistentry condition="gtk">
+<term
+>mouse/left</term>
+<listitem
+><para
+>Đối với giao diện gtk (bộ cài đặt kiểu đồ họa), người dùng có khả năng chuyển đổi con chuột sang thao tác thuận tay trái, bằng cách đặt tham số này thành <userinput
+>true</userinput
+> (đúng). </para
+></listitem>
+</varlistentry>
+
+<varlistentry condition="gtk">
+<term
+>directfb/hw-accel</term>
+<listitem
+><para
+>Đối với lối vào gtk (bộ cài đặt kiểu đồ họa), khả năng tăng tốc độ phần cứng trong directfb bị tắt theo mặc định. Để bật nó, hãy đặt tham số này thành <userinput
+>true</userinput
+> khi khởi động bộ cài đặt. </para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+>rescue/enable</term>
+<listitem
+><para
+>(Cứu/bật) Đặt thành <userinput
+>true</userinput
+> (đúng) để vào chế độ cứu, hơn là chạy tiến trình cài đặt chuẩn. Xem <xref linkend="rescue"/>. </para
+></listitem>
+</varlistentry>
+
+</variablelist>
+
+   <sect3 id="preseed-args">
+   <title
+>Dùng tham số khởi động để trả lời câu hỏi</title>
+<para
+>Trừ vài thứ, ở dấu nhắc khởi động vẫn có khả năng đặt giá trị cho bất cứ câu nào được hỏi trong tiến trình cài đặt, dù khả năng này thật chỉ có ích trong một số trường hợp riêng. </para>
+
+<variablelist>
+
+<varlistentry>
+<term
+>debian-installer/locale (locale)</term>
+<listitem
+><para
+>Có thể được dùng để đặt cả ngôn ngữ lẫn quốc gia đều cho tiến trình cài đặt. Việc này sẽ hoạt động được chỉ nếu miền địa phương (locale) được xác định cũng được hỗ trợ trong Debian. Chẳng hạn, hãy đặt <userinput
+>locale=vi_VN</userinput
+> để chọn tiếng Việt là ngôn ngữ và Việt Nam là quốc gia. (Ghi chú : mặc dù một số ngôn ngữ, v.d. tiếng Anh, tiếng Pháp hay tiếng Trung, được nói trong nhiều quốc gia khác nhau thì có nhiều miền địa phương khác nhau, tiếng Việt hiện thời chỉ có một miền địa phương trong Debian: <userinput
+>locale=vi_VN</userinput
+>.) </para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+>anna/choose_modules (modules)</term>
+<listitem
+><para
+>Có thể được dùng để tự động nạp các thành phần cài đặt không được nạp theo mặc định. Hai thành phần tùy chọn có thể hữu ích là <classname
+>openssh-client-udeb</classname
+> (để có khả năng sử dụng <command
+>scp</command
+> trong khi cài đặt) và <classname
+>ppp-udeb</classname
+> (để hỗ trợ khả năng cấu hình PPPoE). </para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+>netcfg/disable_dhcp</term>
+<listitem
+><para
+>Đặt thành <userinput
+>true</userinput
+> (đúng) nếu bạn muốn tắt dịch vụ DHCP và ép buộc cấu hình mạng tĩnh thay thế. </para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+>mirror/protocol (protocol)</term>
+<listitem
+><para
+>Mặc định là bộ cài đặt sẽ dùng giao thức HTTP để tải các tập tin xuống máy nhân bản Debian: không hỗ trợ việc chuyển đổi sang FTP trong tiến trình cài đặt có ưu tiên chuẩn. Bằng cách đặt tham số này thành <userinput
+>ftp</userinput
+>, bạn có khả năng ép buộc bộ cài đặt sử dụng giao thức FTP thay thế. Ghi chú rằng không thể chọn máy nhân bản FTP trong danh sách: cần phải tự nhập tên máy FTP. </para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+>tasksel:tasksel/first (tasks)</term>
+<listitem
+><para
+>Có thể được dùng để chọn các công việc không sẵn sàng trong danh sách công việc tương tác, v.d. công việc  <literal
+>kde-desktop</literal
+>. Xem <xref linkend="pkgsel"/> để tìm thông tin thêm. </para
+></listitem>
+</varlistentry>
+
+</variablelist>
+
+   </sect3>
+
+   <sect3 id="module-parms">
+   <title
+>Gửi tham số cho mô-đun hạt nhân</title>
+<para
+>Nếu trình điêu khiển nào được biên dịch vào hạt nhân, bạn có khả năng gửi tham số cho chúng, như được diễn tả trong tài liệu hướng dẫn về cách sử dụng hạt nhân. Tuy nhiên, nếu trình điều khiển được biên dịch dạng mô-đun, vì mô-đun hạt nhân được nạp khác trong tiến trình cài đặt so sánh với tiến trình khởi động hệ thống đã cài đặt, không thể gửi tham số cho mô-đun như bình thường. Thay vào đó, bạn cần phải sử dụng cú pháp đặc biệt được bộ cài đặt chấp nhận sẽ đảm bảo các tham số được lưu vào tập tin cấu hình đúng thì được dùng khi mô-đun thật được nạp. Các tham số này cũng sẽ tự động được gồm trong cấu hình cho hệ thống đã cài đặt. </para
+><para
+>Ghi chú rằng lúc bây giờ hơi ít khi cần phải gửi tham số cho mô-đun. Trong phần lớn trường hợp, hạt nhân có thể thăm dò phần cứng của hệ thống thì đặt các giá trị mặc định có ích. Tuy nhiên, trong một số trường hợp riêng, vẫn cần phải tự đặt tham số. </para
+><para
+>Để đặt tham số cho mô-đun, hãy sử dụng cú pháp: <informalexample
+><screen>
+<replaceable
+>tên_mô-đun</replaceable
+>.<replaceable
+>tên_tham_số</replaceable
+>=<replaceable
+>giá_trị</replaceable>
+</screen
+></informalexample
+> Nếu bạn cần phải gửi nhiều tham số cho cùng một mô-đun hay nhiều mô-đun khác nhau, đơn giản hãy lặp lại câu lệnh này. Chẳng hạn, để đặt một thẻ giao diện mạng 3Com cũ sử dụng bộ kết nối BNC (co-ax) và IRQ10, bạn cần gửi: <informalexample
+><screen
+>3c509.xcvr=3 3c509.irq=10
+</screen
+></informalexample>
+
+</para>
+   </sect3>
+
+   <sect3 id="module-blacklist">
+   <title
+>Cấm mô-đun hạt nhân</title>
+<para
+>Đôi khi cần phải cấm một mô-đun để ngăn cản nó tự động được nạp bởi hạt nhân và trình <filename
+>udev</filename
+>. Một lý do có thể là mô-đun đó gây ra vấn đề với phần cứng. Hạt nhân cũng đôi khi liệt kê hai trình điều khiển khác nhau cho cùng một thiết bị. Trường hợp này có thể gây ra thiết bị đó không hoạt động được nếu những trình điều khiển xung đột, hoặc nếu trình điều khiển không đúng được nạp trước. </para
+><para
+>Bạn có khả năng cấm mô-đun bằng cú pháp này: <userinput
+><replaceable
+>tên_mô-đun</replaceable
+>.blacklist=yes</userinput
+> (danh sách màu đen = có). Câu lệnh này sẽ gây ra mô-đun đó bị cấm trong tập tin <filename
+>/etc/modprobe.d/blacklist.local</filename
+>, cả hai trong tiến trình cài đặt, và trên hệ thống được cài đặt. </para
+><para
+>Ghi chú rằng mô-đun đó vẫn còn có thể được nạp bởi hệ thống cài đặt chính nó. Bạn vẫn có thể ngăn cản việc này cảy ra, bằng cách chạy tiến trình cài đặt trong chế độ chuyên môn và bỏ chọn mô-đun đó trong danh sách các mô-đun được hiển thị trong những giải đoạn phát hiện phần cứng. </para>
+   </sect3>
+  </sect2>
+ </sect1>
+<!--   End of file boot-installer/parameters.xml -->
+
+<!-- Start of file boot-installer/trouble.xml -->
+<!-- $Id: trouble.xml 44560 2007-01-28 23:15:21Z fjp $ -->
+
+ <sect1 id="boot-troubleshooting">
+ <title
+>Giải đáp thắc mắc trong tiến trình cài đặt</title>
+ 
+
+  <sect2 arch="not-s390" id="unreliable-cd">
+  <title
+>Sự đáng tin cậy của đĩa CD-ROM</title>
+<para
+>Thỉnh thoảng, nhất là đối với ổ địa CD-ROM cũ, bộ cài đặt không khởi động được từ đĩa CD-ROM. Bộ cài đặt cũng &mdash; ngay cả sau khi khởi động được từ đĩa CD-ROM &mdash; có thể không nhận ra đĩa CD-ROM đó, hoặc trả lại lỗi trong khi đọc nó trong tiến trình cài đặt. </para
+><para
+>Có nhiều nguyên nhân có thể khác nhau của những vấn đề này. Chúng tôi chỉ có thể liệt kê một số vấn đề thường và cung cấp lời đề nghị chung về cách quyết định chúng. Theo bạn sửa. </para
+><para
+>Khuyên bạn trước tiên thử hai việc rất đơn giản. <itemizedlist>
+<listitem
+><para
+>Nếu đĩa CD-ROM không khởi động được, hãy kiểm tra xem nó đã được nạp đúng và nó không dơ bẩn. </para
+></listitem>
+<listitem
+><para
+>Nếu bộ cài đặt không nhận ra đĩa CD-ROM nào, hãy thử đơn giản chạy tùy chọn <menuchoice
+> <guimenuitem
+>Dò tìm và lắp đĩa CD-ROM</guimenuitem
+> </menuchoice
+> lần thứ hai. Đối với ổ đĩa CD-ROM cũ, một số vấn đề liên quan đến DMA đã được quyết định bằng cách này. </para
+></listitem>
+</itemizedlist>
+
+</para
+><para
+>Chưa sửa thì hãy thử những lời đề nghị trong các phần phụ bên dưới. Phần lớn, nhưng không phải tất cả các lời đề nghị được nói ở đó vẫn còn hợp lệ cho cả hai đĩa CD và DVD, nhưng nói về đĩa CD-ROM vì đơn giản hơn. </para
+><para
+>Không cài đặt được từ đĩa CD-ROM thì hãy thử một của những phương pháp cài đặt khác sẵn sàng. </para>
+
+  <sect3>
+  <title
+>Vấn đề thường gặp</title>
+
+<itemizedlist>
+  <listitem
+><para
+>Một số ổ đĩa CD-ROM cũ không hỗ trợ khả năng đọc từ đĩa đã được chép ra ở tốc độ cao bằng bộ ghi CD hiện đại. </para
+></listitem>
+  <listitem
+><para
+>Nếu hệ thống khởi động được từ đĩa CD-ROM, không nhất thiết có nghĩa là Linux cũng hỗ trợ đĩa CD-ROM đó (hoặc, đúng hơn, bộ điều khiển tới đó ổ đĩa CD-ROM được kết nối). </para
+></listitem>
+  <listitem
+><para
+>Một số ổ đĩa CD-ROM cũ không hoạt động được nếu <quote
+>khả năng truy cập bộ nhớ trực tiếp</quote
+> (DMA) được hiệu lực. </para
+></listitem>
+</itemizedlist>
+
+  </sect3>
+
+  <sect3>
+  <title
+>Cách xem xét và có thể quyết định vấn đề</title>
+<para
+>Đĩa CD-ROM không khởi động được thì hãy thử những lời đề nghị bên dưới. <itemizedlist>
+  <listitem
+><para
+>Kiểm tra xem BIOS thật hỗ trợ khả năng khởi động từ đĩa CD-ROM (có lẽ hệ thống cũ không phải) và ổ đĩa CD-ROM hỗ trợ kiểu vật chứa đang được dùng. </para
+></listitem>
+  <listitem
+><para
+>Nếu bạn đã tải về một ảnh ISO, hãy kiểm tra xem tổng MD5SUM của ảnh cũng khớp với tổng được liệt kê dành cho ảnh đó trong tập tin <filename
+>MD5SUMS</filename
+> nên nằm trong cùng một vị trí với nơi tải xuống ảnh. <informalexample
+><screen>
+$ md5sum <replaceable
+>debian-testing-i386-netinst.iso</replaceable>
+a20391b12f7ff22ef705cee4059c6b92  <replaceable
+>debian-testing-i386-netinst.iso</replaceable>
+</screen
+></informalexample
+> Sau đó, kiểm tra xem MD5SUM của đĩa CD-ROM đã chép ra cũng khớp. Lệnh theo đây nên hoạt động được. Nó dùng kích cỡ của ảnh để đọc số byte đúng từ đĩa CD-ROM. <informalexample
+><screen
+>$ dd if=/dev/cdrom | \
+
+> head -c `stat --format=%s <replaceable
+>debian-testing-i386-netinst.iso</replaceable
+>` | \
+
+> md5sum
+a20391b12f7ff22ef705cee4059c6b92  -
+262668+0 records in
+262668+0 records out
+134486016 bytes (134 MB) copied, 97.474 seconds, 1.4 MB/s
+[records in	số bản ghi gửi đến
+records out	số bản ghi gửi đi
+copied		đã sao chép
+seconds		giây]
+</screen
+></informalexample>
+
+  </para
+></listitem>
+</itemizedlist>
+
+</para
+><para
+>Nếu, sau khi bộ cài đặt khởi động được, đĩa CD-ROM không được phát hiện, đôi khi đơn giản thử lại có thể quyết định vấn đề. Có nhiều ổ đĩa CD-ROM thì hãy thử đĩa CD-ROM sang ổ đĩa khác. Nếu việc này không sửa vấn đề, hoặc nếu đĩa CD-ROM được nhận ra, nhưng gặp lỗi khi đọc từ nó, hãy thử những lời đề nghị được liệt kê bên dưới. Cần phải hiểu biết Linux một cách cơ bản để làm như thế. Để chạy lệnh nào nói dưới, trước tiên bạn cần chuyển đổi sang bản giao tiếp ảo thứ hai (VT2) rồi kích hoạt trình bao ở đó. <itemizedlist>
+  <listitem
+><para
+>Chuyển đổi sang VT2 hoặc xem nội dung của <filename
+>/var/log/syslog</filename
+> (dùng <command
+>nano</command
+> như là trình soạn thảo) để kiểm tra có thông điệp lỗi dứt khoát không. Sau đó, kiểm tra kết xuất của lệnh <command
+>dmesg</command
+>. </para
+></listitem>
+  <listitem
+><para
+>Hãy kiểm tra kết xuất của lệnh <command
+>dmesg</command
+> xem nếu ổ đĩa CD-ROM được nhận ra không. Nên có thông tin giống như (những dòng không cần liên tiếp): <informalexample
+><screen>
+Probing IDE interface ide1...
+hdc: TOSHIBA DVD-ROM SD-R6112, ATAPI CD/DVD-ROM drive
+ide1 at 0x170-0x177,0x376 on irq 15
+hdc: ATAPI 24X DVD-ROM DVD-R CD-R/RW drive, 2048kB Cache, UDMA(33)
+Uniform CD-ROM driver Revision: 3.20
+</screen
+></informalexample>
+[Probing	Đang thăm dò
+drive	ổ đĩa
+Cache	bộ nhớ tạmUniform	đồng dạng
+driver	trình điều khiển
+revision	bản sửa đổi]
+Nếu bạn không xem thông tin như thế, rất có thể là bộ kết nối tới đó ổ đĩa CD-ROM được kết nối đã không được nhận ra, hoặc có thể không được hỗ trợ bằng cách nào cả. Nếu bạn biết trình điều khiển nào được dùng cho bộ kết nối, bạn có thể thử tự nạp nó bằng <command
+>modprobe</command
+>. </para
+></listitem>
+  <listitem
+><para
+>Kiểm tra xem có một nút thiết bị (device node) dành cho ổ đĩa CD-ROM đó, nằm dưới thư mục thiết bị <filename
+>/dev/</filename
+>. Trong mẫu thí dụ bên trên, nút thiết bị là <filename
+>/dev/hdc</filename
+>. Cũng cần có một <filename
+>/dev/cdroms/cdrom0</filename
+>. </para
+></listitem>
+  <listitem
+><para
+>Hãy dùng lệnh <command
+>mount</command
+> (lắp) để kiểm tra xem nếu đĩa CD-ROM đã được lắp chưa. Không thì bạn thử tự lắp nó: <informalexample
+><screen>
+$ mount /dev/<replaceable
+>hdc</replaceable
+> /cdrom
+</screen
+></informalexample
+> Kiểm tra xem có thông điệp lỗi nào được xuất bởi lệnh đó. </para
+></listitem>
+  <listitem
+><para
+>Kiểm tra nếu DMA hiện thời được hiệu lực không: <informalexample
+><screen>
+$ cd /proc/<replaceable
+>ide</replaceable
+>/<replaceable
+>hdc</replaceable>
+$ grep using_dma settings
+using_dma      1       0       1       rw
+</screen
+></informalexample
+> Số <quote
+>1</quote
+> trong cột thứ hai nằm sau đoạn <literal
+>using_dma</literal
+> có nghĩa là nó được bật. Nếu có, hãy thử tắt nó : <informalexample
+><screen>
+$ echo -n "using_dma:0" 
+>settings
+</screen
+></informalexample
+> Đảm bảo bạn nằm trong thư mục chứa thiết bị tương ứng với ổ đĩa CD-ROM đó. </para
+></listitem>
+  <listitem
+><para
+>Nếu bạn gặp lỗi trong khi cài đặt, hãy thử kiểm tra sự tích hợp của đĩa CD-ROM đó, dùng tùy chọn nằm gần cuối trình đơn chính của bộ cài đặt. Tùy chọn này cũng có thể được dùng như là việc thử ra chung nếu đĩa CD-ROM vẫn được đọc đáng tin cây. </para
+></listitem>
+</itemizedlist>
+
+</para>
+  </sect3>
+  </sect2>
+
+  <sect2 condition="supports-floppy-boot" id="unreliable-floppies">
+  <title
+>Sự đáng tin cậy của đĩa mềm</title>
+
+<para
+>Sự khó khăn lớn nhất khi người dùng đĩa mềm để cài đặt Debian có vẻ là sự đáng tin cậy của đĩa mềm. </para
+><para
+>Đĩa mềm khởi động là đĩa mềm có vấn đề nghiêm trọng nhất, vì nó được phần cứng đọc trực tiếp, trước khi Linux khởi động. Thường phần cứng không đọc đáng tin cậy như trình điều khiển đĩa mềm Linux, và có thể đơn giản dừng, không in ra thông điệp lỗi, nếu nó đọc dữ liệu sai. Cũng có thể gặp lỗi trong những đĩa mềm trình điều khiển, thường được ngụ ý bởi rất nhiều thông điệp về lỗi nhập/xuất trên đĩa. </para
+><para
+>Nếu bạn thấy tiến trình cài đặt bị ngừng chạy tại một đĩa mềm riêng, trước tiên bạn nên ghi ảnh đĩa mềm đó vào một đĩa mềm <emphasis
+>khác</emphasis
+> và xem nếu việc này quyết định vấn đề. Có lẽ không đủ khi đơn giản định dạng lại đĩa mềm, thậm chí nếu có vẻ là đĩa mềm đã được định dạng lại và ghi lại một cách không có lỗi. Thỉnh thoảng có ích khi thử ghi đĩa mềm trên hệ thống khác. </para
+><para
+>Một người dùng nào đó đã thông báo rằng họ đã cần phải ghi những ảnh vào đĩa mềm <emphasis
+>ba</emphasis
+> lần trước khi gặp một đĩa mềm hoạt động được, còn sau đó, mọi thứ thì tốt với đĩa mềm thứ ba. </para
+><para
+>Bình thường bạn không cần tải về lại ảnh đĩa mềm nào, nhưng nếu gặp lỗi, luôn luôn có ích khi thẩm tra ảnh đã được tải về đúng bằng cách kiểm tra tổng MD5SUM của nó. </para
+><para
+>Người dùng khác đã thông báo rằng tiến trình khởi động lại vài lần cùng một đĩa mềm trong ổ đĩa mềm có thể chỉ tới việc khởi động thành công. Các vấn đề này do lỗi trong trình điều khiển đĩa mềm kiểu phần vững hay phần cứng. </para>
+  </sect2>
+
+  <sect2
+><title
+>Cấu hình khởi động</title>
+
+<para
+>Nếu bạn gặp khó khăn, hạt nhân treo cứng trong tiến trình khởi động, không nhận diện ngoại vi thật, hay không nhận diện được ổ đĩa, trước tiên bạn cần phải xem lại các tham số khởi động, như được thảo luận trong <xref linkend="boot-parms"/>. </para
+><para
+>Thường, vấn đề có thể giải quyết bằng cách gỡ bỏ phần thêm và ngoại vi, rồi thử lại khởi động. <phrase arch="x86"
+>Bộ điều giải nội bộ, thẻ âm thanh và thiết bị cầm-và-chơi có thể gây ra nhiều vấn đề.</phrase
+> </para
+><para
+>Nếu bạn có rất nhiều bộ nhớ được cài đặt trong máy tính, hơn 512M, và trình cài đặt treo cứng trong khi khởi động hạt nhân, có lẽ bạn cần phải thêm một đối số khởi động để hạn chế số lượng bộ nhớ do hạt nhân xem, v.d. <userinput
+>mem=512m</userinput
+> (bộ nhớ). </para>
+  </sect2>
+
+  <sect2 arch="x86" id="i386-boot-problems">
+  <title
+>Vấn đề cài đặt &arch-title; thường</title>
+<para
+>Có một số vấn đề cài đặt thường có thể được giải quyết hay được tránh bằng cách gởi đối số khởi động riêng cho trình cài đặt. </para
+><para
+>Một số hệ thống riêng có đĩa mềm với <quote
+>DCL bị đảo</quote
+>. Nếu bạn gặp lỗi khi đọc đĩa mềm, ngay cả khi bạn biết được đĩa mềm đó là tốt, hãy thử nhập tham số <userinput
+>floppy=thinkpad</userinput
+> (đĩa mềm=vùng nghĩ). </para
+><para
+>Trên một số hệ thống riêng, như IBM PS/1 hay ValuePoint (mà có trình điều khiển đĩa kiểu ST-506), có lẽ ổ đĩa IDE chưa được nhận diện cho đúng. Lần nữa, hãy thử đầu tiên không có tham số, xem nếu ổ đĩa IDE có được nhận diện cho đúng chưa. Nếu chưa, kiểm tra xem có dạng hình ổ đĩa nào (số hình trụ [cylinders], số đầu [heads] và số rãnh ghi [sectors]) rồi nhập tham số <userinput
+>hd=<replaceable
+>trụ</replaceable
+>,<replaceable
+>đầu</replaceable
+>, <replaceable
+>rãnh ghi</replaceable
+></userinput
+>. </para
+><para
+>Nếu bạn có máy rất cũ, và hạt nhân treo cứng sau khi nói <computeroutput
+>Checking 'hlt' instruction...</computeroutput
+> (đang kiểm tra câu lệnh « đánh »), rồi bạn nên thử nhập tham số <userinput
+>no-hlt</userinput
+> (không đánh), mà tất khả năng kiểm tra này. </para
+><para
+>Nếu màn hình bắt đầu hiển thị ảnh lạ trong khi hạt nhân khởi động, v.d. màn hình hoàn toàn trắng, hoàn toàn đèn hay có rác điểm ảnh màu sắc, có lẽ hệ thống chứa thẻ ảnh động không chuyển đổi được sang chế độ bộ đệm khung. Trong trường hợp này, bạn có thể nhập tham số khởi động <userinput
+>fb=false video=vga16:off</userinput
+> (bộ đệm khung là sai, ảnh động=vga16:tắt) để tắt bàn điều khiển bộ đệm khung. Chỉ một bộ ngôn ngữ bị giảm sẽ sẵn sàng trong tiến trình cài đặt, do tính năng bàn điều khiển bị hạn chế. Xem <xref linkend="boot-parms"/> để tìm chi tiết. </para>
+
+  <sect3>
+  <title
+>Hệ thống đông đặc trong giai đoạn cấu hình PCMCIA</title>
+<para
+>Một số mô hình máy tính xách tay kiểu Dell được biết do sụp đổ khi khả năng phát hiện thiết bị PCMCIA thử truy cập một số địa chỉ phần cứng riêng. Máy tính xách tay khác có thể gặp lỗi tương tự. Nếu bạn gặp lỗi như vậy còn không cần có khả năng hỗ trợ PCMCIA trong khi cài đặt, bạn có thể tắt khả năng PCMCIA bằng tham số khởi động <userinput
+>hw-detect/start_pcmcia=false</userinput
+> (phát hiện phần cứng/khởi chạy PCMCIA=sai). Sau khi cài đặt xong, bạn có thể cấu hình PCMCIA, và loại trừ phạm vị tài nguyên gây ra lỗi đó. </para
+><para
+>Hoặc bạn có thể khởi động trình cài đặt trong chế độ nhà chuyên môn. Lúc đó, bạn sẽ được nhắc nhập các tùy chọn phạm vị tài nguyên cần thiết cho phần cứng đó. Chẳng hạn, nếu bạn có máy tính xách tay kiểu Dell nêu trên, bạn nên nhập đoạn <userinput
+>exclude port 0x800-0x8ff</userinput
+> (loại trừ cổng số 0x800-0x8ff). Cũng có danh sách một số tùy chọn phạm vị tài nguyên thường trong <ulink url="http://pcmcia-cs.sourceforge.net/ftp/doc/PCMCIA-HOWTO-1.html#ss1.12"
+>tiết đoạn thiết lập tài nguyên hệ thống của tài liệu PCMCIA Thế Nào</ulink
+>. Ghi chú rằng bạn cần phải bỏ dấu phẩy, nếu có, khi nhập giá trị này vào trình cài đặt. </para>
+   </sect3>
+
+   <sect3>
+   <title
+>Hệ thống đông đặc trong khi tải mô-đun USB</title>
+<para
+>Hạt nhân thường thử cài đặt các mô-đun USB và trình điều khiển bàn phím USB, để hỗ trợ một số bàn phím USB không chuẩn. Tuy nhiên, có một số hệ thống USB bị hỏng trong đó trình điều khiển treo cứng trong khi tải. Sự chỉnh sửa có thể là việc tắt bộ điều khiển USB trong thiết lập BIOS bo mạch chính. Một tùy chọn khác là việc nhập tham số <userinput
+>debian-installer/probe/usb=false</userinput
+> (trình cài đặt Debian/thăm dò/USB=sai) tại dấu nhắc khởi động, mà sẽ ngăn cản tải mô-đun USB. </para>
+   </sect3>
+  </sect2>
+
+  <sect2 arch="sparc" id="sparc-boot-problems">
+  <title
+>Vấn đề cài đặt &arch-title; thường</title>
+<para
+>Một số vấn đề cài đặt thường gặp. </para>
+   <sect3>
+   <title
+>Kết xuất ảnh động bị hướng sai</title>
+<para
+>&arch-title; hơi thường có hai thẻ ảnh động trong cùng một máy, v.d. một thẻ ATI và một thẻ Sun Creator 3D. Trường hợp này có thể gây ra kết xuất ảnh động bị hướng sai sớm sau khi hệ thống khởi động. Điển hình bộ trình bày sẽ chỉ hiển thị <informalexample
+><screen>
+Remapping the kernel... done
+Booting Linux...
+</screen
+></informalexample
+>[Đang ánh xạ hạt nhân... xong. Đang khởi động Linux...]
+Để chỉnh sửa, bạn có thể gỡ bỏ một của những thẻ ảnh động, hoặc tắt bằng tham số thẻ không được dùng trong giải đoạn OpenBoot. Chẳng hạn, để tắt một thẻ ATI, hãy khởi động bộ cài đặt với <userinput
+>video=atyfb:off</userinput
+> (ảnh động=atyfb:tắt). </para
+><para
+>Ghi chú rằng bạn cũng có thể cần phải tự thêm tham số này vào cấu hình silo (soạn thảo <filename
+>/target/etc/silo.conf</filename
+> trước khi khởi động lại). Cài đặt X11 thì cũng sửa đổi trình điều khiển ảnh động trong tập tin cấu hình <filename
+>/etc/X11/xorg.conf</filename
+>. </para>
+   </sect3>
+
+   <sect3>
+   <title
+>Lỗi khởi động hay cài đặt từ đĩa CD-ROM</title>
+<para
+>Thiên hạ ai cũng biết là khó khởi động một số kiểu hệ thống Sparc từ đĩa CD-ROM, và thậm chí nếu khởi động được, tiến trình cài đặt có thể bị lỗi không thể giải thích được. Lỗi nhiều nhất đã được thông báo đối với hệ thống SunBlade. </para
+><para
+>Khuyên bạn cài đặt vào hệ thống như thế bằng cách khởi động bộ cài đặt qua mạng. </para>
+   </sect3>
+  </sect2>
+
+  <sect2 id="kernel-msgs">
+  <title
+>Giải thích thông điệp khởi chạy hạt nhân</title>
+
+<para
+>Trong tiến trình khởi động, có lẽ bạn thấy nhiều thông điệp dạng <computeroutput
+>không tìm thấy <replaceable
+>cái gì</replaceable
+> </computeroutput
+>, hay <computeroutput
+>không có <replaceable
+>cái gì</replaceable
+></computeroutput
+>, <computeroutput
+>không thể khởi tạo <replaceable
+>cái gì</replaceable
+> </computeroutput
+>, ngay cả <computeroutput
+>bản phát hành trình điều khiển này phụ thuộc vào <replaceable
+>cái gì</replaceable
+> </computeroutput
+>. Phần lớn thông điệp này vô hại. Bạn thấy chúng chỉ vì hạt nhân của hệ thống cài đặt được xây dựng để chạy trên các máy tính có nhiều thiết bị ngoại vi khác nhau. Không có máy tính riêng lẻ có tất cả các thiết bị ngoại vi, vì vậy hệ điều hành có thể hiển thị một số thông điệp lỗi trong khi tìm ngoại vi không có. Có lẽ bạn cũng xem hệ thống tạm ngừng một chút. Có xảy ra trong khi nó đợi thiết bị đáp ứng, nhưng thiết bị đó không nằm trên hệ thống của bạn. Nếu tiến trình khởi động hệ thống chạy quá lâu, bạn có thể tạo một hạt nhân riêng về sau (xem <xref linkend="kernel-baking"/>). </para>
+  </sect2>
+
+
+  <sect2 id="problem-report">
+  <title
+>Thông báo vấn đề cài đặt</title>
+<para
+>Nếu bạn chạy được giai đoạn khởi động đầu tiên, nhưng không thể cài đặt xong, mục trình đơn <guimenuitem
+>Lưu các bản ghi gỡ lỗi</guimenuitem
+> có thể hữu ích. Nó cho bạn khả năng cất giữ vào đĩa mềm các bản ghi lỗi hệ thống và thông tin cấu hình của bộ cài đặt, hoặc tải về chúng bằng trình duyệt Mạng. Thông tin này có thể giúp đỡ bạn tìm biết nguyên nhân lỗi và cách sửa chữa nó. Khi thông báo lỗi, khuyên bạn đính kèm thông tin này. </para
+><para
+>Thông điệp cài đặt thích hợp khác nằm trong thư mục <filename
+>/var/log/</filename
+> trong khi cài đặt, rồi trong thư mục <filename
+>/var/log/installer/</filename
+> sau khi máy tính đã khởi động vào hệ thống mới được cài đặt. </para>
+  </sect2>
+
+  <sect2 id="submit-bug">
+  <title
+>Đệ trình báo cáo cài đặt</title>
+<para
+>Nếu bạn vẫn còn gặp khó khăn, xin hãy đệ trình báo cáo cài đặt. Chúng tôi khuyên bạn gởi một báo cáo cài đặt, thậm chí nếu tiến trình cài đặt là thành công, để tập hợp càng nhiều thông tin càng có thể về các cấu hình phần cứng khác nhau. [<replaceable
+>Dịch giả: </replaceable
+> nếu bạn gặp khó khăn viết tiếng Anh, bạn viết bằng tiếng Việt và gởi báo cáo cho Nhóm Việt Hoá Tự Do <email
+>vi-VN@googlegroups.com</email
+> nhé. Chúng tôi sẽ dịch cho bạn.] </para
+><para
+>Ghi chú rằng báo cáo cài đặt của bạn sẽ được xuất bản trong Hệ Thống Theo Dõi Lỗi Debian (BTS) và được chuyển tiếp cho hộp thư chung công cộng. Hãy đảm bảo bạn sử dụng một địa chỉ thư điện tử cũng công cộng. </para
+><para
+>Nếu bạn có hệ thống Debian hoạt động được, phương pháp dễ nhất để gởi báo cáo cài đặt là cài đặt hai gói <classname
+>installation-report</classname
+> và <classname
+>reportbug</classname
+> packages (nhập <command
+>aptitude install installation-report reportbug</command
+>) và cấu hình <classname
+>reportbug</classname
+> như được giải thích trong <xref linkend="mail-outgoing"/>, rồi chạy lệnh <command
+>reportbug installation-reports</command
+>. </para
+><para
+>Hoặc bạn có thể dùng mẫu này khi điền báo cáo cài đặt, và đệ trình báo cáo như là báo cáo lỗi đối với gói ảo <classname
+>installation-reports</classname
+> (các báo cáo cài đặt), bằng cách gửi nó cho địa chỉ <email
+>submit@bugs.debian.org</email
+>. <informalexample
+><screen>
+Package [Gói]: installation-reports
+
+Boot method [Phương pháp khởi động]: &lt;Bạn đã khởi động trình cài đặt như thế nào? Từ đĩa CD (ghi « CD »)? Từ đĩa mềm (floppy)? Qua mạng (network)?&gt;
+Image version [Phiên bản ảnh]: &lt;Địa chỉ Mạng đầy đủ tới ảnh đã tải xuống&gt;
+Date [Ngày]: &lt;Ngày tháng và giờ cài đặt&gt;
+
+Machine [Máy]: &lt;Mô tả máy tính (v.d. IBM Thinkpad R32)&gt;
+Processor [Bộ xử lý]:
+Memory [Bộ nhớ]:
+Partitions [Phân vùng]: &lt;df -Tl là đủ; bảng phân vùng thô là tốt hơn&gt;
+
+Output of lspci -nn and lspci -vnn [Dữ liệu xuất khi nhập mỗi lệnh « lspci -nn » và « lspci -vnn »]:
+
+Base System Installation Checklist [Danh sách kiểm tra việc cài đặt hệ thống cơ sở):
+[O] = Chạy được, [E] = Lỗi (xin hãy giải thích bên dưới), [ ] = Chưa thử
+
+Initial boot [Việc khởi động đầu tiên]:    [ ]
+Detect network card [Phát hiện thẻ mạng]:    [ ]
+Configure network [Cấu hình mạng]:         [ ]
+Detect CD [Phát hiện đĩa CD]:              [ ]
+Load installer modules [Tải các mô-đun cài đặt]: [ ]
+Detect hard drives [Phát hiện các đĩa cứng]:     [ ]
+Partition hard drives [Phân vùng các đĩa cứng]:  [ ]
+Install base system [Cài đặt hệ thống cơ sở]:    [ ]
+Clock/timezone setup [Thiết lập đồng hồ/mũi giờ]:   [ ]
+User/password setup [Thiết lập người dùng/mật khẩu]:    [ ]
+Install tasks [Cài đặt các tác vụ]:          [ ]
+Install boot loader [Cài đặt bộ nạp khởi động]:    [ ]
+Overall install [Toàn bộ tiến trình cài đặt]:        [ ]
+
+Comments/Problems [Chú thích/Vấn đề]:
+
+&lt;Mô tả của tiến trình cài đặt, và các chú thích, chi tiết, ý nghĩ nào trong tiến trình cài đặt đầu tiên.&gt;
+</screen
+></informalexample
+> Trong báo cáo lỗi, xin hãy diễn tả vấn đề, gồm những thông điệp hạt nhân cuối cùng đã hiển thị nếu hạt nhân đã treo cứng. Diễn tả những bước đến tình trạng vấn đề này. </para>
+  </sect2>
+ </sect1>
+<!--   End of file boot-installer/trouble.xml -->
+
+</chapter>
+<!--   End of file boot-installer/boot-installer.xml -->

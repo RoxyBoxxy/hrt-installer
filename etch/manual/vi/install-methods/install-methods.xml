@@ -1,0 +1,1718 @@
+<!-- Start of file install-methods/install-methods.xml -->
+<!-- $Id: install-methods.xml 11648 2004-03-22 00:37:46Z joeyh $ -->
+
+<chapter id="install-methods">
+ <title
+>Lấy vật chứa cài đặt hệ thống</title>
+
+
+<!-- Start of file install-methods/official-cdrom.xml -->
+<!-- $Id: official-cdrom.xml 28672 2005-06-26 10:06:30Z fjp $ -->
+
+ <sect1 id="official-cdrom">
+ <title
+>Bộ đĩa CD &debian; chính thức</title>
+<para
+>Phương pháp dễ nhất cài đặt &debian; là sử dụng một bộ đĩa CD-ROM Debian chính thức. Bạn có thể mua bộ đĩa như thế từ nhà bán (xem <ulink url="&url-debian-cd-vendors;"
+>trang nhà bán đĩa CD</ulink
+>). Cũng có khả năng tải các ảnh đĩa CD-ROM xuống một máy nhân bản Debian, tạo bộ đĩa CD cài đặt của mình, nếu bạn có sự kết nối Mạng nhanh và máy chép ra CD (xem <ulink url="&url-debian-cd;"
+>trang đĩa CD Debian</ulink
+> để tìm hướng dẫn chi tiết). Nếu bạn có một bộ đĩa CD Debian và có khả năng khởi động máy tính từ đĩa CD, bạn có thể nhảy trực tiếp tới <xref linkend="boot-installer"/>; rất nhiều sự cố gắng đã được đóng góp để đảm bảo đĩa CD đó chứa những tập tin phần lớn người cần. Mặc dù bộ gói nhị phân đầy đủ chiếm vài đĩa CD, rất có thể là bạn sẽ không cần gói nằm trên đĩa CD thứ ba và sau. Nếu máy tính của bạn có khả năng khởi động từ đĩa DVD, có lẽ bạn chọn sử dụng đĩa DVD Debian chính thức thay thế, vì các gói nằm trên cùng một đĩa. Như thế thì không cần nhiều khoảng cách trên cái kệ, và không cần cứ chuyển đổi đĩa CD khi cài đặt. </para
+><para
+>Nếu máy tính của bạn không hỗ trợ khả năng khởi động từ đĩa CD, còn bạn vẫn có bộ đĩa CD Debian chính thức, trong trường hợp này bạn có thể sử dụng chiến lược xen kẽ như sử dụng vật chứa <phrase condition="supports-floppy-boot"
+>đĩa mềm,</phrase
+> <phrase arch="s390"
+>băng hay băng đã mô phỏng,</phrase
+> <phrase condition="bootable-disk"
+>đĩa cứng,</phrase
+> <phrase condition="bootable-usb"
+>thanh USB,</phrase
+>, <phrase condition="supports-tftp"
+>khả năng khởi động từ mạng,</phrase
+> hoặc tự tải hạt nhân từ đĩa CD để khởi động trình cài đặt hệ thống lần đầu tiên. Những tập tin cần thiết để khởi động bằng cách khác nào cũng nằm trên đĩa CD đó; kho mạng Debian và đĩa CD có cùng một cây thư mục. Vì vậy, khi bạn đọc bên dưới đường dẫn kho đến tập tin riêng cần thiết để khởi động, hãy tìm tập tin đó bằng cách theo cùng một đường dẫn trên đĩa CD. </para
+><para
+>Một khi trình cài đặt đã được khởi động, nó sẽ có khả năng lấy từ đĩa CD các tập tin khác cần thiết. </para
+><para
+>Nếu bạn không có bộ đĩa CD cài đặt Debian, trong trường hợp đó bạn cần phải tải về các tập tin hệ thống cài đặt và chèn chúng vào <phrase arch="s390"
+>băng cài đặt</phrase
+> <phrase condition="supports-floppy-boot"
+>đĩa mềm hay</phrase
+> <phrase condition="bootable-disk"
+>đĩa cứng hay</phrase
+> <phrase condition="bootable-usb"
+>thanh USB hay</phrase
+> <phrase condition="supports-tftp"
+>máy tính khác được kết nối</phrase
+> để sử dụng nó để khởi động trình cài đặt. </para>
+
+ </sect1>
+<!--   End of file install-methods/official-cdrom.xml -->
+
+<!-- Start of file install-methods/downloading-files.xml -->
+<!-- $Id: downloading-files.xml 25148 2005-01-27 12:30:44Z nahoo-guest $ -->
+
+ <sect1 id="downloading-files">
+ <title
+>Tải tập tin xuống nhân bản Debian</title>
+
+<para
+>Để tìm máy nhân bản gần nhất (do đó rất có thể là nhanh nhất), xem <ulink url="&url-debian-mirrors;"
+>danh sách nhân bản Debian</ulink
+>. </para
+><para
+>Khi tải tập tin xuống máy nhân bản Debian, hãy kiểm tra xem bạn tải về trong chế độ <emphasis
+>nhị phân</emphasis
+> (binary), không phải chế độ kiểu văn bản (text) hay kiểu tự động (automatic). </para>
+
+  <sect2 id="where-files">
+  <title
+>Nơi tìm ảnh cài đặt</title>
+
+<para
+>Những ảnh cài đặt nằm trên mỗi máy nhân bản Debian trong thư mục <ulink url="&url-debian-installer;/images"
+>debian/dists/&releasename;/main/installer-&architecture;/current/images/</ulink
+> &mdash; tập tin <ulink url="&url-debian-installer;/images/MANIFEST"
+>MANIFEST</ulink
+> liệt kê mỗi ảnh với mục đích của nó. </para>
+
+
+<!-- Start of file install-methods/download/alpha.xml -->
+<!-- $Id: alpha.xml 28997 2005-07-07 21:09:22Z fjp $ -->
+
+
+   <sect3 arch="alpha"
+><title
+>Tập tin cài đặt Alpha</title>
+<para
+>Nếu bạn chọn khởi động từ phần vững bàn giao tiếp ARC, dùng <command
+>MILO</command
+>, bạn sẽ cũng cần phải chuẩn bị một đĩa chứa <command
+>MILO</command
+> và <command
+>LINLOAD.EXE</command
+> được sao chép từ những ảnh đĩa đã cung cấp. Xem <xref linkend="alpha-firmware"/> để tìm thông tin thêm về phần vững Alpha và bộ tải khởi động. Những ảnh đĩa mềm nằm trong thư mục <filename
+>MILO</filename
+> mang tên <filename
+>milo_<replaceable
+>subarchitecture</replaceable
+>.bin</filename
+>. </para
+><para
+>Tiếc là chưa có thể thử ra những ảnh <command
+>MILO</command
+> này vậy có lẽ chúng không hoạt động được trên mọi kiến trúc phụ. Nếu ảnh kiểu này không hoạt động được trong trường hợp của bạn, hãy thử sao chép tập tin nhị phân <command
+>MILO</command
+> thích hợp sang đĩa mềm (<ulink url="&disturlftp;main/disks-alpha/current/MILO/"
+></ulink
+>). Ghi chú rằng <command
+>MILO</command
+> kiểu đó không hỗ trợ <quote
+>siêu khối thưa thớt</quote
+> (sparse superblocks) kiểu ext2, nên bạn không thể sử dụng nó để tải hạt nhân từ hệ thống tập tin kiểu ext2 mới được tạo ra. Sự chỉnh sửa có thể là để hạt nhân trên phân vùng FAT ở cạnh <command
+>MILO</command
+> đó. </para
+><para
+>Tập tin nhị phân <command
+>MILO</command
+> có đặc trưng cho nền tảng. Xem <xref linkend="alpha-cpus"/> để quyết định ảnh <command
+>MILO</command
+> thích hợp với nền tảng Alpha riêng của bạn. </para>
+   </sect3>
+<!--   End of file install-methods/download/alpha.xml -->
+
+<!-- Start of file install-methods/download/arm.xml -->
+<!-- $Id: arm.xml 35372 2006-03-11 11:16:09Z fjp $ -->
+
+
+   <sect3 arch="arm" id="riscpc-install-files">
+   <title
+>Tập tin cài đặt RiscPC</title>
+<para
+>Bộ cài đặt RiscPC được khởi động lần đầu tiên từ hệ điều hành RISC OS. Mọi tập tin cần thiết được cung cấp trong cùng một kho nén Zip, &rpc-install-kit;. Hãy tải tập tin này về máy RISC OS, sao chép các thành phần <filename
+>linloader.!Boot</filename
+> vào nơi đúng, rồi chạy <filename
+>!dInstall</filename
+>. </para>
+   </sect3>
+
+   <sect3 arch="arm" id="netwinder-install-files">
+   <title
+>Tập tin cài đặt Netwinder</title>
+<para
+>Phương pháp dễ nhất để khởi động máy kiểu Netwinder là khởi động qua mạng, dùng ảnh TFTP &netwinder-boot-img; được cung cấp. </para>
+   </sect3>
+
+   <sect3 arch="arm" id="cats-install-files">
+   <title
+>Tập tin cài đặt CATS</title>
+<para
+>Có thể khởi động CATS hoặc qua mạng hoặc từ đĩa CD-ROM. Hạt nhân và initrd có thể được lấy từ ảnh &cats-boot-img;. </para>
+   </sect3>
+
+   <sect3 arch="arm" id="nslu2-install-files">
+   <title
+>Tập tin cài đặt NSLU2</title>
+<para
+>Cung cấp cho máy Linksys NSLU2 có một ảnh phần vững sẽ khởi động tự động &d-i;. Ảnh phần vững này có thể được lấy từ ảnh &nslu2-firmware-img;. </para>
+   </sect3>
+
+<!--   End of file install-methods/download/arm.xml -->
+
+<!-- Start of file install-methods/download/powerpc.xml -->
+<!-- $Id: powerpc.xml 28672 2005-06-26 10:06:30Z fjp $ -->
+
+<!-- commented out as it seems out of date and the links are broken
+
+   <sect3 arch="powerpc" id="newworld-install-files">
+   <title
+>NewWorld MacOS Installation Files </title>
+<para>
+
+For floppy-less installation on NewWorld Macs, it may be most
+convenient to obtain all the necessary files packaged into one Stuffit
+archive from
+<ulink url="&url-powerpc-of;"
+></ulink
+> (separate instructions are
+included in the archive). Otherwise, obtain the normal installation
+files listed above. Retrieve the files to an HFS (not HFS+) partition
+on your system.  You will also need the <filename
+>yaboot</filename
+> and
+<filename
+>yaboot.conf</filename
+> files from the
+<ulink url="&downloadable-file;new-powermac/"
+>new-powermac</ulink
+> or
+<ulink url="&downloadable-file;powermac/"
+>powermac</ulink
+> archive folder.
+However, the newest G4 PowerMacs, and those that work without MacOS 9,
+need the newest version of <command
+>yaboot</command
+>; the one in the
+archive will not work. Obtain the newest version from
+<ulink url="http://penguinppc.org/projects/yaboot/"
+></ulink
+>.
+
+</para>
+   </sect3>
+
+-->
+<!--   End of file install-methods/download/powerpc.xml -->
+
+<!-- Start of file install-methods/download/m68k.xml -->
+<!-- $Id: m68k.xml 28672 2005-06-26 10:06:30Z fjp $ -->
+
+
+   <sect3 arch="m68k" id="kernel-22">
+   <title
+>Chọn hạt nhân</title>
+
+<para
+>Một số kiến trúc phụ kiểu m68k có nhiều hạt nhân khác nhau có thể cài đặt. Thông thường chúng tôi khuyên bạn thử đầu tiên hạt nhân phiên bản mới nhất. Nếu kiến trúc phụ hay máy của bạn cần sử dụng hạt nhân phiên bản 2.2.x, hãy kiểm tra xem bạn chọn một của những ảnh hỗ trợ được hạt nhân 2.2.x (xem <ulink url="&disturl;/main/installer-&architecture;/current/images/MANIFEST"
+>MANIFEST</ulink
+>). </para>
+<para
+>Mọi ảnh m68k có thể sử dụng với hạt nhân phiên bản 2.2.x, cần thiết bạn nhập tham số hạt nhân &ramdisksize; (kích cỡ của đĩa RAM). </para>
+   </sect3>
+<!--   End of file install-methods/download/m68k.xml -->
+
+  </sect2>
+
+ </sect1>
+<!--   End of file install-methods/downloading-files.xml -->
+
+<!-- Start of file install-methods/ipl-tape.xml -->
+<!-- $Id: ipl-tape.xml 36841 2006-04-30 23:34:32Z fjp $ -->
+
+ <sect1 arch="s390" id="ipl-tape">
+ <title
+>Tạo băng IPL</title>
+
+<para
+>Nếu bạn không thể khởi động được (IPL) từ đĩa CD-ROM, cũng không sử dụng VM, trong trường hợp đó bạn cần phải tạo một băng IPL trước tiên. Tiến trình này được diễn tả trong tiết đoạn 3.4.3 của Quyển Đỏ <ulink url="http://www.redbooks.ibm.com/pubs/pdfs/redbooks/sg246264.pdf"
+> Linux dành cho IBM eServer zSeries và S/390: bản phát hành</ulink
+>. Bạn cần phải ghi vào băng đó những tập tin này (theo thứ tự): <filename
+>kernel.debian</filename
+>, <filename
+>parmfile.debian</filename
+>, <filename
+>initrd.debian</filename
+>. Những tập tin này có thể được tải xuống thư mục con <filename
+>tape</filename
+>: xem <xref linkend="where-files"/>. </para>
+ </sect1>
+
+<!--   End of file install-methods/ipl-tape.xml -->
+
+<!-- Start of file install-methods/create-floppy.xml -->
+<!-- $Id: create-floppy.xml 45453 2007-02-27 12:58:15Z fjp $ -->
+
+ <sect1 condition="supports-floppy-boot" id="create-floppy">
+ <title
+>Tạo đĩa mềm từ ảnh đĩa</title>
+<para
+>Đĩa mềm có khả năng khởi động thường được dùng như là phương sách cuối cùng, để khởi động trình cài đặt trên phần cứng không có khả năng khởi động từ đĩa CD hoặc bằng cách nào khác. </para
+><para arch="powerpc"
+>Người dùng đã thông báo trường hợp không thể khởi động trình cài đặt Debian từ đĩa mềm nằm trong ổ đĩa mềm USB của máy tính Apple Mac. </para
+><para arch="m68k"
+>Máy tính kiểu cả Amiga lẫn Apple Mac 68k đều không hỗ trợ khả năng khởi đông trình cài đặt Debian từ đĩa mềm. </para
+><para
+>Ảnh đĩa là tập tin chứa nội dung hoàn toàn của một đĩa mềm có dạng <emphasis
+>thô</emphasis
+> (raw). Ảnh đĩa, v.d. <filename
+>boot.img</filename
+>, không thể đơn giản được sao chép vào ổ đĩa mềm. Cần phải sử dụng một chương trình đặc biệt để ghi các tập tin ảnh vào đĩa mềm trong chế độ <emphasis
+>thô</emphasis
+>. Tiến trình này cần thiết vì các ảnh này là sự đại diện thô của đĩa đó : cần phải làm việc <emphasis
+>sao chép rãnh ghi</emphasis
+> các dữ liệu từ tập tin vào đĩa mềm. </para
+><para
+>Có một số phương pháp khác nhau tạo đĩa mềm từ ảnh đĩa. Tiết đoạn này diễn tả phương pháp tạo đĩa mềm từ ảnh đĩa trên nền tảng khác nhau. </para
+><para
+>Bất chấp phương pháp nào bạn sử dụng để tạo đĩa mềm, bạn nên nhớ bật nút chống lại ghi trên đĩa mềm đó, một khi ghi nó, để đảm bảo dữ liệu được ghi sẽ không bị hại tình cờ. </para>
+
+  <sect2
+><title
+>Ghi ảnh đĩa từ hệ thống Linux/UNIX</title>
+<para
+>Để ghi các tập tin ảnh đĩa mềm vào những đĩa mềm thật, rất có thể là bạn sẽ cần có quyền truy cập hệ thống của người chủ (root). Hãy nạp một đĩa mềm rỗng tốt vào ổ đĩa mềm. Sau đó, nhập lệnh <informalexample
+><screen>
+$ dd if=<replaceable
+>tên_tập_tin</replaceable
+> of=/dev/fd0 bs=1024 conv=sync ; sync
+</screen
+></informalexample
+> mà <replaceable
+>tên_tập_tin</replaceable
+> là một của những tập tin ảnh đĩa mềm đó (xem <xref linkend="downloading-files"/> để tìm <replaceable
+>tên_tập_tin</replaceable
+> thích hợp. <filename
+>/dev/fd0</filename
+> là tên thường dùng của thiết bị đĩa mềm; có lẽ máy trạm <phrase arch="sparc"
+> của bạn dùng tên khác (trên Solaris, nó là <filename
+>/dev/fd/0</filename
+>)</phrase
+>. Lệnh này có thể trở về dấu nhắc trước khi Unix ghi xong đĩa mềm, vì vậy trên thiết bị đĩa mềm hãy theo dõi đèn hiển thị đĩa hoạt động, kiểm tra xem đèn này không mở và đĩa quay xong, trước khi đẩy nó ra ổ. Trên một số hệ thống riêng, bạn sẽ cần phải chạy lệnh để đẩy đĩa mềm ra ổ <phrase arch="sparc"
+>(trên Solaris, dùng lệnh <command
+>eject</command
+>, xem trang hướng dẫn để tìm chi tiết)</phrase
+>. </para
+><para
+>Một số hệ thống riêng thử gắn kết tự động đĩa mềm nào được nạp vào ổ. Có lẽ bạn cần phải tắt tính năng này, trước khi máy trạm cho phép bạn ghi một đĩa mềm trong <emphasis
+>chế độ thô</emphasis
+>. Tiếc là phương pháp thích hợp đặc trưng cho hệ điều hành. <phrase arch="sparc"
+> Trên Solaris, bạn có thể chỉnh sửa tiến trình quản lý khối tin để giành quyền truy cập thô vào đĩa mềm. Trước tiên, hãy kiểm tra xem đĩa mềm đã được gắn kết tự động (dùng <command
+>volcheck</command
+> hoặc lệnh tương tư trong bộ quản lý tập tin). Sau đó, dùng lệnh <command
+>dd</command
+> dạng đưa ra trên, chỉ thay thế tên thiết bị <filename
+>/dev/fd0</filename
+> bằng <filename
+>/vol/rdsk/<replaceable
+>tên_đĩa_mềm</replaceable
+></filename
+>, mà <replaceable
+>tên_đĩa_mềm</replaceable
+> là tên được đặt cho đĩa mềm khi nó được định dạng (đĩa mềm vô danh có tên mặc định là <filename
+>unnamed_floppy</filename
+>). Trên hệ thống khác, hãy hỏi quản trị hệ thống. </phrase
+> </para
+><para arch="powerpc"
+>Nếu bạn ghi đĩa mềm trên máy PowerPC chạy Linux, bạn sẽ cần phải đẩy ra đĩa. Khuyên bạn dùng chương trình <command
+>eject</command
+>; có lẽ bạn cần phải cài đặt nó trước tiên. </para>
+
+  </sect2>
+
+
+<!-- Start of file install-methods/floppy/i386.xml -->
+<!-- $Id: i386.xml 39870 2006-08-16 00:35:08Z fjp $ -->
+
+
+<!--  This is not set off for i386 only, because many people will have -->
+<!--  access to a PC in order to make a floppy for other arches. -->
+
+  <sect2
+><title
+>Ghi ảnh đĩa từ DOS, Windows, hay OS/2</title>
+
+<para
+>Nếu bạn có khả năng truy cập một máy kiểu i386 hoặc amd64, bạn có thể dùng một của những chương trình sau đây để sao chép ảnh vào đĩa mềm. </para
+><para
+>Dưới MS-DOS, có thể sử dụng chương trình <command
+>rawrite1</command
+> và <command
+>rawrite2</command
+>. Để làm như thế, trước tiên hãy kiểm tra xem bạn đã khởi động vào hệ điều hành DOS. Việc thử dùng chương trình này bên trong hộp DOS trong hệ điều hành Windows, hoặc việc nhấn đôi vào chương trình này trong Windows Explorer rất có thể sẽ <emphasis
+>không phải</emphasis
+> hoạt động được. </para
+><para
+>Chương trình <command
+>rwwrtwin</command
+> chạy dưới hệ điều hành Windows 95, NT, 98, 2000, ME, XP và rất có thể dưới các phiên bản sau. Để sử dụng nó, bạn sẽ cần phải giải nén tập tin « diskio.dll » trong cùng thư mục. </para
+><para
+>Có thể tìm thấy những công cụ này trên đĩa CD-ROM Debian chính thức, dưới thư mục <filename
+>/tools</filename
+> (công cụ). </para>
+  </sect2>
+<!--   End of file install-methods/floppy/i386.xml -->
+
+<!-- Start of file install-methods/floppy/m68k.xml -->
+<!-- $Id: m68k.xml 45433 2007-02-26 18:10:28Z wouter $ -->
+
+
+  <sect2 arch="m68k"
+><title
+>Ghi ảnh đĩa trên hệ thống Atari</title>
+<para
+>Chương trình &rawwrite.ttp; nằm trong cùng một thư mục với các ảnh đĩa mềm. Hãy khởi chạy chương trình này bằng cách nhấn đôi vào biểu tượng của chương trình, rồi gõ vào hộp thoại dòng lệnh chương trình TOS, tên của tập tin ảnh đĩa mềm bạn muốn ghi vào đĩa mềm. </para>
+
+  </sect2>
+
+  <sect2 arch="m68k"
+><title
+>Ghi ảnh đĩa trên hệ thống Apple Mac</title>
+<para
+>Không có ứng dụng MacOS có thể ghi ảnh vào đĩa mềm (việc này không có ích vì không thể khởi động hệ thống cài đặt hoặc cài đặt hạt nhân và các mô-đun từ đĩa mềm trên Mac). Tuy nhiên, những tập tin này cần thiết để cài đặt hệ điều hành và các mô-đun, trong giai đoạn sau của tiến trình. </para>
+
+  </sect2>
+<!--   End of file install-methods/floppy/m68k.xml -->
+
+<!-- Start of file install-methods/floppy/powerpc.xml -->
+<!-- $Id: powerpc.xml 28997 2005-07-07 21:09:22Z fjp $ -->
+
+
+  <sect2 arch="powerpc"
+><title
+>Ghi ảnh đĩa từ MacOS</title>
+<para
+>Có một tập lệnh AppleScript tên <application
+>Make Debian Floppy</application
+> (tạo đĩa mềm Debian) sẵn sàng để chép ra đĩa mềm từ các tập tin ảnh đĩa được cung cấp. Bạn có thể tải nó xuống <ulink url="ftp://ftp2.sourceforge.net/pub/sourceforge/d/de/debian-imac/MakeDebianFloppy.sit"
+></ulink
+>. Để sử dụng nó, hãy giải nén nó vào Desktop, rồi kéo tập tin ảnh đĩa mềm nào vào nó. Bạn cần phải có AppleScript được cài đặt, cũng được bật chạy trong Extensions Manager (bộ quản lý các phần mở rộng). Chương trình Disk Copy (sao chép đĩa) sẽ nhắc bạn xác nhận bạn muốn xoá hoàn toàn đĩa mềm đó, rồi nó sẽ tiếp tục ghi ảnh tập tin vào nó. </para
+><para
+>Cũng có thể dùng trực tiếp tiện ích Mac OS <command
+>Disk Copy</command
+> (sao chép đĩa) hay tiện ích giải nén phần mềm biếu không <command
+>suntar</command
+>. Tập tin <filename
+>root.bin</filename
+> là một ảnh đĩa mềm thí dụ. Hãy dùng một của những phương pháp sau đây để tạo một đĩa mềm từ ảnh đĩa mềm bằng những tiện ích này. </para>
+
+   <sect3>
+   <title
+>Ghi ảnh đĩa bằng <command
+>Disk Copy</command
+></title>
+<para
+>Nếu bạn đang tạo ảnh đĩa mềm từ các tập tin đã có trên đĩa CD &debian; chính thức, trong trường hợp đó cả hai tài sản Type (kiểu) và Creator (bộ tạo) đã được đặt cho đúng. Chỉ cần thiết theo những bước <command
+>Creator-Changer</command
+> (thay đổi bộ tạo) này nếu bạn đã tải các tập tin ảnh xuống một máy nhân bản Debian nào đó. </para>
+<orderedlist>
+<listitem
+><para
+>Lấy tiện ích <ulink url="&url-powerpc-creator-changer;"
+>Creator-Changer</ulink
+> và dùng nó để mở tập tin <filename
+>root.bin</filename
+>. </para
+></listitem>
+<listitem
+><para
+>Thay đổi thông tin Creator thành <userinput
+>ddsk</userinput
+> (Disk Copy), và thay đổi Type thành <userinput
+>DDim</userinput
+> (ảnh đĩa mềm nhị phân). Hai trường này phân biệt chữ hoa/thường. </para
+></listitem>
+<listitem
+><para
+><emphasis
+>Quan trọng:</emphasis
+> trong Finder, hãy chọn ảnh đĩa mềm rồi bật tính năng <userinput
+>Get Info</userinput
+> (⌘-i, lấy thông tin) để hiển thị thông tin về nó. Trong hộp thông tin đó, đánh dấu trong hộp chọn ở cạnh <userinput
+>File Locked</userinput
+> (tập tin bị khoá) để ngăn cản hệ điều hành MacOS gỡ bỏ các khối tin khởi động nếu ảnh này được gắn kết tình cờ. </para
+></listitem>
+    <listitem
+><para
+>Lấy tiện ích <command
+>Disk Copy</command
+>; nếu bạn có hệ điều hành MacOS hay đĩa CD cài đặt nó, rất có thể là tiện ích này đã có ; nếu không, xem <ulink url="&url-powerpc-diskcopy;"
+></ulink
+>. </para
+></listitem>
+<listitem
+><para
+>Chạy tiện ích <command
+>Disk Copy</command
+>, rồi chọn <menuchoice
+> <guimenu
+>Utilities</guimenu
+> <guimenuitem
+>Make a Floppy</guimenuitem
+> </menuchoice
+> (tiện ích/tạo đĩa mềm), sau đó, chọn tập tin ảnh <emphasis
+>bị khoá</emphasis
+> trong hộp thoại xuất hiện. Hộp thoại sẽ nhắc bạn nạp đĩa mềm, rồi hỏi nếu bạn thật sự muốn xoá nó hoàn toàn: xoá đi. Khi làm xong, chương trình nên đẩy ra đĩa. </para
+></listitem>
+</orderedlist>
+
+   </sect3>
+
+   <sect3>
+   <title
+>Ghi ảnh đĩa bằng <command
+>suntar</command
+></title>
+<para>
+
+<orderedlist>
+<listitem
+><para
+>Lấy tiện ích <command
+>suntar</command
+> từ <ulink url="&url-powerpc-suntar;"
+> </ulink
+>. Khởi chạy chương trình <command
+>suntar</command
+> rồi chọn <quote
+>Overwrite Sectors...</quote
+> (ghi đè lên các rãnh ghi) trong trình đơn <userinput
+>Special</userinput
+> (đặc biệt). </para
+></listitem>
+<listitem
+><para
+>Khi được nhắc, nạp đĩa mềm, rồi bấm phím &enterkey; (bất đầu ở rãnh ghi 0). </para
+></listitem>
+<listitem
+><para
+>Chọn tập tin <filename
+>root.bin</filename
+> trong hộp thoại mở tập tin. </para
+></listitem>
+<listitem
+><para
+>Sau khi đĩa mềm được tạo thành công, hãy chọn <menuchoice
+> <guimenu
+>File</guimenu
+> <guimenuitem
+>Eject</guimenuitem
+> </menuchoice
+> (tập tin/đẩy ra). Nếu gặp lỗi nào trong khi tạo đĩa mềm, đơn giản hãy bỏ đĩa và thử đĩa mới. </para
+></listitem>
+</orderedlist>
+Trước khi sử dụng đĩa mềm bạn đã tạo, hãy <emphasis
+>bật nút chống lại ghi</emphasis
+>! Nếu không, hệ điều hành MacOS sẽ hủy đĩa này nếu nó được gắn kết tình cờ. </para>
+   </sect3>
+  </sect2>
+<!--   End of file install-methods/floppy/powerpc.xml -->
+
+ </sect1>
+
+<!--   End of file install-methods/create-floppy.xml -->
+
+<!-- Start of file install-methods/boot-usb-files.xml -->
+<!-- $Id: boot-usb-files.xml 45616 2007-02-28 18:55:45Z fjp $ -->
+
+ <sect1 condition="bootable-usb" id="boot-usb-files">
+ <title
+>Chuẩn bị tập tin để khởi động thanh bộ nhớ USB</title>
+
+<para
+>Để chuẩn bị thanh USB, cần thiết hệ thống đang chạy GNU/LInux, cũng hỗ trợ khả năng USB. Bạn nên kiểm tra xem mô-đun hạt nhân vật chứa USB đã được tải (chạy lệnh <userinput
+>modprobe usb-storage</userinput
+>), cũng cố gắng tìm biết thanh USB đã được ánh xạ tới thiết bị SCSI nào (trong thí dụ này là thiết bị <filename
+>/dev/sda</filename
+>). Để ghi vào thanh USB, rất có thể là bạn sẽ phải tắt nút chống lại ghi của nó. </para
+><para
+>Ghi chú rằng thanh USB nên có khả năng ít nhất 256 MB (còn có thể tạo thiết lập nhỏ hơn nếu bạn theo <xref linkend="usb-copy-flexible"/>). </para>
+
+  <sect2 id="usb-copy-easy">
+  <title
+>Sao chép tập tin một cách dễ dàng</title>
+<para arch="x86"
+>Có một tập tin toàn bộ <filename
+>hd-media/boot.img.gz</filename
+> chứa mọi tập tin cài đặt (gồm hạt nhân) cũng như <command
+>SYSLINUX</command
+> và tập tin cấu hình của nó. Bạn chỉ cần phải giải nén nó trực tiếp vào thanh USB: <informalexample
+><screen
+># zcat boot.img.gz &gt; /dev/<replaceable
+>sda</replaceable
+>
+</screen
+></informalexample>
+
+</para
+><para arch="powerpc"
+>Có một tập tin toàn bộ <filename
+>hd-media/boot.img.gz</filename
+> chứa mọi tập tin cài đặt (gồm hạt nhân) cũng như <command
+>yaboot</command
+> và tập tin cấu hình của nó. Hãy tạo một phân vùng kiểu « Apple_Bootstrap » trên thanh USB, dùng lệnh <userinput
+>C</userinput
+> của tiện ích <command
+>mac-fdisk</command
+>, rồi giải nén ảnh trực tiếp vào phân vùng đó. <informalexample
+><screen
+># zcat boot.img.gz &gt; /dev/<replaceable
+>sda2</replaceable
+>
+</screen
+></informalexample>
+
+</para>
+<warning
+><para
+>Phương pháp này sẽ hủy mọi thứ đã có trên thiết bị đó. Hãy kiểm tra xem bạn dùng tên thiết bị đúng của thanh USB đó. </para
+></warning>
+<para
+>Sau đó, hãy gắn kết thanh USB (dùng lệnh <userinput
+>mount <replaceable arch="x86"
+>/dev/sda</replaceable
+> <replaceable arch="powerpc"
+>/dev/sda2</replaceable
+> /mnt</userinput
+>), mà lúc bây giờ chứa một <phrase arch="x86"
+>hệ thống tập tin kiểu FAT</phrase
+> <phrase arch="powerpc"
+>hệ thống tập tin kiểu HFS</phrase
+>, rồi sao chép một ảnh ISO kiểu cài đặt qua mạng (netinst) hay thẻ kinh doanh (businesscard) vào nó. Hãy ghi chú rằng tên tập tin phải kết thúc bằng <filename
+>.iso</filename
+>. Bỏ lắp thanh USB (<userinput
+>umount /mnt</userinput
+>): hoàn tất. </para>
+  </sect2>
+
+  <sect2 id="usb-copy-flexible">
+  <title
+>Sao chép tập tin một cách dẻo</title>
+<para
+>Nếu bạn thích tính chất dẻo hơn, hoặc chỉ muốn biết có gì xảy ra, bạn nên sử dụng phương pháp theo đây để sao chép những tập tin vào thanh USB. </para>
+
+
+<!-- Start of file install-methods/usb-setup/x86.xml -->
+<!-- $Id: x86.xml 43730 2006-12-31 22:10:55Z fjp $ -->
+
+   <sect3 arch="x86">
+   <title
+>Phân vùng thanh USB trên &arch-title;</title>
+<para
+>Tiết đoạn này diễn tả phương pháp thiết lập thanh USB để dùng chỉ phân vùng thứ nhất, thay vì toàn bộ thiết bị. </para
+><note
+><para
+>Vì phần lớn thanh USB có một phân vùng FAT16 riêng lẻ được cấu hình sẵn, rất có thể là bạn sẽ không cần phải phân vùng lại hay định dạng lại thanh đó. Nếu bạn vẫn còn cần phải làm như thế, hãy dùng tiện ích <command
+>cfdisk</command
+> hay công cụ phân vùng khác nào để tạo một phân vùng kiểu FAT16, rồi tạo hệ thống tập tin bằng lệnh:<informalexample
+><screen>
+# mkdosfs /dev/<replaceable
+>sda1</replaceable>
+</screen
+></informalexample
+> Hãy cẩn thận, dùng tên thiết bị đúng cho thanh USB. Chức năng <command
+>mkdosfs</command
+> nằm trong gói Debian <classname
+>dosfstools</classname
+>. </para
+></note
+><para
+>Để khởi chạy hạt nhân sau khi khởi động từ thanh USB, bạn cần phải để một bộ tải khởi động trên thanh đó. Mặc dù bất kỳ bộ tải khởi động nào (v.d. <command
+>LILO</command
+>) nên hoạt động được, tiện là dùng <command
+>SYSLINUX</command
+>, vì nó sử dụng phân vùng kiểu FAT16 và có thể được cấu hình lại bằng cách chỉ hiệu chỉnh một tập tin văn bản. Bất kỳ hệ điều hành nào hỗ trợ hệ thống tập tin FAT có thể được dùng để thay đổi cấu hình của bộ tải khởi động. </para
+><para
+>Để chèn <command
+>SYSLINUX</command
+> vào phân vùng kiểu FAT16 trên thanh USB, hãy cài đặt hai gói <classname
+>syslinux</classname
+> và <classname
+>mtools</classname
+> vào hệ thống, rồi chạy lệnh: <informalexample
+><screen>
+# syslinux /dev/<replaceable
+>sda1</replaceable>
+</screen
+></informalexample
+> Lần nữa, quan trọng là bạn nhập tên thiết bị đúng. Hãy kiểm tra xem phân vùng không được gắn kết khi bạn khởi chạy <command
+>SYSLINUX</command
+>. Thủ tục này ghi một rãnh ghi khởi động vào phân vùng đó và tạo tập tin <filename
+>ldlinux.sys</filename
+> mà chứa mã của bộ tải khởi động. </para
+><para
+>Hãy gắn kết phân vùng đó (dùng lệnh <userinput
+>mount /dev/sda1 /mnt</userinput
+>) rồi sao chép những tập tin theo đây từ kho Debian sang thanh USB: <itemizedlist
+> <listitem
+><para
+> <filename
+>vmlinuz</filename
+> (tập tin nhị phân của hạt nhân) </para
+></listitem
+> <listitem
+><para
+> <filename
+>initrd.gz</filename
+> (ảnh đĩa RAM đầu tiên) </para
+></listitem
+> <listitem
+><para
+> <filename
+>syslinux.cfg</filename
+> (tập tin cấu hình SYSLINUX) </para
+></listitem
+> <listitem
+><para
+> Những mô-đun hạt nhân tùy chọn </para
+></listitem
+> </itemizedlist
+> Nếu bạn muốn thay đổi tên của tập tin nào trong nhóm này, hãy ghi chú rằng <command
+>SYSLINUX</command
+> có thể xử lý chỉ tên tập tin dạng DOS (8.3). </para
+><para
+>Tập tin cấu hình <filename
+>syslinux.cfg</filename
+> nên chứa hai dòng này: <informalexample
+><screen
+>default vmlinuz
+append initrd=initrd.gz
+[mặc định vmlinux
+phụ thêm initrd=initrd.gz]
+</screen
+></informalexample>
+
+</para>
+   </sect3>
+<!--   End of file install-methods/usb-setup/x86.xml -->
+
+<!-- Start of file install-methods/usb-setup/powerpc.xml -->
+<!-- $Id: powerpc.xml 33725 2006-01-03 19:39:07Z fjp $ -->
+
+   <sect3 arch="powerpc">
+   <title
+>Phân vùng thanh USB trên &arch-title;</title>
+<para
+>Phần lớn thanh USB không có cấu hình sẵn cung cấp khả năng khởi động OpenFirmware, vậy bạn cần phải phân vùng lại thanh đó. Trên hệ thống Mac, hãy chạy lệnh <userinput
+>mac-fdisk /dev/sda</userinput
+>, rồi khởi tạo một sơ đồ phân vùng mới bằng lệnh <userinput
+>i</userinput
+>, cũng tạo một phân vùng mới kiểu « Apple_Bootstrap » bằng lệnh <userinput
+>C</userinput
+>. (Ghi chú rằng « phân vùng » thứ nhất sẽ luôn luôn là sơ đồ phân vùng chính nó.) Sau đó, hãy gõ lệnh <informalexample
+><screen>
+$ hformat /dev/<replaceable
+>sda2</replaceable>
+</screen
+></informalexample
+> Hãy cẩn thận, nhập tên thiết bị đúng cho thanh USB. Chức năng <command
+>hformat</command
+> nằm trong gói Debian <classname
+>hfsutils</classname
+>. </para
+><para
+>Để khởi chạy hạt nhân sau khi khởi động từ thanh USB, bạn nên để một bộ tải khởi động trên thanh đó. Bộ tải khởi động <command
+>yaboot</command
+> có thể được cài đặt vào hệ thống tập tin kiểu HFS, cũng có thể được cấu hình lại bằng cách chỉ hiệu chỉnh một tập tin văn bản. Bất kỳ hệ điều hành nào hỗ trợ hệ thống tập tin HFS có thể được dùng để thay đổi cấu hình của bộ tải khởi động. </para
+><para
+>Công cụ <command
+>ybin</command
+> chuẩn có sẵn với bộ tải khởi động <command
+>yaboot</command
+> chưa có khả năng xử lý thiết bị vật chứa USB, vậy bạn sẽ cần phải tự cài đặt <command
+>yaboot</command
+> bằng các công cụ <classname
+>hfsutils</classname
+>. Hãy gõ những lệnh: <informalexample
+><screen>
+$ hmount /dev/sda2
+$ hcopy -r /usr/lib/yaboot/yaboot :
+$ hattrib -c UNIX -t tbxi :yaboot
+$ hattrib -b :
+$ humount
+</screen
+></informalexample
+> Lần nữa, bạn nhập cẩn thận tên thiết bị đúng cho thanh USB. Hãy kiểm tra xem phân vùng không được gắn kết bằng cách khác nào trong thủ tục này. Thủ tục này ghi bộ tải khởi động vào phân vùng, sử dụng các tiện ích HFS để nhãn nó bằng cách riêng sẽ làm cho OpenFirmware khởi động nó. Một khi làm như thế, phần còn lại của thanh USB có thể được chuẩn bị bằng các tiện ích UNIX chuẩn. </para
+><para
+>Hãy gắn kết phân vùng đó (dùng lệnh <userinput
+>mount /dev/sda2 /mnt</userinput
+>) và sao chép những tập tin theo đây từ kho Debian vào thanh USB: <itemizedlist>
+<listitem
+><para
+><filename
+>vmlinux</filename
+> (tập tin nhị phân của hạt nhân) </para
+></listitem>
+<listitem
+><para
+><filename
+>initrd.gz</filename
+> (ảnh đĩa RAM đầu tiên) </para
+></listitem>
+<listitem
+><para
+><filename
+>yaboot.conf</filename
+> (tập tin cấu hình yaboot) </para
+></listitem>
+<listitem
+><para
+><filename
+>boot.msg</filename
+> (thông điệp khởi động tùy chọn) </para
+></listitem>
+<listitem
+><para
+>Mô-đun hạt nhân tùy chọn </para
+></listitem>
+</itemizedlist>
+
+</para
+><para
+>Tập tin cấu hình <filename
+>yaboot.conf</filename
+> nên chứa những dòng này: <informalexample
+><screen>
+default=install
+root=/dev/ram
+
+message=/boot.msg
+
+image=/vmlinux
+        label=install
+        initrd=/initrd.gz
+        initrd-size=10000
+        read-only
+</screen
+></informalexample
+> Ghi chú rằng có lẽ cần thiết tăng giá trị của tham số <userinput
+>initrd-size</userinput
+>, phụ thuộc vào ảnh nào đang được khởi động. </para>
+   </sect3>
+<!--   End of file install-methods/usb-setup/powerpc.xml -->
+
+   </sect2>
+   <sect2>
+   <title
+>Thêm ảnh ISO</title>
+<para
+>Trình cài đặt sẽ quét thanh đó tìm ảnh ISO kiểu Debian là nguồn dữ liệu thêm. Như thế thì bước kế tiếp là sao chép một ảnh ISO Debian (kiểu thẻ kinh doanh [businesscard], kiểu qua mạng [netinst] hay ngay cả ảnh CD đầy đủ) vào thanh USB có đủ sức chứa. Tên tập tin của ảnh này phải kết thúc bằng <filename
+>.iso</filename
+>. </para
+><para
+>Nếu bạn muốn cài đặt qua mạng, không sử dụng ảnh ISO, hãy bỏ qua bước trước. Hơn nữa, bạn cần phải sử dụng đĩa RAM đầu tiên từ thư mục <filename
+>netboot</filename
+> thay cho điều nằm trong <filename
+>hd-media</filename
+>, vì <filename
+>hd-media/initrd.gz</filename
+> không có khả năng hỗ trợ chạy mạng. </para
+><para
+>Khi bạn làm xong, hãy tháo gắn kết thanh USB (dùng lệnh <userinput
+>umount /mnt</userinput
+>) rồi bật nút chống lại ghi của nó. </para>
+  </sect2>
+
+  <!-- TODO: doesn't this section belong later? -->
+  <sect2 arch="x86">
+  <title
+>Khởi động thanh USB</title>
+<warning
+><para
+>Nếu hệ thống không khởi động được từ thanh USB, có lẽ thanh đó chứa một mục ghi khởi động chủ (Master Boot Record: MBR) không hợp lệ. Để khắc phục nó, dùng chức năng <command
+>install-mbr</command
+> của gói <classname
+>mbr</classname
+>: <informalexample
+><screen
+># install-mbr /dev/<replaceable
+>sda</replaceable
+>
+</screen
+></informalexample>
+
+</para
+></warning>
+  </sect2>
+ </sect1>
+<!--   End of file install-methods/boot-usb-files.xml -->
+
+<!-- Start of file install-methods/boot-drive-files.xml -->
+<!-- $Id: boot-drive-files.xml 39614 2006-08-07 15:50:11Z fjp $ -->
+
+ <sect1 condition="bootable-disk" id="boot-drive-files">
+ <title
+>Chuẩn bị tập tin để khởi động đĩa cứng</title>
+<para
+>Có thể khởi động trình cài đặt bằng tập tin khởi động nằm trên một phân vùng đĩa cứng đã có, hoặc được khởi chạy từ hệ điều hành khác, hoặc bằng cách gọi một bộ tải khởi động trực tiếp từ BIOS. </para
+><para
+>Có thể dùng phương pháp này để cài đặt <quote
+>hoàn toàn qua mạng</quote
+>. Làm như thế tránh tất cả các vấn đề về vật chứa rời, v.d. cần phải tìm và chép ra ảnh đĩa CD, hoặc gặp khó khăn quản lý đĩa mềm quá nhiều hay không đáng tin. </para
+><para arch="x86"
+>Trình cài đặt không thể khởi động từ tập tin nằm trên hệ thống kiểu NTFS. </para
+><para arch="powerpc"
+>Trình cài đặt không thể khởi động từ tập tin nằm trên hệ thống tập tin kiểu HFS+. Hệ điều hành MacOS 8.1 và sau có khả năng dùng hệ thống tập tin HFS+; mọi máy PowerMac kiểu mới có phải dùng HFS+. Để quyết định nếu hệ thống tập tin tồn tại của bạn là HFS+ hay không, trong Finder hãy chọn đĩa chứa hệ thống tập tin đó, rồi chọn mục trình đơn <userinput
+>Get Info</userinput
+> (lấy thông tin: phím tắt là ⌘-i). Nếu hộp thông tin hiển thị đĩa có kiểu <userinput
+>Mac OS Extended</userinput
+>, hệ thống tập tin đó là HFS+, còn <userinput
+>Mac OS Standard</userinput
+> là HFS chuẩn. Bạn cần phải có ít nhất một phân vùng kiểu HFS chuẩn (không phải HFS+) để trao đổi tập tin giữa hai hệ điều hành MacOS và Linux, đặc biệt các tập tin cài đặt bạn tải về. </para
+><para arch="powerpc"
+>Máy tính <quote
+>kiểu mới</quote
+> và <quote
+>kiểu cũ</quote
+> sử dụng chương trình khác nhau để khởi động hệ thống cài đặt trên đĩa cứng. </para>
+
+  <sect2 arch="x86" id="files-lilo">
+  <title
+>Khởi động trình cài đặt trên đĩa cứng bằng <command
+>LILO</command
+> hay <command
+>GRUB</command
+></title>
+<para
+>Tiết đoạn này diễn tả cách thêm, ngay cả cách thay thế bản cài đặt Linux đã có, dùng bộ tải khởi động hoặc <command
+>LILO</command
+> hoặc <command
+>GRUB</command
+>. </para
+><para
+>Vào lúc khởi động, cả hai bộ tải khởi động hỗ trợ khả năng tải vào bộ nhớ không phải chỉ hạt nhân, cũng lại một ảnh đĩa. Hạt nhân có thể sử dụng đĩa RAM này như là hệ thống tập tin gốc. </para
+><para
+>Hãy sao chép những tập tin theo đây từ kho Debian vào một vị trí tiện trên đĩa cứng, v.d. vào <filename
+>/boot/newinstall/</filename
+>. <itemizedlist>
+<listitem
+><para
+><filename
+>vmlinuz</filename
+> (tập tin nhị phân của hạt nhân) </para
+></listitem>
+<listitem
+><para
+><filename
+>initrd.gz</filename
+> (ảnh đĩa RAM) </para
+></listitem>
+</itemizedlist>
+
+</para
+><para
+>Cuối cùng, để cấu hình bộ tải khởi động, hãy tiếp tục tới <xref linkend="boot-initrd"/>. </para>
+  </sect2>
+
+
+  <sect2 arch="powerpc" id="files-oldworld">
+  <title
+>Khởi động trình cài đặt trên đĩa cứng của Mac kiểu cũ</title>
+<para
+>Đĩa mềm <filename
+>boot-floppy-hfs</filename
+> sử dụng ứng dụng <application
+>miBoot</application
+> để khởi chạy tiến trình cài đặt Linux, nhưng mà không thể dùng dễ dàng ứng dụng <application
+>miBoot</application
+> để khởi động đĩa cứng. Tuy nhiên, ứng dụng <application
+>BootX</application
+>, khi được khởi chạy từ hệ điều hành MacOS, có phải hỗ trợ khả năng khởi động từ tập tin nằm trên đĩa cứng. Cũng có thể dùng <application
+>BootX</application
+> để khởi động đôi MacOS và Linux sau khi cài đặt xong Debian. Trên máy Performa 6360, có vẻ trình <command
+>quik</command
+> không thể làm cho đĩa cứng có khả năng khởi động. Vì vậy mô hình đó cần thiết ứng dụng <application
+>BootX</application
+>. </para
+><para
+>Hãy tải về và giải nén bản phát hành <application
+>BootX</application
+> sẵn sàng tại <ulink url="&url-powerpc-bootx;"
+></ulink
+>, hay nằm trong thư mục <filename
+>dists/woody/main/disks-powerpc/current/powermac</filename
+> trên máy nhân bản FTP/HTTP của Debian, cũng trên đĩa CD Debian chính thức. Dùng ứng dụng <application
+>Stuffit Expander</application
+> (miễn phí) để giải nén chương trình. Bên trong gói đó có một thư mục trống tên <filename
+>Linux Kernels</filename
+> (các hạt nhân Linux). Tải hai tập tin <filename
+>linux.bin</filename
+> và <filename
+>ramdisk.image.gz</filename
+> xuống thư mục <filename
+>disks-powerpc/current/powermac</filename
+>, rồi để chúng trong thư mục <filename
+>Linux Kernels</filename
+>. Rồi để thư mục <filename
+>Linux Kernels</filename
+> trong System Folder (thư mục hệ thống) hoạt động. </para>
+  </sect2>
+
+  <sect2 arch="powerpc" id="files-newworld">
+  <title
+>Khởi động trình cài đặt trên đĩa cứng của Mac kiểu mới</title>
+<para
+>Máy PowerMac kiểu mới hỗ trợ khả năng khởi động từ mạng hay từ đĩa CD-ROM kiểu ISO9660, cũng như khả năng tải tập tin nhị phân ELF một cách trực tiếp từ đĩa cứng. Những máy kiểu này sẽ khởi động trực tiếp Linux bằng <command
+>yaboot</command
+>, mà hỗ trợ khả năng tải trực tiếp hạt nhân và đĩa RAM từ phân vùng kiểu etx2, cũng như khả năng khởi động đôi với hệ điều hành MacOS. Việc khởi động trình cài đặt trên đĩa cứng là thích hợp đặc biệt trên máy mới hơn không có ổ đĩa mềm. Không hỗ trợ ứng dụng <command
+>BootX</command
+> nên không dùng nó trên máy PowerMac kiểu mới. </para
+><para
+><emphasis
+>Sao chép</emphasis
+> (không phải di chuyển) bốn tập tin theo đây mà bạn đã tải trước xuống kho Debian, vào lớp gốc của đĩa cứng. Có thể làm như thế bằng cách bấm phím <keycap
+>option</keycap
+> trong khi kéo mỗi tập tin vào biểu tượng của đĩa cứng. <itemizedlist>
+<listitem
+><para>
+
+<filename
+>vmlinux</filename>
+
+</para
+></listitem>
+<listitem
+><para>
+
+<filename
+>initrd.gz</filename>
+
+</para
+></listitem>
+<listitem
+><para>
+
+<filename
+>yaboot</filename>
+
+</para
+></listitem>
+<listitem
+><para>
+
+<filename
+>yaboot.conf</filename>
+
+</para
+></listitem>
+</itemizedlist>
+
+</para
+><para
+>Hãy ghi nhớ số hiệu phân vùng MacOS nơi bạn để những tập tin này. Nếu bạn có chương trình MacOS <command
+>pdisk</command
+>, bạn có khả năng dùng lệnh <command
+>L</command
+> để kiểm tra xem số hiệu phân vùng. Bạn cần biết số hiệu phân vùng này để gõ lệnh vào dấu nhắc OpenFirmware, khi bạn khởi động trình cài đặt. </para
+><para
+>Để khởi động trình cài đặt, hãy tiếp tục tới <xref linkend="boot-newworld"/>. </para>
+  </sect2>
+ </sect1>
+<!--   End of file install-methods/boot-drive-files.xml -->
+
+<!-- Start of file install-methods/install-tftp.xml -->
+<!-- $Id: install-tftp.xml 44002 2007-01-07 12:31:29Z fjp $ -->
+
+ <sect1 condition="supports-tftp" id="install-tftp">
+ <title
+>Chuẩn bị tập tin để khởi động qua mạng TFTP</title>
+<para
+>Nếu máy tính của bạn có kết nối đến mạng cục bộ, bạn có thể có khả năng khởi động qua mạng từ máy khác bằng TFTP. Nếu bạn định khởi động hệ thống cài đặt từ máy khác, cần phải để các tập tin khởi động vào vị trí dứt khoát trên máy đó, cũng cấu hình máy đó để hỗ trợ khả năng khởi động máy tính riêng của bạn. </para
+><para
+>Bạn cần phải thiết lập một trình phục vụ TFTP, và cho nhiều máy cũng cần một trình phục vụ DHCP<phrase condition="supports-rarp"
+>, hay trình phục vụ RARP</phrase
+><phrase condition="supports-bootp"
+>, hay trình phục vụ BOOTP</phrase
+>. </para
+><para
+><phrase condition="supports-rarp"
+>Giao thức quyết định địa chỉ ngược lại (RARP) là một cách báo ứng dụng khách biết địa chỉ IP nào cần dùng để nhận diện chính nó. Một cách khác là dùng giao thức BOOTP.</phrase
+> <phrase condition="supports-bootp"
+>BOOTP là một giao thức IP báo máy tính biết địa chỉ IP của chính nó và nơi trên mạng có thể lấy ảnh khởi động.</phrase
+> <phrase arch="m68k"
+>Còn có một cách khác trên hệ thống kiểu VMEbus: địa chỉ IP có thể được tự cấu hình trong bộ nhớ ROM khởi động.</phrase
+> <phrase condition="supports-dhcp"
+>DHCP (giao thức cấu hình máy động) là một phần mở rộng BOOTP dẻo hơn và có khả năng tương thích ngược. Một số hệ thống riêng chỉ có thể được cấu hình bằng DHCP.</phrase
+> </para
+><para arch="powerpc"
+>Đối với máy PowerPC, nếu bạn có máy tính PowerMac kiểu mới, khuyên bạn dùng DHCP thay cho BOOTP. Một số máy mới nhất không có khả năng khởi động bằng BOOTP. </para
+><para arch="alpha"
+>Không như OpenFirmware nằm trên máy kiểu Sparc và PowerPC, bàn giao tiếp SRM sẽ <emphasis
+>không phải</emphasis
+> dùng RARP để lấy địa chỉ IP của chính nó nên bạn dùng BOOTP để khởi động máy Alpha qua mạng<footnote
+> <para
+> Cũng có thể khởi động hệ thống Alpha qua mạng bằng MOP (giao thức thao tác duy trì) của DECNet, nhưng mà tiết đoạn này không diễn tả đó. Nếu bạn muốn sử dụng MOP để khởi động Linux trên máy Alpha, có thể hỏi quản trị OpenVMS cục bộ. </para
+> </footnote
+>. Cũng có thể nhập trực tiếp vào bàn giao tiếp SRM cấu hình IP cho giao diện mạng. </para
+><para arch="hppa"
+>Một số máy HPPA cũ hơn (v.d. 715/75) dùng RBOOTD hơn là BOOTP. Debian có sẵn một gói <classname
+>rbootd</classname
+>. </para
+><para
+>Giao thức truyền tập tin không đáng kể (TFTP) được dùng để phục vụ ảnh khởi động cho ứng dụng khách. Về lý thuyết có thể sử dụng bất kỳ trình phục vụ nào trên bất kỳ nền tảng nào mà thực hiện những giao thức này. Những lời thí dụ trong tiết đoạn này sẽ cung cấp lệnh riêng cho hệ điều hành SunOS 4.x, SunOS 5.x (cũng tên Solaris), và GNU/Linux. <note arch="x86"
+><para
+>Để sử dụng phương pháp khởi động TFTP của môi trường thực hiện tiền khởi động (PXE), bạn cần có sẵn sàng trình phục vụ TFTP có hỗ trợ khả năng <userinput
+>tsize</userinput
+>. Trên máy phục vụ &debian;, hai gói<classname
+>atftpd</classname
+> và <classname
+>tftpd-hpa</classname
+> là thích hợp: khuyên bạn dùng <classname
+>tftpd-hpa</classname
+>. </para
+></note>
+
+</para>
+
+
+<!-- Start of file install-methods/tftp/rarp.xml -->
+<!-- $Id: rarp.xml 39897 2006-08-16 20:36:24Z fjp $ -->
+
+
+  <sect2 condition="supports-rarp" id="tftp-rarp">
+  <title
+>Thiết lập trình phục vụ RARP</title>
+<para
+>Để thiết lập RARP, bạn cần biết địa chỉ Ethernet (cũng tên địa chỉ MAC) của mỗi máy tính khách cần cài đặt. Nếu bạn chưa biết thông tin này, bạn có thể <phrase arch="sparc"
+>lấy nó từ những thông điệp khởi động OpenPROM đầu tiên, hoặc dùng lệnh OpenBoot <userinput
+>.enet-addr</userinput
+>, hoặc </phrase
+> khởi động vào chế độ <quote
+>Cứu</quote
+> (v.d. từ đĩa mềm cứu) và sử dụng lệnh <userinput
+>/sbin/ifconfig eth0</userinput
+>. </para
+><para
+>Trên hệ thống phục vụ RARP sử dụng hạt nhân Linux 2.4 hoặc 2.6, hoặc hệ thống Solaris/SunOS, bạn sử dụng chương trình <command
+>rarpd</command
+>. Bạn cần phải kiểm tra xem địa chỉ phần cứng Ethernet cho máy khách được liệt kê trong co sở dữ liệu <quote
+>ethers</quote
+> (hoặc trong tập tin <filename
+>/etc/ethers</filename
+>, hoặc thông qua NIS/NIS+) và trong co sở dữ liệu <quote
+>hosts</quote
+>. Sau đó, bạn cần khởi chạy trình nền RARP. Chạy lệnh (như là người chủ): <userinput
+>/usr/sbin/rarpd -a</userinput
+> trên phần lớn hệ thống kiểu Linux và SunOS 5 (Solaris 2), <userinput
+>/usr/sbin/in.rarpd -a</userinput
+> trên một số hệ thống Linux khác, hoặc <userinput
+>/usr/etc/rarpd -a</userinput
+> trên hệ thống SunOS 4 (Solaris 1). </para>
+  </sect2>
+<!--   End of file install-methods/tftp/rarp.xml -->
+
+<!-- Start of file install-methods/tftp/bootp.xml -->
+<!-- $Id: bootp.xml 43558 2006-12-26 19:46:26Z fjp $ -->
+
+
+  <sect2 condition="supports-bootp" id="tftp-bootp">
+  <title
+>Thiết lập trình phục vụ BOOTP</title>
+<para
+>Có hai trình phục vụ BOOTP sẵn sàng cho GNU/Linux. Trình thứ nhất là <command
+>bootpd</command
+> CMU. Trình thứ hai thật là một trình phục vụ DHCP: <command
+>dhcpd</command
+> ISC. Trong &debian; hai trình này nằm trong gói<classname
+>bootp</classname
+> và <classname
+>dhcp3-server</classname
+> riêng từng cái. </para
+><para
+>Để sử dụng <command
+>bootpd</command
+> CMU, trước tiên bạn cần phải bỏ ghi chú (hay thêm) dòng tương ứng trong trong tập tin cấu hình <filename
+>/etc/inetd.conf</filename
+>. Dưới hệ điều hành &debian;, bạn có khả năng chạy lệnh <userinput
+>update-inetd --enable bootps</userinput
+>, rồi <userinput
+>/etc/init.d/inetd reload</userinput
+> để làm như thế. Trong trường hợp trình phục vụ BOOTP của bạn không chạy Debian được, dòng đó nên hình như: <informalexample
+><screen>
+bootps  dgram  udp  wait  root  /usr/sbin/bootpd  bootpd -i -t 120
+</screen
+></informalexample
+> Sau đó, bạn cần phải tạo một tập tin <filename
+>/etc/bootptab</filename
+>. Nó có cùng một dạng thức thường và khó hiểu với những tập tin <filename
+>printcap</filename
+>, <filename
+>termcap</filename
+> và <filename
+>disktab</filename
+> của BSD. Xem trang hướng dẫn (man) <filename
+>bootptab</filename
+> để tìm thông tin thêm. Đối với tiến trình <command
+>bootpd</command
+>, bạn cần phải biết địa chỉ phần cứng (địa chỉ MAC) của máy khách. Đây là một tập tin <filename
+>/etc/bootptab</filename
+> thí dụ : <informalexample
+><screen>
+client:\
+  hd=/tftpboot:\
+  bf=tftpboot.img:\
+  ip=192.168.1.90:\
+  sm=255.255.255.0:\
+  sa=192.168.1.1:\
+  ha=0123456789AB:
+</screen
+></informalexample
+> Bạn cần phải thay đổi ít nhất tùy chọn <quote
+>ha</quote
+>, mà xác định địa chỉ phần cứng của máy khách. Tùy chọn <quote
+>bf</quote
+> xác định tập tin máy khách cần lấy bằng TFTP; xem <xref linkend="tftp-images"/> để tìm chi tiết. <phrase arch="mips"
+> Trên máy kiểu SGI, bạn có thể đơn giản vào bộ theo dõi lệnh rồi gõ <userinput
+>printenv</userinput
+> (in ra môi trường). Giá trị của biến <userinput
+>eaddr</userinput
+> là địa chỉ phần cứng (địa chỉ MAC) của máy đó. </phrase
+> </para
+><para
+>Mặt khác, tiến trình thiết lập BOOTP bằng <command
+>dhcpd</command
+> ISC là rất dễ dàng, vì nó xử lý các ứng dụng khách BOOTP là ứng dụng khách DHCP kiểu hơi đặc biệt. Một số kiến trúc riêng cần thiết cấu hình phức tạp để khởi động ứng dụng khách thông qua BOOTP. Nếu máy của bạn có kiến trúc như thế, hãy đọc tiết đoạn <xref linkend="dhcpd"/>. Trong trường hợp đó, rất có thể là bạn đơn giản cần phải thêm chỉ thị <userinput
+>allow bootp</userinput
+> (cho phép BOOTP) vào khối cấu hình dành cho mạng phụ chứa máy chạy ứng dụng khách đó, rồi khởi chạy lại trình nền <command
+>dhcpd</command
+> bằng lệnh <userinput
+>/etc/init.d/dhcpd3-server restart</userinput
+>. </para>
+  </sect2>
+<!--   End of file install-methods/tftp/bootp.xml -->
+
+<!-- Start of file install-methods//tftp/dhcp.xml -->
+<!-- $Id: dhcp.xml 43558 2006-12-26 19:46:26Z fjp $ -->
+
+  <sect2 id="dhcpd">
+   <title
+>Thiết lập trình phục vụ DHCP</title>
+<para
+>Một trình phục vụ DHCP phần mềm tự do là <command
+>dhcpd</command
+> ISC. Đối với &debian;, gói <classname
+>dhcp3-server</classname
+> khuyến khích. Đây là một tập tin cấu hình mẫu cho nó (xem <filename
+>/etc/dhcp3/dhcpd.conf</filename
+>): <informalexample
+><screen
+>option domain-name "mẫu.com";
+option domain-name-servers ns1.mẫu.com;
+option subnet-mask 255.255.255.0;
+default-lease-time 600;
+max-lease-time 7200;
+server-name "tên_máy_phục_vụ";
+
+subnet 192.168.1.0 netmask 255.255.255.0 {
+  range 192.168.1.200 192.168.1.253;
+  option routers 192.168.1.1;
+}
+
+host tên_máy_khách {
+  filename "/tftpboot/tftpboot.img";
+  server-name "tên_máy_phục_vụ";
+  next-server tên_máy_phục_vụ;
+  hardware ethernet 01:23:45:67:89:AB;
+  fixed-address 192.168.1.90;
+}
+
+[option			tùy chọn
+domain-name		tên miền
+domain name servers	các máy phục vụ tên miền
+subnet-mask		mặt nạ mạng phụ
+default-lease-time		thời gian thuê mặc định
+max-lease-time	thời gian thuê tối đa
+server-name		tên máy phục vụ
+subnet			mạng phụ
+netmask			mặt nạ mạng
+range			phạm vị
+routers			các bộ định tuyến
+host				máy (hỗ trợ)
+filename			tên tập tin
+hardware ethernet	Ethernet phần cứng
+fixed-address		địa chỉ cố định]
+</screen
+></informalexample>
+
+</para
+><para
+>Trong lời thí dụ này, có một máy phục vụ tên <replaceable
+>tên_máy_phục_vụ</replaceable
+> mà làm mọi công việc của trình phục vụ DHCP, trình phục vụ TFTP và cổng ra mạng. Bình thường, bạn sẽ cần phải thay đổi những tùy chọn tên miền (domain-name), cũng như tên máy phục vụ (server-name) và địa chỉ phần cứng (hardware address) của máy khách. Tùy chọn <replaceable
+>filename</replaceable
+> (tên tập tin) nên là tên tập tin sẽ được lấy thông qua TFTP. </para
+><para
+>Sau khi bạn chỉnh sửa tập tin cấu hình của trình nền <command
+>dhcpd</command
+>, hãy khởi chạy lại nó bằng lệnh <userinput
+>/etc/init.d/dhcpd3-server restart</userinput
+>. </para>
+
+   <sect3 arch="x86">
+   <title
+>Bật khả năng khởi động PXE trong cấu hình DHCP</title>
+<para
+>Đây là một mẫu <filename
+>dhcp.conf</filename
+> khác, dùng phương pháp môi trường thực hiện tiền khởi động (PXE) của giao thức TFTP. [Chú thích đã được dịch trong mẫu này.] <informalexample
+><screen>
+option domain-name "mẫu.com";
+
+default-lease-time 600;
+max-lease-time 7200;
+
+allow booting;
+allow bootp;
+
+# Cần phải sửa đổi đoạn văn này để thích hợp với trường hợp của bạn
+subnet 192.168.1.0 netmask 255.255.255.0 {
+  range 192.168.1.200 192.168.1.253;
+  option broadcast-address 192.168.1.255;
+# địa chỉ cổng ra mà có thể là khác
+# (v.d. truy cập Mạng)
+  option routers 192.168.1.1;
+# xác định DNS cần dùng
+  option domain-name-servers 192.168.1.3;
+}
+
+group {
+ next-server 192.168.1.3;
+ host tftpclient {
+# địa chỉ phần cứng của máy khách TFTP
+  hardware ethernet  00:10:DC:27:6C:15;
+  filename "pxelinux.0";
+ }
+}
+</screen
+></informalexample
+> Ghi chú rằng để khởi động cách PXE, tên tập tin khách <filename
+>pxelinux.0</filename
+> là bộ tải khởi động, không phải là ảnh hạt nhân (xem <xref linkend="tftp-images"/> bên dưới). </para>
+   </sect3>
+  </sect2>
+<!--   End of file install-methods//tftp/dhcp.xml -->
+
+  <sect2 id="tftpd">
+  <title
+>Bật chạy trình phục vụ TFTP</title>
+<para
+>Để hiệu lực trình phục vụ TFTP, trước tiên bạn cần phải kiểm tra xem trình nền <command
+>tftpd</command
+> đã được bật chạy chưa. Bình thường nó được bật chạy bằng dòng theo đây (hay tương tự) trong tập tin cấu hình <filename
+>/etc/inetd.conf</filename
+>: <informalexample
+><screen>
+tftp dgram udp wait nobody /usr/sbin/tcpd in.tftpd /tftpboot
+</screen
+></informalexample
+> Khi bạn cài đặt các gói Debian, dòng này thường được thiết lập theo mặc định. </para>
+<note
+><para
+>Trong quá khứ, máy phục vụ TFTP đã dùng <filename
+>/tftpboot</filename
+> như là thư mục từ đó cần phục vụ ảnh. Tuy nhiên, các gói &debian; có thể sử dụng thư mục khác để tuân theo <ulink url="&url-fhs-home;"
+>Tiêu Chuẩn Phân Cấp Hệ Thống Tập Tin</ulink
+> (FHS). Chẳng hạn, <classname
+>tftpd-hpa</classname
+> theo mặc định sử dụng thư mục <filename
+>/var/lib/tftpboot</filename
+>. Có lẽ bạn cần phải điều chỉnh những mẫu cấu hình trong phần này một cách tương ứng. </para
+></note>
+<para
+>Thấy trong tập tin cấu hình <filename
+>/etc/inetd.conf</filename
+> và ghi nhớ thư mục được dùng như là đối số của <command
+>in.tftpd</command
+><footnote
+> <para
+> Đối số <userinput
+>-l</userinput
+> cho một số phiên bản<command
+>in.tftpd</command
+> có khả năng ghi lưu mọi yêu cầu vào những bản ghi hệ thống: có ích để chẩn đoán lỗi khởi động. </para
+> </footnote
+>; bạn sẽ cần nó bên dưới. Nếu bạn đã cần phải thay đổi tập tin cấu hình <filename
+>/etc/inetd.conf</filename
+>, bạn sẽ cần phải thông báo tiến trình <command
+>inetd</command
+> đang chạy rằng tập tin đó đã thay đổi. Trên máy kiểu Debian, hãy chạy lệnh nạp lại <userinput
+>/etc/init.d/inetd reload</userinput
+>; trên các máy khác, tìm biết mã nhận diện tiến trình (PID) cho<command
+>inetd</command
+>, và chạy lệnh ép buộc kết thúc <userinput
+>kill -HUP <replaceable
+>mã_inetd</replaceable
+></userinput
+>. </para
+><para arch="mips"
+>Nếu bạn định cài đặt Debian trên máy kiểu SGI và máy phục vụ TFTP chạy hệ điều hành Linux phiên bản 2.4, bạn cần phải nhập dòng này vào máy phục vụ : <informalexample
+><screen>
+# echo 1 &gt; /proc/sys/net/ipv4/ip_no_pmtu_disc
+</screen
+></informalexample
+> để tắt khả năng phát hiện « Path MTU ». Nếu không, PROM của SGI không thể tải về hạt nhân. Hơn nữa, hãy kiểm tra xem các gói tin TFTP được gởi từ cổng nguồn có số hiệu dưới 32768, nếu không thì việc tải về sẽ bị ngừng chạy sau gói tin thứ nhất. Lần nữa, HĐH Linux 2.4.X gây ra lỗi này trong PROM, và bạn có thể tránh trường hợp này bằng cách nhập <informalexample
+><screen>
+# echo "2048 32767" &gt; /proc/sys/net/ipv4/phạm_vị_cổng_cục_bộ_IP
+</screen
+></informalexample
+> để điều chỉnh phạm vị cổng nguồn sẵn sàng cho trình phục vụ TFTP Linux sử dụng. </para>
+  </sect2>
+
+  <sect2 id="tftp-images">
+  <title
+>Xác định vị trí của ảnh TFTP</title>
+<para
+>Sau đó, hãy để ảnh khởi động TFTP cần thiết (như được tìm trong <xref linkend="where-files"/>) vào thư mục ảnh khởi động của trình nền <command
+>tftpd</command
+>. Có lẽ bạn cần phải tạo một liên kết từ tập tin đó đến tập tin mà <command
+>tftpd</command
+> sẽ sử dụng để khởi động máy khách riêng. Tiếc là tên tập tin được quyết định bởi máy khách TFTP, và chưa có tiêu chuẩn mạnh nào. </para
+><para arch="powerpc"
+>Trên máy PowerMac kiểu mới, bạn cần phải thiết lập bộ tải khởi động <command
+>yaboot</command
+> như là ảnh khởi động TFTP. Vậy phần mềm <command
+>Yaboot</command
+> sẽ lấy hạt nhân và các các ảnh đĩa RAM bằng TFTP chính nó. Để khởi động qua mạng, hãy dùng tập tin cấu hình <filename
+>yaboot-netboot.conf</filename
+>. Đơn giản thay đổi nó thành <filename
+>yaboot.conf</filename
+> trong thư mục TFTP. </para
+><para arch="x86"
+>Để khởi động PXE, mọi thứ cần thiết đã được thiết lập trong kho nén <filename
+>netboot/netboot.tar.gz</filename
+>. Đơn giản hãy giải nén tập tin này vào thư mục ảnh khởi động của trình nền <command
+>tftpd</command
+>. Hãy kiểm tra xem trình phục vụ DHCP đã được cấu hình để gửi <filename
+>/pxelinux.0</filename
+> cho trình nền<command
+>tftpd</command
+> như là tên tập tin cần khởi động. </para
+><para arch="ia64"
+>Để khởi động PXE, mọi thứ cần thiết đã được thiết lập trong kho <filename
+>netboot/netboot.tar.gz</filename
+>. Đơn giản hãy giải nén tập tin này vào thư mục ảnh khởi động của trình nền <command
+>tftpd</command
+>. Hãy kiểm tra xem máy phục vụ DHCP đã được cấu hình để gởi <filename
+>/debian-installer/ia64/elilo.efi</filename
+> cho trình nền <command
+>tftpd</command
+> như là tên tập tin cần khởi động. </para>
+
+   <sect3 arch="mipsel">
+   <title
+>Ảnh TFTP của DECstation</title>
+<para
+>Đối với máy kiểu DECstation, có tập tin ảnh TFTP dành cho mỗi kiến trúc phụ, mà chứa cả hạt nhân lẫn trình cài đặt trong cùng một tập tin. Quy ước đặt tên là <filename
+><replaceable
+>kiến_trúc_phụ</replaceable
+>/netboot-boot.img</filename
+>. Sao chép tập tin ảnh TFTP đã muốn vào <userinput
+>/tftpboot/tftpboot.img</userinput
+> nếu bạn dùng thiết lập BOOTP/DHCP được diễn tả bên trên. </para
+><para
+>Phần vững DECstation khởi động thông qua TFTP bằng lệnh <userinput
+>boot <replaceable
+>#</replaceable
+>/tftp</userinput
+>, mà <replaceable
+>#</replaceable
+> là số hiệu thiết bị TurboChannel từ đó cần khởi động. Trên phần lớn máy DECstations, số này là <quote
+>3</quote
+>. Nếu máy phục vụ BOOTP/DHCP không cung cấp tên tập tin, hoặc nếu bạn cần gởi tham số thêm cho lệnh, chúng có thể được phụ thêm bằng cú pháp này: </para
+><para>
+
+<userinput
+>boot #/tftp/tên_tập_tin tham_số1=giá_trị1 tham_số2=giá_trị2 ...</userinput>
+
+</para
+><para
+>Một số bản sửa đổi phần vững DECstation biểu lộ một vấn đề về khả năng khởi động qua mạng: việc truyền bắt đầu được, nhưng sau một thời gian nó bị dừng với lỗi <computeroutput
+>a.out err</computeroutput
+>. Có vài lý do có thể : <orderedlist
+> <listitem
+><para
+> Phần vững không trả lời yêu cầu ARP trong tiến trình truyền TFTP: ARP quá giờ nên việc truyền bị dừng. Cách sửa chữa là thêm địa chỉ MAC của thẻ Ethernet trong DECstation một cách tĩnh vào bảng ARP của trình phục vụ TFTP, bằng cách chạy lệnh <userinput
+>arp -s <replaceable
+>địa_chỉ_IP</replaceable
+> <replaceable
+>địa_chỉ_MAC</replaceable
+></userinput
+> với tư cách người chủ trên máy chạy trình phục vụ TFTP. Có thể hiển thị địa chỉ MAC của máy DECstation bằng cách nhập lệnh <command
+>cnfg</command
+> vào dấu nhắc phần vững của DECstation đó. </para
+></listitem
+> <listitem
+><para
+> Phần vững máy giới hạn kích cỡ của tập tin khởi động được thông qua TFTP. </para
+></listitem
+> </orderedlist
+> Cũng có một số bản sửa đổi phần vững không thể khởi động thông qua TFTP bằng cách nào cả. Toàn cảnh về các bản sửa đổi phần vững khác nhau nằm trên các trang Mạng của NetBSD: <ulink url="http://www.netbsd.org/Ports/pmax/board-list.html#proms"
+></ulink
+>. </para>
+   </sect3>
+
+   <sect3 arch="alpha">
+   <title
+>Khởi động TFTP Alpha</title>
+<para
+>Trên máy kiểu Alpha, bạn cần phải xác định tên tập tin (dạng đường dẫn liên quan đến thư mục ảnh khởi động) bằng cách thêm đối số <userinput
+>-file</userinput
+> (tập tin) vào lệnh <userinput
+>boot</userinput
+> SRM, hoặc bằng cách đặt biến môi trường <userinput
+>BOOT_FILE</userinput
+> (tập tin khởi động). Hoặc có thể đưa ra tên tập tin thông qua BOOTP (trong <command
+>dhcpd</command
+> ISC, dùng chỉ thị <userinput
+>filename</userinput
+> [tên tập tin]). Không như đối với Open Firmware, <emphasis
+>không có tên tập tin mặc định</emphasis
+> trên SRM, vậy bạn <emphasis
+>cần phải</emphasis
+> xác định một tên tập tin bằng một của hai phương pháp này. </para>
+   </sect3>
+
+   <sect3 arch="sparc">
+   <title
+>Khởi động TFTP SPARC</title>
+<para
+>Một số kiến trúc SPARC riêng thêm tên kiến trúc phụ, như <quote
+>SUN4M</quote
+> hay <quote
+>SUN4C</quote
+> vào tên tập tin. Như thế thì nếu kiến trúc phụ của hệ thống là SUN4C, với địa chỉ IP 192.168.1.3, tên tập tin là <filename
+>C0A80103.SUN4C</filename
+>. Tuy nhiên, cũng có kiến trúc phụ mà tập tin được tìm bởi khách là chỉ <filename
+>địa_chỉ_IP_của_khách_dạng_thập_lục</filename
+>. Một phương pháp dễ dàng quyết định mã thập lục của địa chỉ IP là nhập lệnh theo đây vào trình bao (giả sử địa chỉ IP đã định của máy đó là 10.0.0.4). <informalexample
+><screen>
+$ printf '%.2x%.2x%.2x%.2x\n' 10 0 0 4
+</screen
+></informalexample
+> Để giành tên tập tin đúng, bạn cần phải chuyển đổi mọi chữ sang chữ hoa, cũng (nếu cần thiết) phụ thêm tên kiến trúc phụ đó. </para
+><para
+>Nếu bạn đã theo các hướng dẫn này, việc chạy lệnh <userinput
+>boot net</userinput
+> từ dấu nhắc OpenPROM nên nạp ảnh đó. Không tìm thấy ảnh thì kiểm tra các bản ghi trên trình phục vụ TFTP để xem tên ảnh nào được yêu cầu. </para
+><para
+>Bạn cũng có thể ép buộc một số hệ thống SPARC tìm một tên tập tin riêng bằng cách phụ thêm nó vào lệnh khởi động OpenPROM, v.d. <userinput
+>boot net ảnh_sparc.tôi</userinput
+>. Nó vẫn còn phải nằm trong thư mục trong đó máy phục vụ TFTP tìm. </para>
+   </sect3>
+
+   <sect3 arch="m68k">
+   <title
+>Khởi động TFTP BVM/Motorola</title>
+<para
+>Đối với hệ thống kiểu BVM và Motorola VMEbus, hãy sao chép các tập tin &bvme6000-tftp-files; vào thư mục <filename
+>/tftpboot/</filename
+>. </para
+><para
+>Sau đó, hãy cấu hình các bộ nhớ ROM khởi động hay máy phục vụ BOOTP để tải đầu tiên tập tin <filename
+>tftplilo.bvme</filename
+> hay <filename
+>tftplilo.mvme</filename
+> từ máy phục vụ TFTP. Xem tập tin <filename
+>tftplilo.txt</filename
+> dành cho kiến trúc phụ của bạn, để tìm thông tin cấu hình thêm đặc trưng cho hệ thống đó. </para>
+   </sect3>
+
+   <sect3 arch="mips">
+   <title
+>Khởi động TFTP SGI</title>
+<para
+>Trên máy kiểu SGI, bạn có thể nhờ trình nền <command
+>bootpd</command
+> cung cấp tên của tập tin TFTP. Tên này được hiển thị hoặc là tùy chọn <userinput
+>bf=</userinput
+> nằm trong tập tin <filename
+>/etc/bootptab</filename
+> hoặc là tùy chọn <userinput
+>filename=</userinput
+> nằm trong tập tin cấu hình <filename
+>/etc/dhcpd.conf</filename
+>. </para>
+   </sect3>
+
+   <sect3 arch="mips">
+   <title
+>Khởi động TFTP BCM91250A và BCM91480B Broadcom</title>
+<para
+>Bạn không cần cấu hình DHCP bằng cách đặc biệt nào, vì bạn sẽ gởi cho CFE đường dẫn đầy đủ của tập tin cần tải. </para>
+   </sect3>
+
+  </sect2>
+
+<!-- FIXME: commented out since it seems too old to be usable and a current
+            way is not known
+
+  <sect2 id="tftp-low-memory">
+  <title
+>TFTP Installation for Low-Memory Systems</title>
+<para>
+
+On some systems, the standard installation RAMdisk, combined with the
+memory requirements of the TFTP boot image, cannot fit in memory.  In
+this case, you can still install using TFTP, you'll just have to go
+through the additional step of NFS mounting your root directory over
+the network as well.  This type of setup is also appropriate for
+diskless or dataless clients.
+
+</para
+><para>
+
+First, follow all the steps above in <xref linkend="install-tftp"/>.
+
+<orderedlist>
+<listitem
+><para>
+
+Copy the Linux kernel image on your TFTP server using the
+<userinput
+>a.out</userinput
+> image for the architecture you are
+booting.
+
+</para
+></listitem>
+<listitem
+><para>
+
+Untar the root archive on your NFS server (can be the same system as
+your TFTP server):
+
+<informalexample
+><screen
+>
+# cd /tftpboot
+# tar xvzf root.tar.gz
+</screen
+></informalexample>
+
+Be sure to use the GNU <command
+>tar</command
+> (other tar programs, like the
+SunOS one, badly handle devices as plain files).
+
+</para
+></listitem>
+<listitem
+><para>
+
+Export your <filename
+>/tftpboot/debian-sparc-root</filename
+> directory
+with root access to your client.  E.g., add the following line to
+<filename
+>/etc/exports</filename
+> (GNU/Linux syntax, should be similar
+for SunOS):
+
+<informalexample
+><screen
+>
+/tftpboot/debian-sparc-root <replaceable>client</replaceable>(rw,no_root_squash)
+</screen
+></informalexample>
+
+NOTE: <replaceable
+>client</replaceable
+> is the host name or IP address recognized
+by the server for the system you are booting.
+
+</para
+></listitem>
+<listitem
+><para>
+
+Create a symbolic link from your client IP address in dotted notation
+to <filename
+>debian-sparc-root</filename
+> in the
+<filename
+>/tftpboot</filename
+> directory.  For example, if the client
+IP address is 192.168.1.3, do
+
+<informalexample
+><screen
+>
+# ln -s debian-sparc-root 192.168.1.3
+</screen
+></informalexample>
+
+</para
+></listitem>
+</orderedlist>
+
+</para>
+
+  </sect2>
+
+  <sect2 condition="supports-nfsroot">
+  <title
+>Installing with TFTP and NFS Root</title>
+<para>
+
+Installing with TFTP and NFS Root is similar to
+<xref linkend="tftp-low-memory"/> because you don't want to
+load the RAMdisk anymore but boot from the newly created NFS-root file
+system.  You then need to replace the symlink to the tftpboot image by
+a symlink to the kernel image (for example,
+<filename
+>linux-a.out</filename
+>).
+
+</para
+><para>
+
+RARP/TFTP requires all daemons to be running on the same server (the
+workstation is sending a TFTP request back to the server that replied
+to its previous RARP request).
+
+</para>
+
+
+  </sect2>
+END FIXME -->
+ </sect1>
+<!--   End of file install-methods/install-tftp.xml -->
+
+<!-- Start of file install-methods/automatic-install.xml -->
+<!-- $Id: automatic-install.xml 33725 2006-01-03 19:39:07Z fjp $ -->
+
+ <sect1 id="automatic-install">
+ <title
+>Cài đặt tự động</title>
+<para
+>Để cài đặt vào nhiều máy tính, có thể chạy việc cài đặt tự động đầy đủ.Những gói Debian được định dành cho mục đích này gồm <classname
+>fai</classname
+> (mà dùng máy phục vụ cài đặt), <classname
+>replicator</classname
+>, <classname
+>systemimager</classname
+>, <classname
+>autoinstall</classname
+>, và trình cài đặt Debian chính nó. </para>
+
+  <sect2 id="preseed">
+  <title
+>Cài đặt tự động bằng trình cài đặt Debian</title>
+<para
+>Trình cài đặt Debian hỗ trợ khả năng cài đặt tự động bằng tập tin cấu hình sẵn. Tập tin cấu hình sẵn có thể được tải từ mạng hay từ vật chứa rời, cũng có thể được dùng để trả lời câu hỏi tương tác với người dùng trong tiến trình cài đặt. </para
+><para
+>Tài liệu hướng dẫn đầy đủ về phương pháp chèn trước, gồm một lời thí dụ hữu ích mà bạn có thể hiệu chỉnh, nằm trong <xref linkend="appendix-preseed"/>. </para>
+  </sect2>
+ </sect1>
+<!--   End of file install-methods/automatic-install.xml -->
+
+</chapter>
+<!--   End of file install-methods/install-methods.xml -->

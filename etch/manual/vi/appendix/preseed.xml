@@ -1,0 +1,1452 @@
+<!-- Start of file appendix/preseed.xml -->
+<!-- $Id: preseed.xml 45612 2007-02-28 15:08:57Z fjp $ -->
+
+<!--
+Be careful with the format of this file as it is parsed to generate
+the example preconfiguration file.
+In that file all text between <informalexample
+> tags that have the
+attribute 'role="example"' set is included, except if a 'condition'
+attribute is in force that does not match the specified release or if an
+'arch' attribute is in force that does not match the specified architecture.
+
+Currently only a single variant of the example file is generated (for i386).
+-->
+
+<appendix id="appendix-preseed">
+<title
+>Tự động hoá việc cài đặt bằng chèn sẵn</title>
+
+<para
+>Phụ lục này giải thích phương pháp chèn sẵn thông tin trả lời các câu hỏi trong &d-i; để tự động hoá tiến trình cài đặt. </para
+><para
+>Những đoạn cấu hình được dùng trong phụ lục này cũng sẵn sàng dạng tập tin định cấu hình sẵn ví dụ tại &urlset-example-preseed;. </para>
+
+ <sect1 id="preseed-intro">
+ <title
+>Giới thiệu</title>
+<para
+>Khả năng chèn sẵn cung cấp phương pháp đặt trả lời những câu được hỏi trong tiến trình cài đặt, không cần tự nhập mỗi trả lời trong khi cài đặt. Như thế thì có khả năng tự động hoá hoàn toàn phần lớn kiểu việc cài đặt, ngay cả cung cấp một số tính năng không sẵn sàng trong tiến trình cài đặt chuẩn. </para>
+
+  <sect2 id="preseed-methods">
+  <title
+>Phương pháp chèn sẵn</title>
+<para
+>Có ba phương pháp có thể dùng để chèn sẵn: <firstterm
+>initrd</firstterm
+>, <firstterm
+>tập tin</firstterm
+> và <firstterm
+>mạng</firstterm
+>. Tiến trình chèn sẵn initrd sẽ hoạt động được với bất cứ phương pháp cài đặt nào, cũng hỗ trợ khả năng chèn sẵn số thứ thêm, còn cần thiết bạn chuẩn bị nhiều nhất. Tiến trình chèn sẵn kiểu tập tin và mạng có thể được dùng với phương pháp cài đặt khác nhau. </para
+><para
+>Theo đây có bảng hiển thị phương pháp chèn sẵn nào dùng được với phương pháp cài đặt nào. <informaltable
+> <tgroup cols="4">
+<thead>
+<row>
+  <entry
+>Phương pháp cài đặt</entry
+><entry
+>initrd</entry>
+  <entry
+>tập tin</entry
+><entry
+>mạng</entry>
+</row>
+</thead>
+
+<tbody>
+<row>
+  <entry
+>CD/DVD</entry>
+  <entry
+>có</entry>
+  <entry
+>có</entry>
+  <entry
+>có<footnote id='apx-ps-net'
+> <para
+>nhưng chỉ nếu bạn có khả năng truy cập mạng, và đặt giá trị <literal
+>preseed/url</literal
+> thích hợp </para>
+
+  </footnote
+></entry>
+</row
+><row>
+  <entry
+>khởi động qua mạng</entry>
+  <entry
+>có</entry>
+  <entry
+>không</entry>
+  <entry
+>có</entry>
+</row
+><row>
+  <entry
+>kiểu đĩa cứng <phrase condition="bootable-usb"
+>(gồm thanh USB)</phrase
+></entry>
+  <entry
+>có</entry>
+  <entry
+>có</entry>
+  <entry
+>có<footnoteref linkend='apx-ps-net'/></entry>
+</row
+><row condition="supports-floppy-boot">
+  <entry
+>dựa vào đĩa mềm (trình điều khiển đĩa CD)</entry>
+  <entry
+>có</entry>
+  <entry
+>có</entry>
+  <entry
+>có<footnoteref linkend='apx-ps-net'/></entry>
+</row
+><row condition="supports-floppy-boot">
+  <entry
+>dựa vào đĩa mềm (trình điều khiển mạng)</entry>
+  <entry
+>có</entry>
+  <entry
+>không</entry>
+  <entry
+>có</entry>
+</row
+><row arch="s390">
+  <entry
+>giống loài / băng</entry>
+  <entry
+>có</entry>
+  <entry
+>không</entry>
+  <entry
+>có</entry>
+</row>
+</tbody>
+
+</tgroup
+></informaltable>
+
+</para
+><para
+>Sự khác nhau quan trọng giữa những phương pháp chèn sẵn là điểm thời nơi tập tin cấu hình sẵn được tải và xử lý. Đối với sự chèn sẵn kiểu initrd, điểm này nằm đúng tại đầu của tiến trình cài đặt, trước khi hỏi câu thứ nhất. Đối với sự chèn sẵn kiểu tập tin, nó nằm sau khi đĩa CD hay ảnh đĩa CD đã được tải. Còn đối với sự chèn sẵn kiểu mạng, nó nằm chỉ sau khi mạng đã được cấu hình. </para
+><para
+>Rõ ràng là không thể chèn sẵn câu hỏi nào được xử lý trước khi nạp tập tin cấu hình sẵn (gồm các câu hỏi chỉ được hiển thị tại ưu tiên vừa hay thấp, như việc chạy phát hiện phần cứng đầu tiên). Phần <xref linkend="preseed-bootparms"/> cung cấp phương pháp tránh hỏi những câu sớm này. </para
+><para
+>Để tránh những câu hỏi bình thường xuất hiện trước khi việc chèn sẵn xảy ra, bạn có khả năng khởi chạy trình cài đặt trong chế độ <quote
+>tự động</quote
+> (auto). Sự chọn này hoãn các câu bình thường được hỏi quá sớm để chèn sẵn (tức là câu chọn ngôn ngữ, quốc gia và bàn phím) đến sau khi mạng trở thành hoạt động, thì cho các câu này được chèn sẵn. Nó cũng chạy tiến trình cài đặt trong chế độ tới hạn, mà tránh nhiều câu hỏi không quan trọng. Xem <xref linkend="preseed-auto"/> để tìm chi tiết. </para>
+  </sect2>
+
+  <sect2 id="preseed-limitations">
+  <title
+>Hạn chế</title>
+<para
+>Mặc dù phương pháp này có khả năng chèn sẵn phần lớn câu hỏi được &d-i; dùng, có một số ngoại lệ quan trọng. Bạn cần phải phân vùng (lại) toàn bộ đĩa hoặc sử dụng sức chứa còn rảnh trên đĩa; không thể sử dụng phân vùng đã có. </para>
+  </sect2>
+
+<!-- Joeyh feels this is too technical, so leave it out for now
+  <sect2 id="preseed-debconf">
+  <title
+>Debconf basics</title>
+<para>
+
+Preseeding makes use of the <classname
+>debconf</classname
+> framework. This
+framework is the preferred mechanism used in Debian to interact with the user
+when configuring packages and also forms the heart of &d-i;.
+In the <classname
+>debconf</classname
+> framework questions or dialogs are
+based on <firstterm
+>templates</firstterm
+>. There are different types of
+templates for different types of questions. The actual questions are
+<quote
+>generated</quote
+> from templates at runtime;  multiple questions can
+use the same template.
+
+</para
+><para>
+
+The following types of templates are relevant for preseeding.
+
+</para>
+
+<itemizedlist spacing="compact">
+<listitem
+><para>
+  string: allows the user to type any value
+</para
+></listitem>
+<listitem
+><para>
+  password: similar to string but the value typed is not displayed
+</para
+></listitem>
+<listitem
+><para>
+  boolean: for yes/no or true/false type of questions
+</para
+></listitem>
+<listitem
+><para>
+  select: allows the user to select one option from a list
+</para
+></listitem>
+<listitem
+><para>
+  multiselect: allows the user to select zero, one or more options from a list
+</para
+></listitem>
+<listitem
+><para>
+  note: used to display a message
+</para
+></listitem>
+</itemizedlist>
+
+<para>
+
+In &d-i; templates are stored in a readable file
+<filename
+>/var/cache/debconf/templates.dat</filename
+>. This file contains all fixed
+text and all translations. It can also contain a default value for the
+template. The fixed text can include variables that will be replaced at
+runtime.
+
+</para
+><para>
+
+Another readable file <filename
+>/var/cache/debconf/questions.dat</filename>
+is used to store the values for variables and the answers given to questions.
+A question always refers to the template used to ask it. For obvious
+security reasons the values for questions of type <quote
+>password</quote>
+are stored in a separate, non-readable file in the same directory.
+
+</para>
+  </sect2>
+-->
+ </sect1>
+
+
+ <sect1 id="preseed-using">
+ <title
+>Dùng khả năng chèn sẵn</title>
+<para
+>Trước tiên bạn cần phải tạo một tập tin cấu hình sẵn, rồi để nó vào vị trí từ đó bạn muốn dùng nó. Phương pháp tạo tập tin cấu hình sẵn được diễn tả trong phần sau của phụ lục này. Cách để nó vào vị trí đúng là hơi đơn giản cho việc chèn sẵn qua mạng hoặc nếu bạn muốn đọc tập tin ra đĩa mềm hay thanh USB. Nếu bạn muốn gồm có tập tin đó trên đĩa CD hay DVD, bạn sẽ cần phải tạo lại chủ ảnh ISO đó. Phương pháp gây ra initrd gồm tập tin cấu hình sẵn nằm ở ngoại phạm vị của tài liệu này: xem tài liệu hướng dẫn của nhà phát triển về &d-i;. </para
+><para
+>Bạn có khả năng tạo tập tin cấu hình sẵn riêng dựa vào tập tin cấu hình sẵn mẫu sẵn sàng tại &urlset-example-preseed;. Tập tin mẫu này lần lượt dựa vào những đoạn cấu hình nằm trong phụ lục này. </para>
+
+  <sect2 id="preseed-loading">
+  <title
+>Tải tập tin định cấu hình sẵn</title>
+<para
+>Nếu bạn đang dùng khả năng chèn sẵn kiểu initrd, bạn chỉ cần phải chắc là một tập tin tên <filename
+>preseed.cfg</filename
+> nằm trong thư mục gốc của initrd đó. Trình cài đặt sẽ kiểm tra tự động nếu có tập tin này không, cũng sẽ tải nó. </para
+><para
+>Đối với các phương pháp chèn sẵn khác, bạn cần phải báo trình cài đặt biết tập tin nào cần dùng khi bạn khởi động nó. Bình thường cung cấp thông tin này bằng cách gởi cho hạt nhân một tham số khởi động, hoặc tự gởi vào lúc khởi động, hoặc bằng cách hiệu chỉnh tập tin cấu hình bộ tải khởi động (v.d. <filename
+>syslinux.cfg</filename
+>), thêm tham số đó vào kết thúc của (những) dòng phụ thêm dành cho hạt nhân. </para
+><para
+>Nếu bạn có phải xác định tập tin cấu hình sẵn trong cấu hình của bộ tải khởi động, bạn cũng có khả năng thay đổi cấu hình để tránh trường hợp cần phải bấm phím &enterkey; để khởi động trình cài đặt. Đối với syslinux, cần phải đặt thời hạn thành <literal
+>1</literal
+> trong tập tin cấu hình <filename
+>syslinux.cfg</filename
+>. </para
+><para
+>Để chắc là trình cài đặt nhận tập tin cấu hình sẵn đúng, bạn có tùy chọn xác định tổng kiểm (checksum) cho tập tin đó. Hiện thời nó cần phải là tổng kiểu md5sum, và nếu được xác định, nó phải khớp với tập tin cấu hình sẵn, nếu không thì trình cài đặt sẽ từ chối dùng nó. </para>
+
+<informalexample
+><screen
+>Các tham số khởi động cần xác định:
+• nếu bạn khởi động qua mạng:
+  preseed/url=http://máy/đường/dẫn/đến/preseed.cfg
+  preseed/url/checksum=5da499872becccfeda2c4872f9171c3d
+
+• nếu bạn khởi động đĩa CD đã tạo lại chủ :
+  preseed/file=/cdrom/preseed.cfg
+  preseed/file/checksum=5da499872becccfeda2c4872f9171c3d
+
+• nếu bạn cài đặt từ vật chứa USB (hãy để tập tin cấu hình sẵn
+vào thư mục cấp đầu của thanh USB):
+  preseed/file=/hd-media/preseed.cfg
+  preseed/file/checksum=5da499872becccfeda2c4872f9171c3d
+</screen
+></informalexample>
+
+<para
+>Ghi chú rằng cũng có khả năng nhập địa chỉ Mạng <filename
+>preseed/url</filename
+> dạng ngắn là chỉ <filename
+>url</filename
+>, còn địa chỉ tập tin <filename
+>preseed/file</filename
+> dạng ngắn là chỉ<filename
+>file</filename
+>, khi địa chỉ kiểu này là tham số khởi động. </para>
+  </sect2>
+  
+  <sect2 id="preseed-bootparms">
+  <title
+>Dùng tham số khởi động để chèn sẵn câu hỏi</title>
+<para
+>Nếu tập tin cấu hình sẵn không thể được dùng để chèn sẵn một số bước riêng, tiến trình cài đặt vẫn còn có thể được tự động hoá hoàn toàn, vì bạn còn có khả năng gửi các giá trị chèn sẵn cho hạt nhân trên dòng lệnh khi khởi động trình cài đặt. </para
+><para
+>Các tham số khởi động cũng có thể được dùng nếu bạn không thật muốn sử dụng khả năng chèn sẵn, nhưng chỉ muốn cung cấp trả lời cho một câu hỏi riêng. Một số mẫu có ích về trường hợp này nằm trong phần khác của tài liệu này. </para
+><para
+>Để đặt một giá trị cần sử dụng bên trong &d-i;, chỉ cần gửi <userinput
+><replaceable
+>đường_dẫn/đến/biến</replaceable
+>=<replaceable
+>giá_trị</replaceable
+></userinput
+> cho bất cứ biến chèn sẵn nào được liệt kê trong những mẫu của phụ lục này. Nếu giá trị nào sẽ được dùng để cấu hình gói cho hệ thống đích, bạn cần phải thêm (vào đầu chuỗi) <firstterm
+>cái sở hữu</firstterm
+> (owner)<footnote
+> <para
+> Cái sở hữu giá trị (hay mẫu) kiểu debconf bình thường là tên của gói chứa mẫu debconf tương ứng. Đối với những biến được dùng trong tiến trình cài đặt chính nó, cái sở hữu là <quote
+>d-i</quote
+>. Mỗi mẫu và biến vẫn còn có khả năng thuộc về nhiều cái sở hữu, mà giúp đỡ quyết định nếu nó có thể được gỡ bỏ ra cơ sở dữ liệu debconf nếu gói đó bị tẩy. </para
+> </footnote
+> biến đó như thế: <userinput
+><replaceable
+>cái_sở_hữu</replaceable
+>:<replaceable
+>đường_dẫn/đến/biến</replaceable
+>=<replaceable
+>giá_trị</replaceable
+></userinput
+>. Không xác định cái sở hữu thì giá trị cho biến đó sẽ không được sao chép vào cơ sở dữ liệu debconf trong hệ thống đích nên vô ích trong tiến trình cấu hình gói liên quan. </para
+><para
+>Ghi chú rằng một số biến thường được đặt tại dấu nhắc khởi động cũng có biệt hiệu ngắn hơn. Biệt hiệu sẵn sàng thì được dùng trong những mẫu thí dụ trong phụ lục này, thay cho biến đầy đủ. Đặc biệt, biến <literal
+>preseed/url</literal
+> có biệt hiệu là <literal
+>url</literal
+>, cũng có khả năng thêm cho phép dùng địa chỉ Mạng ngắn hơn. Và biệt hiệu <literal
+>tasks</literal
+> đại diện <literal
+>tasksel:tasksel/first</literal
+>. </para
+><para
+>Hai dấu trừ <quote
+>--</quote
+> trong những tùy chọn khởi động thì có nghĩa đặc biệt. Các tham số khởi động xuất hiện sau <quote
+>--</quote
+> cuối cùng có thể được sao chép vào cấu hình của bộ tải khởi động cho hệ thống đã cài đặt (nếu hỗ trợ bởi bộ cài đặt cho bộ tải khởi động đó). Bộ cài đặt sẽ tự động lọc ra bất cứ tùy chọn nào nó nhận ra. </para>
+<note
+><para
+>Các hạt nhân Linux hiện thời (2.6.9 và sau) chấp nhận số tối đa là 32 tùy chọn dòng lệnh và 32 biến môi trường, gồm bất cứ tùy chọn nào được thêm theo mặc định cho bộ cài đặt. Vược quá số này thì hạt nhân không thể phục hồi (sụp đổ). (Đối với hạt nhân sớm hơn thì số tối đa là nhỏ hơn.)  </para
+></note>
+<para
+>Đối với phần lớn tiến trình cài đặt, một số tùy chọn mặc định riêng nằm trong tập tin cấu hình của bộ tải khởi động, v.d. <literal
+>vga=normal</literal
+>, có thể được gỡ bỏ an toàn, mà có thể cho bạn có khả năng thêm tùy chọn nữa để chèn sẵn. </para>
+<note
+><para
+>Có lẽ không phải luôn luôn có khả năng xác định giá trị chứa dấu cách cho tham số khởi động, thậm chí nếu bạn định giới chúng bằng dấu trích dẫn. </para
+></note>
+  </sect2>
+  
+  <sect2 id="preseed-auto">
+  <title
+>Chế độ tự động</title>
+<para
+>Bộ cài đặt Debian có vài tính năng hợp nhất với nhau để cho phép dòng lệnh hơi đơn giản ở dấu nhắc khởi động có kết quả là việc cài đặt tự động riêng phức tạp tùy ý. Để làm rõ ý, ở đây có một số mẫu thí dụ có thể được dùng ở dấu nhắc khởi động: <informalexample
+><screen>
+auto url=autoserver
+</screen
+></informalexample>
+[auto	tự động
+url		địa chỉ Mạng
+server	máy phục vụ]
+Mẫu này nhờ máy phục vụ DHCP hỗ trợ máy tính quyết định giá trị của <literal
+>autoserver</literal
+> bằng DNS, có thể sau khi thêm miền cục bộ nếu DHCP đã cung cấp. Nếu mẫu này được dùng ở nơi Mạng có miền <literal
+>mẫu.com</literal
+> có thiết lập DHCP chuẩn, kết quả là tập tin chèn sẵn được lấy từ <literal
+>http://autoserver.mẫu.com/d-i/etch/./preseed.cfg</literal
+>. </para
+><para
+>Phần cuối cùng của địa chỉ đó (<literal
+>d-i/etch/./preseed.cfg</literal
+>) được lấy từ giá trị <literal
+>auto-install/defaultroot</literal
+>. Mặc định là nó gồm thư mục <literal
+>etch</literal
+> để cho các phiên bản sau có khả năng xác định tên mã riêng và cho phép mọi người nâng cấp một cách được điều khiển. Phần <literal
+>/./</literal
+> được dùng để ngụ ý một thư mục gốc vào đó các đường dẫn phụ có thể được neo (để sử dụng trong <literal
+>preseed/include</literal
+> và <literal
+>preseed/run</literal
+>). Bố trí này cho phép xác định tập tin hoặc dạng địa chỉ Mạng đầy đủ hoặc đường dẫn bắt đầu với dấu xuyệc / thì được neo, hoặc ngay cả đường dẫn tương đối với vị trí của tập tin đã lấy cuối cùng. Nó có thể được sử dụng để cấu tạo các văn lệnh có khả năng di động hơn mà toàn bộ phân cấp văn lệnh có thể được di chuyển sang vị trí khác, không ngắt nó, chẳng hạn khi sao chép các tập tin vào thanh USB từ máy phục vụ Mạng. Trong mẫu thí dụ này, nếu tập tin chèn sẵn đặt biến <literal
+>preseed/run</literal
+> thành giá trị <literal
+>/scripts/late_command.sh</literal
+> thì tập tin sẽ được lấy từ <literal
+>http://autoserver.example.com/d-i/etch/./scripts/late_command.sh</literal
+>. </para
+><para
+>Nếu không có hạ tầng cơ sở cục bộ kiểu DHCP hay DNS, hoặc nếu bạn không muốn sử dụng đường dẫn mặc định đến <filename
+>preseed.cfg</filename
+>, bạn vẫn còn có khả năng sử dụng một địa chỉ Mạng dứt khoát; không sử dụng yếu tố <literal
+>/./</literal
+> thì nó được neo vào đầu của đường dẫn (tức là dấu xuyệc <literal
+>/</literal
+> thứ ba trong địa chỉ đó). Ở đây có một mẫu thí dụ chỉ cần sự hỗ trợ tối thiểu của hạ tầng cơ sở cục bộ : <informalexample
+><screen>
+auto url=<replaceable
+>http://192.168.1.2/đường_dẫn/đến/tập_tin_chèn_sẵn.của_tôi</replaceable>
+</screen
+></informalexample
+> Nó hoạt động như thế: <itemizedlist spacing="compact">
+<listitem
+><para
+>địa chỉ Mạng thiếu giao thức thì <literal
+>http</literal
+> được giả sử, </para
+></listitem>
+<listitem
+><para
+>phần tên máy không chứa dấu chấm thì miền bắt nguồn từ DHCP được phụ thêm, và </para
+></listitem>
+<listitem
+><para
+>không có dấu xuyệc <literal
+>/</literal
+> nằm sau tên miền thì đường dẫn mặc định được thêm. </para
+></listitem>
+</itemizedlist>
+
+</para
+><para
+>Thêm vào việc xác định địa chỉ Mạng, bạn cũng có khả năng xác định thiết lập không có tắc động trực tiếp ứng xử của &d-i; chính nó, nhưng vẫn còn có thể được gửi cho văn lệnh nào được ghi rõ bằng <literal
+>preseed/run</literal
+> trong tập tin chèn sẵn đã nạp. Hiện thời, mẫu duy nhất của trường hợp này là <literal
+>auto-install/classes</literal
+>, mà có biệt hiệu là <literal
+>classes</literal
+>. Dùng được như thế: <informalexample
+><screen>
+auto url=<replaceable
+>mẫu.com</replaceable
+> classes=<replaceable
+>hạng_A;hạng_B</replaceable>
+</screen
+></informalexample
+> Những hạng này có thể, chẳng hạn, ngụ ý kiểu hệ thống cần cài đặt hay bản địa hoá cần dùng. </para
+><para
+>Tất nhiên có thể kéo dài khái niệm này, có lẽ bằng cách dùng miền tên <literal
+>auto-install</literal
+> nên dùng mẫu như <literal
+>auto-install/style</literal
+> để dùng trong văn lệnh. Nếu bạn muốn làm việc như thế, hãy gửi lá thư cho hộp thư chung khởi động Debian <email
+>debian-boot@lists.debian.org</email
+>, để chúng ta tránh sự xung đột giữa các tên miền, và có thể thêm biệt hiệu cho tham số đó để giúp đỡ bạn. </para
+><para
+>Nhãn khởi động <literal
+>auto</literal
+> (tự động) chưa được định nghĩa trên mọi kiến trúc. Vẫn còn đạt được cùng một kết quả bằng cách đơn giản thêm hai tham số <literal
+>auto=true priority=critical</literal
+> (tự động là đúng, ưu tiên là tới hạn) vào dòng lệnh hạt nhân. Tham số <literal
+>auto</literal
+> là biệt hiệu cho biến <literal
+>auto-install/enable</literal
+>, và điều khiển cách hoãn những câu hỏi miền địa phương và bàn phím đến sau khi có dịp chèn sẵn chúng. Còn <literal
+>priority</literal
+> là biệt hiệu cho biến <literal
+>debconf/priority</literal
+>: việc đặt nó thành <literal
+>critical</literal
+> thì ngăn cản hỏi câu nào có ưu tiên thấp hơn nó. </para
+><para
+>Tùy chọn thêm có thể có ích khi cố gắng tự động hoá việc cài đặt chạy với dịch vụ DHCP là: <literal
+>interface=auto netcfg/dhcp_timeout=60</literal
+> (giao diện là tự động, thời hạn netcf/dhcp là 60) mà làm cho máy chọn NIC thứ nhất sẵn sàng và đợi nhiều thời gian hơn để nhận trả lời cho truy vấn DHCP của nó. </para>
+  </sect2>
+
+  <sect2 id="preseed-aliases">
+  <title
+>Biệt hiệu có ích khi chèn sẵn</title>
+<para
+>Những biệt hiệu sau có thể có ích khi sử dụng khả năng chèn sẵn (chế độ tự động). </para>
+
+<!-- Setting column width does not seem to work; use non-breaking spaces
+     to separate columns a bit -->
+<informaltable frame="none">
+<tgroup cols="2"
+><tbody>
+<row
+><entry
+>auto</entry
+><entry
+>auto-install/enable</entry
+></row>
+<row
+><entry
+>classes</entry
+><entry
+>auto-install/classes</entry
+></row>
+<row
+><entry
+>fb</entry
+><entry
+>debian-installer/framebuffer</entry
+></row>
+<row
+><entry
+>locale</entry
+><entry
+>debian-installer/locale</entry
+></row>
+<row
+><entry
+>priority</entry
+><entry
+>debconf/priority</entry
+></row>
+<row
+><entry
+>tập tin</entry
+><entry
+>preseed/file</entry
+></row>
+<row
+><entry
+>url</entry
+><entry
+>preseed/url</entry
+></row>
+<row
+><entry
+>interface</entry
+><entry
+>netcfg/choose_interface</entry
+></row>
+<row
+><entry
+>hostname&nbsp;&nbsp;&nbsp;</entry
+><entry
+>netcfg/get_hostname</entry
+></row>
+<row
+><entry
+>domain</entry
+><entry
+>netcfg/get_domain</entry
+></row>
+<row
+><entry
+>protocol</entry
+><entry
+>mirror/protocol</entry
+></row>
+<row
+><entry
+>suite</entry
+><entry
+>mirror/suite</entry
+></row>
+</tbody
+></tgroup>
+</informaltable>
+
+  </sect2>
+  
+  <sect2 id="preseed-dhcp">
+  <title
+>Dùng máy phục vụ DHCP để xác định tập tin định cấu hình sẵn</title>
+<para
+>Cũng có khả năng dùng dịch vụ DHCP để xác định tập tin cấu hình sẵn cần tải xuống mạng. Giao thức DHCP cho khả năng xác định tên tập tin. Bình thường, nó là tập tin cần khởi động qua mạng, nhưng nếu nó có vẻ là địa chỉ Mạng (URL), vật chứa cài đặt mà hỗ trợ khả năng chèn sẵn qua mạng sẽ tải tập tin đó xuống địa chỉ Mạng được cung cấp rồi dùng nó là tập tin cấu hình sẵn. Đây là mẫu cách thiết lập nó trong tập tin cấu hình « dhcpd.conf » cho phiên bản 3 của trình phục vụ DHCP ISC (gói Debian « dhcp3-server »). </para>
+
+<informalexample
+><screen
+>if substring (option vendor-class-identifier, 0, 3) = "d-i" {
+    filename "http://máy/preseed.cfg";
+}
+</screen
+></informalexample>
+
+<para
+>Ghi chú rằng mẫu bên trên giới hạn tên tập tin này thành ứng dụng khách DHCP tự nhận diện là « d-i », vì vậy nó sẽ không có tác động ứng dụng khách DHCP chuẩn, chỉ trình cài đặt. Bạn cũng có khả năng định dạng đoạn đó là đoạn dòng cho chỉ một máy riêng, để tránh chèn sẵn mọi việc cài đặt trên mạng đó. </para
+><para
+>Một phương pháp tốt để dùng khả năng chèn sẵn DHCP là chèn sẵn chỉ những giá trị đặc trưng cho mạng đó, v.d. máy nhân bản Debian cần dùng. Bằng cách này, các việc cài đặt trên mạng đó sẽ chọn tự động máy nhân bản hữu ích, còn phần còn lại của tiến trình cài đặt có thể được thực hiện tương tác. Bạn nên rất cẩn thận khi dùng khả năng chèn sẵn DHCP để tự động hoá hoàn toàn tiến trình cài đặt Debian nào. </para>
+  </sect2>
+ </sect1>
+
+
+ <sect1 id="preseed-creating">
+ <title
+>Tạo tập tin định cấu hình sẵn</title>
+<para
+>Tập tin cấu hình sẵn có dạng thức được dùng bởi lệnh <command
+>debconf-set-selections</command
+>. Dạng thức chung của dòng nào nằm trong tập tin cấu hình sẵn là: <informalexample
+><screen
+>&lt;sở hữu&gt; &lt;tên câu hỏi&gt; &lt;kiểu câu hỏi&gt; &lt;giá trị&gt;
+</screen
+></informalexample>
+
+</para
+><para
+>Ghi nhớ vài quy tắc khi tạo tập tin cấu hình sẵn. </para>
+
+<itemizedlist>
+<listitem
+><para
+>Chèn chỉ một dấu cách riêng lẻ giữa « kiểu » và « giá trị »: dấu cách thêm nào sẽ được xử lý là phần của giá trị đó. </para
+></listitem>
+<listitem
+><para
+>Mỗi dòng có thể được chia ra nhiều dòng bằng cách phụ thêm xuyệc ngược (<quote
+><literal
+>\</literal
+></quote
+>) là ký tự tiếp tục dòng. Nơi thích hợp để chia dòng ra là nơi nằm sau « tên câu hỏi »; còn nơi không thích hợp là nơi giữa « kiểu câu hỏi » và « giá trị ». </para
+></listitem>
+<listitem
+><para
+>Phần lớn câu hỏi cần phải được chèn sẵn bằng giá trị tiếng Anh, không phải giá trị đã dịch. Tuy nhiên, có một số câu hỏi riêng (v.d. trong <classname
+>partman</classname
+>) trong đó cần phải dùng giá trị đã dịch. </para
+></listitem>
+<listitem
+><para
+>Một số câu hỏi riêng chấp nhận mã là giá trị, thay cho đoạn tiếng Anh được hiển thị trong khi cài đặt. </para
+></listitem>
+</itemizedlist>
+
+<para
+>Phương pháp dễ nhất để tạo tập tin cấu hình sẵn là dùng tập tin mẫu được liên kết trong <xref linkend="preseed-contents"/> như là cơ bản, rồi thêm từ từ vào nó. </para
+><para
+>Một phương pháp xen kẽ là tự chạy tiến trình cài đặt, rồi, sau khi khởi động lại, dùng chức năng <command
+>debconf-get-selections</command
+> của gói các tiện ích <classname
+>debconf-utils</classname
+> để đổ cả cơ sở dữ liệu debconf lẫn cơ sở dữ liệu cdebconf của trình cài đặt đều vào cùng một tập tin: <informalexample
+><screen
+>$ debconf-get-selections --installer &gt; <replaceable
+>tập tin</replaceable>
+$ debconf-get-selections &gt;&gt; <replaceable
+>tập tin</replaceable
+>
+</screen
+></informalexample>
+
+</para
+><para
+>Tuy nhiên, tập tin được tạo ra bằng cách này sẽ chứa một số mục riêng không nên được chèn sẵn; tập tin mẫu cũng là nơi bắt đầu thích hợp hơn với trường hợp của phần lớn người dùng. </para>
+
+<note
+><para
+>Phương pháp này nhờ trường hợp rằng, tại kết thúc của tiến trình cài đặt, cơ sở dữ liệu cdebconf của trình cài đặt được lưu vào hệ thống mới cài đặt trong thư mục <filename
+>/var/log/installer/cdebconf</filename
+>. Tuy nhiên, vì cơ sở dữ liệu đó có thể chứa thông tin nhạy cảm, theo mặc định các tập tin đó chỉ cho phép người chủ đọc thôi. </para
+><para
+>Thư mục <filename
+>/var/log/installer</filename
+>, cũng là mọi tập tin nằm trong nó sẽ bị xoá bỏ ra hệ thống của bạn nếu bạn tẩy gói thông báo cài đặt <classname
+>installation-report</classname
+>. </para
+></note>
+
+<para
+>Để kiểm tra giá trị có thể cho câu hỏi, bạn có khả năng sử dụng trình hiệu chỉnh văn bản <command
+>nano</command
+> để xem lại các tập tin nằm trong thư mục <filename
+>/var/lib/cdebconf</filename
+> trong khi cài đặt. Xem tập tin <filename
+>templates.dat</filename
+> để tìm biểu mẫu thô, còn tập tin <filename
+>questions.dat</filename
+> để tìm những giá trị hiện thời và các giá trị được gán cho biến. </para
+><para
+>Trước khi cài đặt, để kiểm tra nếu tập tin cấu hình sẵn có dạng thức hợp lệ chưa, bạn có thể chạy lệnh <command
+>debconf-set-selections -c <replaceable
+>preseed.cfg</replaceable
+></command
+>. </para>
+ </sect1>
+
+
+ <sect1 id="preseed-contents">
+ <title
+>Nội dung của tập tin định cấu hình sẵn</title>
+<para
+>Những đoạn cấu hình được dùng trong phụ lục này cũng sẵn sàng dạng tập tin định cấu hình sẵn ví dụ tại &urlset-example-preseed;. </para
+><para
+>Ghi chú rằng mẫu này dựa vào tiến trình cài đặt vào kiến trúc kiểu x86 Intel. Nếu bạn đang cài đặt vào kiến trúc khác, một số phần mẫu (v.d. phần chọn bố trí bàn phím và phần cài đặt bộ tải khởi động) có lẽ không phải là thích hợp, cũng sẽ cần phải được thay thế bằng thiết lập debconf thích hợp với kiến trúc đó. </para>
+ 
+  <sect2 id="preseed-l10n">
+  <title
+>Địa phương hoá</title>
+<para
+>Việc đặt giá trị địa phương hoá sẽ hoạt động được chỉ nếu bạn dùng khả năng chèn sẵn kiểu initrd. Đối với các phương pháp khác, tập tin cấu hình sẵn sẽ được tải chỉ sau khi hỏi các câu này. </para
+><para
+>Miền địa phương (locale) có thể được dùng để xác định cả ngôn ngữ lẫn quốc gia. Để xác định miền địa phương như là tham số khởi động, hãy dùng đoạn <userinput
+>locale=<replaceable
+>vi</replaceable
+></userinput
+> (hoặc thay thế mã ngôn ngữ/quốc gia khác dạng « nn » hay « nn_QQ »). <informalexample role="example"
+><screen
+># Miền địa phương đặt ngôn ngữ và quốc gia.
+d-i debian-installer/locale string vi
+</screen
+></informalexample>
+
+</para
+><para
+>Tiến trình cấu hình bàn phím là bao gồm việc chọn kiến trúc bàn phím (phần cứng) và bố trí bàn phím (phần mềm). Trong phần lớn trường hợp, kiến trúc bàn phím đúng được chọn theo mặc định, vì vậy bình thường không cần chèn trước nó. Bố trí bàn phím phải là hợp lệ cho kiến trúc bàn phím đã chọn. <informalexample role="example"
+><screen
+># Chọn bàn phím.
+#d-i console-tools/archs select at
+d-i console-keymaps-at/keymap select us
+# Thí dụ cho kiến trúc bàn phím khác
+#d-i console-keymaps-usb/keymap select mac-usb-us
+</screen
+></informalexample>
+
+</para
+><para
+>Để bỏ qua bước cấu hình bàn phím, hãy chèn sẵn <classname
+>console-tools/archs</classname
+> bằng <userinput
+>skip-config</userinput
+> (bỏ qua cấu hình). Kết quả là bố trí bàn phím của hạt nhân còn lại hoạt động. </para>
+
+<note
+><para
+>Các thay đổi trong lớp nhập cho hạt nhân phiên bản 2.6 đã làm cho kiến trúc bàn phím hầu như quá cũ. Đối với hạt nhân 2.6, bình thường nên chọn bố trí bàn phím kiểu <quote
+>PC</quote
+> (<userinput
+>at</userinput
+>). </para
+></note>
+  </sect2>
+
+  <sect2 id="preseed-network">
+  <title
+>Cấu hình mạng</title>
+<para
+>Tất nhiên, việc chèn sẵn bước cấu hình mạng sẽ không hoạt động được nếu bạn tải tập tin cấu hình sẵn qua mạng. Nhưng nó rất có ích khi bạn khởi động từ đĩa CD hay thanh USB. Nếu bạn tải tập tin cấu hình sẵn qua mạng, bạn có khả năng gởi tham số cấu hình mạng bằng cách sử dụng tham số khởi động hạt nhân. </para
+><para
+>Nếu bạn cần phải chọn một giao diện riêng khi khởi động qua mạng, trước khi tải tập tin cấu hình sẵn qua mạng, hãy nhập tham số khởi động như <userinput
+>interface=<replaceable
+>eth1</replaceable
+></userinput
+>. </para
+><para
+>Mặc dù thường không thể chèn sẵn cấu hình mạng khi dùng khả năng chèn trước qua mạng (dùng địa chỉ Mạng <quote
+>preseed/url</quote
+>), bạn vẫn còn có khả năng sử dụng dãy lệnh theo đây để chỉnh sửa sự hạn chế này, thí vụ nếu bạn muốn đặt địa chỉ tĩnh cho giao diện mạng. Dãy lệnh này ép buộc cấu hình mạng chạy lại sau khi tải tập tin chèn sẵn, bằng cách tạo tập lệnh <quote
+>preseed/run</quote
+> chứa những dòng này: <informalexample
+><screen
+>killall.sh dhclient
+netcfg
+</screen
+></informalexample>
+
+</para>
+
+<informalexample role="example"
+><screen
+># netcfg sẽ chọn giao diện có liên kết nếu có thể,
+# thì nó bỏ qua hiển thị danh sách nếu có nhiều giao diện.
+d-i netcfg/choose_interface select auto
+
+# Để chọn giao diện nào thay thế:
+#d-i netcfg/choose_interface select eth1
+
+# Nếu bạn có máy phục vụ DHCP chạy chậm và trình cài đặt thời hạn
+# khi đợi nó, đoạn này có thể có ích:
+#d-i netcfg/dhcp_timeout string 60
+
+# Nếu bạn thích tự cấu hình mạng, hãy bỏ ghi chú dòng này
+# và cấu hình mạng tĩnh bên dưới.
+#d-i netcfg/disable_dhcp boolean true
+
+# Nếu bạn muốn tập tin cấu hình sẵn hoạt động được
+# trên hệ thống cả có lẫn không có trình phục vụ DHCP,
+# hãy bỏ ghi chú những dòng này và cấu hình mạng tĩnh bên dưới.
+#d-i netcfg/dhcp_failed note
+#d-i netcfg/dhcp_options select Tự cấu hình mạng
+
+# Cấu hình mạng tĩnh.
+#d-i netcfg/get_nameservers string 192.168.1.1
+#d-i netcfg/get_ipaddress string 192.168.1.42
+#d-i netcfg/get_netmask string 255.255.255.0
+#d-i netcfg/get_gateway string 192.168.1.1
+#d-i netcfg/confirm_static boolean true
+
+# Tên máy/miền nào được gán từ DHCP có quyền cao hơn giá trị
+# được đặt vào đây.
+# Tuy nhiên, việc đặt giá trị vẫn còn ngăn cản câu hỏi được hiển thị,
+# thậm chí nếu giá trị đến từ DHCP.
+d-i netcfg/get_hostname string unassigned-hostname
+d-i netcfg/get_domain string unassigned-domain
+
+# Tắt hiển thị hộp thoại khoá WEP đó.
+d-i netcfg/wireless_wep string
+# Tên máy DHCP lạ mà một số nhà cung cấp dịch vụ Mạng sử dụng
+# như là kiểu mật khẩu.
+#d-i netcfg/dhcp_hostname string radish
+</screen
+></informalexample>
+
+  </sect2>
+
+  <sect2 id="preseed-mirror">
+  <title
+>Thiết lập máy nhân bản</title>
+<para
+>Phụ thuộc vào phương pháp cài đặt bạn dùng, máy nhân bản có thể được dùng để tải về thành phần cài đặt thêm, để cài đặt hệ thống cơ bản, và để thiết lập danh sách các nguồn <filename
+>/etc/apt/sources.list</filename
+> cho hệ thống đã cài đặt. </para
+><para
+>Tham số <classname
+>mirror/suite</classname
+> xác định bộ phần mềm đối với hệ thống đã cài đặt. </para
+><para
+>Tham số <classname
+>mirror/udeb/suite</classname
+> xác định bộ phần mềm đối với thành phần thêm cho trình đã cài đặt. Việc đặt tham số này có ích chỉ nếu thành phần thật sự được tải về qua mạng, cũng nên khớp với bộ phần mềm đã được dùng để xây dựng initrd cho phương pháp cài đặt được dùng. Theo mặc định, giá trị cho <classname
+>mirror/udeb/suite</classname
+> và <classname
+>mirror/suite</classname
+> là trùng. </para>
+
+<informalexample role="example"
+><screen
+>d-i mirror/country string enter information manually
+d-i mirror/http/hostname string http.us.debian.org
+d-i mirror/http/directory string /debian
+d-i mirror/http/proxy string
+
+# Bộ phần mềm cần cài đặt.
+#d-i mirror/suite string testing
+# Bộ phần mềm cần dùng để tải các thành phần cài đặt (tùy chọn).
+#d-i mirror/udeb/suite string testing
+</screen
+></informalexample>
+
+  </sect2>
+
+  <sect2 id="preseed-partman">
+  <title
+>Phân vùng</title>
+<para
+>Khả năng dùng tiến trình chèn sẵn để phân vùng đĩa cứng rất bị hạn chế thành khả năng được hỗ trợ bởi <classname
+>partman-auto</classname
+>. Bạn có thể chọn phân vùng hoặc sức chứa còn rảnh trên đĩa, hoặc toàn bộ đĩa. Bố trí của đĩa có thể được xác định bằng cách sử dụng công thức xác định sẵn, công thức riêng từ tập tin công thức, hay công thức được gồm trong tập tin định cấu hình sẵn. HIện thời không thể phân vùng nhiều đĩa bằng chèn sẵn. </para>
+
+<warning
+><para
+>Việc nhận diện đĩa phụ thuộc vào thứ tự tải trình điều khiển chúng. Nếu có nhiều đĩa trong hệ thống, hãy chắc là đĩa đúng sẽ được chọn, trước khi dùng khả năng chèn sẵn. </para
+></warning>
+
+<informalexample role="example"
+><screen
+># Nếu hệ thống có sức chứa còn rảnh, bạn có khả năng chọn
+# phân vùng chỉ sức chứa đó.
+# Ghi chú : dòng đầy phải được chèn sẵn với giá trị đã dịch.
+#d-i partman-auto/init_automatically_partition \
+#      select Hướng dẫn — dùng chỗ rỗng liên tục lớn nhất
+
+# Hoặc bạn có khả năng xác định một đĩa cần phân vùng.
+# Tên thiết bị có thể được nhập theo dạng hoặc devfs hoặc
+# khác devfs truyền thống. Chẳng hạn, để sử dụng đĩa thứ nhất:
+d-i partman-auto/disk string /dev/discs/disc0/disc
+# Hơn nữa, bạn sẽ cần phải xác định phương pháp cần dùng.
+# Những phương pháp co sẵn hiện thời là:
+# "regular", "lvm" and "crypto"
+d-i partman-auto/method string lvm
+
+# Nếu một của những đĩa sẽ được phân vùng tự động có chứa
+# một cấu hình LVM cũ, người dùng sẽ bình thường nhận cảnh báo.
+# Cảnh báo này có thể được chèn sẵn ra:
+d-i partman-auto/purge_lvm_from_device boolean true
+# Cũng vậy với việc xác nhận khi ghi các phân vùng LVM.
+d-i partman-lvm/confirm boolean true
+
+# Bạn có khả năng chọn bất cứ điều nào trong
+# những công thức phân vùng định sẵn.
+# Ghi chú : dòng đầy phải được chèn sẵn với giá trị đã dịch.
+d-i partman-auto/choose_recipe \
+       select Mọi tập tin trên một phân vùng (khuyên cho người dùng mới)
+#d-i partman-auto/choose_recipe \
+#       select Phân vùng « /home » riêng
+#d-i partman-auto/choose_recipe \
+#       select Các phân vùng « /home », « /usr », « /var », và « /tmp » riêng
+
+# Hoặc cung cấp một công thức riêng...
+# Định dạng công thức được diễn tả trong tập tin:
+# devel/partman-auto-recipe.txt.
+# Nếu bạn có khả năng chèn công thức đó vào môi trường
+# của bộ cài đặt Debian, bạn đơn giản có thể chỉ tới nó.
+#d-i partman-auto/expert_recipe_file string /hd-media/recipe
+
+# Không thì bạn có khả năng chèn toàn bộ công thức vào tập tin chèn sẵn,
+# dạng cùng một dòng (hợp lệ). Mẫu này tạo một phân vùng /boot
+# (khởi động) nhỏ, thích hợp với chỗ trao đổi, và sử dụng sức chứa
+# còn lại cho phân vùng gốc:
+#d-i partman-auto/expert_recipe string                         \
+#      boot-root ::                                            \
+#              40 50 100 ext3                                  \
+#                      $primary{ } $bootable{ }                \
+#                      method{ format } format{ }              \
+#                      use_filesystem{ } filesystem{ ext3 }    \
+#                      mountpoint{ /boot }                     \
+#              .                                               \
+#              500 10000 1000000000 ext3                       \
+#                      method{ format } format{ }              \
+#                      use_filesystem{ } filesystem{ ext3 }    \
+#                      mountpoint{ / }                         \
+#              .                                               \
+#              64 512 300% linux-swap                          \
+#                      method{ swap } format{ }                \
+#              .
+
+# Điều này làm cho partman tự động phân vùng, không cần xác nhận.
+d-i partman/confirm_write_new_label boolean true
+d-i partman/choose_partition \
+       select Phân vùng xong và ghi các thay đổi vào đĩa
+d-i partman/confirm boolean true
+</screen
+></informalexample>
+
+  </sect2>
+
+  <sect2 id="preseed-partman-raid">
+  <title
+>Phân vùng bằng RAID</title>
+<para
+>Bạn cũng có thể sử dụng khả năng chèn sẵn để thiết lập phân vùng trên mảng RAID phần mềm. Có hỗ trợ RAID lớp 0, 1 và 5, thì tạo mảng bị suy biến và xác định thiết bị thêm. Nếu bạn sử dụng RAID 1, bạn có khả năng chèn sẵn bộ tải khởi động grub để cài đặt vào mọi thiết bị được dùng trong mảng đó ; xem <xref linkend="preseed-bootloader"/>. </para>
+
+<warning
+><para
+>Kiểu việc phân vùng tự động này dễ dàng chạy sai. Cũng là một thành phần rất mới vẫn còn có thể chứa lỗi, hoặc còn thiếu khả năng quản lý lỗi. Người dùng chịu trách nhiệm về việc điều chỉnh công thức khác nhau là hợp lý và không xung đột. Hãy kiểm tra bản ghi hệ thống <filename
+>/var/log/syslog</filename
+> nếu bạn gặp lỗi. </para
+><para
+>Ghi chú rằng chỉ RAID 0 và RAID 1 đã được thử ra bởi những nhà phát triển thành phần đó. RAID 5 chưa được thử ra. Thiết lập RAID cấp cao có mảng bị suy biến hoặc thiết bị thêm đã được thử ra chỉ một ít. </para
+></warning>
+
+<informalexample
+><screen
+># GHI CHÚ : tùy chọn này có chất lượng của phiên bản B:
+# bạn nên sử dụng cẩn thận.
+
+# Phương pháp nên được đặt thành « raid ».
+#d-i partman-auto/method string raid
+# Hãy xác định những đĩa cần phân vùng.
+# Cả chúng sẽ nhận cùng một bố trí, vậy việc này sẽ hoạt động
+# được chỉ nếu mọi đĩa có cùng một kích cỡ.
+#d-i partman-auto/disk string /dev/discs/disc0/disc /dev/discs/disc1/disc
+
+# Sau đó, bạn cần phải xác định những phân vùng vật lý sẽ được dùng.
+#d-i partman-auto/expert_recipe string \
+#      multiraid ::                                         \
+#              1000 5000 4000 raid                          \
+#                      $primary{ } method{ raid }           \
+#              .                                            \
+#              64 512 300% raid                             \
+#                      method{ raid }                       \
+#              .                                            \
+#              500 10000 1000000000 raid                    \
+#                      method{ raid }                       \
+#              .
+
+# Cuối cùng bạn cần phải ghi rõ cách sử dụng những phân vùng
+# đã xác định trước trong thiết lập RAID. Nhớ để sử dụng số hiệu
+# phân vùng đúng cho mỗi phân vùng hợp lý.
+# Các tham số là:
+# &lt;raidtype&gt; &lt;devcount&gt; &lt;sparecount&gt; &lt;fstype&gt; &lt;mountpoint&gt; \
+#          &lt;devices&gt; &lt;sparedevices&gt;
+# RAID lớp 0, 1 và 5 được hỗ trợ ; các thiết bị định giới bằng
+# dấu băm « # »
+#d-i partman-auto-raid/recipe string \
+#    1 2 0 ext3 /                                           \
+#          /dev/discs/disc0/part1#/dev/discs/disc1/part1    \
+#    .                                                      \
+#    1 2 0 swap -                                           \
+#          /dev/discs/disc0/part5#/dev/discs/disc1/part5    \
+#    .                                                      \
+#    0 2 0 ext3 /home                                       \
+#          /dev/discs/disc0/part6#/dev/discs/disc1/part6    \
+#    .
+
+# Việc này gây ra partman phân vùng tự động, không cần xác nhận.
+d-i partman-md/confirm boolean true
+d-i partman/confirm_write_new_label boolean true
+d-i partman/choose_partition \
+       select Phân vùng xong và ghi các thay đổi vào đĩa
+d-i partman/confirm boolean true
+</screen
+></informalexample>
+
+  </sect2>
+
+  <sect2 id="preseed-time">
+  <title
+>Thiết lập đồng hồ và múi giờ</title>
+
+<informalexample role="example"
+><screen
+># Điều khiển nếu đồng hồ phần cứng được đặt thành UTC không.
+d-i clock-setup/utc boolean true
+
+# Bạn có thể đặt điều này thành bất cứ giá trị nào hợp lệ cho $TZ (múi giờ),
+# xem nội dung của « /usr/share/zoneinfo/ » để tìm giá trị hợp lệ.
+d-i time/zone string US/Eastern
+</screen
+></informalexample>
+
+  </sect2>
+
+  <sect2 id="preseed-apt">
+  <title
+>Thiết lập apt</title>
+<para
+>Tiến trình thiết lập danh sách các nguồn của apt <filename
+>/etc/apt/sources.list</filename
+> và các tùy chọn cấu hình cơ bản được tự động hoá hoàn toàn, dựa vào phương pháp cài đặt và trả lời câu hỏi trước. Tùy chọn bạn có khả năng thêm kho phần mềm (cục bộ) khác. </para>
+
+<informalexample role="example"
+><screen
+># Bạn có khả năng chọn cài đặt phần mềm kiểu khác tự do
+# và đã đóng góp.
+#d-i apt-setup/non-free boolean true
+#d-i apt-setup/contrib boolean true
+# Hủy ghi chú dòng này để tránh thêm các nguồn bảo mật,
+# hoặc thêm một tên máy để sử dụng máy phục vụ
+# khác với « security.debian.org ».
+#d-i apt-setup/security_host chuỗi
+
+# Các kho thêm, local[0-9] có sẵn
+#d-i apt-setup/local0/repository chuỗi \
+#       deb http://local.server/debian stable main
+#d-i apt-setup/local0/comment chuỗi máy_phục_vụ_cục_bộ
+# Bật các dòng kiểu deb-src
+#d-i apt-setup/local0/source boolean true
+# Địa chỉ Mạng tới khoá công của kho cục bộ ;
+# bạn cần phải cung cấp một khoá: không thì apt sẽ không chấp nhận
+# kho lưu không được xác thực nên dòng sources.list sẽ bị hủy ghi chú.
+#d-i apt-setup/local0/key chuỗi http://máy_phục_vụ_cục_bộ/khoá
+</screen
+></informalexample>
+
+  </sect2>
+
+  <sect2 id="preseed-account">
+  <title
+>Thiết lập tài khoản</title>
+<para
+>Có khả năng chèn sẵn mật khẩu cho tài khoản người chủ, cũng tên và mật khẩu cho tài khoản của người dùng chuẩn thứ nhất. Đối với mật khẩu, bạn có thể dùng giá trị nhập thô (không mật mã) hay <emphasis
+>băm</emphasis
+> kiểu MD5. </para>
+<warning
+><para
+>Ghi chú rằng tiến trình chèn sẵn mật khẩu không phải là bảo mật hoàn toàn, vì mọi người có quyền truy cập tập tin cấu hình sẵn thì biết các mật khẩu nằm trong nó. Việc dùng băm MD5 được xem là tốt hơn một ít theo các điều khoản của bảo mật, nhưng nó cũng có thể cung cấp ý thức bảo mật giả, vì cách truy cập băm MD5 cho phép người khác tấn công bằng sức mạnh vũ phu. </para
+></warning>
+
+<informalexample role="example"
+><screen
+># Bỏ qua bước tạo tài khoản người chủ (tài khoản kiểu người dùng chuẩn
+# sẽ có khả năng dùng sudo).
+#d-i passwd/root-login boolean false
+# Hoặc để bỏ qua bước tạo tài khoản kiểu người dùng chuẩn:
+#d-i passwd/make-user boolean false
+
+# Mật khẩu người chủ, hoặc bằng nhập thô :
+#d-i passwd/root-password password r00tme
+#d-i passwd/root-password-again password r00tme
+# hoặc được mật mã bằng băm MD5:
+#d-i passwd/root-password-crypted password [băm MD5]
+
+# Để tạo tài khoản kiểu người dùng chuẩn.
+#d-i passwd/user-fullname string Debian User
+#d-i passwd/username string debian
+# Mật khẩu của người dùng chuẩn, hoặc bằng nhập thô :
+#d-i passwd/user-password password insecure
+#d-i passwd/user-password-again password insecure
+# hoặc được mật mã bằng băm MD5:
+#d-i passwd/user-password-crypted password [băm MD5]
+</screen
+></informalexample>
+
+<para
+>Biến <classname
+>passwd/root-password-crypted</classname
+> và <classname
+>passwd/user-password-crypted</classname
+> cũng có thể được chèn trước bằng <quote
+>!</quote
+> là giá trị. Trong trường hợp đó, tài khoản tương ứng bị tắt. Trường hợp này có thể là tiện với tài khoản người chủ, miễn là phương pháp xen kẽ được thiết lập để cho phép hoạt động quản lý hay đăng nhập người chủ (thí dụ bằng cách dùng khả năng xác thức khoá SSH hay <command
+>sudo</command
+>). </para
+><para
+>Băm MD5 cho mật khẩu có thể được tạo ra bằng lệnh theo đây. <informalexample
+><screen
+>$ echo "r00tme" | mkpasswd -s -H MD5
+</screen
+></informalexample>
+
+</para>
+  </sect2>
+
+  <sect2 id="preseed-base-installer">
+  <title
+>Cài đặt hệ thống cơ bản</title>
+<para
+>Thật sự không thể chèn sẵn nhiều vào giai đoạn cài đặt này. Chỉ hỏi câu về cách cài đặt hạt nhân. </para>
+
+<informalexample role="example"
+><screen
+># Chọn bộ tạo ra « initramfs » được dùng để tạo ra initrd cho hạt nhân 2.6.
+#d-i base-installer/kernel/linux/initramfs-generators string yaird
+</screen
+></informalexample>
+
+  </sect2>
+
+  <sect2 id="preseed-bootloader">
+  <title
+>Cài đặt bộ tải khởi động</title>
+
+<informalexample role="example"
+><screen
+># Grub là bộ tải khởi động mặc định (cho x86).
+# Nếu bạn muốn cài đặt lilo thay thế, hãy hủy ghi chú dòng này:
+#d-i grub-installer/skip boolean true
+
+# Lệnh này hơi an toàn đặt, nó gây ra grub tự động cài đặt
+# vào mục ghi khởi động chủ (MBR) nếu không có hệ điều hành
+# khác được phát hiện trên máy đó.
+d-i grub-installer/only_debian boolean true
+
+# Điều này làm cho grub-installer cài đặt vào MBR thậm chí nếu
+# nó phát hiện hệ điều hành khác, sự chọn ít an toàn hơn vì
+# có lẽ nó không thể khởi động hệ điều hành khác đó.
+d-i grub-installer/with_other_os boolean true
+
+# Hoặc nếu bạn muốn cài đặt vào nơi khác với MBR,
+# hãy hủy ghi chú và chỉnh sửa những dòng này:
+#d-i grub-installer/only_debian boolean false
+#d-i grub-installer/with_other_os boolean false
+#d-i grub-installer/bootdev  chuỗi (hd0,0)
+# Để cài đặt grub vào nhiều đĩa:
+#d-i grub-installer/bootdev  chuỗi (hd0,0) (hd1,0) (hd2,0)
+</screen
+></informalexample>
+
+  </sect2>
+
+  <sect2 id="preseed-pkgsel">
+  <title
+>Chọn gói phần mềm</title>
+<para
+>Bạn có khả năng chọn cài đặt bất cứ sự phối hợp công việc nào sẵn sàng. Vào lúc viết câu này, các công việc sẵn sàng gồm: </para>
+
+<itemizedlist>
+<listitem
+><para>
+  <userinput
+>chuẩn</userinput>
+</para
+></listitem>
+<listitem
+><para>
+  <userinput
+>môi trường làm việc</userinput>
+</para
+></listitem>
+<listitem
+><para>
+  <userinput
+>môi trường làm việc Gnome</userinput>
+</para
+></listitem>
+<listitem
+><para>
+  <userinput
+>môi trường làm việc KDE</userinput>
+</para
+></listitem>
+<listitem
+><para>
+  <userinput
+>trình phục vụ Mạng</userinput>
+</para
+></listitem>
+<listitem
+><para>
+  <userinput
+>trình phục vụ in</userinput>
+</para
+></listitem>
+<listitem
+><para>
+  <userinput
+>trình phục vụ DNS</userinput>
+</para
+></listitem>
+<listitem
+><para>
+  <userinput
+>trình phục vụ tập tin</userinput>
+</para
+></listitem>
+<listitem
+><para>
+  <userinput
+>trình phục vụ thư tín</userinput>
+</para
+></listitem>
+<listitem
+><para>
+  <userinput
+>cơ sở dữ liệu SQL</userinput>
+</para
+></listitem>
+<listitem
+><para>
+  <userinput
+>máy tính xách tay</userinput>
+</para
+></listitem>
+</itemizedlist>
+
+<para
+>Bạn cũng có khả năng chọn không cài đặt công việc nào, ép buộc cài đặt một bộ gói bằng cách khác. Khuyên bạn luôn luôn gồm ít nhất công việc <userinput
+>chuẩn</userinput
+>. </para
+><para
+>Nếu bạn muốn cài đặt một số gói riêng, thêm vào những gói được cài đặt trong các công việc, bạn có khả năng sử dụng tham số <classname
+>pkgsel/include</classname
+>. Giá trị của tham số này có thể là danh sách các gói được định giới bằng hoặc dấu phẩy hoặc dấu cách, cũng dễ dàng dùng trên dòng lệnh. </para>
+
+<informalexample role="example"
+><screen
+>tasksel tasksel/first multiselect chuẩn, môi trường làm việc
+#tasksel tasksel/first multiselect chuẩn, trình phục vụ Mạng
+#tasksel tasksel/first multiselect chuẩn, môi trường làm việc KDE
+
+# Các gói thêm riêng cần cài đặt
+#d-i pkgsel/include string openssh-server build-essential
+
+# Một số phiên bản riêng của trình cài đặt có khả năng thông báo lại
+# phần mềm nào bạn đã cài đặt, và phần mềm nào bạn dùng.
+# Giá trị mặc định là không thông báo lại, nhưng việc thông báo
+# giúp đỡ dự án Debian quyết định phần mềm nào thường được dùng
+# thì gồm nó trên đĩa CD.
+#popularity-contest popularity-contest/participate boolean false
+</screen
+></informalexample>
+
+  </sect2>
+
+  <sect2 id="preseed-finish">
+  <title
+>Làm xong giai đoạn cài đặt thứ nhất</title>
+
+<informalexample role="example"
+><screen
+># Tránh thông điệp cuối cùng về cài đặt đã xong.
+d-i finish-install/reboot_in_progress note
+
+# Dòng này sẽ ngăn cản trình cài đặt đẩy ra đĩa CD trong khi khởi động,
+# mà có ích trong một số trường hợp riêng.
+#d-i cdrom-detect/eject boolean false
+</screen
+></informalexample>
+
+  </sect2>
+
+  <sect2 id="preseed-mailer">
+  <title
+>Cấu hình trình thư</title>
+<para
+>Trong tiến trình cài đặt chuẩn, trình exim hỏi chỉ vài câu. Ở đây có diễn tả cách tránh ngay cả vài câu đó. Có khả năng chèn sẵn một cách phức tạp hơn. </para>
+
+<informalexample role="example"
+><screen
+>exim4-config exim4/dc_eximconfig_configtype \
+       select không định cấu hình vào lúc này
+exim4-config exim4/no_config boolean true
+exim4-config exim4/no_config boolean true
+exim4-config exim4/dc_postmaster string
+</screen
+></informalexample>
+
+  </sect2>
+
+  <sect2 id="preseed-X">
+  <title
+>Cấu hình X</title>
+<para
+>Có thể chèn sẵn cấu hình X của Debian, nhưng rất có thể là bạn cần phải biết vài chi tiết về phần mềm ảnh động của máy tính, vì trình cấu hình X của Debian không cấu hình tự động đầy đủ mọi thứ. </para>
+
+<informalexample role="example"
+><screen
+># X có khả năng phát hiện trình điều khiển đúng cho một số thẻ riêng,
+# nhưng nếu bạn đang chèn sẵn, bạn đè lên các sự chọn của nó.
+# Tuy nhiên, « vesa » sẽ hoạt động được trong phần lớn nơi.
+#xserver-xorg xserver-xorg/config/device/driver select vesa
+
+# Cẩn thận: khi phát hiện tự động con chuột, nếu việc này bị lỗi,
+# X sẽ thử lại nó liên tục. Vậy có thể bị vòng lặp vô hạn
+# nếu con chuột không phải được phát hiện tự động.
+#xserver-xorg xserver-xorg/autodetect_mouse boolean true
+
+# Khuyên bạn phát hiện tự động bộ trình bày.
+xserver-xorg xserver-xorg/autodetect_monitor boolean true
+# Bỏ ghi chú dòng này nếu máy tính của bạn có bộ trình bày kiểu LCD
+# (màn hình phẳng hay máy tính xách tay).
+#xserver-xorg xserver-xorg/config/monitor/lcd boolean true
+# X có ba đường dẫn cấu hình cho bộ trình bày.
+# Dòng bên dưới chèn sẵn đường dẫn « vừa », mà sẵn sàng luôn luôn.
+# Đường dẫn « đơn giản » có thể không sẵn sàng,
+# và đường dẫn « cấp cao » hỏi câu nhiều quá.
+xserver-xorg xserver-xorg/config/monitor/selection-method \
+       select vừa
+xserver-xorg xserver-xorg/config/monitor/mode-list \
+       select 1024x768 @ 60 Hz
+</screen
+></informalexample>
+
+  </sect2>
+
+  <sect2 id="preseed-other">
+  <title
+>Chèn trước gói khác</title>
+
+<informalexample role="example"
+><screen
+># Phụ thuộc vào phần mềm nào bạn chọn cài đặt, hoặc nếu tiến trình
+# cài đặt bị lỗi, câu thêm có thể được hỏi. Bạn cũng có khả năng
+# chèn sẵn chúng. Để xem danh sách mọi câu có thể được hỏi
+# trong tiến trình cài đặt, hãy cài đặt xong, rồi chạy hai lệnh này:
+#   debconf-get-selections --installer 
+> file
+#   debconf-get-selections 
+>
+> file
+</screen
+></informalexample>
+
+  </sect2>
+ </sect1>
+
+
+ <sect1 id="preseed-advanced">
+ <title
+>Tùy chọn cấp cao</title>
+
+  <sect2 id="preseed-hooks">
+  <title
+>Chạy lệnh riêng trong khi cài đặt</title>
+<para
+>Những công cụ chèn sẵn cũng cung cấp một tùy chọn rất mạnh và dẻo : khả năng chạy lệnh hay văn lệnh tại một số điểm thời riêng trong tiến trình cài đặt. </para>
+
+<informalexample role="example"
+><screen
+># Tiến trình chèn sẵn trình cài đặt Debian không phải là bảo mật.
+# Không có gì trong trình cài đặt mà kiểm tra bắt sự cố gắng tràn bộ đệm
+# hay cách khác lạm dụng giá trị nằm trong tập tin cấu hình sẵn
+# như điều này. Hãy dùng chỉ tập tin cấu hình sẵn có nguồn đáng tin !
+# Để chứng minh tình trạng không bảo mật của tập tin cấu hình sẵn,
+# bên dưới có phương pháp chạy tự động bất cứ lệnh trình bao nào
+# bên trong trình cài đặt.
+
+# Lệnh thứ nhất nào được chạy càng sớm càng có thể, đúng sau khi
+# đọc thông tin chèn sẵn.
+#d-i preseed/early_command string anna-install some-udeb
+
+# Lệnh bên dưới được chạy đúng trước khi cài đặt xong, nhưng khi
+# vẫn còn có thư mục « /target » có ích. Bạn có thể chroot (chuyển đổi
+# vị trí của thư mục gốc) đến « /target » và dùng nó một cách trực tiếp,
+# hoặc dùng những lệnh « apt-install » (cài đặt bằng apt) và « in-target »
+# (trong đích) để cài đặt dễ dàng gói và chạy lệnh trên hệ thống đích.
+#d-i preseed/late_command string apt-install zsh; in-target chsh -s /bin/zsh
+</screen
+></informalexample>
+
+  </sect2>
+  
+  <sect2 id="preseed-seenflag">
+  <title
+>Dùng khả năng chèn sẵn để thay đổi giá trị mặc định</title>
+<para
+>Có thể dùng khả năng chèn sẵn để thay đổi trả lời mặc định đối với câu hỏi nào, còn câu đó vẫn được hỏi. Để làm như thế, cờ <firstterm
+>seen</firstterm
+> (đã xem) phải được đặt lại thành <quote
+>false</quote
+> (sai) sau khi đặt giá trị cho câu hỏi nào. </para>
+
+<informalexample
+><screen
+>d-i phu/ba chuỗi giá_trị
+d-i phu/ba seen false
+</screen
+></informalexample>
+
+  </sect2>
+
+  <sect2 id="preseed-chainload">
+  <title
+>Tải dây chuyền tập tin định cấu hình sẵn</title>
+<para
+>Có thể gồm một số tập tin cấu hình sẵn khác từ chỉ một tập tin định cấu hình sẵn có liệt kê chúng. Thiết lập nào nằm trong các tập tin cấu hình sẵn đó sẽ đè lên thiết lập tồn tại từ tập tin được tải trước. Tính năng này cho khả năng, lấy thí dụ, để thiết lập mạng chung cho chỗ bạn trong tập tin này, còn để thiết lập chi tiết hơn cho một số cấu hình riêng trong các tập tin khác. </para>
+
+<informalexample
+><screen
+># Có thể liệt kê nhiều tập tin, định giới bằng dấu cách: các tập tin đó
+# sẽ được nạp. Những tập tin được gồm, lần lượt, cũng có thể chứa chỉ thị
+# chèn sẵn/gồm riêng. Ghi chú rằng nếu tên tập tin là tương đối,
+# nó bắt nguồn từ cùng một thư mục với tập tin cấu hình sẵn gồm chúng.
+#d-i preseed/include chuỗi x.cfg
+
+# Trình cài đặt có khả năng (tùy chọn) thẩm tra tổng kiểm của tập tin
+# cấu hình sẵn, trước khi dùng nó. HIện thời chỉ hỗ trợ tổng kiểm
+# kiểu md5sum; hãy liệt kê các tổng md5sum theo cùng một thứ tự
+# với danh sách các tập tin cần gồm.
+#d-i preseed/include/checksum string 5da499872becccfeda2c4872f9171c3d
+
+# Dẻo hơn, dòng bên dưới chạy lệnh trình bao : xuất tên của
+# tập tin cấu hình sẵn thì gồm các tập tin đó.
+#d-i preseed/include_command \
+#      string echo if [ "`hostname`" = bob ]; then echo bob.cfg; fi
+
+# Dẻo nhất, dòng này tải về chương trình rồi chạy nó. Chương trình đó
+# có khả năng dùng lệnh như « debconf-set » (debconf đặt) để thao tác
+# cơ sở dữ liệu cấu hình « debconf ». Có thể liệt kê danh sách các văn lệnh,
+# định giới bằng dấu cách. Ghi chú rằng nếu tên tập tin là tương đối,
+# tên đó bắt nguồn từ cùng một thư mục với tập tin cấu hình sẵn
+# có chạy chúng.
+#d-i preseed/run string phu.sh
+</screen
+></informalexample>
+
+<para
+>Cũng có thể nạp dây chuyền từ giải đoạn chèn sẵn kiểu initrd hay tập tin, đến việc chèn sẵn qua mạng, bằng cách đặt <literal
+>preseed/url</literal
+> trong những tập tin sớm hơn. Sự chọn này sẽ gây ra việc chèn sẵn qua mạng được thực hiện khi mạng trở thành hoạt động. Hãy làm cẩn thận, vì có hai tiến trình chèn sẵn riêng: chẳng hạn, bạn có hai dịp chạy lệnh <literal
+>preseed/url</literal
+>, điều thứ hai được tạo một khi mạng trở thành hoạt động. </para>
+
+  </sect2>
+ </sect1>
+</appendix>
+<!--   End of file appendix/preseed.xml -->
