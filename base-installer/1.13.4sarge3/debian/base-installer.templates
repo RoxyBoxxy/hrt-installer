@@ -1,0 +1,254 @@
+Template: base-installer/use_unclean_target
+Type: boolean
+Default: false
+_Description: Proceed with installation to unclean target?
+ The target file system contains files from a past installation. These files
+ could break the installation process or cause a broken system to be
+ installed.
+
+Template: base-installer/cannot_install
+Type: error
+_Description: Cannot install Debian
+ The installer cannot figure out how to install Debian. No installable CD-ROM
+ was found and no valid mirror was configured.
+
+Template: base-installer/no_target_mounted
+Type: error
+_Description: No file system mounted on /target
+ Before the installation can proceed, a root file system must be mounted on
+ /target. The partitioner and formatter should have done this for you.
+
+Template: base-installer/unclean_target_cancel
+Type: error
+_Description: Not installing to unclean target
+ The installation to the target file system has been canceled, as the target
+ file system contains files from a past installation, which could break the
+ installation process or cause a broken system to be installed. You should
+ go back and erase or format the target file system before
+ proceeding with the install.
+
+Template: base-installer/debootstrap-failed
+Type: error
+_Description: Failed to install the base system
+ The base system installation into /target/ failed.
+ .
+ Check /var/log/messages or see virtual console 3 for the details.
+
+Template: base-installer/debootstrap/error-exitcode
+Type: error
+_Description: Base system installation error
+ The debootstrap program exited with an error (return value ${EXITCODE}).
+ .
+ Check /var/log/messages or see virtual console 3 for the details.
+
+Template: base-installer/debootstrap/error-abnormal
+Type: error
+_Description: Base system installation error
+ The debootstrap program exited abnormally.
+ .
+ Check /var/log/messages or see virtual console 3 for the details.
+
+Template: base-installer/debootstrap/fallback-error
+Type: error
+_Description: Debootstrap Error
+ The following error occurred:
+ .
+ ${ERROR}
+ .
+ Check /var/log/messages or see virtual console 3 for the details.
+
+Template: base-installer/kernel/no-kernel
+Type: error
+_Description: Unable to install a kernel
+ No kernel package is selected for installation.
+
+Template: base-installer/kernel/failed-install
+Type: error
+_Description: Unable to install the selected kernel
+ An error was returned while trying to install the kernel into the
+ target system.
+ .
+ Kernel package: '${KERNEL}'.
+ .
+ Check /var/log/messages or see virtual console 3 for the details.
+
+Template: base-installer/kernel/which-kernel
+Type: select
+Choices: ${KERNELS}
+_Description: Kernel to install:
+ The list shows the available kernels. Please choose one of them in order
+ to make the system bootable from the hard drive.
+
+Template: base-installer/kernel/no-kernels-found
+Type: error
+_Description: No installable kernel found
+ No installable kernel was found in the defined APT sources.
+ .
+ The current default kernel package is '${KERNEL}'.
+ .
+ You may try to continue though this rather strange error is probably fatal.
+
+Template: base-installer/kernel/failed-initrd-tools-install
+Type: error
+_Description: Unable to install initrd-tools
+ An error was returned while trying to install the initrd-tools package 
+ onto the target system.
+ .
+ Check /var/log/messages or see virtual console 3 for the details.
+
+Template: base-installer/debootstrap/error/notpredl
+Type: error
+_Description: Debootstrap Error
+ ${SUBST0} was not pre-downloaded.
+
+Template: base-installer/debootstrap/error/unknownloc
+Type: error
+_Description: Debootstrap Error
+ Unknown location ${SUBST0}.
+
+Template: base-installer/debootstrap/error/nogetrel
+Type: error
+_Description: Debootstrap Error
+ Failed getting Release file ${SUBST0}.
+
+Template: base-installer/debootstrap/error/invalidrel
+Type: error
+_Description: Debootstrap Error
+ Invalid Release file: no valid components.
+
+Template: base-installer/debootstrap/error/missingrelentry
+Type: error
+_Description: Debootstrap Error
+ Invalid Release file: no entry for ${SUBST0}.
+
+Template: base-installer/debootstrap/error/couldntdl
+Type: error
+_Description: Debootstrap Error
+ Couldn't download ${SUBST0}.
+
+Template: base-installer/debootstrap/error/interrupted
+Type: error
+_Description: Debootstrap Error
+ Interrupt caught... Exiting.
+
+Template: base-installer/progress/installing-debian
+Type: text
+_Description: Installing the Debian base system
+
+Template: base-installer/progress/preparing
+Type: text
+_Description: Preparing to install the Debian base system...
+
+Template: base-installer/progress/fallback
+Type: text
+_Description: Running ${SCRIPT}...
+
+Template: base-installer/debootstrap/section/check_target
+Type: text
+_Description: Checking the target file system
+
+Template: base-installer/debootstrap/section/downrel
+Type: text
+_Description: Retrieving Release file
+
+Template: base-installer/debootstrap/section/sizedebs
+Type: text
+_Description: Finding package sizes
+
+Template: base-installer/debootstrap/section/downpkgs
+Type: text
+_Description: Retrieving Packages files
+
+Template: base-installer/debootstrap/section/downdebs
+Type: text
+_Description: Retrieving packages
+
+Template: base-installer/debootstrap/section/extractpkgs
+Type: text
+_Description: Extracting packages
+
+Template: base-installer/debootstrap/section/instbase
+Type: text
+_Description: Installing the base system
+
+Template: base-installer/debootstrap/fallback-info
+Type: text
+_Description: ${SECTION}: ${INFO}...
+
+Template: base-installer/debootstrap/info/validating
+Type: text
+_Description: Validating ${SUBST0}...
+
+Template: base-installer/debootstrap/info/retrieving
+Type: text
+_Description: Retrieving ${SUBST0}...
+
+Template: base-installer/debootstrap/info/extracting
+Type: text
+_Description: Extracting ${SUBST0}...
+
+Template: base-installer/debootstrap/info/checkingsize
+Type: text
+_Description: Checking package size: ${SUBST0}...
+
+Template: base-installer/debootstrap/info/instcore
+Type: text
+_Description: Installing core packages...
+
+Template: base-installer/debootstrap/info/unpackreq
+Type: text
+_Description: Unpacking required packages...
+
+Template: base-installer/debootstrap/info/confreq
+Type: text
+_Description: Configuring required packages...
+
+Template: base-installer/debootstrap/info/instbase
+Type: text
+_Description: Installing base packages...
+
+Template: base-installer/debootstrap/info/basesuccess
+Type: text
+_Description: Base system installed successfully.
+
+Template: base-installer/section/configure_apt
+Type: text
+_Description: Configuring APT sources...
+
+Template: base-installer/section/apt_update
+Type: text
+_Description: Updating the list of available packages...
+
+Template: base-installer/section/install_extra
+Type: text
+_Description: Installing extra packages...
+
+Template: base-installer/section/install_extra_package
+Type: text
+_Description: Installing extra packages - retrieving and installing ${SUBST0}...
+
+Template: base-installer/section/create_devices
+Type: text
+_Description: Creating device files...
+
+Template: base-installer/section/pick_kernel
+Type: text
+_Description: Selecting the kernel to install...
+
+Template: base-installer/section/install_kernel
+Type: text
+_Description: Installing the kernel...
+
+Template: base-installer/section/install_kernel_package
+Type: text
+_Description: Installing the kernel - retrieving and installing ${SUBST0}...
+
+Template: base-installer/section/install_pcmcia_modules
+Type: text
+_Description: Installing the PCMCIA modules
+
+Template: debian-installer/base-installer/title
+Type: text
+#  Item in the main menu to select this package
+_Description: Install the base system
+
