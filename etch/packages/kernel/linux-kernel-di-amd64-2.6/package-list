@@ -5,24 +5,37 @@
 #
 Package: kernel-image
 
+Package: core-modules
+Depends: kernel-image
+Priority: standard
+Description: Core modules
+ This package contains core modules for the kernel, that will almost
+ always be needed.
+
+Package: ext2-modules
+Depends: kernel-image, core-modules
+
+Package: ext3-modules
+Depends: kernel-image, core-modules
+
 Package: fat-modules
 Priority: standard
 
 Package: nic-modules
-Depends: kernel-image, nic-shared-modules, firmware-modules, firewire-core-modules
+Depends: kernel-image, nic-shared-modules, core-modules, firewire-core-modules
 
 Package: scsi-modules
-Depends: kernel-image, scsi-core-modules, scsi-common-modules, parport-modules, cdrom-core-modules, firmware-modules
+Depends: kernel-image, scsi-core-modules, scsi-common-modules, parport-modules, cdrom-core-modules, core-modules
 
 Package: nic-extra-modules
-Depends: kernel-image, nic-shared-modules, firmware-modules, crc-modules
+Depends: kernel-image, nic-shared-modules, core-modules, crc-modules
 
 Package: nic-usb-modules
-Depends: kernel-image, nic-shared-modules, usb-modules, firmware-modules
+Depends: kernel-image, nic-shared-modules, usb-modules, core-modules
 
 Package: ppp-modules
 Depends: serial-modules, kernel-image, crc-modules
 
 Package: pcmcia-modules
-Depends: kernel-image, firmware-modules
+Depends: kernel-image, core-modules
 
