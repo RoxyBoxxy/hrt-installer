@@ -41,7 +41,11 @@ if [ ! $ONLINE ]; then
 	ONLINE="y"
 fi
 if [ ! $KEYRING ]; then
-	KEYRING=/etc/apt/trusted.gpg
+	if [ -f /usr/share/keyrings/debian-archive-keyring.gpg ]; then
+		KEYRING=/usr/share/keyrings/debian-archive-keyring.gpg
+	else
+		KEYRING=/etc/apt/trusted.gpg
+	fi
 fi
 
 # Set APTDIR according to type
