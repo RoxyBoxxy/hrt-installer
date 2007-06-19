@@ -10,8 +10,9 @@ struct mirror_t {
 };
 
 /* This is the codename of the preferred distribution; the one that the
- * current version of d-i is targeted at installing. */
-#define PREFERRED_DISTRIBUTION "etch"
+ * current version of d-i is targeted at installing. This can be removed
+ * once /etc/default_release is fully deployed. */
+#define PREFERRED_DISTRIBUTION "lenny"
 
 /* The two strings defined below must match the strings used in the
  * templates (http and ftp) for these options. */

@@ -1,12 +1,13 @@
 # Hungarian translation of Debian Installation Guide boot-installer
 # SZERVÁC Attila <sas@321.hu>, 2006.
+# NAGY Zoltán <nagy.zoltan@szabadember.hu>, 2007.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: debian-boot@lists.debian.org\n"
-"POT-Creation-Date: 2007-02-27 20:31+0000\n"
-"PO-Revision-Date: 2007-02-22 21:03+0100\n"
+"POT-Creation-Date: 2007-06-10 22:49+0000\n"
+"PO-Revision-Date: 2007-03-18 16:39+0100\n"
 "Last-Translator: SZERVÁC Attila <sas@321.hu>\n"
 "Language-Team: Hungarian <debian-l10n-hungarian@lists.debian>\n"
 "MIME-Version: 1.0\n"
@@ -803,6 +804,11 @@ msgid ""
 "available for download because of license issues. If this situation changes, "
 "you may find new images at <ulink url=\"http//www.netwinder.org/\"></ulink>."
 msgstr ""
+"A telepítő rendszer indításához a NeTTrom 2.2.1 vagy újabb verziójára van "
+"szükség és a 2.3.3-as használata javasolt. Sajnos jelenleg licenc-gondok "
+"miatt nem lehet firmware fájlokat letölteni. Ha e helyzet megváltozik, akkor "
+"a képfájlokat a <ulink url=\"http//www.netwinder.org/\"></ulink> címen "
+"megtalálod."
 
 #. Tag: para
 #: boot-installer.xml:493
@@ -847,6 +853,46 @@ msgid ""
 "\"http://www.netwinder.org/howto/Firmware-HOWTO.html\">detailed HOWTO</"
 "ulink> is available."
 msgstr ""
+"A Netwinder indításakor a visszaszámlálásnál meg kell szakítanod az indulási "
+"folyamatot. Ezzel lehetővé válik számos firmware beállítás megadása ami "
+"szükséges a telepítő indításához. Mindenekelőtt kezdd az alapértelmezett "
+"beállítások betöltésével<informalexample><screen>\n"
+"    NeTTrom command-&gt; load-defaults\n"
+"</screen></informalexample> Továbbá konfigurálnod kell a hálózatot. Statikus "
+"cím esetén:  <informalexample><screen>\n"
+"    NeTTrom command-&gt; setenv netconfig_eth0 flash\n"
+"    NeTTrom command-&gt; setenv eth0_ip 192.168.0.10/24\n"
+"</screen></informalexample> ahol a 24 a hálózati maszk 1-es bitjeinek a "
+"számats in the. Dinamikus cím esetén: <informalexample><screen>\n"
+"    NeTTrom command-&gt; setenv netconfig_eth0 dhcp\n"
+"</screen></informalexample> Ha a TFTP szervered nem a helyi hálózaton van, "
+"akkor lehet, hogy még a <userinput>route1</userinput> beállításokat is meg "
+"kell adnod. Ezeket a beállításokat követve meg kell határoznod a TFTP "
+"szervert és a képfájl helyét. Ezután a beállításokat elmentheted a flash "
+"memóriába. <informalexample><screen>\n"
+"    NeTTrom command-&gt; setenv kerntftpserver 192.168.0.1\n"
+"    NeTTrom command-&gt; setenv kerntftpfile boot.img\n"
+"    NeTTrom command-&gt; save-all\n"
+"</screen></informalexample> Most meg kell mondanod a firmware-nek, hogy a "
+"TFTP képfájlból indítsa a rendszert: <informalexample><screen>\n"
+"    NeTTrom command-&gt; setenv kernconfig tftp\n"
+"    NeTTrom command-&gt; setenv rootdev /dev/ram\n"
+"</screen></informalexample> Ha soros konzolt használsz a Netwinder "
+"telepítéséhez, akkor a következő beállításokat is meg kell adnod: "
+"<informalexample><screen>\n"
+"    NeTTrom command-&gt; setenv cmdappend root=/dev/ram "
+"console=ttyS0,115200\n"
+"</screen></informalexample> Vagy billentyűzet és monitor használata esetén "
+"ezeket: <informalexample><screen>\n"
+"    NeTTrom command-&gt; setenv cmdappend root=/dev/ram\n"
+"</screen></informalexample> A környezeti beállítások ellenőrzéséhez a "
+"<command>printenv</command> parancsot használhatod. A beállítások "
+"helyességének ellenőrzése után betöltheted a képfájlt: "
+"<informalexample><screen>\n"
+"    NeTTrom command-&gt; boot\n"
+"</screen></informalexample> Elérhető egy <ulink url=\"http://www.netwinder."
+"org/howto/Firmware-HOWTO.html\">részletes HOGYAN</ulink> arra az esetre, ha "
+"problémába ütköznél."
 
 #. Tag: title
 #: boot-installer.xml:545
@@ -861,6 +907,8 @@ msgid ""
 "On CATS machines, use <command>boot de0:</command> or similar at the Cyclone "
 "prompt."
 msgstr ""
+"A CATS gépek Cyclone készenléti jelénél add ki a <command>boot de0:</"
+"command> (vagy hasonló) parancsot."
 
 #. Tag: title
 #: boot-installer.xml:556
@@ -953,6 +1001,9 @@ msgid ""
 "flash chip on the device. The installer can be written to flash so it will "
 "automatically start when you reboot your machines."
 msgstr ""
+"Egyre több olyan fogyasztói termék van, amely közvetlenül az eszköz flash "
+"csipjéről indul. A telepítő ide írható, így a készülék újraindítása után "
+"automatikusan el fog indulni."
 
 #. Tag: para
 #: boot-installer.xml:617
@@ -963,6 +1014,10 @@ msgid ""
 "are problems during the flashing process. Therefore, please take care and "
 "follow the steps precisely."
 msgstr ""
+"Gyakori, hogy egy beágyazott rendszerben lévő firmware megváltoztatása a "
+"garancia elvesztésével jár. Előfordulhat, hogy nincs lehetőség az eszköz "
+"helyreállítására, ha a flash írása során hiba lépett fel. Ezért légy "
+"figyelmes és pontosan kövesd a leírást."
 
 #. Tag: title
 #: boot-installer.xml:628
@@ -974,13 +1029,13 @@ msgstr "Az NLSU2 indítása"
 #: boot-installer.xml:629
 #, no-c-format
 msgid "There are three ways how to put the installer firmware into flash:"
-msgstr ""
+msgstr "3 mód van a telepítő firmware flashbe töltéséhez:"
 
 #. Tag: title
 #: boot-installer.xml:635
 #, no-c-format
 msgid "Using the NSLU2 web interface"
-msgstr ""
+msgstr "Az NSLU2 webes felületének használatával"
 
 #. Tag: para
 #: boot-installer.xml:636
@@ -992,12 +1047,17 @@ msgid ""
 "button, confirm, wait for a few minutes and confirm again. The system will "
 "then boot straight into the installer."
 msgstr ""
+"Menj az adminisztrációs részhez és válaszd az <literal>Upgrade</literal> "
+"menüpontot. Ezután keresd meg a lemezeden a letöltött telepítő képfájlt. "
+"Majd nyomd meg a <literal>Start Upgrade</literal> gombot, hagyd jóvá, várj "
+"néhány percet majd ismét hagyd jóvá. A rendszer egyből a telepítővel indul "
+"majd."
 
 #. Tag: title
 #: boot-installer.xml:647
 #, no-c-format
 msgid "Via the network using Linux/Unix"
-msgstr ""
+msgstr "Hálózaton Linux/Unix használatával"
 
 #. Tag: para
 #: boot-installer.xml:648
@@ -1027,12 +1087,37 @@ msgid ""
 "reboot. Make sure you connect your USB disk again now, otherwise the "
 "installer won't be able to find it."
 msgstr ""
+"Bármely Linuxos vagy Unixos gépről használhatod az <command>upslug2</"
+"command> parancsot a készülék hálózaton keresztüli frissítéséhez. Ez a "
+"szoftver csomagként elérhető a Debianhoz. Először upgrade módba kell "
+"helyezned az NSLU2-t: <orderedlist> <listitem><para> Távolíts el minden "
+"lemezt és eszközt az USB portokról. </para></listitem> <listitem><para> "
+"Kapcsold ki az NSLU2-t </para></listitem> <listitem><para> Nyomd meg és "
+"tartsd benyomva a reset gombot (a hátlapon közvetlenül a tápcsatlakozó "
+"felett található kis lyukon keresztül érhető el). </para></listitem> "
+"<listitem><para> Az NSLU2 bekapcsolásához nyomd meg és engedd el a "
+"bekapcsoló gombot. </para></listitem> <listitem><para> A ready/status LED-et "
+"figyelve várj 10 másodpercet. 10 másodperc múlva sárgáról pirosra fog "
+"váltani. Azonnal engedd el a reset gombot. </para></listitem> "
+"<listitem><para> Az NSLU2 ready/status LED-je váltakozva piros és zöld "
+"színnel fog világítani (az első zöld előtt van 1 másodperc késleltetés). Az "
+"NSLU2 most már upgrade módban van. </para></listitem> </orderedlist> Ha "
+"gondod van ezzel, nézd meg az <ulink url=\"http://www.nslu2-linux.org/wiki/"
+"OpenSlug/UsingTheBinary\">NSLU2-Linux oldalakat</ulink>. Mihelyt az NSLU2 "
+"upgrade módban van, már írhatod is be az új képfjált a flashbe: "
+"<informalexample><screen>\n"
+"sudo upslug2 -i di-nslu2.bin\n"
+"</screen></informalexample> Figyeld meg, hogy ez az eszköz az NSLU2 MAC "
+"címét is megmutatja, ami még jól jöhet a DHCP szervered konfigurálásakor. "
+"Miután a teljes képfájlt kiírása és ellenőrzése megtörtént a rendszer "
+"automatikusan újra fog indulni. Ne felejtsd el most az USB-s lemezt "
+"újracsatlakoztatni, különben a telepítő nem fogja megtalálni."
 
 #. Tag: title
 #: boot-installer.xml:709
 #, no-c-format
 msgid "Via the network using Windows"
-msgstr ""
+msgstr "Hálózaton Windowsos gépnél"
 
 #. Tag: para
 #: boot-installer.xml:710
@@ -1042,6 +1127,9 @@ msgid ""
 "all_router_utility.zip\">a tool</ulink> for Windows to upgrade the firmware "
 "via the network."
 msgstr ""
+"Van egy <ulink url=\"http://www.everbesthk.com/8-download/sercomm/firmware/"
+"all_router_utility.zip\">eszköz</ulink> Windowshoz a firmware hálózati "
+"frissítéséhez."
 
 #. Tag: title
 #: boot-installer.xml:726 boot-installer.xml:1137 boot-installer.xml:1954
@@ -3217,11 +3305,26 @@ msgstr ""
 #. Tag: term
 #: boot-installer.xml:2973
 #, no-c-format
+msgid "lowmem"
+msgstr ""
+
+#. Tag: para
+#: boot-installer.xml:2974
+#, no-c-format
+msgid ""
+"Can be used to force the installer to a lowmem level higher than the one the "
+"installer sets by default based on available memory. Possible values are 1 "
+"and 2. See also <xref linkend=\"lowmem\"/>."
+msgstr ""
+
+#. Tag: term
+#: boot-installer.xml:2984
+#, no-c-format
 msgid "debian-installer/framebuffer (fb)"
 msgstr "debian-installer/framebuffer (fb)"
 
 #. Tag: para
-#: boot-installer.xml:2974
+#: boot-installer.xml:2985
 #, no-c-format
 msgid ""
 "Some architectures use the kernel framebuffer to offer installation in a "
@@ -3236,7 +3339,7 @@ msgstr ""
 "körül, üres képernyő vagy fagyás a telepítés indítása után pár perccel."
 
 #. Tag: para
-#: boot-installer.xml:2983
+#: boot-installer.xml:2994
 #, no-c-format
 msgid ""
 "The <userinput>video=vga16:off</userinput> argument may also be used to "
@@ -3248,19 +3351,19 @@ msgstr ""
 "gépeken Mobil Radeon kártya esetén."
 
 #. Tag: para
-#: boot-installer.xml:2989
+#: boot-installer.xml:3000
 #, no-c-format
 msgid "Such problems have been reported on the Amiga 1200 and SE/30."
 msgstr "Hasonló problémákról érkezett jelentés az Amiga 1200 és SE/30 gépeken."
 
 #. Tag: para
-#: boot-installer.xml:2993
+#: boot-installer.xml:3004
 #, no-c-format
 msgid "Such problems have been reported on hppa."
 msgstr "Hasonló problémákról érkezett jelentés egyes hppa gépeken."
 
 #. Tag: para
-#: boot-installer.xml:2997
+#: boot-installer.xml:3008
 #, no-c-format
 msgid ""
 "Because of display problems on some systems, framebuffer support is "
@@ -3278,13 +3381,13 @@ msgstr ""
 "<userinput>fb=true</userinput> paraméterrel."
 
 #. Tag: term
-#: boot-installer.xml:3011
+#: boot-installer.xml:3022
 #, no-c-format
 msgid "debian-installer/theme (theme)"
 msgstr "debian-installer/theme (téma)"
 
 #. Tag: para
-#: boot-installer.xml:3012
+#: boot-installer.xml:3023
 #, no-c-format
 msgid ""
 "A theme determines how the user interface of the installer looks (colors, "
@@ -3300,27 +3403,13 @@ msgstr ""
 "<userinput>theme=<replaceable>dark</replaceable></userinput>."
 
 #. Tag: term
-#: boot-installer.xml:3024
-#, no-c-format
-msgid "debian-installer/probe/usb"
-msgstr "debian-installer/probe/usb"
-
-#. Tag: para
-#: boot-installer.xml:3025
-#, no-c-format
-msgid ""
-"Set to <userinput>false</userinput> to prevent probing for USB on boot, if "
-"that causes problems."
-msgstr "A <userinput>false</userinput> tiltja az USB indítást, ha gondot okoz."
-
-#. Tag: term
-#: boot-installer.xml:3034 boot-installer.xml:3225
+#: boot-installer.xml:3035 boot-installer.xml:3226
 #, no-c-format
 msgid "netcfg/disable_dhcp"
 msgstr "netcfg/disable_dhcp"
 
 #. Tag: para
-#: boot-installer.xml:3035
+#: boot-installer.xml:3036
 #, no-c-format
 msgid ""
 "By default, the &d-i; automatically probes for network configuration via "
@@ -3334,7 +3423,7 @@ msgstr ""
 "lehetséges."
 
 #. Tag: para
-#: boot-installer.xml:3042
+#: boot-installer.xml:3043
 #, no-c-format
 msgid ""
 "If you have a DHCP server on your local network, but want to avoid it "
@@ -3348,13 +3437,13 @@ msgstr ""
 "és megadhatod az adatokat kézzel."
 
 #. Tag: term
-#: boot-installer.xml:3053
+#: boot-installer.xml:3054
 #, no-c-format
 msgid "hw-detect/start_pcmcia"
 msgstr "hw-detect/start_pcmcia"
 
 #. Tag: para
-#: boot-installer.xml:3054
+#: boot-installer.xml:3055
 #, no-c-format
 msgid ""
 "Set to <userinput>false</userinput> to prevent starting PCMCIA services, if "
@@ -3364,13 +3453,13 @@ msgstr ""
 "gondot okoznak. Egyes laptopok híresek erről."
 
 #. Tag: term
-#: boot-installer.xml:3064
+#: boot-installer.xml:3065
 #, no-c-format
 msgid "preseed/url (url)"
 msgstr "preseed/url (url)"
 
 #. Tag: para
-#: boot-installer.xml:3065
+#: boot-installer.xml:3066
 #, no-c-format
 msgid ""
 "Specify the url to a preconfiguration file to download and use for "
@@ -3380,13 +3469,13 @@ msgstr ""
 "fájlra mutató url-t. Lásd a <xref linkend=\"automatic-install\"/> részt."
 
 #. Tag: term
-#: boot-installer.xml:3074
+#: boot-installer.xml:3075
 #, no-c-format
 msgid "preseed/file (file)"
 msgstr "preseed/file (fájl)"
 
 #. Tag: para
-#: boot-installer.xml:3075
+#: boot-installer.xml:3076
 #, no-c-format
 msgid ""
 "Specify the path to a preconfiguration file to load for automating the "
@@ -3396,13 +3485,13 @@ msgstr ""
 "Lásd a <xref linkend=\"automatic-install\"/> részt."
 
 #. Tag: term
-#: boot-installer.xml:3084
+#: boot-installer.xml:3085
 #, no-c-format
 msgid "preseed/interactive"
 msgstr "preseed/interactive"
 
 #. Tag: para
-#: boot-installer.xml:3085
+#: boot-installer.xml:3086
 #, no-c-format
 msgid ""
 "Set to <userinput>true</userinput> to display questions even if they have "
@@ -3417,13 +3506,13 @@ msgstr ""
 "\"preseed-seenflag\"/>."
 
 #. Tag: term
-#: boot-installer.xml:3097
+#: boot-installer.xml:3098
 #, no-c-format
 msgid "auto-install/enable (auto)"
 msgstr "auto-install/enable (auto)"
 
 #. Tag: para
-#: boot-installer.xml:3098
+#: boot-installer.xml:3099
 #, no-c-format
 msgid ""
 "Delay questions that are normally asked before preseeding is possible until "
@@ -3435,13 +3524,13 @@ msgstr ""
 "> részt ennek használatához az automata telepítésben."
 
 #. Tag: term
-#: boot-installer.xml:3109
+#: boot-installer.xml:3110
 #, no-c-format
 msgid "cdrom-detect/eject"
 msgstr "cdrom-detect/eject"
 
 #. Tag: para
-#: boot-installer.xml:3110
+#: boot-installer.xml:3111
 #, no-c-format
 msgid ""
 "By default, before rebooting, &d-i; automatically ejects the optical media "
@@ -3458,7 +3547,7 @@ msgstr ""
 "fentről-töltős stílusú meghajtó nem tudja automatikusan újratölteni a médiát."
 
 #. Tag: para
-#: boot-installer.xml:3119
+#: boot-installer.xml:3120
 #, no-c-format
 msgid ""
 "Set to <userinput>false</userinput> to disable automatic ejection, and be "
@@ -3470,13 +3559,13 @@ msgstr ""
 "optikai meghajtóról a telepítés után."
 
 #. Tag: term
-#: boot-installer.xml:3130
+#: boot-installer.xml:3131
 #, no-c-format
 msgid "debian-installer/allow_unauthenticated"
 msgstr "debian-installer/allow_unauthenticated"
 
 #. Tag: para
-#: boot-installer.xml:3131
+#: boot-installer.xml:3132
 #, no-c-format
 msgid ""
 "By default the installer requires that repositories be authenticated using a "
@@ -3489,13 +3578,13 @@ msgstr ""
 "<emphasis role=\"bold\">Figyelem: nem biztonságos, nem ajánlott.</emphasis>"
 
 #. Tag: term
-#: boot-installer.xml:3142
+#: boot-installer.xml:3143
 #, no-c-format
 msgid "ramdisk_size"
 msgstr "ramdisk_size"
 
 #. Tag: para
-#: boot-installer.xml:3143
+#: boot-installer.xml:3144
 #, no-c-format
 msgid ""
 "This parameter should already be set to a correct value where needed; set it "
@@ -3507,13 +3596,13 @@ msgstr ""
 "teljesen betöltésre. A mértékegység: kB."
 
 #. Tag: term
-#: boot-installer.xml:3153
+#: boot-installer.xml:3154
 #, no-c-format
 msgid "mouse/left"
 msgstr "mouse/left"
 
 #. Tag: para
-#: boot-installer.xml:3154
+#: boot-installer.xml:3155
 #, no-c-format
 msgid ""
 "For the gtk frontend (graphical installer), users can switch the mouse to "
@@ -3524,13 +3613,13 @@ msgstr ""
 "válthatják e paraméter <userinput>true</userinput> értékre állításával."
 
 #. Tag: term
-#: boot-installer.xml:3163
+#: boot-installer.xml:3164
 #, no-c-format
 msgid "directfb/hw-accel"
 msgstr "directfb/hw-accel"
 
 #. Tag: para
-#: boot-installer.xml:3164
+#: boot-installer.xml:3165
 #, no-c-format
 msgid ""
 "For the gtk frontend (graphical installer), hardware acceleration in "
@@ -3542,13 +3631,13 @@ msgstr ""
 "a telepítő indításakor."
 
 #. Tag: term
-#: boot-installer.xml:3174
+#: boot-installer.xml:3175
 #, no-c-format
 msgid "rescue/enable"
 msgstr "rescue/enable"
 
 #. Tag: para
-#: boot-installer.xml:3175
+#: boot-installer.xml:3176
 #, no-c-format
 msgid ""
 "Set to <userinput>true</userinput> to enter rescue mode rather than "
@@ -3558,13 +3647,13 @@ msgstr ""
 "lépéshez. Lásd: <xref linkend=\"rescue\"/>."
 
 #. Tag: title
-#: boot-installer.xml:3186
+#: boot-installer.xml:3187
 #, no-c-format
 msgid "Using boot parameters to answer questions"
 msgstr "Indító paraméterek használata kérdések megválaszolására"
 
 #. Tag: para
-#: boot-installer.xml:3187
+#: boot-installer.xml:3188
 #, no-c-format
 msgid ""
 "With some exceptions, a value can be set at the boot prompt for any question "
@@ -3577,13 +3666,13 @@ msgstr ""
 "erről a <xref linkend=\"preseed-bootparms\"/> részben. Íme pár példa."
 
 #. Tag: term
-#: boot-installer.xml:3199
+#: boot-installer.xml:3200
 #, no-c-format
 msgid "debian-installer/locale (locale)"
 msgstr "debian-installer/locale (honosítás)"
 
 #. Tag: para
-#: boot-installer.xml:3200
+#: boot-installer.xml:3201
 #, no-c-format
 msgid ""
 "Can be used to set both the language and country for the installation. This "
@@ -3596,13 +3685,13 @@ msgstr ""
 "német nyelvet választ, országnak pedig Svájcot."
 
 #. Tag: term
-#: boot-installer.xml:3211
+#: boot-installer.xml:3212
 #, no-c-format
 msgid "anna/choose_modules (modules)"
 msgstr "anna/choose_modules (modules)"
 
 #. Tag: para
-#: boot-installer.xml:3212
+#: boot-installer.xml:3213
 #, no-c-format
 msgid ""
 "Can be used to automatically load installer components that are not loaded "
@@ -3618,7 +3707,7 @@ msgstr ""
 "classname> (lásd itt: <xref linkend=\"pppoe\"/>)</phrase>."
 
 #. Tag: para
-#: boot-installer.xml:3226
+#: boot-installer.xml:3227
 #, no-c-format
 msgid ""
 "Set to <userinput>true</userinput> if you want to disable DHCP and instead "
@@ -3628,13 +3717,13 @@ msgstr ""
 "helyette statikus hálózati beállítás kikényszerítéséhez."
 
 #. Tag: term
-#: boot-installer.xml:3235
+#: boot-installer.xml:3236
 #, no-c-format
 msgid "mirror/protocol (protocol)"
 msgstr "mirror/protocol (protocol)"
 
 #. Tag: para
-#: boot-installer.xml:3236
+#: boot-installer.xml:3237
 #, no-c-format
 msgid ""
 "By default the installer will use the http protocol to download files from "
@@ -3651,13 +3740,13 @@ msgstr ""
 "választható ftp tükör, ezt kézzel kell majd megadni."
 
 #. Tag: term
-#: boot-installer.xml:3249
+#: boot-installer.xml:3250
 #, no-c-format
 msgid "tasksel:tasksel/first (tasks)"
 msgstr "tasksel:tasksel/first (feladatok)"
 
 #. Tag: para
-#: boot-installer.xml:3250
+#: boot-installer.xml:3251
 #, no-c-format
 msgid ""
 "Can be used to select tasks that are not available from the interactive task "
@@ -3669,13 +3758,13 @@ msgstr ""
 "<xref linkend=\"pkgsel\"/> részt további adatokért."
 
 #. Tag: title
-#: boot-installer.xml:3264
+#: boot-installer.xml:3265
 #, no-c-format
 msgid "Passing parameters to kernel modules"
 msgstr "Paraméterek átadása kernel moduloknak"
 
 #. Tag: para
-#: boot-installer.xml:3265
+#: boot-installer.xml:3266
 #, no-c-format
 msgid ""
 "If drivers are compiled into the kernel, you can pass parameters to them as "
@@ -3697,7 +3786,7 @@ msgstr ""
 "E paraméterek átkerülnek a telepített rendszerbe is."
 
 #. Tag: para
-#: boot-installer.xml:3278
+#: boot-installer.xml:3279
 #, no-c-format
 msgid ""
 "Note that it is now quite rare that parameters need to be passed to modules. "
@@ -3710,7 +3799,7 @@ msgstr ""
 "esetekben jól jöhet paraméterek kézi beállítása."
 
 #. Tag: para
-#: boot-installer.xml:3285
+#: boot-installer.xml:3286
 #, no-c-format
 msgid ""
 "The syntax to use to set parameters for modules is: "
@@ -3730,19 +3819,19 @@ msgstr ""
 "beállítása a BNC (koax) csatlakozó és IRQ 10 használatához:"
 
 #. Tag: screen
-#: boot-installer.xml:3295
+#: boot-installer.xml:3296
 #, no-c-format
 msgid "3c509.xcvr=3 3c509.irq=10"
 msgstr "3c509.xcvr=3 3c509.irq=10"
 
 #. Tag: title
-#: boot-installer.xml:3301
+#: boot-installer.xml:3302
 #, no-c-format
 msgid "Blacklisting kernel modules"
 msgstr "Kernel modulok feketelistája"
 
 #. Tag: para
-#: boot-installer.xml:3302
+#: boot-installer.xml:3303
 #, no-c-format
 msgid ""
 "Sometimes it may be necessary to blacklist a module to prevent it from being "
@@ -3758,7 +3847,7 @@ msgstr ""
 "vagy előbb rossz meghajtó betöltése esetén."
 
 #. Tag: para
-#: boot-installer.xml:3311
+#: boot-installer.xml:3312
 #, no-c-format
 msgid ""
 "You can blacklist a module using the following syntax: "
@@ -3773,7 +3862,7 @@ msgstr ""
 "a telepített rendszer alatt is."
 
 #. Tag: para
-#: boot-installer.xml:3319
+#: boot-installer.xml:3320
 #, no-c-format
 msgid ""
 "Note that a module may still be loaded by the installation system itself. "
@@ -3786,19 +3875,19 @@ msgstr ""
 "hardver felismerő szakaszokban."
 
 #. Tag: title
-#: boot-installer.xml:3336
+#: boot-installer.xml:3337
 #, no-c-format
 msgid "Troubleshooting the Installation Process"
 msgstr "Hibák elhárítása a telepítő folyamat során"
 
 #. Tag: title
-#: boot-installer.xml:3341
+#: boot-installer.xml:3342
 #, no-c-format
 msgid "CD-ROM Reliability"
 msgstr "CD-ROM megbízhatóság"
 
 #. Tag: para
-#: boot-installer.xml:3342
+#: boot-installer.xml:3343
 #, no-c-format
 msgid ""
 "Sometimes, especially with older CD-ROM drives, the installer may fail to "
@@ -3812,7 +3901,7 @@ msgstr ""
 "telepítés alatti olvasásakor."
 
 #. Tag: para
-#: boot-installer.xml:3349
+#: boot-installer.xml:3350
 #, no-c-format
 msgid ""
 "There are a many different possible causes for these problems. We can only "
@@ -3823,13 +3912,13 @@ msgstr ""
 "általános tanácsot írunk le. A többi tőled függ."
 
 #. Tag: para
-#: boot-installer.xml:3355
+#: boot-installer.xml:3356
 #, no-c-format
 msgid "There are two very simple things that you should try first."
 msgstr "Először 2 egyszerű dolgot érdemes kipróbálni."
 
 #. Tag: para
-#: boot-installer.xml:3360
+#: boot-installer.xml:3361
 #, no-c-format
 msgid ""
 "If the CD-ROM does not boot, check that it was inserted correctly and that "
@@ -3838,7 +3927,7 @@ msgstr ""
 "Ha a CD-ROM nem indul, ellenőrizd, helyesen van-e betéve és nem piszkos-e."
 
 #. Tag: para
-#: boot-installer.xml:3366
+#: boot-installer.xml:3367
 #, no-c-format
 msgid ""
 "If the installer fails to recognize a CD-ROM, try just running the option "
@@ -3852,7 +3941,7 @@ msgstr ""
 "DMA hiba megoldható így."
 
 #. Tag: para
-#: boot-installer.xml:3376
+#: boot-installer.xml:3377
 #, no-c-format
 msgid ""
 "If this does not work, then try the suggestions in the subsections below. "
@@ -3864,7 +3953,7 @@ msgstr ""
 "kedvéért mindig a CD-ROM szót használjuk."
 
 #. Tag: para
-#: boot-installer.xml:3382
+#: boot-installer.xml:3383
 #, no-c-format
 msgid ""
 "If you cannot get the installation working from CD-ROM, try one of the other "
@@ -3874,13 +3963,13 @@ msgstr ""
 "elérhető telepítő módot."
 
 #. Tag: title
-#: boot-installer.xml:3390
+#: boot-installer.xml:3391
 #, no-c-format
 msgid "Common issues"
 msgstr "Általános hibák"
 
 #. Tag: para
-#: boot-installer.xml:3393
+#: boot-installer.xml:3394
 #, no-c-format
 msgid ""
 "Some older CD-ROM drives do not support reading from discs that were burned "
@@ -3890,7 +3979,7 @@ msgstr ""
 "nagy sebességgel írt lemezek olvasását."
 
 #. Tag: para
-#: boot-installer.xml:3399
+#: boot-installer.xml:3400
 #, no-c-format
 msgid ""
 "If your system boots correctly from the CD-ROM, it does not necessarily mean "
@@ -3902,7 +3991,7 @@ msgstr ""
 "meghajtó kötve van)."
 
 #. Tag: para
-#: boot-installer.xml:3406
+#: boot-installer.xml:3407
 #, no-c-format
 msgid ""
 "Some older CD-ROM drives do not work correctly if <quote>direct memory "
@@ -3912,13 +4001,13 @@ msgstr ""
 "elérés</quote> (DMA) bekapcsolt volta esetén."
 
 #. Tag: title
-#: boot-installer.xml:3417
+#: boot-installer.xml:3418
 #, no-c-format
 msgid "How to investigate and maybe solve issues"
 msgstr "Hogyan vizsgálj ki és oldj meg gondokat"
 
 #. Tag: para
-#: boot-installer.xml:3418
+#: boot-installer.xml:3419
 #, no-c-format
 msgid "If the CD-ROM fails to boot, try the suggestions listed below."
 msgstr ""
@@ -3926,7 +4015,7 @@ msgstr ""
 "javaslatokat."
 
 #. Tag: para
-#: boot-installer.xml:3423
+#: boot-installer.xml:3424
 #, no-c-format
 msgid ""
 "Check that your BIOS actually supports booting from CD-ROM (older systems "
@@ -3936,7 +4025,7 @@ msgstr ""
 "hogy a CD-rom meghajtó támogatja a használt médiát."
 
 #. Tag: para
-#: boot-installer.xml:3429
+#: boot-installer.xml:3430
 #, no-c-format
 msgid ""
 "If you downloaded an iso image, check that the md5sum of that image matches "
@@ -3961,7 +4050,7 @@ msgstr ""
 "olvasására a CD-ROM lemezről."
 
 #. Tag: screen
-#: boot-installer.xml:3442
+#: boot-installer.xml:3443
 #, no-c-format
 msgid ""
 "$ dd if=/dev/cdrom | \\\n"
@@ -3983,7 +4072,7 @@ msgstr ""
 "134486016 bájt (134 MB) másolva, 97.474 másodperc, 1.4 MB/s"
 
 #. Tag: para
-#: boot-installer.xml:3447
+#: boot-installer.xml:3448
 #, no-c-format
 msgid ""
 "If, after the installer has been booted successfully, the CD-ROM is not "
@@ -4002,7 +4091,7 @@ msgstr ""
 "terminálra (VT2), melyen aktiváld a héjat."
 
 #. Tag: para
-#: boot-installer.xml:3459
+#: boot-installer.xml:3460
 #, no-c-format
 msgid ""
 "Switch to VT4 or view the contents of <filename>/var/log/syslog</filename> "
@@ -4014,7 +4103,7 @@ msgstr ""
 "ellenőrzéséhez. Ezután ellenőrizd a <command>dmesg</command> kimenetét is."
 
 #. Tag: para
-#: boot-installer.xml:3466
+#: boot-installer.xml:3467
 #, no-c-format
 msgid ""
 "Check in the output of <command>dmesg</command> if your CD-ROM drive was "
@@ -4044,7 +4133,7 @@ msgstr ""
 "command> paranccsal."
 
 #. Tag: para
-#: boot-installer.xml:3480
+#: boot-installer.xml:3481
 #, no-c-format
 msgid ""
 "Check that there is a device node for your CD-ROM drive under <filename>/dev/"
@@ -4056,7 +4145,7 @@ msgstr ""
 "hdc</filename>. Lehet ez is: <filename>/dev/cdroms/cdrom0</filename>."
 
 #. Tag: para
-#: boot-installer.xml:3488
+#: boot-installer.xml:3489
 #, no-c-format
 msgid ""
 "Use the <command>mount</command> command to check if the CD-ROM is already "
@@ -4071,7 +4160,7 @@ msgstr ""
 "</screen></informalexample> Ellenőrizd, ír-e hibát."
 
 #. Tag: para
-#: boot-installer.xml:3498
+#: boot-installer.xml:3499
 #, no-c-format
 msgid ""
 "Check if DMA is currently enabled: <informalexample><screen>\n"
@@ -4097,7 +4186,7 @@ msgstr ""
 "könyvtárban vagy."
 
 #. Tag: para
-#: boot-installer.xml:3513
+#: boot-installer.xml:3514
 #, no-c-format
 msgid ""
 "If there are any problems during the installation, try checking the "
@@ -4111,13 +4200,13 @@ msgstr ""
 "használható."
 
 #. Tag: title
-#: boot-installer.xml:3528
+#: boot-installer.xml:3529
 #, no-c-format
 msgid "Floppy Disk Reliability"
 msgstr "Flopi lemezek megbízhatósága"
 
 #. Tag: para
-#: boot-installer.xml:3530
+#: boot-installer.xml:3531
 #, no-c-format
 msgid ""
 "The biggest problem for people using floppy disks to install Debian seems to "
@@ -4127,7 +4216,7 @@ msgstr ""
 "megbízhatatlansága."
 
 #. Tag: para
-#: boot-installer.xml:3535
+#: boot-installer.xml:3536
 #, no-c-format
 msgid ""
 "The boot floppy is the floppy with the worst problems, because it is read by "
@@ -4144,7 +4233,7 @@ msgstr ""
 "ezt tömeges lemez I/O hiba üzenettel jelzik."
 
 #. Tag: para
-#: boot-installer.xml:3544
+#: boot-installer.xml:3545
 #, no-c-format
 msgid ""
 "If you are having the installation stall at a particular floppy, the first "
@@ -4160,7 +4249,7 @@ msgstr ""
 "esetben csak az oldja meg, ha egy másik gépen írod meg."
 
 #. Tag: para
-#: boot-installer.xml:3553
+#: boot-installer.xml:3554
 #, no-c-format
 msgid ""
 "One user reports he had to write the images to floppy <emphasis>three</"
@@ -4172,7 +4261,7 @@ msgstr ""
 "sikeresen telepített."
 
 #. Tag: para
-#: boot-installer.xml:3559
+#: boot-installer.xml:3560
 #, no-c-format
 msgid ""
 "Normally you should not have to download a floppy image again, but if you "
@@ -4184,7 +4273,7 @@ msgstr ""
 "ellenőrzésével."
 
 #. Tag: para
-#: boot-installer.xml:3565
+#: boot-installer.xml:3566
 #, no-c-format
 msgid ""
 "Other users have reported that simply rebooting a few times with the same "
@@ -4196,13 +4285,13 @@ msgstr ""
 "hardver vagy firmware flopi meghajtók okozzák."
 
 #. Tag: title
-#: boot-installer.xml:3574
+#: boot-installer.xml:3575
 #, no-c-format
 msgid "Boot Configuration"
 msgstr "Indító beállítás"
 
 #. Tag: para
-#: boot-installer.xml:3576
+#: boot-installer.xml:3577
 #, no-c-format
 msgid ""
 "If you have problems and the kernel hangs during the boot process, doesn't "
@@ -4215,7 +4304,7 @@ msgstr ""
 "korábbi <xref linkend=\"boot-parms\"/> szerint."
 
 #. Tag: para
-#: boot-installer.xml:3583
+#: boot-installer.xml:3584
 #, no-c-format
 msgid ""
 "Often, problems can be solved by removing add-ons and peripherals, and then "
@@ -4227,7 +4316,7 @@ msgstr ""
 "modemek, hangkártyák és Plug-n-Play eszközök sok gondot adnak.</phrase>"
 
 #. Tag: para
-#: boot-installer.xml:3589
+#: boot-installer.xml:3590
 #, no-c-format
 msgid ""
 "If you have a large amount of memory installed in your machine, more than "
@@ -4241,13 +4330,13 @@ msgstr ""
 "userinput>."
 
 #. Tag: title
-#: boot-installer.xml:3600 boot-installer.xml:3685
+#: boot-installer.xml:3601 boot-installer.xml:3685
 #, no-c-format
 msgid "Common &arch-title; Installation Problems"
 msgstr "Gyakori &arch-title; telepítő gondok"
 
 #. Tag: para
-#: boot-installer.xml:3601
+#: boot-installer.xml:3602
 #, no-c-format
 msgid ""
 "There are some common installation problems that can be solved or avoided by "
@@ -4257,7 +4346,7 @@ msgstr ""
 "paraméterek átadásával a telepítőnek."
 
 #. Tag: para
-#: boot-installer.xml:3606
+#: boot-installer.xml:3607
 #, no-c-format
 msgid ""
 "Some systems have floppies with <quote>inverted DCLs</quote>. If you receive "
@@ -4269,7 +4358,7 @@ msgstr ""
 "<userinput>floppy=thinkpad</userinput> paramétert."
 
 #. Tag: para
-#: boot-installer.xml:3612
+#: boot-installer.xml:3613
 #, no-c-format
 msgid ""
 "On some systems, such as the IBM PS/1 or ValuePoint (which have ST-506 disk "
@@ -4289,7 +4378,7 @@ msgstr ""
 "userinput> paramétert."
 
 #. Tag: para
-#: boot-installer.xml:3621
+#: boot-installer.xml:3622
 #, no-c-format
 msgid ""
 "If you have a very old machine, and the kernel hangs after saying "
@@ -4302,7 +4391,7 @@ msgstr ""
 "indító argumentumot, mely kikapcsolja ezt a tesztet."
 
 #. Tag: para
-#: boot-installer.xml:3628
+#: boot-installer.xml:3629
 #, no-c-format
 msgid ""
 "If your screen begins to show a weird picture while the kernel boots, eg. "
@@ -4322,13 +4411,13 @@ msgstr ""
 "részletekért."
 
 #. Tag: title
-#: boot-installer.xml:3642
+#: boot-installer.xml:3643
 #, no-c-format
 msgid "System Freeze During the PCMCIA Configuration Phase"
 msgstr "A rendszer fagyása a PCMCIA beállító szakaszban"
 
 #. Tag: para
-#: boot-installer.xml:3643
+#: boot-installer.xml:3644
 #, no-c-format
 msgid ""
 "Some laptop models produced by Dell are known to crash when PCMCIA device "
@@ -4347,7 +4436,7 @@ msgstr ""
 "erőforrás-tartományokat."
 
 #. Tag: para
-#: boot-installer.xml:3653
+#: boot-installer.xml:3654
 #, no-c-format
 msgid ""
 "Alternatively, you can boot the installer in expert mode. You will then be "
@@ -4369,22 +4458,21 @@ msgstr ""
 "telepítőben."
 
 #. Tag: title
-#: boot-installer.xml:3670
+#: boot-installer.xml:3671
 #, no-c-format
 msgid "System Freeze while Loading USB Modules"
 msgstr "A rendszer fagyása az USB modulok betöltésekor"
 
 #. Tag: para
-#: boot-installer.xml:3671
-#, no-c-format
+#: boot-installer.xml:3672
+#, fuzzy, no-c-format
 msgid ""
 "The kernel normally tries to install USB modules and the USB keyboard driver "
 "in order to support some non-standard USB keyboards. However, there are some "
 "broken USB systems where the driver hangs on loading. A possible workaround "
 "may be disabling the USB controller in your mainboard BIOS setup. Another "
-"option is passing the <userinput>debian-installer/probe/usb=false</"
-"userinput> parameter at the boot prompt, which will prevent the modules from "
-"being loaded."
+"option is passing the <userinput>nousb</userinput> parameter at the boot "
+"prompt."
 msgstr ""
 "A kernel alapban megpróbálja telepíteni az USB modulokat és az USB billentyű "
 "meghajtót pár nem-szabványos USB billentyű támogatásához. De van pár hibás "
@@ -4670,6 +4758,15 @@ msgstr ""
 "</screen></informalexample> A jelentésben írd le az esetleges hibát, ha a "
 "kernel leállna, annak utolsó látható üzeneteit is. Írd le, mely lépések "
 "okozták a gondot."
+
+#~ msgid "debian-installer/probe/usb"
+#~ msgstr "debian-installer/probe/usb"
+
+#~ msgid ""
+#~ "Set to <userinput>false</userinput> to prevent probing for USB on boot, "
+#~ "if that causes problems."
+#~ msgstr ""
+#~ "A <userinput>false</userinput> tiltja az USB indítást, ha gondot okoz."
 
 #~ msgid ""
 #~ "Type <informalexample><screen>\n"

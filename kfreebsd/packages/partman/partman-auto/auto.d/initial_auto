@@ -13,6 +13,8 @@ dev_to_partman () {
 	fi
 
 	for dev in $DEVICES/*; do
+		[ -d "$dev" ] || continue
+
 		# mapdevfs both to allow for different ways to refer to the
 		# same device using devfs, and to allow user input in
 		# non-devfs form
@@ -45,6 +47,15 @@ fi
 disks=""
 if db_get partman-auto/disk && [ "$RET" ]; then
 	disks="$RET"
+fi
+
+# If there's only one disk, then preseeding partman-auto/disk is
+# unnecessary, and sometimes inconvenient in heterogeneous environments
+if [ "$method" ] && [ -z "$disks" ]; then
+	DEVS="$(get_auto_disks)"
+	if [ "$(echo "$DEVS" | wc -l)" -eq 1 ]; then
+		disks="$(cat "${DEVS%$TAB*}"/device)"
+	fi
 fi
 
 # If both are set, let's try to do a completely automatic partitioning
@@ -108,5 +119,8 @@ while [ $code = 99 ]; do
 	ask_user /lib/partman/automatically_partition 
 	code=$?
 done
+if [ $code -lt 100 ]; then
+	rm -f /var/lib/partman/initial_auto # try again
+fi
 echo "partman-auto/automatically_partition" > /lib/partman/automatically_partition/question
 exit $code

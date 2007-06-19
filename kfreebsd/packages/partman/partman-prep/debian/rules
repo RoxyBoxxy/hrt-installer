@@ -6,11 +6,7 @@
 #export DH_VERBOSE=1
 export DH_COMPAT=4
 
-PACKAGE=$(shell dh_listpackages)
-VERSION=$(shell dpkg-parsechangelog | grep ^Version: | cut -d ' ' -f 2)
-ARCH=powerpc
-FILENAME=$(PACKAGE)_$(VERSION)_$(ARCH).udeb
-PRIORITY=$(shell grep ^Priority: debian/control | cut -d ' ' -f 2)
+export PACKAGE=partman-prep
 
 build: build-stamp
 build-stamp:
@@ -29,13 +25,10 @@ install: build
 	dh_testroot
 	dh_clean -k
 	debian/install-rc choose_method
-	debian/install-rc finish.d
+	debian/install-rc check.d
 	debian/install-rc init.d
 	debian/install-rc update.d
-	debian/install-rc valid_filesystems
 	dh_install parted_names lib/partman
-	rm -rf `find debian/$(PACKAGE) -name CVS`
-	rm -rf `find debian/$(PACKAGE) -name .svn`
 
 binary-indep: build install
 
@@ -45,9 +38,8 @@ binary-arch: build install
 	dh_installdebconf
 	dh_fixperms
 	dh_installdeb
-	dh_gencontrol -- -fdebian/files~
-	dpkg-distaddfile $(FILENAME) debian-installer $(PRIORITY)
-	dh_builddeb --filename=$(FILENAME)
+	dh_gencontrol
+	dh_builddeb
 
 binary: binary-indep binary-arch
 .PHONY: build clean binary-indep binary-arch binary install

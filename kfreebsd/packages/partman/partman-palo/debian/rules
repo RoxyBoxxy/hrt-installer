@@ -5,7 +5,7 @@
 # Uncomment this to turn on verbose mode.
 #export DH_VERBOSE=1
 
-PACKAGE = partman-palo
+export PACKAGE = partman-palo
 
 build:
 # Ye olde no-op.
@@ -21,12 +21,10 @@ install: build
 	dh_testroot
 	dh_clean -k
 	debian/install-rc choose_method
-	debian/install-rc finish.d
+	debian/install-rc check.d
 	debian/install-rc init.d
 	debian/install-rc update.d
 	dh_install parted_names lib/partman
-	rm -rf `find debian/$(PACKAGE) -name CVS`
-	rm -rf `find debian/$(PACKAGE) -name .svn`
 
 binary-indep: build install
 

@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: debian-installer\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-01-28 06:31+0000\n"
-"PO-Revision-Date: 2007-02-21 13:24+0100\n"
+"POT-Creation-Date: 2007-05-23 22:47+0000\n"
+"PO-Revision-Date: 2007-04-19 09:11+0200\n"
 "Last-Translator:  Elian Myftiu <elian.myftiu@gmail.com>\n"
 "Language-Team: Debian L10n Albanian <debian-l10n-albanian@lists.debian.org>\n"
 "MIME-Version: 1.0\n"
@@ -28,21 +28,15 @@ msgstr "Menuja kryesore e instaluesit Debian"
 msgid "Choose the next step in the install process:"
 msgstr "Zgjidh hapin tjetër të proçesit të instalimit:"
 
-#. Type: select
-#. Description
-#: ../main-menu.templates:9
-msgid "This is the main menu for the Debian installer."
-msgstr "Kjo është menuja kryesore e instaluesit Debian."
-
 #. Type: error
 #. Description
-#: ../main-menu.templates:14
+#: ../main-menu.templates:13
 msgid "Installation step failed"
 msgstr "Hapi i instalimit dështoi"
 
 #. Type: error
 #. Description
-#: ../main-menu.templates:14
+#: ../main-menu.templates:13
 msgid ""
 "An installation step failed. You can try to run the failing item again from "
 "the menu, or skip it and choose something else. The failing step is: ${ITEM}"
@@ -52,13 +46,13 @@ msgstr ""
 
 #. Type: select
 #. Description
-#: ../main-menu.templates:23
+#: ../main-menu.templates:22
 msgid "Choose an installation step:"
 msgstr "Zgjidh një hap instalimi:"
 
 #. Type: select
 #. Description
-#: ../main-menu.templates:23
+#: ../main-menu.templates:22
 msgid ""
 "This installation step depends on one or more other steps that have not yet "
 "been performed."
@@ -2825,33 +2819,81 @@ msgstr "T'i fshij të gjithë të dhënat ekzistuese të volumit logjik?"
 #. Description
 #: ../partman-auto.templates:36
 msgid ""
-"The selected device already contains logical volumes and/or volume groups "
-"from a previous LVM installation, which must be removed from the disk before "
-"creating any partitions."
+"The selected device already contains the following LVM logical volumes, "
+"volume groups and physical volumes which are about to be removed:"
 msgstr ""
-"Dispozitivi i zgjedhur përmban volume logjikë dhe/ose grupe volumi prej një "
-"instalimi të mëparshëm LVM, i cili duhet hequr nga disku përpara krijimit të "
-"ndonjë ndarjeje."
+"Dispozitivi i zgjedhur aktualisht përmban volumet e mëposhtëm logjikë, grupe "
+"volumi dhe volume fizikë të cilët janë duke u hequr:"
+
+#. Type: boolean
+#. Description
+#: ../partman-auto.templates:36
+msgid "Logical volume(s) to be removed: ${LVTARGETS}"
+msgstr "Volum(e) logjik(ë) për t'u hequr: ${LVTARGETS}"
+
+#. Type: boolean
+#. Description
+#: ../partman-auto.templates:36
+msgid "Volume group(s) to be removed: ${VGTARGETS}"
+msgstr "Grup(e) volumi për t'u hequr: ${VGTARGETS}"
+
+#. Type: boolean
+#. Description
+#: ../partman-auto.templates:36
+msgid "Physical volume(s) to be removed: ${PVTARGETS}"
+msgstr "Volum(e) fizik(ë) për t'u hequr: ${PVTARGETS}"
 
 #. Type: boolean
 #. Description
 #: ../partman-auto.templates:36
 msgid ""
-"Note that this will also permanently erase any data currently on the logical "
+"Note that this will permanently erase any data currently on the logical "
 "volumes."
 msgstr ""
 "Vër re që kjo do të fshijë përfundimisht çdo të dhënë që ndodhet në volumet "
 "logjikë."
 
+#. Type: boolean
+#. Description
+#: ../partman-auto.templates:52
+msgid "Remove existing crypto volume data?"
+msgstr "T'i heq të dhënat ekzistuese të volumit të fshehur?"
+
+#. Type: boolean
+#. Description
+#: ../partman-auto.templates:52
+msgid ""
+"The selected device already contains a crypto volume which is about to be "
+"removed."
+msgstr ""
+"Dispozitivi i zgjedhur aktualisht përmban një volum të fshehur që është duke "
+"u hequr."
+
+#. Type: boolean
+#. Description
+#: ../partman-auto.templates:52
+msgid "The following crypto volume will be removed: ${TARGET}"
+msgstr "Volumi i fshehur më poshtë do të hiqet: ${TARGET}"
+
+#. Type: boolean
+#. Description
+#: ../partman-auto.templates:52
+msgid ""
+"Note that this will also permanently erase any data currently on the crypto "
+"volume."
+msgstr ""
+"Vër re që kjo do të fshijë përfundimisht çdo të dhënë që ndodhet në volumin "
+"e fshehur."
+
 #. Type: error
 #. Description
-#: ../partman-auto.templates:46
+#: ../partman-auto.templates:64
 msgid "LVM physical volume already exists on the selected device"
 msgstr "Volumi fizik LVM gjendet në dispozitivin e zgjedhur"
 
 #. Type: error
 #. Description
-#: ../partman-auto.templates:46
+#: ../partman-auto.templates:64
 msgid ""
 "The selected device already contains one or more LVM physical volumes which "
 "cannot be removed. It is therefore not possible to automatically partition "
@@ -2862,13 +2904,13 @@ msgstr ""
 
 #. Type: select
 #. Description
-#: ../partman-auto.templates:64
+#: ../partman-auto.templates:82
 msgid "Partitioning method:"
 msgstr "Mënyra e ndarjes:"
 
 #. Type: select
 #. Description
-#: ../partman-auto.templates:64
+#: ../partman-auto.templates:82
 msgid ""
 "If you choose guided partitioning for an entire disk, you will next be asked "
 "which disk should be used."
@@ -2878,7 +2920,7 @@ msgstr ""
 
 #. Type: select
 #. Description
-#: ../partman-auto.templates:79
+#: ../partman-auto.templates:97
 msgid "Partitioning scheme:"
 msgstr "Skema e ndarjes:"
 
@@ -2890,13 +2932,13 @@ msgstr "Skema e ndarjes:"
 #.
 #. It is followed by a variable giving the chosen disk, hence the colon
 #. at the end of the sentence. Please keep it.
-#: ../partman-auto.templates:79
+#: ../partman-auto.templates:97
 msgid "Selected for partitioning:"
 msgstr "Zgjedhur për t'u ndarë:"
 
 #. Type: select
 #. Description
-#: ../partman-auto.templates:79
+#: ../partman-auto.templates:97
 msgid ""
 "The disk can be partitioned using one of several different schemes. If you "
 "are unsure, choose the first one."
@@ -2906,13 +2948,13 @@ msgstr ""
 
 #. Type: error
 #. Description
-#: ../partman-auto.templates:89
+#: ../partman-auto.templates:107
 msgid "Unusable free space"
 msgstr "Hapësirë e lirë e papërdorur"
 
 #. Type: error
 #. Description
-#: ../partman-auto.templates:89
+#: ../partman-auto.templates:107
 msgid ""
 "Partitioning failed because the chosen free space may not be used. There are "
 "probably too many (primary) partitions in the partition table."
@@ -2923,33 +2965,33 @@ msgstr ""
 #. Type: text
 #. Description
 #. TRANSLATORS: This is a menu entry. Keep in under 55 columns/characters
-#: ../partman-auto.templates:108
+#: ../partman-auto.templates:126
 msgid "Guided partitioning"
 msgstr "Ndarje e udhëzuar"
 
 #. Type: text
 #. Description
 #. TRANSLATORS: This is a menu entry. Keep in under 55 columns/characters
-#: ../partman-auto.templates:113
+#: ../partman-auto.templates:131
 msgid "Guided - use the largest continuous free space"
 msgstr "E drejtuar - përdor hapësirën e lirë më të madhe"
 
 #. Type: text
 #. Description
 #. TRANSLATORS: This is a menu entry. Keep in under 55 columns/characters
-#: ../partman-auto.templates:118
+#: ../partman-auto.templates:136
 msgid "Guided - use entire disk"
 msgstr "E drejtuar - zgjidh tërë diskun"
 
 #. Type: select
 #. Description
-#: ../partman-auto.templates:123
+#: ../partman-auto.templates:141
 msgid "Select disk to partition:"
 msgstr "Zgjidh diskun për ta ndarë:"
 
 #. Type: select
 #. Description
-#: ../partman-auto.templates:123
+#: ../partman-auto.templates:141
 msgid ""
 "Note that all data on the disk you select will be erased, but not before you "
 "have confirmed that you really want to make the changes."
@@ -2959,13 +3001,13 @@ msgstr ""
 
 #. Type: multiselect
 #. Description
-#: ../partman-auto.templates:130
+#: ../partman-auto.templates:148
 msgid "Select disk(s) to partition:"
 msgstr "Zgjidh diskun(disqet) për ndarje:"
 
 #. Type: multiselect
 #. Description
-#: ../partman-auto.templates:130
+#: ../partman-auto.templates:148
 msgid ""
 "Note that all data on the disk(s) you select will be erased, but not before "
 "you have confirmed that you really want to make the changes."
@@ -2977,42 +3019,42 @@ msgstr ""
 #. Description
 #. TRANSLATORS: This is a menu entry. Keep in under 55 columns/characters
 #. This is a method for partioning - as in guided (automatic) versus manual
-#: ../partman-auto.templates:138
+#: ../partman-auto.templates:156
 msgid "Manual"
 msgstr "Manuale"
 
 #. Type: text
 #. Description
 #. TRANSLATORS: This is a menu entry. Keep in under 55 columns/characters
-#: ../partman-auto.templates:143
+#: ../partman-auto.templates:161
 msgid "Automatically partition the free space"
 msgstr "Ndaj automatikisht hapësirën e lirë"
 
 #. Type: text
 #. Description
 #. TRANSLATORS: This is a menu entry. Keep in under 55 columns/characters
-#: ../partman-auto.templates:148
+#: ../partman-auto.templates:166
 msgid "All files in one partition (recommended for new users)"
 msgstr "Gjithçka në një ndarje (e këshillueshme për përdoruesit e rinj)"
 
 #. Type: text
 #. Description
 #. TRANSLATORS: This is a menu entry. Keep in under 55 columns/characters
-#: ../partman-auto.templates:153
+#: ../partman-auto.templates:171
 msgid "Separate /home partition"
 msgstr "Veço ndarjen /home"
 
 #. Type: text
 #. Description
 #. TRANSLATORS: This is a menu entry. Keep in under 55 columns/characters
-#: ../partman-auto.templates:158
+#: ../partman-auto.templates:176
 msgid "Separate /home, /usr, /var, and /tmp partitions"
 msgstr "Ndaj /home, /usr, /var. dhe /tmp"
 
 #. Type: text
 #. Description
 #. TRANSLATORS: This is a menu entry. Keep in under 55 columns/characters
-#: ../partman-auto.templates:163
+#: ../partman-auto.templates:181
 msgid "Small-disk (< 1GB) partitioning scheme"
 msgstr "Skema e ndarjes së diskut të vogël (< 1GB)"
 
@@ -3178,11 +3220,11 @@ msgstr ""
 
 #. Type: error
 #. Description
-#: ../partman-partitioning.templates:38 ../base-installer.templates:124
-#: ../quik-installer.templates:131 ../yaboot-installer.templates:88
-#: ../vmelilo-installer.templates:46 ../lvmcfg-utils.templates:247
-#: ../partman-lvm.templates:380 ../partman-auto-lvm.templates:40
-#: ../partman-auto-raid.templates:3
+#: ../partman-partitioning.templates:38 ../base-installer.templates:117
+#: ../nobootloader.templates:8 ../quik-installer.templates:131
+#: ../yaboot-installer.templates:88 ../vmelilo-installer.templates:46
+#: ../lvmcfg-utils.templates:247 ../partman-lvm.templates:381
+#: ../partman-auto-lvm.templates:40 ../partman-auto-raid.templates:3
 msgid "Check /var/log/syslog or see virtual console 4 for the details."
 msgstr "Kontrollo /var/log/syslog ose shiko konsolën virtuale 4 për hollësitë."
 
@@ -3500,7 +3542,7 @@ msgstr ""
 
 #. Type: boolean
 #. Description
-#: ../partman-basicfilesystems.templates:41
+#: ../partman-basicfilesystems.templates:42
 msgid ""
 "You have not selected any partitions for use as swap space. Enabling swap "
 "space is recommended so that the system can make better use of the available "
@@ -3516,7 +3558,7 @@ msgstr ""
 
 #. Type: boolean
 #. Description
-#: ../partman-basicfilesystems.templates:41
+#: ../partman-basicfilesystems.templates:42
 msgid ""
 "If you do not go back to the partitioning menu and assign a swap partition, "
 "the installation will continue without swap space."
@@ -3526,7 +3568,7 @@ msgstr ""
 
 #. Type: error
 #. Description
-#: ../partman-basicfilesystems.templates:53 ../partman-ext3.templates:16
+#: ../partman-basicfilesystems.templates:54 ../partman-ext3.templates:16
 #: ../partman-reiserfs.templates:16 ../partman-jfs.templates:16
 #: ../partman-xfs.templates:16 ../partman-ext2r0.templates:16
 msgid "Failed to create a file system"
@@ -3534,7 +3576,7 @@ msgstr "Dështoi në krijimin e filesistemit"
 
 #. Type: error
 #. Description
-#: ../partman-basicfilesystems.templates:53
+#: ../partman-basicfilesystems.templates:54
 msgid ""
 "The ${TYPE} file system creation in partition #${PARTITION} of ${DEVICE} "
 "failed."
@@ -3544,13 +3586,13 @@ msgstr ""
 
 #. Type: error
 #. Description
-#: ../partman-basicfilesystems.templates:59
+#: ../partman-basicfilesystems.templates:60
 msgid "Failed to create a swap space"
 msgstr "Dështoi në krijimin e hapësirës swap"
 
 #. Type: error
 #. Description
-#: ../partman-basicfilesystems.templates:59
+#: ../partman-basicfilesystems.templates:60
 msgid ""
 "The creation of swap space in partition #${PARTITION} of ${DEVICE} failed."
 msgstr ""
@@ -3558,7 +3600,7 @@ msgstr ""
 
 #. Type: boolean
 #. Description
-#: ../partman-basicfilesystems.templates:64 ../partman-ext3.templates:22
+#: ../partman-basicfilesystems.templates:65 ../partman-ext3.templates:22
 #: ../partman-reiserfs.templates:22 ../partman-jfs.templates:22
 #: ../partman-xfs.templates:22 ../partman-ext2r0.templates:22
 msgid "Do you want to return to the partitioning menu?"
@@ -3566,7 +3608,7 @@ msgstr "Dëshiron të kthehesh tek menuja e ndarjes?"
 
 #. Type: boolean
 #. Description
-#: ../partman-basicfilesystems.templates:64
+#: ../partman-basicfilesystems.templates:65
 msgid ""
 "No mount point is assigned for ${FILESYSTEM} file system in partition #"
 "${PARTITION} of ${DEVICE}."
@@ -3576,7 +3618,7 @@ msgstr ""
 
 #. Type: boolean
 #. Description
-#: ../partman-basicfilesystems.templates:64 ../partman-ext3.templates:22
+#: ../partman-basicfilesystems.templates:65 ../partman-ext3.templates:22
 #: ../partman-reiserfs.templates:22 ../partman-jfs.templates:22
 #: ../partman-xfs.templates:22 ../partman-ext2r0.templates:22
 msgid ""
@@ -3588,13 +3630,13 @@ msgstr ""
 
 #. Type: error
 #. Description
-#: ../partman-basicfilesystems.templates:73
+#: ../partman-basicfilesystems.templates:74
 msgid "Invalid file system for this mount point"
 msgstr "Filesistem i pavlefshëm për këtë pikë montimi"
 
 #. Type: error
 #. Description
-#: ../partman-basicfilesystems.templates:73
+#: ../partman-basicfilesystems.templates:74
 msgid ""
 "The file system type ${FILESYSTEM} cannot be mounted on ${MOUNTPOINT}, "
 "because it is not a fully-functional Unix file system. Please choose a "
@@ -3609,7 +3651,7 @@ msgstr ""
 #. Note to translators : Please keep your translations of the choices
 #. below a 65 columns limit (which means 65 characters
 #. in single-byte languages) including the initial path
-#: ../partman-basicfilesystems.templates:83
+#: ../partman-basicfilesystems.templates:84
 msgid "/ - the root file system"
 msgstr "/ - filesistemi root"
 
@@ -3618,7 +3660,7 @@ msgstr "/ - filesistemi root"
 #. Note to translators : Please keep your translations of the choices
 #. below a 65 columns limit (which means 65 characters
 #. in single-byte languages) including the initial path
-#: ../partman-basicfilesystems.templates:83
+#: ../partman-basicfilesystems.templates:84
 msgid "/boot - static files of the boot loader"
 msgstr "/boot - kartelat statike të ngarkuesit të nisjes"
 
@@ -3627,7 +3669,7 @@ msgstr "/boot - kartelat statike të ngarkuesit të nisjes"
 #. Note to translators : Please keep your translations of the choices
 #. below a 65 columns limit (which means 65 characters
 #. in single-byte languages) including the initial path
-#: ../partman-basicfilesystems.templates:83
+#: ../partman-basicfilesystems.templates:84
 msgid "/home - user home directories"
 msgstr "/home - dosjet home të përdoruesve"
 
@@ -3636,7 +3678,7 @@ msgstr "/home - dosjet home të përdoruesve"
 #. Note to translators : Please keep your translations of the choices
 #. below a 65 columns limit (which means 65 characters
 #. in single-byte languages) including the initial path
-#: ../partman-basicfilesystems.templates:83
+#: ../partman-basicfilesystems.templates:84
 msgid "/tmp - temporary files"
 msgstr "/tmp - kartela të përkohshme"
 
@@ -3645,7 +3687,7 @@ msgstr "/tmp - kartela të përkohshme"
 #. Note to translators : Please keep your translations of the choices
 #. below a 65 columns limit (which means 65 characters
 #. in single-byte languages) including the initial path
-#: ../partman-basicfilesystems.templates:83
+#: ../partman-basicfilesystems.templates:84
 msgid "/usr - static data"
 msgstr "/usr - të dhëna statike"
 
@@ -3654,7 +3696,7 @@ msgstr "/usr - të dhëna statike"
 #. Note to translators : Please keep your translations of the choices
 #. below a 65 columns limit (which means 65 characters
 #. in single-byte languages) including the initial path
-#: ../partman-basicfilesystems.templates:83
+#: ../partman-basicfilesystems.templates:84
 msgid "/var - variable data"
 msgstr "/var - të dhëna të ndryshueshme"
 
@@ -3663,7 +3705,7 @@ msgstr "/var - të dhëna të ndryshueshme"
 #. Note to translators : Please keep your translations of the choices
 #. below a 65 columns limit (which means 65 characters
 #. in single-byte languages) including the initial path
-#: ../partman-basicfilesystems.templates:83
+#: ../partman-basicfilesystems.templates:84
 msgid "/srv - data for services provided by this system"
 msgstr "/srv - të dhëna për shërbimet që ofron ky sistem"
 
@@ -3672,7 +3714,7 @@ msgstr "/srv - të dhëna për shërbimet që ofron ky sistem"
 #. Note to translators : Please keep your translations of the choices
 #. below a 65 columns limit (which means 65 characters
 #. in single-byte languages) including the initial path
-#: ../partman-basicfilesystems.templates:83
+#: ../partman-basicfilesystems.templates:84
 msgid "/opt - add-on application software packages"
 msgstr "/opt - paketa programesh shtesë"
 
@@ -3681,19 +3723,19 @@ msgstr "/opt - paketa programesh shtesë"
 #. Note to translators : Please keep your translations of the choices
 #. below a 65 columns limit (which means 65 characters
 #. in single-byte languages) including the initial path
-#: ../partman-basicfilesystems.templates:83
+#: ../partman-basicfilesystems.templates:84
 msgid "/usr/local - local hierarchy"
 msgstr "/usr/local - hierarki lokale"
 
 #. Type: select
 #. Choices
-#: ../partman-basicfilesystems.templates:88
+#: ../partman-basicfilesystems.templates:89
 msgid "/dos"
 msgstr "/dos"
 
 #. Type: select
 #. Choices
-#: ../partman-basicfilesystems.templates:88
+#: ../partman-basicfilesystems.templates:89
 msgid "/windows"
 msgstr "/windows"
 
@@ -3712,7 +3754,7 @@ msgstr "/windows"
 #. below a 65 columns limit (which means 65 characters
 #. in single-byte languages)
 #. What's to be "entered manually" is a mount point
-#: ../partman-basicfilesystems.templates:88 ../partman-ext2r0.templates:36
+#: ../partman-basicfilesystems.templates:89 ../partman-ext2r0.templates:36
 #: ../partconf.templates:62
 msgid "Enter manually"
 msgstr "Krijo vetë"
@@ -3724,43 +3766,43 @@ msgstr "Krijo vetë"
 #. Type: select
 #. Choices
 #. "it" is a partition
-#: ../partman-basicfilesystems.templates:88 ../partman-ext2r0.templates:36
+#: ../partman-basicfilesystems.templates:89 ../partman-ext2r0.templates:36
 msgid "Do not mount it"
 msgstr "Mos e monto"
 
 #. Type: string
 #. Description
-#: ../partman-basicfilesystems.templates:93 ../partman-ext2r0.templates:41
+#: ../partman-basicfilesystems.templates:94 ../partman-ext2r0.templates:41
 msgid "Mount point for this partition:"
 msgstr "Pika e montimit për këtë ndarje:"
 
 #. Type: error
 #. Description
-#: ../partman-basicfilesystems.templates:97 ../partman-ext2r0.templates:45
+#: ../partman-basicfilesystems.templates:98 ../partman-ext2r0.templates:45
 msgid "Invalid mount point"
 msgstr "Pikë montimi e pavlefshme"
 
 #. Type: error
 #. Description
-#: ../partman-basicfilesystems.templates:97 ../partman-ext2r0.templates:45
+#: ../partman-basicfilesystems.templates:98 ../partman-ext2r0.templates:45
 msgid "The mount point you entered is invalid."
 msgstr "Pika e montimit që zgjodhe është e pavlefshme."
 
 #. Type: error
 #. Description
-#: ../partman-basicfilesystems.templates:97 ../partman-ext2r0.templates:45
+#: ../partman-basicfilesystems.templates:98 ../partman-ext2r0.templates:45
 msgid "Mount points must start with \"/\". They cannot contain spaces."
 msgstr "Pikat e montimit duhet të fillojnë me \"/\". Nuk lejohen hapësirat."
 
 #. Type: string
 #. Description
-#: ../partman-basicfilesystems.templates:104
+#: ../partman-basicfilesystems.templates:105
 msgid "Label for the file system in this partition:"
 msgstr "Etiketa për filesistemin e kësaj ndarjeje:"
 
 #. Type: text
 #. Description
-#: ../partman-basicfilesystems.templates:108
+#: ../partman-basicfilesystems.templates:109
 msgid "Format the swap area:"
 msgstr "Formato hapësirën swap:"
 
@@ -3771,7 +3813,7 @@ msgstr "Formato hapësirën swap:"
 #. #-#-#-#-#  templates.pot (PACKAGE VERSION)  #-#-#-#-#
 #. Type: text
 #. Description
-#: ../partman-basicfilesystems.templates:113 ../partman-crypto.templates:121
+#: ../partman-basicfilesystems.templates:114 ../partman-crypto.templates:121
 msgid "yes"
 msgstr "po"
 
@@ -3782,21 +3824,21 @@ msgstr "po"
 #. #-#-#-#-#  templates.pot (PACKAGE VERSION)  #-#-#-#-#
 #. Type: text
 #. Description
-#: ../partman-basicfilesystems.templates:118 ../partman-crypto.templates:117
+#: ../partman-basicfilesystems.templates:119 ../partman-crypto.templates:117
 msgid "no"
 msgstr "jo"
 
 #. Type: text
 #. Description
 #. label of file system
-#: ../partman-basicfilesystems.templates:123
+#: ../partman-basicfilesystems.templates:124
 msgid "Label:"
 msgstr "Etiketa:"
 
 #. Type: text
 #. Description
 #. for partman-basicfilesystems: in the following context: "Label: none"
-#: ../partman-basicfilesystems.templates:128
+#: ../partman-basicfilesystems.templates:129
 msgid ""
 "none[ Do not translate what's inside the brackets and just put the "
 "translation for the word \"none\" in your language without any brackets. "
@@ -3806,13 +3848,13 @@ msgstr "asnjë"
 #. Type: text
 #. Description
 #. Up to 24 character positions
-#: ../partman-basicfilesystems.templates:133
+#: ../partman-basicfilesystems.templates:134
 msgid "Reserved blocks:"
 msgstr "Blloqe të rezervuar:"
 
 #. Type: string
 #. Description
-#: ../partman-basicfilesystems.templates:137
+#: ../partman-basicfilesystems.templates:138
 msgid "Percentage of the file system blocks reserved for the super-user:"
 msgstr ""
 "Përqindja e blloqeve të filesistemit rezervuar për përdoruesin kryesor:"
@@ -3820,26 +3862,26 @@ msgstr ""
 #. Type: text
 #. Description
 #. Up to 25 character positions
-#: ../partman-basicfilesystems.templates:142
+#: ../partman-basicfilesystems.templates:143
 msgid "Typical usage:"
 msgstr "Përdorim tipik"
 
 #. Type: text
 #. Description
 #. In the following context: "Typical usage: standard"
-#: ../partman-basicfilesystems.templates:147
+#: ../partman-basicfilesystems.templates:148
 msgid "standard"
 msgstr "standard"
 
 #. Type: select
 #. Description
-#: ../partman-basicfilesystems.templates:155
+#: ../partman-basicfilesystems.templates:156
 msgid "Typical usage of this partition:"
 msgstr "Përdorimi tipik i kësaj ndarjeje:"
 
 #. Type: select
 #. Description
-#: ../partman-basicfilesystems.templates:155
+#: ../partman-basicfilesystems.templates:156
 msgid ""
 "Please specify how the file system is going to be used, so that optimal file "
 "system parameters can be chosen for that use."
@@ -3849,7 +3891,7 @@ msgstr ""
 
 #. Type: select
 #. Description
-#: ../partman-basicfilesystems.templates:155
+#: ../partman-basicfilesystems.templates:156
 msgid ""
 "standard = standard parameters, news = one inode per 4KB block, largefile = "
 "one inode per megabyte, largefile4 = one inode per 4 megabytes."
@@ -3878,7 +3920,7 @@ msgstr ""
 #. Type: text
 #. Description
 #. This is an item in the menu "Partition settings"
-#: ../partman-basicfilesystems.templates:167 ../partman-ext3.templates:32
+#: ../partman-basicfilesystems.templates:168 ../partman-ext3.templates:32
 #: ../partman-reiserfs.templates:32 ../partman-jfs.templates:32
 #: ../partman-xfs.templates:32
 msgid "Mount point:"
@@ -3887,7 +3929,7 @@ msgstr "Pika e montimit:"
 #. Type: text
 #. Description
 #. In the following context: "Mount point: none"
-#: ../partman-basicfilesystems.templates:172
+#: ../partman-basicfilesystems.templates:173
 msgid ""
 "none[ Do not translate what's inside the brackets and just put the "
 "translation for the word \"none\" in your language without any brackets. "
@@ -3896,53 +3938,53 @@ msgstr "asnjë"
 
 #. Type: text
 #. Description
-#: ../partman-basicfilesystems.templates:176
+#: ../partman-basicfilesystems.templates:177
 msgid "Ext2 file system"
 msgstr "Filesistem Ext2"
 
 #. Type: text
 #. Description
 #. Short file system name (untranslatable in many languages)
-#: ../partman-basicfilesystems.templates:181
+#: ../partman-basicfilesystems.templates:182
 msgid "ext2"
 msgstr "ext2"
 
 #. Type: text
 #. Description
-#: ../partman-basicfilesystems.templates:185
+#: ../partman-basicfilesystems.templates:186
 msgid "FAT16 file system"
 msgstr "filesistem FAT16"
 
 #. Type: text
 #. Description
 #. Short file system name (untranslatable in many languages)
-#: ../partman-basicfilesystems.templates:190
+#: ../partman-basicfilesystems.templates:191
 msgid "fat16"
 msgstr "fat16"
 
 #. Type: text
 #. Description
-#: ../partman-basicfilesystems.templates:194
+#: ../partman-basicfilesystems.templates:195
 msgid "FAT32 file system"
 msgstr "filesistem FAT32"
 
 #. Type: text
 #. Description
 #. Short file system name (untranslatable in many languages)
-#: ../partman-basicfilesystems.templates:199
+#: ../partman-basicfilesystems.templates:200
 msgid "fat32"
 msgstr "fat32"
 
 #. Type: text
 #. Description
-#: ../partman-basicfilesystems.templates:212
+#: ../partman-basicfilesystems.templates:213
 msgid "swap area"
 msgstr "hapësira swap"
 
 #. Type: text
 #. Description
 #. Short variant of `swap space'
-#: ../partman-basicfilesystems.templates:217
+#: ../partman-basicfilesystems.templates:218
 msgid "swap"
 msgstr "swap"
 
@@ -3951,7 +3993,7 @@ msgstr "swap"
 #. Note to translators : Please keep your translations of the choices
 #. below a 65 columns limit (which means 65 characters
 #. in single-byte languages)
-#: ../partman-basicfilesystems.templates:228 ../partman-ext3.templates:44
+#: ../partman-basicfilesystems.templates:229 ../partman-ext3.templates:44
 #: ../partman-reiserfs.templates:44 ../partman-jfs.templates:44
 #: ../partman-xfs.templates:44 ../partman-ext2r0.templates:60
 msgid "noatime - do not update inode access times at each access"
@@ -3962,7 +4004,7 @@ msgstr "noatime - mos fresko herët e hyrjes së inodës në çdo akses"
 #. Note to translators : Please keep your translations of the choices
 #. below a 65 columns limit (which means 65 characters
 #. in single-byte languages)
-#: ../partman-basicfilesystems.templates:228 ../partman-ext3.templates:44
+#: ../partman-basicfilesystems.templates:229 ../partman-ext3.templates:44
 #: ../partman-reiserfs.templates:44 ../partman-jfs.templates:44
 #: ../partman-xfs.templates:44 ../partman-ext2r0.templates:60
 msgid "nodev - do not support character or block special devices"
@@ -3973,7 +4015,7 @@ msgstr "nodev - mos suporto dispozitivat me gërma apo me blloqe speciale"
 #. Note to translators : Please keep your translations of the choices
 #. below a 65 columns limit (which means 65 characters
 #. in single-byte languages)
-#: ../partman-basicfilesystems.templates:228 ../partman-ext3.templates:44
+#: ../partman-basicfilesystems.templates:229 ../partman-ext3.templates:44
 #: ../partman-reiserfs.templates:44 ../partman-jfs.templates:44
 #: ../partman-xfs.templates:44 ../partman-ext2r0.templates:60
 msgid "nosuid - ignore set-user-identifier or set-group-identifier bits"
@@ -3984,7 +4026,7 @@ msgstr "nosuid - shpërfill bitet set-user-identifier apo set-group-identifier"
 #. Note to translators : Please keep your translations of the choices
 #. below a 65 columns limit (which means 65 characters
 #. in single-byte languages)
-#: ../partman-basicfilesystems.templates:228 ../partman-ext3.templates:44
+#: ../partman-basicfilesystems.templates:229 ../partman-ext3.templates:44
 #: ../partman-reiserfs.templates:44 ../partman-jfs.templates:44
 #: ../partman-xfs.templates:44 ../partman-ext2r0.templates:60
 msgid "noexec - do not allow execution of any binaries"
@@ -3995,7 +4037,7 @@ msgstr "noexec - mos lejo ekzekutimin e asnjë binari"
 #. Note to translators : Please keep your translations of the choices
 #. below a 65 columns limit (which means 65 characters
 #. in single-byte languages)
-#: ../partman-basicfilesystems.templates:228 ../partman-ext3.templates:44
+#: ../partman-basicfilesystems.templates:229 ../partman-ext3.templates:44
 #: ../partman-reiserfs.templates:44 ../partman-xfs.templates:44
 #: ../partman-ext2r0.templates:60
 msgid "usrquota - user disk quota accounting enabled"
@@ -4006,7 +4048,7 @@ msgstr "usrquota - llogaria e kuotave të përdoruesve është e aktivizuar"
 #. Note to translators : Please keep your translations of the choices
 #. below a 65 columns limit (which means 65 characters
 #. in single-byte languages)
-#: ../partman-basicfilesystems.templates:228 ../partman-ext3.templates:44
+#: ../partman-basicfilesystems.templates:229 ../partman-ext3.templates:44
 #: ../partman-reiserfs.templates:44 ../partman-xfs.templates:44
 #: ../partman-ext2r0.templates:60
 msgid "grpquota - group disk quota accounting enabled"
@@ -4017,7 +4059,7 @@ msgstr "grpquota - llogaria e kuotave të grupeve është e aktivizuar"
 #. Note to translators : Please keep your translations of the choices
 #. below a 65 columns limit (which means 65 characters
 #. in single-byte languages)
-#: ../partman-basicfilesystems.templates:228 ../partman-ext3.templates:44
+#: ../partman-basicfilesystems.templates:229 ../partman-ext3.templates:44
 #: ../partman-reiserfs.templates:44
 msgid "user_xattr - support user extended attributes"
 msgstr "user_xattr - mbështet vetitë e zgjeruara të përdoruesit"
@@ -4058,7 +4100,7 @@ msgstr "user_xattr - mbështet vetitë e zgjeruara të përdoruesit"
 #. Note to translators : Please keep your translations of the choices
 #. below a 65 columns limit (which means 65 characters
 #. in single-byte languages)
-#: ../partman-basicfilesystems.templates:237 ../partman-ext3.templates:44
+#: ../partman-basicfilesystems.templates:238 ../partman-ext3.templates:44
 #: ../partman-reiserfs.templates:44 ../partman-jfs.templates:44
 #: ../partman-xfs.templates:44 ../partman-ext2r0.templates:60
 msgid "ro - mount the file system read-only"
@@ -4100,7 +4142,7 @@ msgstr "ro - monto filesistemin vetëm për lexim"
 #. Note to translators : Please keep your translations of the choices
 #. below a 65 columns limit (which means 65 characters
 #. in single-byte languages)
-#: ../partman-basicfilesystems.templates:237 ../partman-ext3.templates:44
+#: ../partman-basicfilesystems.templates:238 ../partman-ext3.templates:44
 #: ../partman-reiserfs.templates:44 ../partman-jfs.templates:44
 #: ../partman-xfs.templates:44 ../partman-ext2r0.templates:60
 msgid "sync - all input/output activities occur synchronously"
@@ -4112,13 +4154,13 @@ msgstr ""
 #. Note to translators : Please keep your translations of the choices
 #. below a 65 columns limit (which means 65 characters
 #. in single-byte languages) including the initial path
-#: ../partman-basicfilesystems.templates:237
+#: ../partman-basicfilesystems.templates:238
 msgid "quiet - changing owner and permissions does not return errors"
 msgstr "quiet - duke ndryshuar pronarin dhe lejet nuk jep gabime"
 
 #. Type: multiselect
 #. Description
-#: ../partman-basicfilesystems.templates:238 ../partman-ext3.templates:45
+#: ../partman-basicfilesystems.templates:239 ../partman-ext3.templates:45
 #: ../partman-reiserfs.templates:45 ../partman-jfs.templates:45
 #: ../partman-xfs.templates:45 ../partman-ext2r0.templates:61
 msgid "Mount options:"
@@ -4126,7 +4168,7 @@ msgstr "Mundësitë e montimit:"
 
 #. Type: multiselect
 #. Description
-#: ../partman-basicfilesystems.templates:238 ../partman-ext3.templates:45
+#: ../partman-basicfilesystems.templates:239 ../partman-ext3.templates:45
 #: ../partman-reiserfs.templates:45 ../partman-jfs.templates:45
 #: ../partman-xfs.templates:45 ../partman-ext2r0.templates:61
 msgid "Mount options can tune the behavior of the file system."
@@ -4961,7 +5003,7 @@ msgstr "Asia/Ulaanbaatar, Asia/Hovd, Asia/Choibalsan"
 #. Description
 #: ../common.templates:232
 msgid "Select a city in your time zone:"
-msgstr "Zgjidh një qytet në zonën tënde kohore:"
+msgstr "Zgjidh një qytet në zonën tënde orare:"
 
 #. Type: select
 #. Choices
@@ -5069,7 +5111,7 @@ msgstr "Pacific/Johnston, Pacific/Midway, Pacific/Wake"
 #. Description
 #: ../common.templates:329
 msgid "Select a location in your time zone:"
-msgstr "Zgjidh një vendndodhje në zonën tënde kohore:"
+msgstr "Zgjidh një vendndodhje në zonën tënde orare:"
 
 #. Type: select
 #. Choices
@@ -5095,33 +5137,33 @@ msgstr ""
 #. Description
 #: ../common.templates:346
 msgid "Select your time zone:"
-msgstr "Zgjidh zonën kohore:"
+msgstr "Zgjidh zonën orare:"
 
 #. Type: text
 #. Description
 #. Main menu item
 #: ../tzsetup-udeb.templates:4
-msgid "Configure time zone"
-msgstr "Konfiguro zonën kohore"
+msgid "Configure the time zone"
+msgstr "Konfiguro zonën orare"
 
 #. Type: text
 #. Description
 #. finish-install progress bar item
 #: ../tzsetup-udeb.templates:9
-msgid "Saving time zone..."
-msgstr "Duke ruajtur zonën kohore..."
+msgid "Saving the time zone..."
+msgstr "Duke ruajtur zonën orare..."
 
 #. Type: note
 #. Description
 #: ../tzsetup-udeb.templates:13
-msgid "Selected timezone"
-msgstr "Zona kohore e zgjedhur"
+msgid "Selected time zone"
+msgstr "Zona e zgjedhur orare"
 
 #. Type: note
 #. Description
 #: ../tzsetup-udeb.templates:13
 msgid "Based on your country, your time zone is ${ZONE}."
-msgstr "Duke u bazuar në shtetin tënd, zona jote kohore është ${ZONE}."
+msgstr "Duke u bazuar në shtetin tënd, zona jote orare është ${ZONE}."
 
 #. Type: text
 #. Description
@@ -5146,7 +5188,7 @@ msgid ""
 "expects the clock to be set to local time."
 msgstr ""
 "Zakonisht orët e sistemit caktohen me Orën Universale të Koordinuar (UTC). "
-"Sistemi operativ përdor zonën tënde kohore për të këmbyer orën e sistemit në "
+"Sistemi operativ përdor zonën tënde orare për të këmbyer orën e sistemit në "
 "orën lokale. Kjo është më e këshillueshme nëse nuk përdor një tjetër sistem "
 "operativ i cili pret që ora të jetë caktuar në orën lokale."
 
@@ -5299,30 +5341,12 @@ msgstr ""
 #. Type: error
 #. Description
 #: ../base-installer.templates:76
-msgid "No initrd generator"
-msgstr "Pa përftues initrd"
-
-#. Type: error
-#. Description
-#: ../base-installer.templates:76
-msgid ""
-"The kernel that has been selected for installation needs an initrd to boot. "
-"However, no package to generate that initrd is available that supports your "
-"configuration. This would leave your system unable to boot."
-msgstr ""
-"Kerneli që është zgjedhur për instalim ka nevojë për një initrd për të "
-"nisur. Sidoqoftë, nuk gjendet asnjë paket për të gjeneruar atë initrd që "
-"suporton konfigurimin tënd. Kjo nuk do bënte të mundur nisjen e sistemit."
-
-#. Type: error
-#. Description
-#: ../base-installer.templates:83
 msgid "Unsupported initrd generator"
 msgstr "Përftues initrd-je jo i suportueshëm"
 
 #. Type: error
 #. Description
-#: ../base-installer.templates:83
+#: ../base-installer.templates:76
 msgid ""
 "The package ${GENERATOR} that was selected to generate the initrd is not "
 "supported."
@@ -5332,13 +5356,13 @@ msgstr ""
 
 #. Type: error
 #. Description
-#: ../base-installer.templates:89
+#: ../base-installer.templates:82
 msgid "Unable to install the selected kernel"
 msgstr "Kerneli i zgjedhur nuk mund të instalohet"
 
 #. Type: error
 #. Description
-#: ../base-installer.templates:89
+#: ../base-installer.templates:82
 msgid ""
 "An error was returned while trying to install the kernel into the target "
 "system."
@@ -5346,7 +5370,7 @@ msgstr "Ndodhi një gabim gjatë instalimit të kernelit në sistemin e zgjedhur
 
 #. Type: error
 #. Description
-#: ../base-installer.templates:89
+#: ../base-installer.templates:82
 msgid "Kernel package: '${KERNEL}'."
 msgstr "Paketa kernel: '${KERNEL}'."
 
@@ -5354,7 +5378,7 @@ msgstr "Paketa kernel: '${KERNEL}'."
 #. Choices
 #. For base-installer, "none" is an additional choice to a list of kernels.
 #. It means "no kernel"
-#: ../base-installer.templates:102
+#: ../base-installer.templates:95
 msgid ""
 "none[ Do not translate what's inside the brackets and just put the "
 "translation for the word \"none\" in your language without any brackets. "
@@ -5363,13 +5387,13 @@ msgstr "asnjë"
 
 #. Type: select
 #. Description
-#: ../base-installer.templates:103
+#: ../base-installer.templates:96
 msgid "Kernel to install:"
 msgstr "Kerneli për instalim:"
 
 #. Type: select
 #. Description
-#: ../base-installer.templates:103
+#: ../base-installer.templates:96
 msgid ""
 "The list shows the available kernels. Please choose one of them in order to "
 "make the system bootable from the hard drive."
@@ -5379,19 +5403,19 @@ msgstr ""
 
 #. Type: boolean
 #. Description
-#: ../base-installer.templates:110
+#: ../base-installer.templates:103
 msgid "Continue without installing a kernel?"
 msgstr "Të vazhdoj pa instaluar një kernel?"
 
 #. Type: boolean
 #. Description
-#: ../base-installer.templates:110
+#: ../base-installer.templates:103
 msgid "No installable kernel was found in the defined APT sources."
 msgstr "Nuk u gjet asnjë kernel i instalueshëm në burimet e caktuara APT."
 
 #. Type: boolean
 #. Description
-#: ../base-installer.templates:110
+#: ../base-installer.templates:103
 msgid ""
 "You may try to continue without a kernel, and manually install your own "
 "kernel later. This is only recommended for experts, otherwise you will "
@@ -5403,25 +5427,25 @@ msgstr ""
 
 #. Type: error
 #. Description
-#: ../base-installer.templates:119
+#: ../base-installer.templates:112
 msgid "Cannot install kernel"
 msgstr "Nuk mund të instaloj kernelin"
 
 #. Type: error
 #. Description
-#: ../base-installer.templates:119
+#: ../base-installer.templates:112
 msgid "The installer cannot find a suitable kernel package to install."
 msgstr "Instaluesi nuk mund të gjejë një paketë kerneli për t'u instaluar."
 
 #. Type: error
 #. Description
-#: ../base-installer.templates:124
+#: ../base-installer.templates:117
 msgid "Unable to install ${PACKAGE}"
 msgstr "E pamundur të instalohet ${PACKAGE}"
 
 #. Type: error
 #. Description
-#: ../base-installer.templates:124
+#: ../base-installer.templates:117
 msgid ""
 "An error was returned while trying to install the ${PACKAGE} package onto "
 "the target system."
@@ -5432,34 +5456,34 @@ msgstr ""
 #. Type: error
 #. Description
 #. SUBST0 is a Release file name.
-#: ../base-installer.templates:133
+#: ../base-installer.templates:126
 msgid "Failed getting Release file ${SUBST0}."
 msgstr "Dështoi në marrjen e file Release ${SUBST0}."
 
 #. Type: error
 #. Description
 #. SUBST0 is a Release.gpg file name
-#: ../base-installer.templates:139
+#: ../base-installer.templates:132
 msgid "Failed getting Release signature file ${SUBST0}."
 msgstr "Dështoi në marrjen e file-t nënshkrues për Release ${SUBST0}."
 
 #. Type: error
 #. Description
 #. SUBST0 is a gpg key ID
-#: ../base-installer.templates:145
+#: ../base-installer.templates:138
 msgid "Release file signed by unknown key (key id ${SUBST0})"
 msgstr "Lëshim i nënshkruar nga një çelës i panjohur (id e çelësit ${SUBST0})"
 
 #. Type: error
 #. Description
-#: ../base-installer.templates:150
+#: ../base-installer.templates:143
 msgid "Invalid Release file: no valid components."
 msgstr "File Release i pavlefshëm: asnjë përbërës i vlefshëm."
 
 #. Type: error
 #. Description
 #. SUBST0 is a filename
-#: ../base-installer.templates:156
+#: ../base-installer.templates:149
 msgid "Invalid Release file: no entry for ${SUBST0}."
 msgstr "File Release i pavlefshëm: ansnjë hyrje për ${SUBST0}."
 
@@ -5467,7 +5491,7 @@ msgstr "File Release i pavlefshëm: ansnjë hyrje për ${SUBST0}."
 #. Description
 #. SUBST0 is a filename or package name
 #. Debootstrap is a program name: should not be translated
-#: ../base-installer.templates:163
+#: ../base-installer.templates:156
 msgid "Debootstrap Error"
 msgstr "Gabim i Debootstrap"
 
@@ -5475,7 +5499,7 @@ msgstr "Gabim i Debootstrap"
 #. Description
 #. SUBST0 is a filename or package name
 #. Debootstrap is a program name: should not be translated
-#: ../base-installer.templates:163
+#: ../base-installer.templates:156
 msgid ""
 "Couldn't retrieve ${SUBST0}. This may be due to a network problem or a bad "
 "CD, depending on your installation method."
@@ -5487,7 +5511,7 @@ msgstr ""
 #. Description
 #. SUBST0 is a filename or package name
 #. Debootstrap is a program name: should not be translated
-#: ../base-installer.templates:163
+#: ../base-installer.templates:156
 msgid ""
 "If you are installing from CD-R or CD-RW, burning the CD at a lower speed "
 "may help."
@@ -5497,13 +5521,13 @@ msgstr ""
 
 #. Type: text
 #. Description
-#: ../base-installer.templates:176
+#: ../base-installer.templates:169
 msgid "Preparing to install the base system..."
 msgstr "Duke përgatitur instalimin e sistemit bazë..."
 
 #. Type: text
 #. Description
-#: ../base-installer.templates:180 ../apt-setup-udeb.templates:15
+#: ../base-installer.templates:173 ../apt-setup-udeb.templates:15
 #: ../finish-install.templates:12
 msgid "Running ${SCRIPT}..."
 msgstr "Duke ekzekutuar ${SCRIPT}..."
@@ -5511,55 +5535,55 @@ msgstr "Duke ekzekutuar ${SCRIPT}..."
 #. Type: text
 #. Description
 #. Release is a filename which should not be translated
-#: ../base-installer.templates:185
+#: ../base-installer.templates:178
 msgid "Retrieving Release file"
 msgstr "Duke marrë file Release"
 
 #. Type: text
 #. Description
 #. Release is a filename which should not be translated
-#: ../base-installer.templates:190
+#: ../base-installer.templates:183
 msgid "Retrieving Release file signature"
 msgstr "Duke marrë nënshkrimin e file-t Release"
 
 #. Type: text
 #. Description
 #. "packages" here can be translated
-#: ../base-installer.templates:195
+#: ../base-installer.templates:188
 msgid "Finding package sizes"
 msgstr "Duke gjetur madhësinë e paketit"
 
 #. Type: text
 #. Description
 #. Packages is a filename which should not be translated
-#: ../base-installer.templates:200
+#: ../base-installer.templates:193
 msgid "Retrieving Packages files"
 msgstr "Duke marrë file Packages"
 
 #. Type: text
 #. Description
 #. Packages is a filename which should not be translated
-#: ../base-installer.templates:205
+#: ../base-installer.templates:198
 msgid "Retrieving Packages file"
 msgstr "Duke marrë file-n Packages"
 
 #. Type: text
 #. Description
 #. "packages" here can be translated
-#: ../base-installer.templates:210
+#: ../base-installer.templates:203
 msgid "Retrieving packages"
 msgstr "Duke marrë paketat"
 
 #. Type: text
 #. Description
 #. "packages" here can be translated
-#: ../base-installer.templates:215
+#: ../base-installer.templates:208
 msgid "Extracting packages"
 msgstr "Duke nxjerrë paketat"
 
 #. Type: text
 #. Description
-#: ../base-installer.templates:219
+#: ../base-installer.templates:212
 msgid "Installing the base system"
 msgstr "Duke instaluar sistemin bazë"
 
@@ -5569,7 +5593,7 @@ msgstr "Duke instaluar sistemin bazë"
 #. The "core" packages are indeed packages that are specifically
 #. recorded as part of the base system. Other packages may
 #. be installed on the base system because of dependency resolution
-#: ../base-installer.templates:227
+#: ../base-installer.templates:220
 msgid "Installing core packages"
 msgstr "Duke instaluar paketat thelbësore"
 
@@ -5579,13 +5603,13 @@ msgstr "Duke instaluar paketat thelbësore"
 #. by the dependency chain of core packages
 #. In short, they are "required" because at least one of the
 #. packages from the core packages depends on them
-#: ../base-installer.templates:235
+#: ../base-installer.templates:228
 msgid "Unpacking required packages"
 msgstr "Duke çpaketuar paketat e duhura"
 
 #. Type: text
 #. Description
-#: ../base-installer.templates:239
+#: ../base-installer.templates:232
 msgid "Configuring required packages"
 msgstr "Duke konfiguruar paketat e duhura"
 
@@ -5593,7 +5617,7 @@ msgstr "Duke konfiguruar paketat e duhura"
 #. Description
 #. The base system is the minimal Debian system
 #. See http://www.debian.org/doc/debian-policy/ch-binary.html#s3.7
-#: ../base-installer.templates:245
+#: ../base-installer.templates:238
 msgid "Unpacking the base system"
 msgstr "Duke çpaketuar sistemin bazë"
 
@@ -5601,55 +5625,55 @@ msgstr "Duke çpaketuar sistemin bazë"
 #. Description
 #. The base system is the minimal Debian system
 #. See http://www.debian.org/doc/debian-policy/ch-binary.html#s3.7
-#: ../base-installer.templates:251
+#: ../base-installer.templates:244
 msgid "Configuring the base system"
 msgstr "Duke konfiguruar sistemin bazë"
 
 #. Type: text
 #. Description
-#: ../base-installer.templates:255
+#: ../base-installer.templates:248
 msgid "${SECTION}: ${INFO}..."
 msgstr "${SECTION}: ${INFO}..."
 
 #. Type: text
 #. Description
 #. SUBST0 is a package name
-#: ../base-installer.templates:260
+#: ../base-installer.templates:253
 msgid "Validating ${SUBST0}..."
 msgstr "Duke vlerësuar ${SUBST0}..."
 
 #. Type: text
 #. Description
 #. SUBST0 is a package name
-#: ../base-installer.templates:265
+#: ../base-installer.templates:258
 msgid "Retrieving ${SUBST0}..."
 msgstr "Duke marrë ${SUBST0}..."
 
 #. Type: text
 #. Description
 #. SUBST0 is a package name
-#: ../base-installer.templates:270
+#: ../base-installer.templates:263
 msgid "Extracting ${SUBST0}..."
 msgstr "Duke nxjerrë ${SUBST0}..."
 
 #. Type: text
 #. Description
 #. SUBST0 is a package name
-#: ../base-installer.templates:275
+#: ../base-installer.templates:268
 msgid "Unpacking ${SUBST0}..."
 msgstr "Duke nxjerrë ${SUBST0}"
 
 #. Type: text
 #. Description
 #. SUBST0 is a package name
-#: ../base-installer.templates:280
+#: ../base-installer.templates:273
 msgid "Configuring ${SUBST0}..."
 msgstr "Duke konfiguruar ${SUBST0}..."
 
 #. Type: text
 #. Description
 #. Release is a filename which should not be translated
-#: ../base-installer.templates:285
+#: ../base-installer.templates:278
 msgid "Checking Release signature"
 msgstr "Duke kontrolluar nënshkrimin Release"
 
@@ -5657,40 +5681,40 @@ msgstr "Duke kontrolluar nënshkrimin Release"
 #. Description
 #. SUBST0 is a gpg key id
 #. Release is a filename which should not be translated
-#: ../base-installer.templates:291
+#: ../base-installer.templates:284
 msgid "Valid Release signature (key id ${SUBST0})"
 msgstr "Nënshkrim Release i vlefshëm (id e çelësit ${SUBST0})"
 
 #. Type: text
 #. Description
-#: ../base-installer.templates:295
+#: ../base-installer.templates:288
 msgid "Resolving dependencies of base packages..."
 msgstr "Duke zgjidhur varësitë e paketave bazë..."
 
 #. Type: text
 #. Description
 #. SUBST0 is a list of packages
-#: ../base-installer.templates:300
+#: ../base-installer.templates:293
 msgid "Found additional base dependencies: ${SUBST0}"
 msgstr "U gjetën varësi themelore shtesë: ${SUBST0}"
 
 #. Type: text
 #. Description
 #. SUBST0 is a list of packages
-#: ../base-installer.templates:305
+#: ../base-installer.templates:298
 msgid "Found additional required dependencies: ${SUBST0}"
 msgstr "U gjetën varësi të nevojshme shtesë: ${SUBST0}"
 
 #. Type: text
 #. Description
 #. SUBST0 is a list of packages
-#: ../base-installer.templates:310
+#: ../base-installer.templates:303
 msgid "Found packages in base already in required: ${SUBST0}"
 msgstr "U gjetën paketa themelore që janë të nevojshme: ${SUBST0}"
 
 #. Type: text
 #. Description
-#: ../base-installer.templates:314
+#: ../base-installer.templates:307
 msgid "Resolving dependencies of required packages..."
 msgstr "Duke zgjidhur varësitë e paketave të duhura..."
 
@@ -5698,7 +5722,7 @@ msgstr "Duke zgjidhur varësitë e paketave të duhura..."
 #. Description
 #. SUBST0 is an archive component (main, etc)
 #. SUBST1 is a mirror
-#: ../base-installer.templates:320
+#: ../base-installer.templates:313
 msgid "Checking component ${SUBST0} on ${SUBST1}..."
 msgstr "Duke kontrolluar pjesën përbërëse ${SUBST0} në ${SUBST1}..."
 
@@ -5708,7 +5732,7 @@ msgstr "Duke kontrolluar pjesën përbërëse ${SUBST0} në ${SUBST1}..."
 #. The "core" packages are indeed packages that are specifically
 #. recorded as part of the base system. Other packages may
 #. be installed on the base system because of dependency resolution
-#: ../base-installer.templates:328
+#: ../base-installer.templates:321
 msgid "Installing core packages..."
 msgstr "Duke instaluar paketat thelbësore..."
 
@@ -5718,7 +5742,7 @@ msgstr "Duke instaluar paketat thelbësore..."
 #. by the dependency chain of core packages
 #. In short, they are "required" because at least one of the
 #. packages from the core packages depends on them
-#: ../base-installer.templates:336
+#: ../base-installer.templates:329
 msgid "Unpacking required packages..."
 msgstr "Duke çpaketuar paketat e duhur..."
 
@@ -5728,109 +5752,109 @@ msgstr "Duke çpaketuar paketat e duhur..."
 #. by the dependency chain of core packages
 #. In short, they are "required" because at least one of the
 #. packages from the core packages depends on them
-#: ../base-installer.templates:344
+#: ../base-installer.templates:337
 msgid "Configuring required packages..."
 msgstr "Duke konfiguruar paketat e duhur..."
 
 #. Type: text
 #. Description
-#: ../base-installer.templates:348
+#: ../base-installer.templates:341
 msgid "Installing base packages..."
 msgstr "Duke instaluar paketat bazë..."
 
 #. Type: text
 #. Description
-#: ../base-installer.templates:352
+#: ../base-installer.templates:345
 msgid "Unpacking the base system..."
 msgstr "Duke çpaketuar sistemin bazë..."
 
 #. Type: text
 #. Description
-#: ../base-installer.templates:356
+#: ../base-installer.templates:349
 msgid "Configuring the base system..."
 msgstr "Duke konfiguruar sistemin bazë..."
 
 #. Type: text
 #. Description
-#: ../base-installer.templates:360
+#: ../base-installer.templates:353
 msgid "Base system installed successfully."
 msgstr "Sistemi bazë u instalua me sukses."
 
 #. Type: error
 #. Description
 #. Debootstrap is a program name: should not be translated
-#: ../base-installer.templates:365
+#: ../base-installer.templates:358
 msgid "Debootstrap warning"
 msgstr "Paralajmërim i Debootstrap"
 
 #. Type: error
 #. Description
 #. Debootstrap is a program name: should not be translated
-#: ../base-installer.templates:365
+#: ../base-installer.templates:358
 msgid "Warning: ${INFO}"
 msgstr "Kujdes: ${INFO}"
 
 #. Type: text
 #. Description
 #. SUBST0 is an url
-#: ../base-installer.templates:371
+#: ../base-installer.templates:364
 msgid "Retrying failed download of ${SUBST0}"
 msgstr "Duke riprovuar shkarkimin e dështuar të ${SUBST0}"
 
 #. Type: text
 #. Description
-#: ../base-installer.templates:375
+#: ../base-installer.templates:368
 msgid "Configuring APT sources..."
 msgstr "Duke konfiguruar burimet APT..."
 
 #. Type: text
 #. Description
-#: ../base-installer.templates:379
+#: ../base-installer.templates:372
 msgid "Updating the list of available packages..."
 msgstr "Duke freskuar listën e paketave në dispozicion..."
 
 #. Type: text
 #. Description
-#: ../base-installer.templates:383
+#: ../base-installer.templates:376
 msgid "Installing extra packages..."
 msgstr "Duke instaluar paketat ekstra..."
 
 #. Type: text
 #. Description
 #. SUBST0 is a package name
-#: ../base-installer.templates:388
+#: ../base-installer.templates:381
 msgid "Installing extra packages - retrieving and installing ${SUBST0}..."
 msgstr ""
 "Duke instaluar paketa shtesë - duke tërhequr dhe instaluar ${SUBST0}..."
 
 #. Type: text
 #. Description
-#: ../base-installer.templates:392
+#: ../base-installer.templates:385
 msgid "Creating device files..."
 msgstr "Duke krijuar file-t e dispozitivit..."
 
 #. Type: text
 #. Description
-#: ../base-installer.templates:396
+#: ../base-installer.templates:389
 msgid "Selecting the kernel to install..."
 msgstr "Duke zgjedhur kernelin për instalim..."
 
 #. Type: text
 #. Description
-#: ../base-installer.templates:400
+#: ../base-installer.templates:393
 msgid "Installing the kernel..."
 msgstr "Duke instaluar kernelin..."
 
 #. Type: text
 #. Description
 #. SUBST0 is a package name
-#: ../base-installer.templates:405
+#: ../base-installer.templates:398
 msgid "Installing the kernel - retrieving and installing ${SUBST0}..."
 msgstr "Duke instaluar kernelin - duke tërhequr dhe instaluar ${SUBST0}..."
 
 #. Type: text
 #. Description
-#: ../base-installer.templates:409
+#: ../base-installer.templates:402
 msgid "Installing the PCMCIA modules"
 msgstr "Duke instaluar moduet PCMCIA"
 
@@ -5838,7 +5862,7 @@ msgstr "Duke instaluar moduet PCMCIA"
 #. Description
 #. Item in the main menu to select this package
 #. TRANSLATORS: <65 columns
-#: ../base-installer.templates:415
+#: ../base-installer.templates:408
 msgid "Install the base system"
 msgstr "Duke instaluar sistemin bazë"
 
@@ -6695,9 +6719,30 @@ msgstr ""
 msgid "Continue without boot loader"
 msgstr "Vazhdo pa ngarkues nisjeje"
 
+#. Type: error
+#. Description
+#: ../nobootloader.templates:8 ../quik-installer.templates:131
+#: ../yaboot-installer.templates:88
+msgid "Failed to mount /target/proc"
+msgstr "Montimi i /target/proc dështoi"
+
+#. Type: error
+#. Description
+#: ../nobootloader.templates:8 ../quik-installer.templates:131
+#: ../yaboot-installer.templates:88
+msgid "Mounting the proc file system on /target/proc failed."
+msgstr "Montimi i filesistemit proc në /target/proc dështoi."
+
+#. Type: error
+#. Description
+#: ../nobootloader.templates:8 ../quik-installer.templates:131
+#: ../yaboot-installer.templates:88 ../vmelilo-installer.templates:46
+msgid "Warning: Your system may be unbootable!"
+msgstr "Kujdes: Sistemi yt mund të mos niset!"
+
 #. Type: note
 #. Description
-#: ../nobootloader.templates:9 ../yaboot-installer.templates:98
+#: ../nobootloader.templates:18 ../yaboot-installer.templates:98
 msgid ""
 "Some variables need to be set in the Genesi firmware in order for your "
 "system to boot automatically.  At the end of the installation, the system "
@@ -6711,7 +6756,7 @@ msgstr ""
 
 #. Type: note
 #. Description
-#: ../nobootloader.templates:9 ../yaboot-installer.templates:98
+#: ../nobootloader.templates:18 ../yaboot-installer.templates:98
 msgid ""
 "Alternatively, you will be able to boot the kernel manually by entering, at "
 "the firmware prompt:"
@@ -6721,13 +6766,13 @@ msgstr ""
 
 #. Type: note
 #. Description
-#: ../nobootloader.templates:31 ../yaboot-installer.templates:98
+#: ../nobootloader.templates:40 ../yaboot-installer.templates:98
 msgid "Setting firmware variables for automatic boot"
 msgstr "Duke caktuar të ndryshueshmet firmware për nisjen automatike"
 
 #. Type: note
 #. Description
-#: ../nobootloader.templates:31
+#: ../nobootloader.templates:40
 msgid ""
 "Some variables need to be set in the Netwinder NeTTrom firmware in order for "
 "your system to boot linux automatically.  At the end of this installation "
@@ -6753,7 +6798,7 @@ msgstr ""
 #. Description
 #. Translators, the 4th string of this description has been dropped from
 #. PO files. It contains firmware commands and should not be translated.
-#: ../nobootloader.templates:31 ../yaboot-installer.templates:98
+#: ../nobootloader.templates:40 ../yaboot-installer.templates:98
 #: ../arcboot-installer.templates:34
 msgid ""
 "You will only need to do this once.  Afterwards, enter the \"boot\" command "
@@ -6764,13 +6809,13 @@ msgstr ""
 
 #. Type: note
 #. Description
-#: ../nobootloader.templates:51
+#: ../nobootloader.templates:60
 msgid "No boot loader installed"
 msgstr "Asnjë ngarkues nisjeje i instaluar"
 
 #. Type: note
 #. Description
-#: ../nobootloader.templates:51
+#: ../nobootloader.templates:60
 msgid ""
 "No boot loader has been installed, either because you chose not to or "
 "because your specific architecture doesn't support a boot loader yet."
@@ -6780,7 +6825,7 @@ msgstr ""
 
 #. Type: note
 #. Description
-#: ../nobootloader.templates:51
+#: ../nobootloader.templates:60
 msgid ""
 "You will need to boot manually with the ${KERNEL} kernel on partition "
 "${BOOT} and ${ROOT} passed as a kernel argument."
@@ -7629,25 +7674,6 @@ msgstr "Instalimi i ngarkuesit të nisjes quik u krye me sukses."
 #: ../prep-installer.templates:42
 msgid "The new system is now ready to boot."
 msgstr "Tashmë sistemi është gati të niset."
-
-#. Type: error
-#. Description
-#: ../quik-installer.templates:131 ../yaboot-installer.templates:88
-msgid "Failed to mount /target/proc"
-msgstr "Montimi i /target/proc dështoi"
-
-#. Type: error
-#. Description
-#: ../quik-installer.templates:131 ../yaboot-installer.templates:88
-msgid "Mounting the proc file system on /target/proc failed."
-msgstr "Montimi i filesistemit proc në /target/proc dështoi."
-
-#. Type: error
-#. Description
-#: ../quik-installer.templates:131 ../yaboot-installer.templates:88
-#: ../vmelilo-installer.templates:46
-msgid "Warning: Your system may be unbootable!"
-msgstr "Kujdes: Sistemi yt mund të mos niset!"
 
 #. Type: text
 #. Description
@@ -9897,7 +9923,7 @@ msgstr "Ndrysho volumet logjikë (LV)"
 
 #. Type: select
 #. Description
-#: ../lvmcfg-utils.templates:17 ../partman-lvm.templates:146
+#: ../lvmcfg-utils.templates:17 ../partman-lvm.templates:147
 msgid "LVM configuration action:"
 msgstr "Konfigurimi i OVL:"
 
@@ -10005,31 +10031,31 @@ msgstr "Konfigurimi i Volumeve Logjikë:"
 
 #. Type: multiselect
 #. Description
-#: ../lvmcfg-utils.templates:45 ../partman-lvm.templates:163
+#: ../lvmcfg-utils.templates:45 ../partman-lvm.templates:164
 msgid "Devices for the new volume group:"
 msgstr "Dispozitivat për Grupet e rinj të Volumeve:"
 
 #. Type: multiselect
 #. Description
-#: ../lvmcfg-utils.templates:45 ../partman-lvm.templates:163
+#: ../lvmcfg-utils.templates:45 ../partman-lvm.templates:164
 msgid "Please select the devices for the new volume group."
 msgstr "Të lutem zgjidh një dispozitiv për Grupet e Rinj të Volumit."
 
 #. Type: string
 #. Description
-#: ../lvmcfg-utils.templates:52 ../partman-lvm.templates:170
+#: ../lvmcfg-utils.templates:52 ../partman-lvm.templates:171
 msgid "Volume group name:"
 msgstr "Emri i Grupit të Volumit:"
 
 #. Type: string
 #. Description
-#: ../lvmcfg-utils.templates:52 ../partman-lvm.templates:170
+#: ../lvmcfg-utils.templates:52 ../partman-lvm.templates:171
 msgid "Please enter the name you would like to use for the new volume group."
 msgstr "Të lutem shkruaj emrin që dëshiron të përdorësh për Grupin e Volumit."
 
 #. Type: error
 #. Description
-#: ../lvmcfg-utils.templates:57 ../partman-lvm.templates:175
+#: ../lvmcfg-utils.templates:57 ../partman-lvm.templates:176
 msgid ""
 "No physical volumes were selected. The creation of a new volume group was "
 "aborted."
@@ -10038,20 +10064,20 @@ msgstr ""
 
 #. Type: error
 #. Description
-#: ../lvmcfg-utils.templates:63 ../partman-lvm.templates:181
+#: ../lvmcfg-utils.templates:63 ../partman-lvm.templates:182
 msgid "No volume group name entered"
 msgstr "Nuk u zgjodh asnjë emër Grupi Volumi."
 
 #. Type: error
 #. Description
-#: ../lvmcfg-utils.templates:63 ../partman-lvm.templates:181
+#: ../lvmcfg-utils.templates:63 ../partman-lvm.templates:182
 msgid "No name for the volume group has been entered.  Please enter a name."
 msgstr ""
 "Nuk u zgjodh asnjë emër për Grupin e Volumit.  Të lutem zgjidh një emër."
 
 #. Type: error
 #. Description
-#: ../lvmcfg-utils.templates:69 ../partman-lvm.templates:187
+#: ../lvmcfg-utils.templates:69 ../partman-lvm.templates:188
 #: ../partman-auto-lvm.templates:33
 msgid "Volume group name already in use"
 msgstr "Emër Grupi Volumi në përdorim"
@@ -10065,7 +10091,7 @@ msgstr "Emër Grupi Volumi në përdorim"
 #. #-#-#-#-#  templates.pot (PACKAGE VERSION)  #-#-#-#-#
 #. Type: string
 #. Description
-#: ../lvmcfg-utils.templates:69 ../partman-lvm.templates:187
+#: ../lvmcfg-utils.templates:69 ../partman-lvm.templates:188
 #: ../partman-auto-lvm.templates:12
 msgid ""
 "The selected volume group name is already in use. Please choose another name."
@@ -10075,13 +10101,13 @@ msgstr ""
 
 #. Type: error
 #. Description
-#: ../lvmcfg-utils.templates:75 ../partman-lvm.templates:193
+#: ../lvmcfg-utils.templates:75 ../partman-lvm.templates:194
 msgid "Volume group name overlaps with device name"
 msgstr "Emri i Grupit të Volumit është i njëjtë me emrin e dispozitivit"
 
 #. Type: error
 #. Description
-#: ../lvmcfg-utils.templates:75 ../partman-lvm.templates:193
+#: ../lvmcfg-utils.templates:75 ../partman-lvm.templates:194
 msgid ""
 "The selected volume group name overlaps with an existing device name. Please "
 "choose another name."
@@ -10091,43 +10117,43 @@ msgstr ""
 
 #. Type: select
 #. Description
-#: ../lvmcfg-utils.templates:82 ../partman-lvm.templates:207
+#: ../lvmcfg-utils.templates:82 ../partman-lvm.templates:208
 msgid "Volume group to delete:"
 msgstr "Grupi i Volumit për tu fshirë:"
 
 #. Type: select
 #. Description
-#: ../lvmcfg-utils.templates:82 ../partman-lvm.templates:207
+#: ../lvmcfg-utils.templates:82 ../partman-lvm.templates:208
 msgid "Please select the volume group you wish to delete."
 msgstr "Të lutem zgjidh Grupin e Volumit për tu fshirë."
 
 #. Type: error
 #. Description
-#: ../lvmcfg-utils.templates:87 ../partman-lvm.templates:212
+#: ../lvmcfg-utils.templates:87 ../partman-lvm.templates:213
 msgid "The volume group may have already been deleted."
 msgstr "Grupi i Volumit mund të jetë fshirë më parë."
 
 #. Type: boolean
 #. Description
-#: ../lvmcfg-utils.templates:95 ../partman-lvm.templates:220
+#: ../lvmcfg-utils.templates:95 ../partman-lvm.templates:221
 msgid "Really delete the volume group?"
 msgstr "Vërtet ta fshij Grupin e Volumit?"
 
 #. Type: boolean
 #. Description
-#: ../lvmcfg-utils.templates:95 ../partman-lvm.templates:220
+#: ../lvmcfg-utils.templates:95 ../partman-lvm.templates:221
 msgid "Please confirm the ${VG} volume group removal."
 msgstr "Të lutem poho heqjen e grupit të volumit ${VG}."
 
 #. Type: error
 #. Description
-#: ../lvmcfg-utils.templates:100 ../partman-lvm.templates:225
+#: ../lvmcfg-utils.templates:100 ../partman-lvm.templates:226
 msgid "Error while deleting volume group"
 msgstr "Gabim në fshirjen e Grupit të Volumit"
 
 #. Type: error
 #. Description
-#: ../lvmcfg-utils.templates:100 ../partman-lvm.templates:225
+#: ../lvmcfg-utils.templates:100 ../partman-lvm.templates:226
 msgid ""
 "The selected volume group could not be deleted. One or more logical volumes "
 "may currently be in use."
@@ -10137,49 +10163,49 @@ msgstr ""
 
 #. Type: error
 #. Description
-#: ../lvmcfg-utils.templates:106 ../partman-lvm.templates:231
+#: ../lvmcfg-utils.templates:106 ../partman-lvm.templates:232
 msgid "No volume group can be deleted."
 msgstr "Nuk u arrit të fshihej asnjë Grup Volumi."
 
 #. Type: select
 #. Description
-#: ../lvmcfg-utils.templates:114 ../partman-lvm.templates:239
+#: ../lvmcfg-utils.templates:114 ../partman-lvm.templates:240
 msgid "Volume group to extend:"
 msgstr "Grupi i Volumit për tu zgjeruar:"
 
 #. Type: select
 #. Description
-#: ../lvmcfg-utils.templates:114 ../partman-lvm.templates:239
+#: ../lvmcfg-utils.templates:114 ../partman-lvm.templates:240
 msgid "Please select the volume group you wish to extend."
 msgstr "Të lutem zgjidh Grupin e Volumit që dëshiron të zgjerosh."
 
 #. Type: multiselect
 #. Description
-#: ../lvmcfg-utils.templates:120 ../partman-lvm.templates:245
+#: ../lvmcfg-utils.templates:120 ../partman-lvm.templates:246
 msgid "Devices to add to the volume group:"
 msgstr "Dispozitivat që do ti shtohen Grupit të Volumit:"
 
 #. Type: multiselect
 #. Description
-#: ../lvmcfg-utils.templates:120 ../partman-lvm.templates:245
+#: ../lvmcfg-utils.templates:120 ../partman-lvm.templates:246
 msgid "Please select the devices you wish to add to the volume group."
 msgstr "Të lutem zgjidh dispozitivat që dëshiron ti shtosh Grupit të Volumit."
 
 #. Type: multiselect
 #. Description
-#: ../lvmcfg-utils.templates:120 ../partman-lvm.templates:278
+#: ../lvmcfg-utils.templates:120 ../partman-lvm.templates:279
 msgid "You can select one or more devices."
 msgstr "Mund të zgjedhësh një apo më shumë dispozitva."
 
 #. Type: error
 #. Description
-#: ../lvmcfg-utils.templates:127 ../partman-lvm.templates:285
+#: ../lvmcfg-utils.templates:127 ../partman-lvm.templates:286
 msgid "No physical volumes selected"
 msgstr "Nuk u zgjodh asnjë volum fizik"
 
 #. Type: error
 #. Description
-#: ../lvmcfg-utils.templates:127 ../partman-lvm.templates:252
+#: ../lvmcfg-utils.templates:127 ../partman-lvm.templates:253
 msgid ""
 "No physical volumes were selected. Extension of the volume group was aborted."
 msgstr ""
@@ -10187,13 +10213,13 @@ msgstr ""
 
 #. Type: error
 #. Description
-#: ../lvmcfg-utils.templates:133 ../partman-lvm.templates:258
+#: ../lvmcfg-utils.templates:133 ../partman-lvm.templates:259
 msgid "Error while extending volume group"
 msgstr "Gabim gjatë zgjerimit të grupit të volumit"
 
 #. Type: error
 #. Description
-#: ../lvmcfg-utils.templates:133 ../partman-lvm.templates:258
+#: ../lvmcfg-utils.templates:133 ../partman-lvm.templates:259
 msgid ""
 "The physical volume ${PARTITION} could not be added to the selected volume "
 "group."
@@ -10202,25 +10228,25 @@ msgstr ""
 
 #. Type: error
 #. Description
-#: ../lvmcfg-utils.templates:139 ../partman-lvm.templates:264
+#: ../lvmcfg-utils.templates:139 ../partman-lvm.templates:265
 msgid "No volume group has been found."
 msgstr "Nuk u gjet asnjë Grup Volumi."
 
 #. Type: error
 #. Description
-#: ../lvmcfg-utils.templates:139 ../partman-lvm.templates:264
+#: ../lvmcfg-utils.templates:139 ../partman-lvm.templates:265
 msgid "No volume group can be reduced."
 msgstr "Nuk mund të zvogëlohet asnjë Grup Volumi."
 
 #. Type: select
 #. Description
-#: ../lvmcfg-utils.templates:147 ../partman-lvm.templates:272
+#: ../lvmcfg-utils.templates:147 ../partman-lvm.templates:273
 msgid "Volume group to reduce:"
 msgstr "Grupi i Volumit për tu zvogëluar:"
 
 #. Type: select
 #. Description
-#: ../lvmcfg-utils.templates:147 ../partman-lvm.templates:272
+#: ../lvmcfg-utils.templates:147 ../partman-lvm.templates:273
 msgid "Please select the volume group you wish to reduce."
 msgstr "Të lutem zgjidh Grupin e Volumit që dëshiron të zvogëlosh."
 
@@ -10249,13 +10275,13 @@ msgstr ""
 
 #. Type: error
 #. Description
-#: ../lvmcfg-utils.templates:164 ../partman-lvm.templates:291
+#: ../lvmcfg-utils.templates:164 ../partman-lvm.templates:292
 msgid "Error while reducing volume group"
 msgstr "Gabim në zvogëlimin e Grupit të Volumit"
 
 #. Type: error
 #. Description
-#: ../lvmcfg-utils.templates:164 ../partman-lvm.templates:291
+#: ../lvmcfg-utils.templates:164 ../partman-lvm.templates:292
 msgid ""
 "The physical volume ${PARTITION} could not be removed from the selected "
 "volume group."
@@ -10274,7 +10300,7 @@ msgstr ""
 
 #. Type: error
 #. Description
-#: ../lvmcfg-utils.templates:178 ../partman-lvm.templates:299
+#: ../lvmcfg-utils.templates:178 ../partman-lvm.templates:300
 msgid ""
 "No free volume groups were found for creating a new logical volume. Please "
 "create more physical volumes and volume groups, or reduce an existing volume "
@@ -10286,20 +10312,20 @@ msgstr ""
 
 #. Type: string
 #. Description
-#: ../lvmcfg-utils.templates:185 ../partman-lvm.templates:306
+#: ../lvmcfg-utils.templates:185 ../partman-lvm.templates:307
 msgid "Logical volume name:"
 msgstr "Emri i Volumit Logjik:"
 
 #. Type: string
 #. Description
-#: ../lvmcfg-utils.templates:185 ../partman-lvm.templates:306
+#: ../lvmcfg-utils.templates:185 ../partman-lvm.templates:307
 msgid "Please enter the name you would like to use for the new logical volume."
 msgstr ""
 "Të lutem zgjidh emrin që dëshiron të përdorësh për Volumin e ri Logjik."
 
 #. Type: select
 #. Description
-#: ../lvmcfg-utils.templates:191 ../partman-lvm.templates:312
+#: ../lvmcfg-utils.templates:191 ../partman-lvm.templates:313
 msgid ""
 "Please select the volume group where the new logical volume should be "
 "created."
@@ -10307,19 +10333,19 @@ msgstr "Të lutem zgjidh Grupin e Volumit ku Volumi i ri Logjik duhet krijuar."
 
 #. Type: error
 #. Description
-#: ../lvmcfg-utils.templates:197 ../partman-lvm.templates:318
+#: ../lvmcfg-utils.templates:197 ../partman-lvm.templates:319
 msgid "No logical volume name entered"
 msgstr "Nuk u zgjodh asnjë emër Volumi Logjik"
 
 #. Type: error
 #. Description
-#: ../lvmcfg-utils.templates:197 ../partman-lvm.templates:318
+#: ../lvmcfg-utils.templates:197 ../partman-lvm.templates:319
 msgid "No name for the logical volume has been entered.  Please enter a name."
 msgstr "Nuk u zgjodh asnjë emër për Volumin Logjik.  Të lutem zgjidh një emër."
 
 #. Type: error
 #. Description
-#: ../lvmcfg-utils.templates:203 ../partman-lvm.templates:324
+#: ../lvmcfg-utils.templates:203 ../partman-lvm.templates:325
 msgid ""
 "The name ${LV} is already in use by another logical volume on the same "
 "volume group (${VG})."
@@ -10329,13 +10355,13 @@ msgstr ""
 
 #. Type: string
 #. Description
-#: ../lvmcfg-utils.templates:209 ../partman-lvm.templates:330
+#: ../lvmcfg-utils.templates:209 ../partman-lvm.templates:331
 msgid "Logical volume size:"
 msgstr "Madhësia e Volumit Logjik:"
 
 #. Type: string
 #. Description
-#: ../lvmcfg-utils.templates:209 ../partman-lvm.templates:330
+#: ../lvmcfg-utils.templates:209 ../partman-lvm.templates:331
 msgid ""
 "Please enter the size of the new logical volume. The size may be entered in "
 "the following formats: 10K (Kilobytes), 10M (Megabytes), 10G (Gigabytes), "
@@ -10347,13 +10373,13 @@ msgstr ""
 
 #. Type: error
 #. Description
-#: ../lvmcfg-utils.templates:216 ../partman-lvm.templates:337
+#: ../lvmcfg-utils.templates:216 ../partman-lvm.templates:338
 msgid "Error while creating a new logical volume"
 msgstr "Gabim gjatë krijimt të Volumit të ri Logjik"
 
 #. Type: error
 #. Description
-#: ../lvmcfg-utils.templates:216 ../partman-lvm.templates:337
+#: ../lvmcfg-utils.templates:216 ../partman-lvm.templates:338
 msgid ""
 "Unable to create a new logical volume (${LV}) on ${VG} with the new size "
 "${SIZE}."
@@ -10363,7 +10389,7 @@ msgstr ""
 
 #. Type: error
 #. Description
-#: ../lvmcfg-utils.templates:224 ../partman-lvm.templates:299
+#: ../lvmcfg-utils.templates:224 ../partman-lvm.templates:300
 msgid "No volume group found"
 msgstr "Nuk u gjet asnjë Grup Volumi"
 
@@ -10375,7 +10401,7 @@ msgstr "Nuk u gjet asnjë Grup Volumi për të fshirë një Volum Logjik."
 
 #. Type: select
 #. Description
-#: ../lvmcfg-utils.templates:230 ../partman-lvm.templates:312
+#: ../lvmcfg-utils.templates:230 ../partman-lvm.templates:313
 msgid "Volume group:"
 msgstr "Grupi i Volumit:"
 
@@ -10390,13 +10416,13 @@ msgstr ""
 
 #. Type: error
 #. Description
-#: ../lvmcfg-utils.templates:236 ../partman-lvm.templates:345
+#: ../lvmcfg-utils.templates:236 ../partman-lvm.templates:346
 msgid "No logical volume found"
 msgstr "Nuk u gjet asnjë Volum Logjik"
 
 #. Type: error
 #. Description
-#: ../lvmcfg-utils.templates:236 ../partman-lvm.templates:345
+#: ../lvmcfg-utils.templates:236 ../partman-lvm.templates:346
 msgid ""
 "No logical volume has been found.  Please create a logical volume first."
 msgstr ""
@@ -10404,7 +10430,7 @@ msgstr ""
 
 #. Type: select
 #. Description
-#: ../lvmcfg-utils.templates:242 ../partman-lvm.templates:351
+#: ../lvmcfg-utils.templates:242 ../partman-lvm.templates:352
 msgid "Logical volume:"
 msgstr "Volumi Logjik:"
 
@@ -10416,25 +10442,25 @@ msgstr "Të lutem zgjidh Volumin Logjik për tu fshirë mbi ${VG}."
 
 #. Type: error
 #. Description
-#: ../lvmcfg-utils.templates:247 ../partman-lvm.templates:360
+#: ../lvmcfg-utils.templates:247 ../partman-lvm.templates:361
 msgid "Error while deleting the logical volume"
 msgstr "Gabim gjatë fshirjes së Volumit Logjik"
 
 #. Type: error
 #. Description
-#: ../lvmcfg-utils.templates:247 ../partman-lvm.templates:360
+#: ../lvmcfg-utils.templates:247 ../partman-lvm.templates:361
 msgid "The logical volume (${LV}) on ${VG} could not be deleted."
 msgstr "Volumi Logjik (${LV}) mbi ${VG} nuk mundi të fshihej."
 
 #. Type: error
 #. Description
-#: ../lvmcfg-utils.templates:254 ../partman-lvm.templates:367
+#: ../lvmcfg-utils.templates:254 ../partman-lvm.templates:368
 msgid "No usable physical volumes found"
 msgstr "Nuk u gjet asnjë volum fizik"
 
 #. Type: error
 #. Description
-#: ../lvmcfg-utils.templates:254 ../partman-lvm.templates:367
+#: ../lvmcfg-utils.templates:254 ../partman-lvm.templates:368
 msgid ""
 "No physical volumes (i.e. partitions) were found in your system. All "
 "physical volumes may already be in use. You may also need to load some "
@@ -10446,13 +10472,13 @@ msgstr ""
 
 #. Type: error
 #. Description
-#: ../lvmcfg-utils.templates:261 ../partman-lvm.templates:374
+#: ../lvmcfg-utils.templates:261 ../partman-lvm.templates:375
 msgid "Logical Volume Manager not available"
 msgstr "Organizuesi i Volumit Logjik nuk gjendet"
 
 #. Type: error
 #. Description
-#: ../lvmcfg-utils.templates:261 ../partman-lvm.templates:374
+#: ../lvmcfg-utils.templates:261 ../partman-lvm.templates:375
 msgid ""
 "The current kernel doesn't support the Logical Volume Manager. You may need "
 "to load the lvm-mod module."
@@ -10733,13 +10759,13 @@ msgstr "ovl"
 
 #. Type: select
 #. Description
-#: ../partman-lvm.templates:146
+#: ../partman-lvm.templates:147
 msgid "Summary of current LVM configuration:"
 msgstr "Përmbledhja e konfigurimit të tanishëm LVM:"
 
 #. Type: select
 #. Description
-#: ../partman-lvm.templates:146
+#: ../partman-lvm.templates:147
 msgid ""
 " Free Physical Volumes:  ${FREE_PVS}\n"
 " Used Physical Volumes:  ${USED_PVS}\n"
@@ -10753,32 +10779,32 @@ msgstr ""
 
 #. Type: note
 #. Description
-#: ../partman-lvm.templates:157
+#: ../partman-lvm.templates:158
 msgid "Current LVM configuration:"
 msgstr "Konfigurimi i tanishëm LVM:"
 
 #. Type: error
 #. Description
-#: ../partman-lvm.templates:199
+#: ../partman-lvm.templates:200
 msgid "The volume group ${VG} could not be created."
 msgstr "Grupi i volumit ${VG} nuk mundi të krijohej."
 
 #. Type: multiselect
 #. Description
-#: ../partman-lvm.templates:278
+#: ../partman-lvm.templates:279
 msgid "Devices to remove from the volume group:"
 msgstr "Dispozitivat për tu hequr nga grupi i volumit:"
 
 #. Type: multiselect
 #. Description
-#: ../partman-lvm.templates:278
+#: ../partman-lvm.templates:279
 msgid "Please select the devices you wish to remove from the volume group."
 msgstr ""
 "Të lutem zgjidh dispozitivat që dëshiron të heqësh nga grupi i volumit."
 
 #. Type: error
 #. Description
-#: ../partman-lvm.templates:285
+#: ../partman-lvm.templates:286
 msgid ""
 "No physical volumes were selected. Reduction of the volume group was aborted."
 msgstr ""
@@ -10786,37 +10812,37 @@ msgstr ""
 
 #. Type: select
 #. Description
-#: ../partman-lvm.templates:351
+#: ../partman-lvm.templates:352
 msgid "Please select the logical volume to delete."
 msgstr "Të lutem zgjidh volumin logjik për tu fshirë."
 
 #. Type: text
 #. Description
-#: ../partman-lvm.templates:356
+#: ../partman-lvm.templates:357
 msgid "in VG ${VG}"
 msgstr "në VG ${VG}"
 
 #. Type: error
 #. Description
-#: ../partman-lvm.templates:380
+#: ../partman-lvm.templates:381
 msgid "Error while initializing physical volume"
 msgstr "Gabim gjatë nisjes së volumit logjik"
 
 #. Type: error
 #. Description
-#: ../partman-lvm.templates:380
+#: ../partman-lvm.templates:381
 msgid "The physical volume ${PV} could not be initialized."
 msgstr "Volumi logjik ${PV} nuk mundi të nisej."
 
 #. Type: error
 #. Description
-#: ../partman-lvm.templates:387
+#: ../partman-lvm.templates:388
 msgid "Invalid logical volume or volume group name"
 msgstr "Volum logjik i pavlefshëm ose emër grupi volumi"
 
 #. Type: error
 #. Description
-#: ../partman-lvm.templates:387
+#: ../partman-lvm.templates:388
 msgid ""
 "Logical volume or volume group names may only contain alphanumeric "
 "characters, hyphen, plus, period and underscore. They must be 128 characters "
@@ -10831,7 +10857,7 @@ msgstr ""
 
 #. Type: error
 #. Description
-#: ../partman-lvm.templates:387
+#: ../partman-lvm.templates:388
 msgid "Please choose another name."
 msgstr "Ju lutem zgjidhni një emër tjetër."
 
@@ -12640,6 +12666,21 @@ msgstr "Duke shkruar kernelin në kujtesën e shpejtë"
 msgid "Configure flash memory to boot the system"
 msgstr "Duke konfiguruar kujtesën e shpejtë për të nisur sistemin"
 
+#~ msgid "This is the main menu for the Debian installer."
+#~ msgstr "Kjo është menuja kryesore e instaluesit Debian."
+
+#~ msgid "No initrd generator"
+#~ msgstr "Pa përftues initrd"
+
+#~ msgid ""
+#~ "The kernel that has been selected for installation needs an initrd to "
+#~ "boot. However, no package to generate that initrd is available that "
+#~ "supports your configuration. This would leave your system unable to boot."
+#~ msgstr ""
+#~ "Kerneli që është zgjedhur për instalim ka nevojë për një initrd për të "
+#~ "nisur. Sidoqoftë, nuk gjendet asnjë paket për të gjeneruar atë initrd që "
+#~ "suporton konfigurimin tënd. Kjo nuk do bënte të mundur nisjen e sistemit."
+
 #~ msgid "${SHORTLIST}"
 #~ msgstr "${SHORTLIST}"
 
@@ -13869,9 +13910,6 @@ msgstr "Duke konfiguruar kujtesën e shpejtë për të nisur sistemin"
 #~ msgid "Exit the base system configuration"
 #~ msgstr "Dil nga konfigurimi i sistemit bazë"
 
-#~ msgid "Configure timezone"
-#~ msgstr "Konfiguro zonën kohore"
-
 #~ msgid "stable, unstable, testing"
 #~ msgstr "stable, unstable, testing"
 
@@ -14111,8 +14149,8 @@ msgstr "Duke konfiguruar kujtesën e shpejtë për të nisur sistemin"
 #~ msgid "Do you want to change your current time zone?"
 #~ msgstr "Dëshiron ta ndryshosh zonën e tanishme kohore?"
 
-#~ msgid "Your current time zone is set to ${timezone}."
-#~ msgstr "Zona e tanishme kohore është ${timezone}."
+#~ msgid "Your current time zone is set to ${time zone}."
+#~ msgstr "Zona e tanishme kohore është ${time zone}."
 
 #~ msgid "The following are common time zones in the United States of America."
 #~ msgstr ""
@@ -14182,11 +14220,11 @@ msgstr "Duke konfiguruar kujtesën e shpejtë për të nisur sistemin"
 #~ msgid ""
 #~ " Local time is now:          ${tzdate}\n"
 #~ " Universal Time is now:      ${utdate}\n"
-#~ " Time zone is set to:        ${timezone}"
+#~ " Time zone is set to:        ${time zone}"
 #~ msgstr ""
 #~ " Ora lokale është:        ${tzdate}\n"
 #~ " Ora Universale është     ${utdate}\n"
-#~ " Zona kohore është        ${timezone}"
+#~ " Zona kohore është        ${time zone}"
 
 #~ msgid ""
 #~ "If something looks wrong, you can go through the setup process again."

@@ -29,7 +29,7 @@ static int is_file(const char *fn)
 	return S_ISREG(statbuf.st_mode);
 }
 
-int dpkg_print_architecture()
+static int dpkg_print_architecture()
 {
 	puts(ARCH_TEXT);
 	return 0;
@@ -76,13 +76,12 @@ static int dpkg_doconfigure(struct package_t *pkg)
 	char buf[1024];
 	DPRINTF("Configuring %s [force=%d]\n", pkg->package, force_configure);
 
-	if ((pkg->status & STATUS_STATUSINSTALLED) != 0 &&
-        !force_configure)
-    {
-        PRINTF("Package %s is already installed and configured\n",
-                pkg->package);
-        return 1;
-    }
+	if ((pkg->status & STATUS_STATUSINSTALLED) != 0 && !force_configure)
+	{
+		PRINTF("Package %s is already installed and configured\n",
+			pkg->package);
+		return 1;
+	}
 
 	pkg->status &= STATUS_STATUSMASK;
 
@@ -122,10 +121,12 @@ static int dpkg_dounpack(struct package_t *pkg)
 	char *cwd;
 	char buf[1024], buf2[1024];
 	unsigned int i;
-	char *adminscripts[] = { "prerm", "postrm", "preinst", "postinst",
-	                         "conffiles", "md5sums", "shlibs", 
-				 "templates", "menutest", "isinstallable",
-                                 "config" };
+	const char *adminscripts[] = {
+		"prerm", "postrm", "preinst", "postinst",
+	        "conffiles", "md5sums", "shlibs",
+		"templates", "menutest", "isinstallable",
+		"config"
+	};
 #ifdef DOREMOVE
 	char *p;
 	FILE *infp = NULL, *outfp = NULL;
@@ -136,7 +137,7 @@ static int dpkg_dounpack(struct package_t *pkg)
 	cwd = getcwd(0, 0);
 	chdir("/");
 	snprintf(buf, sizeof(buf), "ar -p %s data.tar.gz|tar -xzf -", pkg->file);
-	if (di_exec_shell_log(buf) == 0)
+	if ((r = di_exec_shell_log(buf)) == 0)
 	{
 		/* Installs the package scripts into the info directory */
 		for (i = 0; i < sizeof(adminscripts) / sizeof(adminscripts[0]);
@@ -175,8 +176,11 @@ static int dpkg_dounpack(struct package_t *pkg)
 					snprintf(buf, sizeof(buf),
 						 "debconf-loadtemplate %s %s",
 						 pkg->package, buf2);
-					if (di_exec_shell_log(buf) != 0)
-						r = 1;
+					if ((r = di_exec_shell_log(buf)) != 0)
+						FPRINTF(stderr,
+							"debconf-loadtemplate "
+							"exited with status "
+							"%d\n", r);
 					/* Delete templates after loading. */
 					unlink(buf2);
 				}
@@ -239,7 +243,7 @@ static int dpkg_dounpack(struct package_t *pkg)
 			pkg->status |= STATUS_STATUSHALFINSTALLED;
 	}
 	else
-		r = 1;
+		FPRINTF(stderr, "%s exited with status %d\n", buf, r);
 	chdir(cwd);
 	return r;
 }
@@ -252,7 +256,7 @@ static int dpkg_doinstall(struct package_t *pkg)
 
 static int dpkg_unpackcontrol(struct package_t *pkg)
 {
-	int r = 1;
+	int r;
 	char *cwd = 0;
 	char *p;
 	char buf[1024], buf2[1024];
@@ -263,38 +267,50 @@ static int dpkg_unpackcontrol(struct package_t *pkg)
 	p = pkg->package = strdup(p);
 	while (*p != 0 && *p != '_' && *p != '.') p++;
 	*p = 0;
-        p = pkg->package;
+	p = pkg->package;
 
 	cwd = getcwd(0, 0);
 	snprintf(buf, sizeof(buf), "%s%s", DPKGCIDIR, pkg->package);
 	DPRINTF("dir = %s\n", buf);
-	if (mkdir(buf, S_IRWXU) == 0 && chdir(buf) == 0)
+	if (mkdir(buf, S_IRWXU) != 0)
 	{
-		snprintf(buf, sizeof(buf), "ar -p %s control.tar.gz|tar -xzf -",
-			pkg->file);
-		if (di_exec_shell_log(buf) == 0)
+		FPRINTF(stderr, "mkdir %s: %s\n", buf, strerror(errno));
+		return 1;
+	}
+	if (chdir(buf) != 0)
+	{
+		FPRINTF(stderr, "chdir %s: %s\n", buf, strerror(errno));
+		return 1;
+	}
+	snprintf(buf, sizeof(buf), "ar -p %s control.tar.gz|tar -xzf -",
+		pkg->file);
+	if ((r = di_exec_shell_log(buf)) != 0)
+	{
+		FPRINTF(stderr, "%s exited with status %d\n", buf, r);
+		return r;
+	}
+	if ((f = fopen("control", "r")) == NULL) 
+	{
+		FPRINTF(stderr, "fopen control: %s\n", strerror(errno));
+		return 1;
+	}
+	control_read(f, pkg);
+	if (strcmp(pkg->package, p) != 0) 
+	{
+		snprintf(buf, sizeof(buf), "%s%s", DPKGCIDIR, p);
+		snprintf(buf2, sizeof(buf2), "%s%s", DPKGCIDIR, pkg->package);
+		if (rename(buf, buf2) != 0)
 		{
-			if ((f = fopen("control", "r")) != NULL) 
-                        {
-				control_read(f, pkg);
-                                if (strcmp(pkg->package, p) != 0) 
-                                {
-                                        snprintf(buf, sizeof(buf), "%s%s", DPKGCIDIR, p);
-                                        snprintf(buf2, sizeof(buf2), "%s%s", DPKGCIDIR, pkg->package);
-                                        r = rename(buf, buf2);
-                                }
-                                else 
-                                {
-                                        r = 0;
-                                }
-                                free(p);
-			}
+			FPRINTF(stderr, "rename %s %s: %s\n",
+				buf, buf2, strerror(errno));
+			return 1;
 		}
 	}
+	free(p);
 
 	chdir(cwd);
 	free(cwd);
-	return r;
+	return 0;
 }
 
 static int dpkg_unpack(struct package_t *pkgs)
@@ -362,7 +378,6 @@ static int dpkg_install(struct package_t *pkgs)
 	for (p = pkgs; p != 0; p = p->next)
 		if (dpkg_unpackcontrol(p) != 0)
 		{
-			perror(p->file);
 			/* force loop break, and prevents further ops */
 			pkgs = 0;
 		}
@@ -386,10 +401,10 @@ static int dpkg_install(struct package_t *pkgs)
 		p->status &= STATUS_FLAGMASK;
 		p->status |= STATUS_FLAGOK;
 
-		if (dpkg_doinstall(p) != 0)
-		{
-			perror(p->file);
-		}
+		/* don't worry about errors here; error messages are printed
+		 * internally
+		 */
+		dpkg_doinstall(p);
 	}
 	
 	if (ordered != 0)
@@ -485,15 +500,15 @@ int main(int argc, char **argv)
 	int opt = 0;
 	struct package_t *p, *packages = NULL;
 	char *cwd = getcwd(0, 0);
-    char **origargv = argv;
-    struct option longopts[] = {
-        /* name, has_arg, flag, val */
-	    { "unpack", 0, 0, 'u' },
-        { "configure", 0, 0, 'c' },
-        { "print-architecture", 0, 0, 'p' } ,
-        { "force-configure", 0, &force_configure, 1 },
-        { 0, 0, 0, 0 },
-    };
+	char **origargv = argv;
+	struct option longopts[] = {
+		/* name, has_arg, flag, val */
+		{ "unpack", 0, 0, 'u' },
+		{ "configure", 0, 0, 'c' },
+		{ "print-architecture", 0, 0, 'p' } ,
+		{ "force-configure", 0, &force_configure, 1 },
+		{ 0, 0, 0, 0 },
+	};
 
 	while (*++argv)
 	{
@@ -503,7 +518,7 @@ int main(int argc, char **argv)
 			memset(p, 0, sizeof(struct package_t));
 			if (**argv == '/')
 				p->file = *argv;
-            else
+			else
 				asprintf(&p->file, "%s/%s", cwd, *argv);
 			p->package = strdup(*argv);
 			p->next = packages;
@@ -511,26 +526,26 @@ int main(int argc, char **argv)
 		}
 	}
 
-    /* let's do this in a silly way, the first pass let's us
-     * set flags (e.g. --force-configure), whereas the second
-     * will actually do stuff
-     */
-    while (getopt_long(argc, origargv, "irf", longopts, 0) >= 0)
-        /* nothing */;
-    optind = 1;
+	/* let's do this in a silly way, the first pass lets us
+	 * set flags (e.g. --force-configure), whereas the second
+	 * will actually do stuff
+	 */
+	while (getopt_long(argc, origargv, "irf", longopts, 0) >= 0)
+		/* nothing */;
+	optind = 1;
 
-    while ((opt = getopt_long(argc, origargv, "irf", longopts, 0)) >= 0)
-    {
-        switch (opt)
-        {
-            case 'i': return dpkg_install(packages); break;
-            case 'r': return dpkg_remove(packages); break;
-            case 'u': return dpkg_unpack(packages); break;
-            case 'c': return dpkg_configure(packages); break;
-            case 'p': return dpkg_print_architecture(); break;
-            case 'f': return dpkg_fields(packages); break;
-            case 0: /* option, not action */; break;
-        }
+	while ((opt = getopt_long(argc, origargv, "irf", longopts, 0)) >= 0)
+	{
+		switch (opt)
+		{
+			case 'i': return dpkg_install(packages); break;
+			case 'r': return dpkg_remove(packages); break;
+			case 'u': return dpkg_unpack(packages); break;
+			case 'c': return dpkg_configure(packages); break;
+			case 'p': return dpkg_print_architecture(); break;
+			case 'f': return dpkg_fields(packages); break;
+			case 0: /* option, not action */; break;
+		}
 	}
 
 	/* if it falls through to here, some of the command line options were

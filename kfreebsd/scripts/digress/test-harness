@@ -84,6 +84,9 @@ use () {
 }
 
 lock () {
+	if [ ! -e "$(which lockfile-create)" ]; then
+		error lockfile-create not found
+	fi
 	while ! lockfile-create --retry 1 "$lockfile"; do
 		echo "$MACHINE is in use:"
 		ls -l $lockfile.lock || true
@@ -114,10 +117,23 @@ export PATH
 
 . $DI_TESTDIR/config
 
+if [ -z "$STATE_DIR" ]; then
+	error CONF "STATE_DIR not set"
+fi
+mkdir -p "$STATE_DIR"
+
 if [ -z "$SCHEME" ]; then
 	if [ -z "$MACHINE" ]; then
-		echo "Machines:"
-		ls $DI_TESTDIR/schemes/$MACHINE
+		printf "Machines: "
+		for machine in $(ls $DI_TESTDIR/schemes/$MACHINE); do
+			SERVER=""
+			use $machine/common
+			if [ -z "$SERVER" ] || 
+			   ( [ -n "$SERVER" ] && [ "$SERVER" = "$(hostname -f)" ] ); then
+				printf "$machine "
+			fi
+		done
+		echo
 	else
 		echo "Available schemes for $MACHINE:"
 		for s in $DI_TESTDIR/schemes/$MACHINE/*; do
@@ -147,11 +163,6 @@ use common
 use $SCHEME
 
 trap sigout INT QUIT
-
-if [ -z "$STATE_DIR" ]; then
-	error CONF "STATE_DIR not set"
-fi
-mkdir -p "$STATE_DIR"
 
 lockfile="$STATE_DIR/$MACHINE-test"
 lock
@@ -216,7 +227,7 @@ fi
 
 if [ -n "$TEST_1" ]; then
 	echo
-	header "Testing the first stage install..."
+	header "Testing the first stage..."
 	endheader
 	for t in $TEST_1; do
 		if ! $t; then
@@ -227,7 +238,7 @@ fi
 
 if [ -n "$TEST_2" ]; then
 	echo
-	header "Testing the second stage install..."
+	header "Testing the second stage..."
 	endheader
 	for t in $TEST_2; do
 		if ! $t; then

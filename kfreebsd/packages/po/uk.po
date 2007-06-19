@@ -1,4 +1,4 @@
-# translation of uk.po to Ukrainian
+# translation of uk.po to
 # Ukrainian messages for debian-installer.
 # Copyright (C) 2003 Software in the Public Interest, Inc.
 # This file is distributed under the same license as debian-installer.
@@ -8,10 +8,10 @@ msgid ""
 msgstr ""
 "Project-Id-Version: uk\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-01-28 06:31+0000\n"
-"PO-Revision-Date: 2007-02-18 18:56+0100\n"
-"Last-Translator: Eugeniy Meshcheryakov <eugen@debian.org>\n"
-"Language-Team: Ukrainian\n"
+"POT-Creation-Date: 2007-05-23 22:47+0000\n"
+"PO-Revision-Date: 2007-06-07 23:15+0200\n"
+"Last-Translator: \n"
+"Language-Team:  <uk@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -31,21 +31,15 @@ msgstr "Головне меню встановлювача Debian"
 msgid "Choose the next step in the install process:"
 msgstr "Виберіть наступний крок процесу встановлення:"
 
-#. Type: select
-#. Description
-#: ../main-menu.templates:9
-msgid "This is the main menu for the Debian installer."
-msgstr "Це головне меню встановлювача Debian."
-
 #. Type: error
 #. Description
-#: ../main-menu.templates:14
+#: ../main-menu.templates:13
 msgid "Installation step failed"
 msgstr "Помилка кроку встановлення"
 
 #. Type: error
 #. Description
-#: ../main-menu.templates:14
+#: ../main-menu.templates:13
 msgid ""
 "An installation step failed. You can try to run the failing item again from "
 "the menu, or skip it and choose something else. The failing step is: ${ITEM}"
@@ -56,13 +50,13 @@ msgstr ""
 
 #. Type: select
 #. Description
-#: ../main-menu.templates:23
+#: ../main-menu.templates:22
 msgid "Choose an installation step:"
 msgstr "Виберіть крок встановлення:"
 
 #. Type: select
 #. Description
-#: ../main-menu.templates:23
+#: ../main-menu.templates:22
 msgid ""
 "This installation step depends on one or more other steps that have not yet "
 "been performed."
@@ -239,7 +233,7 @@ msgid ""
 "available in the archive."
 msgstr ""
 "Модулі ядра не знайдені. Можливо, це сталося тому, що версія ядра, що "
-"використовується цією версією встановлювача, не співпадає із версією, "
+"використовується цією версією встановлювача, не збігається із версією, "
 "наявною в архіві."
 
 #. Type: boolean
@@ -2391,7 +2385,7 @@ msgid ""
 "will be removed."
 msgstr ""
 "Ви вибрали для розбивки весь пристрій. Якщо ви підтвердите створення нової "
-"таблиці розділів на пристрої, то всі існуючі розділи будуть видалені."
+"таблиці розділів на пристрої, то всі існуючі розділи будуть вилучені."
 
 #. Type: boolean
 #. Description
@@ -2485,7 +2479,7 @@ msgid ""
 "WARNING: This will destroy all data on any partitions you have removed as "
 "well as on the partitions that are going to be formatted."
 msgstr ""
-"ПОПЕРЕДЖЕННЯ: це знищить всі дані як на розділах, які ви видалили, так і на "
+"ПОПЕРЕДЖЕННЯ: це знищить всі дані як на розділах, які ви вилучили, так і на "
 "розділах, які будуть відформатовані."
 
 #. Type: text
@@ -2829,57 +2823,104 @@ msgstr ""
 #. Description
 #: ../partman-auto.templates:36
 msgid "Remove existing logical volume data?"
-msgstr "Видалити всі дані про існуючі логічні томи?"
+msgstr "Витерти всі дані про існуючі логічні томи?"
 
 #. Type: boolean
 #. Description
 #: ../partman-auto.templates:36
 msgid ""
-"The selected device already contains logical volumes and/or volume groups "
-"from a previous LVM installation, which must be removed from the disk before "
-"creating any partitions."
+"The selected device already contains the following LVM logical volumes, "
+"volume groups and physical volumes which are about to be removed:"
 msgstr ""
-"Вибраний пристрій вже містить логічні томи і/або групи томів від попередньої "
-"інсталяції з використанням LVM; ці томи (чи групи томів) потрібно видалити з "
-"диску перед створенням будь-яких розділів."
+"Вибраний пристрій вже містить логічні томи LVM, групи томів і фізичні томи "
+"які зараз буде вилучено."
+
+#. Type: boolean
+#. Description
+#: ../partman-auto.templates:36
+msgid "Logical volume(s) to be removed: ${LVTARGETS}"
+msgstr "Логічні томи які будуть вилучені: ${LVTARGETS}"
+
+#. Type: boolean
+#. Description
+#: ../partman-auto.templates:36
+msgid "Volume group(s) to be removed: ${VGTARGETS}"
+msgstr "Групи томів які будуть вилучені: ${VGTARGETS}"
+
+#. Type: boolean
+#. Description
+#: ../partman-auto.templates:36
+msgid "Physical volume(s) to be removed: ${PVTARGETS}"
+msgstr "Фізичні томи які будуть вилучені: ${PVTARGETS}"
 
 #. Type: boolean
 #. Description
 #: ../partman-auto.templates:36
 msgid ""
-"Note that this will also permanently erase any data currently on the logical "
+"Note that this will permanently erase any data currently on the logical "
 "volumes."
 msgstr ""
+"Зверніть увагу, що це назавжди знищить всі дані які зараз знаходяться на "
+"логічних томах."
+
+#. Type: boolean
+#. Description
+#: ../partman-auto.templates:52
+msgid "Remove existing crypto volume data?"
+msgstr "Витерти всю інформацію з існуючого шифрованого тому?"
+
+#. Type: boolean
+#. Description
+#: ../partman-auto.templates:52
+msgid ""
+"The selected device already contains a crypto volume which is about to be "
+"removed."
+msgstr ""
+"Вибраний пристрій вже містить шифрований том, який зараз буде вилучено."
+
+#. Type: boolean
+#. Description
+#: ../partman-auto.templates:52
+msgid "The following crypto volume will be removed: ${TARGET}"
+msgstr "Наступні шифровані томи будуть вилучені: ${TARGET}"
+
+#. Type: boolean
+#. Description
+#: ../partman-auto.templates:52
+msgid ""
+"Note that this will also permanently erase any data currently on the crypto "
+"volume."
+msgstr ""
 "Зверніть увагу, що це також назавжди знищить всі дані які зараз знаходяться "
-"на логічних томах."
+"на шифрованому томі."
 
 #. Type: error
 #. Description
-#: ../partman-auto.templates:46
+#: ../partman-auto.templates:64
 msgid "LVM physical volume already exists on the selected device"
 msgstr "Фізичний том LVM вже існує на вибраному пристрої"
 
 #. Type: error
 #. Description
-#: ../partman-auto.templates:46
+#: ../partman-auto.templates:64
 msgid ""
 "The selected device already contains one or more LVM physical volumes which "
 "cannot be removed. It is therefore not possible to automatically partition "
 "this device."
 msgstr ""
 "Вибраний пристрій вже містить один або декілька фізичних томів LVM які "
-"неможливо видалити. Через це провести автоматичну розбивку цього пристрою "
+"неможливо вилучити. Через це провести автоматичну розбивку цього пристрою "
 "неможливо."
 
 #. Type: select
 #. Description
-#: ../partman-auto.templates:64
+#: ../partman-auto.templates:82
 msgid "Partitioning method:"
 msgstr "Метод розбивки:"
 
 #. Type: select
 #. Description
-#: ../partman-auto.templates:64
+#: ../partman-auto.templates:82
 msgid ""
 "If you choose guided partitioning for an entire disk, you will next be asked "
 "which disk should be used."
@@ -2889,7 +2930,7 @@ msgstr ""
 
 #. Type: select
 #. Description
-#: ../partman-auto.templates:79
+#: ../partman-auto.templates:97
 msgid "Partitioning scheme:"
 msgstr "Принцип розбивки:"
 
@@ -2901,13 +2942,13 @@ msgstr "Принцип розбивки:"
 #.
 #. It is followed by a variable giving the chosen disk, hence the colon
 #. at the end of the sentence. Please keep it.
-#: ../partman-auto.templates:79
+#: ../partman-auto.templates:97
 msgid "Selected for partitioning:"
 msgstr "Вибрано для розбивки:"
 
 #. Type: select
 #. Description
-#: ../partman-auto.templates:79
+#: ../partman-auto.templates:97
 msgid ""
 "The disk can be partitioned using one of several different schemes. If you "
 "are unsure, choose the first one."
@@ -2917,13 +2958,13 @@ msgstr ""
 
 #. Type: error
 #. Description
-#: ../partman-auto.templates:89
+#: ../partman-auto.templates:107
 msgid "Unusable free space"
 msgstr "Непридатний вільний простір"
 
 #. Type: error
 #. Description
-#: ../partman-auto.templates:89
+#: ../partman-auto.templates:107
 msgid ""
 "Partitioning failed because the chosen free space may not be used. There are "
 "probably too many (primary) partitions in the partition table."
@@ -2935,33 +2976,33 @@ msgstr ""
 #. Type: text
 #. Description
 #. TRANSLATORS: This is a menu entry. Keep in under 55 columns/characters
-#: ../partman-auto.templates:108
+#: ../partman-auto.templates:126
 msgid "Guided partitioning"
 msgstr "Розбивка за допомогою встановлювача"
 
 #. Type: text
 #. Description
 #. TRANSLATORS: This is a menu entry. Keep in under 55 columns/characters
-#: ../partman-auto.templates:113
+#: ../partman-auto.templates:131
 msgid "Guided - use the largest continuous free space"
 msgstr "З допомогою - використати найбільший шматок вільного простору"
 
 #. Type: text
 #. Description
 #. TRANSLATORS: This is a menu entry. Keep in under 55 columns/characters
-#: ../partman-auto.templates:118
+#: ../partman-auto.templates:136
 msgid "Guided - use entire disk"
 msgstr "З допомогою - використати весь диск"
 
 #. Type: select
 #. Description
-#: ../partman-auto.templates:123
+#: ../partman-auto.templates:141
 msgid "Select disk to partition:"
 msgstr "Виберіть диск для розбивки:"
 
 #. Type: select
 #. Description
-#: ../partman-auto.templates:123
+#: ../partman-auto.templates:141
 msgid ""
 "Note that all data on the disk you select will be erased, but not before you "
 "have confirmed that you really want to make the changes."
@@ -2971,13 +3012,13 @@ msgstr ""
 
 #. Type: multiselect
 #. Description
-#: ../partman-auto.templates:130
+#: ../partman-auto.templates:148
 msgid "Select disk(s) to partition:"
 msgstr "Виберіть диск(и) для розбивки:"
 
 #. Type: multiselect
 #. Description
-#: ../partman-auto.templates:130
+#: ../partman-auto.templates:148
 msgid ""
 "Note that all data on the disk(s) you select will be erased, but not before "
 "you have confirmed that you really want to make the changes."
@@ -2989,42 +3030,42 @@ msgstr ""
 #. Description
 #. TRANSLATORS: This is a menu entry. Keep in under 55 columns/characters
 #. This is a method for partioning - as in guided (automatic) versus manual
-#: ../partman-auto.templates:138
+#: ../partman-auto.templates:156
 msgid "Manual"
 msgstr "Вручну"
 
 #. Type: text
 #. Description
 #. TRANSLATORS: This is a menu entry. Keep in under 55 columns/characters
-#: ../partman-auto.templates:143
+#: ../partman-auto.templates:161
 msgid "Automatically partition the free space"
 msgstr "Автоматично розбити вільний простір"
 
 #. Type: text
 #. Description
 #. TRANSLATORS: This is a menu entry. Keep in under 55 columns/characters
-#: ../partman-auto.templates:148
+#: ../partman-auto.templates:166
 msgid "All files in one partition (recommended for new users)"
 msgstr "Всі файли в одному розділі (рекомендується для новаків)"
 
 #. Type: text
 #. Description
 #. TRANSLATORS: This is a menu entry. Keep in under 55 columns/characters
-#: ../partman-auto.templates:153
+#: ../partman-auto.templates:171
 msgid "Separate /home partition"
 msgstr "Окремий розділ для  /home"
 
 #. Type: text
 #. Description
 #. TRANSLATORS: This is a menu entry. Keep in under 55 columns/characters
-#: ../partman-auto.templates:158
+#: ../partman-auto.templates:176
 msgid "Separate /home, /usr, /var, and /tmp partitions"
 msgstr "Окремі розділи для /home, /usr, /var та /tmp"
 
 #. Type: text
 #. Description
 #. TRANSLATORS: This is a menu entry. Keep in under 55 columns/characters
-#: ../partman-auto.templates:163
+#: ../partman-auto.templates:181
 msgid "Small-disk (< 1GB) partitioning scheme"
 msgstr "Схема розбивки для малих дисків (< 1ГБ)"
 
@@ -3187,11 +3228,11 @@ msgstr "З невідомої причини неможливо змінити �
 
 #. Type: error
 #. Description
-#: ../partman-partitioning.templates:38 ../base-installer.templates:124
-#: ../quik-installer.templates:131 ../yaboot-installer.templates:88
-#: ../vmelilo-installer.templates:46 ../lvmcfg-utils.templates:247
-#: ../partman-lvm.templates:380 ../partman-auto-lvm.templates:40
-#: ../partman-auto-raid.templates:3
+#: ../partman-partitioning.templates:38 ../base-installer.templates:117
+#: ../nobootloader.templates:8 ../quik-installer.templates:131
+#: ../yaboot-installer.templates:88 ../vmelilo-installer.templates:46
+#: ../lvmcfg-utils.templates:247 ../partman-lvm.templates:381
+#: ../partman-auto-lvm.templates:40 ../partman-auto-raid.templates:3
 msgid "Check /var/log/syslog or see virtual console 4 for the details."
 msgstr "Подробиці дивіться в /var/log/syslog або на віртуальній консолі 4."
 
@@ -3416,7 +3457,7 @@ msgstr "Копіювати дані з іншого розділу"
 #. Description
 #: ../partman-partitioning.templates:159
 msgid "Delete the partition"
-msgstr "Видалити розділ"
+msgstr "Вилучити розділ"
 
 #. Type: text
 #. Description
@@ -3511,7 +3552,7 @@ msgstr ""
 
 #. Type: boolean
 #. Description
-#: ../partman-basicfilesystems.templates:41
+#: ../partman-basicfilesystems.templates:42
 msgid ""
 "You have not selected any partitions for use as swap space. Enabling swap "
 "space is recommended so that the system can make better use of the available "
@@ -3527,7 +3568,7 @@ msgstr ""
 
 #. Type: boolean
 #. Description
-#: ../partman-basicfilesystems.templates:41
+#: ../partman-basicfilesystems.templates:42
 msgid ""
 "If you do not go back to the partitioning menu and assign a swap partition, "
 "the installation will continue without swap space."
@@ -3537,7 +3578,7 @@ msgstr ""
 
 #. Type: error
 #. Description
-#: ../partman-basicfilesystems.templates:53 ../partman-ext3.templates:16
+#: ../partman-basicfilesystems.templates:54 ../partman-ext3.templates:16
 #: ../partman-reiserfs.templates:16 ../partman-jfs.templates:16
 #: ../partman-xfs.templates:16 ../partman-ext2r0.templates:16
 msgid "Failed to create a file system"
@@ -3545,7 +3586,7 @@ msgstr "Не вдалося створити файлову систему"
 
 #. Type: error
 #. Description
-#: ../partman-basicfilesystems.templates:53
+#: ../partman-basicfilesystems.templates:54
 msgid ""
 "The ${TYPE} file system creation in partition #${PARTITION} of ${DEVICE} "
 "failed."
@@ -3555,13 +3596,13 @@ msgstr ""
 
 #. Type: error
 #. Description
-#: ../partman-basicfilesystems.templates:59
+#: ../partman-basicfilesystems.templates:60
 msgid "Failed to create a swap space"
 msgstr "Не вдалося створити простір підкачки"
 
 #. Type: error
 #. Description
-#: ../partman-basicfilesystems.templates:59
+#: ../partman-basicfilesystems.templates:60
 msgid ""
 "The creation of swap space in partition #${PARTITION} of ${DEVICE} failed."
 msgstr ""
@@ -3570,7 +3611,7 @@ msgstr ""
 
 #. Type: boolean
 #. Description
-#: ../partman-basicfilesystems.templates:64 ../partman-ext3.templates:22
+#: ../partman-basicfilesystems.templates:65 ../partman-ext3.templates:22
 #: ../partman-reiserfs.templates:22 ../partman-jfs.templates:22
 #: ../partman-xfs.templates:22 ../partman-ext2r0.templates:22
 msgid "Do you want to return to the partitioning menu?"
@@ -3578,7 +3619,7 @@ msgstr "Чи бажаєте ви повернутися до меню розби
 
 #. Type: boolean
 #. Description
-#: ../partman-basicfilesystems.templates:64
+#: ../partman-basicfilesystems.templates:65
 msgid ""
 "No mount point is assigned for ${FILESYSTEM} file system in partition #"
 "${PARTITION} of ${DEVICE}."
@@ -3588,7 +3629,7 @@ msgstr ""
 
 #. Type: boolean
 #. Description
-#: ../partman-basicfilesystems.templates:64 ../partman-ext3.templates:22
+#: ../partman-basicfilesystems.templates:65 ../partman-ext3.templates:22
 #: ../partman-reiserfs.templates:22 ../partman-jfs.templates:22
 #: ../partman-xfs.templates:22 ../partman-ext2r0.templates:22
 msgid ""
@@ -3600,13 +3641,13 @@ msgstr ""
 
 #. Type: error
 #. Description
-#: ../partman-basicfilesystems.templates:73
+#: ../partman-basicfilesystems.templates:74
 msgid "Invalid file system for this mount point"
 msgstr "Неправильна файлова система для цього розділу"
 
 #. Type: error
 #. Description
-#: ../partman-basicfilesystems.templates:73
+#: ../partman-basicfilesystems.templates:74
 msgid ""
 "The file system type ${FILESYSTEM} cannot be mounted on ${MOUNTPOINT}, "
 "because it is not a fully-functional Unix file system. Please choose a "
@@ -3621,7 +3662,7 @@ msgstr ""
 #. Note to translators : Please keep your translations of the choices
 #. below a 65 columns limit (which means 65 characters
 #. in single-byte languages) including the initial path
-#: ../partman-basicfilesystems.templates:83
+#: ../partman-basicfilesystems.templates:84
 msgid "/ - the root file system"
 msgstr "/ - коренева файлова система"
 
@@ -3630,7 +3671,7 @@ msgstr "/ - коренева файлова система"
 #. Note to translators : Please keep your translations of the choices
 #. below a 65 columns limit (which means 65 characters
 #. in single-byte languages) including the initial path
-#: ../partman-basicfilesystems.templates:83
+#: ../partman-basicfilesystems.templates:84
 msgid "/boot - static files of the boot loader"
 msgstr "/boot - статичні файли завантажувача"
 
@@ -3639,7 +3680,7 @@ msgstr "/boot - статичні файли завантажувача"
 #. Note to translators : Please keep your translations of the choices
 #. below a 65 columns limit (which means 65 characters
 #. in single-byte languages) including the initial path
-#: ../partman-basicfilesystems.templates:83
+#: ../partman-basicfilesystems.templates:84
 msgid "/home - user home directories"
 msgstr "/home - домашні директорії користувачів"
 
@@ -3648,7 +3689,7 @@ msgstr "/home - домашні директорії користувачів"
 #. Note to translators : Please keep your translations of the choices
 #. below a 65 columns limit (which means 65 characters
 #. in single-byte languages) including the initial path
-#: ../partman-basicfilesystems.templates:83
+#: ../partman-basicfilesystems.templates:84
 msgid "/tmp - temporary files"
 msgstr "/tmp - тимчасові файли"
 
@@ -3657,7 +3698,7 @@ msgstr "/tmp - тимчасові файли"
 #. Note to translators : Please keep your translations of the choices
 #. below a 65 columns limit (which means 65 characters
 #. in single-byte languages) including the initial path
-#: ../partman-basicfilesystems.templates:83
+#: ../partman-basicfilesystems.templates:84
 msgid "/usr - static data"
 msgstr "/usr - статичні дані"
 
@@ -3666,7 +3707,7 @@ msgstr "/usr - статичні дані"
 #. Note to translators : Please keep your translations of the choices
 #. below a 65 columns limit (which means 65 characters
 #. in single-byte languages) including the initial path
-#: ../partman-basicfilesystems.templates:83
+#: ../partman-basicfilesystems.templates:84
 msgid "/var - variable data"
 msgstr "/var - змінювані файли"
 
@@ -3675,7 +3716,7 @@ msgstr "/var - змінювані файли"
 #. Note to translators : Please keep your translations of the choices
 #. below a 65 columns limit (which means 65 characters
 #. in single-byte languages) including the initial path
-#: ../partman-basicfilesystems.templates:83
+#: ../partman-basicfilesystems.templates:84
 msgid "/srv - data for services provided by this system"
 msgstr "/srv - дані для послуг, що надаються цією системою"
 
@@ -3684,7 +3725,7 @@ msgstr "/srv - дані для послуг, що надаються цією с
 #. Note to translators : Please keep your translations of the choices
 #. below a 65 columns limit (which means 65 characters
 #. in single-byte languages) including the initial path
-#: ../partman-basicfilesystems.templates:83
+#: ../partman-basicfilesystems.templates:84
 msgid "/opt - add-on application software packages"
 msgstr "/opt - додаткові пакунки програмного забезпечення"
 
@@ -3693,19 +3734,19 @@ msgstr "/opt - додаткові пакунки програмного забе
 #. Note to translators : Please keep your translations of the choices
 #. below a 65 columns limit (which means 65 characters
 #. in single-byte languages) including the initial path
-#: ../partman-basicfilesystems.templates:83
+#: ../partman-basicfilesystems.templates:84
 msgid "/usr/local - local hierarchy"
 msgstr "/usr/local - локальна ієрархія"
 
 #. Type: select
 #. Choices
-#: ../partman-basicfilesystems.templates:88
+#: ../partman-basicfilesystems.templates:89
 msgid "/dos"
 msgstr "/dos"
 
 #. Type: select
 #. Choices
-#: ../partman-basicfilesystems.templates:88
+#: ../partman-basicfilesystems.templates:89
 msgid "/windows"
 msgstr "/windows"
 
@@ -3724,7 +3765,7 @@ msgstr "/windows"
 #. below a 65 columns limit (which means 65 characters
 #. in single-byte languages)
 #. What's to be "entered manually" is a mount point
-#: ../partman-basicfilesystems.templates:88 ../partman-ext2r0.templates:36
+#: ../partman-basicfilesystems.templates:89 ../partman-ext2r0.templates:36
 #: ../partconf.templates:62
 msgid "Enter manually"
 msgstr "ввести вручну"
@@ -3736,44 +3777,44 @@ msgstr "ввести вручну"
 #. Type: select
 #. Choices
 #. "it" is a partition
-#: ../partman-basicfilesystems.templates:88 ../partman-ext2r0.templates:36
+#: ../partman-basicfilesystems.templates:89 ../partman-ext2r0.templates:36
 msgid "Do not mount it"
 msgstr "не монтувати"
 
 #. Type: string
 #. Description
-#: ../partman-basicfilesystems.templates:93 ../partman-ext2r0.templates:41
+#: ../partman-basicfilesystems.templates:94 ../partman-ext2r0.templates:41
 msgid "Mount point for this partition:"
 msgstr "Точка монтування для цього розділу:"
 
 #. Type: error
 #. Description
-#: ../partman-basicfilesystems.templates:97 ../partman-ext2r0.templates:45
+#: ../partman-basicfilesystems.templates:98 ../partman-ext2r0.templates:45
 msgid "Invalid mount point"
 msgstr "Невірна точка монтування"
 
 #. Type: error
 #. Description
-#: ../partman-basicfilesystems.templates:97 ../partman-ext2r0.templates:45
+#: ../partman-basicfilesystems.templates:98 ../partman-ext2r0.templates:45
 msgid "The mount point you entered is invalid."
 msgstr "Введена точка монтування невірна."
 
 #. Type: error
 #. Description
-#: ../partman-basicfilesystems.templates:97 ../partman-ext2r0.templates:45
+#: ../partman-basicfilesystems.templates:98 ../partman-ext2r0.templates:45
 msgid "Mount points must start with \"/\". They cannot contain spaces."
 msgstr ""
 "Точки монтування повинні починатися з „/“. Вони не можуть містити пробілів."
 
 #. Type: string
 #. Description
-#: ../partman-basicfilesystems.templates:104
+#: ../partman-basicfilesystems.templates:105
 msgid "Label for the file system in this partition:"
 msgstr "Мітка файлової системи на цьому розділі:"
 
 #. Type: text
 #. Description
-#: ../partman-basicfilesystems.templates:108
+#: ../partman-basicfilesystems.templates:109
 msgid "Format the swap area:"
 msgstr "Форматувати область підкачки:"
 
@@ -3784,7 +3825,7 @@ msgstr "Форматувати область підкачки:"
 #. #-#-#-#-#  templates.pot (PACKAGE VERSION)  #-#-#-#-#
 #. Type: text
 #. Description
-#: ../partman-basicfilesystems.templates:113 ../partman-crypto.templates:121
+#: ../partman-basicfilesystems.templates:114 ../partman-crypto.templates:121
 msgid "yes"
 msgstr "так"
 
@@ -3795,21 +3836,21 @@ msgstr "так"
 #. #-#-#-#-#  templates.pot (PACKAGE VERSION)  #-#-#-#-#
 #. Type: text
 #. Description
-#: ../partman-basicfilesystems.templates:118 ../partman-crypto.templates:117
+#: ../partman-basicfilesystems.templates:119 ../partman-crypto.templates:117
 msgid "no"
 msgstr "ні"
 
 #. Type: text
 #. Description
 #. label of file system
-#: ../partman-basicfilesystems.templates:123
+#: ../partman-basicfilesystems.templates:124
 msgid "Label:"
 msgstr "Мітка:"
 
 #. Type: text
 #. Description
 #. for partman-basicfilesystems: in the following context: "Label: none"
-#: ../partman-basicfilesystems.templates:128
+#: ../partman-basicfilesystems.templates:129
 msgid ""
 "none[ Do not translate what's inside the brackets and just put the "
 "translation for the word \"none\" in your language without any brackets. "
@@ -3819,39 +3860,39 @@ msgstr "відсутня"
 #. Type: text
 #. Description
 #. Up to 24 character positions
-#: ../partman-basicfilesystems.templates:133
+#: ../partman-basicfilesystems.templates:134
 msgid "Reserved blocks:"
 msgstr "Зарезервовані блоки:"
 
 #. Type: string
 #. Description
-#: ../partman-basicfilesystems.templates:137
+#: ../partman-basicfilesystems.templates:138
 msgid "Percentage of the file system blocks reserved for the super-user:"
 msgstr "Відсоток блоків файлової системи, зарезервованих для суперкористувача:"
 
 #. Type: text
 #. Description
 #. Up to 25 character positions
-#: ../partman-basicfilesystems.templates:142
+#: ../partman-basicfilesystems.templates:143
 msgid "Typical usage:"
 msgstr "Типове застосування:"
 
 #. Type: text
 #. Description
 #. In the following context: "Typical usage: standard"
-#: ../partman-basicfilesystems.templates:147
+#: ../partman-basicfilesystems.templates:148
 msgid "standard"
 msgstr "стандартне"
 
 #. Type: select
 #. Description
-#: ../partman-basicfilesystems.templates:155
+#: ../partman-basicfilesystems.templates:156
 msgid "Typical usage of this partition:"
 msgstr "Типове застосування цього розділу:"
 
 #. Type: select
 #. Description
-#: ../partman-basicfilesystems.templates:155
+#: ../partman-basicfilesystems.templates:156
 msgid ""
 "Please specify how the file system is going to be used, so that optimal file "
 "system parameters can be chosen for that use."
@@ -3861,7 +3902,7 @@ msgstr ""
 
 #. Type: select
 #. Description
-#: ../partman-basicfilesystems.templates:155
+#: ../partman-basicfilesystems.templates:156
 msgid ""
 "standard = standard parameters, news = one inode per 4KB block, largefile = "
 "one inode per megabyte, largefile4 = one inode per 4 megabytes."
@@ -3889,7 +3930,7 @@ msgstr ""
 #. Type: text
 #. Description
 #. This is an item in the menu "Partition settings"
-#: ../partman-basicfilesystems.templates:167 ../partman-ext3.templates:32
+#: ../partman-basicfilesystems.templates:168 ../partman-ext3.templates:32
 #: ../partman-reiserfs.templates:32 ../partman-jfs.templates:32
 #: ../partman-xfs.templates:32
 msgid "Mount point:"
@@ -3898,7 +3939,7 @@ msgstr "Точка монтування:"
 #. Type: text
 #. Description
 #. In the following context: "Mount point: none"
-#: ../partman-basicfilesystems.templates:172
+#: ../partman-basicfilesystems.templates:173
 msgid ""
 "none[ Do not translate what's inside the brackets and just put the "
 "translation for the word \"none\" in your language without any brackets. "
@@ -3907,53 +3948,53 @@ msgstr "відсутня"
 
 #. Type: text
 #. Description
-#: ../partman-basicfilesystems.templates:176
+#: ../partman-basicfilesystems.templates:177
 msgid "Ext2 file system"
 msgstr "файлова система Ext2"
 
 #. Type: text
 #. Description
 #. Short file system name (untranslatable in many languages)
-#: ../partman-basicfilesystems.templates:181
+#: ../partman-basicfilesystems.templates:182
 msgid "ext2"
 msgstr "ext2"
 
 #. Type: text
 #. Description
-#: ../partman-basicfilesystems.templates:185
+#: ../partman-basicfilesystems.templates:186
 msgid "FAT16 file system"
 msgstr "файлова система FAT16"
 
 #. Type: text
 #. Description
 #. Short file system name (untranslatable in many languages)
-#: ../partman-basicfilesystems.templates:190
+#: ../partman-basicfilesystems.templates:191
 msgid "fat16"
 msgstr "fat16"
 
 #. Type: text
 #. Description
-#: ../partman-basicfilesystems.templates:194
+#: ../partman-basicfilesystems.templates:195
 msgid "FAT32 file system"
 msgstr "файлова система FAT32"
 
 #. Type: text
 #. Description
 #. Short file system name (untranslatable in many languages)
-#: ../partman-basicfilesystems.templates:199
+#: ../partman-basicfilesystems.templates:200
 msgid "fat32"
 msgstr "fat32"
 
 #. Type: text
 #. Description
-#: ../partman-basicfilesystems.templates:212
+#: ../partman-basicfilesystems.templates:213
 msgid "swap area"
 msgstr "область підкачки"
 
 #. Type: text
 #. Description
 #. Short variant of `swap space'
-#: ../partman-basicfilesystems.templates:217
+#: ../partman-basicfilesystems.templates:218
 msgid "swap"
 msgstr "swap"
 
@@ -3962,7 +4003,7 @@ msgstr "swap"
 #. Note to translators : Please keep your translations of the choices
 #. below a 65 columns limit (which means 65 characters
 #. in single-byte languages)
-#: ../partman-basicfilesystems.templates:228 ../partman-ext3.templates:44
+#: ../partman-basicfilesystems.templates:229 ../partman-ext3.templates:44
 #: ../partman-reiserfs.templates:44 ../partman-jfs.templates:44
 #: ../partman-xfs.templates:44 ../partman-ext2r0.templates:60
 msgid "noatime - do not update inode access times at each access"
@@ -3973,7 +4014,7 @@ msgstr "noatime - не оновлювати часи доступу при ко�
 #. Note to translators : Please keep your translations of the choices
 #. below a 65 columns limit (which means 65 characters
 #. in single-byte languages)
-#: ../partman-basicfilesystems.templates:228 ../partman-ext3.templates:44
+#: ../partman-basicfilesystems.templates:229 ../partman-ext3.templates:44
 #: ../partman-reiserfs.templates:44 ../partman-jfs.templates:44
 #: ../partman-xfs.templates:44 ../partman-ext2r0.templates:60
 msgid "nodev - do not support character or block special devices"
@@ -3984,7 +4025,7 @@ msgstr "nodev - не підтримувати спеціальні символ�
 #. Note to translators : Please keep your translations of the choices
 #. below a 65 columns limit (which means 65 characters
 #. in single-byte languages)
-#: ../partman-basicfilesystems.templates:228 ../partman-ext3.templates:44
+#: ../partman-basicfilesystems.templates:229 ../partman-ext3.templates:44
 #: ../partman-reiserfs.templates:44 ../partman-jfs.templates:44
 #: ../partman-xfs.templates:44 ../partman-ext2r0.templates:60
 msgid "nosuid - ignore set-user-identifier or set-group-identifier bits"
@@ -3995,7 +4036,7 @@ msgstr "nosuid - ігнорувати біти SUID та SGID"
 #. Note to translators : Please keep your translations of the choices
 #. below a 65 columns limit (which means 65 characters
 #. in single-byte languages)
-#: ../partman-basicfilesystems.templates:228 ../partman-ext3.templates:44
+#: ../partman-basicfilesystems.templates:229 ../partman-ext3.templates:44
 #: ../partman-reiserfs.templates:44 ../partman-jfs.templates:44
 #: ../partman-xfs.templates:44 ../partman-ext2r0.templates:60
 msgid "noexec - do not allow execution of any binaries"
@@ -4006,7 +4047,7 @@ msgstr "noexec - не дозволяти виконання будь-яких п
 #. Note to translators : Please keep your translations of the choices
 #. below a 65 columns limit (which means 65 characters
 #. in single-byte languages)
-#: ../partman-basicfilesystems.templates:228 ../partman-ext3.templates:44
+#: ../partman-basicfilesystems.templates:229 ../partman-ext3.templates:44
 #: ../partman-reiserfs.templates:44 ../partman-xfs.templates:44
 #: ../partman-ext2r0.templates:60
 msgid "usrquota - user disk quota accounting enabled"
@@ -4017,7 +4058,7 @@ msgstr "usrquota - дозволити дискові квоти для кори�
 #. Note to translators : Please keep your translations of the choices
 #. below a 65 columns limit (which means 65 characters
 #. in single-byte languages)
-#: ../partman-basicfilesystems.templates:228 ../partman-ext3.templates:44
+#: ../partman-basicfilesystems.templates:229 ../partman-ext3.templates:44
 #: ../partman-reiserfs.templates:44 ../partman-xfs.templates:44
 #: ../partman-ext2r0.templates:60
 msgid "grpquota - group disk quota accounting enabled"
@@ -4028,7 +4069,7 @@ msgstr "grpquota - дозволити дискові квоти груп"
 #. Note to translators : Please keep your translations of the choices
 #. below a 65 columns limit (which means 65 characters
 #. in single-byte languages)
-#: ../partman-basicfilesystems.templates:228 ../partman-ext3.templates:44
+#: ../partman-basicfilesystems.templates:229 ../partman-ext3.templates:44
 #: ../partman-reiserfs.templates:44
 msgid "user_xattr - support user extended attributes"
 msgstr "user_xattr - підтримувати розширені атрибути користувача"
@@ -4069,7 +4110,7 @@ msgstr "user_xattr - підтримувати розширені атрибут�
 #. Note to translators : Please keep your translations of the choices
 #. below a 65 columns limit (which means 65 characters
 #. in single-byte languages)
-#: ../partman-basicfilesystems.templates:237 ../partman-ext3.templates:44
+#: ../partman-basicfilesystems.templates:238 ../partman-ext3.templates:44
 #: ../partman-reiserfs.templates:44 ../partman-jfs.templates:44
 #: ../partman-xfs.templates:44 ../partman-ext2r0.templates:60
 msgid "ro - mount the file system read-only"
@@ -4111,7 +4152,7 @@ msgstr "ro - монтувати файлову систему тільки дл�
 #. Note to translators : Please keep your translations of the choices
 #. below a 65 columns limit (which means 65 characters
 #. in single-byte languages)
-#: ../partman-basicfilesystems.templates:237 ../partman-ext3.templates:44
+#: ../partman-basicfilesystems.templates:238 ../partman-ext3.templates:44
 #: ../partman-reiserfs.templates:44 ../partman-jfs.templates:44
 #: ../partman-xfs.templates:44 ../partman-ext2r0.templates:60
 msgid "sync - all input/output activities occur synchronously"
@@ -4122,13 +4163,13 @@ msgstr "sync - весь ввід/вивід буде проходити синх
 #. Note to translators : Please keep your translations of the choices
 #. below a 65 columns limit (which means 65 characters
 #. in single-byte languages) including the initial path
-#: ../partman-basicfilesystems.templates:237
+#: ../partman-basicfilesystems.templates:238
 msgid "quiet - changing owner and permissions does not return errors"
 msgstr "quiet - зміна власника та прав доступу не повертатиме помилки"
 
 #. Type: multiselect
 #. Description
-#: ../partman-basicfilesystems.templates:238 ../partman-ext3.templates:45
+#: ../partman-basicfilesystems.templates:239 ../partman-ext3.templates:45
 #: ../partman-reiserfs.templates:45 ../partman-jfs.templates:45
 #: ../partman-xfs.templates:45 ../partman-ext2r0.templates:61
 msgid "Mount options:"
@@ -4136,7 +4177,7 @@ msgstr "Опції монтування:"
 
 #. Type: multiselect
 #. Description
-#: ../partman-basicfilesystems.templates:238 ../partman-ext3.templates:45
+#: ../partman-basicfilesystems.templates:239 ../partman-ext3.templates:45
 #: ../partman-reiserfs.templates:45 ../partman-jfs.templates:45
 #: ../partman-xfs.templates:45 ../partman-ext2r0.templates:61
 msgid "Mount options can tune the behavior of the file system."
@@ -4564,7 +4605,7 @@ msgid ""
 "Select a device to remove all partitions in it and create a new empty "
 "partition table."
 msgstr ""
-"Виберіть пристрій на якому потрібно видалити всі розділи та створити нову "
+"Виберіть пристрій на якому потрібно вилучити всі розділи та створити нову "
 "порожню таблицю розділів."
 
 #. Type: note
@@ -4577,7 +4618,7 @@ msgid ""
 "partition is a necessity.  \"Swap\" is scratch space for an operating "
 "system, which allows the system to use disk storage as \"virtual memory\"."
 msgstr ""
-"Виберіть розділ, щоб видалити його або вказати, як він повинен "
+"Виберіть розділ, щоб вилучити його або вказати, як він повинен "
 "використовуватися. Як мінімум, потрібен один розділ, який містить кореневу "
 "файлову систему (точкою монтування якого є /). Більшість людей вважають, що "
 "окремий розділ підкачки також необхідний. Розділ підкачки („swap“) - це "
@@ -5111,20 +5152,20 @@ msgstr "Виберіть ваш часовий пояс:"
 #. Description
 #. Main menu item
 #: ../tzsetup-udeb.templates:4
-msgid "Configure time zone"
+msgid "Configure the time zone"
 msgstr "Налаштувати часовий пояс"
 
 #. Type: text
 #. Description
 #. finish-install progress bar item
 #: ../tzsetup-udeb.templates:9
-msgid "Saving time zone..."
+msgid "Saving the time zone..."
 msgstr "Збереження часового поясу..."
 
 #. Type: note
 #. Description
 #: ../tzsetup-udeb.templates:13
-msgid "Selected timezone"
+msgid "Selected time zone"
 msgstr "Вибрати часовий пояс"
 
 #. Type: note
@@ -5312,30 +5353,12 @@ msgstr ""
 #. Type: error
 #. Description
 #: ../base-installer.templates:76
-msgid "No initrd generator"
-msgstr "Немає створювача initrd"
-
-#. Type: error
-#. Description
-#: ../base-installer.templates:76
-msgid ""
-"The kernel that has been selected for installation needs an initrd to boot. "
-"However, no package to generate that initrd is available that supports your "
-"configuration. This would leave your system unable to boot."
-msgstr ""
-"Ядро, яке вибране для встановлює, потребує initrd для завантаження. Однак, "
-"жоден пакунок для створення initrd який підтримував би вашу конфігурацію "
-"недоступний. Це залишить вашу систему в стані не придатному для завантаження."
-
-#. Type: error
-#. Description
-#: ../base-installer.templates:83
 msgid "Unsupported initrd generator"
 msgstr "Непідтримуваний генератор initrd"
 
 #. Type: error
 #. Description
-#: ../base-installer.templates:83
+#: ../base-installer.templates:76
 msgid ""
 "The package ${GENERATOR} that was selected to generate the initrd is not "
 "supported."
@@ -5344,13 +5367,13 @@ msgstr ""
 
 #. Type: error
 #. Description
-#: ../base-installer.templates:89
+#: ../base-installer.templates:82
 msgid "Unable to install the selected kernel"
 msgstr "Не вдалося встановити вибране ядро"
 
 #. Type: error
 #. Description
-#: ../base-installer.templates:89
+#: ../base-installer.templates:82
 msgid ""
 "An error was returned while trying to install the kernel into the target "
 "system."
@@ -5358,7 +5381,7 @@ msgstr "При спробі встановлення ядра виникла п�
 
 #. Type: error
 #. Description
-#: ../base-installer.templates:89
+#: ../base-installer.templates:82
 msgid "Kernel package: '${KERNEL}'."
 msgstr "Пакунок з ядром: „${KERNEL}“."
 
@@ -5366,7 +5389,7 @@ msgstr "Пакунок з ядром: „${KERNEL}“."
 #. Choices
 #. For base-installer, "none" is an additional choice to a list of kernels.
 #. It means "no kernel"
-#: ../base-installer.templates:102
+#: ../base-installer.templates:95
 msgid ""
 "none[ Do not translate what's inside the brackets and just put the "
 "translation for the word \"none\" in your language without any brackets. "
@@ -5375,13 +5398,13 @@ msgstr "відсутня"
 
 #. Type: select
 #. Description
-#: ../base-installer.templates:103
+#: ../base-installer.templates:96
 msgid "Kernel to install:"
 msgstr "Ядро для встановлення:"
 
 #. Type: select
 #. Description
-#: ../base-installer.templates:103
+#: ../base-installer.templates:96
 msgid ""
 "The list shows the available kernels. Please choose one of them in order to "
 "make the system bootable from the hard drive."
@@ -5391,13 +5414,13 @@ msgstr ""
 
 #. Type: boolean
 #. Description
-#: ../base-installer.templates:110
+#: ../base-installer.templates:103
 msgid "Continue without installing a kernel?"
 msgstr "Продовжити без встановлення ядра?"
 
 #. Type: boolean
 #. Description
-#: ../base-installer.templates:110
+#: ../base-installer.templates:103
 msgid "No installable kernel was found in the defined APT sources."
 msgstr ""
 "У вказаних джерелах APT не був знайдений жоден пакунок з ядром, який можна "
@@ -5405,7 +5428,7 @@ msgstr ""
 
 #. Type: boolean
 #. Description
-#: ../base-installer.templates:110
+#: ../base-installer.templates:103
 msgid ""
 "You may try to continue without a kernel, and manually install your own "
 "kernel later. This is only recommended for experts, otherwise you will "
@@ -5417,26 +5440,26 @@ msgstr ""
 
 #. Type: error
 #. Description
-#: ../base-installer.templates:119
+#: ../base-installer.templates:112
 msgid "Cannot install kernel"
 msgstr "Неможливо встановити ядро"
 
 #. Type: error
 #. Description
-#: ../base-installer.templates:119
+#: ../base-installer.templates:112
 msgid "The installer cannot find a suitable kernel package to install."
 msgstr ""
 "Встановлювач не може знайти пакунок ядра що придатний для встановлення."
 
 #. Type: error
 #. Description
-#: ../base-installer.templates:124
+#: ../base-installer.templates:117
 msgid "Unable to install ${PACKAGE}"
 msgstr "Неможливо встановити ${PACKAGE}"
 
 #. Type: error
 #. Description
-#: ../base-installer.templates:124
+#: ../base-installer.templates:117
 msgid ""
 "An error was returned while trying to install the ${PACKAGE} package onto "
 "the target system."
@@ -5447,34 +5470,34 @@ msgstr ""
 #. Type: error
 #. Description
 #. SUBST0 is a Release file name.
-#: ../base-installer.templates:133
+#: ../base-installer.templates:126
 msgid "Failed getting Release file ${SUBST0}."
 msgstr "Не вдалося отримати файл Release для ${SUBST0}."
 
 #. Type: error
 #. Description
 #. SUBST0 is a Release.gpg file name
-#: ../base-installer.templates:139
+#: ../base-installer.templates:132
 msgid "Failed getting Release signature file ${SUBST0}."
 msgstr "Не вдалося отримати файл підпису для Release ${SUBST0}."
 
 #. Type: error
 #. Description
 #. SUBST0 is a gpg key ID
-#: ../base-installer.templates:145
+#: ../base-installer.templates:138
 msgid "Release file signed by unknown key (key id ${SUBST0})"
 msgstr "Файл Release підписано невідомим ключем (ID ${SUBST0})"
 
 #. Type: error
 #. Description
-#: ../base-installer.templates:150
+#: ../base-installer.templates:143
 msgid "Invalid Release file: no valid components."
 msgstr "Невірний файл Release: відсутні дозволені компоненти."
 
 #. Type: error
 #. Description
 #. SUBST0 is a filename
-#: ../base-installer.templates:156
+#: ../base-installer.templates:149
 msgid "Invalid Release file: no entry for ${SUBST0}."
 msgstr "Невірний файл Release: відсутній запис для ${SUBST0}."
 
@@ -5482,7 +5505,7 @@ msgstr "Невірний файл Release: відсутній запис для 
 #. Description
 #. SUBST0 is a filename or package name
 #. Debootstrap is a program name: should not be translated
-#: ../base-installer.templates:163
+#: ../base-installer.templates:156
 msgid "Debootstrap Error"
 msgstr "Помилка при виконанні debootstrap"
 
@@ -5490,7 +5513,7 @@ msgstr "Помилка при виконанні debootstrap"
 #. Description
 #. SUBST0 is a filename or package name
 #. Debootstrap is a program name: should not be translated
-#: ../base-installer.templates:163
+#: ../base-installer.templates:156
 msgid ""
 "Couldn't retrieve ${SUBST0}. This may be due to a network problem or a bad "
 "CD, depending on your installation method."
@@ -5502,7 +5525,7 @@ msgstr ""
 #. Description
 #. SUBST0 is a filename or package name
 #. Debootstrap is a program name: should not be translated
-#: ../base-installer.templates:163
+#: ../base-installer.templates:156
 msgid ""
 "If you are installing from CD-R or CD-RW, burning the CD at a lower speed "
 "may help."
@@ -5512,13 +5535,13 @@ msgstr ""
 
 #. Type: text
 #. Description
-#: ../base-installer.templates:176
+#: ../base-installer.templates:169
 msgid "Preparing to install the base system..."
 msgstr "Підготовка до встановлення базової системи..."
 
 #. Type: text
 #. Description
-#: ../base-installer.templates:180 ../apt-setup-udeb.templates:15
+#: ../base-installer.templates:173 ../apt-setup-udeb.templates:15
 #: ../finish-install.templates:12
 msgid "Running ${SCRIPT}..."
 msgstr "Запуск ${SCRIPT}..."
@@ -5526,55 +5549,55 @@ msgstr "Запуск ${SCRIPT}..."
 #. Type: text
 #. Description
 #. Release is a filename which should not be translated
-#: ../base-installer.templates:185
+#: ../base-installer.templates:178
 msgid "Retrieving Release file"
 msgstr "Отримання файлу Release"
 
 #. Type: text
 #. Description
 #. Release is a filename which should not be translated
-#: ../base-installer.templates:190
+#: ../base-installer.templates:183
 msgid "Retrieving Release file signature"
 msgstr "Отримання підпису файлу Release"
 
 #. Type: text
 #. Description
 #. "packages" here can be translated
-#: ../base-installer.templates:195
+#: ../base-installer.templates:188
 msgid "Finding package sizes"
 msgstr "Визначення розмірів пакунків"
 
 #. Type: text
 #. Description
 #. Packages is a filename which should not be translated
-#: ../base-installer.templates:200
+#: ../base-installer.templates:193
 msgid "Retrieving Packages files"
 msgstr "Отримання файлів Packages"
 
 #. Type: text
 #. Description
 #. Packages is a filename which should not be translated
-#: ../base-installer.templates:205
+#: ../base-installer.templates:198
 msgid "Retrieving Packages file"
 msgstr "Отримання файлу Packages"
 
 #. Type: text
 #. Description
 #. "packages" here can be translated
-#: ../base-installer.templates:210
+#: ../base-installer.templates:203
 msgid "Retrieving packages"
 msgstr "Отримання пакунків"
 
 #. Type: text
 #. Description
 #. "packages" here can be translated
-#: ../base-installer.templates:215
+#: ../base-installer.templates:208
 msgid "Extracting packages"
 msgstr "Видобування пакунків"
 
 #. Type: text
 #. Description
-#: ../base-installer.templates:219
+#: ../base-installer.templates:212
 msgid "Installing the base system"
 msgstr "Встановлення базової системи"
 
@@ -5584,7 +5607,7 @@ msgstr "Встановлення базової системи"
 #. The "core" packages are indeed packages that are specifically
 #. recorded as part of the base system. Other packages may
 #. be installed on the base system because of dependency resolution
-#: ../base-installer.templates:227
+#: ../base-installer.templates:220
 msgid "Installing core packages"
 msgstr "Встановлення основних пакунків"
 
@@ -5594,13 +5617,13 @@ msgstr "Встановлення основних пакунків"
 #. by the dependency chain of core packages
 #. In short, they are "required" because at least one of the
 #. packages from the core packages depends on them
-#: ../base-installer.templates:235
+#: ../base-installer.templates:228
 msgid "Unpacking required packages"
 msgstr "Розпаковування необхідних пакунків"
 
 #. Type: text
 #. Description
-#: ../base-installer.templates:239
+#: ../base-installer.templates:232
 msgid "Configuring required packages"
 msgstr "Налаштування необхідних пакунків"
 
@@ -5608,7 +5631,7 @@ msgstr "Налаштування необхідних пакунків"
 #. Description
 #. The base system is the minimal Debian system
 #. See http://www.debian.org/doc/debian-policy/ch-binary.html#s3.7
-#: ../base-installer.templates:245
+#: ../base-installer.templates:238
 msgid "Unpacking the base system"
 msgstr "Розпаковування базової системи"
 
@@ -5616,55 +5639,55 @@ msgstr "Розпаковування базової системи"
 #. Description
 #. The base system is the minimal Debian system
 #. See http://www.debian.org/doc/debian-policy/ch-binary.html#s3.7
-#: ../base-installer.templates:251
+#: ../base-installer.templates:244
 msgid "Configuring the base system"
 msgstr "Налаштування базової системи"
 
 #. Type: text
 #. Description
-#: ../base-installer.templates:255
+#: ../base-installer.templates:248
 msgid "${SECTION}: ${INFO}..."
 msgstr "${SECTION}: ${INFO}..."
 
 #. Type: text
 #. Description
 #. SUBST0 is a package name
-#: ../base-installer.templates:260
+#: ../base-installer.templates:253
 msgid "Validating ${SUBST0}..."
 msgstr "Перевірка ${SUBST0}..."
 
 #. Type: text
 #. Description
 #. SUBST0 is a package name
-#: ../base-installer.templates:265
+#: ../base-installer.templates:258
 msgid "Retrieving ${SUBST0}..."
 msgstr "Отримання ${SUBST0}..."
 
 #. Type: text
 #. Description
 #. SUBST0 is a package name
-#: ../base-installer.templates:270
+#: ../base-installer.templates:263
 msgid "Extracting ${SUBST0}..."
 msgstr "Видобування ${SUBST0}..."
 
 #. Type: text
 #. Description
 #. SUBST0 is a package name
-#: ../base-installer.templates:275
+#: ../base-installer.templates:268
 msgid "Unpacking ${SUBST0}..."
 msgstr "Розпаковування ${SUBST0}..."
 
 #. Type: text
 #. Description
 #. SUBST0 is a package name
-#: ../base-installer.templates:280
+#: ../base-installer.templates:273
 msgid "Configuring ${SUBST0}..."
 msgstr "Налаштування ${SUBST0}..."
 
 #. Type: text
 #. Description
 #. Release is a filename which should not be translated
-#: ../base-installer.templates:285
+#: ../base-installer.templates:278
 msgid "Checking Release signature"
 msgstr "Перевірка підпису файлу Release"
 
@@ -5672,40 +5695,40 @@ msgstr "Перевірка підпису файлу Release"
 #. Description
 #. SUBST0 is a gpg key id
 #. Release is a filename which should not be translated
-#: ../base-installer.templates:291
+#: ../base-installer.templates:284
 msgid "Valid Release signature (key id ${SUBST0})"
 msgstr "Дійсний підпис файлу Release (ID ключа ${SUBST0})"
 
 #. Type: text
 #. Description
-#: ../base-installer.templates:295
+#: ../base-installer.templates:288
 msgid "Resolving dependencies of base packages..."
 msgstr "Розв'язання залежностей для базових пакунків..."
 
 #. Type: text
 #. Description
 #. SUBST0 is a list of packages
-#: ../base-installer.templates:300
+#: ../base-installer.templates:293
 msgid "Found additional base dependencies: ${SUBST0}"
 msgstr "Знайдено додаткові базові залежності: ${SUBST0}"
 
 #. Type: text
 #. Description
 #. SUBST0 is a list of packages
-#: ../base-installer.templates:305
+#: ../base-installer.templates:298
 msgid "Found additional required dependencies: ${SUBST0}"
 msgstr "Знайдено додаткові необхідні залежності: ${SUBST0}"
 
 #. Type: text
 #. Description
 #. SUBST0 is a list of packages
-#: ../base-installer.templates:310
+#: ../base-installer.templates:303
 msgid "Found packages in base already in required: ${SUBST0}"
 msgstr "Знайдено базові пакунки які вже є необхідні: ${SUBST0}"
 
 #. Type: text
 #. Description
-#: ../base-installer.templates:314
+#: ../base-installer.templates:307
 msgid "Resolving dependencies of required packages..."
 msgstr "Розв'язання залежностей для необхідних пакунків..."
 
@@ -5713,7 +5736,7 @@ msgstr "Розв'язання залежностей для необхідних
 #. Description
 #. SUBST0 is an archive component (main, etc)
 #. SUBST1 is a mirror
-#: ../base-installer.templates:320
+#: ../base-installer.templates:313
 msgid "Checking component ${SUBST0} on ${SUBST1}..."
 msgstr "Перевірка компонента ${SUBST0} на ${SUBST1}..."
 
@@ -5723,7 +5746,7 @@ msgstr "Перевірка компонента ${SUBST0} на ${SUBST1}..."
 #. The "core" packages are indeed packages that are specifically
 #. recorded as part of the base system. Other packages may
 #. be installed on the base system because of dependency resolution
-#: ../base-installer.templates:328
+#: ../base-installer.templates:321
 msgid "Installing core packages..."
 msgstr "Встановлення основних пакунків..."
 
@@ -5733,7 +5756,7 @@ msgstr "Встановлення основних пакунків..."
 #. by the dependency chain of core packages
 #. In short, they are "required" because at least one of the
 #. packages from the core packages depends on them
-#: ../base-installer.templates:336
+#: ../base-installer.templates:329
 msgid "Unpacking required packages..."
 msgstr "Розпаковування необхідних пакунків..."
 
@@ -5743,109 +5766,109 @@ msgstr "Розпаковування необхідних пакунків..."
 #. by the dependency chain of core packages
 #. In short, they are "required" because at least one of the
 #. packages from the core packages depends on them
-#: ../base-installer.templates:344
+#: ../base-installer.templates:337
 msgid "Configuring required packages..."
 msgstr "Налаштування необхідних пакунків..."
 
 #. Type: text
 #. Description
-#: ../base-installer.templates:348
+#: ../base-installer.templates:341
 msgid "Installing base packages..."
 msgstr "Встановлення базових пакунків..."
 
 #. Type: text
 #. Description
-#: ../base-installer.templates:352
+#: ../base-installer.templates:345
 msgid "Unpacking the base system..."
 msgstr "Розпаковування базової системи..."
 
 #. Type: text
 #. Description
-#: ../base-installer.templates:356
+#: ../base-installer.templates:349
 msgid "Configuring the base system..."
 msgstr "Налаштування базової системи..."
 
 #. Type: text
 #. Description
-#: ../base-installer.templates:360
+#: ../base-installer.templates:353
 msgid "Base system installed successfully."
 msgstr "Базова система встановлена успішно."
 
 #. Type: error
 #. Description
 #. Debootstrap is a program name: should not be translated
-#: ../base-installer.templates:365
+#: ../base-installer.templates:358
 msgid "Debootstrap warning"
 msgstr "Попередження debootstrap"
 
 #. Type: error
 #. Description
 #. Debootstrap is a program name: should not be translated
-#: ../base-installer.templates:365
+#: ../base-installer.templates:358
 msgid "Warning: ${INFO}"
 msgstr "Попередження: ${INFO}"
 
 #. Type: text
 #. Description
 #. SUBST0 is an url
-#: ../base-installer.templates:371
+#: ../base-installer.templates:364
 msgid "Retrying failed download of ${SUBST0}"
 msgstr "Повторення невдалого завантаження ${SUBST0}"
 
 #. Type: text
 #. Description
-#: ../base-installer.templates:375
+#: ../base-installer.templates:368
 msgid "Configuring APT sources..."
 msgstr "Налаштування джерел APT..."
 
 #. Type: text
 #. Description
-#: ../base-installer.templates:379
+#: ../base-installer.templates:372
 msgid "Updating the list of available packages..."
 msgstr "Оновлення списку наявних пакунків..."
 
 #. Type: text
 #. Description
-#: ../base-installer.templates:383
+#: ../base-installer.templates:376
 msgid "Installing extra packages..."
 msgstr "Встановлення додаткових пакунків..."
 
 #. Type: text
 #. Description
 #. SUBST0 is a package name
-#: ../base-installer.templates:388
+#: ../base-installer.templates:381
 msgid "Installing extra packages - retrieving and installing ${SUBST0}..."
 msgstr ""
 "Встановлення додаткових пакунків: отримання та встановлення ${SUBST0}..."
 
 #. Type: text
 #. Description
-#: ../base-installer.templates:392
+#: ../base-installer.templates:385
 msgid "Creating device files..."
 msgstr "Створення файлів пристроїв..."
 
 #. Type: text
 #. Description
-#: ../base-installer.templates:396
+#: ../base-installer.templates:389
 msgid "Selecting the kernel to install..."
 msgstr "Вибір ядра для встановлення..."
 
 #. Type: text
 #. Description
-#: ../base-installer.templates:400
+#: ../base-installer.templates:393
 msgid "Installing the kernel..."
 msgstr "Встановлення ядра..."
 
 #. Type: text
 #. Description
 #. SUBST0 is a package name
-#: ../base-installer.templates:405
+#: ../base-installer.templates:398
 msgid "Installing the kernel - retrieving and installing ${SUBST0}..."
 msgstr "Встановлення ядра: отримання та встановлення ${SUBST0}..."
 
 #. Type: text
 #. Description
-#: ../base-installer.templates:409
+#: ../base-installer.templates:402
 msgid "Installing the PCMCIA modules"
 msgstr "Встановлення модулів PCMCIA"
 
@@ -5853,7 +5876,7 @@ msgstr "Встановлення модулів PCMCIA"
 #. Description
 #. Item in the main menu to select this package
 #. TRANSLATORS: <65 columns
-#: ../base-installer.templates:415
+#: ../base-installer.templates:408
 msgid "Install the base system"
 msgstr "Встановити базову систему"
 
@@ -6710,9 +6733,30 @@ msgstr ""
 msgid "Continue without boot loader"
 msgstr "Продовжити без завантажувача"
 
+#. Type: error
+#. Description
+#: ../nobootloader.templates:8 ../quik-installer.templates:131
+#: ../yaboot-installer.templates:88
+msgid "Failed to mount /target/proc"
+msgstr "Не вдалося змонтувати /target/proc"
+
+#. Type: error
+#. Description
+#: ../nobootloader.templates:8 ../quik-installer.templates:131
+#: ../yaboot-installer.templates:88
+msgid "Mounting the proc file system on /target/proc failed."
+msgstr "Не вдалося змонтувати файлову систему proc в /target/proc."
+
+#. Type: error
+#. Description
+#: ../nobootloader.templates:8 ../quik-installer.templates:131
+#: ../yaboot-installer.templates:88 ../vmelilo-installer.templates:46
+msgid "Warning: Your system may be unbootable!"
+msgstr "Попередження: ваша система, можливо, не зможе завантажитися!"
+
 #. Type: note
 #. Description
-#: ../nobootloader.templates:9 ../yaboot-installer.templates:98
+#: ../nobootloader.templates:18 ../yaboot-installer.templates:98
 msgid ""
 "Some variables need to be set in the Genesi firmware in order for your "
 "system to boot automatically.  At the end of the installation, the system "
@@ -6726,7 +6770,7 @@ msgstr ""
 
 #. Type: note
 #. Description
-#: ../nobootloader.templates:9 ../yaboot-installer.templates:98
+#: ../nobootloader.templates:18 ../yaboot-installer.templates:98
 msgid ""
 "Alternatively, you will be able to boot the kernel manually by entering, at "
 "the firmware prompt:"
@@ -6736,7 +6780,7 @@ msgstr ""
 
 #. Type: note
 #. Description
-#: ../nobootloader.templates:31 ../yaboot-installer.templates:98
+#: ../nobootloader.templates:40 ../yaboot-installer.templates:98
 msgid "Setting firmware variables for automatic boot"
 msgstr ""
 "Встановлюються змінні вбудованого програмного забезпечення для автоматичного "
@@ -6744,7 +6788,7 @@ msgstr ""
 
 #. Type: note
 #. Description
-#: ../nobootloader.templates:31
+#: ../nobootloader.templates:40
 msgid ""
 "Some variables need to be set in the Netwinder NeTTrom firmware in order for "
 "your system to boot linux automatically.  At the end of this installation "
@@ -6770,7 +6814,7 @@ msgstr ""
 #. Description
 #. Translators, the 4th string of this description has been dropped from
 #. PO files. It contains firmware commands and should not be translated.
-#: ../nobootloader.templates:31 ../yaboot-installer.templates:98
+#: ../nobootloader.templates:40 ../yaboot-installer.templates:98
 #: ../arcboot-installer.templates:34
 msgid ""
 "You will only need to do this once.  Afterwards, enter the \"boot\" command "
@@ -6781,13 +6825,13 @@ msgstr ""
 
 #. Type: note
 #. Description
-#: ../nobootloader.templates:51
+#: ../nobootloader.templates:60
 msgid "No boot loader installed"
 msgstr "Завантажувач не встановлений"
 
 #. Type: note
 #. Description
-#: ../nobootloader.templates:51
+#: ../nobootloader.templates:60
 msgid ""
 "No boot loader has been installed, either because you chose not to or "
 "because your specific architecture doesn't support a boot loader yet."
@@ -6797,7 +6841,7 @@ msgstr ""
 
 #. Type: note
 #. Description
-#: ../nobootloader.templates:51
+#: ../nobootloader.templates:60
 msgid ""
 "You will need to boot manually with the ${KERNEL} kernel on partition "
 "${BOOT} and ${ROOT} passed as a kernel argument."
@@ -7654,25 +7698,6 @@ msgstr "Системний завантажувач quik був успішно �
 msgid "The new system is now ready to boot."
 msgstr "Нова система не готова для завантаження."
 
-#. Type: error
-#. Description
-#: ../quik-installer.templates:131 ../yaboot-installer.templates:88
-msgid "Failed to mount /target/proc"
-msgstr "Не вдалося змонтувати /target/proc"
-
-#. Type: error
-#. Description
-#: ../quik-installer.templates:131 ../yaboot-installer.templates:88
-msgid "Mounting the proc file system on /target/proc failed."
-msgstr "Не вдалося змонтувати файлову систему proc в /target/proc."
-
-#. Type: error
-#. Description
-#: ../quik-installer.templates:131 ../yaboot-installer.templates:88
-#: ../vmelilo-installer.templates:46
-msgid "Warning: Your system may be unbootable!"
-msgstr "Попередження: ваша система, можливо, не зможе завантажитися!"
-
 #. Type: text
 #. Description
 #. Main menu item
@@ -8501,7 +8526,7 @@ msgid ""
 "The ${FILE} file failed the MD5 checksum verification. Your CD-ROM or this "
 "file may have been corrupted."
 msgstr ""
-"Не співпала контрольна сума MD5 для файлу ${FILE}. Ваш компакт-диск або цей "
+"Не збіглася контрольна сума MD5 для файлу ${FILE}. Ваш компакт-диск або цей "
 "файл можливо ушкоджені."
 
 #. Type: boolean
@@ -8647,7 +8672,7 @@ msgstr ""
 #. Description
 #: ../network-console.templates:52
 msgid "Password mismatch"
-msgstr "Паролі не співпадають"
+msgstr "Паролі не збігаються"
 
 #. Type: error
 #. Description
@@ -8656,8 +8681,7 @@ msgid ""
 "The two passwords you entered were not the same. Please enter a password "
 "again."
 msgstr ""
-"Два пароля, що ви їх ввели, не співпадають. Введіть, будь ласка, пароль "
-"знову."
+"Два пароля, що ви їх ввели, не збігаються. Введіть, будь ласка, пароль знову."
 
 #. Type: note
 #. Description
@@ -9519,7 +9543,7 @@ msgstr "Створити багатодисковий пристрій"
 #. in single-byte languages)
 #: ../mdcfg-utils.templates:17
 msgid "Delete MD device"
-msgstr "Видалити багатодисковий пристрій"
+msgstr "Вилучити багатодисковий пристрій"
 
 #. #-#-#-#-#  templates.pot (PACKAGE VERSION)  #-#-#-#-#
 #. Type: select
@@ -9585,7 +9609,7 @@ msgid ""
 "to free its partitions."
 msgstr ""
 "Немає жодного вільного розділу типу „Linux RAID Autodetect“. Будь ласка, "
-"створіть такий розділ або видаліть існуючий багатодисковий пристрій, щоб "
+"створіть такий розділ або вилучіть існуючий багатодисковий пристрій, щоб "
 "звільнити його розділи."
 
 #. Type: error
@@ -9794,7 +9818,7 @@ msgstr ""
 #. Description
 #: ../mdcfg-utils.templates:124
 msgid "Multidisk device to be deleted:"
-msgstr "Багатодисковий пристрій що буде видалений:"
+msgstr "Багатодисковий пристрій що буде вилучений:"
 
 #. Type: select
 #. Description
@@ -9803,7 +9827,7 @@ msgid ""
 "Deleting a multidisk device will stop it and clear the superblock of all its "
 "components."
 msgstr ""
-"Видалення багатодискового пристрою зупинить його та очистить суперблоки всіх "
+"Вилучення багатодискового пристрою зупинить його та очистить суперблоки всіх "
 "його компонентів."
 
 #. Type: select
@@ -9815,7 +9839,7 @@ msgid ""
 "the deletion."
 msgstr ""
 "Зауважте, що ви не зможете одразу використати розділи або пристрої в новому "
-"багатодисковому пристрої. Однак масив може бути використаний після видалення."
+"багатодисковому пристрої. Однак масив може бути використаний після вилучення."
 
 #. Type: select
 #. Description
@@ -9824,7 +9848,7 @@ msgid ""
 "If you select a device for deletion, you will get some information about it "
 "and you will be given the option of aborting this operation."
 msgstr ""
-"Якщо ви виберете пристрій для видалення, то ви отримаєте деяку інформацію "
+"Якщо ви виберете пристрій для вилучення, то ви отримаєте деяку інформацію "
 "про нього та зможете відмінити цю операцію."
 
 #. Type: error
@@ -9837,13 +9861,13 @@ msgstr "Немає жодного багатодискового пристро�
 #. Description
 #: ../mdcfg-utils.templates:137
 msgid "No multidisk devices are available for deletion."
-msgstr "Жоден багатодисковий пристрій недоступний для видалення."
+msgstr "Жоден багатодисковий пристрій недоступний для вилучення."
 
 #. Type: boolean
 #. Description
 #: ../mdcfg-utils.templates:144
 msgid "Really delete this multidisk device?"
-msgstr "Видалити цей багатодисковий пристрій?"
+msgstr "Вилучити цей багатодисковий пристрій?"
 
 #. Type: boolean
 #. Description
@@ -9852,7 +9876,7 @@ msgid ""
 "Please confirm whether you really want to delete the following multidisk "
 "device:"
 msgstr ""
-"Підтвердьте, чи ви дійсно хочете видалити наступний багатодисковий пристрій:"
+"Підтвердьте, чи ви дійсно хочете вилучити наступний багатодисковий пристрій:"
 
 #. Type: boolean
 #. Description
@@ -9870,14 +9894,14 @@ msgstr ""
 #. Description
 #: ../mdcfg-utils.templates:156
 msgid "Failed to delete the multidisk device"
-msgstr "Не вдалося видалити багатодисковий пристрій"
+msgstr "Не вдалося вилучити багатодисковий пристрій"
 
 #. Type: error
 #. Description
 #: ../mdcfg-utils.templates:156
 msgid "There was an error deleting the multidisk device. It may be in use."
 msgstr ""
-"Виникла помилка при видаленні багатодискового пристрою. Можливо, він "
+"Виникла помилка при вилученні багатодискового пристрою. Можливо, він "
 "використовується."
 
 #. #-#-#-#-#  templates.pot (PACKAGE VERSION)  #-#-#-#-#
@@ -9933,7 +9957,7 @@ msgstr "Модифікувати логічні томи (LV)"
 
 #. Type: select
 #. Description
-#: ../lvmcfg-utils.templates:17 ../partman-lvm.templates:146
+#: ../lvmcfg-utils.templates:17 ../partman-lvm.templates:147
 msgid "LVM configuration action:"
 msgstr "Дія по налаштуванню LVM:"
 
@@ -9965,7 +9989,7 @@ msgstr "Створити групи томів"
 #. in single-byte languages) including the initial path
 #: ../lvmcfg-utils.templates:28
 msgid "Delete volume groups"
-msgstr "Видалити групи томів"
+msgstr "Вилучити групи томів"
 
 #. Type: select
 #. Choices
@@ -10019,7 +10043,7 @@ msgstr "Створити логічні томи"
 #. in single-byte languages) including the initial path
 #: ../lvmcfg-utils.templates:39
 msgid "Delete logical volumes"
-msgstr "Видалити логічні томи"
+msgstr "Вилучити логічні томи"
 
 #. Type: select
 #. Choices
@@ -10041,31 +10065,31 @@ msgstr "Налаштування логічних томів:"
 
 #. Type: multiselect
 #. Description
-#: ../lvmcfg-utils.templates:45 ../partman-lvm.templates:163
+#: ../lvmcfg-utils.templates:45 ../partman-lvm.templates:164
 msgid "Devices for the new volume group:"
 msgstr "Пристрої для нової групи томів:"
 
 #. Type: multiselect
 #. Description
-#: ../lvmcfg-utils.templates:45 ../partman-lvm.templates:163
+#: ../lvmcfg-utils.templates:45 ../partman-lvm.templates:164
 msgid "Please select the devices for the new volume group."
 msgstr "Виберіть пристрій для нової групи томів."
 
 #. Type: string
 #. Description
-#: ../lvmcfg-utils.templates:52 ../partman-lvm.templates:170
+#: ../lvmcfg-utils.templates:52 ../partman-lvm.templates:171
 msgid "Volume group name:"
 msgstr "Назва групи томів:"
 
 #. Type: string
 #. Description
-#: ../lvmcfg-utils.templates:52 ../partman-lvm.templates:170
+#: ../lvmcfg-utils.templates:52 ../partman-lvm.templates:171
 msgid "Please enter the name you would like to use for the new volume group."
 msgstr "Введіть назву, яке ви бажаєте використовувати для нової групи томів."
 
 #. Type: error
 #. Description
-#: ../lvmcfg-utils.templates:57 ../partman-lvm.templates:175
+#: ../lvmcfg-utils.templates:57 ../partman-lvm.templates:176
 msgid ""
 "No physical volumes were selected. The creation of a new volume group was "
 "aborted."
@@ -10074,19 +10098,19 @@ msgstr ""
 
 #. Type: error
 #. Description
-#: ../lvmcfg-utils.templates:63 ../partman-lvm.templates:181
+#: ../lvmcfg-utils.templates:63 ../partman-lvm.templates:182
 msgid "No volume group name entered"
 msgstr "Назва групи томів не була введена"
 
 #. Type: error
 #. Description
-#: ../lvmcfg-utils.templates:63 ../partman-lvm.templates:181
+#: ../lvmcfg-utils.templates:63 ../partman-lvm.templates:182
 msgid "No name for the volume group has been entered.  Please enter a name."
 msgstr "Назва групи томів не була введена. Введіть назву групи томів."
 
 #. Type: error
 #. Description
-#: ../lvmcfg-utils.templates:69 ../partman-lvm.templates:187
+#: ../lvmcfg-utils.templates:69 ../partman-lvm.templates:188
 #: ../partman-auto-lvm.templates:33
 msgid "Volume group name already in use"
 msgstr "Група томів з такою назвою вже існує"
@@ -10100,7 +10124,7 @@ msgstr "Група томів з такою назвою вже існує"
 #. #-#-#-#-#  templates.pot (PACKAGE VERSION)  #-#-#-#-#
 #. Type: string
 #. Description
-#: ../lvmcfg-utils.templates:69 ../partman-lvm.templates:187
+#: ../lvmcfg-utils.templates:69 ../partman-lvm.templates:188
 #: ../partman-auto-lvm.templates:12
 msgid ""
 "The selected volume group name is already in use. Please choose another name."
@@ -10108,13 +10132,13 @@ msgstr "Вибрана назва групи томів вже використ�
 
 #. Type: error
 #. Description
-#: ../lvmcfg-utils.templates:75 ../partman-lvm.templates:193
+#: ../lvmcfg-utils.templates:75 ../partman-lvm.templates:194
 msgid "Volume group name overlaps with device name"
 msgstr "Назва групи томів конфліктує з назвою пристрою"
 
 #. Type: error
 #. Description
-#: ../lvmcfg-utils.templates:75 ../partman-lvm.templates:193
+#: ../lvmcfg-utils.templates:75 ../partman-lvm.templates:194
 msgid ""
 "The selected volume group name overlaps with an existing device name. Please "
 "choose another name."
@@ -10124,108 +10148,108 @@ msgstr ""
 
 #. Type: select
 #. Description
-#: ../lvmcfg-utils.templates:82 ../partman-lvm.templates:207
+#: ../lvmcfg-utils.templates:82 ../partman-lvm.templates:208
 msgid "Volume group to delete:"
-msgstr "Група томів для видалення:"
+msgstr "Група томів для вилучення:"
 
 #. Type: select
 #. Description
-#: ../lvmcfg-utils.templates:82 ../partman-lvm.templates:207
+#: ../lvmcfg-utils.templates:82 ../partman-lvm.templates:208
 msgid "Please select the volume group you wish to delete."
-msgstr "Виберіть групу томів для видалення."
+msgstr "Виберіть групу томів для вилучення."
 
 #. Type: error
 #. Description
-#: ../lvmcfg-utils.templates:87 ../partman-lvm.templates:212
+#: ../lvmcfg-utils.templates:87 ../partman-lvm.templates:213
 msgid "The volume group may have already been deleted."
-msgstr "Ця група томів, можливо, вже видалена."
+msgstr "Ця група томів, можливо, вже вилучена."
 
 #. Type: boolean
 #. Description
-#: ../lvmcfg-utils.templates:95 ../partman-lvm.templates:220
+#: ../lvmcfg-utils.templates:95 ../partman-lvm.templates:221
 msgid "Really delete the volume group?"
-msgstr "Ви дійсно хочете видалити групу томів?"
+msgstr "Ви дійсно хочете вилучити групу томів?"
 
 #. Type: boolean
 #. Description
-#: ../lvmcfg-utils.templates:95 ../partman-lvm.templates:220
+#: ../lvmcfg-utils.templates:95 ../partman-lvm.templates:221
 msgid "Please confirm the ${VG} volume group removal."
-msgstr "Підтвердить видалення групи томів ${VG}."
+msgstr "Підтвердить вилучення групи томів ${VG}."
 
 #. Type: error
 #. Description
-#: ../lvmcfg-utils.templates:100 ../partman-lvm.templates:225
+#: ../lvmcfg-utils.templates:100 ../partman-lvm.templates:226
 msgid "Error while deleting volume group"
-msgstr "Помилка при видаленні групи томів"
+msgstr "Помилка при вилученні групи томів"
 
 #. Type: error
 #. Description
-#: ../lvmcfg-utils.templates:100 ../partman-lvm.templates:225
+#: ../lvmcfg-utils.templates:100 ../partman-lvm.templates:226
 msgid ""
 "The selected volume group could not be deleted. One or more logical volumes "
 "may currently be in use."
 msgstr ""
-"Вказана група томів не може бути видалена. Можливо один або декілька "
+"Вказана група томів не може бути вилучена. Можливо один або декілька "
 "логічних томів все ще використовуються."
 
 #. Type: error
 #. Description
-#: ../lvmcfg-utils.templates:106 ../partman-lvm.templates:231
+#: ../lvmcfg-utils.templates:106 ../partman-lvm.templates:232
 msgid "No volume group can be deleted."
-msgstr "Жодна група томів не може бути видалена."
+msgstr "Жодна група томів не може бути вилучена."
 
 #. Type: select
 #. Description
-#: ../lvmcfg-utils.templates:114 ../partman-lvm.templates:239
+#: ../lvmcfg-utils.templates:114 ../partman-lvm.templates:240
 msgid "Volume group to extend:"
 msgstr "Група томів для розширення:"
 
 #. Type: select
 #. Description
-#: ../lvmcfg-utils.templates:114 ../partman-lvm.templates:239
+#: ../lvmcfg-utils.templates:114 ../partman-lvm.templates:240
 msgid "Please select the volume group you wish to extend."
 msgstr "Виберіть групу томів, яку ви бажаєте розширити:"
 
 #. Type: multiselect
 #. Description
-#: ../lvmcfg-utils.templates:120 ../partman-lvm.templates:245
+#: ../lvmcfg-utils.templates:120 ../partman-lvm.templates:246
 msgid "Devices to add to the volume group:"
 msgstr "Пристрої для додавання до групи томів:"
 
 #. Type: multiselect
 #. Description
-#: ../lvmcfg-utils.templates:120 ../partman-lvm.templates:245
+#: ../lvmcfg-utils.templates:120 ../partman-lvm.templates:246
 msgid "Please select the devices you wish to add to the volume group."
 msgstr "Виберіть пристрої, які ви бажаєте додати до групи томів."
 
 #. Type: multiselect
 #. Description
-#: ../lvmcfg-utils.templates:120 ../partman-lvm.templates:278
+#: ../lvmcfg-utils.templates:120 ../partman-lvm.templates:279
 msgid "You can select one or more devices."
 msgstr "Ви можете вибрати один чи декілька пристроїв."
 
 #. Type: error
 #. Description
-#: ../lvmcfg-utils.templates:127 ../partman-lvm.templates:285
+#: ../lvmcfg-utils.templates:127 ../partman-lvm.templates:286
 msgid "No physical volumes selected"
 msgstr "Фізичні томи не вибрані"
 
 #. Type: error
 #. Description
-#: ../lvmcfg-utils.templates:127 ../partman-lvm.templates:252
+#: ../lvmcfg-utils.templates:127 ../partman-lvm.templates:253
 msgid ""
 "No physical volumes were selected. Extension of the volume group was aborted."
 msgstr "Фізичні томи не були вибрані. Розширення групи томів перервано."
 
 #. Type: error
 #. Description
-#: ../lvmcfg-utils.templates:133 ../partman-lvm.templates:258
+#: ../lvmcfg-utils.templates:133 ../partman-lvm.templates:259
 msgid "Error while extending volume group"
 msgstr "Помилка при розширенні групи томів"
 
 #. Type: error
 #. Description
-#: ../lvmcfg-utils.templates:133 ../partman-lvm.templates:258
+#: ../lvmcfg-utils.templates:133 ../partman-lvm.templates:259
 msgid ""
 "The physical volume ${PARTITION} could not be added to the selected volume "
 "group."
@@ -10233,25 +10257,25 @@ msgstr "Не вдалося додати фізичний том ${PARTITION} д
 
 #. Type: error
 #. Description
-#: ../lvmcfg-utils.templates:139 ../partman-lvm.templates:264
+#: ../lvmcfg-utils.templates:139 ../partman-lvm.templates:265
 msgid "No volume group has been found."
 msgstr "Відсутні групи томів."
 
 #. Type: error
 #. Description
-#: ../lvmcfg-utils.templates:139 ../partman-lvm.templates:264
+#: ../lvmcfg-utils.templates:139 ../partman-lvm.templates:265
 msgid "No volume group can be reduced."
 msgstr "Жодна група томів не може бути зменшена."
 
 #. Type: select
 #. Description
-#: ../lvmcfg-utils.templates:147 ../partman-lvm.templates:272
+#: ../lvmcfg-utils.templates:147 ../partman-lvm.templates:273
 msgid "Volume group to reduce:"
 msgstr "Група томів для зменшення:"
 
 #. Type: select
 #. Description
-#: ../lvmcfg-utils.templates:147 ../partman-lvm.templates:272
+#: ../lvmcfg-utils.templates:147 ../partman-lvm.templates:273
 msgid "Please select the volume group you wish to reduce."
 msgstr "Виберіть групу томів, яку ви бажаєте зменшити."
 
@@ -10259,13 +10283,13 @@ msgstr "Виберіть групу томів, яку ви бажаєте зм�
 #. Description
 #: ../lvmcfg-utils.templates:153
 msgid "Device to remove from volume group:"
-msgstr "Пристрій для видалення з групи томів:"
+msgstr "Пристрій для вилучення з групи томів:"
 
 #. Type: select
 #. Description
 #: ../lvmcfg-utils.templates:153
 msgid "Please select the device you wish to remove from the volume group."
-msgstr "Виберіть пристрій, який ви бажаєте видалити із групи томів."
+msgstr "Виберіть пристрій, який ви бажаєте вилучити із групи томів."
 
 #. Type: error
 #. Description
@@ -10275,17 +10299,17 @@ msgid ""
 "physical volume attached. Please delete the volume group instead."
 msgstr ""
 "Вибрана група томів (${VG}) не може бути зменшена. Підключений лише один "
-"логічний том. Замість зменшення видаліть групу томів."
+"логічний том. Замість зменшення вилучіть групу томів."
 
 #. Type: error
 #. Description
-#: ../lvmcfg-utils.templates:164 ../partman-lvm.templates:291
+#: ../lvmcfg-utils.templates:164 ../partman-lvm.templates:292
 msgid "Error while reducing volume group"
 msgstr "Помилка при зменшенні групи томів"
 
 #. Type: error
 #. Description
-#: ../lvmcfg-utils.templates:164 ../partman-lvm.templates:291
+#: ../lvmcfg-utils.templates:164 ../partman-lvm.templates:292
 msgid ""
 "The physical volume ${PARTITION} could not be removed from the selected "
 "volume group."
@@ -10303,7 +10327,7 @@ msgstr ""
 
 #. Type: error
 #. Description
-#: ../lvmcfg-utils.templates:178 ../partman-lvm.templates:299
+#: ../lvmcfg-utils.templates:178 ../partman-lvm.templates:300
 msgid ""
 "No free volume groups were found for creating a new logical volume. Please "
 "create more physical volumes and volume groups, or reduce an existing volume "
@@ -10315,19 +10339,19 @@ msgstr ""
 
 #. Type: string
 #. Description
-#: ../lvmcfg-utils.templates:185 ../partman-lvm.templates:306
+#: ../lvmcfg-utils.templates:185 ../partman-lvm.templates:307
 msgid "Logical volume name:"
 msgstr "Назва логічного тому:"
 
 #. Type: string
 #. Description
-#: ../lvmcfg-utils.templates:185 ../partman-lvm.templates:306
+#: ../lvmcfg-utils.templates:185 ../partman-lvm.templates:307
 msgid "Please enter the name you would like to use for the new logical volume."
 msgstr "Введіть назву, яку бажаєте використовувати для нового логічного тому."
 
 #. Type: select
 #. Description
-#: ../lvmcfg-utils.templates:191 ../partman-lvm.templates:312
+#: ../lvmcfg-utils.templates:191 ../partman-lvm.templates:313
 msgid ""
 "Please select the volume group where the new logical volume should be "
 "created."
@@ -10335,19 +10359,19 @@ msgstr "Виберіть групу томів, в якій буде створ�
 
 #. Type: error
 #. Description
-#: ../lvmcfg-utils.templates:197 ../partman-lvm.templates:318
+#: ../lvmcfg-utils.templates:197 ../partman-lvm.templates:319
 msgid "No logical volume name entered"
 msgstr "Назва логічного тому не була введена."
 
 #. Type: error
 #. Description
-#: ../lvmcfg-utils.templates:197 ../partman-lvm.templates:318
+#: ../lvmcfg-utils.templates:197 ../partman-lvm.templates:319
 msgid "No name for the logical volume has been entered.  Please enter a name."
 msgstr "Назва логічного тому не була введена. Введіть назву."
 
 #. Type: error
 #. Description
-#: ../lvmcfg-utils.templates:203 ../partman-lvm.templates:324
+#: ../lvmcfg-utils.templates:203 ../partman-lvm.templates:325
 msgid ""
 "The name ${LV} is already in use by another logical volume on the same "
 "volume group (${VG})."
@@ -10357,13 +10381,13 @@ msgstr ""
 
 #. Type: string
 #. Description
-#: ../lvmcfg-utils.templates:209 ../partman-lvm.templates:330
+#: ../lvmcfg-utils.templates:209 ../partman-lvm.templates:331
 msgid "Logical volume size:"
 msgstr "Розмір логічного тому:"
 
 #. Type: string
 #. Description
-#: ../lvmcfg-utils.templates:209 ../partman-lvm.templates:330
+#: ../lvmcfg-utils.templates:209 ../partman-lvm.templates:331
 msgid ""
 "Please enter the size of the new logical volume. The size may be entered in "
 "the following formats: 10K (Kilobytes), 10M (Megabytes), 10G (Gigabytes), "
@@ -10375,13 +10399,13 @@ msgstr ""
 
 #. Type: error
 #. Description
-#: ../lvmcfg-utils.templates:216 ../partman-lvm.templates:337
+#: ../lvmcfg-utils.templates:216 ../partman-lvm.templates:338
 msgid "Error while creating a new logical volume"
 msgstr "Помилка при створенні нового логічного тому."
 
 #. Type: error
 #. Description
-#: ../lvmcfg-utils.templates:216 ../partman-lvm.templates:337
+#: ../lvmcfg-utils.templates:216 ../partman-lvm.templates:338
 msgid ""
 "Unable to create a new logical volume (${LV}) on ${VG} with the new size "
 "${SIZE}."
@@ -10390,7 +10414,7 @@ msgstr ""
 
 #. Type: error
 #. Description
-#: ../lvmcfg-utils.templates:224 ../partman-lvm.templates:299
+#: ../lvmcfg-utils.templates:224 ../partman-lvm.templates:300
 msgid "No volume group found"
 msgstr "Не знайдена група томів"
 
@@ -10398,11 +10422,11 @@ msgstr "Не знайдена група томів"
 #. Description
 #: ../lvmcfg-utils.templates:224
 msgid "No volume group has been found for deleting a logical volume."
-msgstr "Не знайдена група томів, з якої можливо видалити логічний том."
+msgstr "Не знайдена група томів, з якої можливо вилучити логічний том."
 
 #. Type: select
 #. Description
-#: ../lvmcfg-utils.templates:230 ../partman-lvm.templates:312
+#: ../lvmcfg-utils.templates:230 ../partman-lvm.templates:313
 msgid "Volume group:"
 msgstr "Група томів:"
 
@@ -10413,24 +10437,24 @@ msgid ""
 "Please select the volume group which contains the logical volume to be "
 "deleted."
 msgstr ""
-"Виберіть групу томів, яка містить логічний том, який потрібно видалити."
+"Виберіть групу томів, яка містить логічний том, який потрібно вилучити."
 
 #. Type: error
 #. Description
-#: ../lvmcfg-utils.templates:236 ../partman-lvm.templates:345
+#: ../lvmcfg-utils.templates:236 ../partman-lvm.templates:346
 msgid "No logical volume found"
 msgstr "Не знайдені логічні томи"
 
 #. Type: error
 #. Description
-#: ../lvmcfg-utils.templates:236 ../partman-lvm.templates:345
+#: ../lvmcfg-utils.templates:236 ../partman-lvm.templates:346
 msgid ""
 "No logical volume has been found.  Please create a logical volume first."
 msgstr "Логічні томи не знайдені. Спочатку створіть логічний том."
 
 #. Type: select
 #. Description
-#: ../lvmcfg-utils.templates:242 ../partman-lvm.templates:351
+#: ../lvmcfg-utils.templates:242 ../partman-lvm.templates:352
 msgid "Logical volume:"
 msgstr "Логічний том:"
 
@@ -10438,29 +10462,29 @@ msgstr "Логічний том:"
 #. Description
 #: ../lvmcfg-utils.templates:242
 msgid "Please select the logical volume to be deleted on ${VG}."
-msgstr "Виберіть логічний том для видалення із групи ${VG}."
+msgstr "Виберіть логічний том для вилучення із групи ${VG}."
 
 #. Type: error
 #. Description
-#: ../lvmcfg-utils.templates:247 ../partman-lvm.templates:360
+#: ../lvmcfg-utils.templates:247 ../partman-lvm.templates:361
 msgid "Error while deleting the logical volume"
-msgstr "Помилка при видаленні логічного тому"
+msgstr "Помилка при вилученні логічного тому"
 
 #. Type: error
 #. Description
-#: ../lvmcfg-utils.templates:247 ../partman-lvm.templates:360
+#: ../lvmcfg-utils.templates:247 ../partman-lvm.templates:361
 msgid "The logical volume (${LV}) on ${VG} could not be deleted."
-msgstr "Не вдалося видалити логічний том (${LV}) із групи ${VG}."
+msgstr "Не вдалося Вилучити логічний том (${LV}) із групи ${VG}."
 
 #. Type: error
 #. Description
-#: ../lvmcfg-utils.templates:254 ../partman-lvm.templates:367
+#: ../lvmcfg-utils.templates:254 ../partman-lvm.templates:368
 msgid "No usable physical volumes found"
 msgstr "Не знайдені фізичні томи, які можна використати"
 
 #. Type: error
 #. Description
-#: ../lvmcfg-utils.templates:254 ../partman-lvm.templates:367
+#: ../lvmcfg-utils.templates:254 ../partman-lvm.templates:368
 msgid ""
 "No physical volumes (i.e. partitions) were found in your system. All "
 "physical volumes may already be in use. You may also need to load some "
@@ -10472,13 +10496,13 @@ msgstr ""
 
 #. Type: error
 #. Description
-#: ../lvmcfg-utils.templates:261 ../partman-lvm.templates:374
+#: ../lvmcfg-utils.templates:261 ../partman-lvm.templates:375
 msgid "Logical Volume Manager not available"
 msgstr "Менеджер логічних томів недоступний."
 
 #. Type: error
 #. Description
-#: ../lvmcfg-utils.templates:261 ../partman-lvm.templates:374
+#: ../lvmcfg-utils.templates:261 ../partman-lvm.templates:375
 msgid ""
 "The current kernel doesn't support the Logical Volume Manager. You may need "
 "to load the lvm-mod module."
@@ -10636,7 +10660,7 @@ msgstr "Створити групу томів"
 #. Use infinitive form
 #: ../partman-lvm.templates:57
 msgid "Delete volume group"
-msgstr "Видалити групу томів"
+msgstr "Вилучити групу томів"
 
 #. Type: text
 #. Description
@@ -10668,7 +10692,7 @@ msgstr "Створити логічний том"
 #. Use infinitive form
 #: ../partman-lvm.templates:81
 msgid "Delete logical volume"
-msgstr "Видалити логічний том"
+msgstr "Вилучити логічний том"
 
 #. Type: boolean
 #. Description
@@ -10752,13 +10776,13 @@ msgstr "lvm"
 
 #. Type: select
 #. Description
-#: ../partman-lvm.templates:146
+#: ../partman-lvm.templates:147
 msgid "Summary of current LVM configuration:"
 msgstr "Огляд поточних налаштувань LVM:"
 
 #. Type: select
 #. Description
-#: ../partman-lvm.templates:146
+#: ../partman-lvm.templates:147
 msgid ""
 " Free Physical Volumes:  ${FREE_PVS}\n"
 " Used Physical Volumes:  ${USED_PVS}\n"
@@ -10772,68 +10796,68 @@ msgstr ""
 
 #. Type: note
 #. Description
-#: ../partman-lvm.templates:157
+#: ../partman-lvm.templates:158
 msgid "Current LVM configuration:"
 msgstr "Поточні налаштування LVM:"
 
 #. Type: error
 #. Description
-#: ../partman-lvm.templates:199
+#: ../partman-lvm.templates:200
 msgid "The volume group ${VG} could not be created."
 msgstr "Неможливо створити групу томів ${VG}"
 
 #. Type: multiselect
 #. Description
-#: ../partman-lvm.templates:278
+#: ../partman-lvm.templates:279
 msgid "Devices to remove from the volume group:"
-msgstr "Пристрої для видалення з групи томів:"
+msgstr "Пристрої для вилучення з групи томів:"
 
 #. Type: multiselect
 #. Description
-#: ../partman-lvm.templates:278
+#: ../partman-lvm.templates:279
 msgid "Please select the devices you wish to remove from the volume group."
-msgstr "Виберіть пристрої, які ви бажаєте видалити з групи томів."
+msgstr "Виберіть пристрої, які ви бажаєте Вилучити з групи томів."
 
 #. Type: error
 #. Description
-#: ../partman-lvm.templates:285
+#: ../partman-lvm.templates:286
 msgid ""
 "No physical volumes were selected. Reduction of the volume group was aborted."
 msgstr "Фізичні томи не були вибрані. Зменшення групи томів перервано."
 
 #. Type: select
 #. Description
-#: ../partman-lvm.templates:351
+#: ../partman-lvm.templates:352
 msgid "Please select the logical volume to delete."
-msgstr "Виберіть, будь ласка, логічний том для видалення."
+msgstr "Виберіть, будь ласка, логічний том для вилучення."
 
 #. Type: text
 #. Description
-#: ../partman-lvm.templates:356
+#: ../partman-lvm.templates:357
 msgid "in VG ${VG}"
 msgstr "у VG ${VG}"
 
 #. Type: error
 #. Description
-#: ../partman-lvm.templates:380
+#: ../partman-lvm.templates:381
 msgid "Error while initializing physical volume"
 msgstr "Помилка при ініціалізації фізичного тому"
 
 #. Type: error
 #. Description
-#: ../partman-lvm.templates:380
+#: ../partman-lvm.templates:381
 msgid "The physical volume ${PV} could not be initialized."
 msgstr "Неможливо ініціалізувати фізичний том ${PV}."
 
 #. Type: error
 #. Description
-#: ../partman-lvm.templates:387
+#: ../partman-lvm.templates:388
 msgid "Invalid logical volume or volume group name"
 msgstr "Недозволена назва логічного тому або групи томів"
 
 #. Type: error
 #. Description
-#: ../partman-lvm.templates:387
+#: ../partman-lvm.templates:388
 msgid ""
 "Logical volume or volume group names may only contain alphanumeric "
 "characters, hyphen, plus, period and underscore. They must be 128 characters "
@@ -10848,7 +10872,7 @@ msgstr ""
 
 #. Type: error
 #. Description
-#: ../partman-lvm.templates:387
+#: ../partman-lvm.templates:388
 msgid "Please choose another name."
 msgstr "Виберіть, будь ласка, іншу назву."
 
@@ -11107,7 +11131,7 @@ msgid ""
 "strength."
 msgstr ""
 "Ключ шифрування отримується з пароля шляхом застосування до нього "
-"однонапрямленої хеш-функції. Зазвичай немає причини змінювати рекомендоване "
+"однонапрямної хеш-функції. Зазвичай немає причини змінювати рекомендоване "
 "значення за замовчанням і неправильна зміна може погіршити якість шифрування."
 
 #. Type: text
@@ -11457,7 +11481,7 @@ msgstr "Помилка при введенні пароля"
 #. Description
 #: ../partman-crypto.templates:291
 msgid "The two passphrases you entered were not the same. Please try again."
-msgstr "Два пароля, що ви їх ввели, не співпадають. Спробуйте знову."
+msgstr "Два пароля, що ви їх ввели, не сходяться. Спробуйте знову."
 
 #. Type: error
 #. Description
@@ -12459,7 +12483,7 @@ msgid ""
 "it keep the MAC addresses of IPv4 packets."
 msgstr ""
 "За замовчанням карти OSA-Express використовують режим layer3. В цьому режимі "
-"LLC-заголовки видаляються зі вхідних IPv4-пакетів. При використанні карти в "
+"LLC-заголовки вилучаються зі вхідних IPv4-пакетів. При використанні карти в "
 "режимі layer2 MAC-адреси IPv4-пакетів будуть зберігатися."
 
 #. Type: boolean

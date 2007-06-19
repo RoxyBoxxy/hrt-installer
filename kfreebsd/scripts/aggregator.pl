@@ -28,7 +28,6 @@ sub aggregate {
 	foreach my $log (@_) {
 		my $onesuccess=0;
 		my $onefailed=0;
-		my $oneother=0;
 		
 		print $fh "<li><a href=\"".$log->{url}."\">".$log->{description}."</a><br>\n";
 		if (length $log->{notes}) {
@@ -36,7 +35,7 @@ sub aggregate {
 		}
 		my ($basebasename)=($basename)=~m/(?:.*\/)?(.*)/;
 		print $fh "<img src=\"".logpng($log, $basebasename)."\" alt=\"graph\">\n";
-		my $logurl=$log->{logurl}."overview".$log->{logext}."\n";
+		my $logurl=$log->{logurl}."overview".(exists $log->{overviewext} ? $log->{overviewext} : $log->{logext})."\n";
 		if ($logurl=~m#.*://#) {
 			if (! open (LOG, "wget --tries=3 --timeout=5 --quiet -O - $logurl |")) {
 				print $fh "<b>wget error</b>\n";
@@ -81,15 +80,13 @@ sub aggregate {
 					$status='<b>failed</b>';
 					$failed++;
 					$onefailed++;
+					$total++;
 				}
 				elsif ($status eq 'success') {
 					$success++;
 					$onesuccess++;
+					$total++;
 				}
-				else {
-					$oneother++;
-				}
-				$total++;
 				if (defined $notes && length $notes) {
 					$notes="($notes)";
 				}
@@ -101,8 +98,8 @@ sub aggregate {
 		}
 		print $fh "</ul>\n";
 		print STATS "\t";
-		if ($onesuccess+$onefailed+$oneother > 0) {
-			print STATS ($onesuccess / ($onesuccess+$onefailed+$oneother) * 100);
+		if ($onesuccess+$onefailed > 0) {
+			print STATS ($onesuccess / ($onesuccess+$onefailed) * 100);
 		}
 		else {
 			print STATS 0;

@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: debian-installer\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-01-28 06:31+0000\n"
-"PO-Revision-Date: 2007-02-17 19:13+0900\n"
+"POT-Creation-Date: 2007-05-23 22:47+0000\n"
+"PO-Revision-Date: 2007-05-16 15:40+0900\n"
 "Last-Translator:  Kenshi Muto <kmuto@debian.org>\n"
 "Language-Team: Debian L10n Japanese <debian-l10n-japanese@lists.debian.org>\n"
 "MIME-Version: 1.0\n"
@@ -26,21 +26,15 @@ msgstr "Debian インストーラメインメニュー"
 msgid "Choose the next step in the install process:"
 msgstr "インストールプロセスの次のステップの選択:"
 
-#. Type: select
-#. Description
-#: ../main-menu.templates:9
-msgid "This is the main menu for the Debian installer."
-msgstr "これは Debian インストーラのメインメニューです。"
-
 #. Type: error
 #. Description
-#: ../main-menu.templates:14
+#: ../main-menu.templates:13
 msgid "Installation step failed"
 msgstr "インストールステップが失敗しました"
 
 #. Type: error
 #. Description
-#: ../main-menu.templates:14
+#: ../main-menu.templates:13
 msgid ""
 "An installation step failed. You can try to run the failing item again from "
 "the menu, or skip it and choose something else. The failing step is: ${ITEM}"
@@ -51,13 +45,13 @@ msgstr ""
 
 #. Type: select
 #. Description
-#: ../main-menu.templates:23
+#: ../main-menu.templates:22
 msgid "Choose an installation step:"
 msgstr "インストールステップの選択:"
 
 #. Type: select
 #. Description
-#: ../main-menu.templates:23
+#: ../main-menu.templates:22
 msgid ""
 "This installation step depends on one or more other steps that have not yet "
 "been performed."
@@ -1757,7 +1751,7 @@ msgstr "安定版"
 #. Choices
 #: ../choose-mirror-bin.templates-in:13
 msgid "testing"
-msgstr "試験版"
+msgstr "テスト版"
 
 #. Type: select
 #. Choices
@@ -1782,8 +1776,8 @@ msgid ""
 msgstr ""
 "Debian にはいくつかのフレーバーがあります。安定版は十分にテストされ、変更され"
 "ることは滅多にありません。不安定版はテストされておらず、頻繁に更新されます。"
-"試験版はその中間で、不安定版からバグのひどすぎない新しいバージョンの多くを取"
-"得します。"
+"テスト版はその中間で、不安定版からバグのひどすぎない新しいバージョンの多くを"
+"取得します。"
 
 #. Type: text
 #. Description
@@ -1880,9 +1874,9 @@ msgid ""
 "the network -- be aware that nearby countries, or even your own, may not be "
 "the best choice."
 msgstr ""
-"あなたのネットワークに最も近い Debian アーカイブミラーを見つけることが肝心で"
-"す。地理的な隣国 (あるいはあなたの住んでいる国) が最適解とは限らないことに注"
-"意してください。"
+"ネットワーク上あなたに最も近い Debian アーカイブミラーを見つけることが最終目"
+"標です。近隣国はもちろん自国でさえ最適の選択とは限らないことに注意しましょ"
+"う。"
 
 #. Type: select
 #. Description
@@ -2820,33 +2814,80 @@ msgstr "既存の論理ボリュームデータを削除しますか?"
 #. Description
 #: ../partman-auto.templates:36
 msgid ""
-"The selected device already contains logical volumes and/or volume groups "
-"from a previous LVM installation, which must be removed from the disk before "
-"creating any partitions."
+"The selected device already contains the following LVM logical volumes, "
+"volume groups and physical volumes which are about to be removed:"
 msgstr ""
-"選択されたデバイスには、パーティションを作成する前にディスクから削除すべき、"
-"以前の LVM インストールからの論理ボリュームあるいはボリュームグループがすでに"
-"存在します。"
+"選択されたデバイスには、削除されることになる次の LVM 論理ボリューム、ボリュー"
+"ムグループ、物理ボリュームが含まれています:"
+
+#. Type: boolean
+#. Description
+#: ../partman-auto.templates:36
+msgid "Logical volume(s) to be removed: ${LVTARGETS}"
+msgstr "削除される論理ボリューム: ${LVTARGETS}"
+
+#. Type: boolean
+#. Description
+#: ../partman-auto.templates:36
+msgid "Volume group(s) to be removed: ${VGTARGETS}"
+msgstr "削除されるボリュームグループ: ${VGTARGETS}"
+
+#. Type: boolean
+#. Description
+#: ../partman-auto.templates:36
+msgid "Physical volume(s) to be removed: ${PVTARGETS}"
+msgstr "削除される物理ボリューム: ${PVTARGETS}"
 
 #. Type: boolean
 #. Description
 #: ../partman-auto.templates:36
 msgid ""
-"Note that this will also permanently erase any data currently on the logical "
+"Note that this will permanently erase any data currently on the logical "
 "volumes."
 msgstr ""
-"これを行うと、論理ボリュームに現在あるすべてのデータが永久に失われることにも"
+"これを行うと、論理ボリュームに現在あるすべてのデータが永久に失われることに注"
+"意してください。"
+
+#. Type: boolean
+#. Description
+#: ../partman-auto.templates:52
+msgid "Remove existing crypto volume data?"
+msgstr "既存の暗号化ボリュームデータを削除しますか?"
+
+#. Type: boolean
+#. Description
+#: ../partman-auto.templates:52
+msgid ""
+"The selected device already contains a crypto volume which is about to be "
+"removed."
+msgstr ""
+"選択されたデバイスには、削除されることになる暗号化ボリュームが含まれています:"
+
+#. Type: boolean
+#. Description
+#: ../partman-auto.templates:52
+msgid "The following crypto volume will be removed: ${TARGET}"
+msgstr "次の暗号化ボリュームは削除されます: ${TARGET}"
+
+#. Type: boolean
+#. Description
+#: ../partman-auto.templates:52
+msgid ""
+"Note that this will also permanently erase any data currently on the crypto "
+"volume."
+msgstr ""
+"これを行うと、暗号化ボリュームに現在あるすべてのデータが永久に失われることに"
 "注意してください。"
 
 #. Type: error
 #. Description
-#: ../partman-auto.templates:46
+#: ../partman-auto.templates:64
 msgid "LVM physical volume already exists on the selected device"
 msgstr "選択されたデバイスに LVM 物理ボリュームがすでに存在します"
 
 #. Type: error
 #. Description
-#: ../partman-auto.templates:46
+#: ../partman-auto.templates:64
 msgid ""
 "The selected device already contains one or more LVM physical volumes which "
 "cannot be removed. It is therefore not possible to automatically partition "
@@ -2858,13 +2899,13 @@ msgstr ""
 
 #. Type: select
 #. Description
-#: ../partman-auto.templates:64
+#: ../partman-auto.templates:82
 msgid "Partitioning method:"
 msgstr "パーティショニングの方法:"
 
 #. Type: select
 #. Description
-#: ../partman-auto.templates:64
+#: ../partman-auto.templates:82
 msgid ""
 "If you choose guided partitioning for an entire disk, you will next be asked "
 "which disk should be used."
@@ -2874,7 +2915,7 @@ msgstr ""
 
 #. Type: select
 #. Description
-#: ../partman-auto.templates:79
+#: ../partman-auto.templates:97
 msgid "Partitioning scheme:"
 msgstr "パーティショニング機構:"
 
@@ -2886,13 +2927,13 @@ msgstr "パーティショニング機構:"
 #.
 #. It is followed by a variable giving the chosen disk, hence the colon
 #. at the end of the sentence. Please keep it.
-#: ../partman-auto.templates:79
+#: ../partman-auto.templates:97
 msgid "Selected for partitioning:"
 msgstr "選択されたパーティショニング:"
 
 #. Type: select
 #. Description
-#: ../partman-auto.templates:79
+#: ../partman-auto.templates:97
 msgid ""
 "The disk can be partitioned using one of several different schemes. If you "
 "are unsure, choose the first one."
@@ -2902,13 +2943,13 @@ msgstr ""
 
 #. Type: error
 #. Description
-#: ../partman-auto.templates:89
+#: ../partman-auto.templates:107
 msgid "Unusable free space"
 msgstr "空き領域を利用できません"
 
 #. Type: error
 #. Description
-#: ../partman-auto.templates:89
+#: ../partman-auto.templates:107
 msgid ""
 "Partitioning failed because the chosen free space may not be used. There are "
 "probably too many (primary) partitions in the partition table."
@@ -2920,33 +2961,33 @@ msgstr ""
 #. Type: text
 #. Description
 #. TRANSLATORS: This is a menu entry. Keep in under 55 columns/characters
-#: ../partman-auto.templates:108
+#: ../partman-auto.templates:126
 msgid "Guided partitioning"
 msgstr "ガイドによるパーティショニング"
 
 #. Type: text
 #. Description
 #. TRANSLATORS: This is a menu entry. Keep in under 55 columns/characters
-#: ../partman-auto.templates:113
+#: ../partman-auto.templates:131
 msgid "Guided - use the largest continuous free space"
 msgstr "ガイド - 最大の連続空き領域を使う"
 
 #. Type: text
 #. Description
 #. TRANSLATORS: This is a menu entry. Keep in under 55 columns/characters
-#: ../partman-auto.templates:118
+#: ../partman-auto.templates:136
 msgid "Guided - use entire disk"
 msgstr "ガイド - ディスク全体を使う"
 
 #. Type: select
 #. Description
-#: ../partman-auto.templates:123
+#: ../partman-auto.templates:141
 msgid "Select disk to partition:"
 msgstr "パーティショニングするディスクの選択:"
 
 #. Type: select
 #. Description
-#: ../partman-auto.templates:123
+#: ../partman-auto.templates:141
 msgid ""
 "Note that all data on the disk you select will be erased, but not before you "
 "have confirmed that you really want to make the changes."
@@ -2956,13 +2997,13 @@ msgstr ""
 
 #. Type: multiselect
 #. Description
-#: ../partman-auto.templates:130
+#: ../partman-auto.templates:148
 msgid "Select disk(s) to partition:"
 msgstr "パーティショニングするディスクの選択:"
 
 #. Type: multiselect
 #. Description
-#: ../partman-auto.templates:130
+#: ../partman-auto.templates:148
 msgid ""
 "Note that all data on the disk(s) you select will be erased, but not before "
 "you have confirmed that you really want to make the changes."
@@ -2974,42 +3015,42 @@ msgstr ""
 #. Description
 #. TRANSLATORS: This is a menu entry. Keep in under 55 columns/characters
 #. This is a method for partioning - as in guided (automatic) versus manual
-#: ../partman-auto.templates:138
+#: ../partman-auto.templates:156
 msgid "Manual"
 msgstr "手動"
 
 #. Type: text
 #. Description
 #. TRANSLATORS: This is a menu entry. Keep in under 55 columns/characters
-#: ../partman-auto.templates:143
+#: ../partman-auto.templates:161
 msgid "Automatically partition the free space"
 msgstr "ガイドによるパーティショニング"
 
 #. Type: text
 #. Description
 #. TRANSLATORS: This is a menu entry. Keep in under 55 columns/characters
-#: ../partman-auto.templates:148
+#: ../partman-auto.templates:166
 msgid "All files in one partition (recommended for new users)"
 msgstr "すべてのファイルを 1 つのパーティションに (初心者ユーザには推奨)"
 
 #. Type: text
 #. Description
 #. TRANSLATORS: This is a menu entry. Keep in under 55 columns/characters
-#: ../partman-auto.templates:153
+#: ../partman-auto.templates:171
 msgid "Separate /home partition"
 msgstr "/home パーティションの分割"
 
 #. Type: text
 #. Description
 #. TRANSLATORS: This is a menu entry. Keep in under 55 columns/characters
-#: ../partman-auto.templates:158
+#: ../partman-auto.templates:176
 msgid "Separate /home, /usr, /var, and /tmp partitions"
 msgstr "/home, /usr, /var, /tmp パーティションを分割"
 
 #. Type: text
 #. Description
 #. TRANSLATORS: This is a menu entry. Keep in under 55 columns/characters
-#: ../partman-auto.templates:163
+#: ../partman-auto.templates:181
 msgid "Small-disk (< 1GB) partitioning scheme"
 msgstr "小さなディスク (< 1GB) のパーティショニング機構"
 
@@ -3173,11 +3214,11 @@ msgstr "未知の理由でこのパーティションのサイズ変更操作は
 
 #. Type: error
 #. Description
-#: ../partman-partitioning.templates:38 ../base-installer.templates:124
-#: ../quik-installer.templates:131 ../yaboot-installer.templates:88
-#: ../vmelilo-installer.templates:46 ../lvmcfg-utils.templates:247
-#: ../partman-lvm.templates:380 ../partman-auto-lvm.templates:40
-#: ../partman-auto-raid.templates:3
+#: ../partman-partitioning.templates:38 ../base-installer.templates:117
+#: ../nobootloader.templates:8 ../quik-installer.templates:131
+#: ../yaboot-installer.templates:88 ../vmelilo-installer.templates:46
+#: ../lvmcfg-utils.templates:247 ../partman-lvm.templates:381
+#: ../partman-auto-lvm.templates:40 ../partman-auto-raid.templates:3
 msgid "Check /var/log/syslog or see virtual console 4 for the details."
 msgstr ""
 "詳細については、/var/log/syslog を確認するか、仮想コンソール 4 を見てくださ"
@@ -3501,7 +3542,7 @@ msgstr ""
 
 #. Type: boolean
 #. Description
-#: ../partman-basicfilesystems.templates:41
+#: ../partman-basicfilesystems.templates:42
 msgid ""
 "You have not selected any partitions for use as swap space. Enabling swap "
 "space is recommended so that the system can make better use of the available "
@@ -3516,7 +3557,7 @@ msgstr ""
 
 #. Type: boolean
 #. Description
-#: ../partman-basicfilesystems.templates:41
+#: ../partman-basicfilesystems.templates:42
 msgid ""
 "If you do not go back to the partitioning menu and assign a swap partition, "
 "the installation will continue without swap space."
@@ -3526,7 +3567,7 @@ msgstr ""
 
 #. Type: error
 #. Description
-#: ../partman-basicfilesystems.templates:53 ../partman-ext3.templates:16
+#: ../partman-basicfilesystems.templates:54 ../partman-ext3.templates:16
 #: ../partman-reiserfs.templates:16 ../partman-jfs.templates:16
 #: ../partman-xfs.templates:16 ../partman-ext2r0.templates:16
 msgid "Failed to create a file system"
@@ -3534,7 +3575,7 @@ msgstr "ファイルシステムの作成に失敗しました"
 
 #. Type: error
 #. Description
-#: ../partman-basicfilesystems.templates:53
+#: ../partman-basicfilesystems.templates:54
 msgid ""
 "The ${TYPE} file system creation in partition #${PARTITION} of ${DEVICE} "
 "failed."
@@ -3544,13 +3585,13 @@ msgstr ""
 
 #. Type: error
 #. Description
-#: ../partman-basicfilesystems.templates:59
+#: ../partman-basicfilesystems.templates:60
 msgid "Failed to create a swap space"
 msgstr "スワップ領域の作成に失敗しました"
 
 #. Type: error
 #. Description
-#: ../partman-basicfilesystems.templates:59
+#: ../partman-basicfilesystems.templates:60
 msgid ""
 "The creation of swap space in partition #${PARTITION} of ${DEVICE} failed."
 msgstr ""
@@ -3559,7 +3600,7 @@ msgstr ""
 
 #. Type: boolean
 #. Description
-#: ../partman-basicfilesystems.templates:64 ../partman-ext3.templates:22
+#: ../partman-basicfilesystems.templates:65 ../partman-ext3.templates:22
 #: ../partman-reiserfs.templates:22 ../partman-jfs.templates:22
 #: ../partman-xfs.templates:22 ../partman-ext2r0.templates:22
 msgid "Do you want to return to the partitioning menu?"
@@ -3567,7 +3608,7 @@ msgstr "パーティショニングメニューに戻りますか?"
 
 #. Type: boolean
 #. Description
-#: ../partman-basicfilesystems.templates:64
+#: ../partman-basicfilesystems.templates:65
 msgid ""
 "No mount point is assigned for ${FILESYSTEM} file system in partition #"
 "${PARTITION} of ${DEVICE}."
@@ -3577,7 +3618,7 @@ msgstr ""
 
 #. Type: boolean
 #. Description
-#: ../partman-basicfilesystems.templates:64 ../partman-ext3.templates:22
+#: ../partman-basicfilesystems.templates:65 ../partman-ext3.templates:22
 #: ../partman-reiserfs.templates:22 ../partman-jfs.templates:22
 #: ../partman-xfs.templates:22 ../partman-ext2r0.templates:22
 msgid ""
@@ -3589,13 +3630,13 @@ msgstr ""
 
 #. Type: error
 #. Description
-#: ../partman-basicfilesystems.templates:73
+#: ../partman-basicfilesystems.templates:74
 msgid "Invalid file system for this mount point"
 msgstr "このマウントポイントには無効なファイルシステムです"
 
 #. Type: error
 #. Description
-#: ../partman-basicfilesystems.templates:73
+#: ../partman-basicfilesystems.templates:74
 msgid ""
 "The file system type ${FILESYSTEM} cannot be mounted on ${MOUNTPOINT}, "
 "because it is not a fully-functional Unix file system. Please choose a "
@@ -3610,7 +3651,7 @@ msgstr ""
 #. Note to translators : Please keep your translations of the choices
 #. below a 65 columns limit (which means 65 characters
 #. in single-byte languages) including the initial path
-#: ../partman-basicfilesystems.templates:83
+#: ../partman-basicfilesystems.templates:84
 msgid "/ - the root file system"
 msgstr "/ - ルートファイルシステム"
 
@@ -3619,7 +3660,7 @@ msgstr "/ - ルートファイルシステム"
 #. Note to translators : Please keep your translations of the choices
 #. below a 65 columns limit (which means 65 characters
 #. in single-byte languages) including the initial path
-#: ../partman-basicfilesystems.templates:83
+#: ../partman-basicfilesystems.templates:84
 msgid "/boot - static files of the boot loader"
 msgstr "/boot - ブートローダの静的ファイル"
 
@@ -3628,7 +3669,7 @@ msgstr "/boot - ブートローダの静的ファイル"
 #. Note to translators : Please keep your translations of the choices
 #. below a 65 columns limit (which means 65 characters
 #. in single-byte languages) including the initial path
-#: ../partman-basicfilesystems.templates:83
+#: ../partman-basicfilesystems.templates:84
 msgid "/home - user home directories"
 msgstr "/home - ユーザのホームディレクトリ"
 
@@ -3637,7 +3678,7 @@ msgstr "/home - ユーザのホームディレクトリ"
 #. Note to translators : Please keep your translations of the choices
 #. below a 65 columns limit (which means 65 characters
 #. in single-byte languages) including the initial path
-#: ../partman-basicfilesystems.templates:83
+#: ../partman-basicfilesystems.templates:84
 msgid "/tmp - temporary files"
 msgstr "/tmp - テンポラリファイル"
 
@@ -3646,7 +3687,7 @@ msgstr "/tmp - テンポラリファイル"
 #. Note to translators : Please keep your translations of the choices
 #. below a 65 columns limit (which means 65 characters
 #. in single-byte languages) including the initial path
-#: ../partman-basicfilesystems.templates:83
+#: ../partman-basicfilesystems.templates:84
 msgid "/usr - static data"
 msgstr "/usr - 静的データ"
 
@@ -3655,7 +3696,7 @@ msgstr "/usr - 静的データ"
 #. Note to translators : Please keep your translations of the choices
 #. below a 65 columns limit (which means 65 characters
 #. in single-byte languages) including the initial path
-#: ../partman-basicfilesystems.templates:83
+#: ../partman-basicfilesystems.templates:84
 msgid "/var - variable data"
 msgstr "/var - 可変データ"
 
@@ -3664,7 +3705,7 @@ msgstr "/var - 可変データ"
 #. Note to translators : Please keep your translations of the choices
 #. below a 65 columns limit (which means 65 characters
 #. in single-byte languages) including the initial path
-#: ../partman-basicfilesystems.templates:83
+#: ../partman-basicfilesystems.templates:84
 msgid "/srv - data for services provided by this system"
 msgstr "/srv - このシステムで提供されるサービスのデータ"
 
@@ -3673,7 +3714,7 @@ msgstr "/srv - このシステムで提供されるサービスのデータ"
 #. Note to translators : Please keep your translations of the choices
 #. below a 65 columns limit (which means 65 characters
 #. in single-byte languages) including the initial path
-#: ../partman-basicfilesystems.templates:83
+#: ../partman-basicfilesystems.templates:84
 msgid "/opt - add-on application software packages"
 msgstr "/opt - 追加アプリケーションソフトウェアパッケージ"
 
@@ -3682,19 +3723,19 @@ msgstr "/opt - 追加アプリケーションソフトウェアパッケージ"
 #. Note to translators : Please keep your translations of the choices
 #. below a 65 columns limit (which means 65 characters
 #. in single-byte languages) including the initial path
-#: ../partman-basicfilesystems.templates:83
+#: ../partman-basicfilesystems.templates:84
 msgid "/usr/local - local hierarchy"
 msgstr "/usr/local - ローカル階層"
 
 #. Type: select
 #. Choices
-#: ../partman-basicfilesystems.templates:88
+#: ../partman-basicfilesystems.templates:89
 msgid "/dos"
 msgstr "/dos"
 
 #. Type: select
 #. Choices
-#: ../partman-basicfilesystems.templates:88
+#: ../partman-basicfilesystems.templates:89
 msgid "/windows"
 msgstr "/windows"
 
@@ -3713,7 +3754,7 @@ msgstr "/windows"
 #. below a 65 columns limit (which means 65 characters
 #. in single-byte languages)
 #. What's to be "entered manually" is a mount point
-#: ../partman-basicfilesystems.templates:88 ../partman-ext2r0.templates:36
+#: ../partman-basicfilesystems.templates:89 ../partman-ext2r0.templates:36
 #: ../partconf.templates:62
 msgid "Enter manually"
 msgstr "手動で入力"
@@ -3725,31 +3766,31 @@ msgstr "手動で入力"
 #. Type: select
 #. Choices
 #. "it" is a partition
-#: ../partman-basicfilesystems.templates:88 ../partman-ext2r0.templates:36
+#: ../partman-basicfilesystems.templates:89 ../partman-ext2r0.templates:36
 msgid "Do not mount it"
 msgstr "マウントしない"
 
 #. Type: string
 #. Description
-#: ../partman-basicfilesystems.templates:93 ../partman-ext2r0.templates:41
+#: ../partman-basicfilesystems.templates:94 ../partman-ext2r0.templates:41
 msgid "Mount point for this partition:"
 msgstr "このパーティションのマウントポイント:"
 
 #. Type: error
 #. Description
-#: ../partman-basicfilesystems.templates:97 ../partman-ext2r0.templates:45
+#: ../partman-basicfilesystems.templates:98 ../partman-ext2r0.templates:45
 msgid "Invalid mount point"
 msgstr "無効なマウントポイント"
 
 #. Type: error
 #. Description
-#: ../partman-basicfilesystems.templates:97 ../partman-ext2r0.templates:45
+#: ../partman-basicfilesystems.templates:98 ../partman-ext2r0.templates:45
 msgid "The mount point you entered is invalid."
 msgstr "入力されたマウントポイントは無効です。"
 
 #. Type: error
 #. Description
-#: ../partman-basicfilesystems.templates:97 ../partman-ext2r0.templates:45
+#: ../partman-basicfilesystems.templates:98 ../partman-ext2r0.templates:45
 msgid "Mount points must start with \"/\". They cannot contain spaces."
 msgstr ""
 "マウントポイントは \"/\" ではじまらなければなりません。スペースも含めてはいけ"
@@ -3757,13 +3798,13 @@ msgstr ""
 
 #. Type: string
 #. Description
-#: ../partman-basicfilesystems.templates:104
+#: ../partman-basicfilesystems.templates:105
 msgid "Label for the file system in this partition:"
 msgstr "このパーティションのファイルシステムのラベル:"
 
 #. Type: text
 #. Description
-#: ../partman-basicfilesystems.templates:108
+#: ../partman-basicfilesystems.templates:109
 msgid "Format the swap area:"
 msgstr "スワップ領域の初期化:"
 
@@ -3774,7 +3815,7 @@ msgstr "スワップ領域の初期化:"
 #. #-#-#-#-#  templates.pot (PACKAGE VERSION)  #-#-#-#-#
 #. Type: text
 #. Description
-#: ../partman-basicfilesystems.templates:113 ../partman-crypto.templates:121
+#: ../partman-basicfilesystems.templates:114 ../partman-crypto.templates:121
 msgid "yes"
 msgstr "はい"
 
@@ -3785,21 +3826,21 @@ msgstr "はい"
 #. #-#-#-#-#  templates.pot (PACKAGE VERSION)  #-#-#-#-#
 #. Type: text
 #. Description
-#: ../partman-basicfilesystems.templates:118 ../partman-crypto.templates:117
+#: ../partman-basicfilesystems.templates:119 ../partman-crypto.templates:117
 msgid "no"
 msgstr "いいえ"
 
 #. Type: text
 #. Description
 #. label of file system
-#: ../partman-basicfilesystems.templates:123
+#: ../partman-basicfilesystems.templates:124
 msgid "Label:"
 msgstr "ラベル:"
 
 #. Type: text
 #. Description
 #. for partman-basicfilesystems: in the following context: "Label: none"
-#: ../partman-basicfilesystems.templates:128
+#: ../partman-basicfilesystems.templates:129
 msgid ""
 "none[ Do not translate what's inside the brackets and just put the "
 "translation for the word \"none\" in your language without any brackets. "
@@ -3809,39 +3850,39 @@ msgstr "なし"
 #. Type: text
 #. Description
 #. Up to 24 character positions
-#: ../partman-basicfilesystems.templates:133
+#: ../partman-basicfilesystems.templates:134
 msgid "Reserved blocks:"
 msgstr "予約ブロック:"
 
 #. Type: string
 #. Description
-#: ../partman-basicfilesystems.templates:137
+#: ../partman-basicfilesystems.templates:138
 msgid "Percentage of the file system blocks reserved for the super-user:"
 msgstr "スーパーユーザによって予約されているシステムブロックの割合:"
 
 #. Type: text
 #. Description
 #. Up to 25 character positions
-#: ../partman-basicfilesystems.templates:142
+#: ../partman-basicfilesystems.templates:143
 msgid "Typical usage:"
 msgstr "典型的な利用方法:"
 
 #. Type: text
 #. Description
 #. In the following context: "Typical usage: standard"
-#: ../partman-basicfilesystems.templates:147
+#: ../partman-basicfilesystems.templates:148
 msgid "standard"
 msgstr "標準"
 
 #. Type: select
 #. Description
-#: ../partman-basicfilesystems.templates:155
+#: ../partman-basicfilesystems.templates:156
 msgid "Typical usage of this partition:"
 msgstr "このパーティションの典型的利用方法:"
 
 #. Type: select
 #. Description
-#: ../partman-basicfilesystems.templates:155
+#: ../partman-basicfilesystems.templates:156
 msgid ""
 "Please specify how the file system is going to be used, so that optimal file "
 "system parameters can be chosen for that use."
@@ -3851,7 +3892,7 @@ msgstr ""
 
 #. Type: select
 #. Description
-#: ../partman-basicfilesystems.templates:155
+#: ../partman-basicfilesystems.templates:156
 msgid ""
 "standard = standard parameters, news = one inode per 4KB block, largefile = "
 "one inode per megabyte, largefile4 = one inode per 4 megabytes."
@@ -3879,7 +3920,7 @@ msgstr ""
 #. Type: text
 #. Description
 #. This is an item in the menu "Partition settings"
-#: ../partman-basicfilesystems.templates:167 ../partman-ext3.templates:32
+#: ../partman-basicfilesystems.templates:168 ../partman-ext3.templates:32
 #: ../partman-reiserfs.templates:32 ../partman-jfs.templates:32
 #: ../partman-xfs.templates:32
 msgid "Mount point:"
@@ -3888,7 +3929,7 @@ msgstr "マウントポイント:"
 #. Type: text
 #. Description
 #. In the following context: "Mount point: none"
-#: ../partman-basicfilesystems.templates:172
+#: ../partman-basicfilesystems.templates:173
 msgid ""
 "none[ Do not translate what's inside the brackets and just put the "
 "translation for the word \"none\" in your language without any brackets. "
@@ -3897,53 +3938,53 @@ msgstr "なし"
 
 #. Type: text
 #. Description
-#: ../partman-basicfilesystems.templates:176
+#: ../partman-basicfilesystems.templates:177
 msgid "Ext2 file system"
 msgstr "ext2 ファイルシステム"
 
 #. Type: text
 #. Description
 #. Short file system name (untranslatable in many languages)
-#: ../partman-basicfilesystems.templates:181
+#: ../partman-basicfilesystems.templates:182
 msgid "ext2"
 msgstr "ext2"
 
 #. Type: text
 #. Description
-#: ../partman-basicfilesystems.templates:185
+#: ../partman-basicfilesystems.templates:186
 msgid "FAT16 file system"
 msgstr "FAT16 ファイルシステム"
 
 #. Type: text
 #. Description
 #. Short file system name (untranslatable in many languages)
-#: ../partman-basicfilesystems.templates:190
+#: ../partman-basicfilesystems.templates:191
 msgid "fat16"
 msgstr "fat16"
 
 #. Type: text
 #. Description
-#: ../partman-basicfilesystems.templates:194
+#: ../partman-basicfilesystems.templates:195
 msgid "FAT32 file system"
 msgstr "FAT32 ファイルシステム"
 
 #. Type: text
 #. Description
 #. Short file system name (untranslatable in many languages)
-#: ../partman-basicfilesystems.templates:199
+#: ../partman-basicfilesystems.templates:200
 msgid "fat32"
 msgstr "fat32"
 
 #. Type: text
 #. Description
-#: ../partman-basicfilesystems.templates:212
+#: ../partman-basicfilesystems.templates:213
 msgid "swap area"
 msgstr "スワップ領域"
 
 #. Type: text
 #. Description
 #. Short variant of `swap space'
-#: ../partman-basicfilesystems.templates:217
+#: ../partman-basicfilesystems.templates:218
 msgid "swap"
 msgstr "スワップ"
 
@@ -3952,7 +3993,7 @@ msgstr "スワップ"
 #. Note to translators : Please keep your translations of the choices
 #. below a 65 columns limit (which means 65 characters
 #. in single-byte languages)
-#: ../partman-basicfilesystems.templates:228 ../partman-ext3.templates:44
+#: ../partman-basicfilesystems.templates:229 ../partman-ext3.templates:44
 #: ../partman-reiserfs.templates:44 ../partman-jfs.templates:44
 #: ../partman-xfs.templates:44 ../partman-ext2r0.templates:60
 msgid "noatime - do not update inode access times at each access"
@@ -3963,7 +4004,7 @@ msgstr "noatime - アクセスごとでの inode アクセス時刻の更新を�
 #. Note to translators : Please keep your translations of the choices
 #. below a 65 columns limit (which means 65 characters
 #. in single-byte languages)
-#: ../partman-basicfilesystems.templates:228 ../partman-ext3.templates:44
+#: ../partman-basicfilesystems.templates:229 ../partman-ext3.templates:44
 #: ../partman-reiserfs.templates:44 ../partman-jfs.templates:44
 #: ../partman-xfs.templates:44 ../partman-ext2r0.templates:60
 msgid "nodev - do not support character or block special devices"
@@ -3974,7 +4015,7 @@ msgstr "nodev - キャラクタ/ブロック特殊デバイスをサポートし
 #. Note to translators : Please keep your translations of the choices
 #. below a 65 columns limit (which means 65 characters
 #. in single-byte languages)
-#: ../partman-basicfilesystems.templates:228 ../partman-ext3.templates:44
+#: ../partman-basicfilesystems.templates:229 ../partman-ext3.templates:44
 #: ../partman-reiserfs.templates:44 ../partman-jfs.templates:44
 #: ../partman-xfs.templates:44 ../partman-ext2r0.templates:60
 msgid "nosuid - ignore set-user-identifier or set-group-identifier bits"
@@ -3985,7 +4026,7 @@ msgstr "nosuid - SUID および SGID ビットを無視する"
 #. Note to translators : Please keep your translations of the choices
 #. below a 65 columns limit (which means 65 characters
 #. in single-byte languages)
-#: ../partman-basicfilesystems.templates:228 ../partman-ext3.templates:44
+#: ../partman-basicfilesystems.templates:229 ../partman-ext3.templates:44
 #: ../partman-reiserfs.templates:44 ../partman-jfs.templates:44
 #: ../partman-xfs.templates:44 ../partman-ext2r0.templates:60
 msgid "noexec - do not allow execution of any binaries"
@@ -3996,7 +4037,7 @@ msgstr "noexec - あらゆるバイナリの実行を許可しない"
 #. Note to translators : Please keep your translations of the choices
 #. below a 65 columns limit (which means 65 characters
 #. in single-byte languages)
-#: ../partman-basicfilesystems.templates:228 ../partman-ext3.templates:44
+#: ../partman-basicfilesystems.templates:229 ../partman-ext3.templates:44
 #: ../partman-reiserfs.templates:44 ../partman-xfs.templates:44
 #: ../partman-ext2r0.templates:60
 msgid "usrquota - user disk quota accounting enabled"
@@ -4007,7 +4048,7 @@ msgstr "usrquota - ユーザのディスククオータ計測を有効にする"
 #. Note to translators : Please keep your translations of the choices
 #. below a 65 columns limit (which means 65 characters
 #. in single-byte languages)
-#: ../partman-basicfilesystems.templates:228 ../partman-ext3.templates:44
+#: ../partman-basicfilesystems.templates:229 ../partman-ext3.templates:44
 #: ../partman-reiserfs.templates:44 ../partman-xfs.templates:44
 #: ../partman-ext2r0.templates:60
 msgid "grpquota - group disk quota accounting enabled"
@@ -4018,7 +4059,7 @@ msgstr "grpquota - グループのディスククオータ計測を有効にす�
 #. Note to translators : Please keep your translations of the choices
 #. below a 65 columns limit (which means 65 characters
 #. in single-byte languages)
-#: ../partman-basicfilesystems.templates:228 ../partman-ext3.templates:44
+#: ../partman-basicfilesystems.templates:229 ../partman-ext3.templates:44
 #: ../partman-reiserfs.templates:44
 msgid "user_xattr - support user extended attributes"
 msgstr "user_xattr - ユーザ拡張属性をサポートする"
@@ -4059,7 +4100,7 @@ msgstr "user_xattr - ユーザ拡張属性をサポートする"
 #. Note to translators : Please keep your translations of the choices
 #. below a 65 columns limit (which means 65 characters
 #. in single-byte languages)
-#: ../partman-basicfilesystems.templates:237 ../partman-ext3.templates:44
+#: ../partman-basicfilesystems.templates:238 ../partman-ext3.templates:44
 #: ../partman-reiserfs.templates:44 ../partman-jfs.templates:44
 #: ../partman-xfs.templates:44 ../partman-ext2r0.templates:60
 msgid "ro - mount the file system read-only"
@@ -4101,7 +4142,7 @@ msgstr "ro - 読み取りのみとしてファイルシステムをマウント�
 #. Note to translators : Please keep your translations of the choices
 #. below a 65 columns limit (which means 65 characters
 #. in single-byte languages)
-#: ../partman-basicfilesystems.templates:237 ../partman-ext3.templates:44
+#: ../partman-basicfilesystems.templates:238 ../partman-ext3.templates:44
 #: ../partman-reiserfs.templates:44 ../partman-jfs.templates:44
 #: ../partman-xfs.templates:44 ../partman-ext2r0.templates:60
 msgid "sync - all input/output activities occur synchronously"
@@ -4112,13 +4153,13 @@ msgstr "sync - すべての入出力の処理を同期する"
 #. Note to translators : Please keep your translations of the choices
 #. below a 65 columns limit (which means 65 characters
 #. in single-byte languages) including the initial path
-#: ../partman-basicfilesystems.templates:237
+#: ../partman-basicfilesystems.templates:238
 msgid "quiet - changing owner and permissions does not return errors"
 msgstr "quiet - 所有者とパーミッションの変更でエラーを返さない"
 
 #. Type: multiselect
 #. Description
-#: ../partman-basicfilesystems.templates:238 ../partman-ext3.templates:45
+#: ../partman-basicfilesystems.templates:239 ../partman-ext3.templates:45
 #: ../partman-reiserfs.templates:45 ../partman-jfs.templates:45
 #: ../partman-xfs.templates:45 ../partman-ext2r0.templates:61
 msgid "Mount options:"
@@ -4126,7 +4167,7 @@ msgstr "マウントオプション:"
 
 #. Type: multiselect
 #. Description
-#: ../partman-basicfilesystems.templates:238 ../partman-ext3.templates:45
+#: ../partman-basicfilesystems.templates:239 ../partman-ext3.templates:45
 #: ../partman-reiserfs.templates:45 ../partman-jfs.templates:45
 #: ../partman-xfs.templates:45 ../partman-ext2r0.templates:61
 msgid "Mount options can tune the behavior of the file system."
@@ -5104,20 +5145,20 @@ msgstr "時間帯を選択してください:"
 #. Description
 #. Main menu item
 #: ../tzsetup-udeb.templates:4
-msgid "Configure time zone"
+msgid "Configure the time zone"
 msgstr "時間帯の設定"
 
 #. Type: text
 #. Description
 #. finish-install progress bar item
 #: ../tzsetup-udeb.templates:9
-msgid "Saving time zone..."
+msgid "Saving the time zone..."
 msgstr "時間帯を保存しています..."
 
 #. Type: note
 #. Description
 #: ../tzsetup-udeb.templates:13
-msgid "Selected timezone"
+msgid "Selected time zone"
 msgstr "選択された時間帯"
 
 #. Type: note
@@ -5303,30 +5344,12 @@ msgstr ""
 #. Type: error
 #. Description
 #: ../base-installer.templates:76
-msgid "No initrd generator"
-msgstr "initrd 生成ツールがありません"
-
-#. Type: error
-#. Description
-#: ../base-installer.templates:76
-msgid ""
-"The kernel that has been selected for installation needs an initrd to boot. "
-"However, no package to generate that initrd is available that supports your "
-"configuration. This would leave your system unable to boot."
-msgstr ""
-"インストール用に選択されたカーネルは、ブートするのに initrd が必要です。しか"
-"し、設定内容をサポートする initrd を生成する利用可能なパッケージがありませ"
-"ん。つまり、システムはブートできない状態のままになります。"
-
-#. Type: error
-#. Description
-#: ../base-installer.templates:83
 msgid "Unsupported initrd generator"
 msgstr "サポートされていない initrd 生成ツールです"
 
 #. Type: error
 #. Description
-#: ../base-installer.templates:83
+#: ../base-installer.templates:76
 msgid ""
 "The package ${GENERATOR} that was selected to generate the initrd is not "
 "supported."
@@ -5336,13 +5359,13 @@ msgstr ""
 
 #. Type: error
 #. Description
-#: ../base-installer.templates:89
+#: ../base-installer.templates:82
 msgid "Unable to install the selected kernel"
 msgstr "選択されたカーネルはインストールできません"
 
 #. Type: error
 #. Description
-#: ../base-installer.templates:89
+#: ../base-installer.templates:82
 msgid ""
 "An error was returned while trying to install the kernel into the target "
 "system."
@@ -5350,7 +5373,7 @@ msgstr "カーネルを対象システムにインストール中にエラーが
 
 #. Type: error
 #. Description
-#: ../base-installer.templates:89
+#: ../base-installer.templates:82
 msgid "Kernel package: '${KERNEL}'."
 msgstr "カーネルパッケージ: '${KERNEL}'"
 
@@ -5358,7 +5381,7 @@ msgstr "カーネルパッケージ: '${KERNEL}'"
 #. Choices
 #. For base-installer, "none" is an additional choice to a list of kernels.
 #. It means "no kernel"
-#: ../base-installer.templates:102
+#: ../base-installer.templates:95
 msgid ""
 "none[ Do not translate what's inside the brackets and just put the "
 "translation for the word \"none\" in your language without any brackets. "
@@ -5367,13 +5390,13 @@ msgstr "なし"
 
 #. Type: select
 #. Description
-#: ../base-installer.templates:103
+#: ../base-installer.templates:96
 msgid "Kernel to install:"
 msgstr "インストールするカーネル:"
 
 #. Type: select
 #. Description
-#: ../base-installer.templates:103
+#: ../base-installer.templates:96
 msgid ""
 "The list shows the available kernels. Please choose one of them in order to "
 "make the system bootable from the hard drive."
@@ -5383,20 +5406,20 @@ msgstr ""
 
 #. Type: boolean
 #. Description
-#: ../base-installer.templates:110
+#: ../base-installer.templates:103
 msgid "Continue without installing a kernel?"
 msgstr "カーネルをインストールせずに続けますか?"
 
 #. Type: boolean
 #. Description
-#: ../base-installer.templates:110
+#: ../base-installer.templates:103
 msgid "No installable kernel was found in the defined APT sources."
 msgstr ""
 "定義された APT ソースにインストール可能なカーネルが見つかりませんでした。"
 
 #. Type: boolean
 #. Description
-#: ../base-installer.templates:110
+#: ../base-installer.templates:103
 msgid ""
 "You may try to continue without a kernel, and manually install your own "
 "kernel later. This is only recommended for experts, otherwise you will "
@@ -5408,13 +5431,13 @@ msgstr ""
 
 #. Type: error
 #. Description
-#: ../base-installer.templates:119
+#: ../base-installer.templates:112
 msgid "Cannot install kernel"
 msgstr "カーネルをインストールできませんでした"
 
 #. Type: error
 #. Description
-#: ../base-installer.templates:119
+#: ../base-installer.templates:112
 msgid "The installer cannot find a suitable kernel package to install."
 msgstr ""
 "インストーラはインストールする適切なカーネルパッケージを見つけられませんでし"
@@ -5422,13 +5445,13 @@ msgstr ""
 
 #. Type: error
 #. Description
-#: ../base-installer.templates:124
+#: ../base-installer.templates:117
 msgid "Unable to install ${PACKAGE}"
 msgstr "${PACKAGE} をインストールできません"
 
 #. Type: error
 #. Description
-#: ../base-installer.templates:124
+#: ../base-installer.templates:117
 msgid ""
 "An error was returned while trying to install the ${PACKAGE} package onto "
 "the target system."
@@ -5438,34 +5461,34 @@ msgstr ""
 #. Type: error
 #. Description
 #. SUBST0 is a Release file name.
-#: ../base-installer.templates:133
+#: ../base-installer.templates:126
 msgid "Failed getting Release file ${SUBST0}."
 msgstr "Release ファイル ${SUBST0} の取得に失敗しました。"
 
 #. Type: error
 #. Description
 #. SUBST0 is a Release.gpg file name
-#: ../base-installer.templates:139
+#: ../base-installer.templates:132
 msgid "Failed getting Release signature file ${SUBST0}."
 msgstr "Release シグネチャファイル ${SUBST0} の取得に失敗しました。"
 
 #. Type: error
 #. Description
 #. SUBST0 is a gpg key ID
-#: ../base-installer.templates:145
+#: ../base-installer.templates:138
 msgid "Release file signed by unknown key (key id ${SUBST0})"
 msgstr "Release ファイルは未知のキー (キー ID ${SUBST0}) で署名されています"
 
 #. Type: error
 #. Description
-#: ../base-installer.templates:150
+#: ../base-installer.templates:143
 msgid "Invalid Release file: no valid components."
 msgstr "無効な Release ファイルです: 有効なコンポーネントがありません。"
 
 #. Type: error
 #. Description
 #. SUBST0 is a filename
-#: ../base-installer.templates:156
+#: ../base-installer.templates:149
 msgid "Invalid Release file: no entry for ${SUBST0}."
 msgstr "無効な Release ファイルです: ${SUBST0} のエントリがありません。"
 
@@ -5473,7 +5496,7 @@ msgstr "無効な Release ファイルです: ${SUBST0} のエントリがあり
 #. Description
 #. SUBST0 is a filename or package name
 #. Debootstrap is a program name: should not be translated
-#: ../base-installer.templates:163
+#: ../base-installer.templates:156
 msgid "Debootstrap Error"
 msgstr "Debootstrap エラー"
 
@@ -5481,7 +5504,7 @@ msgstr "Debootstrap エラー"
 #. Description
 #. SUBST0 is a filename or package name
 #. Debootstrap is a program name: should not be translated
-#: ../base-installer.templates:163
+#: ../base-installer.templates:156
 msgid ""
 "Couldn't retrieve ${SUBST0}. This may be due to a network problem or a bad "
 "CD, depending on your installation method."
@@ -5493,7 +5516,7 @@ msgstr ""
 #. Description
 #. SUBST0 is a filename or package name
 #. Debootstrap is a program name: should not be translated
-#: ../base-installer.templates:163
+#: ../base-installer.templates:156
 msgid ""
 "If you are installing from CD-R or CD-RW, burning the CD at a lower speed "
 "may help."
@@ -5503,13 +5526,13 @@ msgstr ""
 
 #. Type: text
 #. Description
-#: ../base-installer.templates:176
+#: ../base-installer.templates:169
 msgid "Preparing to install the base system..."
 msgstr "ベースシステムのインストールを準備しています..."
 
 #. Type: text
 #. Description
-#: ../base-installer.templates:180 ../apt-setup-udeb.templates:15
+#: ../base-installer.templates:173 ../apt-setup-udeb.templates:15
 #: ../finish-install.templates:12
 msgid "Running ${SCRIPT}..."
 msgstr "${SCRIPT} を実行しています..."
@@ -5517,55 +5540,55 @@ msgstr "${SCRIPT} を実行しています..."
 #. Type: text
 #. Description
 #. Release is a filename which should not be translated
-#: ../base-installer.templates:185
+#: ../base-installer.templates:178
 msgid "Retrieving Release file"
 msgstr "Release ファイルを取得しています"
 
 #. Type: text
 #. Description
 #. Release is a filename which should not be translated
-#: ../base-installer.templates:190
+#: ../base-installer.templates:183
 msgid "Retrieving Release file signature"
 msgstr "Release ファイルのシグネチャを取得しています"
 
 #. Type: text
 #. Description
 #. "packages" here can be translated
-#: ../base-installer.templates:195
+#: ../base-installer.templates:188
 msgid "Finding package sizes"
 msgstr "パッケージサイズを調べています"
 
 #. Type: text
 #. Description
 #. Packages is a filename which should not be translated
-#: ../base-installer.templates:200
+#: ../base-installer.templates:193
 msgid "Retrieving Packages files"
 msgstr "Packages ファイルを取得しています"
 
 #. Type: text
 #. Description
 #. Packages is a filename which should not be translated
-#: ../base-installer.templates:205
+#: ../base-installer.templates:198
 msgid "Retrieving Packages file"
 msgstr "Packages ファイルを取得しています"
 
 #. Type: text
 #. Description
 #. "packages" here can be translated
-#: ../base-installer.templates:210
+#: ../base-installer.templates:203
 msgid "Retrieving packages"
 msgstr "パッケージを取得しています"
 
 #. Type: text
 #. Description
 #. "packages" here can be translated
-#: ../base-installer.templates:215
+#: ../base-installer.templates:208
 msgid "Extracting packages"
 msgstr "パッケージを展開しています"
 
 #. Type: text
 #. Description
-#: ../base-installer.templates:219
+#: ../base-installer.templates:212
 msgid "Installing the base system"
 msgstr "ベースシステムをインストールしています"
 
@@ -5575,7 +5598,7 @@ msgstr "ベースシステムをインストールしています"
 #. The "core" packages are indeed packages that are specifically
 #. recorded as part of the base system. Other packages may
 #. be installed on the base system because of dependency resolution
-#: ../base-installer.templates:227
+#: ../base-installer.templates:220
 msgid "Installing core packages"
 msgstr "コアパッケージをインストールしています"
 
@@ -5585,13 +5608,13 @@ msgstr "コアパッケージをインストールしています"
 #. by the dependency chain of core packages
 #. In short, they are "required" because at least one of the
 #. packages from the core packages depends on them
-#: ../base-installer.templates:235
+#: ../base-installer.templates:228
 msgid "Unpacking required packages"
 msgstr "必須パッケージを展開しています"
 
 #. Type: text
 #. Description
-#: ../base-installer.templates:239
+#: ../base-installer.templates:232
 msgid "Configuring required packages"
 msgstr "必須パッケージを設定しています"
 
@@ -5599,7 +5622,7 @@ msgstr "必須パッケージを設定しています"
 #. Description
 #. The base system is the minimal Debian system
 #. See http://www.debian.org/doc/debian-policy/ch-binary.html#s3.7
-#: ../base-installer.templates:245
+#: ../base-installer.templates:238
 msgid "Unpacking the base system"
 msgstr "ベースシステムを展開しています"
 
@@ -5607,55 +5630,55 @@ msgstr "ベースシステムを展開しています"
 #. Description
 #. The base system is the minimal Debian system
 #. See http://www.debian.org/doc/debian-policy/ch-binary.html#s3.7
-#: ../base-installer.templates:251
+#: ../base-installer.templates:244
 msgid "Configuring the base system"
 msgstr "ベースシステムを設定しています"
 
 #. Type: text
 #. Description
-#: ../base-installer.templates:255
+#: ../base-installer.templates:248
 msgid "${SECTION}: ${INFO}..."
 msgstr "${SECTION}: ${INFO}..."
 
 #. Type: text
 #. Description
 #. SUBST0 is a package name
-#: ../base-installer.templates:260
+#: ../base-installer.templates:253
 msgid "Validating ${SUBST0}..."
 msgstr "${SUBST0} を検査しています..."
 
 #. Type: text
 #. Description
 #. SUBST0 is a package name
-#: ../base-installer.templates:265
+#: ../base-installer.templates:258
 msgid "Retrieving ${SUBST0}..."
 msgstr "${SUBST0} を取得しています..."
 
 #. Type: text
 #. Description
 #. SUBST0 is a package name
-#: ../base-installer.templates:270
+#: ../base-installer.templates:263
 msgid "Extracting ${SUBST0}..."
 msgstr "${SUBST0} を展開しています..."
 
 #. Type: text
 #. Description
 #. SUBST0 is a package name
-#: ../base-installer.templates:275
+#: ../base-installer.templates:268
 msgid "Unpacking ${SUBST0}..."
 msgstr "${SUBST0} を展開しています..."
 
 #. Type: text
 #. Description
 #. SUBST0 is a package name
-#: ../base-installer.templates:280
+#: ../base-installer.templates:273
 msgid "Configuring ${SUBST0}..."
 msgstr "${SUBST0} を設定しています..."
 
 #. Type: text
 #. Description
 #. Release is a filename which should not be translated
-#: ../base-installer.templates:285
+#: ../base-installer.templates:278
 msgid "Checking Release signature"
 msgstr "Release シグネチャをチェックしています"
 
@@ -5663,40 +5686,40 @@ msgstr "Release シグネチャをチェックしています"
 #. Description
 #. SUBST0 is a gpg key id
 #. Release is a filename which should not be translated
-#: ../base-installer.templates:291
+#: ../base-installer.templates:284
 msgid "Valid Release signature (key id ${SUBST0})"
 msgstr "有効な Release シグネチャです (キーID ${SUBST0})"
 
 #. Type: text
 #. Description
-#: ../base-installer.templates:295
+#: ../base-installer.templates:288
 msgid "Resolving dependencies of base packages..."
 msgstr "ベースパッケージの依存関係を解決しています..."
 
 #. Type: text
 #. Description
 #. SUBST0 is a list of packages
-#: ../base-installer.templates:300
+#: ../base-installer.templates:293
 msgid "Found additional base dependencies: ${SUBST0}"
 msgstr "追加の依存関係を発見しました: ${SUBST0}"
 
 #. Type: text
 #. Description
 #. SUBST0 is a list of packages
-#: ../base-installer.templates:305
+#: ../base-installer.templates:298
 msgid "Found additional required dependencies: ${SUBST0}"
 msgstr "追加の必須関係を発見しました: ${SUBST0}"
 
 #. Type: text
 #. Description
 #. SUBST0 is a list of packages
-#: ../base-installer.templates:310
+#: ../base-installer.templates:303
 msgid "Found packages in base already in required: ${SUBST0}"
 msgstr "ベースにあるパッケージはすでに必須としてあります: ${SUBST0}"
 
 #. Type: text
 #. Description
-#: ../base-installer.templates:314
+#: ../base-installer.templates:307
 msgid "Resolving dependencies of required packages..."
 msgstr "必須パッケージの依存関係を解決しています..."
 
@@ -5704,7 +5727,7 @@ msgstr "必須パッケージの依存関係を解決しています..."
 #. Description
 #. SUBST0 is an archive component (main, etc)
 #. SUBST1 is a mirror
-#: ../base-installer.templates:320
+#: ../base-installer.templates:313
 msgid "Checking component ${SUBST0} on ${SUBST1}..."
 msgstr "${SUBST1} のコンポーネント ${SUBST0} をチェックしています..."
 
@@ -5714,7 +5737,7 @@ msgstr "${SUBST1} のコンポーネント ${SUBST0} をチェックしていま
 #. The "core" packages are indeed packages that are specifically
 #. recorded as part of the base system. Other packages may
 #. be installed on the base system because of dependency resolution
-#: ../base-installer.templates:328
+#: ../base-installer.templates:321
 msgid "Installing core packages..."
 msgstr "コアパッケージをインストールしています..."
 
@@ -5724,7 +5747,7 @@ msgstr "コアパッケージをインストールしています..."
 #. by the dependency chain of core packages
 #. In short, they are "required" because at least one of the
 #. packages from the core packages depends on them
-#: ../base-installer.templates:336
+#: ../base-installer.templates:329
 msgid "Unpacking required packages..."
 msgstr "必須パッケージを展開しています..."
 
@@ -5734,77 +5757,77 @@ msgstr "必須パッケージを展開しています..."
 #. by the dependency chain of core packages
 #. In short, they are "required" because at least one of the
 #. packages from the core packages depends on them
-#: ../base-installer.templates:344
+#: ../base-installer.templates:337
 msgid "Configuring required packages..."
 msgstr "必須パッケージを設定しています..."
 
 #. Type: text
 #. Description
-#: ../base-installer.templates:348
+#: ../base-installer.templates:341
 msgid "Installing base packages..."
 msgstr "ベースパッケージをインストールしています..."
 
 #. Type: text
 #. Description
-#: ../base-installer.templates:352
+#: ../base-installer.templates:345
 msgid "Unpacking the base system..."
 msgstr "ベースシステムを展開しています..."
 
 #. Type: text
 #. Description
-#: ../base-installer.templates:356
+#: ../base-installer.templates:349
 msgid "Configuring the base system..."
 msgstr "ベースシステムを設定しています..."
 
 #. Type: text
 #. Description
-#: ../base-installer.templates:360
+#: ../base-installer.templates:353
 msgid "Base system installed successfully."
 msgstr "ベースシステムのインストールに成功しました。"
 
 #. Type: error
 #. Description
 #. Debootstrap is a program name: should not be translated
-#: ../base-installer.templates:365
+#: ../base-installer.templates:358
 msgid "Debootstrap warning"
 msgstr "Debootstrap 警告"
 
 #. Type: error
 #. Description
 #. Debootstrap is a program name: should not be translated
-#: ../base-installer.templates:365
+#: ../base-installer.templates:358
 msgid "Warning: ${INFO}"
 msgstr "警告: ${INFO}"
 
 #. Type: text
 #. Description
 #. SUBST0 is an url
-#: ../base-installer.templates:371
+#: ../base-installer.templates:364
 msgid "Retrying failed download of ${SUBST0}"
 msgstr "ダウンロードに失敗した ${SUBST0} を再試行しています"
 
 #. Type: text
 #. Description
-#: ../base-installer.templates:375
+#: ../base-installer.templates:368
 msgid "Configuring APT sources..."
 msgstr "APT ソースを設定しています..."
 
 #. Type: text
 #. Description
-#: ../base-installer.templates:379
+#: ../base-installer.templates:372
 msgid "Updating the list of available packages..."
 msgstr "利用可能なパッケージのリストを更新しています..."
 
 #. Type: text
 #. Description
-#: ../base-installer.templates:383
+#: ../base-installer.templates:376
 msgid "Installing extra packages..."
 msgstr "特別パッケージをインストールしています..."
 
 #. Type: text
 #. Description
 #. SUBST0 is a package name
-#: ../base-installer.templates:388
+#: ../base-installer.templates:381
 msgid "Installing extra packages - retrieving and installing ${SUBST0}..."
 msgstr ""
 "特別パッケージをインストールしています - ${SUBST0} を取得・インストールしてい"
@@ -5812,26 +5835,26 @@ msgstr ""
 
 #. Type: text
 #. Description
-#: ../base-installer.templates:392
+#: ../base-installer.templates:385
 msgid "Creating device files..."
 msgstr "デバイスファイルを作成しています..."
 
 #. Type: text
 #. Description
-#: ../base-installer.templates:396
+#: ../base-installer.templates:389
 msgid "Selecting the kernel to install..."
 msgstr "インストールするカーネルを選択しています..."
 
 #. Type: text
 #. Description
-#: ../base-installer.templates:400
+#: ../base-installer.templates:393
 msgid "Installing the kernel..."
 msgstr "カーネルをインストールしています..."
 
 #. Type: text
 #. Description
 #. SUBST0 is a package name
-#: ../base-installer.templates:405
+#: ../base-installer.templates:398
 msgid "Installing the kernel - retrieving and installing ${SUBST0}..."
 msgstr ""
 "カーネルをインストールしています - ${SUBST0} を取得・インストールしていま"
@@ -5839,7 +5862,7 @@ msgstr ""
 
 #. Type: text
 #. Description
-#: ../base-installer.templates:409
+#: ../base-installer.templates:402
 msgid "Installing the PCMCIA modules"
 msgstr "PCMCIA モジュールをインストールしています"
 
@@ -5847,7 +5870,7 @@ msgstr "PCMCIA モジュールをインストールしています"
 #. Description
 #. Item in the main menu to select this package
 #. TRANSLATORS: <65 columns
-#: ../base-installer.templates:415
+#: ../base-installer.templates:408
 msgid "Install the base system"
 msgstr "ベースシステムのインストール"
 
@@ -6696,9 +6719,30 @@ msgstr ""
 msgid "Continue without boot loader"
 msgstr "ブートローダなしで続ける"
 
+#. Type: error
+#. Description
+#: ../nobootloader.templates:8 ../quik-installer.templates:131
+#: ../yaboot-installer.templates:88
+msgid "Failed to mount /target/proc"
+msgstr "/target/proc のマウントに失敗しました"
+
+#. Type: error
+#. Description
+#: ../nobootloader.templates:8 ../quik-installer.templates:131
+#: ../yaboot-installer.templates:88
+msgid "Mounting the proc file system on /target/proc failed."
+msgstr "proc ファイルシステムを /target/proc にマウントするのに失敗しました。"
+
+#. Type: error
+#. Description
+#: ../nobootloader.templates:8 ../quik-installer.templates:131
+#: ../yaboot-installer.templates:88 ../vmelilo-installer.templates:46
+msgid "Warning: Your system may be unbootable!"
+msgstr "警告: あなたのシステムは起動できない恐れがあります!"
+
 #. Type: note
 #. Description
-#: ../nobootloader.templates:9 ../yaboot-installer.templates:98
+#: ../nobootloader.templates:18 ../yaboot-installer.templates:98
 msgid ""
 "Some variables need to be set in the Genesi firmware in order for your "
 "system to boot automatically.  At the end of the installation, the system "
@@ -6712,7 +6756,7 @@ msgstr ""
 
 #. Type: note
 #. Description
-#: ../nobootloader.templates:9 ../yaboot-installer.templates:98
+#: ../nobootloader.templates:18 ../yaboot-installer.templates:98
 msgid ""
 "Alternatively, you will be able to boot the kernel manually by entering, at "
 "the firmware prompt:"
@@ -6722,13 +6766,13 @@ msgstr ""
 
 #. Type: note
 #. Description
-#: ../nobootloader.templates:31 ../yaboot-installer.templates:98
+#: ../nobootloader.templates:40 ../yaboot-installer.templates:98
 msgid "Setting firmware variables for automatic boot"
 msgstr "自動起動するためのファームウェア変数を設定しています"
 
 #. Type: note
 #. Description
-#: ../nobootloader.templates:31
+#: ../nobootloader.templates:40
 msgid ""
 "Some variables need to be set in the Netwinder NeTTrom firmware in order for "
 "your system to boot linux automatically.  At the end of this installation "
@@ -6753,7 +6797,7 @@ msgstr ""
 #. Description
 #. Translators, the 4th string of this description has been dropped from
 #. PO files. It contains firmware commands and should not be translated.
-#: ../nobootloader.templates:31 ../yaboot-installer.templates:98
+#: ../nobootloader.templates:40 ../yaboot-installer.templates:98
 #: ../arcboot-installer.templates:34
 msgid ""
 "You will only need to do this once.  Afterwards, enter the \"boot\" command "
@@ -6764,13 +6808,13 @@ msgstr ""
 
 #. Type: note
 #. Description
-#: ../nobootloader.templates:51
+#: ../nobootloader.templates:60
 msgid "No boot loader installed"
 msgstr "ブートローダがインストールされていません"
 
 #. Type: note
 #. Description
-#: ../nobootloader.templates:51
+#: ../nobootloader.templates:60
 msgid ""
 "No boot loader has been installed, either because you chose not to or "
 "because your specific architecture doesn't support a boot loader yet."
@@ -6780,7 +6824,7 @@ msgstr ""
 
 #. Type: note
 #. Description
-#: ../nobootloader.templates:51
+#: ../nobootloader.templates:60
 msgid ""
 "You will need to boot manually with the ${KERNEL} kernel on partition "
 "${BOOT} and ${ROOT} passed as a kernel argument."
@@ -6935,8 +6979,8 @@ msgstr ""
 "認されていないユーザがマシンへのアクセスを持ったときにはあなたのシステムを侵"
 "害するのに使われかねません。これを防ぐために、メニューのエントリの編集やGRUB "
 "コマンドラインインターフェイスに入る前に必須とするパスワードを選択できます。"
-"デフォルトでは、すべてのユーザはパスワードの入力なしにどのメニューエントリか"
-"らまだ開始できます。"
+"デフォルトでは、すべてのユーザはパスワードの入力なしにどのメニューエントリで"
+"もまだ開始できます。"
 
 #. Type: password
 #. Description
@@ -7631,25 +7675,6 @@ msgstr "quik ブートローダは正常にインストールされました。"
 #: ../prep-installer.templates:42
 msgid "The new system is now ready to boot."
 msgstr "新しいシステムをブートする準備ができました。"
-
-#. Type: error
-#. Description
-#: ../quik-installer.templates:131 ../yaboot-installer.templates:88
-msgid "Failed to mount /target/proc"
-msgstr "/target/proc のマウントに失敗しました"
-
-#. Type: error
-#. Description
-#: ../quik-installer.templates:131 ../yaboot-installer.templates:88
-msgid "Mounting the proc file system on /target/proc failed."
-msgstr "proc ファイルシステムを /target/proc にマウントするのに失敗しました。"
-
-#. Type: error
-#. Description
-#: ../quik-installer.templates:131 ../yaboot-installer.templates:88
-#: ../vmelilo-installer.templates:46
-msgid "Warning: Your system may be unbootable!"
-msgstr "警告: あなたのシステムは起動できない恐れがあります!"
 
 #. Type: text
 #. Description
@@ -9902,7 +9927,7 @@ msgstr "論理ボリューム (LV) の操作"
 
 #. Type: select
 #. Description
-#: ../lvmcfg-utils.templates:17 ../partman-lvm.templates:146
+#: ../lvmcfg-utils.templates:17 ../partman-lvm.templates:147
 msgid "LVM configuration action:"
 msgstr "LVM 設定アクション:"
 
@@ -10010,31 +10035,31 @@ msgstr "論理ボリュームマネージャの設定アクション:"
 
 #. Type: multiselect
 #. Description
-#: ../lvmcfg-utils.templates:45 ../partman-lvm.templates:163
+#: ../lvmcfg-utils.templates:45 ../partman-lvm.templates:164
 msgid "Devices for the new volume group:"
 msgstr "新しいボリュームグループのデバイス:"
 
 #. Type: multiselect
 #. Description
-#: ../lvmcfg-utils.templates:45 ../partman-lvm.templates:163
+#: ../lvmcfg-utils.templates:45 ../partman-lvm.templates:164
 msgid "Please select the devices for the new volume group."
 msgstr "新しいボリュームグループデバイスを選択してください。"
 
 #. Type: string
 #. Description
-#: ../lvmcfg-utils.templates:52 ../partman-lvm.templates:170
+#: ../lvmcfg-utils.templates:52 ../partman-lvm.templates:171
 msgid "Volume group name:"
 msgstr "ボリュームグループ名:"
 
 #. Type: string
 #. Description
-#: ../lvmcfg-utils.templates:52 ../partman-lvm.templates:170
+#: ../lvmcfg-utils.templates:52 ../partman-lvm.templates:171
 msgid "Please enter the name you would like to use for the new volume group."
 msgstr "新しいボリュームグループに使いたい名前を入力してください。"
 
 #. Type: error
 #. Description
-#: ../lvmcfg-utils.templates:57 ../partman-lvm.templates:175
+#: ../lvmcfg-utils.templates:57 ../partman-lvm.templates:176
 msgid ""
 "No physical volumes were selected. The creation of a new volume group was "
 "aborted."
@@ -10044,19 +10069,19 @@ msgstr ""
 
 #. Type: error
 #. Description
-#: ../lvmcfg-utils.templates:63 ../partman-lvm.templates:181
+#: ../lvmcfg-utils.templates:63 ../partman-lvm.templates:182
 msgid "No volume group name entered"
 msgstr "ボリュームグループが入力されていません"
 
 #. Type: error
 #. Description
-#: ../lvmcfg-utils.templates:63 ../partman-lvm.templates:181
+#: ../lvmcfg-utils.templates:63 ../partman-lvm.templates:182
 msgid "No name for the volume group has been entered.  Please enter a name."
 msgstr "ボリュームグループ名が入力されていません。名前を入力してください。"
 
 #. Type: error
 #. Description
-#: ../lvmcfg-utils.templates:69 ../partman-lvm.templates:187
+#: ../lvmcfg-utils.templates:69 ../partman-lvm.templates:188
 #: ../partman-auto-lvm.templates:33
 msgid "Volume group name already in use"
 msgstr "ボリュームグループ名はすでに使われています"
@@ -10070,7 +10095,7 @@ msgstr "ボリュームグループ名はすでに使われています"
 #. #-#-#-#-#  templates.pot (PACKAGE VERSION)  #-#-#-#-#
 #. Type: string
 #. Description
-#: ../lvmcfg-utils.templates:69 ../partman-lvm.templates:187
+#: ../lvmcfg-utils.templates:69 ../partman-lvm.templates:188
 #: ../partman-auto-lvm.templates:12
 msgid ""
 "The selected volume group name is already in use. Please choose another name."
@@ -10080,13 +10105,13 @@ msgstr ""
 
 #. Type: error
 #. Description
-#: ../lvmcfg-utils.templates:75 ../partman-lvm.templates:193
+#: ../lvmcfg-utils.templates:75 ../partman-lvm.templates:194
 msgid "Volume group name overlaps with device name"
 msgstr "ボリュームグループ名はデバイス名と重なります"
 
 #. Type: error
 #. Description
-#: ../lvmcfg-utils.templates:75 ../partman-lvm.templates:193
+#: ../lvmcfg-utils.templates:75 ../partman-lvm.templates:194
 msgid ""
 "The selected volume group name overlaps with an existing device name. Please "
 "choose another name."
@@ -10096,43 +10121,43 @@ msgstr ""
 
 #. Type: select
 #. Description
-#: ../lvmcfg-utils.templates:82 ../partman-lvm.templates:207
+#: ../lvmcfg-utils.templates:82 ../partman-lvm.templates:208
 msgid "Volume group to delete:"
 msgstr "削除するボリュームグループ:"
 
 #. Type: select
 #. Description
-#: ../lvmcfg-utils.templates:82 ../partman-lvm.templates:207
+#: ../lvmcfg-utils.templates:82 ../partman-lvm.templates:208
 msgid "Please select the volume group you wish to delete."
 msgstr "削除したいボリュームグループを選択してください。"
 
 #. Type: error
 #. Description
-#: ../lvmcfg-utils.templates:87 ../partman-lvm.templates:212
+#: ../lvmcfg-utils.templates:87 ../partman-lvm.templates:213
 msgid "The volume group may have already been deleted."
 msgstr "ボリュームグループ名はすでに削除されているようです。"
 
 #. Type: boolean
 #. Description
-#: ../lvmcfg-utils.templates:95 ../partman-lvm.templates:220
+#: ../lvmcfg-utils.templates:95 ../partman-lvm.templates:221
 msgid "Really delete the volume group?"
 msgstr "本当にボリュームグループを削除しますか?"
 
 #. Type: boolean
 #. Description
-#: ../lvmcfg-utils.templates:95 ../partman-lvm.templates:220
+#: ../lvmcfg-utils.templates:95 ../partman-lvm.templates:221
 msgid "Please confirm the ${VG} volume group removal."
 msgstr "${VG} ボリュームグループの削除をしてよいか確認してください。"
 
 #. Type: error
 #. Description
-#: ../lvmcfg-utils.templates:100 ../partman-lvm.templates:225
+#: ../lvmcfg-utils.templates:100 ../partman-lvm.templates:226
 msgid "Error while deleting volume group"
 msgstr "ボリュームグループの削除中のエラー"
 
 #. Type: error
 #. Description
-#: ../lvmcfg-utils.templates:100 ../partman-lvm.templates:225
+#: ../lvmcfg-utils.templates:100 ../partman-lvm.templates:226
 msgid ""
 "The selected volume group could not be deleted. One or more logical volumes "
 "may currently be in use."
@@ -10142,49 +10167,49 @@ msgstr ""
 
 #. Type: error
 #. Description
-#: ../lvmcfg-utils.templates:106 ../partman-lvm.templates:231
+#: ../lvmcfg-utils.templates:106 ../partman-lvm.templates:232
 msgid "No volume group can be deleted."
 msgstr "削除できるボリュームグループはありません。"
 
 #. Type: select
 #. Description
-#: ../lvmcfg-utils.templates:114 ../partman-lvm.templates:239
+#: ../lvmcfg-utils.templates:114 ../partman-lvm.templates:240
 msgid "Volume group to extend:"
 msgstr "拡張するボリュームグループ:"
 
 #. Type: select
 #. Description
-#: ../lvmcfg-utils.templates:114 ../partman-lvm.templates:239
+#: ../lvmcfg-utils.templates:114 ../partman-lvm.templates:240
 msgid "Please select the volume group you wish to extend."
 msgstr "拡張したいボリュームグループを選択してください。"
 
 #. Type: multiselect
 #. Description
-#: ../lvmcfg-utils.templates:120 ../partman-lvm.templates:245
+#: ../lvmcfg-utils.templates:120 ../partman-lvm.templates:246
 msgid "Devices to add to the volume group:"
 msgstr "追加するボリュームグループのデバイス:"
 
 #. Type: multiselect
 #. Description
-#: ../lvmcfg-utils.templates:120 ../partman-lvm.templates:245
+#: ../lvmcfg-utils.templates:120 ../partman-lvm.templates:246
 msgid "Please select the devices you wish to add to the volume group."
 msgstr "ボリュームグループを追加したいデバイスを選択してください。"
 
 #. Type: multiselect
 #. Description
-#: ../lvmcfg-utils.templates:120 ../partman-lvm.templates:278
+#: ../lvmcfg-utils.templates:120 ../partman-lvm.templates:279
 msgid "You can select one or more devices."
 msgstr "1 つ以上のデバイスを選択できます。"
 
 #. Type: error
 #. Description
-#: ../lvmcfg-utils.templates:127 ../partman-lvm.templates:285
+#: ../lvmcfg-utils.templates:127 ../partman-lvm.templates:286
 msgid "No physical volumes selected"
 msgstr "物理ボリュームが選択されていません"
 
 #. Type: error
 #. Description
-#: ../lvmcfg-utils.templates:127 ../partman-lvm.templates:252
+#: ../lvmcfg-utils.templates:127 ../partman-lvm.templates:253
 msgid ""
 "No physical volumes were selected. Extension of the volume group was aborted."
 msgstr ""
@@ -10193,13 +10218,13 @@ msgstr ""
 
 #. Type: error
 #. Description
-#: ../lvmcfg-utils.templates:133 ../partman-lvm.templates:258
+#: ../lvmcfg-utils.templates:133 ../partman-lvm.templates:259
 msgid "Error while extending volume group"
 msgstr "ボリュームグループの拡張中のエラー"
 
 #. Type: error
 #. Description
-#: ../lvmcfg-utils.templates:133 ../partman-lvm.templates:258
+#: ../lvmcfg-utils.templates:133 ../partman-lvm.templates:259
 msgid ""
 "The physical volume ${PARTITION} could not be added to the selected volume "
 "group."
@@ -10209,25 +10234,25 @@ msgstr ""
 
 #. Type: error
 #. Description
-#: ../lvmcfg-utils.templates:139 ../partman-lvm.templates:264
+#: ../lvmcfg-utils.templates:139 ../partman-lvm.templates:265
 msgid "No volume group has been found."
 msgstr "ボリュームグループが見つかりませんでした。"
 
 #. Type: error
 #. Description
-#: ../lvmcfg-utils.templates:139 ../partman-lvm.templates:264
+#: ../lvmcfg-utils.templates:139 ../partman-lvm.templates:265
 msgid "No volume group can be reduced."
 msgstr "縮小できるボリュームグループはありません。"
 
 #. Type: select
 #. Description
-#: ../lvmcfg-utils.templates:147 ../partman-lvm.templates:272
+#: ../lvmcfg-utils.templates:147 ../partman-lvm.templates:273
 msgid "Volume group to reduce:"
 msgstr "縮小するボリュームグループ:"
 
 #. Type: select
 #. Description
-#: ../lvmcfg-utils.templates:147 ../partman-lvm.templates:272
+#: ../lvmcfg-utils.templates:147 ../partman-lvm.templates:273
 msgid "Please select the volume group you wish to reduce."
 msgstr "縮小したいボリュームグループを選択してください。"
 
@@ -10256,13 +10281,13 @@ msgstr ""
 
 #. Type: error
 #. Description
-#: ../lvmcfg-utils.templates:164 ../partman-lvm.templates:291
+#: ../lvmcfg-utils.templates:164 ../partman-lvm.templates:292
 msgid "Error while reducing volume group"
 msgstr "ボリュームグループの縮小中のエラー"
 
 #. Type: error
 #. Description
-#: ../lvmcfg-utils.templates:164 ../partman-lvm.templates:291
+#: ../lvmcfg-utils.templates:164 ../partman-lvm.templates:292
 msgid ""
 "The physical volume ${PARTITION} could not be removed from the selected "
 "volume group."
@@ -10282,7 +10307,7 @@ msgstr ""
 
 #. Type: error
 #. Description
-#: ../lvmcfg-utils.templates:178 ../partman-lvm.templates:299
+#: ../lvmcfg-utils.templates:178 ../partman-lvm.templates:300
 msgid ""
 "No free volume groups were found for creating a new logical volume. Please "
 "create more physical volumes and volume groups, or reduce an existing volume "
@@ -10294,19 +10319,19 @@ msgstr ""
 
 #. Type: string
 #. Description
-#: ../lvmcfg-utils.templates:185 ../partman-lvm.templates:306
+#: ../lvmcfg-utils.templates:185 ../partman-lvm.templates:307
 msgid "Logical volume name:"
 msgstr "論理ボリューム名:"
 
 #. Type: string
 #. Description
-#: ../lvmcfg-utils.templates:185 ../partman-lvm.templates:306
+#: ../lvmcfg-utils.templates:185 ../partman-lvm.templates:307
 msgid "Please enter the name you would like to use for the new logical volume."
 msgstr "新しい論理ボリュームに使いたい名前を入力してください。"
 
 #. Type: select
 #. Description
-#: ../lvmcfg-utils.templates:191 ../partman-lvm.templates:312
+#: ../lvmcfg-utils.templates:191 ../partman-lvm.templates:313
 msgid ""
 "Please select the volume group where the new logical volume should be "
 "created."
@@ -10314,19 +10339,19 @@ msgstr "新しい論理ボリュームを作成するボリュームグループ
 
 #. Type: error
 #. Description
-#: ../lvmcfg-utils.templates:197 ../partman-lvm.templates:318
+#: ../lvmcfg-utils.templates:197 ../partman-lvm.templates:319
 msgid "No logical volume name entered"
 msgstr "論理ボリューム名が入力されていません"
 
 #. Type: error
 #. Description
-#: ../lvmcfg-utils.templates:197 ../partman-lvm.templates:318
+#: ../lvmcfg-utils.templates:197 ../partman-lvm.templates:319
 msgid "No name for the logical volume has been entered.  Please enter a name."
 msgstr "論理ボリュームグループ名が入力されていません。名前を入力してください。"
 
 #. Type: error
 #. Description
-#: ../lvmcfg-utils.templates:203 ../partman-lvm.templates:324
+#: ../lvmcfg-utils.templates:203 ../partman-lvm.templates:325
 msgid ""
 "The name ${LV} is already in use by another logical volume on the same "
 "volume group (${VG})."
@@ -10336,13 +10361,13 @@ msgstr ""
 
 #. Type: string
 #. Description
-#: ../lvmcfg-utils.templates:209 ../partman-lvm.templates:330
+#: ../lvmcfg-utils.templates:209 ../partman-lvm.templates:331
 msgid "Logical volume size:"
 msgstr "論理ボリュームサイズ:"
 
 #. Type: string
 #. Description
-#: ../lvmcfg-utils.templates:209 ../partman-lvm.templates:330
+#: ../lvmcfg-utils.templates:209 ../partman-lvm.templates:331
 msgid ""
 "Please enter the size of the new logical volume. The size may be entered in "
 "the following formats: 10K (Kilobytes), 10M (Megabytes), 10G (Gigabytes), "
@@ -10354,13 +10379,13 @@ msgstr ""
 
 #. Type: error
 #. Description
-#: ../lvmcfg-utils.templates:216 ../partman-lvm.templates:337
+#: ../lvmcfg-utils.templates:216 ../partman-lvm.templates:338
 msgid "Error while creating a new logical volume"
 msgstr "新しい論理ボリュームの作成中のエラー"
 
 #. Type: error
 #. Description
-#: ../lvmcfg-utils.templates:216 ../partman-lvm.templates:337
+#: ../lvmcfg-utils.templates:216 ../partman-lvm.templates:338
 msgid ""
 "Unable to create a new logical volume (${LV}) on ${VG} with the new size "
 "${SIZE}."
@@ -10370,7 +10395,7 @@ msgstr ""
 
 #. Type: error
 #. Description
-#: ../lvmcfg-utils.templates:224 ../partman-lvm.templates:299
+#: ../lvmcfg-utils.templates:224 ../partman-lvm.templates:300
 msgid "No volume group found"
 msgstr "ボリュームグループが見つかりません"
 
@@ -10383,7 +10408,7 @@ msgstr ""
 
 #. Type: select
 #. Description
-#: ../lvmcfg-utils.templates:230 ../partman-lvm.templates:312
+#: ../lvmcfg-utils.templates:230 ../partman-lvm.templates:313
 msgid "Volume group:"
 msgstr "ボリュームグループ:"
 
@@ -10397,13 +10422,13 @@ msgstr "削除する論理ボリュームを含むボリュームグループを
 
 #. Type: error
 #. Description
-#: ../lvmcfg-utils.templates:236 ../partman-lvm.templates:345
+#: ../lvmcfg-utils.templates:236 ../partman-lvm.templates:346
 msgid "No logical volume found"
 msgstr "論理ボリュームが見つかりません"
 
 #. Type: error
 #. Description
-#: ../lvmcfg-utils.templates:236 ../partman-lvm.templates:345
+#: ../lvmcfg-utils.templates:236 ../partman-lvm.templates:346
 msgid ""
 "No logical volume has been found.  Please create a logical volume first."
 msgstr ""
@@ -10412,7 +10437,7 @@ msgstr ""
 
 #. Type: select
 #. Description
-#: ../lvmcfg-utils.templates:242 ../partman-lvm.templates:351
+#: ../lvmcfg-utils.templates:242 ../partman-lvm.templates:352
 msgid "Logical volume:"
 msgstr "論理ボリューム:"
 
@@ -10424,25 +10449,25 @@ msgstr "${VG} で削除する論理ボリュームを選択してください。
 
 #. Type: error
 #. Description
-#: ../lvmcfg-utils.templates:247 ../partman-lvm.templates:360
+#: ../lvmcfg-utils.templates:247 ../partman-lvm.templates:361
 msgid "Error while deleting the logical volume"
 msgstr "論理ボリュームの削除中のエラー"
 
 #. Type: error
 #. Description
-#: ../lvmcfg-utils.templates:247 ../partman-lvm.templates:360
+#: ../lvmcfg-utils.templates:247 ../partman-lvm.templates:361
 msgid "The logical volume (${LV}) on ${VG} could not be deleted."
 msgstr "${VG} の論理ボリューム (${LV}) を削除できませんでした。"
 
 #. Type: error
 #. Description
-#: ../lvmcfg-utils.templates:254 ../partman-lvm.templates:367
+#: ../lvmcfg-utils.templates:254 ../partman-lvm.templates:368
 msgid "No usable physical volumes found"
 msgstr "利用可能な物理ボリュームが見つかりません"
 
 #. Type: error
 #. Description
-#: ../lvmcfg-utils.templates:254 ../partman-lvm.templates:367
+#: ../lvmcfg-utils.templates:254 ../partman-lvm.templates:368
 msgid ""
 "No physical volumes (i.e. partitions) were found in your system. All "
 "physical volumes may already be in use. You may also need to load some "
@@ -10454,13 +10479,13 @@ msgstr ""
 
 #. Type: error
 #. Description
-#: ../lvmcfg-utils.templates:261 ../partman-lvm.templates:374
+#: ../lvmcfg-utils.templates:261 ../partman-lvm.templates:375
 msgid "Logical Volume Manager not available"
 msgstr "論理ボリュームマネージャは利用できません"
 
 #. Type: error
 #. Description
-#: ../lvmcfg-utils.templates:261 ../partman-lvm.templates:374
+#: ../lvmcfg-utils.templates:261 ../partman-lvm.templates:375
 msgid ""
 "The current kernel doesn't support the Logical Volume Manager. You may need "
 "to load the lvm-mod module."
@@ -10734,13 +10759,13 @@ msgstr "lvm"
 
 #. Type: select
 #. Description
-#: ../partman-lvm.templates:146
+#: ../partman-lvm.templates:147
 msgid "Summary of current LVM configuration:"
 msgstr "現在の LVM 設定の概要:"
 
 #. Type: select
 #. Description
-#: ../partman-lvm.templates:146
+#: ../partman-lvm.templates:147
 msgid ""
 " Free Physical Volumes:  ${FREE_PVS}\n"
 " Used Physical Volumes:  ${USED_PVS}\n"
@@ -10754,31 +10779,31 @@ msgstr ""
 
 #. Type: note
 #. Description
-#: ../partman-lvm.templates:157
+#: ../partman-lvm.templates:158
 msgid "Current LVM configuration:"
 msgstr "現在の LVM 設定:"
 
 #. Type: error
 #. Description
-#: ../partman-lvm.templates:199
+#: ../partman-lvm.templates:200
 msgid "The volume group ${VG} could not be created."
 msgstr "ボリュームグループ ${VG} を作成できませんでした。"
 
 #. Type: multiselect
 #. Description
-#: ../partman-lvm.templates:278
+#: ../partman-lvm.templates:279
 msgid "Devices to remove from the volume group:"
 msgstr "ボリュームグループから削除するデバイス:"
 
 #. Type: multiselect
 #. Description
-#: ../partman-lvm.templates:278
+#: ../partman-lvm.templates:279
 msgid "Please select the devices you wish to remove from the volume group."
 msgstr "ボリュームグループから削除したいデバイスを選択してください。"
 
 #. Type: error
 #. Description
-#: ../partman-lvm.templates:285
+#: ../partman-lvm.templates:286
 msgid ""
 "No physical volumes were selected. Reduction of the volume group was aborted."
 msgstr ""
@@ -10787,37 +10812,37 @@ msgstr ""
 
 #. Type: select
 #. Description
-#: ../partman-lvm.templates:351
+#: ../partman-lvm.templates:352
 msgid "Please select the logical volume to delete."
 msgstr "削除する論理ボリュームを選択してください。"
 
 #. Type: text
 #. Description
-#: ../partman-lvm.templates:356
+#: ../partman-lvm.templates:357
 msgid "in VG ${VG}"
 msgstr "VG ${VG} 内"
 
 #. Type: error
 #. Description
-#: ../partman-lvm.templates:380
+#: ../partman-lvm.templates:381
 msgid "Error while initializing physical volume"
 msgstr "物理ボリュームの初期化中のエラー"
 
 #. Type: error
 #. Description
-#: ../partman-lvm.templates:380
+#: ../partman-lvm.templates:381
 msgid "The physical volume ${PV} could not be initialized."
 msgstr "物理ボリューム ${PV} を初期化できませんでした。"
 
 #. Type: error
 #. Description
-#: ../partman-lvm.templates:387
+#: ../partman-lvm.templates:388
 msgid "Invalid logical volume or volume group name"
 msgstr "論理ボリュームまたはボリュームグループ名が無効です"
 
 #. Type: error
 #. Description
-#: ../partman-lvm.templates:387
+#: ../partman-lvm.templates:388
 msgid ""
 "Logical volume or volume group names may only contain alphanumeric "
 "characters, hyphen, plus, period and underscore. They must be 128 characters "
@@ -10831,7 +10856,7 @@ msgstr ""
 
 #. Type: error
 #. Description
-#: ../partman-lvm.templates:387
+#: ../partman-lvm.templates:388
 msgid "Please choose another name."
 msgstr "別の名前を選んでください。"
 
@@ -12641,3 +12666,18 @@ msgstr "カーネルをフラッシュメモリに書き込んでいます"
 #: ../flash-kernel-installer.templates:25
 msgid "Configure flash memory to boot the system"
 msgstr "システムをブートするためにフラッシュメモリを設定しています"
+
+#~ msgid "This is the main menu for the Debian installer."
+#~ msgstr "これは Debian インストーラのメインメニューです。"
+
+#~ msgid "No initrd generator"
+#~ msgstr "initrd 生成ツールがありません"
+
+#~ msgid ""
+#~ "The kernel that has been selected for installation needs an initrd to "
+#~ "boot. However, no package to generate that initrd is available that "
+#~ "supports your configuration. This would leave your system unable to boot."
+#~ msgstr ""
+#~ "インストール用に選択されたカーネルは、ブートするのに initrd が必要です。し"
+#~ "かし、設定内容をサポートする initrd を生成する利用可能なパッケージがありま"
+#~ "せん。つまり、システムはブートできない状態のままになります。"

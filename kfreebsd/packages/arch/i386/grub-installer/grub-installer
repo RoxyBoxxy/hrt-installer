@@ -33,32 +33,43 @@ info() {
 }
 
 get_serial_console() {
-	local defconsole="$(sed -e 's/.*console=/console=/' /proc/cmdline)"
-	if echo "${defconsole}" | grep -q console=ttyS; then
-		local PORT="$(echo "${defconsole}" | sed -e 's%^console=ttyS%%' -e 's%,.*%%')"
-		local SPEED="$(echo "${defconsole}" | sed -e 's%^console=ttyS[0-9]\+,%%' -e 's% .*%%')"
-		local SERIAL="ttyS${PORT},${SPEED}"
-		echo "console=$SERIAL"
+	# Get the last 'console=' entry (if none, the whole string is returned)
+	local defconsole="$(sed -e 's/.*\(console=[^ ]*\).*/\1/' /proc/cmdline)"
+	if echo "$defconsole" | grep -q console=ttyS; then
+		echo "$defconsole"
 	fi
 }
 
 grub_serial_console() {
 	#$1=output of get_serial_console
-	local unit=$(echo $1 | sed -e 's%^console=ttyS%%' -e 's%,.*%%')
-	local speed=$(echo $1 | sed -e 's%^console=ttyS[0-9]\+,%%' -e 's%[^(0-9)].*%%')
-	local parity=$(echo $1 | sed -e 's%^console=ttyS[0-9]\+,[0-9]\+%%' -e 's%[78].*%%')
+	local serconsole=${1##console=}
+	local device=${serconsole%%,*}
+	local unit=${device##ttyS}
+	local options=""
+	if echo $serconsole | grep -q ","; then
+		options=${serconsole##*,}
+	fi
+	local speed=$(echo "$options" | sed -e 's/^\([0-9]*\).*$/\1/')
+	# Take optional 1st (parity) and 3rd (word) characters after speed
+	options=${options##${speed}}
+	local parity=$(echo $options | sed 's/^\(.\?\).*$/\1/')
+	local word=$(echo $options | sed 's/^.\?.\?\(.\?\).*$/\1/')
+	if [ -z "$speed" ]; then
+		speed="9600"
+	fi
 	case "$parity" in 
-		"n") local parity="no" ;;
-		"e") local parity="even" ;;
-		"o") local parity="odd" ;;
-		*)   local parity="" ;;
+		n) parity="--parity=no" ;;
+		e) parity="--parity=even" ;;
+		o) parity="--parity=odd" ;;
+		*) parity="" ;;
 	esac
-	local word=$(echo $1 | sed -e 's%^console=ttyS[0-9]\+,[0-9]\+[oen]%%' -e 's%r%%')
-	local flow=$(echo $1 | sed -e 's%^console=ttyS[0-9]\+,[0-9]\+[oen][78]%%')
+	if [ "$word" ]; then
+		word="--word=$word"
+	fi
 
-	echo serial --unit=$unit --speed=$speed --word=$word --parity=$parity --stop=1
+	echo serial --unit=$unit --speed=$speed $word $parity --stop=1
 	echo terminal serial	
-	}
+}
 
 serial="$(get_serial_console)"
 
@@ -77,7 +88,7 @@ convert () {
 #		exit 1
 #    fi
 
-    host_os=`uname -s | tr 'A-Z' 'a-z'`
+    host_os=$(uname -s | tr 'A-Z' 'a-z')
 
     # Break the device name into the disk part and the partition part
     case "$host_os" in
@@ -201,38 +212,82 @@ update_grub () {
 	fi
 }
 
+findfs () {
+	mount | grep "on /target${1%/} " | cut -d' ' -f1
+}
+
 findfstype () {
 	mount | grep "on $ROOT${1%/} " | cut -d' ' -f5
 }
 
+rootfs=$(findfs /)
+bootfs=$(findfs /boot)
+[ -n "$bootfs" ] || bootfs="$rootfs"
+
 bootfstype=$(findfstype /boot)
 [ -n "$bootfstype" ] || bootfstype="$(findfstype /)"
 
-# GRUB Legacy defaults
+# This code to set disc_offered was taken from lilo-installer
+rootfs_nodevfs=$(mapdevfs $rootfs)
+bootfs_nodevfs=$(mapdevfs $bootfs)
+prefix=$(echo "$bootfs" | \
+  sed 's/\(\/dev\/\(cciss\|ida\)\/c[0-9]d[0-9]\|\/dev\/[a-z]\+\).*/\1/')
+
+case $prefix in
+	/dev/md)
+		disc_offered_devfs="$bootfs"
+	;;
+	/dev/mapper)
+		disc_offered_devfs="$bootfs"
+	;;
+	/dev/[hs]d[a-z]|/dev/cciss/c[0-9]d[0-9]|/dev/ida/c[0-9]d[0-9])
+		disc_offered_devfs="$prefix"
+	;;
+	*)
+		disc_offered_devfs=$(find $prefix -follow -name disc | head -n 1)
+	;;
+esac
+disc_offered=$(mapdevfs "$disc_offered_devfs")
+
+# Identify partition table of the disk containing our boot partition
+bootfslabel=$(partmap $disc_offered || echo unknown)
+
+info "Identified partition label for $bootfs: $bootfslabel"
+
+# Default to GRUB Legacy
 grub_version="grub"
 menu_file="menu.lst"
 
-# reiserfs is the only filesystem that d-i supports and grub2 doesn't yet
-##if [ "$bootfstype" != "reiserfs" ]; then
-##  db_input low grub-installer/grub2_instead_of_grub_legacy || [ $? -eq 30 ]
-##  db_go || true
-##  db_get grub-installer/grub2_instead_of_grub_legacy
-##  if [ "$RET" = true ]; then
-##    grub_version="grub2"
-##    menu_file="grub.cfg"
-##  fi
-##fi
-
-if [ "$bootfstype" = "xfs" ]; then
-	# Warn user that grub on xfs is not safe and let them back out to
-	# main menu
-	db_input critical grub-installer/install_to_xfs || [ $? -eq 30 ]
-	db_go || exit 10
-	db_get grub-installer/install_to_xfs
-	if [ "$RET" != true ]; then
+case "$bootfstype:$bootfslabel" in
+	reiserfs:gpt)
+		# GPT is only supported in version 2, which doesn't have a
+		# reiserfs implementation yet.
 		exit 10
-	fi
-fi
+	;;
+	*:gpt)
+		grub_version="grub2"
+		menu_file="grub.cfg"
+	;;
+	xfs:*)
+		# Warn user that grub on xfs is not safe and let them back out to
+		# main menu
+		db_input critical grub-installer/install_to_xfs || [ $? -eq 30 ]
+		db_go || exit 10
+		db_get grub-installer/install_to_xfs
+		if [ "$RET" != true ]; then
+			exit 10
+		fi
+	;;
+	*:*)
+		db_input low grub-installer/grub2_instead_of_grub_legacy || [ $? -eq 30 ]
+		db_go || true
+		db_get grub-installer/grub2_instead_of_grub_legacy
+		if [ "$RET" = true ]; then
+			grub_version="grub2"
+			menu_file="grub.cfg"
+		fi
+	;;
+esac
 
 db_progress START 0 6 grub-installer/progress/title
 
@@ -241,7 +296,11 @@ db_progress INFO grub-installer/progress/step_install
 # apt-install passes --no-remove to apt, but grub{,2} conflict each other, so
 # we need to purge them first to support users who try grub2 and then switch
 # to grub legacy, or vice-versa
-##log-output -t grub-installer $chroot $ROOT dpkg -P grub grub2
+if [ "$grub_version" = grub ]; then
+	log-output -t grub-installer $chroot $ROOT dpkg -P grub2
+else
+	log-output -t grub-installer $chroot $ROOT dpkg -P grub
+fi
 
 if ! apt-install $grub_version ; then
 	info "Calling 'apt-install $grub_version' failed"
@@ -327,6 +386,16 @@ else
 	state=1
 fi
 
+nr_frdisks="$(dmraid -s -c | grep -v "No RAID disks" | wc -l)"
+if [ $nr_frdisks -eq 1 ]; then
+	q=grub-installer/fakeraid
+	frdisk=$(dmraid -s -c)
+elif [ $nr_frdisks -gt 1 ]; then
+	db_input critical grub-installer/fakeraid-unsupported || [ $? -eq 30 ]
+	db_go || true
+	exit 1
+fi
+
 db_progress STEP 1
 db_progress INFO grub-installer/progress/step_bootdev
 
@@ -377,30 +446,64 @@ info "Installing grub on '$bootdev'"
 
 update_mtab
 
-# Install grub on each space separated disk in the list
-bootdevs="$bootdev"
-for bootdev in $bootdevs; do
-	if ! is_floppy "$bootdev"; then
-		if $chroot $ROOT grub-install -h 2>&1 | grep -q no-floppy; then
-			info "grub-install supports --no-floppy"
-			floppyparam="--no-floppy"
-		else
-			info "grub-install does not support --no-floppy"
-		fi
-	fi
+if [ -z "$frdisk" ]; then
 
-	info "Running $chroot $ROOT grub-install --recheck $floppyparam \"$bootdev\""
-	if log-output -t grub-installer $chroot $ROOT grub-install --recheck $floppyparam "$bootdev"; then
-		info "grub-install ran successfully"
-	else
-		error "Running 'grub-install --recheck $floppyparam \"$bootdev\"' failed."
-		db_subst grub-installer/grub-install-failed BOOTDEV "$bootdev"
-		db_input critical grub-installer/grub-install-failed || [ $? -eq 30 ]
-		db_go || true
-		db_progress STOP
+	# Install grub on each space separated disk in the list
+	bootdevs="$bootdev"
+	for bootdev in $bootdevs; do
+		if ! is_floppy "$bootdev"; then
+			if $chroot $ROOT grub-install -h 2>&1 | grep -q no-floppy; then
+				info "grub-install supports --no-floppy"
+				floppyparam="--no-floppy"
+			else
+				info "grub-install does not support --no-floppy"
+			fi
+		fi
+	
+		info "Running $chroot $ROOT grub-install --recheck $floppyparam \"$bootdev\""
+		if log-output -t grub-installer $chroot $ROOT grub-install --recheck $floppyparam "$bootdev"; then
+			info "grub-install ran successfully"
+		else
+			error "Running 'grub-install --recheck $floppyparam \"$bootdev\"' failed."
+			db_subst grub-installer/grub-install-failed BOOTDEV "$bootdev"
+			db_input critical grub-installer/grub-install-failed || [ $? -eq 30 ]
+			db_go || true
+			db_progress STOP
+			exit 1
+		fi
+	done
+
+else
+
+	# Semi-manual grub setup for a fake (ata) RAID disk
+	case $(archdetect) in
+	    i386/*)
+		stagedir=i386-pc ;;
+	    amd64/*)
+		stagedir=x86_64-pc ;;
+	    *)
+	    	error "Unsupported architecture for fake RAID installation"
+		exit 1
+		;;
+	esac
+	if [ ! -d $ROOT/usr/lib/grub/$stagedir/ ]; then
+		error "Grub stage files not available"
 		exit 1
 	fi
-done
+	mkdir -p /target/boot/grub
+	cp $ROOT/usr/lib/grub/$stagedir/* $ROOT/boot/grub
+
+	# TODO: Check for errors during this process!
+	TERM=linux $chroot $ROOT \
+        grub --device-map=/dev/null >/var/log/grub-dmraid.log 2>&1 </dev/null <<EOF
+device (hd0,0) /dev/mapper/${frdisk}1
+device (hd0) /dev/mapper/$frdisk
+root (hd0,0)
+setup (hd0,0)
+quit
+EOF
+
+fi
 
 db_progress STEP 1
 db_progress INFO grub-installer/progress/step_config_loader
@@ -524,10 +627,21 @@ rm -f /tmp/os-probed
 
 if [ -s $tmpfile ] ; then
 	case $grub_version in
-	    grub)	grub_write_divider ;;
-	    grub2)	: ;;
+	    grub)
+			grub_write_divider
+			cat $tmpfile >> $ROOT/boot/grub/$menu_file
+	    ;;
+	    grub2)
+			grub_write_divider
+			cat > $ROOT/etc/grub.d/30_otheros << EOF
+#!/bin/sh
+exec tail -n +3 \$0
+EOF
+			cat $tmpfile >> $ROOT/etc/grub.d/30_otheros
+			chmod +x $ROOT/etc/grub.d/30_otheros
+			update-grub # propagate 30_otheros to grub.cfg
+	    ;;
 	esac
-	cat $tmpfile >> $ROOT/boot/grub/$menu_file
 	rm -f $tmpfile
 fi
 

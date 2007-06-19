@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ne\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-01-28 06:31+0000\n"
+"POT-Creation-Date: 2007-05-23 22:47+0000\n"
 "PO-Revision-Date: 2007-02-18 02:18+0545\n"
 "Last-Translator: Shiva Pokharel <shiva@mpp.org.np>\n"
 "Language-Team: Nepali <info@mpp.org.np>\n"
@@ -30,21 +30,15 @@ msgstr "डेबियन स्थापनाकर्ता मुख्य 
 msgid "Choose the next step in the install process:"
 msgstr "स्थापना प्रक्रियामा अर्को चरण रोज्नुहोस्:"
 
-#. Type: select
-#. Description
-#: ../main-menu.templates:9
-msgid "This is the main menu for the Debian installer."
-msgstr "डेबियन स्थापनाकर्ताका लागि यो मुख्य मेनु हो ।"
-
 #. Type: error
 #. Description
-#: ../main-menu.templates:14
+#: ../main-menu.templates:13
 msgid "Installation step failed"
 msgstr "स्थापना चरण असफल भयो"
 
 #. Type: error
 #. Description
-#: ../main-menu.templates:14
+#: ../main-menu.templates:13
 msgid ""
 "An installation step failed. You can try to run the failing item again from "
 "the menu, or skip it and choose something else. The failing step is: ${ITEM}"
@@ -54,13 +48,13 @@ msgstr ""
 
 #. Type: select
 #. Description
-#: ../main-menu.templates:23
+#: ../main-menu.templates:22
 msgid "Choose an installation step:"
 msgstr "एउटा स्थापना चरण रोज्नुहोस् :"
 
 #. Type: select
 #. Description
-#: ../main-menu.templates:23
+#: ../main-menu.templates:22
 msgid ""
 "This installation step depends on one or more other steps that have not yet "
 "been performed."
@@ -2793,10 +2787,10 @@ msgstr "अवस्थित लोजिकल भोल्युम डेट
 #. Type: boolean
 #. Description
 #: ../partman-auto.templates:36
+#, fuzzy
 msgid ""
-"The selected device already contains logical volumes and/or volume groups "
-"from a previous LVM installation, which must be removed from the disk before "
-"creating any partitions."
+"The selected device already contains the following LVM logical volumes, "
+"volume groups and physical volumes which are about to be removed:"
 msgstr ""
 "चयन गरिएका यन्त्रसँग पहिल्यै अघिल्लो LVM स्थापनाबाट लोजिकल भोल्युमहरू र/वा भोल्युम समूहहरू "
 "समाविष्ट छन्, जुन डिस्कबाट कुनै विभाजनहरू सिर्जना गर्नु पहिले हटाउनुपर्छ ।"
@@ -2804,20 +2798,70 @@ msgstr ""
 #. Type: boolean
 #. Description
 #: ../partman-auto.templates:36
+msgid "Logical volume(s) to be removed: ${LVTARGETS}"
+msgstr ""
+
+#. Type: boolean
+#. Description
+#: ../partman-auto.templates:36
+#, fuzzy
+msgid "Volume group(s) to be removed: ${VGTARGETS}"
+msgstr "मेट्नुका लागि भोल्युम समूह: "
+
+#. Type: boolean
+#. Description
+#: ../partman-auto.templates:36
+msgid "Physical volume(s) to be removed: ${PVTARGETS}"
+msgstr ""
+
+#. Type: boolean
+#. Description
+#: ../partman-auto.templates:36
+#, fuzzy
 msgid ""
-"Note that this will also permanently erase any data currently on the logical "
+"Note that this will permanently erase any data currently on the logical "
 "volumes."
+msgstr "याद गर्नुहोस् यसले लोजिकल भोल्युमहरूमा हालै कुनै डेटा स्थायी रूपमा मेट्नेछ ।"
+
+#. Type: boolean
+#. Description
+#: ../partman-auto.templates:52
+#, fuzzy
+msgid "Remove existing crypto volume data?"
+msgstr "अवस्थित लोजिकल भोल्युम डेटा हटाउनुहुन्छ ?"
+
+#. Type: boolean
+#. Description
+#: ../partman-auto.templates:52
+msgid ""
+"The selected device already contains a crypto volume which is about to be "
+"removed."
+msgstr ""
+
+#. Type: boolean
+#. Description
+#: ../partman-auto.templates:52
+msgid "The following crypto volume will be removed: ${TARGET}"
+msgstr ""
+
+#. Type: boolean
+#. Description
+#: ../partman-auto.templates:52
+#, fuzzy
+msgid ""
+"Note that this will also permanently erase any data currently on the crypto "
+"volume."
 msgstr "याद गर्नुहोस् यसले लोजिकल भोल्युमहरूमा हालै कुनै डेटा स्थायी रूपमा मेट्नेछ ।"
 
 #. Type: error
 #. Description
-#: ../partman-auto.templates:46
+#: ../partman-auto.templates:64
 msgid "LVM physical volume already exists on the selected device"
 msgstr "LVM भौतिक भोल्युम चयन भएको यन्त्रमा पहिल्यै अवस्थित छ"
 
 #. Type: error
 #. Description
-#: ../partman-auto.templates:46
+#: ../partman-auto.templates:64
 msgid ""
 "The selected device already contains one or more LVM physical volumes which "
 "cannot be removed. It is therefore not possible to automatically partition "
@@ -2828,13 +2872,13 @@ msgstr ""
 
 #. Type: select
 #. Description
-#: ../partman-auto.templates:64
+#: ../partman-auto.templates:82
 msgid "Partitioning method:"
 msgstr "विभाजिय विधि:"
 
 #. Type: select
 #. Description
-#: ../partman-auto.templates:64
+#: ../partman-auto.templates:82
 msgid ""
 "If you choose guided partitioning for an entire disk, you will next be asked "
 "which disk should be used."
@@ -2844,7 +2888,7 @@ msgstr ""
 
 #. Type: select
 #. Description
-#: ../partman-auto.templates:79
+#: ../partman-auto.templates:97
 msgid "Partitioning scheme:"
 msgstr "विभाजन योजना:"
 
@@ -2856,13 +2900,13 @@ msgstr "विभाजन योजना:"
 #.
 #. It is followed by a variable giving the chosen disk, hence the colon
 #. at the end of the sentence. Please keep it.
-#: ../partman-auto.templates:79
+#: ../partman-auto.templates:97
 msgid "Selected for partitioning:"
 msgstr "विभाजनको लागि चयन गरिएको:"
 
 #. Type: select
 #. Description
-#: ../partman-auto.templates:79
+#: ../partman-auto.templates:97
 msgid ""
 "The disk can be partitioned using one of several different schemes. If you "
 "are unsure, choose the first one."
@@ -2872,13 +2916,13 @@ msgstr ""
 
 #. Type: error
 #. Description
-#: ../partman-auto.templates:89
+#: ../partman-auto.templates:107
 msgid "Unusable free space"
 msgstr "अनुपयोगी खाली स्पेस"
 
 #. Type: error
 #. Description
-#: ../partman-auto.templates:89
+#: ../partman-auto.templates:107
 msgid ""
 "Partitioning failed because the chosen free space may not be used. There are "
 "probably too many (primary) partitions in the partition table."
@@ -2889,33 +2933,33 @@ msgstr ""
 #. Type: text
 #. Description
 #. TRANSLATORS: This is a menu entry. Keep in under 55 columns/characters
-#: ../partman-auto.templates:108
+#: ../partman-auto.templates:126
 msgid "Guided partitioning"
 msgstr "गाइड गरिएका विभाजन"
 
 #. Type: text
 #. Description
 #. TRANSLATORS: This is a menu entry. Keep in under 55 columns/characters
-#: ../partman-auto.templates:113
+#: ../partman-auto.templates:131
 msgid "Guided - use the largest continuous free space"
 msgstr "मार्गदर्शक गरिएको: ठूलो निरन्तर खाली स्पेसको प्रयोग गर्नुहोस्"
 
 #. Type: text
 #. Description
 #. TRANSLATORS: This is a menu entry. Keep in under 55 columns/characters
-#: ../partman-auto.templates:118
+#: ../partman-auto.templates:136
 msgid "Guided - use entire disk"
 msgstr "मार्गदर्शक गरिएको - पूरै डिस्क प्रयोग गर्नुहोस्"
 
 #. Type: select
 #. Description
-#: ../partman-auto.templates:123
+#: ../partman-auto.templates:141
 msgid "Select disk to partition:"
 msgstr "विभाजनमा डिस्क चयन गर्नुहोस्:"
 
 #. Type: select
 #. Description
-#: ../partman-auto.templates:123
+#: ../partman-auto.templates:141
 msgid ""
 "Note that all data on the disk you select will be erased, but not before you "
 "have confirmed that you really want to make the changes."
@@ -2925,13 +2969,13 @@ msgstr ""
 
 #. Type: multiselect
 #. Description
-#: ../partman-auto.templates:130
+#: ../partman-auto.templates:148
 msgid "Select disk(s) to partition:"
 msgstr "विभाजनमा डिस्कहरू चयन गर्नुहोस्:"
 
 #. Type: multiselect
 #. Description
-#: ../partman-auto.templates:130
+#: ../partman-auto.templates:148
 msgid ""
 "Note that all data on the disk(s) you select will be erased, but not before "
 "you have confirmed that you really want to make the changes."
@@ -2943,42 +2987,42 @@ msgstr ""
 #. Description
 #. TRANSLATORS: This is a menu entry. Keep in under 55 columns/characters
 #. This is a method for partioning - as in guided (automatic) versus manual
-#: ../partman-auto.templates:138
+#: ../partman-auto.templates:156
 msgid "Manual"
 msgstr "म्यानुअल"
 
 #. Type: text
 #. Description
 #. TRANSLATORS: This is a menu entry. Keep in under 55 columns/characters
-#: ../partman-auto.templates:143
+#: ../partman-auto.templates:161
 msgid "Automatically partition the free space"
 msgstr "खाली स्पेसलाई स्वत: विभाजन गर्नुहोस् "
 
 #. Type: text
 #. Description
 #. TRANSLATORS: This is a menu entry. Keep in under 55 columns/characters
-#: ../partman-auto.templates:148
+#: ../partman-auto.templates:166
 msgid "All files in one partition (recommended for new users)"
 msgstr "एउटा विभाजनमा सबै फाइलहरू ( नयाँ प्रयोगकर्ताका लागि सिफारिस)"
 
 #. Type: text
 #. Description
 #. TRANSLATORS: This is a menu entry. Keep in under 55 columns/characters
-#: ../partman-auto.templates:153
+#: ../partman-auto.templates:171
 msgid "Separate /home partition"
 msgstr "अलग/गृह विभाजन"
 
 #. Type: text
 #. Description
 #. TRANSLATORS: This is a menu entry. Keep in under 55 columns/characters
-#: ../partman-auto.templates:158
+#: ../partman-auto.templates:176
 msgid "Separate /home, /usr, /var, and /tmp partitions"
 msgstr "/गृह, /प्रयोगकर्ता, /चल, र /टेम्प्लेट विभाजनहरू विभाजित गर्नुहोस्"
 
 #. Type: text
 #. Description
 #. TRANSLATORS: This is a menu entry. Keep in under 55 columns/characters
-#: ../partman-auto.templates:163
+#: ../partman-auto.templates:181
 msgid "Small-disk (< 1GB) partitioning scheme"
 msgstr "सानो-डिस्क (< 1GB) विभाजन योजना"
 
@@ -3138,11 +3182,11 @@ msgstr "एउटा अज्ञात कारणको कारणले �
 
 #. Type: error
 #. Description
-#: ../partman-partitioning.templates:38 ../base-installer.templates:124
-#: ../quik-installer.templates:131 ../yaboot-installer.templates:88
-#: ../vmelilo-installer.templates:46 ../lvmcfg-utils.templates:247
-#: ../partman-lvm.templates:380 ../partman-auto-lvm.templates:40
-#: ../partman-auto-raid.templates:3
+#: ../partman-partitioning.templates:38 ../base-installer.templates:117
+#: ../nobootloader.templates:8 ../quik-installer.templates:131
+#: ../yaboot-installer.templates:88 ../vmelilo-installer.templates:46
+#: ../lvmcfg-utils.templates:247 ../partman-lvm.templates:381
+#: ../partman-auto-lvm.templates:40 ../partman-auto-raid.templates:3
 msgid "Check /var/log/syslog or see virtual console 4 for the details."
 msgstr "विस्तृतका लागि /var/log/syslog जाच्नुहोस् वा अवास्तविक कन्सोल ४ लाई हेर्नुहोस् । "
 
@@ -3455,7 +3499,7 @@ msgstr ""
 
 #. Type: boolean
 #. Description
-#: ../partman-basicfilesystems.templates:41
+#: ../partman-basicfilesystems.templates:42
 msgid ""
 "You have not selected any partitions for use as swap space. Enabling swap "
 "space is recommended so that the system can make better use of the available "
@@ -3470,7 +3514,7 @@ msgstr ""
 
 #. Type: boolean
 #. Description
-#: ../partman-basicfilesystems.templates:41
+#: ../partman-basicfilesystems.templates:42
 msgid ""
 "If you do not go back to the partitioning menu and assign a swap partition, "
 "the installation will continue without swap space."
@@ -3480,7 +3524,7 @@ msgstr ""
 
 #. Type: error
 #. Description
-#: ../partman-basicfilesystems.templates:53 ../partman-ext3.templates:16
+#: ../partman-basicfilesystems.templates:54 ../partman-ext3.templates:16
 #: ../partman-reiserfs.templates:16 ../partman-jfs.templates:16
 #: ../partman-xfs.templates:16 ../partman-ext2r0.templates:16
 msgid "Failed to create a file system"
@@ -3488,7 +3532,7 @@ msgstr "फाइल प्रणाली सिर्जना असफल �
 
 #. Type: error
 #. Description
-#: ../partman-basicfilesystems.templates:53
+#: ../partman-basicfilesystems.templates:54
 msgid ""
 "The ${TYPE} file system creation in partition #${PARTITION} of ${DEVICE} "
 "failed."
@@ -3498,20 +3542,20 @@ msgstr ""
 
 #. Type: error
 #. Description
-#: ../partman-basicfilesystems.templates:59
+#: ../partman-basicfilesystems.templates:60
 msgid "Failed to create a swap space"
 msgstr "स्वाप खाली ठाउँ सिर्जना असफल भयो "
 
 #. Type: error
 #. Description
-#: ../partman-basicfilesystems.templates:59
+#: ../partman-basicfilesystems.templates:60
 msgid ""
 "The creation of swap space in partition #${PARTITION} of ${DEVICE} failed."
 msgstr "${DEVICE} को विभाजन #${PARTITION} मा स्वाप खाली ठाउँको सिर्जना असफल भयो ।"
 
 #. Type: boolean
 #. Description
-#: ../partman-basicfilesystems.templates:64 ../partman-ext3.templates:22
+#: ../partman-basicfilesystems.templates:65 ../partman-ext3.templates:22
 #: ../partman-reiserfs.templates:22 ../partman-jfs.templates:22
 #: ../partman-xfs.templates:22 ../partman-ext2r0.templates:22
 msgid "Do you want to return to the partitioning menu?"
@@ -3519,7 +3563,7 @@ msgstr "के तपाईँ विभाजन मेनुमा फर्�
 
 #. Type: boolean
 #. Description
-#: ../partman-basicfilesystems.templates:64
+#: ../partman-basicfilesystems.templates:65
 msgid ""
 "No mount point is assigned for ${FILESYSTEM} file system in partition #"
 "${PARTITION} of ${DEVICE}."
@@ -3529,7 +3573,7 @@ msgstr ""
 
 #. Type: boolean
 #. Description
-#: ../partman-basicfilesystems.templates:64 ../partman-ext3.templates:22
+#: ../partman-basicfilesystems.templates:65 ../partman-ext3.templates:22
 #: ../partman-reiserfs.templates:22 ../partman-jfs.templates:22
 #: ../partman-xfs.templates:22 ../partman-ext2r0.templates:22
 msgid ""
@@ -3541,13 +3585,13 @@ msgstr ""
 
 #. Type: error
 #. Description
-#: ../partman-basicfilesystems.templates:73
+#: ../partman-basicfilesystems.templates:74
 msgid "Invalid file system for this mount point"
 msgstr "यो माउन्ट विन्दुका लागि अवैध फाइल प्रणाली"
 
 #. Type: error
 #. Description
-#: ../partman-basicfilesystems.templates:73
+#: ../partman-basicfilesystems.templates:74
 msgid ""
 "The file system type ${FILESYSTEM} cannot be mounted on ${MOUNTPOINT}, "
 "because it is not a fully-functional Unix file system. Please choose a "
@@ -3562,7 +3606,7 @@ msgstr ""
 #. Note to translators : Please keep your translations of the choices
 #. below a 65 columns limit (which means 65 characters
 #. in single-byte languages) including the initial path
-#: ../partman-basicfilesystems.templates:83
+#: ../partman-basicfilesystems.templates:84
 msgid "/ - the root file system"
 msgstr "/ - मूल फाइल प्रणाली"
 
@@ -3571,7 +3615,7 @@ msgstr "/ - मूल फाइल प्रणाली"
 #. Note to translators : Please keep your translations of the choices
 #. below a 65 columns limit (which means 65 characters
 #. in single-byte languages) including the initial path
-#: ../partman-basicfilesystems.templates:83
+#: ../partman-basicfilesystems.templates:84
 msgid "/boot - static files of the boot loader"
 msgstr "/बुट - बुट लोडरको स्थिर फाइलहरू"
 
@@ -3580,7 +3624,7 @@ msgstr "/बुट - बुट लोडरको स्थिर फाइल�
 #. Note to translators : Please keep your translations of the choices
 #. below a 65 columns limit (which means 65 characters
 #. in single-byte languages) including the initial path
-#: ../partman-basicfilesystems.templates:83
+#: ../partman-basicfilesystems.templates:84
 msgid "/home - user home directories"
 msgstr "/home - प्रयोगकर्ताको गृह डाइरेक्ट्रीहरू"
 
@@ -3589,7 +3633,7 @@ msgstr "/home - प्रयोगकर्ताको गृह डाइर�
 #. Note to translators : Please keep your translations of the choices
 #. below a 65 columns limit (which means 65 characters
 #. in single-byte languages) including the initial path
-#: ../partman-basicfilesystems.templates:83
+#: ../partman-basicfilesystems.templates:84
 msgid "/tmp - temporary files"
 msgstr "/tmp - अस्थायी फाइलहरू"
 
@@ -3598,7 +3642,7 @@ msgstr "/tmp - अस्थायी फाइलहरू"
 #. Note to translators : Please keep your translations of the choices
 #. below a 65 columns limit (which means 65 characters
 #. in single-byte languages) including the initial path
-#: ../partman-basicfilesystems.templates:83
+#: ../partman-basicfilesystems.templates:84
 msgid "/usr - static data"
 msgstr "/usr - स्थिर डेटा"
 
@@ -3607,7 +3651,7 @@ msgstr "/usr - स्थिर डेटा"
 #. Note to translators : Please keep your translations of the choices
 #. below a 65 columns limit (which means 65 characters
 #. in single-byte languages) including the initial path
-#: ../partman-basicfilesystems.templates:83
+#: ../partman-basicfilesystems.templates:84
 msgid "/var - variable data"
 msgstr "/var - चल डेटा"
 
@@ -3616,7 +3660,7 @@ msgstr "/var - चल डेटा"
 #. Note to translators : Please keep your translations of the choices
 #. below a 65 columns limit (which means 65 characters
 #. in single-byte languages) including the initial path
-#: ../partman-basicfilesystems.templates:83
+#: ../partman-basicfilesystems.templates:84
 msgid "/srv - data for services provided by this system"
 msgstr "/srv - यो प्रणाली द्वारा सेवाहरुका लागि उपलब्ध गराइएको डेटा"
 
@@ -3625,7 +3669,7 @@ msgstr "/srv - यो प्रणाली द्वारा सेवाह�
 #. Note to translators : Please keep your translations of the choices
 #. below a 65 columns limit (which means 65 characters
 #. in single-byte languages) including the initial path
-#: ../partman-basicfilesystems.templates:83
+#: ../partman-basicfilesystems.templates:84
 msgid "/opt - add-on application software packages"
 msgstr "/opt - अनुप्रयोग सफ्टवेयर प्याकेजहरुमा थप्नुहोस्"
 
@@ -3634,19 +3678,19 @@ msgstr "/opt - अनुप्रयोग सफ्टवेयर प्या
 #. Note to translators : Please keep your translations of the choices
 #. below a 65 columns limit (which means 65 characters
 #. in single-byte languages) including the initial path
-#: ../partman-basicfilesystems.templates:83
+#: ../partman-basicfilesystems.templates:84
 msgid "/usr/local - local hierarchy"
 msgstr "/usr/local - स्थानिय सोपानक्रम "
 
 #. Type: select
 #. Choices
-#: ../partman-basicfilesystems.templates:88
+#: ../partman-basicfilesystems.templates:89
 msgid "/dos"
 msgstr "/dos"
 
 #. Type: select
 #. Choices
-#: ../partman-basicfilesystems.templates:88
+#: ../partman-basicfilesystems.templates:89
 msgid "/windows"
 msgstr "/windows"
 
@@ -3665,7 +3709,7 @@ msgstr "/windows"
 #. below a 65 columns limit (which means 65 characters
 #. in single-byte languages)
 #. What's to be "entered manually" is a mount point
-#: ../partman-basicfilesystems.templates:88 ../partman-ext2r0.templates:36
+#: ../partman-basicfilesystems.templates:89 ../partman-ext2r0.templates:36
 #: ../partconf.templates:62
 msgid "Enter manually"
 msgstr "म्यानुअल तरिकाले प्रविष्ट गर्नुहोस्"
@@ -3677,43 +3721,43 @@ msgstr "म्यानुअल तरिकाले प्रविष्ट 
 #. Type: select
 #. Choices
 #. "it" is a partition
-#: ../partman-basicfilesystems.templates:88 ../partman-ext2r0.templates:36
+#: ../partman-basicfilesystems.templates:89 ../partman-ext2r0.templates:36
 msgid "Do not mount it"
 msgstr "यसलाई माउन्ट नगर्नुहोस्"
 
 #. Type: string
 #. Description
-#: ../partman-basicfilesystems.templates:93 ../partman-ext2r0.templates:41
+#: ../partman-basicfilesystems.templates:94 ../partman-ext2r0.templates:41
 msgid "Mount point for this partition:"
 msgstr "यो विभाजनका लागि विन्दु माउन्ट गर्नुहोस्:"
 
 #. Type: error
 #. Description
-#: ../partman-basicfilesystems.templates:97 ../partman-ext2r0.templates:45
+#: ../partman-basicfilesystems.templates:98 ../partman-ext2r0.templates:45
 msgid "Invalid mount point"
 msgstr "अवैध माउन्ट विन्दु"
 
 #. Type: error
 #. Description
-#: ../partman-basicfilesystems.templates:97 ../partman-ext2r0.templates:45
+#: ../partman-basicfilesystems.templates:98 ../partman-ext2r0.templates:45
 msgid "The mount point you entered is invalid."
 msgstr "तपाईँले प्रविष्टि गर्नु भएको माउन्ट विन्दु अवैध छ ।"
 
 #. Type: error
 #. Description
-#: ../partman-basicfilesystems.templates:97 ../partman-ext2r0.templates:45
+#: ../partman-basicfilesystems.templates:98 ../partman-ext2r0.templates:45
 msgid "Mount points must start with \"/\". They cannot contain spaces."
 msgstr "माउन्ट विन्दुहरू \"/\" सँगै सुरू हुन्छ । तिनीहरुले खाली ठाउँहरू समावेश गर्दैन ।"
 
 #. Type: string
 #. Description
-#: ../partman-basicfilesystems.templates:104
+#: ../partman-basicfilesystems.templates:105
 msgid "Label for the file system in this partition:"
 msgstr "यो विभाजनमा फाइल प्रणालीका लागि लेबुल गर्नुहोस्:"
 
 #. Type: text
 #. Description
-#: ../partman-basicfilesystems.templates:108
+#: ../partman-basicfilesystems.templates:109
 msgid "Format the swap area:"
 msgstr "स्वाप क्षेत्र ढाँचाबद्ध गर्नुहोस्:"
 
@@ -3724,7 +3768,7 @@ msgstr "स्वाप क्षेत्र ढाँचाबद्ध गर
 #. #-#-#-#-#  templates.pot (PACKAGE VERSION)  #-#-#-#-#
 #. Type: text
 #. Description
-#: ../partman-basicfilesystems.templates:113 ../partman-crypto.templates:121
+#: ../partman-basicfilesystems.templates:114 ../partman-crypto.templates:121
 msgid "yes"
 msgstr "हो"
 
@@ -3735,21 +3779,21 @@ msgstr "हो"
 #. #-#-#-#-#  templates.pot (PACKAGE VERSION)  #-#-#-#-#
 #. Type: text
 #. Description
-#: ../partman-basicfilesystems.templates:118 ../partman-crypto.templates:117
+#: ../partman-basicfilesystems.templates:119 ../partman-crypto.templates:117
 msgid "no"
 msgstr "होइन"
 
 #. Type: text
 #. Description
 #. label of file system
-#: ../partman-basicfilesystems.templates:123
+#: ../partman-basicfilesystems.templates:124
 msgid "Label:"
 msgstr "लेबुल:"
 
 #. Type: text
 #. Description
 #. for partman-basicfilesystems: in the following context: "Label: none"
-#: ../partman-basicfilesystems.templates:128
+#: ../partman-basicfilesystems.templates:129
 msgid ""
 "none[ Do not translate what's inside the brackets and just put the "
 "translation for the word \"none\" in your language without any brackets. "
@@ -3759,39 +3803,39 @@ msgstr "कुनै पनि होइन"
 #. Type: text
 #. Description
 #. Up to 24 character positions
-#: ../partman-basicfilesystems.templates:133
+#: ../partman-basicfilesystems.templates:134
 msgid "Reserved blocks:"
 msgstr "सुरक्षित खण्डहरू:"
 
 #. Type: string
 #. Description
-#: ../partman-basicfilesystems.templates:137
+#: ../partman-basicfilesystems.templates:138
 msgid "Percentage of the file system blocks reserved for the super-user:"
 msgstr "सुपर-प्रयोगकर्ताका लागि फाइल प्रणाली खण्डहरुको प्रतिशत सुरक्षित "
 
 #. Type: text
 #. Description
 #. Up to 25 character positions
-#: ../partman-basicfilesystems.templates:142
+#: ../partman-basicfilesystems.templates:143
 msgid "Typical usage:"
 msgstr "खास उपयोग:"
 
 #. Type: text
 #. Description
 #. In the following context: "Typical usage: standard"
-#: ../partman-basicfilesystems.templates:147
+#: ../partman-basicfilesystems.templates:148
 msgid "standard"
 msgstr "मानक"
 
 #. Type: select
 #. Description
-#: ../partman-basicfilesystems.templates:155
+#: ../partman-basicfilesystems.templates:156
 msgid "Typical usage of this partition:"
 msgstr "यो विभाजनको खास उपयोग:"
 
 #. Type: select
 #. Description
-#: ../partman-basicfilesystems.templates:155
+#: ../partman-basicfilesystems.templates:156
 msgid ""
 "Please specify how the file system is going to be used, so that optimal file "
 "system parameters can be chosen for that use."
@@ -3801,7 +3845,7 @@ msgstr ""
 
 #. Type: select
 #. Description
-#: ../partman-basicfilesystems.templates:155
+#: ../partman-basicfilesystems.templates:156
 msgid ""
 "standard = standard parameters, news = one inode per 4KB block, largefile = "
 "one inode per megabyte, largefile4 = one inode per 4 megabytes."
@@ -3829,7 +3873,7 @@ msgstr ""
 #. Type: text
 #. Description
 #. This is an item in the menu "Partition settings"
-#: ../partman-basicfilesystems.templates:167 ../partman-ext3.templates:32
+#: ../partman-basicfilesystems.templates:168 ../partman-ext3.templates:32
 #: ../partman-reiserfs.templates:32 ../partman-jfs.templates:32
 #: ../partman-xfs.templates:32
 msgid "Mount point:"
@@ -3838,7 +3882,7 @@ msgstr "माउन्ट विन्दु:"
 #. Type: text
 #. Description
 #. In the following context: "Mount point: none"
-#: ../partman-basicfilesystems.templates:172
+#: ../partman-basicfilesystems.templates:173
 msgid ""
 "none[ Do not translate what's inside the brackets and just put the "
 "translation for the word \"none\" in your language without any brackets. "
@@ -3847,53 +3891,53 @@ msgstr "कुनै पनि होइन"
 
 #. Type: text
 #. Description
-#: ../partman-basicfilesystems.templates:176
+#: ../partman-basicfilesystems.templates:177
 msgid "Ext2 file system"
 msgstr "Ext2 फाइल प्रणाली"
 
 #. Type: text
 #. Description
 #. Short file system name (untranslatable in many languages)
-#: ../partman-basicfilesystems.templates:181
+#: ../partman-basicfilesystems.templates:182
 msgid "ext2"
 msgstr "ext2"
 
 #. Type: text
 #. Description
-#: ../partman-basicfilesystems.templates:185
+#: ../partman-basicfilesystems.templates:186
 msgid "FAT16 file system"
 msgstr "FAT16 फाइल प्रणाली"
 
 #. Type: text
 #. Description
 #. Short file system name (untranslatable in many languages)
-#: ../partman-basicfilesystems.templates:190
+#: ../partman-basicfilesystems.templates:191
 msgid "fat16"
 msgstr "fat16"
 
 #. Type: text
 #. Description
-#: ../partman-basicfilesystems.templates:194
+#: ../partman-basicfilesystems.templates:195
 msgid "FAT32 file system"
 msgstr "FAT32 फाइल प्रणाली"
 
 #. Type: text
 #. Description
 #. Short file system name (untranslatable in many languages)
-#: ../partman-basicfilesystems.templates:199
+#: ../partman-basicfilesystems.templates:200
 msgid "fat32"
 msgstr "fat32"
 
 #. Type: text
 #. Description
-#: ../partman-basicfilesystems.templates:212
+#: ../partman-basicfilesystems.templates:213
 msgid "swap area"
 msgstr "स्वाप क्षेत्र"
 
 #. Type: text
 #. Description
 #. Short variant of `swap space'
-#: ../partman-basicfilesystems.templates:217
+#: ../partman-basicfilesystems.templates:218
 msgid "swap"
 msgstr "स्वाप"
 
@@ -3902,7 +3946,7 @@ msgstr "स्वाप"
 #. Note to translators : Please keep your translations of the choices
 #. below a 65 columns limit (which means 65 characters
 #. in single-byte languages)
-#: ../partman-basicfilesystems.templates:228 ../partman-ext3.templates:44
+#: ../partman-basicfilesystems.templates:229 ../partman-ext3.templates:44
 #: ../partman-reiserfs.templates:44 ../partman-jfs.templates:44
 #: ../partman-xfs.templates:44 ../partman-ext2r0.templates:60
 msgid "noatime - do not update inode access times at each access"
@@ -3913,7 +3957,7 @@ msgstr "noatime - प्रत्येक पहुँचमा इनोड �
 #. Note to translators : Please keep your translations of the choices
 #. below a 65 columns limit (which means 65 characters
 #. in single-byte languages)
-#: ../partman-basicfilesystems.templates:228 ../partman-ext3.templates:44
+#: ../partman-basicfilesystems.templates:229 ../partman-ext3.templates:44
 #: ../partman-reiserfs.templates:44 ../partman-jfs.templates:44
 #: ../partman-xfs.templates:44 ../partman-ext2r0.templates:60
 msgid "nodev - do not support character or block special devices"
@@ -3924,7 +3968,7 @@ msgstr "nodev - क्यारेक्टर वा बन्द भएको 
 #. Note to translators : Please keep your translations of the choices
 #. below a 65 columns limit (which means 65 characters
 #. in single-byte languages)
-#: ../partman-basicfilesystems.templates:228 ../partman-ext3.templates:44
+#: ../partman-basicfilesystems.templates:229 ../partman-ext3.templates:44
 #: ../partman-reiserfs.templates:44 ../partman-jfs.templates:44
 #: ../partman-xfs.templates:44 ../partman-ext2r0.templates:60
 msgid "nosuid - ignore set-user-identifier or set-group-identifier bits"
@@ -3935,7 +3979,7 @@ msgstr "nosuid - सेट-प्रयोगकर्ता-पहिचाय�
 #. Note to translators : Please keep your translations of the choices
 #. below a 65 columns limit (which means 65 characters
 #. in single-byte languages)
-#: ../partman-basicfilesystems.templates:228 ../partman-ext3.templates:44
+#: ../partman-basicfilesystems.templates:229 ../partman-ext3.templates:44
 #: ../partman-reiserfs.templates:44 ../partman-jfs.templates:44
 #: ../partman-xfs.templates:44 ../partman-ext2r0.templates:60
 msgid "noexec - do not allow execution of any binaries"
@@ -3946,7 +3990,7 @@ msgstr "noexec - कुनै बाइनरीहरुको कार्य�
 #. Note to translators : Please keep your translations of the choices
 #. below a 65 columns limit (which means 65 characters
 #. in single-byte languages)
-#: ../partman-basicfilesystems.templates:228 ../partman-ext3.templates:44
+#: ../partman-basicfilesystems.templates:229 ../partman-ext3.templates:44
 #: ../partman-reiserfs.templates:44 ../partman-xfs.templates:44
 #: ../partman-ext2r0.templates:60
 msgid "usrquota - user disk quota accounting enabled"
@@ -3957,7 +4001,7 @@ msgstr "usrquota - "
 #. Note to translators : Please keep your translations of the choices
 #. below a 65 columns limit (which means 65 characters
 #. in single-byte languages)
-#: ../partman-basicfilesystems.templates:228 ../partman-ext3.templates:44
+#: ../partman-basicfilesystems.templates:229 ../partman-ext3.templates:44
 #: ../partman-reiserfs.templates:44 ../partman-xfs.templates:44
 #: ../partman-ext2r0.templates:60
 msgid "grpquota - group disk quota accounting enabled"
@@ -3968,7 +4012,7 @@ msgstr "grpquota - समूह डिस्क भाग लेखालाई 
 #. Note to translators : Please keep your translations of the choices
 #. below a 65 columns limit (which means 65 characters
 #. in single-byte languages)
-#: ../partman-basicfilesystems.templates:228 ../partman-ext3.templates:44
+#: ../partman-basicfilesystems.templates:229 ../partman-ext3.templates:44
 #: ../partman-reiserfs.templates:44
 msgid "user_xattr - support user extended attributes"
 msgstr "user_xattr - प्रयोगकर्ता विस्तारित विशेषताहरू समर्थन गर्नुहोस्"
@@ -4009,7 +4053,7 @@ msgstr "user_xattr - प्रयोगकर्ता विस्तारि�
 #. Note to translators : Please keep your translations of the choices
 #. below a 65 columns limit (which means 65 characters
 #. in single-byte languages)
-#: ../partman-basicfilesystems.templates:237 ../partman-ext3.templates:44
+#: ../partman-basicfilesystems.templates:238 ../partman-ext3.templates:44
 #: ../partman-reiserfs.templates:44 ../partman-jfs.templates:44
 #: ../partman-xfs.templates:44 ../partman-ext2r0.templates:60
 msgid "ro - mount the file system read-only"
@@ -4051,7 +4095,7 @@ msgstr "ro- पढ्ने फाइल प्रणाली मात्र �
 #. Note to translators : Please keep your translations of the choices
 #. below a 65 columns limit (which means 65 characters
 #. in single-byte languages)
-#: ../partman-basicfilesystems.templates:237 ../partman-ext3.templates:44
+#: ../partman-basicfilesystems.templates:238 ../partman-ext3.templates:44
 #: ../partman-reiserfs.templates:44 ../partman-jfs.templates:44
 #: ../partman-xfs.templates:44 ../partman-ext2r0.templates:60
 msgid "sync - all input/output activities occur synchronously"
@@ -4062,13 +4106,13 @@ msgstr "sync - सबै आगत/निर्गत क्रियाकल�
 #. Note to translators : Please keep your translations of the choices
 #. below a 65 columns limit (which means 65 characters
 #. in single-byte languages) including the initial path
-#: ../partman-basicfilesystems.templates:237
+#: ../partman-basicfilesystems.templates:238
 msgid "quiet - changing owner and permissions does not return errors"
 msgstr "quiet - मालिक र अनुमति परिवर्तन गरेर त्रुटि फर्कदैन"
 
 #. Type: multiselect
 #. Description
-#: ../partman-basicfilesystems.templates:238 ../partman-ext3.templates:45
+#: ../partman-basicfilesystems.templates:239 ../partman-ext3.templates:45
 #: ../partman-reiserfs.templates:45 ../partman-jfs.templates:45
 #: ../partman-xfs.templates:45 ../partman-ext2r0.templates:61
 msgid "Mount options:"
@@ -4076,7 +4120,7 @@ msgstr "माउन्ट विकल्पहरू:"
 
 #. Type: multiselect
 #. Description
-#: ../partman-basicfilesystems.templates:238 ../partman-ext3.templates:45
+#: ../partman-basicfilesystems.templates:239 ../partman-ext3.templates:45
 #: ../partman-reiserfs.templates:45 ../partman-jfs.templates:45
 #: ../partman-xfs.templates:45 ../partman-ext2r0.templates:61
 msgid "Mount options can tune the behavior of the file system."
@@ -5032,20 +5076,22 @@ msgstr "तपाईँको टाइमजोन चयन गर्नुह
 #. Description
 #. Main menu item
 #: ../tzsetup-udeb.templates:4
-msgid "Configure time zone"
+#, fuzzy
+msgid "Configure the time zone"
 msgstr "टाइमजोन कन्फिगर गर्नुहोस्"
 
 #. Type: text
 #. Description
 #. finish-install progress bar item
 #: ../tzsetup-udeb.templates:9
-msgid "Saving time zone..."
+#, fuzzy
+msgid "Saving the time zone..."
 msgstr "टाइमजोन बचत गरिदै..."
 
 #. Type: note
 #. Description
 #: ../tzsetup-udeb.templates:13
-msgid "Selected timezone"
+msgid "Selected time zone"
 msgstr "चयन गरिएका टाइमजोन"
 
 #. Type: note
@@ -5229,30 +5275,12 @@ msgstr ""
 #. Type: error
 #. Description
 #: ../base-installer.templates:76
-msgid "No initrd generator"
-msgstr "initrd उत्पन्नकर्ता होइन"
-
-#. Type: error
-#. Description
-#: ../base-installer.templates:76
-msgid ""
-"The kernel that has been selected for installation needs an initrd to boot. "
-"However, no package to generate that initrd is available that supports your "
-"configuration. This would leave your system unable to boot."
-msgstr ""
-"स्थापनाका लागि चयन भएको कर्नेलले बुट गर्न एउटा initrd चाहन्छ । यद्यपि, उत्पन्न हुने कुनै "
-"प्याकेज नभएता पनि initrd उपलब्ध छ जसले तपाईँको कनफिगरेसनलाई समर्थन गर्छ । यसले तपाईँको "
-"प्रणालीलाई बुट गर्न असक्षम छोडिदिन्छ । "
-
-#. Type: error
-#. Description
-#: ../base-installer.templates:83
 msgid "Unsupported initrd generator"
 msgstr "असमर्थित initrd उत्पन्नकर्ता"
 
 #. Type: error
 #. Description
-#: ../base-installer.templates:83
+#: ../base-installer.templates:76
 msgid ""
 "The package ${GENERATOR} that was selected to generate the initrd is not "
 "supported."
@@ -5260,13 +5288,13 @@ msgstr "initrd उत्पन्न गर्न चयन भएको प्�
 
 #. Type: error
 #. Description
-#: ../base-installer.templates:89
+#: ../base-installer.templates:82
 msgid "Unable to install the selected kernel"
 msgstr "चयन भएको कर्नेल स्थापना गर्न असक्षम छ "
 
 #. Type: error
 #. Description
-#: ../base-installer.templates:89
+#: ../base-installer.templates:82
 msgid ""
 "An error was returned while trying to install the kernel into the target "
 "system."
@@ -5274,7 +5302,7 @@ msgstr "लक्षित प्रणालीमा कर्नेल स्
 
 #. Type: error
 #. Description
-#: ../base-installer.templates:89
+#: ../base-installer.templates:82
 msgid "Kernel package: '${KERNEL}'."
 msgstr "कर्नेल प्याकेज:'${KERNEL}' ।"
 
@@ -5282,7 +5310,7 @@ msgstr "कर्नेल प्याकेज:'${KERNEL}' ।"
 #. Choices
 #. For base-installer, "none" is an additional choice to a list of kernels.
 #. It means "no kernel"
-#: ../base-installer.templates:102
+#: ../base-installer.templates:95
 msgid ""
 "none[ Do not translate what's inside the brackets and just put the "
 "translation for the word \"none\" in your language without any brackets. "
@@ -5291,13 +5319,13 @@ msgstr "कुनै पनि होइन"
 
 #. Type: select
 #. Description
-#: ../base-installer.templates:103
+#: ../base-installer.templates:96
 msgid "Kernel to install:"
 msgstr "स्थापना गर्न कर्नेल:"
 
 #. Type: select
 #. Description
-#: ../base-installer.templates:103
+#: ../base-installer.templates:96
 msgid ""
 "The list shows the available kernels. Please choose one of them in order to "
 "make the system bootable from the hard drive."
@@ -5307,19 +5335,19 @@ msgstr ""
 
 #. Type: boolean
 #. Description
-#: ../base-installer.templates:110
+#: ../base-installer.templates:103
 msgid "Continue without installing a kernel?"
 msgstr "कर्नेल स्थापना नगरिकन निरन्तरता दिनुहोस्?"
 
 #. Type: boolean
 #. Description
-#: ../base-installer.templates:110
+#: ../base-installer.templates:103
 msgid "No installable kernel was found in the defined APT sources."
 msgstr "परिभाषित APT स्रोतहरुमा कुनै पनि स्थापित कर्नेल फेला परेन ।"
 
 #. Type: boolean
 #. Description
-#: ../base-installer.templates:110
+#: ../base-installer.templates:103
 msgid ""
 "You may try to continue without a kernel, and manually install your own "
 "kernel later. This is only recommended for experts, otherwise you will "
@@ -5331,25 +5359,25 @@ msgstr ""
 
 #. Type: error
 #. Description
-#: ../base-installer.templates:119
+#: ../base-installer.templates:112
 msgid "Cannot install kernel"
 msgstr "कर्नेल स्थापना गर्न सक्दैन"
 
 #. Type: error
 #. Description
-#: ../base-installer.templates:119
+#: ../base-installer.templates:112
 msgid "The installer cannot find a suitable kernel package to install."
 msgstr "स्थापनाकर्ताले स्थापना गर्न उचित कर्नेल प्याकेज फेला पार्न सक्दैन ।"
 
 #. Type: error
 #. Description
-#: ../base-installer.templates:124
+#: ../base-installer.templates:117
 msgid "Unable to install ${PACKAGE}"
 msgstr "${PACKAGE} स्थापना गर्न असक्षम"
 
 #. Type: error
 #. Description
-#: ../base-installer.templates:124
+#: ../base-installer.templates:117
 msgid ""
 "An error was returned while trying to install the ${PACKAGE} package onto "
 "the target system."
@@ -5358,34 +5386,34 @@ msgstr "लक्षित प्रणालीमा ${PACKAGE} प्या�
 #. Type: error
 #. Description
 #. SUBST0 is a Release file name.
-#: ../base-installer.templates:133
+#: ../base-installer.templates:126
 msgid "Failed getting Release file ${SUBST0}."
 msgstr "निष्काशन फाइल ${SUBST0} प्राप्त गर्न असफल भयो ।"
 
 #. Type: error
 #. Description
 #. SUBST0 is a Release.gpg file name
-#: ../base-installer.templates:139
+#: ../base-installer.templates:132
 msgid "Failed getting Release signature file ${SUBST0}."
 msgstr "निष्काशन हस्ताक्षर फाइल ${SUBST0} प्राप्त गर्न असफल भयो ।"
 
 #. Type: error
 #. Description
 #. SUBST0 is a gpg key ID
-#: ../base-installer.templates:145
+#: ../base-installer.templates:138
 msgid "Release file signed by unknown key (key id ${SUBST0})"
 msgstr "अज्ञात कुञ्जी (कुञ्जी id ${SUBST0}) द्वारा हस्ताक्षर गरिएको फाइल निस्काशन भयो ।"
 
 #. Type: error
 #. Description
-#: ../base-installer.templates:150
+#: ../base-installer.templates:143
 msgid "Invalid Release file: no valid components."
 msgstr "अवैध निष्काशन फाइल: वैध तत्वहरू होइन ।"
 
 #. Type: error
 #. Description
 #. SUBST0 is a filename
-#: ../base-installer.templates:156
+#: ../base-installer.templates:149
 msgid "Invalid Release file: no entry for ${SUBST0}."
 msgstr "अवैध नििष्काश फाइलन : ${SUBST0} का लागि कुनै प्रविष्टि छैन ।"
 
@@ -5393,7 +5421,7 @@ msgstr "अवैध नििष्काश फाइलन : ${SUBST0} का
 #. Description
 #. SUBST0 is a filename or package name
 #. Debootstrap is a program name: should not be translated
-#: ../base-installer.templates:163
+#: ../base-installer.templates:156
 msgid "Debootstrap Error"
 msgstr "डिबुट स्ट्रयाप त्रुटि"
 
@@ -5401,7 +5429,7 @@ msgstr "डिबुट स्ट्रयाप त्रुटि"
 #. Description
 #. SUBST0 is a filename or package name
 #. Debootstrap is a program name: should not be translated
-#: ../base-installer.templates:163
+#: ../base-installer.templates:156
 msgid ""
 "Couldn't retrieve ${SUBST0}. This may be due to a network problem or a bad "
 "CD, depending on your installation method."
@@ -5413,7 +5441,7 @@ msgstr ""
 #. Description
 #. SUBST0 is a filename or package name
 #. Debootstrap is a program name: should not be translated
-#: ../base-installer.templates:163
+#: ../base-installer.templates:156
 msgid ""
 "If you are installing from CD-R or CD-RW, burning the CD at a lower speed "
 "may help."
@@ -5423,13 +5451,13 @@ msgstr ""
 
 #. Type: text
 #. Description
-#: ../base-installer.templates:176
+#: ../base-installer.templates:169
 msgid "Preparing to install the base system..."
 msgstr "आधार प्रणाली स्थापना गर्न तयार गरिदै..."
 
 #. Type: text
 #. Description
-#: ../base-installer.templates:180 ../apt-setup-udeb.templates:15
+#: ../base-installer.templates:173 ../apt-setup-udeb.templates:15
 #: ../finish-install.templates:12
 msgid "Running ${SCRIPT}..."
 msgstr "${SCRIPT} चालु भइरहेको छ..."
@@ -5437,55 +5465,55 @@ msgstr "${SCRIPT} चालु भइरहेको छ..."
 #. Type: text
 #. Description
 #. Release is a filename which should not be translated
-#: ../base-installer.templates:185
+#: ../base-installer.templates:178
 msgid "Retrieving Release file"
 msgstr "निष्काशन फाइल पुन: प्राप्त गरिदैछ "
 
 #. Type: text
 #. Description
 #. Release is a filename which should not be translated
-#: ../base-installer.templates:190
+#: ../base-installer.templates:183
 msgid "Retrieving Release file signature"
 msgstr "निष्काशन फाइल हस्ताक्षर पुन: प्राप्त गरिदै"
 
 #. Type: text
 #. Description
 #. "packages" here can be translated
-#: ../base-installer.templates:195
+#: ../base-installer.templates:188
 msgid "Finding package sizes"
 msgstr "प्याकेज साइजहरू फेला पारिदै "
 
 #. Type: text
 #. Description
 #. Packages is a filename which should not be translated
-#: ../base-installer.templates:200
+#: ../base-installer.templates:193
 msgid "Retrieving Packages files"
 msgstr "प्याकेजहरुको फाइलहरू पुन: प्राप्त गरिदै"
 
 #. Type: text
 #. Description
 #. Packages is a filename which should not be translated
-#: ../base-installer.templates:205
+#: ../base-installer.templates:198
 msgid "Retrieving Packages file"
 msgstr "प्याकेजहरुको फाइलहरू पुन: प्राप्त गरिदै"
 
 #. Type: text
 #. Description
 #. "packages" here can be translated
-#: ../base-installer.templates:210
+#: ../base-installer.templates:203
 msgid "Retrieving packages"
 msgstr "प्याकेजहरुको पुन: प्राप्त गरिदै"
 
 #. Type: text
 #. Description
 #. "packages" here can be translated
-#: ../base-installer.templates:215
+#: ../base-installer.templates:208
 msgid "Extracting packages"
 msgstr "प्याकेजहरू झिकिदै"
 
 #. Type: text
 #. Description
-#: ../base-installer.templates:219
+#: ../base-installer.templates:212
 msgid "Installing the base system"
 msgstr "आधार प्रणाली स्थापना गरिदै"
 
@@ -5495,7 +5523,7 @@ msgstr "आधार प्रणाली स्थापना गरिदै
 #. The "core" packages are indeed packages that are specifically
 #. recorded as part of the base system. Other packages may
 #. be installed on the base system because of dependency resolution
-#: ../base-installer.templates:227
+#: ../base-installer.templates:220
 msgid "Installing core packages"
 msgstr "कोर प्याकेजहरू स्थापना गरिदै"
 
@@ -5505,13 +5533,13 @@ msgstr "कोर प्याकेजहरू स्थापना गरि
 #. by the dependency chain of core packages
 #. In short, they are "required" because at least one of the
 #. packages from the core packages depends on them
-#: ../base-installer.templates:235
+#: ../base-installer.templates:228
 msgid "Unpacking required packages"
 msgstr "आवश्यक प्याकेजहरू अनप्याक गर्दै"
 
 #. Type: text
 #. Description
-#: ../base-installer.templates:239
+#: ../base-installer.templates:232
 msgid "Configuring required packages"
 msgstr "आवश्यक प्याकेजहरू कन्फिगर गरिदै"
 
@@ -5519,7 +5547,7 @@ msgstr "आवश्यक प्याकेजहरू कन्फिगर 
 #. Description
 #. The base system is the minimal Debian system
 #. See http://www.debian.org/doc/debian-policy/ch-binary.html#s3.7
-#: ../base-installer.templates:245
+#: ../base-installer.templates:238
 msgid "Unpacking the base system"
 msgstr "आधार प्रणाली अनप्याक गर्दै"
 
@@ -5527,55 +5555,55 @@ msgstr "आधार प्रणाली अनप्याक गर्दै
 #. Description
 #. The base system is the minimal Debian system
 #. See http://www.debian.org/doc/debian-policy/ch-binary.html#s3.7
-#: ../base-installer.templates:251
+#: ../base-installer.templates:244
 msgid "Configuring the base system"
 msgstr "आधार प्रणाली कन्फिगर गरिदै"
 
 #. Type: text
 #. Description
-#: ../base-installer.templates:255
+#: ../base-installer.templates:248
 msgid "${SECTION}: ${INFO}..."
 msgstr "${SECTION}: ${INFO}..."
 
 #. Type: text
 #. Description
 #. SUBST0 is a package name
-#: ../base-installer.templates:260
+#: ../base-installer.templates:253
 msgid "Validating ${SUBST0}..."
 msgstr "${SUBST0} वैध गरिदै..."
 
 #. Type: text
 #. Description
 #. SUBST0 is a package name
-#: ../base-installer.templates:265
+#: ../base-installer.templates:258
 msgid "Retrieving ${SUBST0}..."
 msgstr "${SUBST0} पुन: प्राप्त गरिदै"
 
 #. Type: text
 #. Description
 #. SUBST0 is a package name
-#: ../base-installer.templates:270
+#: ../base-installer.templates:263
 msgid "Extracting ${SUBST0}..."
 msgstr "${SUBST0} झिकिदै..."
 
 #. Type: text
 #. Description
 #. SUBST0 is a package name
-#: ../base-installer.templates:275
+#: ../base-installer.templates:268
 msgid "Unpacking ${SUBST0}..."
 msgstr "${SUBST0} अनप्याक गर्दै..."
 
 #. Type: text
 #. Description
 #. SUBST0 is a package name
-#: ../base-installer.templates:280
+#: ../base-installer.templates:273
 msgid "Configuring ${SUBST0}..."
 msgstr "${SUBST0} कन्फिगर गरिदै..."
 
 #. Type: text
 #. Description
 #. Release is a filename which should not be translated
-#: ../base-installer.templates:285
+#: ../base-installer.templates:278
 msgid "Checking Release signature"
 msgstr "निष्काशन हस्ताक्षर जाँच गरिदै"
 
@@ -5583,40 +5611,40 @@ msgstr "निष्काशन हस्ताक्षर जाँच गर
 #. Description
 #. SUBST0 is a gpg key id
 #. Release is a filename which should not be translated
-#: ../base-installer.templates:291
+#: ../base-installer.templates:284
 msgid "Valid Release signature (key id ${SUBST0})"
 msgstr "वैध निष्काशन हस्ताक्षर (कुञ्जी id ${SUBST0})"
 
 #. Type: text
 #. Description
-#: ../base-installer.templates:295
+#: ../base-installer.templates:288
 msgid "Resolving dependencies of base packages..."
 msgstr "आधार प्याकेजहरुको निर्भरता स्पष्ट गर्दै..."
 
 #. Type: text
 #. Description
 #. SUBST0 is a list of packages
-#: ../base-installer.templates:300
+#: ../base-installer.templates:293
 msgid "Found additional base dependencies: ${SUBST0}"
 msgstr "थप आधार निर्भरताहरू फेला पर्यो:${SUBST0}"
 
 #. Type: text
 #. Description
 #. SUBST0 is a list of packages
-#: ../base-installer.templates:305
+#: ../base-installer.templates:298
 msgid "Found additional required dependencies: ${SUBST0}"
 msgstr "थप आवश्यक निर्भरताहरू फेला पर्यो:${SUBST0}"
 
 #. Type: text
 #. Description
 #. SUBST0 is a list of packages
-#: ../base-installer.templates:310
+#: ../base-installer.templates:303
 msgid "Found packages in base already in required: ${SUBST0}"
 msgstr "आधारमा फेला परेका प्याकेजहरू पहिलेनै आवश्यक थियो:${SUBST0}"
 
 #. Type: text
 #. Description
-#: ../base-installer.templates:314
+#: ../base-installer.templates:307
 msgid "Resolving dependencies of required packages..."
 msgstr "आवश्यक प्याकेजहरुको निर्भरता स्पष्ट गरिदै..."
 
@@ -5624,7 +5652,7 @@ msgstr "आवश्यक प्याकेजहरुको निर्भ�
 #. Description
 #. SUBST0 is an archive component (main, etc)
 #. SUBST1 is a mirror
-#: ../base-installer.templates:320
+#: ../base-installer.templates:313
 msgid "Checking component ${SUBST0} on ${SUBST1}..."
 msgstr "${SUBST1} मा तत्व ${SUBST0} जाँच गरिदै..."
 
@@ -5634,7 +5662,7 @@ msgstr "${SUBST1} मा तत्व ${SUBST0} जाँच गरिदै..."
 #. The "core" packages are indeed packages that are specifically
 #. recorded as part of the base system. Other packages may
 #. be installed on the base system because of dependency resolution
-#: ../base-installer.templates:328
+#: ../base-installer.templates:321
 msgid "Installing core packages..."
 msgstr "कोर प्याकेजहरू स्थापना गरिदैछ..."
 
@@ -5644,7 +5672,7 @@ msgstr "कोर प्याकेजहरू स्थापना गरि
 #. by the dependency chain of core packages
 #. In short, they are "required" because at least one of the
 #. packages from the core packages depends on them
-#: ../base-installer.templates:336
+#: ../base-installer.templates:329
 msgid "Unpacking required packages..."
 msgstr "आवश्यक प्याकेजहरू अनप्याक गरिदै..."
 
@@ -5654,108 +5682,108 @@ msgstr "आवश्यक प्याकेजहरू अनप्याक 
 #. by the dependency chain of core packages
 #. In short, they are "required" because at least one of the
 #. packages from the core packages depends on them
-#: ../base-installer.templates:344
+#: ../base-installer.templates:337
 msgid "Configuring required packages..."
 msgstr "आवश्यक प्याकेजहरू कन्फिगर गरिदैछ..."
 
 #. Type: text
 #. Description
-#: ../base-installer.templates:348
+#: ../base-installer.templates:341
 msgid "Installing base packages..."
 msgstr "आधार प्याकेजहरू स्थापना गरिदैछ..."
 
 #. Type: text
 #. Description
-#: ../base-installer.templates:352
+#: ../base-installer.templates:345
 msgid "Unpacking the base system..."
 msgstr "आधार प्रणाली अनप्याक गरिदैछ..."
 
 #. Type: text
 #. Description
-#: ../base-installer.templates:356
+#: ../base-installer.templates:349
 msgid "Configuring the base system..."
 msgstr "आधार प्रणाली कन्फिगर गरिदैछ..."
 
 #. Type: text
 #. Description
-#: ../base-installer.templates:360
+#: ../base-installer.templates:353
 msgid "Base system installed successfully."
 msgstr "आधार प्रणाली सफलतापूर्वक स्थापना भयो ।"
 
 #. Type: error
 #. Description
 #. Debootstrap is a program name: should not be translated
-#: ../base-installer.templates:365
+#: ../base-installer.templates:358
 msgid "Debootstrap warning"
 msgstr "डिबुट स्ट्रयाप चेतावनी "
 
 #. Type: error
 #. Description
 #. Debootstrap is a program name: should not be translated
-#: ../base-installer.templates:365
+#: ../base-installer.templates:358
 msgid "Warning: ${INFO}"
 msgstr "चेतावनी:${INFO}"
 
 #. Type: text
 #. Description
 #. SUBST0 is an url
-#: ../base-installer.templates:371
+#: ../base-installer.templates:364
 msgid "Retrying failed download of ${SUBST0}"
 msgstr "${SUBST0} को डाउनलोड गरिएको पुन:प्रयास असफल भयो "
 
 #. Type: text
 #. Description
-#: ../base-installer.templates:375
+#: ../base-installer.templates:368
 msgid "Configuring APT sources..."
 msgstr "APT स्रोतहरू कन्फिगर गरिदैछ..."
 
 #. Type: text
 #. Description
-#: ../base-installer.templates:379
+#: ../base-installer.templates:372
 msgid "Updating the list of available packages..."
 msgstr "उपलब्ध प्याकेजहरुको सूची अद्यावधिक गरिदैछ..."
 
 #. Type: text
 #. Description
-#: ../base-installer.templates:383
+#: ../base-installer.templates:376
 msgid "Installing extra packages..."
 msgstr "अतिरिक्त प्याकेजहरू स्थापना गरिदैछ..."
 
 #. Type: text
 #. Description
 #. SUBST0 is a package name
-#: ../base-installer.templates:388
+#: ../base-installer.templates:381
 msgid "Installing extra packages - retrieving and installing ${SUBST0}..."
 msgstr "अतिरिक्त प्याकेजहरू स्थापना गरिदै - ${SUBST0} पुन: प्राप्त गरेर स्थापना गरिदै..."
 
 #. Type: text
 #. Description
-#: ../base-installer.templates:392
+#: ../base-installer.templates:385
 msgid "Creating device files..."
 msgstr "यन्त्र फाइलहरू सिर्जना गरिछदै..."
 
 #. Type: text
 #. Description
-#: ../base-installer.templates:396
+#: ../base-installer.templates:389
 msgid "Selecting the kernel to install..."
 msgstr "स्थापनालाई कर्नेल चयन गरिदैछ..."
 
 #. Type: text
 #. Description
-#: ../base-installer.templates:400
+#: ../base-installer.templates:393
 msgid "Installing the kernel..."
 msgstr "कर्नेल स्थापना गरिदैछ..."
 
 #. Type: text
 #. Description
 #. SUBST0 is a package name
-#: ../base-installer.templates:405
+#: ../base-installer.templates:398
 msgid "Installing the kernel - retrieving and installing ${SUBST0}..."
 msgstr "कर्नेल स्थापना गरिदै - ${SUBST0} पुन: प्राप्त गरेर स्थापना गरिदै..."
 
 #. Type: text
 #. Description
-#: ../base-installer.templates:409
+#: ../base-installer.templates:402
 msgid "Installing the PCMCIA modules"
 msgstr "PCMCIA मोड्युलहरू स्थापना गरिदै"
 
@@ -5763,7 +5791,7 @@ msgstr "PCMCIA मोड्युलहरू स्थापना गरिद
 #. Description
 #. Item in the main menu to select this package
 #. TRANSLATORS: <65 columns
-#: ../base-installer.templates:415
+#: ../base-installer.templates:408
 msgid "Install the base system"
 msgstr "आधार प्रणाली स्थापना गर्नुहोस्"
 
@@ -6603,9 +6631,30 @@ msgstr ""
 msgid "Continue without boot loader"
 msgstr "बुट लोडर बिना निरन्तर गर्नुहोस्"
 
+#. Type: error
+#. Description
+#: ../nobootloader.templates:8 ../quik-installer.templates:131
+#: ../yaboot-installer.templates:88
+msgid "Failed to mount /target/proc"
+msgstr "/target/proc लाई माउन्ट गर्न असफल भयो"
+
+#. Type: error
+#. Description
+#: ../nobootloader.templates:8 ../quik-installer.templates:131
+#: ../yaboot-installer.templates:88
+msgid "Mounting the proc file system on /target/proc failed."
+msgstr "/target/proc मा proc फाइल प्रणाली माउन्ट गर्दै गरेको असफल भयो ।"
+
+#. Type: error
+#. Description
+#: ../nobootloader.templates:8 ../quik-installer.templates:131
+#: ../yaboot-installer.templates:88 ../vmelilo-installer.templates:46
+msgid "Warning: Your system may be unbootable!"
+msgstr "चेतावनी: तपाईँको प्रणाली अनबुटेवल हुन सक्छ ! "
+
 #. Type: note
 #. Description
-#: ../nobootloader.templates:9 ../yaboot-installer.templates:98
+#: ../nobootloader.templates:18 ../yaboot-installer.templates:98
 msgid ""
 "Some variables need to be set in the Genesi firmware in order for your "
 "system to boot automatically.  At the end of the installation, the system "
@@ -6618,7 +6667,7 @@ msgstr ""
 
 #. Type: note
 #. Description
-#: ../nobootloader.templates:9 ../yaboot-installer.templates:98
+#: ../nobootloader.templates:18 ../yaboot-installer.templates:98
 msgid ""
 "Alternatively, you will be able to boot the kernel manually by entering, at "
 "the firmware prompt:"
@@ -6628,13 +6677,13 @@ msgstr ""
 
 #. Type: note
 #. Description
-#: ../nobootloader.templates:31 ../yaboot-installer.templates:98
+#: ../nobootloader.templates:40 ../yaboot-installer.templates:98
 msgid "Setting firmware variables for automatic boot"
 msgstr "स्वत बुट गर्नका लागि firmware चलहरू सेट गरिदै"
 
 #. Type: note
 #. Description
-#: ../nobootloader.templates:31
+#: ../nobootloader.templates:40
 msgid ""
 "Some variables need to be set in the Netwinder NeTTrom firmware in order for "
 "your system to boot linux automatically.  At the end of this installation "
@@ -6659,7 +6708,7 @@ msgstr ""
 #. Description
 #. Translators, the 4th string of this description has been dropped from
 #. PO files. It contains firmware commands and should not be translated.
-#: ../nobootloader.templates:31 ../yaboot-installer.templates:98
+#: ../nobootloader.templates:40 ../yaboot-installer.templates:98
 #: ../arcboot-installer.templates:34
 msgid ""
 "You will only need to do this once.  Afterwards, enter the \"boot\" command "
@@ -6670,13 +6719,13 @@ msgstr ""
 
 #. Type: note
 #. Description
-#: ../nobootloader.templates:51
+#: ../nobootloader.templates:60
 msgid "No boot loader installed"
 msgstr "कुनै बुट लोडर स्थापना भएको छैन"
 
 #. Type: note
 #. Description
-#: ../nobootloader.templates:51
+#: ../nobootloader.templates:60
 msgid ""
 "No boot loader has been installed, either because you chose not to or "
 "because your specific architecture doesn't support a boot loader yet."
@@ -6686,7 +6735,7 @@ msgstr ""
 
 #. Type: note
 #. Description
-#: ../nobootloader.templates:51
+#: ../nobootloader.templates:60
 msgid ""
 "You will need to boot manually with the ${KERNEL} kernel on partition "
 "${BOOT} and ${ROOT} passed as a kernel argument."
@@ -7521,25 +7570,6 @@ msgstr "कुइक बुट लोडर सफलतापूर्वक �
 #: ../prep-installer.templates:42
 msgid "The new system is now ready to boot."
 msgstr "नयाँ प्रणाली अहिल्यै बुट हुन तयार छन् ।"
-
-#. Type: error
-#. Description
-#: ../quik-installer.templates:131 ../yaboot-installer.templates:88
-msgid "Failed to mount /target/proc"
-msgstr "/target/proc लाई माउन्ट गर्न असफल भयो"
-
-#. Type: error
-#. Description
-#: ../quik-installer.templates:131 ../yaboot-installer.templates:88
-msgid "Mounting the proc file system on /target/proc failed."
-msgstr "/target/proc मा proc फाइल प्रणाली माउन्ट गर्दै गरेको असफल भयो ।"
-
-#. Type: error
-#. Description
-#: ../quik-installer.templates:131 ../yaboot-installer.templates:88
-#: ../vmelilo-installer.templates:46
-msgid "Warning: Your system may be unbootable!"
-msgstr "चेतावनी: तपाईँको प्रणाली अनबुटेवल हुन सक्छ ! "
 
 #. Type: text
 #. Description
@@ -9748,7 +9778,7 @@ msgstr "लोजिकल भोल्युमहरू (LV) परिमा�
 
 #. Type: select
 #. Description
-#: ../lvmcfg-utils.templates:17 ../partman-lvm.templates:146
+#: ../lvmcfg-utils.templates:17 ../partman-lvm.templates:147
 msgid "LVM configuration action:"
 msgstr "LVM कन्फिगरेशन कार्य:"
 
@@ -9856,31 +9886,31 @@ msgstr "लोजिकल भोल्युम कन्फिगरेशन 
 
 #. Type: multiselect
 #. Description
-#: ../lvmcfg-utils.templates:45 ../partman-lvm.templates:163
+#: ../lvmcfg-utils.templates:45 ../partman-lvm.templates:164
 msgid "Devices for the new volume group:"
 msgstr "नयाँ भोल्युम समूहका लागि यन्त्रहरू:"
 
 #. Type: multiselect
 #. Description
-#: ../lvmcfg-utils.templates:45 ../partman-lvm.templates:163
+#: ../lvmcfg-utils.templates:45 ../partman-lvm.templates:164
 msgid "Please select the devices for the new volume group."
 msgstr "नयाँ भोल्युम समूहका लागि यन्त्रहरू चयन गर्नुहोस् ।"
 
 #. Type: string
 #. Description
-#: ../lvmcfg-utils.templates:52 ../partman-lvm.templates:170
+#: ../lvmcfg-utils.templates:52 ../partman-lvm.templates:171
 msgid "Volume group name:"
 msgstr "भोल्युम समूह नाम: "
 
 #. Type: string
 #. Description
-#: ../lvmcfg-utils.templates:52 ../partman-lvm.templates:170
+#: ../lvmcfg-utils.templates:52 ../partman-lvm.templates:171
 msgid "Please enter the name you would like to use for the new volume group."
 msgstr "नयाँ भोल्युम समूह प्रयोग गर्नका लागि तपाईँलाई मन परेको नाम प्रविष्ट गर्नुहोस् ।"
 
 #. Type: error
 #. Description
-#: ../lvmcfg-utils.templates:57 ../partman-lvm.templates:175
+#: ../lvmcfg-utils.templates:57 ../partman-lvm.templates:176
 msgid ""
 "No physical volumes were selected. The creation of a new volume group was "
 "aborted."
@@ -9888,19 +9918,19 @@ msgstr "कुनै भौतिक भोल्युमहरू चयन �
 
 #. Type: error
 #. Description
-#: ../lvmcfg-utils.templates:63 ../partman-lvm.templates:181
+#: ../lvmcfg-utils.templates:63 ../partman-lvm.templates:182
 msgid "No volume group name entered"
 msgstr "कुनै भोल्युम समूह नाम प्रविष्ट भएको छैन"
 
 #. Type: error
 #. Description
-#: ../lvmcfg-utils.templates:63 ../partman-lvm.templates:181
+#: ../lvmcfg-utils.templates:63 ../partman-lvm.templates:182
 msgid "No name for the volume group has been entered.  Please enter a name."
 msgstr "भोल्युम समूहका लागि कुनै नाम प्रविष्टि भएको छैन । कृपया नाम प्रविष्ट गर्नुहोस् ।"
 
 #. Type: error
 #. Description
-#: ../lvmcfg-utils.templates:69 ../partman-lvm.templates:187
+#: ../lvmcfg-utils.templates:69 ../partman-lvm.templates:188
 #: ../partman-auto-lvm.templates:33
 msgid "Volume group name already in use"
 msgstr "भोल्युम समूह नाम पहिल्यै प्रयोगमा छन् "
@@ -9914,7 +9944,7 @@ msgstr "भोल्युम समूह नाम पहिल्यै प�
 #. #-#-#-#-#  templates.pot (PACKAGE VERSION)  #-#-#-#-#
 #. Type: string
 #. Description
-#: ../lvmcfg-utils.templates:69 ../partman-lvm.templates:187
+#: ../lvmcfg-utils.templates:69 ../partman-lvm.templates:188
 #: ../partman-auto-lvm.templates:12
 msgid ""
 "The selected volume group name is already in use. Please choose another name."
@@ -9922,13 +9952,13 @@ msgstr "चयन भएको भोल्युम समूह नाम प�
 
 #. Type: error
 #. Description
-#: ../lvmcfg-utils.templates:75 ../partman-lvm.templates:193
+#: ../lvmcfg-utils.templates:75 ../partman-lvm.templates:194
 msgid "Volume group name overlaps with device name"
 msgstr "भोल्युम समूह नाम यन्त्र नाम सँग खप्टिन्छ ।"
 
 #. Type: error
 #. Description
-#: ../lvmcfg-utils.templates:75 ../partman-lvm.templates:193
+#: ../lvmcfg-utils.templates:75 ../partman-lvm.templates:194
 msgid ""
 "The selected volume group name overlaps with an existing device name. Please "
 "choose another name."
@@ -9936,43 +9966,43 @@ msgstr "चयन भएको समूह नाम अवस्थित य�
 
 #. Type: select
 #. Description
-#: ../lvmcfg-utils.templates:82 ../partman-lvm.templates:207
+#: ../lvmcfg-utils.templates:82 ../partman-lvm.templates:208
 msgid "Volume group to delete:"
 msgstr "मेट्नुका लागि भोल्युम समूह: "
 
 #. Type: select
 #. Description
-#: ../lvmcfg-utils.templates:82 ../partman-lvm.templates:207
+#: ../lvmcfg-utils.templates:82 ../partman-lvm.templates:208
 msgid "Please select the volume group you wish to delete."
 msgstr "कृपया तपाईँले मेट्न चाहनु भएको भोल्युम समूह चयन गर्नुहोस् । "
 
 #. Type: error
 #. Description
-#: ../lvmcfg-utils.templates:87 ../partman-lvm.templates:212
+#: ../lvmcfg-utils.templates:87 ../partman-lvm.templates:213
 msgid "The volume group may have already been deleted."
 msgstr "भोल्युम समूह पहिल्यै मेटिसकेको हुनेछ ।"
 
 #. Type: boolean
 #. Description
-#: ../lvmcfg-utils.templates:95 ../partman-lvm.templates:220
+#: ../lvmcfg-utils.templates:95 ../partman-lvm.templates:221
 msgid "Really delete the volume group?"
 msgstr "भोल्युम समूह साँच्चै मेट्नहुन्छ?"
 
 #. Type: boolean
 #. Description
-#: ../lvmcfg-utils.templates:95 ../partman-lvm.templates:220
+#: ../lvmcfg-utils.templates:95 ../partman-lvm.templates:221
 msgid "Please confirm the ${VG} volume group removal."
 msgstr "कृपया ${VG} भोल्युम समूह हटाउने कुरा यकिन गर्नुहोस् ।"
 
 #. Type: error
 #. Description
-#: ../lvmcfg-utils.templates:100 ../partman-lvm.templates:225
+#: ../lvmcfg-utils.templates:100 ../partman-lvm.templates:226
 msgid "Error while deleting volume group"
 msgstr "भोल्युम समूह मेट्दा त्रुटि"
 
 #. Type: error
 #. Description
-#: ../lvmcfg-utils.templates:100 ../partman-lvm.templates:225
+#: ../lvmcfg-utils.templates:100 ../partman-lvm.templates:226
 msgid ""
 "The selected volume group could not be deleted. One or more logical volumes "
 "may currently be in use."
@@ -9981,62 +10011,62 @@ msgstr ""
 
 #. Type: error
 #. Description
-#: ../lvmcfg-utils.templates:106 ../partman-lvm.templates:231
+#: ../lvmcfg-utils.templates:106 ../partman-lvm.templates:232
 msgid "No volume group can be deleted."
 msgstr "कुनै भोल्युम समूह मेट्न सकिदैन ।"
 
 #. Type: select
 #. Description
-#: ../lvmcfg-utils.templates:114 ../partman-lvm.templates:239
+#: ../lvmcfg-utils.templates:114 ../partman-lvm.templates:240
 msgid "Volume group to extend:"
 msgstr "विस्तार गर्नुपर्ने भोल्युम समूह:"
 
 #. Type: select
 #. Description
-#: ../lvmcfg-utils.templates:114 ../partman-lvm.templates:239
+#: ../lvmcfg-utils.templates:114 ../partman-lvm.templates:240
 msgid "Please select the volume group you wish to extend."
 msgstr "कृपया तपाईँले विस्तार गर्नु चाहनु भएको भोल्युम समूह चयन गर्नुहोस् ।"
 
 #. Type: multiselect
 #. Description
-#: ../lvmcfg-utils.templates:120 ../partman-lvm.templates:245
+#: ../lvmcfg-utils.templates:120 ../partman-lvm.templates:246
 msgid "Devices to add to the volume group:"
 msgstr "भोल्युम समूहमा थप्नुपर्ने यन्त्रहरू:"
 
 #. Type: multiselect
 #. Description
-#: ../lvmcfg-utils.templates:120 ../partman-lvm.templates:245
+#: ../lvmcfg-utils.templates:120 ../partman-lvm.templates:246
 msgid "Please select the devices you wish to add to the volume group."
 msgstr "कृपया तपाईँले भोल्युम समूहमा थप्नु चाहानु भएको यन्त्रहरू चयन गर्नुहोस् ।"
 
 #. Type: multiselect
 #. Description
-#: ../lvmcfg-utils.templates:120 ../partman-lvm.templates:278
+#: ../lvmcfg-utils.templates:120 ../partman-lvm.templates:279
 msgid "You can select one or more devices."
 msgstr "तपाईँ एउटा वा धेरै यन्त्रहरू चयन गर्न सक्नुहुन्छ ।"
 
 #. Type: error
 #. Description
-#: ../lvmcfg-utils.templates:127 ../partman-lvm.templates:285
+#: ../lvmcfg-utils.templates:127 ../partman-lvm.templates:286
 msgid "No physical volumes selected"
 msgstr "कुनै भौतिक भोल्युम चयन भएको छैन"
 
 #. Type: error
 #. Description
-#: ../lvmcfg-utils.templates:127 ../partman-lvm.templates:252
+#: ../lvmcfg-utils.templates:127 ../partman-lvm.templates:253
 msgid ""
 "No physical volumes were selected. Extension of the volume group was aborted."
 msgstr "कुनै भौतिक भोल्युम चयन भएको छैन । भोल्युम समूहको विस्तार परित्याग गरियो ।"
 
 #. Type: error
 #. Description
-#: ../lvmcfg-utils.templates:133 ../partman-lvm.templates:258
+#: ../lvmcfg-utils.templates:133 ../partman-lvm.templates:259
 msgid "Error while extending volume group"
 msgstr "भोल्युम समूह विस्तारमा त्रुटि"
 
 #. Type: error
 #. Description
-#: ../lvmcfg-utils.templates:133 ../partman-lvm.templates:258
+#: ../lvmcfg-utils.templates:133 ../partman-lvm.templates:259
 msgid ""
 "The physical volume ${PARTITION} could not be added to the selected volume "
 "group."
@@ -10044,25 +10074,25 @@ msgstr "भौतिक भोल्युम ${PARTITION} चयन भएक�
 
 #. Type: error
 #. Description
-#: ../lvmcfg-utils.templates:139 ../partman-lvm.templates:264
+#: ../lvmcfg-utils.templates:139 ../partman-lvm.templates:265
 msgid "No volume group has been found."
 msgstr "कुनै भोल्युम समूह फेला परेन ।"
 
 #. Type: error
 #. Description
-#: ../lvmcfg-utils.templates:139 ../partman-lvm.templates:264
+#: ../lvmcfg-utils.templates:139 ../partman-lvm.templates:265
 msgid "No volume group can be reduced."
 msgstr "कुनै भोल्युम समूह घट्न सक्दैन ।"
 
 #. Type: select
 #. Description
-#: ../lvmcfg-utils.templates:147 ../partman-lvm.templates:272
+#: ../lvmcfg-utils.templates:147 ../partman-lvm.templates:273
 msgid "Volume group to reduce:"
 msgstr "घटाउनु पर्ने भोल्युम समूह: "
 
 #. Type: select
 #. Description
-#: ../lvmcfg-utils.templates:147 ../partman-lvm.templates:272
+#: ../lvmcfg-utils.templates:147 ../partman-lvm.templates:273
 msgid "Please select the volume group you wish to reduce."
 msgstr "कृपया तपाईँले घटाउनु चाहनु भएको भोल्युम समूह चयन गर्नुहोस् ।"
 
@@ -10090,13 +10120,13 @@ msgstr ""
 
 #. Type: error
 #. Description
-#: ../lvmcfg-utils.templates:164 ../partman-lvm.templates:291
+#: ../lvmcfg-utils.templates:164 ../partman-lvm.templates:292
 msgid "Error while reducing volume group"
 msgstr "भोल्युम समूह घटाउदा त्रुटि"
 
 #. Type: error
 #. Description
-#: ../lvmcfg-utils.templates:164 ../partman-lvm.templates:291
+#: ../lvmcfg-utils.templates:164 ../partman-lvm.templates:292
 msgid ""
 "The physical volume ${PARTITION} could not be removed from the selected "
 "volume group."
@@ -10114,7 +10144,7 @@ msgstr ""
 
 #. Type: error
 #. Description
-#: ../lvmcfg-utils.templates:178 ../partman-lvm.templates:299
+#: ../lvmcfg-utils.templates:178 ../partman-lvm.templates:300
 msgid ""
 "No free volume groups were found for creating a new logical volume. Please "
 "create more physical volumes and volume groups, or reduce an existing volume "
@@ -10125,13 +10155,13 @@ msgstr ""
 
 #. Type: string
 #. Description
-#: ../lvmcfg-utils.templates:185 ../partman-lvm.templates:306
+#: ../lvmcfg-utils.templates:185 ../partman-lvm.templates:307
 msgid "Logical volume name:"
 msgstr "लोजिकल भोल्युम नाम:"
 
 #. Type: string
 #. Description
-#: ../lvmcfg-utils.templates:185 ../partman-lvm.templates:306
+#: ../lvmcfg-utils.templates:185 ../partman-lvm.templates:307
 msgid "Please enter the name you would like to use for the new logical volume."
 msgstr ""
 "कृपया तपाईँले नयाँ लोजिकल भोल्युमका लागि प्रयोग गर्न मन पराउनु भएको नाम प्रविष्ट गर्नुहोस् "
@@ -10139,7 +10169,7 @@ msgstr ""
 
 #. Type: select
 #. Description
-#: ../lvmcfg-utils.templates:191 ../partman-lvm.templates:312
+#: ../lvmcfg-utils.templates:191 ../partman-lvm.templates:313
 msgid ""
 "Please select the volume group where the new logical volume should be "
 "created."
@@ -10147,19 +10177,19 @@ msgstr "कृपया भोल्युम समूह चयन गर्�
 
 #. Type: error
 #. Description
-#: ../lvmcfg-utils.templates:197 ../partman-lvm.templates:318
+#: ../lvmcfg-utils.templates:197 ../partman-lvm.templates:319
 msgid "No logical volume name entered"
 msgstr "कुनै लोजिकल नाम प्रविष्टि भएन"
 
 #. Type: error
 #. Description
-#: ../lvmcfg-utils.templates:197 ../partman-lvm.templates:318
+#: ../lvmcfg-utils.templates:197 ../partman-lvm.templates:319
 msgid "No name for the logical volume has been entered.  Please enter a name."
 msgstr "लोजिकल भोल्युमका लागि कुनै नाम प्रविष्टि भएन । कृपया नाम प्रविष्ट गर्नुहोस् ।"
 
 #. Type: error
 #. Description
-#: ../lvmcfg-utils.templates:203 ../partman-lvm.templates:324
+#: ../lvmcfg-utils.templates:203 ../partman-lvm.templates:325
 msgid ""
 "The name ${LV} is already in use by another logical volume on the same "
 "volume group (${VG})."
@@ -10168,13 +10198,13 @@ msgstr ""
 
 #. Type: string
 #. Description
-#: ../lvmcfg-utils.templates:209 ../partman-lvm.templates:330
+#: ../lvmcfg-utils.templates:209 ../partman-lvm.templates:331
 msgid "Logical volume size:"
 msgstr "लोजिकल भोल्युम साइज:"
 
 #. Type: string
 #. Description
-#: ../lvmcfg-utils.templates:209 ../partman-lvm.templates:330
+#: ../lvmcfg-utils.templates:209 ../partman-lvm.templates:331
 msgid ""
 "Please enter the size of the new logical volume. The size may be entered in "
 "the following formats: 10K (Kilobytes), 10M (Megabytes), 10G (Gigabytes), "
@@ -10186,13 +10216,13 @@ msgstr ""
 
 #. Type: error
 #. Description
-#: ../lvmcfg-utils.templates:216 ../partman-lvm.templates:337
+#: ../lvmcfg-utils.templates:216 ../partman-lvm.templates:338
 msgid "Error while creating a new logical volume"
 msgstr "नयाँ यक्तिसँगत भोल्युम सिर्जनामा त्रुटि"
 
 #. Type: error
 #. Description
-#: ../lvmcfg-utils.templates:216 ../partman-lvm.templates:337
+#: ../lvmcfg-utils.templates:216 ../partman-lvm.templates:338
 msgid ""
 "Unable to create a new logical volume (${LV}) on ${VG} with the new size "
 "${SIZE}."
@@ -10201,7 +10231,7 @@ msgstr ""
 
 #. Type: error
 #. Description
-#: ../lvmcfg-utils.templates:224 ../partman-lvm.templates:299
+#: ../lvmcfg-utils.templates:224 ../partman-lvm.templates:300
 msgid "No volume group found"
 msgstr "कुनै भोल्युम समूह फेला परेन"
 
@@ -10213,7 +10243,7 @@ msgstr "लोजिकल भोल्युम मेट्नका लाग
 
 #. Type: select
 #. Description
-#: ../lvmcfg-utils.templates:230 ../partman-lvm.templates:312
+#: ../lvmcfg-utils.templates:230 ../partman-lvm.templates:313
 msgid "Volume group:"
 msgstr "भोल्युम समूह:"
 
@@ -10227,20 +10257,20 @@ msgstr "कृपया लोजिकल भोल्युम मेट्न
 
 #. Type: error
 #. Description
-#: ../lvmcfg-utils.templates:236 ../partman-lvm.templates:345
+#: ../lvmcfg-utils.templates:236 ../partman-lvm.templates:346
 msgid "No logical volume found"
 msgstr "कुनै लोजिकल भोल्युम फेला परेन "
 
 #. Type: error
 #. Description
-#: ../lvmcfg-utils.templates:236 ../partman-lvm.templates:345
+#: ../lvmcfg-utils.templates:236 ../partman-lvm.templates:346
 msgid ""
 "No logical volume has been found.  Please create a logical volume first."
 msgstr "कुनै लोजिकल भोल्युम फेला परेन । कृपया पहिले लोजिकल भोल्युम सिर्जना गर्नुहोस् ।"
 
 #. Type: select
 #. Description
-#: ../lvmcfg-utils.templates:242 ../partman-lvm.templates:351
+#: ../lvmcfg-utils.templates:242 ../partman-lvm.templates:352
 msgid "Logical volume:"
 msgstr "यक्तिसँगत भोल्युम:"
 
@@ -10252,25 +10282,25 @@ msgstr "${VG} मा मेट्नु पर्ने यक्तिसँग
 
 #. Type: error
 #. Description
-#: ../lvmcfg-utils.templates:247 ../partman-lvm.templates:360
+#: ../lvmcfg-utils.templates:247 ../partman-lvm.templates:361
 msgid "Error while deleting the logical volume"
 msgstr "लोजिकल भोल्युम मेट्दा त्रुटि"
 
 #. Type: error
 #. Description
-#: ../lvmcfg-utils.templates:247 ../partman-lvm.templates:360
+#: ../lvmcfg-utils.templates:247 ../partman-lvm.templates:361
 msgid "The logical volume (${LV}) on ${VG} could not be deleted."
 msgstr "${VG} मा लोजिकल भोल्युम (${LV}) मेट्न सक्दैन ।"
 
 #. Type: error
 #. Description
-#: ../lvmcfg-utils.templates:254 ../partman-lvm.templates:367
+#: ../lvmcfg-utils.templates:254 ../partman-lvm.templates:368
 msgid "No usable physical volumes found"
 msgstr "कुनै उपयोगी भौतिक भोल्युम फेला परेन"
 
 #. Type: error
 #. Description
-#: ../lvmcfg-utils.templates:254 ../partman-lvm.templates:367
+#: ../lvmcfg-utils.templates:254 ../partman-lvm.templates:368
 msgid ""
 "No physical volumes (i.e. partitions) were found in your system. All "
 "physical volumes may already be in use. You may also need to load some "
@@ -10282,13 +10312,13 @@ msgstr ""
 
 #. Type: error
 #. Description
-#: ../lvmcfg-utils.templates:261 ../partman-lvm.templates:374
+#: ../lvmcfg-utils.templates:261 ../partman-lvm.templates:375
 msgid "Logical Volume Manager not available"
 msgstr "लोजिकल भोल्युम प्रबन्धक उपलब्ध छैन "
 
 #. Type: error
 #. Description
-#: ../lvmcfg-utils.templates:261 ../partman-lvm.templates:374
+#: ../lvmcfg-utils.templates:261 ../partman-lvm.templates:375
 msgid ""
 "The current kernel doesn't support the Logical Volume Manager. You may need "
 "to load the lvm-mod module."
@@ -10562,13 +10592,13 @@ msgstr "lvm"
 
 #. Type: select
 #. Description
-#: ../partman-lvm.templates:146
+#: ../partman-lvm.templates:147
 msgid "Summary of current LVM configuration:"
 msgstr "हालको LVM कन्फिगरेशनको संक्षेप:"
 
 #. Type: select
 #. Description
-#: ../partman-lvm.templates:146
+#: ../partman-lvm.templates:147
 msgid ""
 " Free Physical Volumes:  ${FREE_PVS}\n"
 " Used Physical Volumes:  ${USED_PVS}\n"
@@ -10582,68 +10612,68 @@ msgstr ""
 
 #. Type: note
 #. Description
-#: ../partman-lvm.templates:157
+#: ../partman-lvm.templates:158
 msgid "Current LVM configuration:"
 msgstr "हालको LVM कन्फिगरेशन:"
 
 #. Type: error
 #. Description
-#: ../partman-lvm.templates:199
+#: ../partman-lvm.templates:200
 msgid "The volume group ${VG} could not be created."
 msgstr "भोल्युम समूह ${VG} सिर्जना हुन सकेन ।"
 
 #. Type: multiselect
 #. Description
-#: ../partman-lvm.templates:278
+#: ../partman-lvm.templates:279
 msgid "Devices to remove from the volume group:"
 msgstr "भोल्युम समूहबाट हटाउनु पर्ने यन्त्रहरू:"
 
 #. Type: multiselect
 #. Description
-#: ../partman-lvm.templates:278
+#: ../partman-lvm.templates:279
 msgid "Please select the devices you wish to remove from the volume group."
 msgstr "कृपया भोल्युम समूहबाट हटाउन चाहनु भएको यन्त्र चयनहरू गर्नुहोस् ।"
 
 #. Type: error
 #. Description
-#: ../partman-lvm.templates:285
+#: ../partman-lvm.templates:286
 msgid ""
 "No physical volumes were selected. Reduction of the volume group was aborted."
 msgstr "कुनै भौतिक भोल्युम चयन भएको छैन । भोल्युम समूहको विस्तार परित्याग गरियो ।"
 
 #. Type: select
 #. Description
-#: ../partman-lvm.templates:351
+#: ../partman-lvm.templates:352
 msgid "Please select the logical volume to delete."
 msgstr "कृपया मेट्नुपर्ने लोजिकल भोल्युम चयन गर्नुहोस् ।"
 
 #. Type: text
 #. Description
-#: ../partman-lvm.templates:356
+#: ../partman-lvm.templates:357
 msgid "in VG ${VG}"
 msgstr "VG ${VG} मा"
 
 #. Type: error
 #. Description
-#: ../partman-lvm.templates:380
+#: ../partman-lvm.templates:381
 msgid "Error while initializing physical volume"
 msgstr "भौतिक भोल्युम सुरुआत गर्दा त्रुटि"
 
 #. Type: error
 #. Description
-#: ../partman-lvm.templates:380
+#: ../partman-lvm.templates:381
 msgid "The physical volume ${PV} could not be initialized."
 msgstr "भौतिक भोल्युम ${PV} सुरुआत हुन सकेन ।"
 
 #. Type: error
 #. Description
-#: ../partman-lvm.templates:387
+#: ../partman-lvm.templates:388
 msgid "Invalid logical volume or volume group name"
 msgstr "अवैध लोजिकल भोल्युम वा भोल्युम समूह नाम"
 
 #. Type: error
 #. Description
-#: ../partman-lvm.templates:387
+#: ../partman-lvm.templates:388
 msgid ""
 "Logical volume or volume group names may only contain alphanumeric "
 "characters, hyphen, plus, period and underscore. They must be 128 characters "
@@ -10657,7 +10687,7 @@ msgstr ""
 
 #. Type: error
 #. Description
-#: ../partman-lvm.templates:387
+#: ../partman-lvm.templates:388
 msgid "Please choose another name."
 msgstr "कृपया अर्को नाम रोज्नुहोस् ।"
 
@@ -12435,3 +12465,18 @@ msgstr "फ्लास स्मृतिमा कर्नल लेखिँ
 #: ../flash-kernel-installer.templates:25
 msgid "Configure flash memory to boot the system"
 msgstr "प्रणाली बुट गर्न फ्लास स्मृति कनफिगर गर्नुहोस्"
+
+#~ msgid "This is the main menu for the Debian installer."
+#~ msgstr "डेबियन स्थापनाकर्ताका लागि यो मुख्य मेनु हो ।"
+
+#~ msgid "No initrd generator"
+#~ msgstr "initrd उत्पन्नकर्ता होइन"
+
+#~ msgid ""
+#~ "The kernel that has been selected for installation needs an initrd to "
+#~ "boot. However, no package to generate that initrd is available that "
+#~ "supports your configuration. This would leave your system unable to boot."
+#~ msgstr ""
+#~ "स्थापनाका लागि चयन भएको कर्नेलले बुट गर्न एउटा initrd चाहन्छ । यद्यपि, उत्पन्न हुने "
+#~ "कुनै प्याकेज नभएता पनि initrd उपलब्ध छ जसले तपाईँको कनफिगरेसनलाई समर्थन गर्छ । यसले "
+#~ "तपाईँको प्रणालीलाई बुट गर्न असक्षम छोडिदिन्छ । "

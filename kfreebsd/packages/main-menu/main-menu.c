@@ -31,6 +31,7 @@
 const int RAISE = 1;
 const int LOWER = 0;
 
+di_hash_table *seen_items;
 int last_successful_item = -1;
 
 /* Save default priority, to be able to return to it when we have to lower it */
@@ -57,8 +58,18 @@ int package_array_compare (const void *v1, const void *v2) {
 	p2 = *(di_system_package **)v2;
 
 	int r = p1->installer_menu_item - p2->installer_menu_item;
+	//di_log(DI_LOG_LEVEL_DEBUG, "menu compare: %s (%i) vs %s (%i): %i", 
+	//		p1->p.package, p1->installer_menu_item,
+	//		p2->p.package, p2->installer_menu_item, r);
 	if (r) return r;
 	return strcmp(p1->p.package, p2->p.package);
+}
+
+static void seen_items_key_destroy (void *key)
+{
+	di_rstring *s = key;
+	di_free(s->string);
+	di_free(s);
 }
 
 int isdefault(di_system_package *p) {
@@ -128,7 +139,8 @@ get_default_menu_item(di_slist *list)
 			//di_log(DI_LOG_LEVEL_DEBUG, "not menu item; or not installed");
 			continue;
 		}
-		if (p->installer_menu_item < last_successful_item &&
+		if ((p->installer_menu_item < last_successful_item &&
+		     !di_hash_table_lookup(seen_items, &p->p.key)) &&
 		    p->installer_menu_item < NEVERDEFAULT) {
 			//di_log(DI_LOG_LEVEL_DEBUG, "not in range to be default");
 			continue;
@@ -499,9 +511,18 @@ static void adjust_default_priority (void) {
 	}
 }
 
+static void restore_default_priority (void) {
+	const char *template = "debconf/priority";
+
+	di_log(DI_LOG_LEVEL_INFO, "Restoring default debconf priority '%s'",
+		debconf_priorities[default_priority] ? debconf_priorities[default_priority] : "(null)");
+	debconf_set(debconf, template, debconf_priorities[default_priority]);
+}
+
 void notify_user_of_failure (di_system_package *p) {
 	char buf[256];
 	
+	set_package_title(p);
 	debconf_capb(debconf);
 	menu_entry(debconf, p, buf, sizeof (buf));
 	debconf_subst(debconf, ITEM_FAILURE, "ITEM", buf);
@@ -568,6 +589,7 @@ int main (int argc __attribute__ ((unused)), char **argv) {
 	di_packages *packages;
 	di_packages_allocator *allocator;
 	int ret;
+	int last_item_backup = 0;
 
 	debconf = debconfclient_new();
 	di_system_init(basename(argv[0]));
@@ -583,9 +605,18 @@ int main (int argc __attribute__ ((unused)), char **argv) {
 
 	menu_startup();
 
+	seen_items = di_hash_table_new_full(di_rstring_hash, di_rstring_equal,
+					    seen_items_key_destroy, NULL);
+
 	allocator = di_system_packages_allocator_alloc ();
 	packages = di_system_packages_status_read_file(DI_SYSTEM_DPKG_STATUSFILE, allocator);
 	while ((p=show_main_menu(packages, allocator))) {
+		di_slist_node *node;
+
+		if (p->installer_menu_item < NEVERDEFAULT && last_item_backup) {
+			restore_default_priority();
+			last_item_backup = 0;
+		}
 		ret = do_menu_item(p);
 		adjust_default_priority();
 		switch (ret) {
@@ -603,13 +634,24 @@ int main (int argc __attribute__ ((unused)), char **argv) {
 			case EXIT_BACKUP:
 				di_log(DI_LOG_LEVEL_INFO, "Menu item '%s' succeeded but requested to be left unconfigured.", p->p.package); 
 				modify_debconf_priority(LOWER);
+				last_item_backup = 1;
 				break;
 			default:
 				di_log(DI_LOG_LEVEL_WARNING, "Menu item '%s' failed.", p->p.package);
 				notify_user_of_failure(p);
 				modify_debconf_priority(LOWER);
 		}
-		
+
+		/* Remember all the packages we've seen so far */
+		for (node = packages->list.head; node; node = node->next) {
+			di_system_package *seen = node->data;
+			di_rstring *seen_name = di_new0(di_rstring, 1);
+			seen_name->string = di_stradup(seen->p.key.string,
+						       seen->p.key.size);
+			seen_name->size = seen->p.key.size;
+			di_hash_table_insert(seen_items, seen_name, seen_name);
+		}
+
 		di_packages_free (packages);
 		di_packages_allocator_free (allocator);
 		allocator = di_system_packages_allocator_alloc ();

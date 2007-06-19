@@ -5,7 +5,7 @@
 # Uncomment this to turn on verbose mode.
 #export DH_VERBOSE=1
 
-PACKAGE = partman-xfs
+export PACKAGE = partman-xfs
 
 build:
 # Ye olde no-op.
@@ -23,14 +23,13 @@ install: build
 	debian/install-rc active_partition
 	debian/install-rc valid_filesystems
 	debian/install-rc init.d
+	debian/install-rc check.d
 	debian/install-rc commit.d
 	debian/install-rc finish.d
 	debian/install-rc mount.d
 	dh_install mountoptions lib/partman
 	dh_install fstab.d lib/partman
 	dh_install parted_names lib/partman
-	rm -rf `find debian/$(PACKAGE) -name CVS`
-	rm -rf `find debian/$(PACKAGE) -name .svn`
 
 binary-arch: build install
 

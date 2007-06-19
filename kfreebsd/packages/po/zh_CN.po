@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: debian-installer\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-01-28 06:31+0000\n"
-"PO-Revision-Date: 2007-01-29 05:01-0500\n"
+"POT-Creation-Date: 2007-05-23 22:47+0000\n"
+"PO-Revision-Date: 2007-04-21 16:54-0500\n"
 "Last-Translator: Ming Hua <minghua@rice.edu>\n"
 "Language-Team: Debian Chinese [GB] <debian-chinese-gb@lists.debian.org>\n"
 "MIME-Version: 1.0\n"
@@ -30,21 +30,15 @@ msgstr "Debian 安装程序主菜单"
 msgid "Choose the next step in the install process:"
 msgstr "请选择下一个安装步骤："
 
-#. Type: select
-#. Description
-#: ../main-menu.templates:9
-msgid "This is the main menu for the Debian installer."
-msgstr "这是 Debian 安装程序的主菜单。"
-
 #. Type: error
 #. Description
-#: ../main-menu.templates:14
+#: ../main-menu.templates:13
 msgid "Installation step failed"
 msgstr "安装步骤失败"
 
 #. Type: error
 #. Description
-#: ../main-menu.templates:14
+#: ../main-menu.templates:13
 msgid ""
 "An installation step failed. You can try to run the failing item again from "
 "the menu, or skip it and choose something else. The failing step is: ${ITEM}"
@@ -54,13 +48,13 @@ msgstr ""
 
 #. Type: select
 #. Description
-#: ../main-menu.templates:23
+#: ../main-menu.templates:22
 msgid "Choose an installation step:"
 msgstr "请选择一个安装步骤："
 
 #. Type: select
 #. Description
-#: ../main-menu.templates:23
+#: ../main-menu.templates:22
 msgid ""
 "This installation step depends on one or more other steps that have not yet "
 "been performed."
@@ -190,7 +184,7 @@ msgstr "注意，如果您的选择赖于其他组件，那么这些组件也将
 #. TRANSLATORS : keep short
 #: ../anna.templates:30
 msgid "Loading additional components"
-msgstr "加载额外组件"
+msgstr "正在加载额外组件"
 
 #. Type: text
 #. Description
@@ -1687,19 +1681,19 @@ msgstr "使用静态地址配置网络"
 #. Choices
 #: ../choose-mirror-bin.templates-in:13
 msgid "stable"
-msgstr "稳定"
+msgstr "稳定版"
 
 #. Type: select
 #. Choices
 #: ../choose-mirror-bin.templates-in:13
 msgid "testing"
-msgstr "测试中"
+msgstr "测试版"
 
 #. Type: select
 #. Choices
 #: ../choose-mirror-bin.templates-in:13
 msgid "unstable"
-msgstr "不稳定"
+msgstr "不稳定版"
 
 #. Type: select
 #. Description
@@ -1716,9 +1710,9 @@ msgid ""
 "that receives many of the new versions from unstable if they are not too "
 "buggy."
 msgstr ""
-"Debian 同时存在多个版本。稳定版是经过大量测试，很少更动的版本。不稳定版是没有"
-"经过测试，变动非常频繁的版本。测试中版本则是介于稳定与不稳定之间，它通常会从"
-"不稳定版中接收一些没太多问题的新版软件。"
+"Debian 同时存在多个版本。稳定版 (stable) 是经过大量测试，很少更动的版本。不稳"
+"定版 (unstable) 是未经测试，变动非常频繁的版本。测试版 (testing) 则是介于两者"
+"之间的版本，它通常会从不稳定版中接收一些没太多问题的新版软件。"
 
 #. Type: text
 #. Description
@@ -2717,30 +2711,74 @@ msgstr "移除现有的逻辑卷数据？"
 #. Description
 #: ../partman-auto.templates:36
 msgid ""
-"The selected device already contains logical volumes and/or volume groups "
-"from a previous LVM installation, which must be removed from the disk before "
-"creating any partitions."
+"The selected device already contains the following LVM logical volumes, "
+"volume groups and physical volumes which are about to be removed:"
 msgstr ""
-"您所选择的设备上已经包含了由以前的 LVM 安装过程所建立的逻辑卷或卷组。在创建任"
-"何新分区之前，这些逻辑卷或卷组都必须被移除。"
+"您所选择的设备上已经包含了下列 LVM 逻辑卷、卷组和物理卷，它们都将被删除："
+
+#. Type: boolean
+#. Description
+#: ../partman-auto.templates:36
+msgid "Logical volume(s) to be removed: ${LVTARGETS}"
+msgstr "要删除的逻辑卷：${LVTARGETS}"
+
+#. Type: boolean
+#. Description
+#: ../partman-auto.templates:36
+msgid "Volume group(s) to be removed: ${VGTARGETS}"
+msgstr "要删除的卷组：${VGTARGETS}"
+
+#. Type: boolean
+#. Description
+#: ../partman-auto.templates:36
+msgid "Physical volume(s) to be removed: ${PVTARGETS}"
+msgstr "要删除的物理卷：${PVTARGETS}"
 
 #. Type: boolean
 #. Description
 #: ../partman-auto.templates:36
 msgid ""
-"Note that this will also permanently erase any data currently on the logical "
+"Note that this will permanently erase any data currently on the logical "
 "volumes."
-msgstr "注意这同时会把这些逻辑卷上的全部数据都永久删除。"
+msgstr "注意这将会把这些逻辑卷上的全部数据都永久删除。"
+
+#. Type: boolean
+#. Description
+#: ../partman-auto.templates:52
+msgid "Remove existing crypto volume data?"
+msgstr "移除现有的加密卷数据？"
+
+#. Type: boolean
+#. Description
+#: ../partman-auto.templates:52
+msgid ""
+"The selected device already contains a crypto volume which is about to be "
+"removed."
+msgstr "您所选择的设备上已经包含了一个加密卷，它将被删除。"
+
+#. Type: boolean
+#. Description
+#: ../partman-auto.templates:52
+msgid "The following crypto volume will be removed: ${TARGET}"
+msgstr "下列加密卷将被删除：${TARGET}"
+
+#. Type: boolean
+#. Description
+#: ../partman-auto.templates:52
+msgid ""
+"Note that this will also permanently erase any data currently on the crypto "
+"volume."
+msgstr "注意这将会把这些加密卷上的全部数据都永久删除。"
 
 #. Type: error
 #. Description
-#: ../partman-auto.templates:46
+#: ../partman-auto.templates:64
 msgid "LVM physical volume already exists on the selected device"
 msgstr "所选的设备上已存在 LVM 物理卷"
 
 #. Type: error
 #. Description
-#: ../partman-auto.templates:46
+#: ../partman-auto.templates:64
 msgid ""
 "The selected device already contains one or more LVM physical volumes which "
 "cannot be removed. It is therefore not possible to automatically partition "
@@ -2751,13 +2789,13 @@ msgstr ""
 
 #. Type: select
 #. Description
-#: ../partman-auto.templates:64
+#: ../partman-auto.templates:82
 msgid "Partitioning method:"
 msgstr "分区方法："
 
 #. Type: select
 #. Description
-#: ../partman-auto.templates:64
+#: ../partman-auto.templates:82
 msgid ""
 "If you choose guided partitioning for an entire disk, you will next be asked "
 "which disk should be used."
@@ -2766,7 +2804,7 @@ msgstr ""
 
 #. Type: select
 #. Description
-#: ../partman-auto.templates:79
+#: ../partman-auto.templates:97
 msgid "Partitioning scheme:"
 msgstr "分区方案："
 
@@ -2778,13 +2816,13 @@ msgstr "分区方案："
 #.
 #. It is followed by a variable giving the chosen disk, hence the colon
 #. at the end of the sentence. Please keep it.
-#: ../partman-auto.templates:79
+#: ../partman-auto.templates:97
 msgid "Selected for partitioning:"
 msgstr "已选择要分区："
 
 #. Type: select
 #. Description
-#: ../partman-auto.templates:79
+#: ../partman-auto.templates:97
 msgid ""
 "The disk can be partitioned using one of several different schemes. If you "
 "are unsure, choose the first one."
@@ -2793,13 +2831,13 @@ msgstr ""
 
 #. Type: error
 #. Description
-#: ../partman-auto.templates:89
+#: ../partman-auto.templates:107
 msgid "Unusable free space"
 msgstr "不可用的空闲空间"
 
 #. Type: error
 #. Description
-#: ../partman-auto.templates:89
+#: ../partman-auto.templates:107
 msgid ""
 "Partitioning failed because the chosen free space may not be used. There are "
 "probably too many (primary) partitions in the partition table."
@@ -2809,33 +2847,33 @@ msgstr ""
 #. Type: text
 #. Description
 #. TRANSLATORS: This is a menu entry. Keep in under 55 columns/characters
-#: ../partman-auto.templates:108
+#: ../partman-auto.templates:126
 msgid "Guided partitioning"
 msgstr "分区向导"
 
 #. Type: text
 #. Description
 #. TRANSLATORS: This is a menu entry. Keep in under 55 columns/characters
-#: ../partman-auto.templates:113
+#: ../partman-auto.templates:131
 msgid "Guided - use the largest continuous free space"
 msgstr "向导 - 使用最大的连续空闲空间"
 
 #. Type: text
 #. Description
 #. TRANSLATORS: This is a menu entry. Keep in under 55 columns/characters
-#: ../partman-auto.templates:118
+#: ../partman-auto.templates:136
 msgid "Guided - use entire disk"
 msgstr "向导 - 使用整个磁盘"
 
 #. Type: select
 #. Description
-#: ../partman-auto.templates:123
+#: ../partman-auto.templates:141
 msgid "Select disk to partition:"
 msgstr "请选择要分区的磁盘："
 
 #. Type: select
 #. Description
-#: ../partman-auto.templates:123
+#: ../partman-auto.templates:141
 msgid ""
 "Note that all data on the disk you select will be erased, but not before you "
 "have confirmed that you really want to make the changes."
@@ -2845,13 +2883,13 @@ msgstr ""
 
 #. Type: multiselect
 #. Description
-#: ../partman-auto.templates:130
+#: ../partman-auto.templates:148
 msgid "Select disk(s) to partition:"
 msgstr "请选择要分区的磁盘："
 
 #. Type: multiselect
 #. Description
-#: ../partman-auto.templates:130
+#: ../partman-auto.templates:148
 msgid ""
 "Note that all data on the disk(s) you select will be erased, but not before "
 "you have confirmed that you really want to make the changes."
@@ -2863,42 +2901,42 @@ msgstr ""
 #. Description
 #. TRANSLATORS: This is a menu entry. Keep in under 55 columns/characters
 #. This is a method for partioning - as in guided (automatic) versus manual
-#: ../partman-auto.templates:138
+#: ../partman-auto.templates:156
 msgid "Manual"
 msgstr "手动"
 
 #. Type: text
 #. Description
 #. TRANSLATORS: This is a menu entry. Keep in under 55 columns/characters
-#: ../partman-auto.templates:143
+#: ../partman-auto.templates:161
 msgid "Automatically partition the free space"
 msgstr "对空闲空间进行自动分区"
 
 #. Type: text
 #. Description
 #. TRANSLATORS: This is a menu entry. Keep in under 55 columns/characters
-#: ../partman-auto.templates:148
+#: ../partman-auto.templates:166
 msgid "All files in one partition (recommended for new users)"
 msgstr "将所有文件放在同一个分区中 (推荐新手使用)"
 
 #. Type: text
 #. Description
 #. TRANSLATORS: This is a menu entry. Keep in under 55 columns/characters
-#: ../partman-auto.templates:153
+#: ../partman-auto.templates:171
 msgid "Separate /home partition"
 msgstr "将 /home 放在单独的分区"
 
 #. Type: text
 #. Description
 #. TRANSLATORS: This is a menu entry. Keep in under 55 columns/characters
-#: ../partman-auto.templates:158
+#: ../partman-auto.templates:176
 msgid "Separate /home, /usr, /var, and /tmp partitions"
 msgstr "将 /home、/usr、/var 和 /tmp 都分别放在单独的分区"
 
 #. Type: text
 #. Description
 #. TRANSLATORS: This is a menu entry. Keep in under 55 columns/characters
-#: ../partman-auto.templates:163
+#: ../partman-auto.templates:181
 msgid "Small-disk (< 1GB) partitioning scheme"
 msgstr "小硬盘 (< 1GB) 分区方案"
 
@@ -3056,11 +3094,11 @@ msgstr "由于未知的原因，您将无法改变分区大小。"
 
 #. Type: error
 #. Description
-#: ../partman-partitioning.templates:38 ../base-installer.templates:124
-#: ../quik-installer.templates:131 ../yaboot-installer.templates:88
-#: ../vmelilo-installer.templates:46 ../lvmcfg-utils.templates:247
-#: ../partman-lvm.templates:380 ../partman-auto-lvm.templates:40
-#: ../partman-auto-raid.templates:3
+#: ../partman-partitioning.templates:38 ../base-installer.templates:117
+#: ../nobootloader.templates:8 ../quik-installer.templates:131
+#: ../yaboot-installer.templates:88 ../vmelilo-installer.templates:46
+#: ../lvmcfg-utils.templates:247 ../partman-lvm.templates:381
+#: ../partman-auto-lvm.templates:40 ../partman-auto-raid.templates:3
 msgid "Check /var/log/syslog or see virtual console 4 for the details."
 msgstr "请检查 /var/log/syslog 或查看第四虚拟控制台以获得详细信息。"
 
@@ -3366,7 +3404,7 @@ msgstr "如果您不返回分区菜单并更正这些错误，将无法使用此
 
 #. Type: boolean
 #. Description
-#: ../partman-basicfilesystems.templates:41
+#: ../partman-basicfilesystems.templates:42
 msgid ""
 "You have not selected any partitions for use as swap space. Enabling swap "
 "space is recommended so that the system can make better use of the available "
@@ -3380,7 +3418,7 @@ msgstr ""
 
 #. Type: boolean
 #. Description
-#: ../partman-basicfilesystems.templates:41
+#: ../partman-basicfilesystems.templates:42
 msgid ""
 "If you do not go back to the partitioning menu and assign a swap partition, "
 "the installation will continue without swap space."
@@ -3390,7 +3428,7 @@ msgstr ""
 
 #. Type: error
 #. Description
-#: ../partman-basicfilesystems.templates:53 ../partman-ext3.templates:16
+#: ../partman-basicfilesystems.templates:54 ../partman-ext3.templates:16
 #: ../partman-reiserfs.templates:16 ../partman-jfs.templates:16
 #: ../partman-xfs.templates:16 ../partman-ext2r0.templates:16
 msgid "Failed to create a file system"
@@ -3398,7 +3436,7 @@ msgstr "创建文件系统失败"
 
 #. Type: error
 #. Description
-#: ../partman-basicfilesystems.templates:53
+#: ../partman-basicfilesystems.templates:54
 msgid ""
 "The ${TYPE} file system creation in partition #${PARTITION} of ${DEVICE} "
 "failed."
@@ -3406,20 +3444,20 @@ msgstr "在 ${DEVICE} 设备的第 ${PARTITION} 分区上创建 ${TYPE} 文件�
 
 #. Type: error
 #. Description
-#: ../partman-basicfilesystems.templates:59
+#: ../partman-basicfilesystems.templates:60
 msgid "Failed to create a swap space"
 msgstr "创建交换空间失败"
 
 #. Type: error
 #. Description
-#: ../partman-basicfilesystems.templates:59
+#: ../partman-basicfilesystems.templates:60
 msgid ""
 "The creation of swap space in partition #${PARTITION} of ${DEVICE} failed."
 msgstr "在 ${DEVICE} 设备上第 ${PARTITION} 分区创建交换空间失败。"
 
 #. Type: boolean
 #. Description
-#: ../partman-basicfilesystems.templates:64 ../partman-ext3.templates:22
+#: ../partman-basicfilesystems.templates:65 ../partman-ext3.templates:22
 #: ../partman-reiserfs.templates:22 ../partman-jfs.templates:22
 #: ../partman-xfs.templates:22 ../partman-ext2r0.templates:22
 msgid "Do you want to return to the partitioning menu?"
@@ -3427,7 +3465,7 @@ msgstr "您是否想返回分区菜单？"
 
 #. Type: boolean
 #. Description
-#: ../partman-basicfilesystems.templates:64
+#: ../partman-basicfilesystems.templates:65
 msgid ""
 "No mount point is assigned for ${FILESYSTEM} file system in partition #"
 "${PARTITION} of ${DEVICE}."
@@ -3437,7 +3475,7 @@ msgstr ""
 
 #. Type: boolean
 #. Description
-#: ../partman-basicfilesystems.templates:64 ../partman-ext3.templates:22
+#: ../partman-basicfilesystems.templates:65 ../partman-ext3.templates:22
 #: ../partman-reiserfs.templates:22 ../partman-jfs.templates:22
 #: ../partman-xfs.templates:22 ../partman-ext2r0.templates:22
 msgid ""
@@ -3447,13 +3485,13 @@ msgstr "如果您不返回分区菜单并分配一个挂载点，就无法使用
 
 #. Type: error
 #. Description
-#: ../partman-basicfilesystems.templates:73
+#: ../partman-basicfilesystems.templates:74
 msgid "Invalid file system for this mount point"
 msgstr "对这个挂载点不适用的文件系统"
 
 #. Type: error
 #. Description
-#: ../partman-basicfilesystems.templates:73
+#: ../partman-basicfilesystems.templates:74
 msgid ""
 "The file system type ${FILESYSTEM} cannot be mounted on ${MOUNTPOINT}, "
 "because it is not a fully-functional Unix file system. Please choose a "
@@ -3467,7 +3505,7 @@ msgstr ""
 #. Note to translators : Please keep your translations of the choices
 #. below a 65 columns limit (which means 65 characters
 #. in single-byte languages) including the initial path
-#: ../partman-basicfilesystems.templates:83
+#: ../partman-basicfilesystems.templates:84
 msgid "/ - the root file system"
 msgstr "/ - 根文件系统"
 
@@ -3476,7 +3514,7 @@ msgstr "/ - 根文件系统"
 #. Note to translators : Please keep your translations of the choices
 #. below a 65 columns limit (which means 65 characters
 #. in single-byte languages) including the initial path
-#: ../partman-basicfilesystems.templates:83
+#: ../partman-basicfilesystems.templates:84
 msgid "/boot - static files of the boot loader"
 msgstr "/boot - 启动引导器所用的静态文件"
 
@@ -3485,7 +3523,7 @@ msgstr "/boot - 启动引导器所用的静态文件"
 #. Note to translators : Please keep your translations of the choices
 #. below a 65 columns limit (which means 65 characters
 #. in single-byte languages) including the initial path
-#: ../partman-basicfilesystems.templates:83
+#: ../partman-basicfilesystems.templates:84
 msgid "/home - user home directories"
 msgstr "/home - 用户的家目录"
 
@@ -3494,7 +3532,7 @@ msgstr "/home - 用户的家目录"
 #. Note to translators : Please keep your translations of the choices
 #. below a 65 columns limit (which means 65 characters
 #. in single-byte languages) including the initial path
-#: ../partman-basicfilesystems.templates:83
+#: ../partman-basicfilesystems.templates:84
 msgid "/tmp - temporary files"
 msgstr "/tmp - 临时文件"
 
@@ -3503,7 +3541,7 @@ msgstr "/tmp - 临时文件"
 #. Note to translators : Please keep your translations of the choices
 #. below a 65 columns limit (which means 65 characters
 #. in single-byte languages) including the initial path
-#: ../partman-basicfilesystems.templates:83
+#: ../partman-basicfilesystems.templates:84
 msgid "/usr - static data"
 msgstr "/usr - 静态数据"
 
@@ -3512,7 +3550,7 @@ msgstr "/usr - 静态数据"
 #. Note to translators : Please keep your translations of the choices
 #. below a 65 columns limit (which means 65 characters
 #. in single-byte languages) including the initial path
-#: ../partman-basicfilesystems.templates:83
+#: ../partman-basicfilesystems.templates:84
 msgid "/var - variable data"
 msgstr "/var - 可变数据"
 
@@ -3521,7 +3559,7 @@ msgstr "/var - 可变数据"
 #. Note to translators : Please keep your translations of the choices
 #. below a 65 columns limit (which means 65 characters
 #. in single-byte languages) including the initial path
-#: ../partman-basicfilesystems.templates:83
+#: ../partman-basicfilesystems.templates:84
 msgid "/srv - data for services provided by this system"
 msgstr "/srv - 本系统所提供的服务的数据"
 
@@ -3530,7 +3568,7 @@ msgstr "/srv - 本系统所提供的服务的数据"
 #. Note to translators : Please keep your translations of the choices
 #. below a 65 columns limit (which means 65 characters
 #. in single-byte languages) including the initial path
-#: ../partman-basicfilesystems.templates:83
+#: ../partman-basicfilesystems.templates:84
 msgid "/opt - add-on application software packages"
 msgstr "/opt - 附加应用软件包"
 
@@ -3539,19 +3577,19 @@ msgstr "/opt - 附加应用软件包"
 #. Note to translators : Please keep your translations of the choices
 #. below a 65 columns limit (which means 65 characters
 #. in single-byte languages) including the initial path
-#: ../partman-basicfilesystems.templates:83
+#: ../partman-basicfilesystems.templates:84
 msgid "/usr/local - local hierarchy"
 msgstr "/usr/local - 本地目录树"
 
 #. Type: select
 #. Choices
-#: ../partman-basicfilesystems.templates:88
+#: ../partman-basicfilesystems.templates:89
 msgid "/dos"
 msgstr "/dos"
 
 #. Type: select
 #. Choices
-#: ../partman-basicfilesystems.templates:88
+#: ../partman-basicfilesystems.templates:89
 msgid "/windows"
 msgstr "/windows"
 
@@ -3570,7 +3608,7 @@ msgstr "/windows"
 #. below a 65 columns limit (which means 65 characters
 #. in single-byte languages)
 #. What's to be "entered manually" is a mount point
-#: ../partman-basicfilesystems.templates:88 ../partman-ext2r0.templates:36
+#: ../partman-basicfilesystems.templates:89 ../partman-ext2r0.templates:36
 #: ../partconf.templates:62
 msgid "Enter manually"
 msgstr "手动输入"
@@ -3582,43 +3620,43 @@ msgstr "手动输入"
 #. Type: select
 #. Choices
 #. "it" is a partition
-#: ../partman-basicfilesystems.templates:88 ../partman-ext2r0.templates:36
+#: ../partman-basicfilesystems.templates:89 ../partman-ext2r0.templates:36
 msgid "Do not mount it"
 msgstr "不挂载此分区"
 
 #. Type: string
 #. Description
-#: ../partman-basicfilesystems.templates:93 ../partman-ext2r0.templates:41
+#: ../partman-basicfilesystems.templates:94 ../partman-ext2r0.templates:41
 msgid "Mount point for this partition:"
 msgstr "此分区的挂载点："
 
 #. Type: error
 #. Description
-#: ../partman-basicfilesystems.templates:97 ../partman-ext2r0.templates:45
+#: ../partman-basicfilesystems.templates:98 ../partman-ext2r0.templates:45
 msgid "Invalid mount point"
 msgstr "无效的挂载点"
 
 #. Type: error
 #. Description
-#: ../partman-basicfilesystems.templates:97 ../partman-ext2r0.templates:45
+#: ../partman-basicfilesystems.templates:98 ../partman-ext2r0.templates:45
 msgid "The mount point you entered is invalid."
 msgstr "您所输入的挂载点是无效的。"
 
 #. Type: error
 #. Description
-#: ../partman-basicfilesystems.templates:97 ../partman-ext2r0.templates:45
+#: ../partman-basicfilesystems.templates:98 ../partman-ext2r0.templates:45
 msgid "Mount points must start with \"/\". They cannot contain spaces."
 msgstr "挂载点必须以“/”开头，并且不能包含空格。"
 
 #. Type: string
 #. Description
-#: ../partman-basicfilesystems.templates:104
+#: ../partman-basicfilesystems.templates:105
 msgid "Label for the file system in this partition:"
 msgstr "此分区文件系统的标识："
 
 #. Type: text
 #. Description
-#: ../partman-basicfilesystems.templates:108
+#: ../partman-basicfilesystems.templates:109
 msgid "Format the swap area:"
 msgstr "格式化交换空间："
 
@@ -3629,7 +3667,7 @@ msgstr "格式化交换空间："
 #. #-#-#-#-#  templates.pot (PACKAGE VERSION)  #-#-#-#-#
 #. Type: text
 #. Description
-#: ../partman-basicfilesystems.templates:113 ../partman-crypto.templates:121
+#: ../partman-basicfilesystems.templates:114 ../partman-crypto.templates:121
 msgid "yes"
 msgstr "是"
 
@@ -3640,21 +3678,21 @@ msgstr "是"
 #. #-#-#-#-#  templates.pot (PACKAGE VERSION)  #-#-#-#-#
 #. Type: text
 #. Description
-#: ../partman-basicfilesystems.templates:118 ../partman-crypto.templates:117
+#: ../partman-basicfilesystems.templates:119 ../partman-crypto.templates:117
 msgid "no"
 msgstr "否"
 
 #. Type: text
 #. Description
 #. label of file system
-#: ../partman-basicfilesystems.templates:123
+#: ../partman-basicfilesystems.templates:124
 msgid "Label:"
 msgstr "标识："
 
 #. Type: text
 #. Description
 #. for partman-basicfilesystems: in the following context: "Label: none"
-#: ../partman-basicfilesystems.templates:128
+#: ../partman-basicfilesystems.templates:129
 msgid ""
 "none[ Do not translate what's inside the brackets and just put the "
 "translation for the word \"none\" in your language without any brackets. "
@@ -3664,39 +3702,39 @@ msgstr "无"
 #. Type: text
 #. Description
 #. Up to 24 character positions
-#: ../partman-basicfilesystems.templates:133
+#: ../partman-basicfilesystems.templates:134
 msgid "Reserved blocks:"
 msgstr "保留块："
 
 #. Type: string
 #. Description
-#: ../partman-basicfilesystems.templates:137
+#: ../partman-basicfilesystems.templates:138
 msgid "Percentage of the file system blocks reserved for the super-user:"
 msgstr "文件系统被保留给超级用户的百分比："
 
 #. Type: text
 #. Description
 #. Up to 25 character positions
-#: ../partman-basicfilesystems.templates:142
+#: ../partman-basicfilesystems.templates:143
 msgid "Typical usage:"
 msgstr "典型用途："
 
 #. Type: text
 #. Description
 #. In the following context: "Typical usage: standard"
-#: ../partman-basicfilesystems.templates:147
+#: ../partman-basicfilesystems.templates:148
 msgid "standard"
 msgstr "标准"
 
 #. Type: select
 #. Description
-#: ../partman-basicfilesystems.templates:155
+#: ../partman-basicfilesystems.templates:156
 msgid "Typical usage of this partition:"
 msgstr "此分区的典型用途："
 
 #. Type: select
 #. Description
-#: ../partman-basicfilesystems.templates:155
+#: ../partman-basicfilesystems.templates:156
 msgid ""
 "Please specify how the file system is going to be used, so that optimal file "
 "system parameters can be chosen for that use."
@@ -3705,7 +3743,7 @@ msgstr ""
 
 #. Type: select
 #. Description
-#: ../partman-basicfilesystems.templates:155
+#: ../partman-basicfilesystems.templates:156
 msgid ""
 "standard = standard parameters, news = one inode per 4KB block, largefile = "
 "one inode per megabyte, largefile4 = one inode per 4 megabytes."
@@ -3733,7 +3771,7 @@ msgstr ""
 #. Type: text
 #. Description
 #. This is an item in the menu "Partition settings"
-#: ../partman-basicfilesystems.templates:167 ../partman-ext3.templates:32
+#: ../partman-basicfilesystems.templates:168 ../partman-ext3.templates:32
 #: ../partman-reiserfs.templates:32 ../partman-jfs.templates:32
 #: ../partman-xfs.templates:32
 msgid "Mount point:"
@@ -3742,7 +3780,7 @@ msgstr "挂载点："
 #. Type: text
 #. Description
 #. In the following context: "Mount point: none"
-#: ../partman-basicfilesystems.templates:172
+#: ../partman-basicfilesystems.templates:173
 msgid ""
 "none[ Do not translate what's inside the brackets and just put the "
 "translation for the word \"none\" in your language without any brackets. "
@@ -3751,53 +3789,53 @@ msgstr "无"
 
 #. Type: text
 #. Description
-#: ../partman-basicfilesystems.templates:176
+#: ../partman-basicfilesystems.templates:177
 msgid "Ext2 file system"
 msgstr "Ext2 文件系统"
 
 #. Type: text
 #. Description
 #. Short file system name (untranslatable in many languages)
-#: ../partman-basicfilesystems.templates:181
+#: ../partman-basicfilesystems.templates:182
 msgid "ext2"
 msgstr "ext2"
 
 #. Type: text
 #. Description
-#: ../partman-basicfilesystems.templates:185
+#: ../partman-basicfilesystems.templates:186
 msgid "FAT16 file system"
 msgstr "FAT16 文件系统"
 
 #. Type: text
 #. Description
 #. Short file system name (untranslatable in many languages)
-#: ../partman-basicfilesystems.templates:190
+#: ../partman-basicfilesystems.templates:191
 msgid "fat16"
 msgstr "fat16"
 
 #. Type: text
 #. Description
-#: ../partman-basicfilesystems.templates:194
+#: ../partman-basicfilesystems.templates:195
 msgid "FAT32 file system"
 msgstr "FAT32 文件系统"
 
 #. Type: text
 #. Description
 #. Short file system name (untranslatable in many languages)
-#: ../partman-basicfilesystems.templates:199
+#: ../partman-basicfilesystems.templates:200
 msgid "fat32"
 msgstr "fat32"
 
 #. Type: text
 #. Description
-#: ../partman-basicfilesystems.templates:212
+#: ../partman-basicfilesystems.templates:213
 msgid "swap area"
 msgstr "交换空间"
 
 #. Type: text
 #. Description
 #. Short variant of `swap space'
-#: ../partman-basicfilesystems.templates:217
+#: ../partman-basicfilesystems.templates:218
 msgid "swap"
 msgstr "swap"
 
@@ -3806,7 +3844,7 @@ msgstr "swap"
 #. Note to translators : Please keep your translations of the choices
 #. below a 65 columns limit (which means 65 characters
 #. in single-byte languages)
-#: ../partman-basicfilesystems.templates:228 ../partman-ext3.templates:44
+#: ../partman-basicfilesystems.templates:229 ../partman-ext3.templates:44
 #: ../partman-reiserfs.templates:44 ../partman-jfs.templates:44
 #: ../partman-xfs.templates:44 ../partman-ext2r0.templates:60
 msgid "noatime - do not update inode access times at each access"
@@ -3817,7 +3855,7 @@ msgstr "noatime - 在每次对数据进行存取时不更新 inode 的存取时�
 #. Note to translators : Please keep your translations of the choices
 #. below a 65 columns limit (which means 65 characters
 #. in single-byte languages)
-#: ../partman-basicfilesystems.templates:228 ../partman-ext3.templates:44
+#: ../partman-basicfilesystems.templates:229 ../partman-ext3.templates:44
 #: ../partman-reiserfs.templates:44 ../partman-jfs.templates:44
 #: ../partman-xfs.templates:44 ../partman-ext2r0.templates:60
 msgid "nodev - do not support character or block special devices"
@@ -3828,7 +3866,7 @@ msgstr "nodev - 不支持字符或块特殊设备"
 #. Note to translators : Please keep your translations of the choices
 #. below a 65 columns limit (which means 65 characters
 #. in single-byte languages)
-#: ../partman-basicfilesystems.templates:228 ../partman-ext3.templates:44
+#: ../partman-basicfilesystems.templates:229 ../partman-ext3.templates:44
 #: ../partman-reiserfs.templates:44 ../partman-jfs.templates:44
 #: ../partman-xfs.templates:44 ../partman-ext2r0.templates:60
 msgid "nosuid - ignore set-user-identifier or set-group-identifier bits"
@@ -3839,7 +3877,7 @@ msgstr "nosuid - 忽略 set-user-identifier 或 set-group-identifier 位"
 #. Note to translators : Please keep your translations of the choices
 #. below a 65 columns limit (which means 65 characters
 #. in single-byte languages)
-#: ../partman-basicfilesystems.templates:228 ../partman-ext3.templates:44
+#: ../partman-basicfilesystems.templates:229 ../partman-ext3.templates:44
 #: ../partman-reiserfs.templates:44 ../partman-jfs.templates:44
 #: ../partman-xfs.templates:44 ../partman-ext2r0.templates:60
 msgid "noexec - do not allow execution of any binaries"
@@ -3850,7 +3888,7 @@ msgstr "noexec - 禁止执行任何二进制文件。"
 #. Note to translators : Please keep your translations of the choices
 #. below a 65 columns limit (which means 65 characters
 #. in single-byte languages)
-#: ../partman-basicfilesystems.templates:228 ../partman-ext3.templates:44
+#: ../partman-basicfilesystems.templates:229 ../partman-ext3.templates:44
 #: ../partman-reiserfs.templates:44 ../partman-xfs.templates:44
 #: ../partman-ext2r0.templates:60
 msgid "usrquota - user disk quota accounting enabled"
@@ -3861,7 +3899,7 @@ msgstr "usrquota - 开启用户磁盘限额功能"
 #. Note to translators : Please keep your translations of the choices
 #. below a 65 columns limit (which means 65 characters
 #. in single-byte languages)
-#: ../partman-basicfilesystems.templates:228 ../partman-ext3.templates:44
+#: ../partman-basicfilesystems.templates:229 ../partman-ext3.templates:44
 #: ../partman-reiserfs.templates:44 ../partman-xfs.templates:44
 #: ../partman-ext2r0.templates:60
 msgid "grpquota - group disk quota accounting enabled"
@@ -3872,7 +3910,7 @@ msgstr "grpquota - 开启用户组磁盘限额功能"
 #. Note to translators : Please keep your translations of the choices
 #. below a 65 columns limit (which means 65 characters
 #. in single-byte languages)
-#: ../partman-basicfilesystems.templates:228 ../partman-ext3.templates:44
+#: ../partman-basicfilesystems.templates:229 ../partman-ext3.templates:44
 #: ../partman-reiserfs.templates:44
 msgid "user_xattr - support user extended attributes"
 msgstr "user_xattr - 支持用户扩展属性"
@@ -3913,7 +3951,7 @@ msgstr "user_xattr - 支持用户扩展属性"
 #. Note to translators : Please keep your translations of the choices
 #. below a 65 columns limit (which means 65 characters
 #. in single-byte languages)
-#: ../partman-basicfilesystems.templates:237 ../partman-ext3.templates:44
+#: ../partman-basicfilesystems.templates:238 ../partman-ext3.templates:44
 #: ../partman-reiserfs.templates:44 ../partman-jfs.templates:44
 #: ../partman-xfs.templates:44 ../partman-ext2r0.templates:60
 msgid "ro - mount the file system read-only"
@@ -3955,7 +3993,7 @@ msgstr "ro - 以只读方式挂载文件系统"
 #. Note to translators : Please keep your translations of the choices
 #. below a 65 columns limit (which means 65 characters
 #. in single-byte languages)
-#: ../partman-basicfilesystems.templates:237 ../partman-ext3.templates:44
+#: ../partman-basicfilesystems.templates:238 ../partman-ext3.templates:44
 #: ../partman-reiserfs.templates:44 ../partman-jfs.templates:44
 #: ../partman-xfs.templates:44 ../partman-ext2r0.templates:60
 msgid "sync - all input/output activities occur synchronously"
@@ -3966,13 +4004,13 @@ msgstr "sync - 所有输入/输出动作都将同步"
 #. Note to translators : Please keep your translations of the choices
 #. below a 65 columns limit (which means 65 characters
 #. in single-byte languages) including the initial path
-#: ../partman-basicfilesystems.templates:237
+#: ../partman-basicfilesystems.templates:238
 msgid "quiet - changing owner and permissions does not return errors"
 msgstr "quiet - 改变属主和权限时不返回错误"
 
 #. Type: multiselect
 #. Description
-#: ../partman-basicfilesystems.templates:238 ../partman-ext3.templates:45
+#: ../partman-basicfilesystems.templates:239 ../partman-ext3.templates:45
 #: ../partman-reiserfs.templates:45 ../partman-jfs.templates:45
 #: ../partman-xfs.templates:45 ../partman-ext2r0.templates:61
 msgid "Mount options:"
@@ -3980,7 +4018,7 @@ msgstr "挂载选项："
 
 #. Type: multiselect
 #. Description
-#: ../partman-basicfilesystems.templates:238 ../partman-ext3.templates:45
+#: ../partman-basicfilesystems.templates:239 ../partman-ext3.templates:45
 #: ../partman-reiserfs.templates:45 ../partman-jfs.templates:45
 #: ../partman-xfs.templates:45 ../partman-ext2r0.templates:61
 msgid "Mount options can tune the behavior of the file system."
@@ -4908,20 +4946,20 @@ msgstr "请选择您的时区："
 #. Description
 #. Main menu item
 #: ../tzsetup-udeb.templates:4
-msgid "Configure time zone"
-msgstr "时区设置"
+msgid "Configure the time zone"
+msgstr "配置时区"
 
 #. Type: text
 #. Description
 #. finish-install progress bar item
 #: ../tzsetup-udeb.templates:9
-msgid "Saving time zone..."
+msgid "Saving the time zone..."
 msgstr "正在保存时区..."
 
 #. Type: note
 #. Description
 #: ../tzsetup-udeb.templates:13
-msgid "Selected timezone"
+msgid "Selected time zone"
 msgstr "所选时区"
 
 #. Type: note
@@ -5102,29 +5140,12 @@ msgstr ""
 #. Type: error
 #. Description
 #: ../base-installer.templates:76
-msgid "No initrd generator"
-msgstr "没有 initrd 生成工具"
-
-#. Type: error
-#. Description
-#: ../base-installer.templates:76
-msgid ""
-"The kernel that has been selected for installation needs an initrd to boot. "
-"However, no package to generate that initrd is available that supports your "
-"configuration. This would leave your system unable to boot."
-msgstr ""
-"被选定安装的内核需要 initrd 才能启动。但是，没有任何生成 initrd 的工具软件包"
-"可以支持您的设置。这将使您的系统无法启动。"
-
-#. Type: error
-#. Description
-#: ../base-installer.templates:83
 msgid "Unsupported initrd generator"
 msgstr "无法支持的 initrd 生成工具"
 
 #. Type: error
 #. Description
-#: ../base-installer.templates:83
+#: ../base-installer.templates:76
 msgid ""
 "The package ${GENERATOR} that was selected to generate the initrd is not "
 "supported."
@@ -5132,13 +5153,13 @@ msgstr "选择用来生成 initrd 的工具软件包 ${GENERATOR} 不被支持�
 
 #. Type: error
 #. Description
-#: ../base-installer.templates:89
+#: ../base-installer.templates:82
 msgid "Unable to install the selected kernel"
 msgstr "无法安装所选的内核"
 
 #. Type: error
 #. Description
-#: ../base-installer.templates:89
+#: ../base-installer.templates:82
 msgid ""
 "An error was returned while trying to install the kernel into the target "
 "system."
@@ -5146,7 +5167,7 @@ msgstr "向目标系统中安装内核时发生错误。"
 
 #. Type: error
 #. Description
-#: ../base-installer.templates:89
+#: ../base-installer.templates:82
 msgid "Kernel package: '${KERNEL}'."
 msgstr "内核软件包： '${KERNEL}'。"
 
@@ -5154,7 +5175,7 @@ msgstr "内核软件包： '${KERNEL}'。"
 #. Choices
 #. For base-installer, "none" is an additional choice to a list of kernels.
 #. It means "no kernel"
-#: ../base-installer.templates:102
+#: ../base-installer.templates:95
 msgid ""
 "none[ Do not translate what's inside the brackets and just put the "
 "translation for the word \"none\" in your language without any brackets. "
@@ -5163,13 +5184,13 @@ msgstr "无"
 
 #. Type: select
 #. Description
-#: ../base-installer.templates:103
+#: ../base-installer.templates:96
 msgid "Kernel to install:"
 msgstr "要安装的内核："
 
 #. Type: select
 #. Description
-#: ../base-installer.templates:103
+#: ../base-installer.templates:96
 msgid ""
 "The list shows the available kernels. Please choose one of them in order to "
 "make the system bootable from the hard drive."
@@ -5177,19 +5198,19 @@ msgstr "这里列出了 APT 源中可用的内核。请选择其中之一，使�
 
 #. Type: boolean
 #. Description
-#: ../base-installer.templates:110
+#: ../base-installer.templates:103
 msgid "Continue without installing a kernel?"
 msgstr "不安装内核而继续吗？"
 
 #. Type: boolean
 #. Description
-#: ../base-installer.templates:110
+#: ../base-installer.templates:103
 msgid "No installable kernel was found in the defined APT sources."
 msgstr "在指定的 APT 源没有找到可以安装的内核。"
 
 #. Type: boolean
 #. Description
-#: ../base-installer.templates:110
+#: ../base-installer.templates:103
 msgid ""
 "You may try to continue without a kernel, and manually install your own "
 "kernel later. This is only recommended for experts, otherwise you will "
@@ -5200,25 +5221,25 @@ msgstr ""
 
 #. Type: error
 #. Description
-#: ../base-installer.templates:119
+#: ../base-installer.templates:112
 msgid "Cannot install kernel"
 msgstr "无法安装内核"
 
 #. Type: error
 #. Description
-#: ../base-installer.templates:119
+#: ../base-installer.templates:112
 msgid "The installer cannot find a suitable kernel package to install."
 msgstr "安装程序无法找到一个合适的内核软件包来安装。"
 
 #. Type: error
 #. Description
-#: ../base-installer.templates:124
+#: ../base-installer.templates:117
 msgid "Unable to install ${PACKAGE}"
 msgstr "无法安装 ${PACKAGE}"
 
 #. Type: error
 #. Description
-#: ../base-installer.templates:124
+#: ../base-installer.templates:117
 msgid ""
 "An error was returned while trying to install the ${PACKAGE} package onto "
 "the target system."
@@ -5227,34 +5248,34 @@ msgstr "向目标系统中安装 ${PACKAGE} 软件包时出现一个错误。"
 #. Type: error
 #. Description
 #. SUBST0 is a Release file name.
-#: ../base-installer.templates:133
+#: ../base-installer.templates:126
 msgid "Failed getting Release file ${SUBST0}."
 msgstr "无法获得 Release 文件 ${SUBST0}。"
 
 #. Type: error
 #. Description
 #. SUBST0 is a Release.gpg file name
-#: ../base-installer.templates:139
+#: ../base-installer.templates:132
 msgid "Failed getting Release signature file ${SUBST0}."
 msgstr "无法获得 Release 签名文件 ${SUBST0}。"
 
 #. Type: error
 #. Description
 #. SUBST0 is a gpg key ID
-#: ../base-installer.templates:145
+#: ../base-installer.templates:138
 msgid "Release file signed by unknown key (key id ${SUBST0})"
 msgstr "Release 文件由未知的 key 签名 (key id ${SUBST0})"
 
 #. Type: error
 #. Description
-#: ../base-installer.templates:150
+#: ../base-installer.templates:143
 msgid "Invalid Release file: no valid components."
 msgstr "无效的 Release 文件：非有效的组件。"
 
 #. Type: error
 #. Description
 #. SUBST0 is a filename
-#: ../base-installer.templates:156
+#: ../base-installer.templates:149
 msgid "Invalid Release file: no entry for ${SUBST0}."
 msgstr "无效的 Release 文件：没有 ${SUBST0} 项目。"
 
@@ -5262,7 +5283,7 @@ msgstr "无效的 Release 文件：没有 ${SUBST0} 项目。"
 #. Description
 #. SUBST0 is a filename or package name
 #. Debootstrap is a program name: should not be translated
-#: ../base-installer.templates:163
+#: ../base-installer.templates:156
 msgid "Debootstrap Error"
 msgstr "Debootstrap 错误"
 
@@ -5270,7 +5291,7 @@ msgstr "Debootstrap 错误"
 #. Description
 #. SUBST0 is a filename or package name
 #. Debootstrap is a program name: should not be translated
-#: ../base-installer.templates:163
+#: ../base-installer.templates:156
 msgid ""
 "Couldn't retrieve ${SUBST0}. This may be due to a network problem or a bad "
 "CD, depending on your installation method."
@@ -5282,7 +5303,7 @@ msgstr ""
 #. Description
 #. SUBST0 is a filename or package name
 #. Debootstrap is a program name: should not be translated
-#: ../base-installer.templates:163
+#: ../base-installer.templates:156
 msgid ""
 "If you are installing from CD-R or CD-RW, burning the CD at a lower speed "
 "may help."
@@ -5292,13 +5313,13 @@ msgstr ""
 
 #. Type: text
 #. Description
-#: ../base-installer.templates:176
+#: ../base-installer.templates:169
 msgid "Preparing to install the base system..."
 msgstr "正在准备安装基本系统..."
 
 #. Type: text
 #. Description
-#: ../base-installer.templates:180 ../apt-setup-udeb.templates:15
+#: ../base-installer.templates:173 ../apt-setup-udeb.templates:15
 #: ../finish-install.templates:12
 msgid "Running ${SCRIPT}..."
 msgstr "正在运行 ${SCRIPT}..."
@@ -5306,55 +5327,55 @@ msgstr "正在运行 ${SCRIPT}..."
 #. Type: text
 #. Description
 #. Release is a filename which should not be translated
-#: ../base-installer.templates:185
+#: ../base-installer.templates:178
 msgid "Retrieving Release file"
 msgstr "正在接收软件包文件"
 
 #. Type: text
 #. Description
 #. Release is a filename which should not be translated
-#: ../base-installer.templates:190
+#: ../base-installer.templates:183
 msgid "Retrieving Release file signature"
 msgstr "正在接收 Release 文件签名"
 
 #. Type: text
 #. Description
 #. "packages" here can be translated
-#: ../base-installer.templates:195
+#: ../base-installer.templates:188
 msgid "Finding package sizes"
 msgstr "查询软件包大小"
 
 #. Type: text
 #. Description
 #. Packages is a filename which should not be translated
-#: ../base-installer.templates:200
+#: ../base-installer.templates:193
 msgid "Retrieving Packages files"
 msgstr "正在接收软件包文件"
 
 #. Type: text
 #. Description
 #. Packages is a filename which should not be translated
-#: ../base-installer.templates:205
+#: ../base-installer.templates:198
 msgid "Retrieving Packages file"
 msgstr "正在接收软件包文件"
 
 #. Type: text
 #. Description
 #. "packages" here can be translated
-#: ../base-installer.templates:210
+#: ../base-installer.templates:203
 msgid "Retrieving packages"
 msgstr "正在接收软件包"
 
 #. Type: text
 #. Description
 #. "packages" here can be translated
-#: ../base-installer.templates:215
+#: ../base-installer.templates:208
 msgid "Extracting packages"
 msgstr "正在解开软件包"
 
 #. Type: text
 #. Description
-#: ../base-installer.templates:219
+#: ../base-installer.templates:212
 msgid "Installing the base system"
 msgstr "正在安装基本系统"
 
@@ -5364,7 +5385,7 @@ msgstr "正在安装基本系统"
 #. The "core" packages are indeed packages that are specifically
 #. recorded as part of the base system. Other packages may
 #. be installed on the base system because of dependency resolution
-#: ../base-installer.templates:227
+#: ../base-installer.templates:220
 msgid "Installing core packages"
 msgstr "正在安装核心软件包"
 
@@ -5374,13 +5395,13 @@ msgstr "正在安装核心软件包"
 #. by the dependency chain of core packages
 #. In short, they are "required" because at least one of the
 #. packages from the core packages depends on them
-#: ../base-installer.templates:235
+#: ../base-installer.templates:228
 msgid "Unpacking required packages"
 msgstr "正在解包必需的软件包"
 
 #. Type: text
 #. Description
-#: ../base-installer.templates:239
+#: ../base-installer.templates:232
 msgid "Configuring required packages"
 msgstr "正在配置必需的软件包"
 
@@ -5388,7 +5409,7 @@ msgstr "正在配置必需的软件包"
 #. Description
 #. The base system is the minimal Debian system
 #. See http://www.debian.org/doc/debian-policy/ch-binary.html#s3.7
-#: ../base-installer.templates:245
+#: ../base-installer.templates:238
 msgid "Unpacking the base system"
 msgstr "正在解包基本系统"
 
@@ -5396,55 +5417,55 @@ msgstr "正在解包基本系统"
 #. Description
 #. The base system is the minimal Debian system
 #. See http://www.debian.org/doc/debian-policy/ch-binary.html#s3.7
-#: ../base-installer.templates:251
+#: ../base-installer.templates:244
 msgid "Configuring the base system"
 msgstr "正在配置基本系统"
 
 #. Type: text
 #. Description
-#: ../base-installer.templates:255
+#: ../base-installer.templates:248
 msgid "${SECTION}: ${INFO}..."
 msgstr "${SECTION}：${INFO}..."
 
 #. Type: text
 #. Description
 #. SUBST0 is a package name
-#: ../base-installer.templates:260
+#: ../base-installer.templates:253
 msgid "Validating ${SUBST0}..."
 msgstr "正在校验 ${SUBST0}..."
 
 #. Type: text
 #. Description
 #. SUBST0 is a package name
-#: ../base-installer.templates:265
+#: ../base-installer.templates:258
 msgid "Retrieving ${SUBST0}..."
 msgstr "正在接收 ${SUBST0}..."
 
 #. Type: text
 #. Description
 #. SUBST0 is a package name
-#: ../base-installer.templates:270
+#: ../base-installer.templates:263
 msgid "Extracting ${SUBST0}..."
 msgstr "正在解开 ${SUBST0}..."
 
 #. Type: text
 #. Description
 #. SUBST0 is a package name
-#: ../base-installer.templates:275
+#: ../base-installer.templates:268
 msgid "Unpacking ${SUBST0}..."
 msgstr "正在解包 ${SUBST0}..."
 
 #. Type: text
 #. Description
 #. SUBST0 is a package name
-#: ../base-installer.templates:280
+#: ../base-installer.templates:273
 msgid "Configuring ${SUBST0}..."
 msgstr "正在配置 ${SUBST0}..."
 
 #. Type: text
 #. Description
 #. Release is a filename which should not be translated
-#: ../base-installer.templates:285
+#: ../base-installer.templates:278
 msgid "Checking Release signature"
 msgstr "正在接收 Release 签名"
 
@@ -5452,40 +5473,40 @@ msgstr "正在接收 Release 签名"
 #. Description
 #. SUBST0 is a gpg key id
 #. Release is a filename which should not be translated
-#: ../base-installer.templates:291
+#: ../base-installer.templates:284
 msgid "Valid Release signature (key id ${SUBST0})"
 msgstr "有效的 Release 签名 (key id ${SUBST0})"
 
 #. Type: text
 #. Description
-#: ../base-installer.templates:295
+#: ../base-installer.templates:288
 msgid "Resolving dependencies of base packages..."
 msgstr "正在解决基本软件包依赖关系..."
 
 #. Type: text
 #. Description
 #. SUBST0 is a list of packages
-#: ../base-installer.templates:300
+#: ../base-installer.templates:293
 msgid "Found additional base dependencies: ${SUBST0}"
 msgstr "找到额外的基本软件包依赖关系：${SUBST0}"
 
 #. Type: text
 #. Description
 #. SUBST0 is a list of packages
-#: ../base-installer.templates:305
+#: ../base-installer.templates:298
 msgid "Found additional required dependencies: ${SUBST0}"
 msgstr "找到额外的必需软件包依赖关系：${SUBST0}"
 
 #. Type: text
 #. Description
 #. SUBST0 is a list of packages
-#: ../base-installer.templates:310
+#: ../base-installer.templates:303
 msgid "Found packages in base already in required: ${SUBST0}"
 msgstr "找到已存在于必需类中的基本软件包：${SUBST0}"
 
 #. Type: text
 #. Description
-#: ../base-installer.templates:314
+#: ../base-installer.templates:307
 msgid "Resolving dependencies of required packages..."
 msgstr "正在解决必需软件包依赖关系..."
 
@@ -5493,7 +5514,7 @@ msgstr "正在解决必需软件包依赖关系..."
 #. Description
 #. SUBST0 is an archive component (main, etc)
 #. SUBST1 is a mirror
-#: ../base-installer.templates:320
+#: ../base-installer.templates:313
 msgid "Checking component ${SUBST0} on ${SUBST1}..."
 msgstr "正在检查组件 ${SUBST0} 于 ${SUBST1} 上..."
 
@@ -5503,7 +5524,7 @@ msgstr "正在检查组件 ${SUBST0} 于 ${SUBST1} 上..."
 #. The "core" packages are indeed packages that are specifically
 #. recorded as part of the base system. Other packages may
 #. be installed on the base system because of dependency resolution
-#: ../base-installer.templates:328
+#: ../base-installer.templates:321
 msgid "Installing core packages..."
 msgstr "正在安装核心软件包..."
 
@@ -5513,7 +5534,7 @@ msgstr "正在安装核心软件包..."
 #. by the dependency chain of core packages
 #. In short, they are "required" because at least one of the
 #. packages from the core packages depends on them
-#: ../base-installer.templates:336
+#: ../base-installer.templates:329
 msgid "Unpacking required packages..."
 msgstr "正在解包必需的软件包..."
 
@@ -5523,108 +5544,108 @@ msgstr "正在解包必需的软件包..."
 #. by the dependency chain of core packages
 #. In short, they are "required" because at least one of the
 #. packages from the core packages depends on them
-#: ../base-installer.templates:344
+#: ../base-installer.templates:337
 msgid "Configuring required packages..."
 msgstr "正在配置必需的软件包..."
 
 #. Type: text
 #. Description
-#: ../base-installer.templates:348
+#: ../base-installer.templates:341
 msgid "Installing base packages..."
 msgstr "正在安装基本软件包..."
 
 #. Type: text
 #. Description
-#: ../base-installer.templates:352
+#: ../base-installer.templates:345
 msgid "Unpacking the base system..."
 msgstr "正在解包基本系统..."
 
 #. Type: text
 #. Description
-#: ../base-installer.templates:356
+#: ../base-installer.templates:349
 msgid "Configuring the base system..."
 msgstr "正在配置基本系统..."
 
 #. Type: text
 #. Description
-#: ../base-installer.templates:360
+#: ../base-installer.templates:353
 msgid "Base system installed successfully."
 msgstr "基本系统安装成功。"
 
 #. Type: error
 #. Description
 #. Debootstrap is a program name: should not be translated
-#: ../base-installer.templates:365
+#: ../base-installer.templates:358
 msgid "Debootstrap warning"
 msgstr "Debootstrap 警告"
 
 #. Type: error
 #. Description
 #. Debootstrap is a program name: should not be translated
-#: ../base-installer.templates:365
+#: ../base-installer.templates:358
 msgid "Warning: ${INFO}"
 msgstr "警告：${INFO}"
 
 #. Type: text
 #. Description
 #. SUBST0 is an url
-#: ../base-installer.templates:371
+#: ../base-installer.templates:364
 msgid "Retrying failed download of ${SUBST0}"
 msgstr "重新尝试下载失败的 ${SUBST0}"
 
 #. Type: text
 #. Description
-#: ../base-installer.templates:375
+#: ../base-installer.templates:368
 msgid "Configuring APT sources..."
 msgstr "正在配置 APT 源..."
 
 #. Type: text
 #. Description
-#: ../base-installer.templates:379
+#: ../base-installer.templates:372
 msgid "Updating the list of available packages..."
 msgstr "更新可用软件包列表..."
 
 #. Type: text
 #. Description
-#: ../base-installer.templates:383
+#: ../base-installer.templates:376
 msgid "Installing extra packages..."
 msgstr "正在安装额外的软件包..."
 
 #. Type: text
 #. Description
 #. SUBST0 is a package name
-#: ../base-installer.templates:388
+#: ../base-installer.templates:381
 msgid "Installing extra packages - retrieving and installing ${SUBST0}..."
 msgstr "安装额外软件包 - 正在接收并安装 ${SUBST0}..."
 
 #. Type: text
 #. Description
-#: ../base-installer.templates:392
+#: ../base-installer.templates:385
 msgid "Creating device files..."
 msgstr "正在创建设备文件..."
 
 #. Type: text
 #. Description
-#: ../base-installer.templates:396
+#: ../base-installer.templates:389
 msgid "Selecting the kernel to install..."
 msgstr "选择要安装的内核..."
 
 #. Type: text
 #. Description
-#: ../base-installer.templates:400
+#: ../base-installer.templates:393
 msgid "Installing the kernel..."
 msgstr "正在安装内核..."
 
 #. Type: text
 #. Description
 #. SUBST0 is a package name
-#: ../base-installer.templates:405
+#: ../base-installer.templates:398
 msgid "Installing the kernel - retrieving and installing ${SUBST0}..."
 msgstr "安装内核 - 正在接收并安装 ${SUBST0}..."
 
 #. Type: text
 #. Description
-#: ../base-installer.templates:409
+#: ../base-installer.templates:402
 msgid "Installing the PCMCIA modules"
 msgstr "正在安装 PCMCIA 模块"
 
@@ -5632,7 +5653,7 @@ msgstr "正在安装 PCMCIA 模块"
 #. Description
 #. Item in the main menu to select this package
 #. TRANSLATORS: <65 columns
-#: ../base-installer.templates:415
+#: ../base-installer.templates:408
 msgid "Install the base system"
 msgstr "安装基本系统"
 
@@ -6447,9 +6468,30 @@ msgstr ""
 msgid "Continue without boot loader"
 msgstr "不安装启动引导器，继续"
 
+#. Type: error
+#. Description
+#: ../nobootloader.templates:8 ../quik-installer.templates:131
+#: ../yaboot-installer.templates:88
+msgid "Failed to mount /target/proc"
+msgstr "无法挂载 /target/proc"
+
+#. Type: error
+#. Description
+#: ../nobootloader.templates:8 ../quik-installer.templates:131
+#: ../yaboot-installer.templates:88
+msgid "Mounting the proc file system on /target/proc failed."
+msgstr "无法将 proc 文件系统挂载到 /target/proc 上。"
+
+#. Type: error
+#. Description
+#: ../nobootloader.templates:8 ../quik-installer.templates:131
+#: ../yaboot-installer.templates:88 ../vmelilo-installer.templates:46
+msgid "Warning: Your system may be unbootable!"
+msgstr "警告：您的系统可能将无法启动！"
+
 #. Type: note
 #. Description
-#: ../nobootloader.templates:9 ../yaboot-installer.templates:98
+#: ../nobootloader.templates:18 ../yaboot-installer.templates:98
 msgid ""
 "Some variables need to be set in the Genesi firmware in order for your "
 "system to boot automatically.  At the end of the installation, the system "
@@ -6462,7 +6504,7 @@ msgstr ""
 
 #. Type: note
 #. Description
-#: ../nobootloader.templates:9 ../yaboot-installer.templates:98
+#: ../nobootloader.templates:18 ../yaboot-installer.templates:98
 msgid ""
 "Alternatively, you will be able to boot the kernel manually by entering, at "
 "the firmware prompt:"
@@ -6470,13 +6512,13 @@ msgstr "另外，您可以在固件提示符下输入以下内容来手工启动
 
 #. Type: note
 #. Description
-#: ../nobootloader.templates:31 ../yaboot-installer.templates:98
+#: ../nobootloader.templates:40 ../yaboot-installer.templates:98
 msgid "Setting firmware variables for automatic boot"
 msgstr "正在为自动启动设置固件变量"
 
 #. Type: note
 #. Description
-#: ../nobootloader.templates:31
+#: ../nobootloader.templates:40
 msgid ""
 "Some variables need to be set in the Netwinder NeTTrom firmware in order for "
 "your system to boot linux automatically.  At the end of this installation "
@@ -6499,7 +6541,7 @@ msgstr ""
 #. Description
 #. Translators, the 4th string of this description has been dropped from
 #. PO files. It contains firmware commands and should not be translated.
-#: ../nobootloader.templates:31 ../yaboot-installer.templates:98
+#: ../nobootloader.templates:40 ../yaboot-installer.templates:98
 #: ../arcboot-installer.templates:34
 msgid ""
 "You will only need to do this once.  Afterwards, enter the \"boot\" command "
@@ -6510,13 +6552,13 @@ msgstr ""
 
 #. Type: note
 #. Description
-#: ../nobootloader.templates:51
+#: ../nobootloader.templates:60
 msgid "No boot loader installed"
 msgstr "未安装启动引导器"
 
 #. Type: note
 #. Description
-#: ../nobootloader.templates:51
+#: ../nobootloader.templates:60
 msgid ""
 "No boot loader has been installed, either because you chose not to or "
 "because your specific architecture doesn't support a boot loader yet."
@@ -6526,7 +6568,7 @@ msgstr ""
 
 #. Type: note
 #. Description
-#: ../nobootloader.templates:51
+#: ../nobootloader.templates:60
 msgid ""
 "You will need to boot manually with the ${KERNEL} kernel on partition "
 "${BOOT} and ${ROOT} passed as a kernel argument."
@@ -7336,25 +7378,6 @@ msgstr "quik 启动管理程序已经安装成功。"
 #: ../prep-installer.templates:42
 msgid "The new system is now ready to boot."
 msgstr "可以启动新系统了。"
-
-#. Type: error
-#. Description
-#: ../quik-installer.templates:131 ../yaboot-installer.templates:88
-msgid "Failed to mount /target/proc"
-msgstr "无法挂载 /target/proc"
-
-#. Type: error
-#. Description
-#: ../quik-installer.templates:131 ../yaboot-installer.templates:88
-msgid "Mounting the proc file system on /target/proc failed."
-msgstr "无法将 proc 文件系统挂载到 /target/proc 上。"
-
-#. Type: error
-#. Description
-#: ../quik-installer.templates:131 ../yaboot-installer.templates:88
-#: ../vmelilo-installer.templates:46
-msgid "Warning: Your system may be unbootable!"
-msgstr "警告：您的系统可能将无法启动！"
 
 #. Type: text
 #. Description
@@ -9499,7 +9522,7 @@ msgstr "修改逻辑卷 (LV)"
 
 #. Type: select
 #. Description
-#: ../lvmcfg-utils.templates:17 ../partman-lvm.templates:146
+#: ../lvmcfg-utils.templates:17 ../partman-lvm.templates:147
 msgid "LVM configuration action:"
 msgstr "LVM 配置动作："
 
@@ -9607,31 +9630,31 @@ msgstr "逻辑卷配置动作："
 
 #. Type: multiselect
 #. Description
-#: ../lvmcfg-utils.templates:45 ../partman-lvm.templates:163
+#: ../lvmcfg-utils.templates:45 ../partman-lvm.templates:164
 msgid "Devices for the new volume group:"
 msgstr "新卷组使用的设备："
 
 #. Type: multiselect
 #. Description
-#: ../lvmcfg-utils.templates:45 ../partman-lvm.templates:163
+#: ../lvmcfg-utils.templates:45 ../partman-lvm.templates:164
 msgid "Please select the devices for the new volume group."
 msgstr "请选择新卷组使用的设备。"
 
 #. Type: string
 #. Description
-#: ../lvmcfg-utils.templates:52 ../partman-lvm.templates:170
+#: ../lvmcfg-utils.templates:52 ../partman-lvm.templates:171
 msgid "Volume group name:"
 msgstr "卷组名："
 
 #. Type: string
 #. Description
-#: ../lvmcfg-utils.templates:52 ../partman-lvm.templates:170
+#: ../lvmcfg-utils.templates:52 ../partman-lvm.templates:171
 msgid "Please enter the name you would like to use for the new volume group."
 msgstr "请输入新卷组的名称。"
 
 #. Type: error
 #. Description
-#: ../lvmcfg-utils.templates:57 ../partman-lvm.templates:175
+#: ../lvmcfg-utils.templates:57 ../partman-lvm.templates:176
 msgid ""
 "No physical volumes were selected. The creation of a new volume group was "
 "aborted."
@@ -9639,19 +9662,19 @@ msgstr "您尚未选择物理卷。建立新卷组的动作被中止。"
 
 #. Type: error
 #. Description
-#: ../lvmcfg-utils.templates:63 ../partman-lvm.templates:181
+#: ../lvmcfg-utils.templates:63 ../partman-lvm.templates:182
 msgid "No volume group name entered"
 msgstr "未输入卷组名"
 
 #. Type: error
 #. Description
-#: ../lvmcfg-utils.templates:63 ../partman-lvm.templates:181
+#: ../lvmcfg-utils.templates:63 ../partman-lvm.templates:182
 msgid "No name for the volume group has been entered.  Please enter a name."
 msgstr "您尚未设定卷组名，请为此卷组输入一个名称。"
 
 #. Type: error
 #. Description
-#: ../lvmcfg-utils.templates:69 ../partman-lvm.templates:187
+#: ../lvmcfg-utils.templates:69 ../partman-lvm.templates:188
 #: ../partman-auto-lvm.templates:33
 msgid "Volume group name already in use"
 msgstr "卷组名已被使用"
@@ -9665,7 +9688,7 @@ msgstr "卷组名已被使用"
 #. #-#-#-#-#  templates.pot (PACKAGE VERSION)  #-#-#-#-#
 #. Type: string
 #. Description
-#: ../lvmcfg-utils.templates:69 ../partman-lvm.templates:187
+#: ../lvmcfg-utils.templates:69 ../partman-lvm.templates:188
 #: ../partman-auto-lvm.templates:12
 msgid ""
 "The selected volume group name is already in use. Please choose another name."
@@ -9673,13 +9696,13 @@ msgstr "所选卷组名已被使用，请换用另一个名称。"
 
 #. Type: error
 #. Description
-#: ../lvmcfg-utils.templates:75 ../partman-lvm.templates:193
+#: ../lvmcfg-utils.templates:75 ../partman-lvm.templates:194
 msgid "Volume group name overlaps with device name"
 msgstr "卷组名与设备名重复"
 
 #. Type: error
 #. Description
-#: ../lvmcfg-utils.templates:75 ../partman-lvm.templates:193
+#: ../lvmcfg-utils.templates:75 ../partman-lvm.templates:194
 msgid ""
 "The selected volume group name overlaps with an existing device name. Please "
 "choose another name."
@@ -9687,43 +9710,43 @@ msgstr "所选卷组名与某个现有设备名雷同，请换用另一个名称
 
 #. Type: select
 #. Description
-#: ../lvmcfg-utils.templates:82 ../partman-lvm.templates:207
+#: ../lvmcfg-utils.templates:82 ../partman-lvm.templates:208
 msgid "Volume group to delete:"
 msgstr "要删除的卷组："
 
 #. Type: select
 #. Description
-#: ../lvmcfg-utils.templates:82 ../partman-lvm.templates:207
+#: ../lvmcfg-utils.templates:82 ../partman-lvm.templates:208
 msgid "Please select the volume group you wish to delete."
 msgstr "请选择您要删除的卷组。"
 
 #. Type: error
 #. Description
-#: ../lvmcfg-utils.templates:87 ../partman-lvm.templates:212
+#: ../lvmcfg-utils.templates:87 ../partman-lvm.templates:213
 msgid "The volume group may have already been deleted."
 msgstr "卷组也许已被删除。"
 
 #. Type: boolean
 #. Description
-#: ../lvmcfg-utils.templates:95 ../partman-lvm.templates:220
+#: ../lvmcfg-utils.templates:95 ../partman-lvm.templates:221
 msgid "Really delete the volume group?"
 msgstr "真的要删除此卷组吗？"
 
 #. Type: boolean
 #. Description
-#: ../lvmcfg-utils.templates:95 ../partman-lvm.templates:220
+#: ../lvmcfg-utils.templates:95 ../partman-lvm.templates:221
 msgid "Please confirm the ${VG} volume group removal."
 msgstr "请确认要删除的卷组 ${VG}。"
 
 #. Type: error
 #. Description
-#: ../lvmcfg-utils.templates:100 ../partman-lvm.templates:225
+#: ../lvmcfg-utils.templates:100 ../partman-lvm.templates:226
 msgid "Error while deleting volume group"
 msgstr "删除卷组出错"
 
 #. Type: error
 #. Description
-#: ../lvmcfg-utils.templates:100 ../partman-lvm.templates:225
+#: ../lvmcfg-utils.templates:100 ../partman-lvm.templates:226
 msgid ""
 "The selected volume group could not be deleted. One or more logical volumes "
 "may currently be in use."
@@ -9731,62 +9754,62 @@ msgstr "无法删除所选卷组。一个或多个逻辑卷正在被使用。"
 
 #. Type: error
 #. Description
-#: ../lvmcfg-utils.templates:106 ../partman-lvm.templates:231
+#: ../lvmcfg-utils.templates:106 ../partman-lvm.templates:232
 msgid "No volume group can be deleted."
 msgstr "不能删除卷组。"
 
 #. Type: select
 #. Description
-#: ../lvmcfg-utils.templates:114 ../partman-lvm.templates:239
+#: ../lvmcfg-utils.templates:114 ../partman-lvm.templates:240
 msgid "Volume group to extend:"
 msgstr "要扩展的卷组："
 
 #. Type: select
 #. Description
-#: ../lvmcfg-utils.templates:114 ../partman-lvm.templates:239
+#: ../lvmcfg-utils.templates:114 ../partman-lvm.templates:240
 msgid "Please select the volume group you wish to extend."
 msgstr "请选择要扩展的卷组。"
 
 #. Type: multiselect
 #. Description
-#: ../lvmcfg-utils.templates:120 ../partman-lvm.templates:245
+#: ../lvmcfg-utils.templates:120 ../partman-lvm.templates:246
 msgid "Devices to add to the volume group:"
 msgstr "要加入卷组的设备："
 
 #. Type: multiselect
 #. Description
-#: ../lvmcfg-utils.templates:120 ../partman-lvm.templates:245
+#: ../lvmcfg-utils.templates:120 ../partman-lvm.templates:246
 msgid "Please select the devices you wish to add to the volume group."
 msgstr "请选择要加入到卷组中的设备。"
 
 #. Type: multiselect
 #. Description
-#: ../lvmcfg-utils.templates:120 ../partman-lvm.templates:278
+#: ../lvmcfg-utils.templates:120 ../partman-lvm.templates:279
 msgid "You can select one or more devices."
 msgstr "您可以选择一个或多个设备。"
 
 #. Type: error
 #. Description
-#: ../lvmcfg-utils.templates:127 ../partman-lvm.templates:285
+#: ../lvmcfg-utils.templates:127 ../partman-lvm.templates:286
 msgid "No physical volumes selected"
 msgstr "没有选择物理卷"
 
 #. Type: error
 #. Description
-#: ../lvmcfg-utils.templates:127 ../partman-lvm.templates:252
+#: ../lvmcfg-utils.templates:127 ../partman-lvm.templates:253
 msgid ""
 "No physical volumes were selected. Extension of the volume group was aborted."
 msgstr "没有选择物理卷。扩展卷组的动作被中止。"
 
 #. Type: error
 #. Description
-#: ../lvmcfg-utils.templates:133 ../partman-lvm.templates:258
+#: ../lvmcfg-utils.templates:133 ../partman-lvm.templates:259
 msgid "Error while extending volume group"
 msgstr "扩展卷组出错"
 
 #. Type: error
 #. Description
-#: ../lvmcfg-utils.templates:133 ../partman-lvm.templates:258
+#: ../lvmcfg-utils.templates:133 ../partman-lvm.templates:259
 msgid ""
 "The physical volume ${PARTITION} could not be added to the selected volume "
 "group."
@@ -9794,25 +9817,25 @@ msgstr "物理卷 ${PARTITION} 不能被加入到所选卷组中。"
 
 #. Type: error
 #. Description
-#: ../lvmcfg-utils.templates:139 ../partman-lvm.templates:264
+#: ../lvmcfg-utils.templates:139 ../partman-lvm.templates:265
 msgid "No volume group has been found."
 msgstr "没有找到卷组。"
 
 #. Type: error
 #. Description
-#: ../lvmcfg-utils.templates:139 ../partman-lvm.templates:264
+#: ../lvmcfg-utils.templates:139 ../partman-lvm.templates:265
 msgid "No volume group can be reduced."
 msgstr "不能缩小卷组。"
 
 #. Type: select
 #. Description
-#: ../lvmcfg-utils.templates:147 ../partman-lvm.templates:272
+#: ../lvmcfg-utils.templates:147 ../partman-lvm.templates:273
 msgid "Volume group to reduce:"
 msgstr "要缩小的卷组："
 
 #. Type: select
 #. Description
-#: ../lvmcfg-utils.templates:147 ../partman-lvm.templates:272
+#: ../lvmcfg-utils.templates:147 ../partman-lvm.templates:273
 msgid "Please select the volume group you wish to reduce."
 msgstr "请选择要缩小的卷组。"
 
@@ -9838,13 +9861,13 @@ msgstr "所选的卷组 (${VG}) 不能被缩小。其中仅有一个物理卷。
 
 #. Type: error
 #. Description
-#: ../lvmcfg-utils.templates:164 ../partman-lvm.templates:291
+#: ../lvmcfg-utils.templates:164 ../partman-lvm.templates:292
 msgid "Error while reducing volume group"
 msgstr "缩小卷组出错"
 
 #. Type: error
 #. Description
-#: ../lvmcfg-utils.templates:164 ../partman-lvm.templates:291
+#: ../lvmcfg-utils.templates:164 ../partman-lvm.templates:292
 msgid ""
 "The physical volume ${PARTITION} could not be removed from the selected "
 "volume group."
@@ -9860,7 +9883,7 @@ msgstr "未能找到建立新逻辑卷需要的卷组。请创建更多的物理
 
 #. Type: error
 #. Description
-#: ../lvmcfg-utils.templates:178 ../partman-lvm.templates:299
+#: ../lvmcfg-utils.templates:178 ../partman-lvm.templates:300
 msgid ""
 "No free volume groups were found for creating a new logical volume. Please "
 "create more physical volumes and volume groups, or reduce an existing volume "
@@ -9871,19 +9894,19 @@ msgstr ""
 
 #. Type: string
 #. Description
-#: ../lvmcfg-utils.templates:185 ../partman-lvm.templates:306
+#: ../lvmcfg-utils.templates:185 ../partman-lvm.templates:307
 msgid "Logical volume name:"
 msgstr "逻辑卷名称："
 
 #. Type: string
 #. Description
-#: ../lvmcfg-utils.templates:185 ../partman-lvm.templates:306
+#: ../lvmcfg-utils.templates:185 ../partman-lvm.templates:307
 msgid "Please enter the name you would like to use for the new logical volume."
 msgstr "请输入新逻辑卷的名称。"
 
 #. Type: select
 #. Description
-#: ../lvmcfg-utils.templates:191 ../partman-lvm.templates:312
+#: ../lvmcfg-utils.templates:191 ../partman-lvm.templates:313
 msgid ""
 "Please select the volume group where the new logical volume should be "
 "created."
@@ -9891,19 +9914,19 @@ msgstr "请选择新逻辑卷所在的卷组。"
 
 #. Type: error
 #. Description
-#: ../lvmcfg-utils.templates:197 ../partman-lvm.templates:318
+#: ../lvmcfg-utils.templates:197 ../partman-lvm.templates:319
 msgid "No logical volume name entered"
 msgstr "未输入逻辑卷名"
 
 #. Type: error
 #. Description
-#: ../lvmcfg-utils.templates:197 ../partman-lvm.templates:318
+#: ../lvmcfg-utils.templates:197 ../partman-lvm.templates:319
 msgid "No name for the logical volume has been entered.  Please enter a name."
 msgstr "您尚未设定逻辑卷名，请为此逻辑卷输入一个名称。"
 
 #. Type: error
 #. Description
-#: ../lvmcfg-utils.templates:203 ../partman-lvm.templates:324
+#: ../lvmcfg-utils.templates:203 ../partman-lvm.templates:325
 msgid ""
 "The name ${LV} is already in use by another logical volume on the same "
 "volume group (${VG})."
@@ -9911,13 +9934,13 @@ msgstr "逻辑卷名 ${LV} 已被同一卷组 (${VG}) 中的另一个逻辑卷�
 
 #. Type: string
 #. Description
-#: ../lvmcfg-utils.templates:209 ../partman-lvm.templates:330
+#: ../lvmcfg-utils.templates:209 ../partman-lvm.templates:331
 msgid "Logical volume size:"
 msgstr "逻辑卷大小："
 
 #. Type: string
 #. Description
-#: ../lvmcfg-utils.templates:209 ../partman-lvm.templates:330
+#: ../lvmcfg-utils.templates:209 ../partman-lvm.templates:331
 msgid ""
 "Please enter the size of the new logical volume. The size may be entered in "
 "the following formats: 10K (Kilobytes), 10M (Megabytes), 10G (Gigabytes), "
@@ -9928,13 +9951,13 @@ msgstr ""
 
 #. Type: error
 #. Description
-#: ../lvmcfg-utils.templates:216 ../partman-lvm.templates:337
+#: ../lvmcfg-utils.templates:216 ../partman-lvm.templates:338
 msgid "Error while creating a new logical volume"
 msgstr "创建新逻辑卷出错"
 
 #. Type: error
 #. Description
-#: ../lvmcfg-utils.templates:216 ../partman-lvm.templates:337
+#: ../lvmcfg-utils.templates:216 ../partman-lvm.templates:338
 msgid ""
 "Unable to create a new logical volume (${LV}) on ${VG} with the new size "
 "${SIZE}."
@@ -9942,7 +9965,7 @@ msgstr "无法在 ${VG} 上新创建大小为 ${SIZE} 的逻辑卷 (${LV})。"
 
 #. Type: error
 #. Description
-#: ../lvmcfg-utils.templates:224 ../partman-lvm.templates:299
+#: ../lvmcfg-utils.templates:224 ../partman-lvm.templates:300
 msgid "No volume group found"
 msgstr "未找到卷组"
 
@@ -9954,7 +9977,7 @@ msgstr "没有找到要删除逻辑卷的卷组。"
 
 #. Type: select
 #. Description
-#: ../lvmcfg-utils.templates:230 ../partman-lvm.templates:312
+#: ../lvmcfg-utils.templates:230 ../partman-lvm.templates:313
 msgid "Volume group:"
 msgstr "卷组："
 
@@ -9968,20 +9991,20 @@ msgstr "请选择包含要删除的逻辑卷的卷组。"
 
 #. Type: error
 #. Description
-#: ../lvmcfg-utils.templates:236 ../partman-lvm.templates:345
+#: ../lvmcfg-utils.templates:236 ../partman-lvm.templates:346
 msgid "No logical volume found"
 msgstr "未找到逻辑卷"
 
 #. Type: error
 #. Description
-#: ../lvmcfg-utils.templates:236 ../partman-lvm.templates:345
+#: ../lvmcfg-utils.templates:236 ../partman-lvm.templates:346
 msgid ""
 "No logical volume has been found.  Please create a logical volume first."
 msgstr "没有找到逻辑卷。请先创建一个逻辑卷。"
 
 #. Type: select
 #. Description
-#: ../lvmcfg-utils.templates:242 ../partman-lvm.templates:351
+#: ../lvmcfg-utils.templates:242 ../partman-lvm.templates:352
 msgid "Logical volume:"
 msgstr "逻辑卷："
 
@@ -9993,25 +10016,25 @@ msgstr "请选择要删除 ${VG} 上哪个逻辑卷。"
 
 #. Type: error
 #. Description
-#: ../lvmcfg-utils.templates:247 ../partman-lvm.templates:360
+#: ../lvmcfg-utils.templates:247 ../partman-lvm.templates:361
 msgid "Error while deleting the logical volume"
 msgstr "删除逻辑卷出错"
 
 #. Type: error
 #. Description
-#: ../lvmcfg-utils.templates:247 ../partman-lvm.templates:360
+#: ../lvmcfg-utils.templates:247 ../partman-lvm.templates:361
 msgid "The logical volume (${LV}) on ${VG} could not be deleted."
 msgstr "${VG} 上的逻辑卷 (${LV}) 不能被删除。"
 
 #. Type: error
 #. Description
-#: ../lvmcfg-utils.templates:254 ../partman-lvm.templates:367
+#: ../lvmcfg-utils.templates:254 ../partman-lvm.templates:368
 msgid "No usable physical volumes found"
 msgstr "没有找到可用的物理卷"
 
 #. Type: error
 #. Description
-#: ../lvmcfg-utils.templates:254 ../partman-lvm.templates:367
+#: ../lvmcfg-utils.templates:254 ../partman-lvm.templates:368
 msgid ""
 "No physical volumes (i.e. partitions) were found in your system. All "
 "physical volumes may already be in use. You may also need to load some "
@@ -10022,13 +10045,13 @@ msgstr ""
 
 #. Type: error
 #. Description
-#: ../lvmcfg-utils.templates:261 ../partman-lvm.templates:374
+#: ../lvmcfg-utils.templates:261 ../partman-lvm.templates:375
 msgid "Logical Volume Manager not available"
 msgstr "逻辑卷管理器不可用"
 
 #. Type: error
 #. Description
-#: ../lvmcfg-utils.templates:261 ../partman-lvm.templates:374
+#: ../lvmcfg-utils.templates:261 ../partman-lvm.templates:375
 msgid ""
 "The current kernel doesn't support the Logical Volume Manager. You may need "
 "to load the lvm-mod module."
@@ -10297,13 +10320,13 @@ msgstr "lvm"
 
 #. Type: select
 #. Description
-#: ../partman-lvm.templates:146
+#: ../partman-lvm.templates:147
 msgid "Summary of current LVM configuration:"
 msgstr "当前 LVM 配置的总结"
 
 #. Type: select
 #. Description
-#: ../partman-lvm.templates:146
+#: ../partman-lvm.templates:147
 msgid ""
 " Free Physical Volumes:  ${FREE_PVS}\n"
 " Used Physical Volumes:  ${USED_PVS}\n"
@@ -10317,68 +10340,68 @@ msgstr ""
 
 #. Type: note
 #. Description
-#: ../partman-lvm.templates:157
+#: ../partman-lvm.templates:158
 msgid "Current LVM configuration:"
 msgstr "当前 LVM 配置"
 
 #. Type: error
 #. Description
-#: ../partman-lvm.templates:199
+#: ../partman-lvm.templates:200
 msgid "The volume group ${VG} could not be created."
 msgstr "无法创建逻辑卷 ${VG}。"
 
 #. Type: multiselect
 #. Description
-#: ../partman-lvm.templates:278
+#: ../partman-lvm.templates:279
 msgid "Devices to remove from the volume group:"
 msgstr "要从卷组中移除的设备："
 
 #. Type: multiselect
 #. Description
-#: ../partman-lvm.templates:278
+#: ../partman-lvm.templates:279
 msgid "Please select the devices you wish to remove from the volume group."
 msgstr "请选择您想要从卷组中移除的设备。"
 
 #. Type: error
 #. Description
-#: ../partman-lvm.templates:285
+#: ../partman-lvm.templates:286
 msgid ""
 "No physical volumes were selected. Reduction of the volume group was aborted."
 msgstr "没有选择物理卷。缩小卷组的动作被中止。"
 
 #. Type: select
 #. Description
-#: ../partman-lvm.templates:351
+#: ../partman-lvm.templates:352
 msgid "Please select the logical volume to delete."
 msgstr "请选择要删除的逻辑卷。"
 
 #. Type: text
 #. Description
-#: ../partman-lvm.templates:356
+#: ../partman-lvm.templates:357
 msgid "in VG ${VG}"
 msgstr "于卷组 ${VG}"
 
 #. Type: error
 #. Description
-#: ../partman-lvm.templates:380
+#: ../partman-lvm.templates:381
 msgid "Error while initializing physical volume"
 msgstr "初始化物理卷出错"
 
 #. Type: error
 #. Description
-#: ../partman-lvm.templates:380
+#: ../partman-lvm.templates:381
 msgid "The physical volume ${PV} could not be initialized."
 msgstr "无法对物理卷 ${PV} 初始化。"
 
 #. Type: error
 #. Description
-#: ../partman-lvm.templates:387
+#: ../partman-lvm.templates:388
 msgid "Invalid logical volume or volume group name"
 msgstr "无效的逻辑卷或卷组名称"
 
 #. Type: error
 #. Description
-#: ../partman-lvm.templates:387
+#: ../partman-lvm.templates:388
 msgid ""
 "Logical volume or volume group names may only contain alphanumeric "
 "characters, hyphen, plus, period and underscore. They must be 128 characters "
@@ -10391,7 +10414,7 @@ msgstr ""
 
 #. Type: error
 #. Description
-#: ../partman-lvm.templates:387
+#: ../partman-lvm.templates:388
 msgid "Please choose another name."
 msgstr "请选择另一个名称。"
 
@@ -11540,7 +11563,7 @@ msgstr ""
 #. msgstr " Periph.  Modele              Taille Libre  Fat-lib N Part"
 #: ../autopartkit.templates:11
 msgid " Device   Model               Size   Free   FreeFAT NbPart"
-msgstr " 设备     型号                 大小   空闲   FreeFAT NbPart"
+msgstr " 设备     型号                大小   空闲   FreeFAT NbPart"
 
 #. Type: string
 #. Description
@@ -11709,13 +11732,13 @@ msgstr "在 '${MOUNTPOINT}' 上创建 '${FSTYPE}' 类型的文件系统"
 #. Description
 #: ../autopartkit.templates:107
 msgid "Estimated time left: ${HOURS} hour(s) ${MINUTES} minute(s)"
-msgstr "剩余时间： ${HOURS} 小时 ${MINUTES} 分钟"
+msgstr "剩余时间：${HOURS} 小时 ${MINUTES} 分钟"
 
 #. Type: text
 #. Description
 #: ../autopartkit.templates:111
 msgid "Estimated time left: ${MINUTES} minute(s)"
-msgstr "剩余时间： ${MINUTES} 分钟"
+msgstr "剩余时间：${MINUTES} 分钟"
 
 #. Type: text
 #. Description
@@ -12106,6 +12129,20 @@ msgstr "正在将内核写入闪存 (flash memory)"
 #: ../flash-kernel-installer.templates:25
 msgid "Configure flash memory to boot the system"
 msgstr "配置闪存 (flash memory) 以启动系统"
+
+#~ msgid "This is the main menu for the Debian installer."
+#~ msgstr "这是 Debian 安装程序的主菜单。"
+
+#~ msgid "No initrd generator"
+#~ msgstr "没有 initrd 生成工具"
+
+#~ msgid ""
+#~ "The kernel that has been selected for installation needs an initrd to "
+#~ "boot. However, no package to generate that initrd is available that "
+#~ "supports your configuration. This would leave your system unable to boot."
+#~ msgstr ""
+#~ "被选定安装的内核需要 initrd 才能启动。但是，没有任何生成 initrd 的工具软件"
+#~ "包可以支持您的设置。这将使您的系统无法启动。"
 
 #~ msgid "Ethernet or Fast Ethernet"
 #~ msgstr "以太网或高速以太网"

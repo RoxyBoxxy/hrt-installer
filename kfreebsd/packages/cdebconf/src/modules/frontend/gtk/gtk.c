@@ -49,13 +49,7 @@
 #include <debian-installer/slist.h>
 #include <gdk/gdkkeysyms.h>
 
-#if GTK_CHECK_VERSION(2,10,0)
-#ifdef GDK_WINDOWING_DIRECTFB
 #include <directfb.h>
-#endif
-#else
-#include <directfb.h>
-#endif
 
 #define WINDOW_WIDTH 800
 #define WINDOW_HEIGHT 600
@@ -92,19 +86,18 @@ typedef int (custom_func_t)(struct frontend*, struct question*, GtkWidget*);
 
 static const char * get_text(struct frontend *obj, const char *template, const char *fallback );
 
-static int reset_cursor_cnt = 0;
-
 void register_setter(void (*func)(void*, struct question*),
              void *data, struct question *q, struct frontend *obj)
 {
     struct setter_struct *s;
+    struct frontend_data *fe_data = obj->data;
 
     s = malloc(sizeof(struct setter_struct));
     s->func = func;
     s->data = data;
     s->q = q;
-    s->next = ((struct frontend_data*)obj->data)->setters;
-    ((struct frontend_data*)obj->data)->setters = s;
+    s->next = fe_data->setters;
+    fe_data->setters = s;
 }
 
 void free_description_data( GtkObject *obj, struct frontend_question_data* data )
@@ -351,21 +344,6 @@ gboolean expose_event_callback(GtkWidget *wid, GdkEventExpose *event, struct fro
     return FALSE;
 }
 
-/* TODO: workaround for bug #404482
- * This is a workaround for a bug in gtk/dfb which causes wrong GDK crossing
- * events (not) to be delivered and hence cursor not to be reshaped when
- * entering or leaving a gtktextview or a gtkentry
- */
-static gboolean reset_cursor_callback (GtkWidget *widget, GdkEventExpose *event, void *data)
-{
-    if (event->type == GDK_LEAVE_NOTIFY || event->type == GDK_ENTER_NOTIFY) {
-        if ( (reset_cursor_cnt % 2) == 0)
-            gdk_window_set_cursor (widget->window, NULL);
-        reset_cursor_cnt++;
-    }
-
-    return FALSE;
-}
 
 /* Scrolling to default row in SELECT questions has to be done after the
  * treeview has been realized
@@ -1279,6 +1257,7 @@ void set_design_elements(struct frontend *obj, GtkWidget *window)
     GtkWidget *label_title, *h_title_box, *v_title_box, *logo_button;
     GList *focus_chain = NULL;
     int *ret_val;
+    struct frontend_data *data = obj->data;
 
     /* A logo is displayed in the upper area of the screen */
     logo_button = gtk_image_new_from_file("/usr/share/graphics/logo_debian.png");
@@ -1287,7 +1266,7 @@ void set_design_elements(struct frontend *obj, GtkWidget *window)
     /* A label is used to display the fontend's title */
     label_title = gtk_label_new(NULL);
     gtk_misc_set_alignment (GTK_MISC (label_title), 0, 0);
-    ((struct frontend_data*) obj->data)->title = label_title;
+    data->title = label_title;
     h_title_box = gtk_hbox_new (TRUE, 0);
     gtk_box_pack_start(GTK_BOX (h_title_box), label_title, TRUE, TRUE, DEFAULT_PADDING);
     v_title_box = gtk_vbox_new (TRUE, 0);
@@ -1295,7 +1274,7 @@ void set_design_elements(struct frontend *obj, GtkWidget *window)
 
     /* This is the box were question(s) will be displayed */
     targetbox = gtk_vbox_new (FALSE, 0);
-    ((struct frontend_data*) obj->data)->target_box = targetbox;
+    data->target_box = targetbox;
 
     actionbox = gtk_hbutton_box_new();
     h_actionbox = gtk_hbox_new(FALSE, 0);
@@ -1307,7 +1286,7 @@ void set_design_elements(struct frontend *obj, GtkWidget *window)
     button_screenshot = gtk_button_new_with_label (get_text(obj, "debconf/gtk-button-screenshot", "Screenshot"));
     g_signal_connect (G_OBJECT (button_screenshot), "clicked", G_CALLBACK (screenshot_button_callback), obj );
     gtk_box_pack_start (GTK_BOX(actionbox), button_screenshot, TRUE, TRUE, DEFAULT_PADDING);
-    ((struct frontend_data*) obj->data)->button_screenshot = button_screenshot;
+    data->button_screenshot = button_screenshot;
     gtk_widget_set_sensitive (button_screenshot, FALSE);
 
     /* Here are the back and forward buttons */
@@ -1328,8 +1307,8 @@ void set_design_elements(struct frontend *obj, GtkWidget *window)
     gtk_box_pack_start (GTK_BOX(actionbox), button_next, TRUE, TRUE, DEFAULT_PADDING);
     GTK_WIDGET_SET_FLAGS (button_next, GTK_CAN_DEFAULT);
 
-    ((struct frontend_data*) obj->data)->button_prev = button_prev;
-    ((struct frontend_data*) obj->data)->button_next = button_next;
+    data->button_prev = button_prev;
+    data->button_next = button_next;
     gtk_widget_set_sensitive (button_prev, FALSE);
     gtk_widget_set_sensitive (button_next, FALSE);
 
@@ -1341,7 +1320,7 @@ void set_design_elements(struct frontend *obj, GtkWidget *window)
     g_signal_connect (G_OBJECT(button_cancel), "clicked",
                       G_CALLBACK(cancel_button_callback), obj);
     gtk_box_pack_start (GTK_BOX(actionbox), button_cancel, TRUE, TRUE, DEFAULT_PADDING);
-    ((struct frontend_data*) obj->data)->button_cancel = button_cancel;
+    data->button_cancel = button_cancel;
     gtk_widget_set_sensitive (button_cancel, FALSE);
 
     /* focus order inside actionbox */
@@ -1440,14 +1419,13 @@ static int gtk_initialize(struct frontend *obj, struct configuration *conf)
     gtk_init (&args, &name);
 
     window = gtk_window_new (GTK_WINDOW_TOPLEVEL);
-    g_signal_connect_after (G_OBJECT (window), "event", G_CALLBACK (reset_cursor_callback), NULL);
     gtk_widget_set_size_request (window, WINDOW_WIDTH, WINDOW_HEIGHT);
     gtk_window_set_resizable (GTK_WINDOW (window), TRUE);
     gtk_window_set_position (GTK_WINDOW (window), GTK_WIN_POS_CENTER);
     gtk_window_set_decorated (GTK_WINDOW (window), TRUE);
     set_design_elements (obj, window);
     gtk_rc_reparse_all();
-    ((struct frontend_data*) obj->data)->window = window;
+    fe_data->window = window;
     gtk_widget_set_default_direction(get_text_direction(obj));
     gtk_widget_show_all(window);
 
@@ -1489,18 +1467,12 @@ static int gtk_go(struct frontend *obj)
     gdk_threads_enter();
 
     /* TODO
-     * workarund to force dfb to reload keymap at every run, awaiting
+     * workaround to force dfb to reload keymap at every run, awaiting
      * for dfb to support automatic keymap change detection and reloading
      * (See also bug #381979)
      */
 
-    #if GTK_CHECK_VERSION(2,10,0)
-    #ifdef GDK_WINDOWING_DIRECTFB
     dfb_input_device_reload_keymap( dfb_input_device_at( DIDID_KEYBOARD ) );
-    #endif
-    #else
-    dfb_input_device_reload_keymap( dfb_input_device_at( DIDID_KEYBOARD ) );
-    #endif
 
     gtk_rc_reparse_all();
 

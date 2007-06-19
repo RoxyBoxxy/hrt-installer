@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<!-- original version: 44192  -->
+<!-- original version: 44580  -->
 <!-- traducido por jfs, 19 enero 2007 -->
+<!-- revisado por Igor Tamara, 14 marzo 2007 -->
 
  <sect1 condition="gtk" id="graphical">
  <title>El instalador gráfico</title>
@@ -26,7 +27,7 @@ una sola pantalla.
 
 El instalador gráfico está disponible en todas las imágenes de CD con el
 mecanismo de instalación hd-media. El instalador debe arrancarse con
-<userinput>installgui</userinput> en lugar de con
+<userinput>installgui</userinput> en lugar de usar
 <userinput>install</userinput> ya que utiliza una versión distinta (y más
 grande) del initrd. El arranque se realiza con «Analogous». Para arrancar el
 modo experto y de rescate se debe utilizar <userinput>expertgui</userinput> y
@@ -40,17 +41,17 @@ especial<footnote id="gtk-miniiso">
 <para>
 La imagen mini ISO puede descargarse de una réplica de Debian tal y
 como se describe en <xref linkend="downloading-files"/>. 
-Buque <quote>gtk-miniiso</quote>.
+Busque <quote>gtk-miniiso</quote>.
 </para>
 
 </footnote>, que se utiliza principalmente para pruebas. En
 esta imagen el instalador se carga simplemente utilizando
 <userinput>install</userinput>. No hay ninguna imagen del instalador gráfico
-que pueda utilizar el arranque via red.
+que pueda utilizar el arranque vía red.
 
 </para><para arch="powerpc">
 
-Solamente se disponible de una <quote>mini</quote> imagen ISO
+Solamente se dispone de una <quote>mini</quote> imagen ISO
 en el caso de &arch-title;<footnote id="gtk-miniiso">
 
 <para>
@@ -67,7 +68,7 @@ en otros sistemas.
 
 El instalador gráfico necesita de una cantidad de memoria significativamente
 mayor que el instalador normal: &minimum-memory-gtk;.  Si no dispone de
-suficiente memoria se utilizar el interfaz habitual basado en
+suficiente memoria se utilizará la interfaz habitual basada en
 <quote>newt</quote>.
 
 </para><para>
@@ -83,7 +84,7 @@ parámetros necesarios están definidos en <xref linkend="boot-parms"/>.
   <title>Utilizar el instalador gráfico</title>
 <para>
 
-    El instalador gráfico funciona básicamente como el instalador normal por lo
+    El instalador gráfico funciona básicamente como el instalador normal, por lo
     que puede utilizar las demás partes de este manual para guiarse durante el
     proceso de instalación.
 
@@ -130,7 +131,7 @@ idioma. Otro ejemplo es la pantalla principal de «partman».
 </para></listitem>
 <listitem><para>
 
-Puede que si teclea algunos caracteres éstos no se representen correctamente,
+Puede que si teclea algunos caracteres no se representen correctamente,
 pudiéndose incluso escribir un carácter distinto. No funciona, por ejemplo, la
 «composición» de un carácter pulsando primero la tecla del acento y luego la
 letra que debería utilizar el acento.
@@ -155,6 +156,27 @@ funciona sin problemas.
 No es posible generar la contraseña de cifrado aleatoria por lo que el soporte
 de particiones cifradas es aún limitado. Es posible configurar una partición de
 cifrado utilizando una frase de paso como clave de cifrado.
+
+</para></listitem>
+<listitem><para>
+Actualmente no se puede ejecutar un intérprete de órdenes desde la
+interfaz gráfica. Las opciones que permiten hacer esto (que sí
+están disponibles al utilizar la interfaz de texto) no se mostrarán
+en el menú principal del sistema de instalación ni en el menú del 
+modo de rescate. Tendrá que conmutar (como se ha descrito
+previamente) a los intérpretes de órdenes que se pueden encontrar en
+las consolas virtuales VT2 y VT3.
+</para><para>
+        
+Puede ser útil ejecutar un intérprete de órdenes en la partición raíz
+de un sistema previamente instalado una vez haya arrancado el instalador en
+modo de rescate. Puede hacer esto (una vez haya indicado qué partición
+se debe montar como partición raíz) cambiando a VT2 o VT3 e introduciendo
+la siguiente orden:
+
+<informalexample><screen>
+# chroot /target
+</screen></informalexample>
 
 </para></listitem>
 </itemizedlist>

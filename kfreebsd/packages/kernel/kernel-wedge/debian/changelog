@@ -1,3 +1,114 @@
+kernel-wedge (2.38) UNRELEASED; urgency=low
+
+  [ Joey Hess ]
+  * Add bitrev to core-modules, optionally. Some arches may build this as a
+    module if nothing in the kernel itself uses it.
+
+  [ Wouter Verhelst ]
+  * Create an nbd-modules package with just the 'nbd' module in it that
+    together with nbd-client-udeb and an as of yet to be written partman
+    module should allow installing to an NBD device.
+
+  [ Frans Pop ]
+  * Add the definitions for loop-aes-modules (linux-modules-*).
+
+ -- Frans Pop <fjp@debian.org>  Mon, 18 Jun 2007 19:20:20 +0200
+
+kernel-wedge (2.37) unstable; urgency=low
+
+  [ Martin Michlmayr ]
+  * Make nic-modules depend on core-modules. Closes: #421352
+
+  [ Joey Hess ]
+  * Split wireless modules out of nic-extra-modules into nic-wireless-modules.
+    This new package will contain wireless modules that arn't USB or pcmcia;
+    those stay in their respective packages.
+  * nic-pcmcia-modules now depends on nic-wireless-modules instead of
+    nic-extra-modules.
+  * Add zd1211rw to nic-usb-modules, and ipw2100 and ipw2200 to
+    nic-wireless-modules. These had been left off due to needing nonfree
+    firmware, but maybe we'll work out a way to provide that, and users can
+    always provide it on their own, so I think including these in d-i is
+    worthwhile.
+  * nic-usb-modules now depends on nic-wireless-modules for 80211 modules.
+
+ -- Joey Hess <joeyh@debian.org>  Mon, 04 Jun 2007 15:21:30 -0400
+
+kernel-wedge (2.36) unstable; urgency=low
+
+  * Updates for 2.6.21:
+    - Add atl1 and cxgb3 to nic-extra-modules
+    - Add dm9601 to nic-usb-modules
+    - sata_sis now depends on pata_sis, so I moved sata_sis to pata-modules,
+      which is not really ideal
+
+ -- Joey Hess <joeyh@debian.org>  Fri, 18 May 2007 01:28:41 -0400
+
+kernel-wedge (2.35) unstable; urgency=low
+
+  [ Joey Hess ]
+  * Make nic-usb-modules depend on core-modules. Closes: #421352
+  * It's generally fine to make any modules package depend on core-modules,
+    even if the dependency is specific to one architecture. core-modules is
+    priority standard so is always available anyway
+
+  [ Frans Pop ]
+  * Add cbc and ecb to crypto-modules (split out from another module in
+    2.6.20).
+
+ -- Joey Hess <joeyh@debian.org>  Thu, 10 May 2007 20:03:32 -0400
+
+kernel-wedge (2.34) unstable; urgency=low
+
+  * Really add qla3xx to nic-extra-modules.
+  * Remove 3c359 from nic-extra-modules, it was added accidentially, as it's a
+    token ring driver.
+  * Move qla4xxxx and qla2xxxx to scsi-extra-modules as scsi-modules is too
+    large for the i386 cd-drivers floppy and these modules are unlikely to be
+    used for CD drives.
+
+ -- Joey Hess <joeyh@debian.org>  Fri, 27 Apr 2007 14:33:52 -0400
+
+kernel-wedge (2.33) unstable; urgency=low
+
+  * Move eth1394 to nic-modules, this change was only made in i386 and amd64
+    before.
+  * Mark cpqarray optional, it is not available in amd64 as of 2.6.20.
+    (This may be a bug in the kernel package.)
+  * Rename firmware-modules to core-modules, so that it can be used for
+    other modules besides firmware. Should only be used for very core modules.
+
+ -- Joey Hess <joeyh@debian.org>  Thu, 12 Apr 2007 03:20:10 -0400
+
+kernel-wedge (2.32) unstable; urgency=low
+
+  * Add ipr, qlogicfas408, and dc395x to scsi-modules, and pd6729 to
+    pcmcia-modules. These were only listed in i386's files for some
+    reason before.
+  * 2.6.20 support: (Closes: #418707)
+    - add dgrs, netxen_nic, qla3xxx to nic-extra-modules
+      NB: netxen_nic may need external firmware; dgrs seems to contain a
+      binary blob in the kernel.
+    - didn't add new tokenring modules for 3c359 and smctr, guessing noone
+      will need them?
+    - add aic94xx and qla4xxx, and stex to scsi-modules.
+    - add mcs7830 to nic-usb-modules.
+    - didn't add aircable to usb-serial-modules, as I'm guessing noone will
+      use it in d-i (ditto for mos7720 and mos7840)
+    - Add pata_* to pata-modules. This is quite likely wrong, since all the
+      old ide modules are also still being built, and most of them register
+      the same pci ida as the pata modules. Which one wins I don't know. I'm
+      just following the kernel team here so that d-i behaves the same as a
+      system running the 2.6.20 kernel package. Expect that this will be
+      worked out in the future and only one version of each module included.
+    - Factor out libata to a new ata-modules, since both sata-modules and
+      pata-modules need it.
+    - scsi-modules also needs to depend on ata-modules now, since ipr has a
+      new dependency on libata.
+    - pata_pcmcia to pcmcia-storage-modules
+
+ -- Joey Hess <joeyh@debian.org>  Thu, 12 Apr 2007 02:22:56 -0400
+
 kernel-wedge (2.31) unstable; urgency=low
 
   * Add jmicron to ide-modules.

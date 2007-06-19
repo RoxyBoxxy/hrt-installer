@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: preseed\n"
 "Report-Msgid-Bugs-To: debian-boot@lists.debian.org\n"
-"POT-Creation-Date: 2007-02-28 20:57+0000\n"
-"PO-Revision-Date: 2007-02-08 09:35+0200\n"
+"POT-Creation-Date: 2007-05-19 14:20+0000\n"
+"PO-Revision-Date: 2007-03-20 12:04+0200\n"
 "Last-Translator: \n"
 "Language-Team:  <en@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -803,6 +803,12 @@ msgid ""
 "many other nice effects that can be achieved by creative use of "
 "preconfiguration."
 msgstr ""
+"Ένα εκτεταμένο παράγειγμα του πώς μπορείτε να χρησιμοποιήσετε αυτό το "
+"πλαίσιο, που συμπεριλαμβάνει παραδείγματα σεναρίων (script) και κλάσσεις, "
+"μπορεί να βρεθεί στον <ulink url=\"http://hands.com/d-i/\">δικτυακό τόπο του "
+"προγραμματιστή</ulink>. Τα παραδείγματα που δίνονται εκεί δείχνουν επίσης "
+"μερικά ακόμα χρήσιμα αποτελέσματα που μπορούν να επιτευχθούν μέσω της "
+"δημιουργικής χρήσης της προρύθμισης."
 
 #. Tag: title
 #: preseed.xml:481
@@ -1539,7 +1545,7 @@ msgstr ""
 
 #. Tag: screen
 #: preseed.xml:759
-#, fuzzy, no-c-format
+#, no-c-format
 msgid ""
 "# If you select ftp, the mirror/country string does not need to be set.\n"
 "#d-i mirror/protocol string ftp\n"
@@ -1553,7 +1559,10 @@ msgid ""
 "# Suite to use for loading installer components (optional).\n"
 "#d-i mirror/udeb/suite string testing"
 msgstr ""
-"d-i mirror/country string enter information manually\n"
+"# Αν επιλέξετε ftp, η συμβολοσειρά mirror/country δεν είναι απαραίτητο να "
+"οριστεί.\n"
+"#d-i mirror/protocol string ftp\n"
+"d-i mirror/country string εισάγετε την πληροφορία με το χέρι\n"
 "d-i mirror/http/hostname string &archive-mirror;\n"
 "d-i mirror/http/directory string /debian\n"
 "d-i mirror/http/proxy string\n"
@@ -1931,83 +1940,11 @@ msgstr ""
 #. Tag: title
 #: preseed.xml:828
 #, no-c-format
-msgid "Apt setup"
-msgstr "Ρύθμιση setup"
-
-#. Tag: para
-#: preseed.xml:829
-#, no-c-format
-msgid ""
-"Setup of the <filename>/etc/apt/sources.list</filename> and basic "
-"configuration options is fully automated based on your installation method "
-"and answers to earlier questions. You can optionally add other (local) "
-"repositories."
-msgstr ""
-"Η ρύθμιση του αρχείου <filename>/etc/apt/sources.list</filename> και οι "
-"βασικές επιλογές διαμόρφωσης αυτοματοποιούνται πλήρως ανάλογα με την μέθοδο "
-"εγκατάστασης και τις απαντήσεις σας σε προηγούμενες ερωτήσεις. Μπορείτε "
-"προαιρετικά να προσθέσετε και άλλες (τοπικές) \"αποθήκες\" πακέτων."
-
-#. Tag: screen
-#: preseed.xml:837
-#, fuzzy, no-c-format
-msgid ""
-"# You can choose to install non-free and contrib software.\n"
-"#d-i apt-setup/non-free boolean true\n"
-"#d-i apt-setup/contrib boolean true\n"
-"# Uncomment this if you don't want to use a network mirror.\n"
-"#d-i apt-setup/use_mirror boolean false\n"
-"# Uncomment this to avoid adding security sources, or\n"
-"# add a hostname to use a different server than security.debian.org.\n"
-"#d-i apt-setup/security_host string\n"
-"\n"
-"# Additional repositories, local[0-9] available\n"
-"#d-i apt-setup/local0/repository string \\\n"
-"#       deb http://local.server/debian stable main\n"
-"#d-i apt-setup/local0/comment string local server\n"
-"# Enable deb-src lines\n"
-"#d-i apt-setup/local0/source boolean true\n"
-"# URL to the public key of the local repository; you must provide a key or\n"
-"# apt will complain about the unauthenticated repository and so the\n"
-"# sources.list line will be left commented out\n"
-"#d-i apt-setup/local0/key string http://local.server/key\n"
-"\n"
-"# By default the installer requires that repositories be authenticated\n"
-"# using a known gpg key. This setting can be used to disable that\n"
-"# authentication. Warning: Insecure, not recommended.\n"
-"#d-i debian-installer/allow_unauthenticated string true"
-msgstr ""
-"# Μπορείτε να επιλέξετε να εγκαταστήσετε μη-ελεύθερο και συνεισφερόμενο "
-"λογισμικό.\n"
-"#d-i apt-setup/non-free boolean true\n"
-"#d-i apt-setup/contrib boolean true\n"
-"# Αποσχολιάσετε το επόμενο για να αποφύγετε την προσθήκη πηγών αναβαθμίσεων "
-"ασφαλείας, ή\n"
-"#προσθέστε ένα άλλο όνομα μηχανήματος για να χρησιμοποιήσετε έναν "
-"εξυπηρετητή διαφορετικό από τον security.debian.org.\n"
-"#d-i apt-setup/security_host string \n"
-"\n"
-"# Επιπρόσθετες διαθέσιμες αρχειοθήκες πακέτων, local[0-9]\n"
-"#d-i apt-setup/local0/repository string \\\n"
-"#       deb http://local.server/debian stable main\n"
-"#d-i apt-setup/local0/comment string local server\n"
-"#Ενεργοποίηση γραμμών για deb-src\n"
-"#d-i apt-setup/local0/source boolean true\n"
-"# URL για το δημόσιο κλειδί της τοπικής αρχειοθήκης. Θα πρέπει να δώσετε ένα "
-"κλειδί \n"
-"#διαφορετικά το apt θα διαμαρτυρηθεί για την μη πιστοποιημένη αρχειοθήκη και "
-"έτσι\n"
-"#η αντίστοιχη γραμμή στο sources.list θα παραμείνει σχολιασμένη\n"
-"#d-i apt-setup/local0/key string http://local.server/key"
-
-#. Tag: title
-#: preseed.xml:842
-#, no-c-format
 msgid "Account setup"
 msgstr "Ρύθμιση Λογαριασμού"
 
 #. Tag: para
-#: preseed.xml:843
+#: preseed.xml:829
 #, no-c-format
 msgid ""
 "The password for the root account and name and password for a first regular "
@@ -2020,7 +1957,7 @@ msgstr ""
 "κρυπτογραφημένο (clear text) είτε MD5 <emphasis>hashes</emphasis>."
 
 #. Tag: para
-#: preseed.xml:850
+#: preseed.xml:836
 #, no-c-format
 msgid ""
 "Be aware that preseeding passwords is not completely secure as everyone with "
@@ -2037,7 +1974,7 @@ msgstr ""
 "force attacks)."
 
 #. Tag: screen
-#: preseed.xml:860
+#: preseed.xml:846
 #, no-c-format
 msgid ""
 "# Skip creation of a root account (normal user account will be able to\n"
@@ -2085,7 +2022,7 @@ msgstr ""
 "#d-i passwd/user-password-crypted password [MD5 hash]"
 
 #. Tag: para
-#: preseed.xml:862
+#: preseed.xml:848
 #, no-c-format
 msgid ""
 "The <classname>passwd/root-password-crypted</classname> and "
@@ -2106,7 +2043,7 @@ msgstr ""
 "την εντολή <command>sudo</command>)."
 
 #. Tag: para
-#: preseed.xml:872
+#: preseed.xml:858
 #, no-c-format
 msgid ""
 "An MD5 hash for a password can be generated using the following command."
@@ -2115,19 +2052,19 @@ msgstr ""
 "χρησιμοποιώντας την ακόλουθη εντολή."
 
 #. Tag: screen
-#: preseed.xml:876
+#: preseed.xml:862
 #, no-c-format
 msgid "$ echo \"r00tme\" | mkpasswd -s -H MD5"
 msgstr "$ echo \"r00tme\" | mkpasswd -s -H MD5"
 
 #. Tag: title
-#: preseed.xml:882
+#: preseed.xml:868
 #, no-c-format
 msgid "Base system installation"
 msgstr "Εγκατάσταση του βασικού συστήματος"
 
 #. Tag: para
-#: preseed.xml:883
+#: preseed.xml:869
 #, no-c-format
 msgid ""
 "There is actually not very much that can be preseeded for this stage of the "
@@ -2139,7 +2076,7 @@ msgstr ""
 "ερωτήσεις που γίνονται αφορούν την εγκατάσταση του πυρήνα."
 
 #. Tag: screen
-#: preseed.xml:890
+#: preseed.xml:876
 #, no-c-format
 msgid ""
 "# Select the initramfs generator used to generate the initrd for 2.6 "
@@ -2152,18 +2089,248 @@ msgstr ""
 "#d-i base-installer/kernel/linux/initramfs-generators string yaird"
 
 #. Tag: title
+#: preseed.xml:881
+#, no-c-format
+msgid "Apt setup"
+msgstr "Ρύθμιση setup"
+
+#. Tag: para
+#: preseed.xml:882
+#, no-c-format
+msgid ""
+"Setup of the <filename>/etc/apt/sources.list</filename> and basic "
+"configuration options is fully automated based on your installation method "
+"and answers to earlier questions. You can optionally add other (local) "
+"repositories."
+msgstr ""
+"Η ρύθμιση του αρχείου <filename>/etc/apt/sources.list</filename> και οι "
+"βασικές επιλογές διαμόρφωσης αυτοματοποιούνται πλήρως ανάλογα με την μέθοδο "
+"εγκατάστασης και τις απαντήσεις σας σε προηγούμενες ερωτήσεις. Μπορείτε "
+"προαιρετικά να προσθέσετε και άλλες (τοπικές) \"αποθήκες\" πακέτων."
+
+#. Tag: screen
+#: preseed.xml:890
+#, no-c-format
+msgid ""
+"# You can choose to install non-free and contrib software.\n"
+"#d-i apt-setup/non-free boolean true\n"
+"#d-i apt-setup/contrib boolean true\n"
+"# Uncomment this if you don't want to use a network mirror.\n"
+"#d-i apt-setup/use_mirror boolean false\n"
+"# Uncomment this to avoid adding security sources, or\n"
+"# add a hostname to use a different server than security.debian.org.\n"
+"#d-i apt-setup/security_host string\n"
+"\n"
+"# Additional repositories, local[0-9] available\n"
+"#d-i apt-setup/local0/repository string \\\n"
+"#       http://local.server/debian stable main\n"
+"#d-i apt-setup/local0/comment string local server\n"
+"# Enable deb-src lines\n"
+"#d-i apt-setup/local0/source boolean true\n"
+"# URL to the public key of the local repository; you must provide a key or\n"
+"# apt will complain about the unauthenticated repository and so the\n"
+"# sources.list line will be left commented out\n"
+"#d-i apt-setup/local0/key string http://local.server/key\n"
+"\n"
+"# By default the installer requires that repositories be authenticated\n"
+"# using a known gpg key. This setting can be used to disable that\n"
+"# authentication. Warning: Insecure, not recommended.\n"
+"#d-i debian-installer/allow_unauthenticated string true"
+msgstr ""
+"# Μπορείτε να επιλέξετε να εγκαταστήσετε μη-ελεύθερο και συνεισφερόμενο "
+"λογισμικό.\n"
+"#d-i apt-setup/non-free boolean true\n"
+"#d-i apt-setup/contrib boolean true\n"
+"# Αποσχολιάστε το επόμενο αν δεν θέλετε να χρησιμοποιήσετε έναν δικτυακό "
+"καθρέφτη.\n"
+"#d-i apt-setup/use_mirror boolean false\n"
+"# Αποσχολιάσετε το επόμενο για να αποφύγετε την προσθήκη πηγών αναβαθμίσεων "
+"ασφαλείας, ή\n"
+"#προσθέστε ένα άλλο όνομα μηχανήματος για να χρησιμοποιήσετε έναν "
+"εξυπηρετητή διαφορετικό από τον security.debian.org.\n"
+"#d-i apt-setup/security_host string \n"
+"\n"
+"# Επιπρόσθετες αρχειοθήκες πακέτων, local[0-9] διαθέσιμες\n"
+"#d-i apt-setup/local0/repository string \\\n"
+"#       http://local.server/debian stable main\n"
+"#d-i apt-setup/local0/comment string local server\n"
+"#Ενεργοποίηση γραμμών για deb-src\n"
+"#d-i apt-setup/local0/source boolean true\n"
+"# URL για το δημόσιο κλειδί της τοπικής αρχειοθήκης. Θα πρέπει να δώσετε ένα "
+"κλειδί \n"
+"#διαφορετικά το apt θα διαμαρτυρηθεί για την μη πιστοποιημένη αρχειοθήκη και "
+"έτσι\n"
+"#η αντίστοιχη γραμμή στο sources.list θα παραμείνει σχολιασμένη\n"
+"#d-i apt-setup/local0/key string http://local.server/key #Εξ' ορισμο'ο "
+"εγκαταστάτης την αυθεντικοποίηση των αρχειοθηκών των πακέτων\n"
+"# με την χρήση ενός γνωστού κλειδιού gpg. Η παρούσα ρύθμιση μπορεί να "
+"χρησιμοποιηθεί ώστε\n"
+"#να απενεργοποιήσετε αυτή την αυθεντικοποίηση. Προειδοποίηση: Μη ασφαλής, "
+"δεν συνίσταται.\n"
+"#d-i debian-installer/allow_unauthenticated string true"
+
+#. Tag: title
 #: preseed.xml:895
+#, no-c-format
+msgid "Package selection"
+msgstr "Επιλογή πακέτων"
+
+#. Tag: para
+#: preseed.xml:896
+#, no-c-format
+msgid ""
+"You can choose to install any combination of tasks that are available. "
+"Available tasks as of this writing include:"
+msgstr ""
+"Μπορείτε να επιλέξετε να εγκαταστήσετε οποιονδήποτε συνδυασμό καθηκόντων "
+"είναι διαθέσιμα. Διαθέσιμα καθήκοντα περιλαμβάνουν την σιγμή που γράφεται "
+"αυτό το κείμενο:"
+
+#. Tag: userinput
+#: preseed.xml:905
+#, no-c-format
+msgid "standard"
+msgstr "Κανονικό σύστημα"
+
+#. Tag: userinput
+#: preseed.xml:908
+#, no-c-format
+msgid "desktop"
+msgstr "επιφάνεια εργασίας"
+
+#. Tag: userinput
+#: preseed.xml:911
+#, no-c-format
+msgid "gnome-desktop"
+msgstr "επιφάνεια εργασίας gnome"
+
+#. Tag: userinput
+#: preseed.xml:914
+#, no-c-format
+msgid "kde-desktop"
+msgstr "επιφάνεια εργασίας kde"
+
+#. Tag: userinput
+#: preseed.xml:917
+#, no-c-format
+msgid "web-server"
+msgstr "Server ιστοσελίδων"
+
+#. Tag: userinput
+#: preseed.xml:920
+#, no-c-format
+msgid "print-server"
+msgstr "Server εκτυπώσεων"
+
+#. Tag: userinput
+#: preseed.xml:923
+#, no-c-format
+msgid "dns-server"
+msgstr "server oνοματοδοσίας (dns-server)"
+
+#. Tag: userinput
+#: preseed.xml:926
+#, no-c-format
+msgid "file-server"
+msgstr "Server αρχείων"
+
+#. Tag: userinput
+#: preseed.xml:929
+#, no-c-format
+msgid "mail-server"
+msgstr "Server αλληλογραφίας"
+
+#. Tag: userinput
+#: preseed.xml:932
+#, no-c-format
+msgid "sql-database"
+msgstr "Βάση δεδομένων SQL"
+
+#. Tag: userinput
+#: preseed.xml:935
+#, no-c-format
+msgid "laptop"
+msgstr "Φορητός υπολογιστής"
+
+#. Tag: para
+#: preseed.xml:939
+#, no-c-format
+msgid ""
+"You can also choose to install no tasks, and force the installation of a set "
+"of packages in some other way. We recommend always including the "
+"<userinput>standard</userinput> task."
+msgstr ""
+"Μπορείτε επίσης να επιλέξετε να μην εγκαταστήσετε οποιοδήποτε task, "
+"επιβάλλοντας την εγκατάσταση ενός συνόλου πακέτων με κάποιον άλλον τρόπο. "
+"Συνιστούμε πάντως να συμπεριλαμβάνετε πάντα το \"καθήκον\" "
+"<userinput>Κανονικό σύστημα</userinput>."
+
+#. Tag: para
+#: preseed.xml:945
+#, no-c-format
+msgid ""
+"If you want to install some individual packages in addition to packages "
+"installed by tasks, you can use the parameter <classname>pkgsel/include</"
+"classname>. The value of this parameter can be a list of packages separated "
+"by either commas or spaces, which allows it to be used easily on the kernel "
+"command line as well."
+msgstr ""
+"Αν θέλετε να εγκαταστήσετε κάποια μεμονωμένα πακέτα επιπλέον από τα πακέτα "
+"που εγκαθίστανται από τις ομάδες πακέτων (tasks), μπορείτε να "
+"χρησιμοποιήσετε την παράμετρο <classname>pkgsel/include</classname>. Η τιμή "
+"αυτής της παραμέτρου μπορεί να είναι μια λίστα πακέτων που διαχωρίζονται με "
+"άνω τελείες ή κενά, κάτι που επιτρέπει επίσης την εύκολη χρήση της στην "
+"γραμμή εντολών του πυρήνα."
+
+#. Tag: screen
+#: preseed.xml:955
+#, fuzzy, no-c-format
+msgid ""
+"#tasksel tasksel/first multiselect standard, web-server<phrase condition="
+"\"lenny\">\n"
+"# If the desktop task is selected, install the kde and xfce desktops\n"
+"# instead of the default gnome desktop.\n"
+"#tasksel tasksel/desktop multiselect kde-desktop, xfce-desktop</"
+"phrase><phrase condition=\"etch\">\n"
+"#tasksel tasksel/first multiselect standard, kde-desktop</phrase>\n"
+"\n"
+"# Individual additional packages to install\n"
+"#d-i pkgsel/include string openssh-server build-essential\n"
+"\n"
+"# Some versions of the installer can report back on what software you have\n"
+"# installed, and what software you use. The default is not to report back,\n"
+"# but sending reports helps the project determine what software is most\n"
+"# popular and include it on CDs.\n"
+"#popularity-contest popularity-contest/participate boolean false"
+msgstr ""
+"tasksel tasksel/first multiselect standard, Desktop environment\n"
+"#tasksel tasksel/first multiselect Standard system, Web server\n"
+"\n"
+"# Μερικές εκδόσεις του εγκαταστάτη μπορούν να κάνουν αναφορά σχετικά με το # "
+"λογισμικό που έχετε\n"
+"# και το λογισμικό που χρησιμοποιείτε. Η προεπιλογή είναι να μηνγίνεται μια "
+"# τέτοια αναφορά\n"
+" # αλλά η αποστολή αναφορών βοηθα το Debian project στον καθορισμό του # "
+"λογισμικού που είναι \n"
+" # δημοφιλέστερο ώστε να συμπεριλαμβάνεται στα CD.\n"
+"#popularity-contest popularity-contest/participate boolean false"
+
+#. Tag: title
+#: preseed.xml:960
 #, no-c-format
 msgid "Boot loader installation"
 msgstr "Εγκατάσταση φορτωτή εκκίνησης"
 
 #. Tag: screen
-#: preseed.xml:897
-#, no-c-format
+#: preseed.xml:962
+#, fuzzy, no-c-format
 msgid ""
 "# Grub is the default boot loader (for x86). If you want lilo installed\n"
 "# instead, uncomment this:\n"
-"#d-i grub-installer/skip boolean true\n"
+"#d-i grub-installer/skip boolean true<phrase condition=\"lenny\">\n"
+"# To also skip installing lilo, and install no bootloader, uncomment this\n"
+"# too:\n"
+"#d-i lilo-installer/skip boolean true</phrase>\n"
 "\n"
 "# This is fairly safe to set, it makes grub install automatically to the "
 "MBR\n"
@@ -2208,148 +2375,6 @@ msgstr ""
 "#d-i grub-installer/bootdev  string (hd0,0)\n"
 "# Για να εγκαταστήσετε το grub σε πολλαπλούς δίσκους:\n"
 "#d-i grub-installer/bootdev  string (hd0,0) (hd1,0) (hd2,0)"
-
-#. Tag: title
-#: preseed.xml:902
-#, no-c-format
-msgid "Package selection"
-msgstr "Επιλογή πακέτων"
-
-#. Tag: para
-#: preseed.xml:903
-#, no-c-format
-msgid ""
-"You can choose to install any combination of tasks that are available. "
-"Available tasks as of this writing include:"
-msgstr ""
-"Μπορείτε να επιλέξετε να εγκαταστήσετε οποιονδήποτε συνδυασμό καθηκόντων "
-"είναι διαθέσιμα. Διαθέσιμα καθήκοντα περιλαμβάνουν την σιγμή που γράφεται "
-"αυτό το κείμενο:"
-
-#. Tag: userinput
-#: preseed.xml:912
-#, no-c-format
-msgid "standard"
-msgstr "Κανονικό σύστημα"
-
-#. Tag: userinput
-#: preseed.xml:915
-#, no-c-format
-msgid "desktop"
-msgstr "επιφάνεια εργασίας"
-
-#. Tag: userinput
-#: preseed.xml:918
-#, no-c-format
-msgid "gnome-desktop"
-msgstr "επιφάνεια εργασίας gnome"
-
-#. Tag: userinput
-#: preseed.xml:921
-#, no-c-format
-msgid "kde-desktop"
-msgstr "επιφάνεια εργασίας kde"
-
-#. Tag: userinput
-#: preseed.xml:924
-#, no-c-format
-msgid "web-server"
-msgstr "Server ιστοσελίδων"
-
-#. Tag: userinput
-#: preseed.xml:927
-#, no-c-format
-msgid "print-server"
-msgstr "Server εκτυπώσεων"
-
-#. Tag: userinput
-#: preseed.xml:930
-#, no-c-format
-msgid "dns-server"
-msgstr "server oνοματοδοσίας (dns-server)"
-
-#. Tag: userinput
-#: preseed.xml:933
-#, no-c-format
-msgid "file-server"
-msgstr "Server αρχείων"
-
-#. Tag: userinput
-#: preseed.xml:936
-#, no-c-format
-msgid "mail-server"
-msgstr "Server αλληλογραφίας"
-
-#. Tag: userinput
-#: preseed.xml:939
-#, no-c-format
-msgid "sql-database"
-msgstr "Βάση δεδομένων SQL"
-
-#. Tag: userinput
-#: preseed.xml:942
-#, no-c-format
-msgid "laptop"
-msgstr "Φορητός υπολογιστής"
-
-#. Tag: para
-#: preseed.xml:946
-#, no-c-format
-msgid ""
-"You can also choose to install no tasks, and force the installation of a set "
-"of packages in some other way. We recommend always including the "
-"<userinput>standard</userinput> task."
-msgstr ""
-"Μπορείτε επίσης να επιλέξετε να μην εγκαταστήσετε οποιοδήποτε task, "
-"επιβάλλοντας την εγκατάσταση ενός συνόλου πακέτων με κάποιον άλλον τρόπο. "
-"Συνιστούμε πάντως να συμπεριλαμβάνετε πάντα το \"καθήκον\" "
-"<userinput>Κανονικό σύστημα</userinput>."
-
-#. Tag: para
-#: preseed.xml:952
-#, no-c-format
-msgid ""
-"If you want to install some individual packages in addition to packages "
-"installed by tasks, you can use the parameter <classname>pkgsel/include</"
-"classname>. The value of this parameter can be a list of packages separated "
-"by either commas or spaces, which allows it to be used easily on the kernel "
-"command line as well."
-msgstr ""
-"Αν θέλετε να εγκαταστήσετε κάποια μεμονωμένα πακέτα επιπλέον από τα πακέτα "
-"που εγκαθίστανται από τις ομάδες πακέτων (tasks), μπορείτε να "
-"χρησιμοποιήσετε την παράμετρο <classname>pkgsel/include</classname>. Η τιμή "
-"αυτής της παραμέτρου μπορεί να είναι μια λίστα πακέτων που διαχωρίζονται με "
-"άνω τελείες ή κενά, κάτι που επιτρέπει επίσης την εύκολη χρήση της στην "
-"γραμμή εντολών του πυρήνα."
-
-#. Tag: screen
-#: preseed.xml:962
-#, no-c-format
-msgid ""
-"tasksel tasksel/first multiselect standard, desktop\n"
-"#tasksel tasksel/first multiselect standard, web-server\n"
-"#tasksel tasksel/first multiselect standard, kde-desktop\n"
-"\n"
-"# Individual additional packages to install\n"
-"#d-i pkgsel/include string openssh-server build-essential\n"
-"\n"
-"# Some versions of the installer can report back on what software you have\n"
-"# installed, and what software you use. The default is not to report back,\n"
-"# but sending reports helps the project determine what software is most\n"
-"# popular and include it on CDs.\n"
-"#popularity-contest popularity-contest/participate boolean false"
-msgstr ""
-"tasksel tasksel/first multiselect standard, Desktop environment\n"
-"#tasksel tasksel/first multiselect Standard system, Web server\n"
-"\n"
-"# Μερικές εκδόσεις του εγκαταστάτη μπορούν να κάνουν αναφορά σχετικά με το # "
-"λογισμικό που έχετε\n"
-"# και το λογισμικό που χρησιμοποιείτε. Η προεπιλογή είναι να μηνγίνεται μια "
-"# τέτοια αναφορά\n"
-" # αλλά η αποστολή αναφορών βοηθα το Debian project στον καθορισμό του # "
-"λογισμικού που είναι \n"
-" # δημοφιλέστερο ώστε να συμπεριλαμβάνεται στα CD.\n"
-"#popularity-contest popularity-contest/participate boolean false"
 
 #. Tag: title
 #: preseed.xml:967
@@ -2555,7 +2580,7 @@ msgstr "Χρήση preseeding για την αλλαγή των προκαθορ
 
 #. Tag: para
 #: preseed.xml:1015
-#, fuzzy, no-c-format
+#, no-c-format
 msgid ""
 "It is possible to use preseeding to change the default answer for a "
 "question, but still have the question asked. To do this the <firstterm>seen</"
@@ -2577,14 +2602,23 @@ msgid ""
 msgstr ""
 "Είναι δυνατόν να χρησιμοποιήσετε την προρύθμιση για να αλλάξετε την "
 "προκαθορισμένη απάντηση σε μια ερώτηση, επιτρέποντας όμως ακόμα την "
-"διατύπωση της. Για να το κάνετε αυτό η σήμανση <firstterm>seen</firstterm> "
+"διατύπωσή της. Για να το κάνετε αυτό η σήμανση <firstterm>seen</firstterm> "
 "πρέπει να ξαναοριστεί σαν <quote>false</quote> μετά την απόδοση μιας τιμής "
 "για την ερώτηση. <informalexample><screen>\n"
 "d-i foo/bar string value\n"
 "d-i foo/bar seen false\n"
-"</screen></informalexample> Αυρτό θα έχει φυσικά αποτέλεσμα μόνο για "
-"παραμέτρους που αντιστοιχούν σε ερωτήσεις που πράγματι εμφανίζονται στην "
-"διάρκεια μιας εγκατάστασης και όχι για <quote>εσωτερικές</quote> παραμέτρους."
+"</screen></informalexample> Το ίδιο αποτέλεσμα μπορεί να επιτευχθεί για "
+"<emphasis>όλες</emphasis> τις ερωτήσεις ορίζοντας την παράμετρο "
+"<classname>preseed/interactive=true</classname> στο προτρεπτικό εκκίνησης. "
+"Αυτό μπορεί να είναι χρήσιμο και στον έλεγχο ή την αποσφαλμάτωση του αρχείου "
+"προρύθμισης. Αν κάνετε την προρύθμιση χρησιμοποιώντας παραμέτρους εκκίνησης, "
+"μπορείτε να κάνετε τον εγκαταστάτη να ρωτήσει την αντίστοιχη ερώτηση "
+"χρησιμοποιώντας τον τελεστή <quote>?=</quote>, δηλ. "
+"<userinput><replaceable>foo</replaceable>/<replaceable>bar</replaceable>?"
+"=<replaceable>value</replaceable></userinput>. Αυτό θα έχει φυσικά "
+"αποτέλεσμα μόνο για παραμέτρους που αντιστοιχούν σε ερωτήσεις που πράγματι "
+"εμφανίζονται στην διάρκεια μιας εγκατάστασης και όχι για <quote>εσωτερικές</"
+"quote> παραμέτρους."
 
 #. Tag: title
 #: preseed.xml:1043
@@ -2690,38 +2724,3 @@ msgstr ""
 "προρύθμισης, που σημαίνει για παράδειγμα ότι έχετε άλλη μια ευκαιρία να "
 "εκτελέσετε την εντολή preseed/early, με την δεύτερη να προκύπτει όταν το "
 "δίκτυο έχει ανέβει."
-
-#~ msgid "Mailer configuration"
-#~ msgstr "Ρύθμιση προγράμματος αλληλογραφίας"
-
-#~ msgid ""
-#~ "During a normal install, exim asks only a few questions. Here's how to "
-#~ "avoid even those. More complicated preseeding is possible."
-#~ msgstr ""
-#~ "Στην διάρκεια μιας κανονικής εγκατάστασης, το exim κάνει μόνο λίγες "
-#~ "ερωτήσεις. Εδώ περιγράφεται πώς να αποφύγετε ακόμα κι αυτές. Πιο "
-#~ "πολύπλοκα σενάρια preseeding είναι πιθανά."
-
-#~ msgid ""
-#~ "exim4-config exim4/dc_eximconfig_configtype \\\n"
-#~ "       select no configuration at this time\n"
-#~ "exim4-config exim4/no_config boolean true\n"
-#~ "exim4-config exim4/no_config boolean true\n"
-#~ "exim4-config exim4/dc_postmaster string"
-#~ msgstr ""
-#~ "exim4-config exim4/dc_eximconfig_configtype \\\n"
-#~ "       επιλέξτε να μην γίνει ρύθμιση αυτή τη στιγμή\n"
-#~ "exim4-config exim4/no_config boolean true\n"
-#~ "exim4-config exim4/no_config boolean true\n"
-#~ "exim4-config exim4/dc_postmaster string"
-
-#~ msgid ""
-#~ "The same effect can be achieved for <emphasis>all</emphasis> questions by "
-#~ "setting the parameter <classname>preseed/interactive=true</classname> at "
-#~ "the boot prompt. This can also be useful for testing or debugging your "
-#~ "preconfiguration file."
-#~ msgstr ""
-#~ "Το ίδιο αποτέλεσμα μπορεί να επιτευχθεί για <emphasis>όλες</emphasis> τις "
-#~ "ερωτήσεις ορίζοντας την παράμετρο <classname>preseed/interactive=true</"
-#~ "classname> στο προτρεπτικό εκκίνησης. Αυτό μπορεί να είναι χρήσιμο και "
-#~ "για τον έλεγχο ή την εκσφαλμάτωση του αρχείου σας προρύθμισης."

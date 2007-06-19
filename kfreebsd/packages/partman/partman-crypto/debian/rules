@@ -5,7 +5,7 @@
 # Uncomment this to turn on verbose mode.
 #export DH_VERBOSE=1
 
-PACKAGE = partman-crypto
+export PACKAGE = partman-crypto
 
 build: build-stamp
 build-stamp:
@@ -36,6 +36,7 @@ install-arch: build
 	dh_testroot
 	dh_clean -k
 	debian/install-rc init.d
+	debian/install-rc check.d
 	debian/install-rc commit.d
 	debian/install-rc choose_partition
 	debian/install-rc choose_method

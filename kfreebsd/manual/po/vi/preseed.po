@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: preseed\n"
 "Report-Msgid-Bugs-To: debian-boot@lists.debian.org\n"
-"POT-Creation-Date: 2007-02-28 20:57+0000\n"
+"POT-Creation-Date: 2007-05-19 14:20+0000\n"
 "PO-Revision-Date: 2006-12-29 15:47+1030\n"
 "Last-Translator: Clytie Siddall <clytie@riverland.net.au>\n"
 "Language-Team: Vietnamese <vi-VN@googlegroups.com>\n"
@@ -1860,80 +1860,11 @@ msgstr ""
 #. Tag: title
 #: preseed.xml:828
 #, no-c-format
-msgid "Apt setup"
-msgstr "Thiết lập apt"
-
-#. Tag: para
-#: preseed.xml:829
-#, no-c-format
-msgid ""
-"Setup of the <filename>/etc/apt/sources.list</filename> and basic "
-"configuration options is fully automated based on your installation method "
-"and answers to earlier questions. You can optionally add other (local) "
-"repositories."
-msgstr ""
-"Tiến trình thiết lập danh sách các nguồn của apt <filename>/etc/apt/sources."
-"list</filename> và các tùy chọn cấu hình cơ bản được tự động hoá hoàn toàn, "
-"dựa vào phương pháp cài đặt và trả lời câu hỏi trước. Tùy chọn bạn có khả "
-"năng thêm kho phần mềm (cục bộ) khác."
-
-#. Tag: screen
-#: preseed.xml:837
-#, fuzzy, no-c-format
-msgid ""
-"# You can choose to install non-free and contrib software.\n"
-"#d-i apt-setup/non-free boolean true\n"
-"#d-i apt-setup/contrib boolean true\n"
-"# Uncomment this if you don't want to use a network mirror.\n"
-"#d-i apt-setup/use_mirror boolean false\n"
-"# Uncomment this to avoid adding security sources, or\n"
-"# add a hostname to use a different server than security.debian.org.\n"
-"#d-i apt-setup/security_host string\n"
-"\n"
-"# Additional repositories, local[0-9] available\n"
-"#d-i apt-setup/local0/repository string \\\n"
-"#       deb http://local.server/debian stable main\n"
-"#d-i apt-setup/local0/comment string local server\n"
-"# Enable deb-src lines\n"
-"#d-i apt-setup/local0/source boolean true\n"
-"# URL to the public key of the local repository; you must provide a key or\n"
-"# apt will complain about the unauthenticated repository and so the\n"
-"# sources.list line will be left commented out\n"
-"#d-i apt-setup/local0/key string http://local.server/key\n"
-"\n"
-"# By default the installer requires that repositories be authenticated\n"
-"# using a known gpg key. This setting can be used to disable that\n"
-"# authentication. Warning: Insecure, not recommended.\n"
-"#d-i debian-installer/allow_unauthenticated string true"
-msgstr ""
-"# Bạn có khả năng chọn cài đặt phần mềm kiểu khác tự do\n"
-"# và đã đóng góp.\n"
-"#d-i apt-setup/non-free boolean true\n"
-"#d-i apt-setup/contrib boolean true\n"
-"# Hủy ghi chú dòng này để tránh thêm các nguồn bảo mật,\n"
-"# hoặc thêm một tên máy để sử dụng máy phục vụ\n"
-"# khác với « security.debian.org ».\n"
-"#d-i apt-setup/security_host chuỗi\n"
-"\n"
-"# Các kho thêm, local[0-9] có sẵn\n"
-"#d-i apt-setup/local0/repository chuỗi \\\n"
-"#       deb http://local.server/debian stable main\n"
-"#d-i apt-setup/local0/comment chuỗi máy_phục_vụ_cục_bộ\n"
-"# Bật các dòng kiểu deb-src\n"
-"#d-i apt-setup/local0/source boolean true\n"
-"# Địa chỉ Mạng tới khoá công của kho cục bộ ;\n"
-"# bạn cần phải cung cấp một khoá: không thì apt sẽ không chấp nhận\n"
-"# kho lưu không được xác thực nên dòng sources.list sẽ bị hủy ghi chú.\n"
-"#d-i apt-setup/local0/key chuỗi http://máy_phục_vụ_cục_bộ/khoá"
-
-#. Tag: title
-#: preseed.xml:842
-#, no-c-format
 msgid "Account setup"
 msgstr "Thiết lập tài khoản"
 
 #. Tag: para
-#: preseed.xml:843
+#: preseed.xml:829
 #, no-c-format
 msgid ""
 "The password for the root account and name and password for a first regular "
@@ -1945,7 +1876,7 @@ msgstr ""
 "dùng giá trị nhập thô (không mật mã) hay <emphasis>băm</emphasis> kiểu MD5."
 
 #. Tag: para
-#: preseed.xml:850
+#: preseed.xml:836
 #, no-c-format
 msgid ""
 "Be aware that preseeding passwords is not completely secure as everyone with "
@@ -1961,7 +1892,7 @@ msgstr ""
 "truy cập băm MD5 cho phép người khác tấn công bằng sức mạnh vũ phu."
 
 #. Tag: screen
-#: preseed.xml:860
+#: preseed.xml:846
 #, no-c-format
 msgid ""
 "# Skip creation of a root account (normal user account will be able to\n"
@@ -2007,7 +1938,7 @@ msgstr ""
 "#d-i passwd/user-password-crypted password [băm MD5]"
 
 #. Tag: para
-#: preseed.xml:862
+#: preseed.xml:848
 #, no-c-format
 msgid ""
 "The <classname>passwd/root-password-crypted</classname> and "
@@ -2027,7 +1958,7 @@ msgstr ""
 "<command>sudo</command>)."
 
 #. Tag: para
-#: preseed.xml:872
+#: preseed.xml:858
 #, no-c-format
 msgid ""
 "An MD5 hash for a password can be generated using the following command."
@@ -2035,19 +1966,19 @@ msgstr "Băm MD5 cho mật khẩu có thể được tạo ra bằng lệnh theo
 
 # Literal: don't translate / Nghĩa chữ: đừng dịch
 #. Tag: screen
-#: preseed.xml:876
+#: preseed.xml:862
 #, no-c-format
 msgid "$ echo \"r00tme\" | mkpasswd -s -H MD5"
 msgstr "$ echo \"r00tme\" | mkpasswd -s -H MD5"
 
 #. Tag: title
-#: preseed.xml:882
+#: preseed.xml:868
 #, no-c-format
 msgid "Base system installation"
 msgstr "Cài đặt hệ thống cơ bản"
 
 #. Tag: para
-#: preseed.xml:883
+#: preseed.xml:869
 #, no-c-format
 msgid ""
 "There is actually not very much that can be preseeded for this stage of the "
@@ -2058,7 +1989,7 @@ msgstr ""
 "cách cài đặt hạt nhân."
 
 #. Tag: screen
-#: preseed.xml:890
+#: preseed.xml:876
 #, no-c-format
 msgid ""
 "# Select the initramfs generator used to generate the initrd for 2.6 "
@@ -2069,18 +2000,234 @@ msgstr ""
 "#d-i base-installer/kernel/linux/initramfs-generators string yaird"
 
 #. Tag: title
+#: preseed.xml:881
+#, no-c-format
+msgid "Apt setup"
+msgstr "Thiết lập apt"
+
+#. Tag: para
+#: preseed.xml:882
+#, no-c-format
+msgid ""
+"Setup of the <filename>/etc/apt/sources.list</filename> and basic "
+"configuration options is fully automated based on your installation method "
+"and answers to earlier questions. You can optionally add other (local) "
+"repositories."
+msgstr ""
+"Tiến trình thiết lập danh sách các nguồn của apt <filename>/etc/apt/sources."
+"list</filename> và các tùy chọn cấu hình cơ bản được tự động hoá hoàn toàn, "
+"dựa vào phương pháp cài đặt và trả lời câu hỏi trước. Tùy chọn bạn có khả "
+"năng thêm kho phần mềm (cục bộ) khác."
+
+#. Tag: screen
+#: preseed.xml:890
+#, fuzzy, no-c-format
+msgid ""
+"# You can choose to install non-free and contrib software.\n"
+"#d-i apt-setup/non-free boolean true\n"
+"#d-i apt-setup/contrib boolean true\n"
+"# Uncomment this if you don't want to use a network mirror.\n"
+"#d-i apt-setup/use_mirror boolean false\n"
+"# Uncomment this to avoid adding security sources, or\n"
+"# add a hostname to use a different server than security.debian.org.\n"
+"#d-i apt-setup/security_host string\n"
+"\n"
+"# Additional repositories, local[0-9] available\n"
+"#d-i apt-setup/local0/repository string \\\n"
+"#       http://local.server/debian stable main\n"
+"#d-i apt-setup/local0/comment string local server\n"
+"# Enable deb-src lines\n"
+"#d-i apt-setup/local0/source boolean true\n"
+"# URL to the public key of the local repository; you must provide a key or\n"
+"# apt will complain about the unauthenticated repository and so the\n"
+"# sources.list line will be left commented out\n"
+"#d-i apt-setup/local0/key string http://local.server/key\n"
+"\n"
+"# By default the installer requires that repositories be authenticated\n"
+"# using a known gpg key. This setting can be used to disable that\n"
+"# authentication. Warning: Insecure, not recommended.\n"
+"#d-i debian-installer/allow_unauthenticated string true"
+msgstr ""
+"# Bạn có khả năng chọn cài đặt phần mềm kiểu khác tự do\n"
+"# và đã đóng góp.\n"
+"#d-i apt-setup/non-free boolean true\n"
+"#d-i apt-setup/contrib boolean true\n"
+"# Hủy ghi chú dòng này để tránh thêm các nguồn bảo mật,\n"
+"# hoặc thêm một tên máy để sử dụng máy phục vụ\n"
+"# khác với « security.debian.org ».\n"
+"#d-i apt-setup/security_host chuỗi\n"
+"\n"
+"# Các kho thêm, local[0-9] có sẵn\n"
+"#d-i apt-setup/local0/repository chuỗi \\\n"
+"#       http://local.server/debian stable main\n"
+"#d-i apt-setup/local0/comment chuỗi máy_phục_vụ_cục_bộ\n"
+"# Bật các dòng kiểu deb-src\n"
+"#d-i apt-setup/local0/source boolean true\n"
+"# Địa chỉ Mạng tới khoá công của kho cục bộ ;\n"
+"# bạn cần phải cung cấp một khoá: không thì apt sẽ không chấp nhận\n"
+"# kho lưu không được xác thực nên dòng sources.list sẽ bị hủy ghi chú.\n"
+"#d-i apt-setup/local0/key chuỗi http://máy_phục_vụ_cục_bộ/khoá"
+
+#. Tag: title
 #: preseed.xml:895
+#, no-c-format
+msgid "Package selection"
+msgstr "Chọn gói phần mềm"
+
+#. Tag: para
+#: preseed.xml:896
+#, no-c-format
+msgid ""
+"You can choose to install any combination of tasks that are available. "
+"Available tasks as of this writing include:"
+msgstr ""
+"Bạn có khả năng chọn cài đặt bất cứ sự phối hợp công việc nào sẵn sàng. Vào "
+"lúc viết câu này, các công việc sẵn sàng gồm:"
+
+#. Tag: userinput
+#: preseed.xml:905
+#, no-c-format
+msgid "standard"
+msgstr "chuẩn"
+
+#. Tag: userinput
+#: preseed.xml:908
+#, no-c-format
+msgid "desktop"
+msgstr "môi trường làm việc"
+
+#. Tag: userinput
+#: preseed.xml:911
+#, no-c-format
+msgid "gnome-desktop"
+msgstr "môi trường làm việc Gnome"
+
+#. Tag: userinput
+#: preseed.xml:914
+#, no-c-format
+msgid "kde-desktop"
+msgstr "môi trường làm việc KDE"
+
+#. Tag: userinput
+#: preseed.xml:917
+#, no-c-format
+msgid "web-server"
+msgstr "trình phục vụ Mạng"
+
+#. Tag: userinput
+#: preseed.xml:920
+#, no-c-format
+msgid "print-server"
+msgstr "trình phục vụ in"
+
+#. Tag: userinput
+#: preseed.xml:923
+#, no-c-format
+msgid "dns-server"
+msgstr "trình phục vụ DNS"
+
+#. Tag: userinput
+#: preseed.xml:926
+#, no-c-format
+msgid "file-server"
+msgstr "trình phục vụ tập tin"
+
+#. Tag: userinput
+#: preseed.xml:929
+#, no-c-format
+msgid "mail-server"
+msgstr "trình phục vụ thư tín"
+
+#. Tag: userinput
+#: preseed.xml:932
+#, no-c-format
+msgid "sql-database"
+msgstr "cơ sở dữ liệu SQL"
+
+#. Tag: userinput
+#: preseed.xml:935
+#, no-c-format
+msgid "laptop"
+msgstr "máy tính xách tay"
+
+#. Tag: para
+#: preseed.xml:939
+#, no-c-format
+msgid ""
+"You can also choose to install no tasks, and force the installation of a set "
+"of packages in some other way. We recommend always including the "
+"<userinput>standard</userinput> task."
+msgstr ""
+"Bạn cũng có khả năng chọn không cài đặt công việc nào, ép buộc cài đặt một "
+"bộ gói bằng cách khác. Khuyên bạn luôn luôn gồm ít nhất công việc "
+"<userinput>chuẩn</userinput>."
+
+#. Tag: para
+#: preseed.xml:945
+#, no-c-format
+msgid ""
+"If you want to install some individual packages in addition to packages "
+"installed by tasks, you can use the parameter <classname>pkgsel/include</"
+"classname>. The value of this parameter can be a list of packages separated "
+"by either commas or spaces, which allows it to be used easily on the kernel "
+"command line as well."
+msgstr ""
+"Nếu bạn muốn cài đặt một số gói riêng, thêm vào những gói được cài đặt trong "
+"các công việc, bạn có khả năng sử dụng tham số <classname>pkgsel/include</"
+"classname>. Giá trị của tham số này có thể là danh sách các gói được định "
+"giới bằng hoặc dấu phẩy hoặc dấu cách, cũng dễ dàng dùng trên dòng lệnh."
+
+#. Tag: screen
+#: preseed.xml:955
+#, fuzzy, no-c-format
+msgid ""
+"#tasksel tasksel/first multiselect standard, web-server<phrase condition="
+"\"lenny\">\n"
+"# If the desktop task is selected, install the kde and xfce desktops\n"
+"# instead of the default gnome desktop.\n"
+"#tasksel tasksel/desktop multiselect kde-desktop, xfce-desktop</"
+"phrase><phrase condition=\"etch\">\n"
+"#tasksel tasksel/first multiselect standard, kde-desktop</phrase>\n"
+"\n"
+"# Individual additional packages to install\n"
+"#d-i pkgsel/include string openssh-server build-essential\n"
+"\n"
+"# Some versions of the installer can report back on what software you have\n"
+"# installed, and what software you use. The default is not to report back,\n"
+"# but sending reports helps the project determine what software is most\n"
+"# popular and include it on CDs.\n"
+"#popularity-contest popularity-contest/participate boolean false"
+msgstr ""
+"tasksel tasksel/first multiselect chuẩn, môi trường làm việc\n"
+"#tasksel tasksel/first multiselect chuẩn, trình phục vụ Mạng\n"
+"#tasksel tasksel/first multiselect chuẩn, môi trường làm việc KDE\n"
+"\n"
+"# Các gói thêm riêng cần cài đặt\n"
+"#d-i pkgsel/include string openssh-server build-essential\n"
+"\n"
+"# Một số phiên bản riêng của trình cài đặt có khả năng thông báo lại\n"
+"# phần mềm nào bạn đã cài đặt, và phần mềm nào bạn dùng.\n"
+"# Giá trị mặc định là không thông báo lại, nhưng việc thông báo\n"
+"# giúp đỡ dự án Debian quyết định phần mềm nào thường được dùng\n"
+"# thì gồm nó trên đĩa CD.\n"
+"#popularity-contest popularity-contest/participate boolean false"
+
+#. Tag: title
+#: preseed.xml:960
 #, no-c-format
 msgid "Boot loader installation"
 msgstr "Cài đặt bộ tải khởi động"
 
 #. Tag: screen
-#: preseed.xml:897
-#, no-c-format
+#: preseed.xml:962
+#, fuzzy, no-c-format
 msgid ""
 "# Grub is the default boot loader (for x86). If you want lilo installed\n"
 "# instead, uncomment this:\n"
-"#d-i grub-installer/skip boolean true\n"
+"#d-i grub-installer/skip boolean true<phrase condition=\"lenny\">\n"
+"# To also skip installing lilo, and install no bootloader, uncomment this\n"
+"# too:\n"
+"#d-i lilo-installer/skip boolean true</phrase>\n"
 "\n"
 "# This is fairly safe to set, it makes grub install automatically to the "
 "MBR\n"
@@ -2121,146 +2268,6 @@ msgstr ""
 "#d-i grub-installer/bootdev  chuỗi (hd0,0)\n"
 "# Để cài đặt grub vào nhiều đĩa:\n"
 "#d-i grub-installer/bootdev  chuỗi (hd0,0) (hd1,0) (hd2,0)"
-
-#. Tag: title
-#: preseed.xml:902
-#, no-c-format
-msgid "Package selection"
-msgstr "Chọn gói phần mềm"
-
-#. Tag: para
-#: preseed.xml:903
-#, no-c-format
-msgid ""
-"You can choose to install any combination of tasks that are available. "
-"Available tasks as of this writing include:"
-msgstr ""
-"Bạn có khả năng chọn cài đặt bất cứ sự phối hợp công việc nào sẵn sàng. Vào "
-"lúc viết câu này, các công việc sẵn sàng gồm:"
-
-#. Tag: userinput
-#: preseed.xml:912
-#, no-c-format
-msgid "standard"
-msgstr "chuẩn"
-
-#. Tag: userinput
-#: preseed.xml:915
-#, no-c-format
-msgid "desktop"
-msgstr "môi trường làm việc"
-
-#. Tag: userinput
-#: preseed.xml:918
-#, no-c-format
-msgid "gnome-desktop"
-msgstr "môi trường làm việc Gnome"
-
-#. Tag: userinput
-#: preseed.xml:921
-#, no-c-format
-msgid "kde-desktop"
-msgstr "môi trường làm việc KDE"
-
-#. Tag: userinput
-#: preseed.xml:924
-#, no-c-format
-msgid "web-server"
-msgstr "trình phục vụ Mạng"
-
-#. Tag: userinput
-#: preseed.xml:927
-#, no-c-format
-msgid "print-server"
-msgstr "trình phục vụ in"
-
-#. Tag: userinput
-#: preseed.xml:930
-#, no-c-format
-msgid "dns-server"
-msgstr "trình phục vụ DNS"
-
-#. Tag: userinput
-#: preseed.xml:933
-#, no-c-format
-msgid "file-server"
-msgstr "trình phục vụ tập tin"
-
-#. Tag: userinput
-#: preseed.xml:936
-#, no-c-format
-msgid "mail-server"
-msgstr "trình phục vụ thư tín"
-
-#. Tag: userinput
-#: preseed.xml:939
-#, no-c-format
-msgid "sql-database"
-msgstr "cơ sở dữ liệu SQL"
-
-#. Tag: userinput
-#: preseed.xml:942
-#, no-c-format
-msgid "laptop"
-msgstr "máy tính xách tay"
-
-#. Tag: para
-#: preseed.xml:946
-#, no-c-format
-msgid ""
-"You can also choose to install no tasks, and force the installation of a set "
-"of packages in some other way. We recommend always including the "
-"<userinput>standard</userinput> task."
-msgstr ""
-"Bạn cũng có khả năng chọn không cài đặt công việc nào, ép buộc cài đặt một "
-"bộ gói bằng cách khác. Khuyên bạn luôn luôn gồm ít nhất công việc "
-"<userinput>chuẩn</userinput>."
-
-#. Tag: para
-#: preseed.xml:952
-#, no-c-format
-msgid ""
-"If you want to install some individual packages in addition to packages "
-"installed by tasks, you can use the parameter <classname>pkgsel/include</"
-"classname>. The value of this parameter can be a list of packages separated "
-"by either commas or spaces, which allows it to be used easily on the kernel "
-"command line as well."
-msgstr ""
-"Nếu bạn muốn cài đặt một số gói riêng, thêm vào những gói được cài đặt trong "
-"các công việc, bạn có khả năng sử dụng tham số <classname>pkgsel/include</"
-"classname>. Giá trị của tham số này có thể là danh sách các gói được định "
-"giới bằng hoặc dấu phẩy hoặc dấu cách, cũng dễ dàng dùng trên dòng lệnh."
-
-#. Tag: screen
-#: preseed.xml:962
-#, no-c-format
-msgid ""
-"tasksel tasksel/first multiselect standard, desktop\n"
-"#tasksel tasksel/first multiselect standard, web-server\n"
-"#tasksel tasksel/first multiselect standard, kde-desktop\n"
-"\n"
-"# Individual additional packages to install\n"
-"#d-i pkgsel/include string openssh-server build-essential\n"
-"\n"
-"# Some versions of the installer can report back on what software you have\n"
-"# installed, and what software you use. The default is not to report back,\n"
-"# but sending reports helps the project determine what software is most\n"
-"# popular and include it on CDs.\n"
-"#popularity-contest popularity-contest/participate boolean false"
-msgstr ""
-"tasksel tasksel/first multiselect chuẩn, môi trường làm việc\n"
-"#tasksel tasksel/first multiselect chuẩn, trình phục vụ Mạng\n"
-"#tasksel tasksel/first multiselect chuẩn, môi trường làm việc KDE\n"
-"\n"
-"# Các gói thêm riêng cần cài đặt\n"
-"#d-i pkgsel/include string openssh-server build-essential\n"
-"\n"
-"# Một số phiên bản riêng của trình cài đặt có khả năng thông báo lại\n"
-"# phần mềm nào bạn đã cài đặt, và phần mềm nào bạn dùng.\n"
-"# Giá trị mặc định là không thông báo lại, nhưng việc thông báo\n"
-"# giúp đỡ dự án Debian quyết định phần mềm nào thường được dùng\n"
-"# thì gồm nó trên đĩa CD.\n"
-"#popularity-contest popularity-contest/participate boolean false"
 
 #. Tag: title
 #: preseed.xml:967

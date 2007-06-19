@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<!-- original version: 44002 -->
+<!-- original version: 45239 -->
 <!-- revisado jfs, 23 feb. 2005 -->
 
  <sect1 id="boot-parms"><title>Parámetros de arranque</title>
@@ -265,7 +265,7 @@ la versión reducida <userinput>fb=true</userinput>.
 <term>debian-installer/theme (theme)</term>
 <listitem><para>
 
-Un tema determina cómo se muestra el interfaz de usuario del
+Un tema determina cómo se muestra la interfaz de usuario del
 instalador (colores, iconos, etc.). Los temas disponibles dependen de
 la interfaz. Actualmente las interfaces newt y gtk sólo tienen un tema
 denominado <quote>dark</quote> (oscuro, n. del t.) que se ha diseñado
@@ -366,13 +366,28 @@ Consulte <xref linkend="automatic-install"/>.
 </varlistentry>
 
 <varlistentry>
+<term>preseed/interactive</term>
+<listitem><para>
+
+Se se fija a <userinput>true</userinput> (verdadero), se mostrarán las
+preguntas aunque ya hayan sido preconfiguradas. Esta opción puede ser
+útil para probar o depurar un fichero de preconfiguración. Tenga 
+en cuenta que este valor no tiene ningún efecto sobre los parámetros
+que se introducen como parámetros de arranque, pero puede utilizar
+una sintaxis especial para éstos. Para más información consulte
+<xref linkend="preseed-seenflag"/>.
+         
+</para></listitem>
+</varlistentry>
+
+<varlistentry>
 <term>auto-install/enable (auto)</term>
 <listitem><para>
 
 Demora las preguntas que se realizan normalmente antes de la
 preconfiguración hasta después de configurar la red.
 Consulte <xref linkend="preseed-auto"/> para más información de cómo
-utilizar ésto para realizar instalaciones automatizadas.
+utilizar esto para realizar instalaciones automatizadas.
 
 </para></listitem>
 </varlistentry>
@@ -397,6 +412,18 @@ expulsado automático, pero tenga en cuenta que debe asegurarse que el
 sistema no arranca de forma automática de la unidad óptica tras la
 instalación inicial.
 
+</para></listitem>
+</varlistentry>
+
+<varlistentry>
+<term>debian-installer/allow_unauthenticated</term>
+<listitem><para>
+
+Por omisión, el instalador obliga a que los repositorios estén autenticados con
+una clave gpg conocida. Si se fija esta opción a <userinput>true</userinput>,
+se deshabilitará esta autenciación.  <emphasis role="bold">Aviso: inseguro, no
+recomendado.</emphasis>
+            
 </para></listitem>
 </varlistentry>
 
@@ -428,7 +455,7 @@ gtk (instalador gráfico).
 <listitem><para>
 
 La aceleración hardware en directfb está deshabilitada por omisión en
-el interfaz gtk (instalador gráfico. Debe configurar este parámetro a
+la interfaz gtk (instalador gráfico. Debe configurar este parámetro a
 <userinput>true</userinput> si desea activarla cuando arranca el
 instalador.
 
@@ -456,7 +483,7 @@ en lugar de hacer una instalación normal. Si desea más información consulte
 
 Se puede fijar un valor durante el indicador de arranque para
 cualquier pregunta que se realiza durante la instalación, con algunas
-excepciones. Realmente ésto es sólo útil para algunos casos
+excepciones. Realmente esto es sólo útil para algunos casos
 concretos. Puede encontrar instrucciones generales que describen como
 hacer esto en <xref linkend="preseed-bootparms"/>. A continuación se
 listan algunos ejemplos.
@@ -486,8 +513,9 @@ Puede utilizarse para cargar automáticamente componentes del
 instalador que no se cargan por omisión.
 Algunos ejemplos de componentes opcionales que pueden ser útiles son
 <classname>openssh-client-udeb</classname> (para poder utilizar el
-programa <command>scp</command> durante la instalación) y
-<classname>ppp-udeb</classname> (que permite la configuración PPPoE).
+programa <command>scp</command> durante la instalación))<phrase
+arch="not-s390"> y <classname>ppp-udeb</classname> (que permite la
+configuración PPPoE)</phrase>.
 
 </para></listitem>
 </varlistentry>
@@ -584,7 +612,7 @@ y la interrupción (IRQ) 10 debería utiliza:
 
 Algunas veces es necesario poner un módulo en una lista negra para que
 ni el núcleo ni «udev» lo carguen automáticamente. Una razón para hacer
-ésto es cuando un módulo concreto causa problemas en su hardware. El
+esto es cuando un módulo concreto causa problemas en su hardware. El
 núcleo también puede algunas veces listar dos controladores distintos
 para el mismo dispositivo. Esto puede hacer que el dispositivo no
 funcione correctamente si los controladores entran en conflicto o si

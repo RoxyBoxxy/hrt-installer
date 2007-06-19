@@ -57,6 +57,7 @@ enum state
 	SETUP,
 	DETECT_CHANNELS,
 	GET_CHANNEL,
+	ENABLE,
 	FORMAT,
 	WRITE,
 	ERROR,
@@ -171,7 +172,7 @@ static enum state_wanted get_channel_input (void)
 
 	while (1)
 	{
-		ret = my_debconf_input ("high", TEMPLATE_PREFIX "choose", &ptr);
+		ret = my_debconf_input ("critical", TEMPLATE_PREFIX "choose", &ptr);
 		if (ret == 30)
 			return WANT_BACKUP;
 
@@ -183,7 +184,7 @@ static enum state_wanted get_channel_input (void)
 				return WANT_NEXT;
 		}
 
-		ret = my_debconf_input ("high", TEMPLATE_PREFIX "choose_invalid", &ptr);
+		ret = my_debconf_input ("critical", TEMPLATE_PREFIX "choose_invalid", &ptr);
 		if (ret == 30)
 			return WANT_BACKUP;
 	}
@@ -212,7 +213,7 @@ static enum state_wanted get_channel_select (void)
 	di_tree_foreach (channels, get_channel_select_append, buf);
 
 	debconf_subst (client, TEMPLATE_PREFIX "choose_select", "choices", buf);
-	ret = my_debconf_input ("high", TEMPLATE_PREFIX "choose_select", &ptr);
+	ret = my_debconf_input ("critical", TEMPLATE_PREFIX "choose_select", &ptr);
 
 	if (ret == 30)
 		return WANT_BACKUP;
@@ -233,6 +234,28 @@ static enum state_wanted get_channel (void)
 	else if (di_tree_size (channels) > 0)
 		return get_channel_select ();
 	return WANT_ERROR;
+}
+
+static enum state_wanted enable (void)
+{
+	struct sysfs_device *device;
+	struct sysfs_attribute *attr;
+
+	device = sysfs_open_device ("ccw", channel_current->name);
+	if (!device)
+		return WANT_ERROR;
+
+	attr = sysfs_get_device_attr (device, "online");
+	if (!attr)
+		return WANT_ERROR;
+	if (sysfs_write_attribute (attr, "1", 1) < 0)
+		return WANT_ERROR;
+
+	sysfs_close_device (device);
+
+	channel_current->online = true;
+
+	return WANT_NEXT;
 }
 
 struct hd_geometry {
@@ -263,7 +286,7 @@ static enum state_wanted format (void)
 
 	debconf_subst (client, TEMPLATE_PREFIX "format", "device", channel_current->name);
 	debconf_set (client, TEMPLATE_PREFIX "format", "false");
-	ret = my_debconf_input ("medium", TEMPLATE_PREFIX "format", &ptr);
+	ret = my_debconf_input ("critical", TEMPLATE_PREFIX "format", &ptr);
 
 	if (ret == 10)
 		return WANT_BACKUP;
@@ -295,24 +318,8 @@ static enum state_wanted format (void)
 
 static enum state_wanted write_dasd (void)
 {
-	struct sysfs_device *device;
-	struct sysfs_attribute *attr;
         char buf[256];
         FILE *config;
-
-        device = sysfs_open_device ("ccw", channel_current->name);
-        if (!device)
-                return WANT_ERROR;
-
-        attr = sysfs_get_device_attr (device, "online");
-        if (!attr)
-                return WANT_ERROR;
-        if (sysfs_write_attribute (attr, "1", 1) < 0)
-                return WANT_ERROR;
-
-        sysfs_close_device (device);
-
-	channel_current->online = true;
 
         snprintf (buf, sizeof (buf), SYSCONFIG_DIR "config-ccw-%s", channel_current->name);
         config = fopen (buf, "w");
@@ -352,6 +359,9 @@ int main ()
 			case GET_CHANNEL:
 				state_want = get_channel ();
 				break;
+			case ENABLE:
+				state_want = enable ();
+				break;
 			case FORMAT:
 				state_want = format ();
 				break;
@@ -375,7 +385,13 @@ int main ()
 						state = GET_CHANNEL;
 						break;
 					case GET_CHANNEL:
-						state = FORMAT;
+						state = ENABLE;
+						break;
+					case ENABLE:
+						if (channel_current->type == CHANNEL_TYPE_DASD_ECKD)
+							state = FORMAT;
+						else
+							state = WRITE;
 						break;
 					case FORMAT:
 						state = WRITE;
