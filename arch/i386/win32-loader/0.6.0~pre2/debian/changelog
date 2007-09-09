@@ -1,0 +1,32 @@
+win32-loader (0.6.0~pre2) unstable; urgency=low
+
+  * Add reference to /usr/share/common-licenses.
+    - debian/copyright
+    - debian/control (Depends): Add base-files (>= 4.0.1).
+  * Put debian-boot as Maintainer, and myself in Uploaders.
+  * Support for using a different charset in NTLDR.  Defaults to cp437,
+    which works for languages with latin charset.  Other translations
+    will need to change this setting in their respective PO files.
+    (Closes: #440471)
+  * Misc fixes in l10n infrastructure that will enable build on any system
+    where locales-all (added to Build-Depends) is installed, no matter the
+    locale setup.  (Closes: #441193)
+  * Get rid of hardcoded language lists in main.nsi.  All this cruft is
+    now generated dynamicaly by l10n/Makefile (based on $(LINGUAS)).
+
+  [ Updated translations ]
+  * Catalan (ca.po) by Robert Millan
+  * Basque (eu.po) by Piarres Beobide
+  * French (fr.po) by Christian Perrier
+  * Hungarian (hu.po) by SZERVÁC Attila
+  * Italian (it.po) by Stefano Canepa
+  * Portuguese (pt.po) by Miguel Figueiredo
+
+ -- Robert Millan <rmh@debian.org>  Sun,  9 Sep 2007 16:06:51 +0200
+
+win32-loader (0.6.0~pre1) unstable; urgency=low
+
+  * Initial release (Closes: #425038).
+
+ -- Robert Millan <rmh@debian.org>  Tue, 28 Aug 2007 23:14:19 +0200
+
