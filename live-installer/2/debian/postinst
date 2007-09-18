@@ -1,0 +1,127 @@
+#! /bin/sh
+set -e
+
+. /usr/share/debconf/confmodule
+db_capb backup
+
+. /usr/lib/base-installer/library.sh
+
+ETCDIR=/target/etc
+ARCH=`udpkg --print-architecture`
+PROTOCOL=
+MIRROR=
+DIRECTORY=
+COMPONENTS=
+DISTRIBUTION=
+INCLUDES=
+EXCLUDES=
+KERNEL=
+KERNEL_LIST=/tmp/available_kernels.txt
+KERNEL_MAJOR="$(uname -r | cut -d . -f 1,2)"
+KERNEL_VERSION="$(uname -r | cut -d - -f 1)"
+KERNEL_ABI="$(uname -r | cut -d - -f 1,2)"
+MACHINE="$(uname -m)"
+NUMCPUS=$(cat /var/numcpus 2>/dev/null) || true
+CPUINFO=/proc/cpuinfo
+SPEAKUP=/proc/speakup
+NEWLINE="
+"
+
+SUBARCH="$(archdetect)"
+SUBARCH="${SUBARCH#*/}"
+
+install_live_system () {
+	# Look at
+	PLACES=""
+
+	# Load filesystem support
+	for script in $(ls /lib/live-installer/*); do
+		. $script
+	done
+
+	for place in $PLACES; do
+		[ ! -e $place ] && continue
+
+		SUPPORT=$(echo $place | sed 's,.*\.\(.*\)$,\1,g')
+		info "Using $SUPPORT support for $place"
+
+		eval ${SUPPORT}_prepare
+		STEPS=$(eval ${SUPPORT}_count)
+
+		db_progress INFO live-installer/progress/copying
+
+		COUNT=0
+		OLD_IFS=$IFS
+		IFS=$NEWLINE
+		for item in `find .`; do
+			# We need to be ensure it's not a symbolic link otherwise
+			# it breaks links for directories.
+			if [ -d "$item" ] && [ ! -h "$item" ]; then
+				mkdir -p /target/"$item"
+			else
+				mkdir -p /target/"$(dirname $item)"
+				rm -f /target/"$item"
+				cp -a "$item" /target/"$item"
+			fi
+
+			COUNT=$(($COUNT + 1))
+			CURRENT=$(($COUNT * 100 / $STEPS))
+
+			[ x$CURRENT = x$LAST_UPDATE ] && continue
+
+			LAST_UPDATE=$CURRENT
+			db_progress STEP 1
+		done
+		IFS=$OLD_IFS
+	done
+
+	# run the scripts found in hook directory after copying the system
+	partsdir="/usr/lib/live-installer.d"
+	if [ -d "$partsdir" ]; then
+		for script in $(ls "$partsdir"/*); do
+			base=$(basename $script | sed 's/[0-9]*//')
+			if ! db_progress INFO live-installer/progress/$base; then
+				db_subst live-installer/progress/fallback SCRIPT "$base"
+				db_progress INFO live-installer/progress/fallback
+			fi
+
+			if [ -x "$script" ] ; then
+				# be careful to preserve exit code
+				if log-output -t live-installer "$script"; then
+					:
+				else
+					warning "$script returned error code $?"
+				fi
+			else
+				error "Unable to execute $script"
+			fi
+		done
+	fi
+}
+
+waypoint 1	check_target
+waypoint 1	get_mirror_info
+waypoint 1	pre_install_hooks
+waypoint 100	install_live_system
+waypoint 1	configure_apt_preferences
+waypoint 1	configure_apt
+waypoint 3	apt_update
+#waypoint 2	create_devices
+waypoint 5	post_install_hooks
+#waypoint 1	pick_kernel
+#waypoint 20	install_linux
+#waypoint 10	install_extra
+waypoint 0	cleanup
+
+run_waypoints live-installer/progress/installing
+
+# mount /dev and /proc on target otherwise grub-installer will fail
+if grep -q udev /proc/mounts; then
+	mount -o bind /dev /target/dev
+fi
+
+if [ ! -e /target/proc/version ]; then
+	mount -o bind /proc /target/proc
+fi
+
+exit 0
