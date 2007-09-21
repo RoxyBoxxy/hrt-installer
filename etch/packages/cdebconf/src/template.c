@@ -134,6 +134,7 @@ void template_delete(struct template *t)
 	while (p != NULL)
 	{
 		q = p->next;
+		DELETE(p->language);
 		DELETE(p->defaultval);
 		DELETE(p->choices);
 		DELETE(p->indices);
