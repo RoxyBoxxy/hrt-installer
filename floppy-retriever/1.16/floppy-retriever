@@ -1,0 +1,81 @@
+#!/bin/sh -e
+
+. /usr/share/debconf/confmodule
+
+FLOPPYMNT=/floppy
+
+cmd="$1"
+shift
+
+case "x$cmd" in
+	xconfig)
+		mountfloppy
+		for f in include exclude; do
+			if [ -e $FLOPPYMNT/udeb_$f ]; then
+				ln -sf $FLOPPYMNT/udeb_$f /var/cache/anna/$f
+			fi
+		done
+	;;
+
+	xretrieve)
+		mountfloppy
+		if [ -e $FLOPPYMNT/$1 ]; then
+			ln -sf $FLOPPYMNT/$1 "$2"
+			exit $?
+		else
+			exit 1
+		fi
+	;;
+
+	xpackages)
+		# generate a Packages file based on what udebs are on the
+		# floppy
+		mountfloppy
+		rm -f "$1"
+		touch "$1"
+		# Check for regular debs, udebs, and to be on the safe side,
+		# check for *.ude files (msdos file names...)
+		FILES=""
+		FILE_COUNT=0
+		for filename in $FLOPPYMNT/*.deb $FLOPPYMNT/*.udeb $FLOPPYMNT/*.ude; do
+			if [ -f "$filename" ]; then
+				FILES="$FILES $filename"
+				FILE_COUNT=$(expr $FILE_COUNT + 1)
+			fi
+		done
+		if [ "$FILE_COUNT" = 0 ]; then
+			# Probably not a legitimate driver floppy.
+			exit 1
+		fi
+		# This could take a while, so a progress bar.
+		db_progress START 0 $FILE_COUNT retriever/floppy/packages/progress
+		for filename in $FILES; do
+			udpkg -f "$filename" | sed 's/Priority: .*/Priority: standard/' >> "$1"
+			path="`echo "$filename" | sed 's,^/floppy/,,'`"
+			echo "Filename: $path" >> "$1"
+			echo >> "$1"
+			db_progress STEP 1
+		done
+		db_progress STOP
+	;;
+
+	xerror)
+		umount $FLOPPYMNT || true
+
+		T="retriever/floppy/error"
+		db_input critical "$T" || true
+		db_go
+		exit 2
+	;;
+	
+	xcleanup)
+		umount $FLOPPYMNT || true
+		rm -f /var/cache/anna/include
+		rm -f /var/cache/anna/exclude
+	;;
+
+	*)
+		# unknown command
+		exit 1
+	;;
+esac
