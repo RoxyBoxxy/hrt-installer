@@ -1,0 +1,537 @@
+#! /bin/sh
+set -e
+
+# Copyright: Frans Pop <elendil@planet.nl>, 2007
+# This program is free software; you can redistribute it and/or modify it
+# under the terms of the GNU General Public License as published by the Free
+# Software Foundation; either version 2 of the License, or (at your option)
+# any later version.
+
+### INITIALIZATION
+
+NL="
+"
+
+OPERATION=""
+BDEP_SVERSION=""
+ARCHES=""
+USE_INCOMING=""
+NO_CLEAN=""
+DO_DCH=""
+CHANGELOG_EXTRA=""
+DISTRIBUTION=""
+LMIRROR=""
+MIRROR=""
+INCOMING=""
+
+# Source user configuration file
+# Can contain values for LMIRROR, MIRROR and INCOMING
+# A local mirror is only used if defined in this file
+if [ -f ~/.d-i_massbuildrc ]; then
+	. ~/.d-i_massbuildrc
+fi
+
+MIRROR=${MIRROR:-"http://ftp.nl.debian.org/debian"}
+INCOMING=${INCOMING:-"http://incoming.debian.org"}
+
+UNOFFICIAL="armel ppc64"
+
+usage() {
+	if [ "$@" ]; then
+		echo "Error: $@"
+		echo
+	fi
+	cat <<EOF
+Usage: $(basename $0) kbuild|mbuild [OPTION ...] [<architecture> ...]"
+       $(basename $0) krelease|mrelease [<architecture> ...]"
+       $(basename $0) kclean|mclean [<architecture> ...]"
+
+Operations starting with 'k' act on linux-kernel-* source packages;"
+those starting with 'm' on linux-module-* packages:"
+ - build:   retrieve dependencies and build the udebs"
+ - release: show changes; after confirmation call 'debcommit --release'"
+ - clean:   remove built and temporary files"
+
+If no architecture is specified, an operation will be performed for all"
+official architectures."
+
+Options for 'kbuild' and 'mbuild' operations:"
+ -k            keep the temporary files (incl. downloaded dependencies) used"
+               during the build; useful for repeated builds when making"
+               changes to udeb contents or solving build errors"
+ --dch         update changelog; automatically adds new entry (if needed)"
+               and a line describing updates in dependencies used"
+ -m <extra changelog entry>"
+               add additional lines in changelog; implies --dch"
+ -d <distribution>"
+               set named target distribution in changelog"
+ --incoming    also check 'incoming' for dependencies"
+EOF
+	exit 1
+}
+
+list_arches() {
+	local arch
+	for arch in $1; do
+		local udir=$UBASE-$arch-2.6
+		echo $(egrep -v "^(#|[[:space:]]*$)" $udir/kernel-versions | \
+			awk '{print $1}' | sort | uniq)
+	done
+}
+
+[ "$1" ] || usage "operation not specified"
+
+## Parse command line arguments
+OPERATION="$1"
+shift
+case "$OPERATION" in
+    kbuild|krelease|kclean)
+	TYPE=kernel
+	;;
+    mbuild|mrelease|mclean)
+	TYPE=modules
+	;;
+    *)
+	usage "unrecognized operation" ;;
+esac
+
+UBASE=linux-$TYPE-di
+OUTDIR=massbuild.out.$TYPE
+
+while true; do
+	case "$1" in
+	    "")
+		break ;;
+	    -k)
+		NO_CLEAN=1
+		;;
+	    --dch)
+		DO_DCH=1
+		;;
+	    -m)
+		DO_DCH=1
+		shift
+		CHANGELOG_EXTRA="$1"
+		;;
+	    -d)
+		shift
+		DISTRIBUTION="$1"
+		;;
+	    --incoming)
+		USE_INCOMING=1
+		;;
+	    -*)
+		usage "unrecognized argument '$1'" ;;
+	    *)
+		# Strip trailing slash
+		ARCHES="${ARCHES:+$ARCHES }$1"
+		;;
+	esac
+	shift
+done
+
+
+# Default to all possible architectures
+REQUESTED=$ARCHES
+if [ -z "$ARCHES" ]; then
+	for uarch in $(ls -d $UBASE-*-2.6 | cut -d- -f4); do
+		ARCHES=${ARCHES:+$ARCHES }$(list_arches $uarch)
+	done
+fi
+
+# Some architectures are combined in the same source 
+UARCHES=""
+for arch in $ARCHES; do
+	case $arch in
+	    ppc64)	uarch=powerpc ;;
+	    *)		uarch=$arch ;;
+	esac
+
+	if ! [ -f $UBASE-$uarch-2.6/kernel-versions ]; then
+		usage "unsupported architecture '$arch'"
+	fi
+	if ! echo "$UARCHES" | grep -q $uarch; then
+		UARCHES="${UARCHES:+$UARCHES }$uarch"
+	fi
+done
+
+CL_TEMP="$(mktemp -t massbuild.changelog.XXXXXX)"
+trap 'rm -f "$CL_TEMP"' EXIT HUP INT QUIT TERM
+
+
+### FUNCTION DEFINITIONS FOR MAINLINE
+
+log() {
+	echo "$@"
+	echo "$@" >>$LOGFILE
+}
+
+clean_arch_tmp() {
+	[ "$NO_CLEAN" ] || rm -rf $ARCH_TDIR
+}
+
+clean_arch() {
+	# Remove from both dirs to also clean manual or failed builds
+	rm -f ./$UBASE-$arch-2.6_*.*
+	rm -f ./*_$1.udeb
+	rm -f ./$OUTDIR/$UBASE-$arch-2.6_*.*
+	rm -f ./$OUTDIR/*_$1.udeb
+}
+
+init_changelog() {
+	[ "$DO_DCH" ] || return 0
+
+	>"$CL_TEMP"
+	if [ "$CHANGELOG_EXTRA" ]; then
+		echo "$CHANGELOG_EXTRA" >"$CL_TEMP"
+	fi
+}
+
+add_changelog() {
+	[ "$DO_DCH" ] || return 0
+
+	echo "$1" >>"$CL_TEMP"
+}
+
+
+do_dch() {
+	[ "$DO_DCH" ] || return 0
+
+	local new_entry=""
+
+	# Use dch's default logic to determine if we need a new changelog
+	# entry or not.
+	cat $CL_TEMP | while read CL; do
+		# Avoid duplicate entries in the changelog, but limit scope
+		if ! head -n 25 debian/changelog | grep -q "\* $CL"; then
+			dch --release-heuristic=changelog "$CL"
+			new_entry=1
+		fi
+	done
+	# Sanity check
+	if ! head -n 1 debian/changelog | grep -q UNRELEASED && [ -z "$new_entry" ]; then
+		cat <<EOF
+
+Error: no new changelog entries were added, which most likely means there
+has been an earlier build against the same version of the packages this
+component depends on. Not having a new changelog entry cannot be correct
+as the previous version is already marked as released.
+Did you want to do a rebuild without the --dch option or did you forget to
+provide a reason for the rebuild using the -m option?
+EOF
+		clean_arch_tmp
+		exit 1
+	fi
+
+	local dist=""
+	if [ "$DISTRIBUTION" ]; then
+		dist="--distribution $DISTRIBUTION"
+	fi
+	EDITOR=true dch $dist -r
+}
+
+has_recent_upload() {
+	local chlog="$USOURCE/debian/changelog"
+	if ! head -n 1 $chlog | grep -q UNRELEASED; then
+		sig="$(grep "^ --" $chlog | head -n 1)"
+		sigdate="${sig#*  }"
+		sigsec="$(date -d "$sigdate" +%s 2>/dev/null)" || true
+		if [ "$sigsec" ]; then
+			if [ $((($(date +%s) - $sigsec) / 86400)) -lt 5 ]; then
+				return 0
+			fi
+		else
+			echo "* Error parsing date from '$sig'"
+		fi
+	fi
+	return 1
+}
+
+select_source() {
+	local bdep=$1
+	case $bdep in
+	    linux-image-2.6*)
+		BDEP_SOURCE=linux-2.6
+		BDEP_BINARY_BASE=linux-image-2.6
+		;;
+	    squashfs-modules-2.6*)
+		BDEP_SOURCE=linux-modules-extra-2.6
+		BDEP_BINARY_BASE=squashfs-modules-2.6
+		;;
+	    loop-aes-modules-2.6*)
+		BDEP_SOURCE=loop-aes
+		BDEP_BINARY_BASE=loop-aes-modules-2.6
+		;;
+	    *)
+		echo "Unsupported build-dependency '$1'"
+		clean_arch_tmp
+		exit 1
+		;;
+	esac
+
+	BDEP_SVERSION=$(grep "^$BDEP_SOURCE[[:space:]]" ../massbuild.versions | awk '{print $2}')
+	if [ -z "$BDEP_SVERSION" ]; then
+		echo "Could not determine desired version for $bdep"
+		clean_arch_tmp
+		exit 1
+	fi
+
+        _TMP=${BDEP_SOURCE#?} # everything but the first character
+	BDEP_SOURCE_PREFIX=${BDEP_SOURCE%$_TMP}
+}
+
+retrieve_package() {
+	local mirror_type=$1
+	local package_list
+	local url
+
+	# HACK ALERT
+	# The binary packages for linux-modules-extra have a different
+	# version than their source package.
+	# The version of the module's source package is inserted between the
+	# "upstream" part of the version and the "Debian" revision.
+	local sv_base=${BDEP_SVERSION%-*}
+	local sv_rev=${BDEP_SVERSION##*-}
+	local sv_regexp="_${sv_base}([^_]*)?-${sv_rev}_"
+
+	case $mirror_type in
+	    disk)
+		PACKAGE="$(ls -1 $ARCH_TDIR/ | \
+			   egrep "${build_dep}${sv_regexp}${kv_arch}\.deb")"
+		if [ "$PACKAGE" ]; then
+			log "  Using already available $PACKAGE"
+			return 0
+		else
+			return 1
+		fi
+		;;
+	    local)
+		url="$LMIRROR/pool/main/${BDEP_SOURCE_PREFIX}/$BDEP_SOURCE"
+		;;
+	    pool)
+		url="$MIRROR/pool/main/${BDEP_SOURCE_PREFIX}/$BDEP_SOURCE"
+		;;
+	    incoming)
+		url="$INCOMING"
+		;;
+	    *)
+		echo "Internal error: undefined mirror type"
+		clean_arch_tmp
+		exit 1
+		;;
+	esac
+
+	package_list="$(wget -q $url -O - | \
+		   sed "s:</tr><:</tr>\n<:g" | \
+		   grep "$BDEP_BINARY_BASE.*\.deb" | \
+		   sed -r "s/^.*(href|HREF)=\"([^\"]*)\".*$/\2/" |
+		   sed "s/%2B/+/")"
+	if [ "$mirror_type" != incoming ] && [ -z "$package_list" ]; then
+		echo "Failed to retrieve available build dependencies"
+		clean_arch_tmp
+		exit 1
+	fi
+
+	package_list="$(echo "$package_list" | grep "${build_dep}_.*$kv_arch\.")"
+	if [ -z "$package_list" ]; then
+		log "  * no packages available matching $build_dep from $mirror_type"
+		return 1
+	fi
+
+	PACKAGE="$(echo "$package_list" | egrep "$sv_regexp")"
+	if [ -z "$PACKAGE" ]; then
+		log "  * version $BDEP_SVERSION of $BDEP_SOURCE for $kv_arch seems unavailable in $mirror_type"
+		return 1
+	fi
+
+	log "  Retrieving $PACKAGE from $mirror_type..."
+	if ! wget -q $url/$PACKAGE -O $ARCH_TDIR/$PACKAGE; then
+		log "  * failed to retrieve $PACKAGE for $USOURCE from $mirror_type"
+		return 1
+	fi
+}
+
+get_depends() {
+	rm -rf $ARCH_TDIR/lib $ARCH_TDIR/usr
+
+	cat kernel-versions | egrep "^$1[[:space:]]" | \
+	    while read kv_arch version flavour installedname suffix build_deps; do
+		build_deps="$(echo $build_deps | sed "s/ ([^)]*)//" | \
+			      sed "s/,[[:space:]]*/ /g")"
+		for build_dep in $build_deps; do
+			select_source $build_dep
+
+			# exit on errors as we're in a subshell!
+			if retrieve_package disk; then
+				:
+			elif [ "$LMIRROR" ] && retrieve_package local; then
+				:
+			elif retrieve_package pool; then
+				:
+			elif [ "$USE_INCOMING" ] && retrieve_package incoming; then
+				:
+			else
+				exit 1
+			fi
+
+			add_changelog "Built against version $BDEP_SVERSION of $BDEP_SOURCE."
+			dpkg -x $ARCH_TDIR/$PACKAGE $ARCH_TDIR/
+		done
+		if [ -d $ARCH_TDIR/lib/modules/$installedname ]; then
+			/sbin/depmod -b $ARCH_TDIR/ $installedname
+		fi
+	done
+	return $?
+}
+
+
+### MAINLINE
+
+LOGFILE="$(pwd -P)/massbuild.$OPERATION.log"
+: >$LOGFILE
+
+case $OPERATION in
+    krelease|mrelease)
+	for uarch in $UARCHES; do
+		cd $UBASE-$uarch-2.6
+		log "Committing changes for $uarch..."
+		SVN_ST="$(svn st)"
+		if [ "$(echo "$SVN_ST" | egrep -q "^(\?|C)")" ]; then
+			log "* Working copy is not clean; skipping"
+			cd ..; log ""; continue
+		fi
+		if [ -z "$(echo "$SVN_ST" | egrep "^M.*debian/changelog")" ]; then
+			log "* No changes to commit; skipping"
+			cd ..; log ""; continue
+		fi
+		svn diff
+		read -n 1 -s -p "Are you sure you want to commit these changes [yN]? " reply
+		echo
+		if [ "$reply" != y ] && [ "$reply" != Y ]; then
+			log "* Aborted by user"
+			cd ..; log ""; continue
+		fi
+		debcommit --release 2>&1 | tee -a $LOGFILE
+		cd ..; log ""
+	done
+	;;
+    kclean|mclean)
+	for arch in $ARCHES; do
+		log "Cleaning files for $arch..."
+		rm -rf ./$arch
+		clean_arch $arch
+	done
+	rmdir ./$OUTDIR 2>/dev/null || true
+	;;
+esac
+
+
+## Rest of processing is for builds
+if [ $OPERATION != kbuild ] && [ $OPERATION != mbuild ]; then
+	exit 0
+fi
+
+# Require dpkg-cross unless we are building only for a single architecture
+# and that architecture matches the host we're running on.
+no_cross=""
+hostarch_cpu=$(dpkg-architecture -qDEB_HOST_ARCH_CPU 2>/dev/null)
+set $UARCHES
+if [ ${#@} -eq 1 ]; then
+	arch=$(list_arches "$UARCHES")
+	set $arch
+	if [ ${#@} -eq 1 ] && [ "$arch" = $hostarch_cpu ]; then
+		no_cross=1
+	fi
+fi
+if [ -z "$no_cross" ] && ! dpkg -l dpkg-cross | grep -q "^ii"; then
+	echo "Error: dpkg-cross is not installed; unable to proceed"
+	exit 1
+fi
+
+
+cat <<EOF
+This script will build kernel udebs from source packages of a specific
+version either for all architectures or a specific architecture.
+Make sure you have updated 'massbuild.versions' before continuing.
+EOF
+if [ "$no_cross" ]; then
+	cat <<EOF
+NOTE: Uploads of kernel/module udebs should only be done by a porter
+      for that architecture, or after checking with the D-I release
+      manager.
+EOF
+else
+	cat <<EOF
+NOTE: This script should only be used to build and upload kernel/module
+      udebs for multiple architectures after checking with the D-I
+      release manager.
+EOF
+fi
+read -p "Do you wish to continue [yN]? " reply
+echo
+if [ "$reply" != y ] && [ "$reply" != Y ]; then
+	exit 0
+fi
+
+
+for uarch in $UARCHES; do
+	echo
+	init_changelog
+
+	USOURCE=$UBASE-$uarch-2.6
+	for arch in $(list_arches $uarch); do
+		if ! echo "$ARCHES" | egrep -q "(^| )$arch( |$)"; then
+			continue
+		fi
+
+		# Skip unofficial arches unless specifically requested
+		if echo "$UNOFFICIAL" | egrep -q "(^| )$arch( |$)" && \
+		   ! echo "$REQUESTED" | egrep -q "(^| )$arch( |$)"; then
+			echo "! Skipping architecture $arch (unofficial)"
+			continue
+		fi
+		log "Processing $arch..."
+
+		if has_recent_upload; then
+			echo "There already has been a recent upload for this architecture."
+			read -n 1 -s -p "Skip this architecture [Yn]? " reply
+			echo
+			if [ "$reply" != n ] && [ "$reply" != N ]; then
+				continue
+			fi
+		fi
+
+		clean_arch $arch
+		rm -f massbuild.$arch.log
+
+		cd $USOURCE
+		ARCH_TDIR=../$arch
+		mkdir -p $ARCH_TDIR
+
+		log "  Retrieving and extracting dependencies..."
+		if get_depends $arch; then
+			do_dch
+			log "  Building udebs, please wait..."
+			if ! kernel-wedge build-arch "$arch" >../massbuild.$TYPE.$arch.log 2>&1; then
+				log "* There were errors building udebs for $arch"
+				clean_arch $arch
+			else
+				mkdir -p ../$OUTDIR
+				mv ../$UBASE-$arch-2.6_*.* ../$OUTDIR
+				mv ../*_$arch.udeb ../$OUTDIR
+			fi
+		else
+			log "* Skipping architecture $arch"
+		fi
+
+		clean_arch_tmp
+		cd ..
+	done
+done
+
+echo
+if grep -q "^\*" $LOGFILE; then
+	echo "There were errors processing some architectures!"
+	echo "See the logfiles for details"
+	echo
+fi
