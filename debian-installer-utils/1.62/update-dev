@@ -1,0 +1,12 @@
+#! /bin/sh
+set +e	# ignore errors
+
+# Make sure /dev is up to date after loading modules.
+if type udevadm >/dev/null 2>&1; then
+	udevadm trigger --subsystem-nomatch=sound
+	udevadm settle
+else
+	logger -t update-dev "warning: unable to find udevadm; skipping"
+fi
+
+exit 0
