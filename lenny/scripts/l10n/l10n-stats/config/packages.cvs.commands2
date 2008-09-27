@@ -1,0 +1,36 @@
+touch $HOME/.cvspass
+
+#echo -n "tasksel "
+rm -rf tasksel
+if [ `hostname` == "alioth" ] ; then
+	git clone -q /git/tasksel/tasksel.git
+else
+	git clone -q git://git.debian.org/git/tasksel/tasksel.git
+fi
+
+#echo -n "iso-codes "
+svn -q co svn+ssh://svn.debian.org/svn/pkg-isocodes/trunk/iso-codes
+
+#echo -n "console-data "
+rm -rf console-data
+mkdir console-data
+svn -q co svn://svn.debian.org/console-data/trunk/debian console-data/debian
+
+#echo -n "popularity-contest "
+cvs -z3 -Q -d:pserver:anonymous@cvs.alioth.debian.org:/cvsroot/popcon co popularity-contest
+
+# echo -n "eject "
+rm -rf eject
+if [ `hostname` == "alioth" ] ; then
+	git clone -q /git/collab-maint/eject
+else
+	git clone -q git://git.debian.org/git/collab-maint/eject
+fi
+#apt-get $APT_OPT -t unstable source eject >/dev/null
+#rm -f *.tar.gz *.dsc *.diff.gz
+#mv eject* eject
+
+echo "X${APT_OPT}X" >~/tmp/log
+set >>~/tmp/log
+pwd >>~/tmp/log
+echo "X${DI}X" >>~/tmp/log

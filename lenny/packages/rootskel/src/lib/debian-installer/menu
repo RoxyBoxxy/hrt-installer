@@ -1,0 +1,5 @@
+#!/bin/sh
+if [ -z "$DEBCONF_DROP_TRANSLATIONS" ]; then
+	export DEBCONF_DROP_TRANSLATIONS=1
+fi
+exec debconf -o d-i $MENU

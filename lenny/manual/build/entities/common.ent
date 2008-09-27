@@ -1,0 +1,137 @@
+<!-- -*- DocBook -*- -->
+<!-- These entries should be language independent.  -->
+<!-- The *first* definition of an ENTITY wins.      -->
+
+<!-- proper (long) name to use for Debian -->
+<!ENTITY debian "Debian GNU/Linux">
+
+<!ENTITY d-i "<classname>debian-installer</classname>">
+
+<!ENTITY release     "5.0">
+<!ENTITY releasename "lenny">
+<!ENTITY releasename-cap "Lenny">
+<!ENTITY releasename-uc "LENNY">
+
+<!ENTITY FIXME
+  "<emphasis>Documentation not complete, text missing.</emphasis>">
+
+<!-- proper nouns for architectures -->
+<!ENTITY arch-title
+  "<phrase arch='amd64'>AMD64</phrase><phrase arch='alpha'>Alpha</phrase><phrase arch='arm'>ARM</phrase><phrase arch='hppa'>PA-RISC</phrase><phrase arch='i386'>Intel x86</phrase><phrase arch='ia64'>IA-64</phrase><phrase arch='m68k'>Motorola 680x0</phrase><phrase arch='mips'>Mips</phrase><phrase arch='mipsel'>Mipsel</phrase><phrase arch='powerpc'>PowerPC</phrase><phrase arch='sparc'>SPARC</phrase><phrase arch='s390'>S/390</phrase>">
+
+<!-- general things from installer -->
+<!ENTITY enterkey "<keycap>Enter</keycap>">
+<!ENTITY escapekey "<keycap>Esc</keycap>">
+<!ENTITY tabkey "<keycap>Tab</keycap>">
+<!ENTITY MSG-YES "<userinput>Yes</userinput>">
+<!ENTITY MSG-NO "<userinput>No</userinput>">
+<!ENTITY BTN-CONT "<guibutton>Continue</guibutton>">
+<!ENTITY BTN-CANCEL "<guibutton>Cancel</guibutton>">
+<!ENTITY BTN-GOBACK "<guibutton>Go Back</guibutton>">
+
+<!-- notation used for 'megabytes' -->
+<!ENTITY notation-megabytes "MB">
+
+<!-- minimum hard disk size for base system -->
+<!-- As measured on a completed etch install, minimal work space included. -->
+<!ENTITY minimum-fs-size "500&notation-megabytes;">
+
+<!--
+Size of install as used in appendix/files.xml; all values based on i386.
+
+To determine the size of the base system and tasks, start with a default
+installation:
+- in English
+- with use of network mirror
+- without selecting _any_ tasks.
+After the reboot, the size for the minimal base system should be determined
+after running 'aptitude clean' using 'du -hsx /'. After that the "Standard
+system" task should be installed and the size of the standard system can be
+determined using the same method.
+
+Sizes of tasks should be determined by running tasksel with the "new-install"
+option on a system that been fully installed without selecting any tasks. By
+selecting a task together with the "manual selection" option, aptitude will
+be started and show the sizes for the task. Use "cancel pending actions" to
+clear the slate, quit aptitude and repeat for other tasks.
+Space requirements need to be determined from tasksel as tasksel will not
+install recommended packages while selecting a task from aptitude will.
+-->
+
+<!-- Size of the basic installation -->
+  <!ENTITY base-system-size   "248">
+  <!ENTITY std-system-size    "410">
+<!-- Desktop environment task -->
+  <!ENTITY task-desktop-inst "1857">
+  <!ENTITY task-desktop-dl    "688">
+  <!ENTITY task-desktop-tot  "2545">
+<!-- Laptop task -->
+  <!ENTITY task-laptop-inst    "25">
+  <!ENTITY task-laptop-dl       "9">
+  <!ENTITY task-laptop-tot     "34">
+<!-- Web server task -->
+  <!ENTITY task-web-inst       "37">
+  <!ENTITY task-web-dl         "12">
+  <!ENTITY task-web-tot        "49">
+<!-- Print server task -->
+  <!ENTITY task-print-inst    "208">
+  <!ENTITY task-print-dl       "76">
+  <!ENTITY task-print-tot     "284">
+<!-- DNS server task -->
+  <!ENTITY task-dns-inst        "2">
+  <!ENTITY task-dns-dl          "1">
+  <!ENTITY task-dns-tot         "3">
+<!-- File server task -->
+  <!ENTITY task-file-inst      "53">
+  <!ENTITY task-file-dl        "22">
+  <!ENTITY task-file-tot       "75">
+<!-- Mail server task -->
+  <!ENTITY task-mail-inst      "15">
+  <!ENTITY task-mail-dl         "5">
+  <!ENTITY task-mail-tot       "20">
+<!-- SQL database task -->
+  <!ENTITY task-sql-inst       "37">
+  <!ENTITY task-sql-dl         "12">
+  <!ENTITY task-sql-tot        "49">
+
+
+<!-- number of packages, approx, in the main distribution -->
+<!-- use:
+     for i in binary-*; do echo -n "$i: "; zgrep '^Package:' $i/Packages.gz | wc -l; done
+-->
+<!-- last updated: January 1 2007 for Etch (FJP) -->
+<!ENTITY num-of-distrib-pkgs
+  "<phrase arch='alpha'>20850</phrase>
+   <phrase arch='amd64'>21250</phrase>
+   <phrase arch='arm'>20750</phrase>
+   <phrase arch='hppa'>20850</phrase>
+   <phrase arch='i386'>21500</phrase>
+   <phrase arch='ia64'>21000</phrase>
+   <phrase arch='m68k'>17450</phrase>
+   <phrase arch='mips'>20850</phrase>
+   <phrase arch='mipsel'>10850</phrase>
+   <phrase arch='powerpc'>21250</phrase>
+   <phrase arch='s390'>20850</phrase>
+   <phrase arch='sparc'>21000</phrase>">
+
+<!-- Number of current Debian developers -->
+<!-- Can be found for example on vote.debian.org (use last vote) -->
+<!ENTITY num-of-debian-developers "1075">
+
+<!-- Number of current Debian maillists -->
+<!ENTITY num-of-debian-maillists "215">
+
+<!-- version of X11 shipping with the current release -->
+<!ENTITY x11ver "7.3">
+
+<!-- an example of adding another image to lilo.conf, cf
+     en/post-install.sgml etc. -->
+<!ENTITY additional-lilo-image
+'image=/boot/vmlinuz.new
+  label=new
+  append="mcd=0x320,11"
+  read-only'>
+
+<!-- prefix for files that can be downloaded -->
+<!-- <![ %official-web-build; [ <!ENTITY downloadable-file "&url-boot-floppies;"> ]]> -->
+                          <!ENTITY downloadable-file "&url-debian-installer;">
