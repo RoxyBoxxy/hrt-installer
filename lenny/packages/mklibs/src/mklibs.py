@@ -185,8 +185,8 @@ def resolve_link(file):
 # Find complete path of a library, by searching in lib_path
 def find_lib(lib):
     for path in lib_path:
-        if os.access(sysroot + path + "/" + lib, os.F_OK):
-            return sysroot + path + "/" + lib
+        if os.access(path + "/" + lib, os.F_OK):
+            return path + "/" + lib
 
     return ""
 
@@ -194,7 +194,7 @@ def find_lib(lib):
 def find_pic(lib):
     base_name = so_pattern.match(lib).group(1)
     for path in lib_path:
-        for file in glob.glob(sysroot + path + "/" + base_name + "_pic.a"):
+        for file in glob.glob(path + "/" + base_name + "_pic.a"):
             if os.access(file, os.F_OK):
                 return resolve_link(file)
     return ""
@@ -203,7 +203,7 @@ def find_pic(lib):
 def find_pic_map(lib):
     base_name = so_pattern.match(lib).group(1)
     for path in lib_path:
-        for file in glob.glob(sysroot + path + "/" + base_name + "_pic.map"):
+        for file in glob.glob(path + "/" + base_name + "_pic.map"):
             if os.access(file, os.F_OK):
                 return resolve_link(file)
     return ""
@@ -230,9 +230,6 @@ def usage(was_err):
     print >> outfd, "      --libc-extras-dir DIRECTORY  look for libc extra files in DIRECTORY"
     print >> outfd, "      --target TARGET          prepend TARGET- to the gcc and binutils calls"
     print >> outfd, "      --root ROOT              search in ROOT for library rpaths"
-    print >> outfd, "      --sysroot ROOT           prepend ROOT to all paths for libraries"
-    print >> outfd, "      --gcc-options OPTIONS    pass OPTIONS to gcc"
-    print >> outfd, "      --libdir DIR             use DIR (e.g. lib64) in place of lib in default paths"
     print >> outfd, "  -v, --verbose                explain what is being done"
     print >> outfd, "  -h, --help                   display this help and exit"
     sys.exit(was_err)
@@ -267,8 +264,7 @@ os.environ['LC_ALL'] = "C"
 # Argument parsing
 opts = "L:DnvVhd:r:l:"
 longopts = ["no-default-lib", "dry-run", "verbose", "version", "help",
-            "dest-dir=", "ldlib=", "libc-extras-dir=", "target=", "root=",
-            "sysroot=", "gcc-options=", "libdir="]
+            "dest-dir=", "ldlib=", "libc-extras-dir=", "target=", "root="]
 
 # some global variables
 lib_rpath = []
@@ -278,13 +274,9 @@ ldlib = "LDLIB"
 include_default_lib_path = "yes"
 default_lib_path = ["/lib/", "/usr/lib/", "/usr/X11R6/lib/"]
 libc_extras_dir = "/usr/lib/libc_pic"
-libc_extras_dir_default = True
-libdir = "lib"
 target = ""
 root = ""
-sysroot = ""
 force_libs = []
-gcc_options = []
 so_pattern = re.compile("((lib|ld).*)\.so(\..+)*")
 script_pattern = re.compile("^#!\s*/")
 
@@ -308,19 +300,12 @@ for opt, arg in optlist:
         ldlib = arg
     elif opt == "--libc-extras-dir":
         libc_extras_dir = arg
-        libc_extras_dir_default = False
     elif opt == "--target":
         target = arg + "-"
     elif opt in ("-r", "--root"):
         root = arg
-    elif opt == "--sysroot":
-        sysroot = arg
     elif opt in ("-l",):
         force_libs.append(arg)
-    elif opt == "--gcc-options":
-        gcc_options.extend(string.split(arg, " "))
-    elif opt == "--libdir":
-        libdir = arg
     elif opt in ("--help", "-h"):
 	usage(0)
         sys.exit(0)
@@ -331,10 +316,7 @@ for opt, arg in optlist:
         print "WARNING: unknown option: " + opt + "\targ: " + arg
 
 if include_default_lib_path == "yes":
-    lib_path.extend([a.replace("/lib/", "/" + libdir + "/") for a in default_lib_path])
-
-if libc_extras_dir_default:
-    libc_extras_dir = libc_extras_dir.replace("/lib/", "/" + libdir + "/")
+    lib_path.extend(default_lib_path)
 
 if ldlib == "LDLIB":
     ldlib = os.getenv("ldlib")
@@ -361,8 +343,6 @@ if not ldlib:
 
 if not ldlib:
     sys.exit("E: Dynamic linker not found, aborting.")
-
-ldlib = sysroot + ldlib
 
 debug(DEBUG_NORMAL, "I: Using", ldlib, "as dynamic linker.")
 
@@ -414,12 +394,8 @@ while 1:
     libraries = set(force_libs)
     for obj in objects.values():
         for symbol in undefined_symbols(obj):
-            # Some undefined symbols in libthread_db are defined in
-            # the application that uses it.
-            if (not (re.search("libthread_db\.so", obj)
-                     and re.search("^ps_", str(symbol)))):
-                debug(DEBUG_SPAM, "needed_symbols adding %s, weak: %s" % (symbol, symbol.weak))
-                needed_symbols[str(symbol)] = symbol
+            debug(DEBUG_SPAM, "needed_symbols adding %s, weak: %s" % (symbol, symbol.weak))
+            needed_symbols[str(symbol)] = symbol
         libraries.update(library_depends(obj))
 
     # calculate what symbols are present in small_libs and available_libs
@@ -493,7 +469,7 @@ while 1:
     for name in needed_symbols:
         if not name in symbol_provider:
             if not needed_symbols[name].weak:
-                raise "No library provides non-weak %s" % name
+                raise "No library provides non-weak %s" % symbol
         else:
             lib = symbol_provider[name]
             library_symbols_used[lib].add(library_symbols[lib][name])
@@ -538,8 +514,8 @@ while 1:
             if soname in ("libc.so.6", "libc.so.6.1"):
                 # force dso_handle.os to be included, otherwise reduced libc
                 # may segfault in ptmalloc_init due to undefined weak reference
-                extra_pre_obj.append(sysroot + libc_extras_dir + "/soinit.o")
-                extra_post_obj.append(sysroot + libc_extras_dir + "/sofini.o")
+                extra_pre_obj.append(libc_extras_dir + "/soinit.o")
+                extra_post_obj.append(libc_extras_dir + "/sofini.o")
                 symbols.add(ProvidedSymbol('__dso_handle', 'Base', True))
 
             map_file = find_pic_map(library)
@@ -548,7 +524,6 @@ while 1:
 
             # compile in only used symbols
             cmd = []
-            cmd.extend(gcc_options)
             cmd.append("-nostdlib -nostartfiles -shared -Wl,-soname=" + soname)
             cmd.extend(["-u%s" % a.linker_name() for a in symbols])
             cmd.extend(["-o", dest_path + "/" + so_file_name + "-so"])
@@ -557,7 +532,7 @@ while 1:
             cmd.extend(extra_post_obj)
             cmd.extend(extra_flags)
             cmd.append("-lgcc")
-            cmd.extend(["-L%s" % a for a in [dest_path] + [sysroot + b for b in lib_path if sysroot == "" or b not in ("/" + libdir + "/", "/usr/" + libdir + "/")]])
+            cmd.extend(["-L%s" % a for a in [dest_path] + lib_path])
             cmd.append(library_depends_gcc_libnames(so_file))
             command(target + "gcc", *cmd)
 
