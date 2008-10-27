@@ -1,14 +1,14 @@
 <!-- $Id$ -->
-<!-- original version: 53452 -->
+<!-- original version: 56450 -->
 
- <sect1 id="network-cards">
+ <sect2 id="network-cards">
  <title>Hardware pro připojení k síti</title>
 
 <para>
 
 Libovolná síťová karta (NIC) podporovaná linuxovým jádrem by měla být
-podporována i instalačním systémem. Ovladače dostupné jak moduly jádra
-by se měly zavádět automaticky.
+podporována i instalačním systémem. Ovladače dostupné jako moduly
+jádra by se měly zavádět automaticky.
 
 <phrase arch="x86">To zahrnuje většinu PCI a PCMCIA karet.</phrase>
 
@@ -85,44 +85,44 @@ stránce <ulink url="&url-slug-firmware;">Slug-Firmware</ulink>.
 
 </para><para arch="x86">
 
-Z oblasti ISDN není v sadě zaváděcích disků zahrnuta podpora pro
-protokol D-channel (staré) německé sítě 1TR6 a karty Spellcaster
-BRI. Používání ISDN během instalace není podporováno.
+ISDN je podporováno, ale ne během instalace.
 
 </para>
 
-  <sect2 arch="not-s390" id="nics-firmware">
-  <title>Ovladače vyžadující firmware</title>
+  <sect3 condition="supports-wireless" id="nics-wireless">
+  <title>Bezdrátové síťové karty</title>
 <para>
 
-Instalační systém zatím nepodporuje používání firmware. To znamená, že
-síťové karty používající ovladač, který vyžaduje nahrání firmwaru,
-nejsou podporovány.
+Bezdrátové síťové karty jsou obecně podporovány, nicméně mnoho
+bezdrátových síťových adaptérů vyžaduje (nesvobodný) firmware. Tyto
+síťové karty lze pod &debian;em zprovoznit, avšak nejsou podporovány
+během instalace.
 
 </para><para>
 
-Jestliže pro instalaci nemůžete použít jinou síťovou kartu, můžete pro
-instalaci &debian;u použít obraz velkého CD nebo DVD. Při instalaci
-zvolte možnost, že nechcete nastavit síť a že chcete použít pouze
-balíky, které jsou dostupné na CD/DVD. Po instalaci (po restartu do
-nového systému) pak můžete nainstalovat příslušný ovladač a firmware a
-nastavit síť ručně. Může se stát, že firmware bude zabalený v jiném
-balíku než ovladač, nebo že nebude dostupný v <quote>hlavní</quote>
-sekci archivu Debianu.
+Ani použití podporované bezdrátové síťové karty pro instalaci
+nezaručuje automatický úspěch, protože tato část instalátoru je ještě
+ve vývoji a podporuje pouze některé způsoby nastavení bezdrátových
+přístupových bodů (AP). Jestliže pro instalaci nemůžete použít jinou
+síťovou kartu, stále lze pro instalaci &debian;u použít obraz velkého
+CD nebo DVD. V takovém případě přeskočte konfiguraci sítě a instalujte
+pouze balíky z CD nebo DVD. Potřebný ovladač pak můžete spolu s
+firmwarem doinstalovat po dokončení instalace a následném restartu do
+nového systému.
 
 </para><para>
 
-Pokud je <emphasis>podporovaný</emphasis> samotný ovladač, je zde
-šance, že budete moci síťovou kartu používat i během instalace. Musíte
-však z nějakého média ručně nakopírovat firmware do adresáře
-<filename>/usr/lib/hotplug/firmware</filename>. Firmware byste pak
-měli před dokončením instalace nakopírovat i do nově nainstalovaného
-systému.
+Pokud ovladač pro kartu existuje, ale není dostupný jako debianí
+balík, můžete si stáhnout z Internetu jeho zdrojové kódy a následně
+zkompilovat, což však přesahuje rozsah této příručky.
+<phrase arch="x86">Neexistuje-li svobodný ovladač, je vaší poslední
+možností balík <classname>ndiswrapper</classname>, který umí použít
+ovladače z Windows.</phrase>
 
 </para>
-  </sect2>
+  </sect3>
 
-  <sect2 arch="sparc" id="nics-sparc-trouble">
+  <sect3 arch="sparc" id="nics-sparc-trouble">
   <title>Známé problémy na &arch-title;</title>
 <para>
 
@@ -131,7 +131,7 @@ vhodné zde zmínit.
 
 </para>
 
-   <sect3>
+   <sect4>
    <title>Konflikt mezi ovladači tulip a dfme</title>
 <para>
 
@@ -161,15 +161,15 @@ možné, že po restartu do nového systému se opět zavede ten chybný
 ovladač.
 
 </para>
-   </sect3>
+   </sect4>
 
-   <sect3><title>Sun B100 blade</title>
+   <sect4><title>Sun B100 blade</title>
 <para>
 
 Síťový ovladač <literal>cassini</literal> nefunguje na systémech Sun
 B100 blade.
 
  </para>
-   </sect3>
-  </sect2>
- </sect1>
+   </sect4>
+  </sect3>
+ </sect2>

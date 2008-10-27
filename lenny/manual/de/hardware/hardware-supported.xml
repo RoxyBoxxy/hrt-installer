@@ -1,5 +1,5 @@
 <!-- retain these comments for translator revision tracking -->
-<!-- original version: 55471 -->
+<!-- original version: 56439 -->
 
  <sect1 id="hardware-supported">
  <title>Unterstützte Hardware</title>
@@ -25,8 +25,8 @@ Informationen gefunden werden können.
   <sect2><title>Unterstützte Architekturen</title>
 <para>
 
-Debian &release; unterstützt zwölf Haupt-Architekturen und einige Variationen
-von jeder dieser Architekturen, auch als <quote>Flavours</quote> bekannt.
+Debian &release; unterstützt elf Haupt-Architekturen und einige Variationen
+dieser Architekturen, auch als <quote>Flavours</quote> bekannt.
 
 </para><para>
 
@@ -63,10 +63,15 @@ von jeder dieser Architekturen, auch als <quote>Flavours</quote> bekannt.
 
  <row>
   <entry morerows="4">ARM</entry>
-  <entry morerows="4">arm</entry>
-   <entry>Netwinder und CATS</entry>
-   <entry>netwinder</entry>
+  <entry>arm</entry>
+  <entry>Netwinder und CATS</entry>
+  <entry>netwinder</entry>
  </row><row>
+  <entry>armel</entry>
+  <entry>Versatile</entry>
+  <entry>versatile</entry>
+</row><row>
+  <entry morerows="2">arm und armel</entry>
   <entry>Intel IOP32x</entry>
   <entry>iop32x</entry>
 </row><row>
@@ -75,9 +80,6 @@ von jeder dieser Architekturen, auch als <quote>Flavours</quote> bekannt.
 </row><row>
   <entry>Marvell Orion</entry>
   <entry>orion5x</entry>
-</row><row>
-  <entry>Versatile</entry>
-  <entry>versatile</entry>
 </row>
 
 <row>
@@ -138,32 +140,29 @@ von jeder dieser Architekturen, auch als <quote>Flavours</quote> bekannt.
   <entry>sb1a-bcm91480b</entry>
 </row>
 
-<row>
+<row arch="m68k">
   <entry morerows="5">Motorola 680x0</entry>
   <entry morerows="5">m68k</entry>
   <entry>Atari</entry>
   <entry>atari</entry>
-</row><row>
+</row><row arch="m68k">
   <entry>Amiga</entry>
   <entry>amiga</entry>
-</row><row>
+</row><row arch="m68k">
   <entry>68k Macintosh</entry>
   <entry>mac</entry>
-</row><row>
+</row><row arch="m68k">
   <entry morerows="2">VME</entry>
   <entry>bvme6000</entry>
-</row><row>
+</row><row arch="m68k">
   <entry>mvme147</entry>
-</row><row>
+</row><row arch="m68k">
   <entry>mvme16x</entry>
 </row>
 
 <row>
-  <entry morerows="2">IBM/Motorola PowerPC</entry>
-  <entry morerows="2">powerpc</entry>
-  <entry>CHRP</entry>
-  <entry>chrp</entry>
-</row><row>
+  <entry morerows="1">IBM/Motorola PowerPC</entry>
+  <entry morerows="1">powerpc</entry>
   <entry>PowerMac</entry>
   <entry>pmac</entry>
 </row><row>
@@ -229,6 +228,115 @@ zu kontaktieren.
 &supported-powerpc.xml;
 &supported-s390.xml;
 &supported-sparc.xml;
+
+  <sect2 arch="x86" id="laptops"><title>Laptops</title>
+<para>
+
+Auch Laptops werden unterstützt und heutzutage funktionieren die meisten
+<quote>out of the box</quote>, also direkt ohne manuelle Nacharbeit. Falls ein
+Laptop spezialisierte oder proprietäre Hardware enthält, werden bestimmte
+Funktionen möglicherweise nicht unterstützt. Um zu erfahren, ob ein bestimmter
+Laptop gut mit GNU/Linux funktioniert, können Sie zum Beispiel die
+<ulink url="&url-x86-laptop;">Linux-on-Laptops-Seiten</ulink> besuchen.
+
+</para>
+   </sect2>
+
+  <sect2 condition="defaults-smp">
+  <title>Mehrprozessor-Systeme</title>
+<para>
+
+Mehrprozessor-Unterstützung &ndash; auch <quote>symmetrisches
+Multiprocessing (SMP)</quote> genannt &ndash; ist für diese Architektur
+verfügbar. Das Standard-Kernelimage in &release; wurde mit SMP-Unterstützung
+kompiliert. Dieser Kernel ist auch auf nicht-SMP-Systemen nutzbar. Zwar hat
+er einen geringen Overhead, was zu einem kleinen Verlust an Performance führt,
+dies ist jedoch bei normaler Systemnutzung kaum zu bemerken.
+
+</para><para>
+
+Um den Kernel für Single-CPU-Systeme zu optimieren, müssen Sie den
+Standard-Debian-Kernel durch einen eigenen ersetzen. Eine Erörterung dazu
+finden Sie im <xref linkend="kernel-baking"/>. Zum momentanen Zeitpunkt
+(Kernel-Version &kernelversion;) ist der Weg zum Deaktivieren von SMP
+das Abwählen von <quote>&smp-config-option;</quote> im
+<quote>&smp-config-section;</quote>-Abschnitt der Kernel-Konfiguration.
+
+</para>
+  </sect2>
+
+  <sect2 condition="smp-alternatives">
+  <title>Mehrprozessor-Systeme</title>
+<para>
+
+Mehrprozessor-Unterstützung &ndash; auch <quote>symmetrisches
+Multiprocessing (SMP)</quote> genannt &ndash; ist für diese Architektur
+verfügbar. Das Standard-Kernelimage in &release; wurde mit
+<firstterm>SMP-alternatives</firstterm>-Unterstützung kompiliert.
+Das bedeutet, dass der Kernel die Zahl der Prozessoren (oder
+Prozessor-Kerne) erkennt und bei Ein-Prozessor-Systemen automatisch die
+SMP-Unterstützung deaktiviert.
+
+</para><para arch="i386">
+
+Die 486-Variation des Debian-Kernelimage-Pakets für &arch-title;
+ist nicht mit SMP-Unterstützung kompiliert.
+
+</para>
+  </sect2>
+
+  <sect2 condition="supports-smp">
+  <title>Mehrprozessor-Systeme</title>
+<para>
+
+Mehrprozessor-Unterstützung &ndash; auch <quote>symmetrisches
+Multiprocessing (SMP)</quote> genannt &ndash; ist für diese Architektur
+verfügbar. Das Standard-Kernelimage in &release; unterstützt jedoch kein SMP.
+Das sollte eine Installation jedoch nicht verhindern, da der
+Standard-Nicht-SMP-Kernel auch auf SMP-Systemen starten müsste;
+der Kernel wird dann lediglich die erste CPU verwenden.
+
+</para><para>
+
+Um die Vorteile von mehreren Prozessoren zu nutzen, müssen Sie den
+Standard-Debian-Kernel ersetzen. Eine Erörterung dazu finden Sie im
+<xref linkend="kernel-baking"/>. Zum momentanen Zeitpunkt
+(Kernel-Version &kernelversion;) ist der Weg zum Aktivieren von SMP
+das Auswählen von <quote>&smp-config-option;</quote> im
+<quote>&smp-config-section;</quote>-Abschnitt der Kernel-Konfiguration.
+
+</para>
+  </sect2>
+
+
+  <sect2 condition="supports-smp-sometimes">
+  <title>Mehrprozessor-Systeme</title>
+<para>
+
+Mehrprozessor-Unterstützung &ndash; auch <quote>symmetrisches
+Multiprocessing (SMP)</quote> genannt &ndash; ist für diese Architektur
+verfügbar und wird auch von einem der vorkompilierten Kernel unterstützt. Es
+hängt jedoch von Ihrem Installationsmedium ab, ob dieser SMP-fähige Kernel
+standardmäßig installiert wird. Dies sollte eine Installation aber nicht
+verhindern, da der Standard-Nicht-SMP-Kernel auch auf SMP-Systemen starten
+müsste; der Kernel wird dann lediglich die erste CPU verwenden.
+
+</para><para>
+
+Um die Vorteile von mehreren Prozessoren zu nutzen, sollten Sie überprüfen,
+ob ein Kernelpaket, das SMP unterstützt, installiert ist und, falls nicht,
+ein passendes Paket auswählen und installieren.
+
+</para><para>
+
+Sie können auch einen eigenen benutzerspezifischen Kernel mit
+SMP-Unterstützung bauen. Zum momentanen Zeitpunkt (Kernel-Version
+&kernelversion;) ist der Weg zum Aktivieren von SMP das Auswählen von
+<quote>&smp-config-option;</quote> im
+<quote>&smp-config-section;</quote>-Abschnitt der Kernel-Konfiguration.
+
+</para>
+  </sect2>
 
   <sect2 id="gfx" arch="not-s390"><title>Grafikkarten-Unterstützung</title>
 <para arch="x86">
@@ -299,110 +407,40 @@ Tastatur vor dem Systemstart herauszieht.
 </para>
   </sect2>
 
-  <sect2 arch="x86" id="laptops"><title>Laptops</title>
+&network-cards.xml;
+&supported-peripherals.xml;
+
+ </sect1>
+
+ <sect1 arch="not-s390" id="hardware-firmware">
+ <title>Hardware, die Firmware erfordert</title>
 <para>
 
-Auch Laptops werden unterstützt. Laptops sind oftmals spezialisiert
-oder beinhalten proprietäre Hardware. Um herauszufinden, ob Ihr
-spezieller Laptop gut mit GNU/Linux zurechtkommt, lesen Sie die
-<ulink url="&url-x86-laptop;">Linux on Laptops-Seiten</ulink>.
-
-</para>
-   </sect2>
-
-  <sect2 condition="defaults-smp">
-  <title>Mehrprozessor-Systeme</title>
-<para>
-
-Mehrprozessor-Unterstützung &ndash; auch <quote>symmetrisches
-Multiprocessing (SMP)</quote> genannt &ndash; ist für diese Architektur
-verfügbar. Das Standard-Kernelimage in &release; wurde mit SMP-Unterstützung
-kompiliert. Das sollte eine Installation jedoch nicht verhindern, da der
-SMP-Kernel auch auf Nicht-SMP-Systemen starten müsste; der Kernel wird
-lediglich ein bisschen mehr Overhead verursachen.
+Neben der Verfügbarkeit eines Gerätetreiber erfordern einige Geräte
+zusätzlich sogenannte <firstterm>Firmware</firstterm> (oder
+<firstterm>Microcode</firstterm>), die in das Gerät geladen werden muss,
+damit es funktioniert. Dies ist überwiegend bei Netzwerkkarten (speziell
+für Drahtlos-Netzwerke/Wireless-LAN) üblich, aber es gibt zum Beispiel
+auch USB-Geräte und sogar einige Festplatten-Controller, die Firmware
+erfordern.
 
 </para><para>
 
-Um den Kernel für Single-CPU-Systeme zu optimieren, müssen Sie den
-Standard-Debian-Kernel ersetzen. Sie können eine Erörterung, wie das geht,
-unter <xref linkend="kernel-baking"/> finden. Zum momentanen Zeitpunkt
-(Kernel-Version &kernelversion;) ist der Weg zum Deaktivieren von SMP
-das Abwählen von <quote>&smp-config-option;</quote> im
-<quote>&smp-config-section;</quote>-Abschnitt der Kernel-Konfiguration.
-
-</para>
-  </sect2>
-
-  <sect2 condition="smp-alternatives">
-  <title>Mehrprozessor-Systeme</title>
-<para>
-
-Mehrprozessor-Unterstützung &ndash; auch <quote>symmetrisches
-Multiprocessing (SMP)</quote> genannt &ndash; ist für diese Architektur
-verfügbar. Das Standard-Kernelimage in &release; wurde mit
-<firstterm>SMP-alternatives</firstterm>-Unterstützung kompiliert.
-Das bedeutet, dass der Kernel die Zahl der Prozessoren (oder
-Prozessor-Kerne) erkennt und bei Ein-Prozessor-Systemen automatisch die
-SMP-Unterstützung deaktiviert.
-
-</para><para arch="i386">
-
-Die 486-Variation des Debian-Kernelimage-Paketes für &arch-title;
-ist nicht mit SMP-Unterstützung kompiliert.
-
-</para>
-  </sect2>
-
-  <sect2 condition="supports-smp">
-  <title>Mehrprozessor-Systeme</title>
-<para>
-
-Mehrprozessor-Unterstützung &ndash; auch <quote>symmetrisches
-Multiprocessing (SMP)</quote> genannt &ndash; ist für diese Architektur
-verfügbar. Das Standard-Kernelimage in &release; unterstützt jedoch kein SMP.
-Das sollte eine Installation jedoch nicht verhindern, da der
-Standard-Nicht-SMP-Kernel auch auf SMP-Systemen starten müsste;
-der Kernel wird dann lediglich die erste CPU verwenden.
+In den meisten Fällen ist Firmware im Sinne der Kriterien des
+&debian;-Projekts nicht frei und kann deshalb nicht in der
+Hauptdistribution oder im Installationssystem integriert werden. Falls der
+Gerätetreiber selbst in der Distribution enthalten ist und falls &debian;
+die Firmware legal weiterverteilen darf, ist sie aber oft als separates Paket
+in der Non-Free-Sektion des Archivs verfügbar.
 
 </para><para>
 
-Um die Vorteile von mehreren Prozessoren zu nutzen, müssen Sie den
-Standard-Debian-Kernel ersetzen. Sie können eine Erörterung, wie das geht,
-unter <xref linkend="kernel-baking"/> finden. Zum momentanen Zeitpunkt
-(Kernel-Version &kernelversion;) ist der Weg zum Aktivieren von SMP
-das Auswählen von <quote>&smp-config-option;</quote> im
-<quote>&smp-config-section;</quote>-Abschnitt der Kernel-Konfiguration.
+Dies bedeutet aber nicht, dass solche Hardware nicht während der
+Installation verwendet werden kann. Seit &debian; 5.0 unterstützt der
+&d-i; die Möglichkeit, Firmware-Dateien oder -Pakete von einem transportablen
+Medium (wie einer Diskette oder einem USB-Stick) nachzuladen.
+<xref linkend="loading-firmware"/> enthält detailierte Informationen, wie
+Sie die Firmware während der Installation laden können.
 
 </para>
-  </sect2>
-
-
-  <sect2 condition="supports-smp-sometimes">
-  <title>Mehrprozessor-Systeme</title>
-<para>
-
-Mehrprozessor-Unterstützung &ndash; auch <quote>symmetrisches
-Multiprocessing (SMP)</quote> genannt &ndash; ist für diese Architektur
-verfügbar und wird auch von einem der vorkompilierten Kernel unterstützt. Es
-hängt jedoch von Ihrem Installationsmedium ab, ob dieser SMP-fähige Kernel
-standardmäßig installiert wird. Dies sollte eine Installation aber nicht
-verhindern, da der Standard-Nicht-SMP-Kernel auch auf SMP-Systemen starten
-müsste; der Kernel wird dann lediglich die erste CPU verwenden.
-
-</para><para>
-
-Um die Vorteile von mehreren Prozessoren zu nutzen, sollten Sie überprüfen,
-ob ein Kernelpaket, das SMP unterstützt, installiert ist und, falls nicht,
-ein passendes Paket wählen und installieren.
-
-</para><para>
-
-Sie können auch Ihren eigenen benutzerspezifischen Kernel mit
-SMP-Unterstützung bauen. Zum momentanen Zeitpunkt (Kernel-Version
-&kernelversion;) ist der Weg zum Aktivieren von SMP das Auswählen von
-<quote>&smp-config-option;</quote> im
-<quote>&smp-config-section;</quote>-Abschnitt der Kernel-Konfiguration.
-
-</para>
-  </sect2>
  </sect1>

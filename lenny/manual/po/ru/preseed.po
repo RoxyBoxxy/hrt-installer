@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: preseed\n"
 "Report-Msgid-Bugs-To: debian-boot@lists.debian.org\n"
-"POT-Creation-Date: 2008-09-26 00:09+0000\n"
-"PO-Revision-Date: 2008-08-17 22:10+0400\n"
+"POT-Creation-Date: 2008-10-26 00:10+0000\n"
+"PO-Revision-Date: 2008-10-24 22:15+0400\n"
 "Last-Translator: D-R L10N Team <debian-l10n-russian@lists.debian.org>\n"
 "Language-Team: Russian <debian-l10n-russian@lists.debian.org>\n"
 "MIME-Version: 1.0\n"
@@ -34,7 +34,7 @@ msgstr ""
 "&d-i; для автоматизации установки операционной системы."
 
 #. Tag: para
-#: preseed.xml:23 preseed.xml:662
+#: preseed.xml:23 preseed.xml:663
 #, no-c-format
 msgid ""
 "The configuration fragments used in this appendix are also available as an "
@@ -1054,29 +1054,44 @@ msgstr ""
 
 #. Tag: para
 #: preseed.xml:574
-#, no-c-format
+#, fuzzy, no-c-format
+#| msgid ""
+#| "Put only a single space or tab between type and value: any additional "
+#| "whitespace will be interpreted as belonging to the value. If you specify "
+#| "an empty value you should still put a single space or tab after the type."
 msgid ""
 "Put only a single space or tab between type and value: any additional "
 "whitespace will be interpreted as belonging to the value."
 msgstr ""
 "Между типом и значением вставляйте только один пробел или отступ(tab): любой "
-"дополнительный пробельный символ будет включён в значение."
+"дополнительный пробельный символ будет включён в значение. Если вы "
+"указываете пустое значение, то всё равно введите один пробел или отступ "
+"после типа."
 
 #. Tag: para
 #: preseed.xml:578
-#, no-c-format
+#, fuzzy, no-c-format
+#| msgid ""
+#| "A line can be split into multiple lines by appending a backslash "
+#| "(<quote><literal>\\</literal></quote>) as the line continuation "
+#| "character. A good place to split a line is after the question name; a bad "
+#| "place is between type and value. Splitting a line inside the value is "
+#| "normally not supported, with the exception of partitioning recipes."
 msgid ""
 "A line can be split into multiple lines by appending a backslash "
 "(<quote><literal>\\</literal></quote>) as the line continuation character. A "
 "good place to split a line is after the question name; a bad place is "
-"between type and value."
+"between type and value. Split lines will be joined into a single line with "
+"all leading/trailing whitespace condensed to a single space."
 msgstr ""
 "Строка может быть разбита на несколько, если добавить обратный слеш "
 "(<quote><literal>\\</literal></quote>) как символ продолжения строки. Хорошо "
-"разделять строку после имени вопроса; плохо &mdash; между типом и значением."
+"разделять строку после имени вопроса; плохо &mdash; между типом и значением. "
+"Разделение строки посередине значения обычно не поддерживается, за "
+"исключением наборов разметки."
 
 #. Tag: para
-#: preseed.xml:584
+#: preseed.xml:585
 #, no-c-format
 msgid ""
 "For debconf variables (templates) used in the installer itself, the owner "
@@ -1094,7 +1109,7 @@ msgstr ""
 "установлено нечто, отличное от <quote>d-i</quote>."
 
 #. Tag: para
-#: preseed.xml:592
+#: preseed.xml:593
 #, no-c-format
 msgid ""
 "Most questions need to be preseeded using the values valid in English and "
@@ -1106,7 +1121,7 @@ msgstr ""
 "classname>), где нужно использовать ответы на родном языке."
 
 #. Tag: para
-#: preseed.xml:598
+#: preseed.xml:599
 #, no-c-format
 msgid ""
 "Some questions take a code as value instead of the English text that is "
@@ -1116,7 +1131,7 @@ msgstr ""
 "который показывается во время установки."
 
 #. Tag: para
-#: preseed.xml:604
+#: preseed.xml:605
 #, no-c-format
 msgid ""
 "The easiest way to create a preconfiguration file is to use the example file "
@@ -1126,7 +1141,7 @@ msgstr ""
 "<xref linkend=\"preseed-contents\"/> в качестве основы и изменить его."
 
 #. Tag: para
-#: preseed.xml:609
+#: preseed.xml:610
 #, no-c-format
 msgid ""
 "An alternative method is to do a manual installation and then, after "
@@ -1140,7 +1155,7 @@ msgstr ""
 "debconf и базу данных программы установки cdebconf в один файл:"
 
 #. Tag: screen
-#: preseed.xml:616
+#: preseed.xml:617
 #, no-c-format
 msgid ""
 "$ debconf-get-selections --installer &gt; <replaceable>file</replaceable>\n"
@@ -1150,7 +1165,7 @@ msgstr ""
 "$ debconf-get-selections &gt;&gt; <replaceable>файл</replaceable>"
 
 #. Tag: para
-#: preseed.xml:618
+#: preseed.xml:619
 #, no-c-format
 msgid ""
 "However, a file generated in this manner will have some items that should "
@@ -1162,7 +1177,7 @@ msgstr ""
 "пользователей лучше использовать файл примера."
 
 #. Tag: para
-#: preseed.xml:626
+#: preseed.xml:627
 #, no-c-format
 msgid ""
 "This method relies on the fact that, at the end of the installation, the "
@@ -1178,7 +1193,7 @@ msgstr ""
 "суперпользователю."
 
 #. Tag: para
-#: preseed.xml:634
+#: preseed.xml:635
 #, no-c-format
 msgid ""
 "The directory <filename>/var/log/installer</filename> and all files in it "
@@ -1190,7 +1205,7 @@ msgstr ""
 "classname>."
 
 #. Tag: para
-#: preseed.xml:642
+#: preseed.xml:643
 #, no-c-format
 msgid ""
 "To check possible values for questions, you can use <command>nano</command> "
@@ -1206,7 +1221,7 @@ msgstr ""
 "filename> &mdash; текущие значения и значения, назначенные переменным."
 
 #. Tag: para
-#: preseed.xml:650
+#: preseed.xml:651
 #, no-c-format
 msgid ""
 "To check if the format of your preconfiguration file is valid before "
@@ -1218,13 +1233,13 @@ msgstr ""
 "cfg</replaceable></command>."
 
 #. Tag: title
-#: preseed.xml:661
+#: preseed.xml:662
 #, no-c-format
 msgid "Contents of the preconfiguration file (for &releasename;)"
 msgstr "Содержимое файла ответов (для &releasename;)"
 
 #. Tag: para
-#: preseed.xml:667
+#: preseed.xml:668
 #, no-c-format
 msgid ""
 "Note that this example is based on an installation for the Intel x86 "
@@ -1240,13 +1255,13 @@ msgstr ""
 "этой архитектуры."
 
 #. Tag: title
-#: preseed.xml:678
+#: preseed.xml:679
 #, no-c-format
 msgid "Localization"
 msgstr "Локализация"
 
 #. Tag: para
-#: preseed.xml:679
+#: preseed.xml:680
 #, no-c-format
 msgid ""
 "Setting localization values will only work if you are using initrd "
@@ -1258,19 +1273,26 @@ msgstr ""
 "заданы."
 
 #. Tag: para
-#: preseed.xml:685
-#, no-c-format
+#: preseed.xml:686
+#, fuzzy, no-c-format
+#| msgid ""
+#| "The locale can be used to specify both language and country. To specify "
+#| "the locale as a boot parameter, use <userinput>locale=<replaceable>en_US</"
+#| "replaceable></userinput>."
 msgid ""
-"The locale can be used to specify both language and country. To specify the "
-"locale as a boot parameter, use <userinput>locale=<replaceable>en_US</"
-"replaceable></userinput>."
+"The locale can be used to specify both language and country and can be any "
+"combination of a language supported by &d-i; and a recognized country. If "
+"the combination does not form a valid locale, the installer will "
+"automatically select a locale that is valid for the selected language. To "
+"specify the locale as a boot parameter, use "
+"<userinput>locale=<replaceable>en_US</replaceable></userinput>."
 msgstr ""
 "Для указания языка и страны можно использовать локаль. Для назначения локали "
 "в параметре загрузки, используйте <userinput>locale=<replaceable>ru_RU</"
 "replaceable></userinput>."
 
 #. Tag: screen
-#: preseed.xml:691
+#: preseed.xml:695
 #, no-c-format
 msgid ""
 "# Locale sets language and country.\n"
@@ -1280,21 +1302,21 @@ msgstr ""
 "d-i debian-installer/locale string ru_RU"
 
 #. Tag: para
-#: preseed.xml:693
+#: preseed.xml:697
 #, no-c-format
 msgid ""
 "Keyboard configuration consists of selecting a keyboard architecture and a "
 "keymap. In most cases the correct keyboard architecture is selected by "
-"default, so there's normally no need to preseed it. The keymap must be valid "
-"for the selected keyboard architecture."
+"default, so there's normally no need to preseed it. The keymap must be known "
+"to the &d-i; for the selected keyboard architecture."
 msgstr ""
-"Настройка клавиатуры состоит из указания архитектуры клавиатуры и раскладки. "
-"В большинстве случаев правильная архитектура клавиатуры уже выбрана по "
+"При настройке клавиатуры выбирается архитектура клавиатуры и раскладка. В "
+"большинстве случаев правильная архитектура клавиатуры уже выбрана по "
 "умолчанию, поэтому обычно не нужно задавать автоматический ответ. Раскладка "
-"клавиатуры должна быть допустимой для выбранной архитектуры клавиатуры."
+"клавиатуры должна быть известна &d-i; для выбранной архитектуры клавиатуры."
 
 #. Tag: screen
-#: preseed.xml:700
+#: preseed.xml:704
 #, no-c-format
 msgid ""
 "# Keyboard selection.\n"
@@ -1310,7 +1332,7 @@ msgstr ""
 "#d-i console-keymaps-usb/keymap select mac-usb-us"
 
 #. Tag: para
-#: preseed.xml:702
+#: preseed.xml:706
 #, no-c-format
 msgid ""
 "To skip keyboard configuration, preseed <classname>console-tools/archs</"
@@ -1322,7 +1344,7 @@ msgstr ""
 "останется активной клавиатурная раскладка ядра."
 
 #. Tag: para
-#: preseed.xml:711
+#: preseed.xml:715
 #, no-c-format
 msgid ""
 "The changes in the input layer for 2.6 kernels have made the keyboard "
@@ -1334,13 +1356,13 @@ msgstr ""
 "раскладку <quote>PC</quote> (<userinput>at</userinput>)."
 
 #. Tag: title
-#: preseed.xml:721
+#: preseed.xml:725
 #, no-c-format
 msgid "Network configuration"
 msgstr "Настройка сети"
 
 #. Tag: para
-#: preseed.xml:722
+#: preseed.xml:726
 #, no-c-format
 msgid ""
 "Of course, preseeding the network configuration won't work if you're loading "
@@ -1355,7 +1377,7 @@ msgstr ""
 "указать конфигурацию сети через загрузочные параметры ядра."
 
 #. Tag: para
-#: preseed.xml:730
+#: preseed.xml:734
 #, no-c-format
 msgid ""
 "If you need to pick a particular interface when netbooting before loading a "
@@ -1367,7 +1389,7 @@ msgstr ""
 "<userinput>interface=<replaceable>eth1</replaceable></userinput>."
 
 #. Tag: para
-#: preseed.xml:736
+#: preseed.xml:740
 #, no-c-format
 msgid ""
 "Although preseeding the network configuration is normally not possible when "
@@ -1386,19 +1408,19 @@ msgstr ""
 "quote> со следующими строчками:"
 
 #. Tag: screen
-#: preseed.xml:746
+#: preseed.xml:750
 #, no-c-format
 msgid "killall.sh; netcfg"
 msgstr "killall.sh; netcfg"
 
 #. Tag: para
-#: preseed.xml:748
+#: preseed.xml:752
 #, no-c-format
 msgid "The following debconf variables are relevant for network configuration."
 msgstr "Следующие переменные debconf относятся к настройке сети."
 
 #. Tag: screen
-#: preseed.xml:754
+#: preseed.xml:758
 #, no-c-format
 msgid ""
 "# netcfg will choose an interface that has link if possible. This makes it\n"
@@ -1492,7 +1514,7 @@ msgstr ""
 "#d-i hw-detect/load_firmware boolean true"
 
 #. Tag: para
-#: preseed.xml:756
+#: preseed.xml:760
 #, no-c-format
 msgid ""
 "Please note that <command>netcfg</command> will automatically determine the "
@@ -1503,15 +1525,23 @@ msgid ""
 "As a special case, you can set <classname>netcfg/get_gateway</classname> to "
 "<quote>none</quote> to specify that no gateway should be used."
 msgstr ""
+"Заметим, что <command>netcfg</command> автоматически выберет маску сети,если "
+"она не указана в <classname>netcfg/get_netmask</classname>. В этом случае, "
+"переменная будет помечена как <literal>seen</literal> при автоматической "
+"установке. Аналогично <command>netcfg</command> выберет подходящий адрес "
+"шлюза, если не указано значение в <classname>netcfg/get_gateway</classname>. "
+"Но есть специальная настройка: <classname>netcfg/get_gateway</classname> "
+"можно установить в <quote>none</quote>, чтобы указать, что шлюз вообще не "
+"должен использоваться."
 
 #. Tag: title
-#: preseed.xml:772
+#: preseed.xml:776
 #, no-c-format
 msgid "Mirror settings"
 msgstr "Настройка сервера-зеркала"
 
 #. Tag: para
-#: preseed.xml:773
+#: preseed.xml:777
 #, no-c-format
 msgid ""
 "Depending on the installation method you use, a mirror may be used to "
@@ -1525,7 +1555,7 @@ msgstr ""
 "использовать сервер-зеркало."
 
 #. Tag: para
-#: preseed.xml:780
+#: preseed.xml:784
 #, no-c-format
 msgid ""
 "The parameter <classname>mirror/suite</classname> determines the suite for "
@@ -1535,7 +1565,7 @@ msgstr ""
 "для устанавливаемой системы."
 
 #. Tag: para
-#: preseed.xml:785
+#: preseed.xml:789
 #, no-c-format
 msgid ""
 "The parameter <classname>mirror/udeb/suite</classname> determines the suite "
@@ -1554,7 +1584,7 @@ msgstr ""
 "<classname>mirror/suite</classname>."
 
 #. Tag: screen
-#: preseed.xml:797
+#: preseed.xml:801
 #, no-c-format
 msgid ""
 "# If you select ftp, the mirror/country string does not need to be set.\n"
@@ -1582,13 +1612,13 @@ msgstr ""
 "#d-i mirror/udeb/suite string testing"
 
 #. Tag: title
-#: preseed.xml:802
+#: preseed.xml:806
 #, no-c-format
 msgid "Clock and time zone setup"
 msgstr "Настройка времени и часового пояса"
 
 #. Tag: screen
-#: preseed.xml:804
+#: preseed.xml:808
 #, no-c-format
 msgid ""
 "# Controls whether or not the hardware clock is set to UTC.\n"
@@ -1617,13 +1647,13 @@ msgstr ""
 "#d-i clock-setup/ntp-server ntp.example.com"
 
 #. Tag: title
-#: preseed.xml:809
+#: preseed.xml:813
 #, no-c-format
 msgid "Partitioning"
 msgstr "Разметка дисков"
 
 #. Tag: para
-#: preseed.xml:810
+#: preseed.xml:814
 #, no-c-format
 msgid ""
 "Using preseeding to partition the harddisk is very much limited to what is "
@@ -1642,7 +1672,7 @@ msgstr ""
 "разметка нескольких дисков."
 
 #. Tag: para
-#: preseed.xml:821
+#: preseed.xml:825
 #, no-c-format
 msgid ""
 "The identification of disks is dependent on the order in which their drivers "
@@ -1654,18 +1684,16 @@ msgstr ""
 "как использовать автоматическую установку."
 
 #. Tag: screen
-#: preseed.xml:829
+#: preseed.xml:833
 #, no-c-format
 msgid ""
 "# If the system has free space you can choose to only partition that space.\n"
-"# Note: this must be preseeded with a localized (translated) value.\n"
-"#d-i partman-auto/init_automatically_partition \\\n"
-"#      select Guided - use the largest continuous free space\n"
+"#d-i partman-auto/init_automatically_partition select biggest_free\n"
 "\n"
 "# Alternatively, you can specify a disk to partition. The device name must\n"
 "# be given in traditional non-devfs format.\n"
-"# For example, to use the first SCSI/SATA hard disk:\n"
 "# Note: A disk must be specified, unless the system has only one disk.\n"
+"# For example, to use the first SCSI/SATA hard disk:\n"
 "#d-i partman-auto/disk string /dev/sda\n"
 "# In addition, you'll need to specify the method to use.\n"
 "# The presently available methods are: \"regular\", \"lvm\" and \"crypto\"\n"
@@ -1675,17 +1703,16 @@ msgid ""
 "# contains an old LVM configuration, the user will normally receive a\n"
 "# warning. This can be preseeded away...\n"
 "d-i partman-lvm/device_remove_lvm boolean true\n"
+"# The same applies to pre-existing software RAID array:\n"
+"d-i parman-md/device_remove_md boolean true\n"
 "# And the same goes for the confirmation to write the lvm partitions.\n"
 "d-i partman-lvm/confirm boolean true\n"
 "\n"
-"# You can choose from any of the predefined partitioning recipes.\n"
-"# Note: this must be preseeded with a localized (translated) value.\n"
-"d-i partman-auto/choose_recipe \\\n"
-"       select All files in one partition (recommended for new users)\n"
-"#d-i partman-auto/choose_recipe \\\n"
-"#       select Separate /home partition\n"
-"#d-i partman-auto/choose_recipe \\\n"
-"#       select Separate /home, /usr, /var, and /tmp partitions\n"
+"# You can choose one of the three predefined partitioning recipes:\n"
+"# - atomic: all files in one partition\n"
+"# - home:   separate /home partition\n"
+"# - multi:  separate /home, /usr, /var, and /tmp partitions\n"
+"d-i partman-auto/choose_recipe select atomic\n"
 "\n"
 "# Or provide a recipe of your own...\n"
 "# The recipe format is documented in the file devel/partman-auto-recipe."
@@ -1718,21 +1745,18 @@ msgid ""
 "# This makes partman automatically partition without confirmation, provided\n"
 "# that you told it what to do using one of the methods above.\n"
 "d-i partman/confirm_write_new_label boolean true\n"
-"d-i partman/choose_partition \\\n"
-"       select Finish partitioning and write changes to disk\n"
+"d-i partman/choose_partition select finish\n"
 "d-i partman/confirm boolean true"
 msgstr ""
 "# Если система имеет свободное место, вы можете выбрать для разметки\n"
 "# только его.\n"
-"# Замечание: нужно указывать локализованные (переведённые) значения.\n"
-"#d-i partman-auto/init_automatically_partition \\\n"
-"#      select Авто - использовать наибольшее свободное место\n"
+"#d-i partman-auto/init_automatically_partition select biggest_free\n"
 "\n"
 "#Или же, вы можете задать размечаемый диск. Имя устройства\n"
 "# должно задаваться в обычном не-devfs формате.\n"
+"# Замечание: диск нужно указывать, если в системе более одного\n"
+"# жёсткого диска.\n"
 "# Например, для использования первого жёсткого диска SCSI/SATA:\n"
-"# Замечание: если в системе более одного жёсткого диска, то # диск нужно "
-"указывать.\n"
 "#d-i partman-auto/disk string /dev/sda\n"
 "# Также, вы можете указать какой метод использовать.\n"
 "# Доступные методы: \"regular\", \"lvm\" и \"crypto\"\n"
@@ -1742,22 +1766,21 @@ msgstr ""
 "# разметки, содержит старую конфигурацию LVM, то пользователю выдаётся\n"
 "# предупреждение. Ответ можно автоматизировать...\n"
 "d-i partman-lvm/device_remove_lvm boolean true\n"
+"# То же самое для существующих программных RAID массивов:\n"
+"d-i parman-md/device_remove_md boolean true\n"
 "# И подтвердить запись lvm разделов.\n"
 "d-i partman-lvm/confirm boolean true\n"
 "\n"
-"# Вы можете выбрать любой из имеющихся наборов разметки.\n"
-"# Замечание: он должен содержать локализованные (переведённые) значения.\n"
-"d-i partman-auto/choose_recipe \\\n"
-"       select Все файлы в одном разделе (рекомендуется новичкам)\n"
-"#d-i partman-auto/choose_recipe \\\n"
-"#       select Отдельный раздел для /home\n"
-"#d-i partman-auto/choose_recipe \\\n"
-"#       select Отдельные разделы для /home, /usr, /var и /tmp\n"
+"# Вы можете выбрать один из трёх имеющихся наборов разметки:\n"
+"# - atomic: все файлы в одном разделе\n"
+"# - home:   отдельный раздел для /home\n"
+"# - multi:  отдельные разделы для /home, /usr, /var и /tmp\n"
+"d-i partman-auto/choose_recipe select atomic\n"
 "\n"
 "# Или создать набор вручную...\n"
 "# Формат файла набора описан в файле devel/partman-auto-recipe.txt.\n"
 "# Если вы каким-то образом поместили файл набора в окружение d-i, то можно\n"
-"# просто указать путь.\n"
+"# просто указать его.\n"
 "#d-i partman-auto/expert_recipe_file string /hd-media/recipe\n"
 "\n"
 "# Если нет, то можно записать набор полностью в файле ответов в одну\n"
@@ -1781,28 +1804,21 @@ msgstr ""
 "#                      method{ swap } format{ }                \\\n"
 "#              .\n"
 "\n"
-"# Этот параметр заставляет partman автоматически выполнить разметку,\n"
+"# Это заставляет partman автоматически выполнить разметку\n"
 "# без подтверждения, ровно такую, которую вы указали в методах выше.\n"
 "d-i partman/confirm_write_new_label boolean true\n"
-"d-i partman/choose_partition \\\n"
-"       select Закончить разметку и записать изменения на диск\n"
+"d-i partman/choose_partition select finish\n"
 "d-i partman/confirm boolean true"
 
 #. Tag: title
-#: preseed.xml:834
+#: preseed.xml:838
 #, no-c-format
 msgid "Partitioning using RAID"
 msgstr "Разметка с использованием RAID"
 
 #. Tag: para
-#: preseed.xml:835
-#, fuzzy, no-c-format
-#| msgid ""
-#| "You can also use preseeding to set up partitions on software RAID arrays. "
-#| "Supported are RAID levels 0, 1 and 5, creating degraded arrays and "
-#| "specifying spare devices. If you are using RAID 1, you can preseed grub "
-#| "to install to all devices used in the array; see <xref linkend=\"preseed-"
-#| "bootloader\"/>."
+#: preseed.xml:839
+#, no-c-format
 msgid ""
 "You can also use preseeding to set up partitions on software RAID arrays. "
 "Supported are RAID levels 0, 1, 5, 6 and 10, creating degraded arrays and "
@@ -1810,94 +1826,31 @@ msgid ""
 "install to all devices used in the array; see <xref linkend=\"preseed-"
 "bootloader\"/>."
 msgstr ""
-"Также вы можете автоматизировать настройку массивов RAID. Поддерживаются "
-"RAID уровни 0, 1 и 5, создание неполных массивов (degraded arrays) и "
-"указание запасных устройств. Если вы используете RAID 1, то можете "
-"автоматизировать установку grub на все устройства массива; смотрите <xref "
-"linkend=\"preseed-bootloader\"/>."
+"Также вы можете автоматизировать настройку массивов программного RAID. "
+"Поддерживаются RAID уровни 0, 1, 5, 6 и 10, создание неполных массивов "
+"(degraded arrays) и можно указать запасные устройства. Если вы используете "
+"RAID 1, то можете автоматизировать установку grub на все устройства массива, "
+"см. <xref linkend=\"preseed-bootloader\"/>."
 
 #. Tag: para
-#: preseed.xml:845
+#: preseed.xml:849
 #, no-c-format
 msgid ""
-"This type of automated partitioning is easy to get wrong. It is also a very "
-"new component that may still have some bugs or missing error handling. The "
-"responsibility to get the various recipes right (so they make sense and "
-"don't conflict) lies with the user. Check <filename>/var/log/syslog</"
-"filename> if you run into problems."
+"This type of automated partitioning is easy to get wrong. It is also "
+"functionality that receives relatively little testing from the developers of "
+"&d-i;. The responsibility to get the various recipes right (so they make "
+"sense and don't conflict) lies with the user. Check <filename>/var/log/"
+"syslog</filename> if you run into problems."
 msgstr ""
-"В данном типе автоматизации разделов легко ошибиться. Также это очень новый "
-"компонент и может содержать ошибки или не обрабатывать какие-то ошибочные "
-"ситуации. Ответственность при создании правильного набора (то есть, чтобы он "
-"был логически верным и не имел конфликтов) лежит на пользователе. Если "
-"возникают проблемы -- смотрите <filename>/var/log/syslog</filename>."
-
-#. Tag: para
-#: preseed.xml:853
-#, no-c-format
-msgid ""
-"Note that only RAID 0 and RAID 1 have been tested by the developers of the "
-"component. RAID 5 is untested. Advanced RAID setup with degraded arrays or "
-"spare devices has only been tested lightly."
-msgstr ""
-"Заметим, что разработчики компонента тестировали только RAID 0 и RAID 1. "
-"RAID 5 не тестировался. Более сложная настройка RAID с неполными массивами "
-"(degraded arrays) или запасными устройствами тестировалась поверхностно."
+"В данном типе автоматизации разметки легко ошибиться. Также эта возможность "
+"тестировалась относительно мало разработчиками &d-i;. Ответственность при "
+"создании правильного набора (то есть, чтобы он был логически верным и не "
+"имел конфликтов) лежит на пользователе. Если возникают проблемы -- см. "
+"<filename>/var/log/syslog</filename>."
 
 #. Tag: screen
-#: preseed.xml:861
-#, fuzzy, no-c-format
-#| msgid ""
-#| "# NOTE: this option is of beta release quality and should be used "
-#| "carefully\n"
-#| "\n"
-#| "# The method should be set to \"raid\".\n"
-#| "#d-i partman-auto/method string raid\n"
-#| "# Specify the disks to be partitioned. They will all get the same "
-#| "layout,\n"
-#| "# so this will only work if the disks are the same size.\n"
-#| "#d-i partman-auto/disk string /dev/discs/disc0/disc /dev/discs/disc1/"
-#| "disc\n"
-#| "\n"
-#| "# Next you need to specify the physical partitions that will be used. \n"
-#| "#d-i partman-auto/expert_recipe string \\\n"
-#| "#      multiraid ::                                         \\\n"
-#| "#              1000 5000 4000 raid                          \\\n"
-#| "#                      $primary{ } method{ raid }           \\\n"
-#| "#              .                                            \\\n"
-#| "#              64 512 300% raid                             \\\n"
-#| "#                      method{ raid }                       \\\n"
-#| "#              .                                            \\\n"
-#| "#              500 10000 1000000000 raid                    \\\n"
-#| "#                      method{ raid }                       \\\n"
-#| "#              .\n"
-#| "\n"
-#| "# Last you need to specify how the previously defined partitions will be\n"
-#| "# used in the RAID setup. Remember to use the correct partition numbers\n"
-#| "# for logical partitions.\n"
-#| "# Parameters are:\n"
-#| "# &lt;raidtype&gt; &lt;devcount&gt; &lt;sparecount&gt; &lt;fstype&gt; &lt;"
-#| "mountpoint&gt; \\\n"
-#| "#          &lt;devices&gt; &lt;sparedevices&gt;\n"
-#| "# RAID levels 0, 1 and 5 are supported; devices are separated using \"#"
-#| "\"\n"
-#| "#d-i partman-auto-raid/recipe string \\\n"
-#| "#    1 2 0 ext3 /                                           \\\n"
-#| "#          /dev/discs/disc0/part1#/dev/discs/disc1/part1    \\\n"
-#| "#    .                                                      \\\n"
-#| "#    1 2 0 swap -                                           \\\n"
-#| "#          /dev/discs/disc0/part5#/dev/discs/disc1/part5    \\\n"
-#| "#    .                                                      \\\n"
-#| "#    0 2 0 ext3 /home                                       \\\n"
-#| "#          /dev/discs/disc0/part6#/dev/discs/disc1/part6    \\\n"
-#| "#    .\n"
-#| "\n"
-#| "# This makes partman automatically partition without confirmation.\n"
-#| "d-i partman-md/confirm boolean true\n"
-#| "d-i partman/confirm_write_new_label boolean true\n"
-#| "d-i partman/choose_partition \\\n"
-#| "       select Finish partitioning and write changes to disk\n"
-#| "d-i partman/confirm boolean true"
+#: preseed.xml:859
+#, no-c-format
 msgid ""
 "# NOTE: this option is of beta release quality and should be used carefully\n"
 "\n"
@@ -1943,16 +1896,15 @@ msgid ""
 "# This makes partman automatically partition without confirmation.\n"
 "d-i partman-md/confirm boolean true\n"
 "d-i partman/confirm_write_new_label boolean true\n"
-"d-i partman/choose_partition \\\n"
-"       select Finish partitioning and write changes to disk\n"
+"d-i partman/choose_partition select finish\n"
 "d-i partman/confirm boolean true"
 msgstr ""
 "# ЗАМЕЧАНИЕ: это бета-версия, используйте осторожно\n"
 "\n"
 "# Метод должен быть установлен в значение \"raid\".\n"
 "#d-i partman-auto/method string raid\n"
-"# Задать размечаемые диски. Они будут иметь одинаковую раскладку,\n"
-"# поэтому это работает только если все диски одинакового размера.\n"
+"# Задать размечаемые диски. Они будут иметь одинаковую разметку,\n"
+"# поэтому это работает только, если диски одинакового размера.\n"
 "#d-i partman-auto/disk string /dev/discs/disc0/disc /dev/discs/disc1/disc\n"
 "\n"
 "# Далее нужно указать какие физические разделы будут использоваться.\n"
@@ -1975,8 +1927,8 @@ msgstr ""
 "# &lt;raidtype&gt; &lt;devcount&gt; &lt;sparecount&gt; &lt;fstype&gt; &lt;"
 "mountpoint&gt; \\\n"
 "#          &lt;devices&gt; &lt;sparedevices&gt;\n"
-"# Поддерживаются RAID уровни 0, 1 и 5; устройства разделяются с помощью \"#"
-"\"\n"
+"# Поддерживаются RAID уровни 0, 1, 5, 6 и 10; устройства разделяются\n"
+"# с помощью \"#\"\n"
 "#d-i partman-auto-raid/recipe string \\\n"
 "#    1 2 0 ext3 /                                           \\\n"
 "#          /dev/discs/disc0/part1#/dev/discs/disc1/part1    \\\n"
@@ -1991,18 +1943,17 @@ msgstr ""
 "# Это заставит partman сделать разметку автоматически, без подтверждения.\n"
 "d-i partman-md/confirm boolean true\n"
 "d-i partman/confirm_write_new_label boolean true\n"
-"d-i partman/choose_partition \\\n"
-"       select Закончить разметку и записать изменения на диск\n"
+"d-i partman/choose_partition select finish\n"
 "d-i partman/confirm boolean true"
 
 #. Tag: title
-#: preseed.xml:866
+#: preseed.xml:864
 #, no-c-format
 msgid "Base system installation"
 msgstr "Установка базовой системы"
 
 #. Tag: para
-#: preseed.xml:867
+#: preseed.xml:865
 #, no-c-format
 msgid ""
 "There is actually not very much that can be preseeded for this stage of the "
@@ -2013,7 +1964,7 @@ msgstr ""
 "основном они касаются установки ядра."
 
 #. Tag: screen
-#: preseed.xml:874
+#: preseed.xml:872
 #, no-c-format
 msgid ""
 "# Select the initramfs generator used to generate the initrd for 2.6 "
@@ -2034,13 +1985,13 @@ msgstr ""
 "#d-i base-installer/kernel/image string linux-image-2.6-486"
 
 #. Tag: title
-#: preseed.xml:879
+#: preseed.xml:877
 #, no-c-format
 msgid "Account setup"
 msgstr "Настройка учётной записи"
 
 #. Tag: para
-#: preseed.xml:880
+#: preseed.xml:878
 #, no-c-format
 msgid ""
 "The password for the root account and name and password for a first regular "
@@ -2052,7 +2003,7 @@ msgstr ""
 "виде или в виде <emphasis>хешей</emphasis> MD5."
 
 #. Tag: para
-#: preseed.xml:887
+#: preseed.xml:885
 #, no-c-format
 msgid ""
 "Be aware that preseeding passwords is not completely secure as everyone with "
@@ -2068,7 +2019,7 @@ msgstr ""
 "пароль прямым перебором."
 
 #. Tag: screen
-#: preseed.xml:897
+#: preseed.xml:895
 #, no-c-format
 msgid ""
 "# Skip creation of a root account (normal user account will be able to\n"
@@ -2127,14 +2078,14 @@ msgstr ""
 "#d-i passwd/user-default-groups string audio cdrom video"
 
 #. Tag: para
-#: preseed.xml:899
+#: preseed.xml:897
 #, no-c-format
 msgid ""
 "The <classname>passwd/root-password-crypted</classname> and "
 "<classname>passwd/user-password-crypted</classname> variables can also be "
 "preseeded with <quote>!</quote> as their value. In that case, the "
 "corresponding account is disabled. This may be convenient for the root "
-"account, provided of course that an alternative method is setup to allow "
+"account, provided of course that an alternative method is set up to allow "
 "administrative activities or root login (for instance by using SSH key "
 "authentication or <command>sudo</command>)."
 msgstr ""
@@ -2148,26 +2099,26 @@ msgstr ""
 "<command>sudo</command>)."
 
 #. Tag: para
-#: preseed.xml:909
+#: preseed.xml:907
 #, no-c-format
 msgid ""
 "The following command can be used to generate an MD5 hash for a password:"
 msgstr "С помощью следующей команды можно сгенерировать MD5 хеш для пароля:"
 
 #. Tag: screen
-#: preseed.xml:913
+#: preseed.xml:911
 #, no-c-format
 msgid "$ echo \"r00tme\" | mkpasswd -s -m md5"
 msgstr "$ echo \"r00tme\" | mkpasswd -s -m md5"
 
 #. Tag: title
-#: preseed.xml:919
+#: preseed.xml:917
 #, no-c-format
 msgid "Apt setup"
 msgstr "Настройка Apt"
 
 #. Tag: para
-#: preseed.xml:920
+#: preseed.xml:918
 #, no-c-format
 msgid ""
 "Setup of the <filename>/etc/apt/sources.list</filename> and basic "
@@ -2181,7 +2132,7 @@ msgstr ""
 "добавить другие (локальные) репозитории."
 
 #. Tag: screen
-#: preseed.xml:928
+#: preseed.xml:926
 #, no-c-format
 msgid ""
 "# You can choose to install non-free and contrib software.\n"
@@ -2241,13 +2192,13 @@ msgstr ""
 "#d-i debian-installer/allow_unauthenticated string true"
 
 #. Tag: title
-#: preseed.xml:933
+#: preseed.xml:931
 #, no-c-format
 msgid "Package selection"
 msgstr "Выбор пакетов"
 
 #. Tag: para
-#: preseed.xml:934
+#: preseed.xml:932
 #, no-c-format
 msgid ""
 "You can choose to install any combination of tasks that are available. "
@@ -2257,73 +2208,73 @@ msgstr ""
 "Доступные задачи:"
 
 #. Tag: userinput
-#: preseed.xml:943
+#: preseed.xml:941
 #, no-c-format
 msgid "standard"
 msgstr "standard (стандартная система)"
 
 #. Tag: userinput
-#: preseed.xml:946
+#: preseed.xml:944
 #, no-c-format
 msgid "desktop"
 msgstr "desktop (рабочий стол)"
 
 #. Tag: userinput
-#: preseed.xml:949
+#: preseed.xml:947
 #, no-c-format
 msgid "gnome-desktop"
 msgstr "gnome-desktop (рабочий стол gnome)"
 
 #. Tag: userinput
-#: preseed.xml:952
+#: preseed.xml:950
 #, no-c-format
 msgid "kde-desktop"
 msgstr "kde-desktop (рабочий стол kde)"
 
 #. Tag: userinput
-#: preseed.xml:955
+#: preseed.xml:953
 #, no-c-format
 msgid "web-server"
 msgstr "web-server (веб сервер)"
 
 #. Tag: userinput
-#: preseed.xml:958
+#: preseed.xml:956
 #, no-c-format
 msgid "print-server"
 msgstr "print-server (сервер печати)"
 
 #. Tag: userinput
-#: preseed.xml:961
+#: preseed.xml:959
 #, no-c-format
 msgid "dns-server"
 msgstr "dns-server (DNS-сервер)"
 
 #. Tag: userinput
-#: preseed.xml:964
+#: preseed.xml:962
 #, no-c-format
 msgid "file-server"
 msgstr "file-server (файловый сервер)"
 
 #. Tag: userinput
-#: preseed.xml:967
+#: preseed.xml:965
 #, no-c-format
 msgid "mail-server"
 msgstr "mail-server (почтовый сервер)"
 
 #. Tag: userinput
-#: preseed.xml:970
+#: preseed.xml:968
 #, no-c-format
 msgid "sql-database"
 msgstr "sql-database (база данных SQL)"
 
 #. Tag: userinput
-#: preseed.xml:973
+#: preseed.xml:971
 #, no-c-format
 msgid "laptop"
 msgstr "laptop (для ноутбука)"
 
 #. Tag: para
-#: preseed.xml:977
+#: preseed.xml:975
 #, no-c-format
 msgid ""
 "You can also choose to install no tasks, and force the installation of a set "
@@ -2335,7 +2286,7 @@ msgstr ""
 "<userinput>standard</userinput>."
 
 #. Tag: para
-#: preseed.xml:983
+#: preseed.xml:981
 #, no-c-format
 msgid ""
 "If you want to install some individual packages in addition to packages "
@@ -2351,7 +2302,7 @@ msgstr ""
 "указать в командной строке ядра."
 
 #. Tag: screen
-#: preseed.xml:993
+#: preseed.xml:991
 #, no-c-format
 msgid ""
 "#tasksel tasksel/first multiselect standard, web-server\n"
@@ -2389,13 +2340,13 @@ msgstr ""
 "#popularity-contest popularity-contest/participate boolean false"
 
 #. Tag: title
-#: preseed.xml:998
+#: preseed.xml:996
 #, no-c-format
 msgid "Boot loader installation"
 msgstr "Установка загрузчика"
 
 #. Tag: screen
-#: preseed.xml:1000
+#: preseed.xml:998
 #, no-c-format
 msgid ""
 "# Grub is the default boot loader (for x86). If you want lilo installed\n"
@@ -2460,7 +2411,7 @@ msgstr ""
 "#d-i grub-installer/password-crypted password [MD5 хеш]"
 
 #. Tag: para
-#: preseed.xml:1002
+#: preseed.xml:1000
 #, no-c-format
 msgid ""
 "An MD5 hash for a password for <classname>grub</classname> can be generated "
@@ -2472,13 +2423,13 @@ msgstr ""
 "linkend=\"preseed-account\"/>."
 
 #. Tag: title
-#: preseed.xml:1012
+#: preseed.xml:1010
 #, no-c-format
 msgid "Finishing up the installation"
 msgstr "Завершение установки"
 
 #. Tag: screen
-#: preseed.xml:1014
+#: preseed.xml:1012
 #, no-c-format
 msgid ""
 "# During installations from serial console, the regular virtual consoles\n"
@@ -2518,82 +2469,13 @@ msgstr ""
 "#d-i debian-installer/exit/poweroff boolean true"
 
 #. Tag: title
-#: preseed.xml:1019
-#, no-c-format
-msgid "X configuration"
-msgstr "Настройка X системы"
-
-#. Tag: para
-#: preseed.xml:1020
-#, no-c-format
-msgid ""
-"Preseeding Debian's X config is possible, but you probably need to know some "
-"details about the video hardware of the machine, since Debian's X "
-"configurator does not do fully automatic configuration of everything."
-msgstr ""
-"Возможна автоматическая настройка X системы в Debian, но для этого, "
-"вероятно, нужно знать некоторые детали о видео аппаратуре машины, так как "
-"настройщик X в Debian не поддерживает полную автоматическую настройку любого "
-"оборудования."
-
-#. Tag: screen
-#: preseed.xml:1028
-#, no-c-format
-msgid ""
-"# X can detect the right driver for some cards, but if you're preseeding,\n"
-"# you override whatever it chooses. Still, vesa will work most places.\n"
-"#xserver-xorg xserver-xorg/config/device/driver select vesa\n"
-"\n"
-"# A caveat with mouse autodetection is that if it fails, X will retry it\n"
-"# over and over. So if it's preseeded to be done, there is a possibility of\n"
-"# an infinite loop if the mouse is not autodetected.\n"
-"#xserver-xorg xserver-xorg/autodetect_mouse boolean true\n"
-"\n"
-"# Monitor autodetection is recommended.\n"
-"xserver-xorg xserver-xorg/autodetect_monitor boolean true\n"
-"# Uncomment if you have an LCD display.\n"
-"#xserver-xorg xserver-xorg/config/monitor/lcd boolean true\n"
-"# X has three configuration paths for the monitor. Here's how to preseed\n"
-"# the \"medium\" path, which is always available. The \"simple\" path may "
-"not\n"
-"# be available, and the \"advanced\" path asks too many questions.\n"
-"xserver-xorg xserver-xorg/config/monitor/selection-method \\\n"
-"       select medium\n"
-"xserver-xorg xserver-xorg/config/monitor/mode-list \\\n"
-"       select 1024x768 @ 60 Hz"
-msgstr ""
-"# X может определить нужный драйвер для некоторых карт, но при\n"
-"# автоматизации,\n"
-"# можно задать нужный. Кроме того, драйвер vesa работает почти везде.\n"
-"#xserver-xorg xserver-xorg/config/device/driver select vesa\n"
-"\n"
-"# Предостережение при неудачном автообнаружении мыши, X будет\n"
-"# показывать снова и снова. Поэтому при выполнении автоустановки существует\n"
-"# вероятность возникновения бесконечного цикла, если мышь не будет\n"
-"# обнаружена.\n"
-"#xserver-xorg xserver-xorg/autodetect_mouse boolean true\n"
-"\n"
-"# Рекомендуется включать автоопределение монитора.\n"
-"xserver-xorg xserver-xorg/autodetect_monitor boolean true\n"
-"# Раскомментируйте, если у вас LCD монитор.\n"
-"#xserver-xorg xserver-xorg/config/monitor/lcd boolean true\n"
-"# X имеет три пути настройки монитора. Здесь показан\n"
-"# \"средний\" путь, который всегда работает. \"Простой\" путь\n"
-"# может быть не доступен, а в \"расширенном\" пути задаётся слишком\n"
-"# много вопросов.\n"
-"xserver-xorg xserver-xorg/config/monitor/selection-method \\\n"
-"       select medium\n"
-"xserver-xorg xserver-xorg/config/monitor/mode-list \\\n"
-"       select 1024x768 @ 60 Hz"
-
-#. Tag: title
-#: preseed.xml:1033
+#: preseed.xml:1017
 #, no-c-format
 msgid "Preseeding other packages"
 msgstr "Автоматизация других пакетов"
 
 #. Tag: screen
-#: preseed.xml:1035
+#: preseed.xml:1019
 #, no-c-format
 msgid ""
 "# Depending on what software you choose to install, or if things go wrong\n"
@@ -2616,19 +2498,19 @@ msgstr ""
 "#   debconf-get-selections >> файл"
 
 #. Tag: title
-#: preseed.xml:1042
+#: preseed.xml:1026
 #, no-c-format
 msgid "Advanced options"
 msgstr "Дополнительные параметры"
 
 #. Tag: title
-#: preseed.xml:1045
+#: preseed.xml:1029
 #, no-c-format
 msgid "Running custom commands during the installation"
 msgstr "Запуск пользовательских команд во время установки"
 
 #. Tag: para
-#: preseed.xml:1046
+#: preseed.xml:1030
 #, no-c-format
 msgid ""
 "A very powerful and flexible option offered by the preconfiguration tools is "
@@ -2639,7 +2521,7 @@ msgstr ""
 "моменты установки."
 
 #. Tag: screen
-#: preseed.xml:1054
+#: preseed.xml:1038
 #, no-c-format
 msgid ""
 "# d-i preseeding is inherently not secure. Nothing in the installer checks\n"
@@ -2679,14 +2561,14 @@ msgstr ""
 "zsh"
 
 #. Tag: title
-#: preseed.xml:1059
+#: preseed.xml:1043
 #, no-c-format
 msgid "Using preseeding to change default values"
 msgstr ""
 "Использование автоматической установки для изменения значений по умолчанию"
 
 #. Tag: para
-#: preseed.xml:1060
+#: preseed.xml:1044
 #, no-c-format
 msgid ""
 "It is possible to use preseeding to change the default answer for a "
@@ -2712,7 +2594,7 @@ msgstr ""
 "помочь при отладке или тестировании вашего файла ответов."
 
 #. Tag: para
-#: preseed.xml:1074
+#: preseed.xml:1058
 #, no-c-format
 msgid ""
 "If you are preseeding using boot parameters, you can make the installer ask "
@@ -2732,13 +2614,13 @@ msgstr ""
 "<quote>внутренние</quote> параметры."
 
 #. Tag: title
-#: preseed.xml:1089
+#: preseed.xml:1073
 #, no-c-format
 msgid "Chainloading preconfiguration files"
 msgstr "Последовательная загрузка нескольких файлов ответов"
 
 #. Tag: para
-#: preseed.xml:1090
+#: preseed.xml:1074
 #, no-c-format
 msgid ""
 "It is possible to include other preconfiguration files from a "
@@ -2754,7 +2636,7 @@ msgstr ""
 "конфигураций в другие файлы."
 
 #. Tag: screen
-#: preseed.xml:1100
+#: preseed.xml:1084
 #, no-c-format
 msgid ""
 "# More than one file can be listed, separated by spaces; all will be\n"
@@ -2807,7 +2689,7 @@ msgstr ""
 "d-i preseed/run string foo.sh"
 
 #. Tag: para
-#: preseed.xml:1102
+#: preseed.xml:1086
 #, no-c-format
 msgid ""
 "It is also possible to chainload from the initrd or file preseeding phase, "

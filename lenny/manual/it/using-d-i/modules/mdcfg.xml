@@ -1,9 +1,9 @@
 <!-- retain these comments for translator revision tracking -->
-<!-- original version: 51911 -->
+<!-- original version: 56427 -->
 
    <sect3 id="mdcfg">
    <!-- <title>Configuring Multidisk Devices (Software RAID)</title> -->
-   <title>Configurazione di device multidisk (RAID software)</title>
+   <title>Configurazione di device multidisco (RAID software)</title>
 <para>
 
 <!--
@@ -15,20 +15,19 @@ Se nel proprio sistema ci sono più dischi fissi<footnote>
 <para>
 
 <!--
-To be honest, you can construct MD device even from partitions
-residing on single physical drive, but that won't bring you anything
-useful.
+To be honest, you can construct an MD device even from partitions
+residing on single physical drive, but that won't give any benefits.
 -->
 
 In verità si può creare un device MD anche usando delle partizioni che
-risiedono sullo stesso disco ma in questo modo non si ottiene nulla di
-utile.
+risiedono sullo stesso disco ma in questo modo non si ottiene alcun
+beneficio.
 
 </para>
 
 <!--
 </footnote> in your computer, you can use
-<command>mdcfg</command> to setup your drives for increased
+<command>mdcfg</command> to set up your drives for increased
 performance and/or better reliability of your data. The result is
 called <firstterm>Multidisk Device</firstterm> (or after its most
 famous variant <firstterm>software RAID</firstterm>).
@@ -183,6 +182,70 @@ informazioni di parità.
 
 </para></listitem>
 </varlistentry>
+<varlistentry>
+
+<term>RAID6</term><listitem><para>
+
+<!--
+Is similar to RAID5 except that it uses two parity devices instead of
+one.
+-->
+
+Simile a RAID5 con l'eccezione che utilizza due dispositivi per la parità
+anziché uno.
+
+</para><para>
+
+<!--
+A RAID6 array can survive up to two disk failures.
+-->
+
+Un array RAID6 può sopravvivere alla rottura di due dischi.
+
+</para></listitem>
+</varlistentry>
+<varlistentry>
+
+<term>RAID10</term><listitem><para>
+
+<!--
+RAID10 combines striping (as in RAID0) and mirroring (as in RAID1).
+It creates <replaceable>n</replaceable> copies of incoming data and
+distributes them across the partitions so that none of the copies of
+the same data are on the same device.
+The default value of <replaceable>n</replaceable> is 2, but it can be
+set to something else in expert mode. The number of partitions used
+must be at least <replaceable>n</replaceable>.
+RAID10 has different layouts for distributing the copies. The default is
+near copies. Near copies have all of the copies at about the same offset
+on all of the disks. Far copies have the copies at different offsets on
+the disks. Offset copies copy the stripe, not the individual copies.
+-->
+
+RAID10 combina lo striping (come in RAID0) e il mirroring (come in RAID1).
+Vengono create <replaceable>n</replaceable> copie dei dati in arrivo che
+sono distribuite fra le partizioni in modo che nessuna copia dei dati sia
+scritta sullo stesso dispositivo. Il valore predefinito per
+<replaceable>n</replaceable> è 2, ma può essere cambiato in modalità
+esperto. Il numero di partizioni usato deve essere almeno
+<replaceable>n</replaceable>. RAID10 può distribuire le copie usando
+diversi layout. Il layout predefinito prevede copie vicine. Con le copie
+vicine, tutte le copie hanno lo stesso offset sui dischi. Invece le
+copie lontane hanno offset diversi. Le copie offset copiano l'intera
+striscia, non la singola copia.
+
+</para><para>
+
+<!--
+RAID10 can be used to achieve reliability and redundancy without the
+drawback of having to calculate parity.
+-->
+
+RAID10 può essere usato per avere affidalibità e ridondanza senza lo
+svantaggio di dover calcolare la parità.
+
+</para></listitem>
+</varlistentry>
 </variablelist>
 
 <!--
@@ -247,6 +310,34 @@ Riassumendo:
   </entry>
 </row>
 
+<row>
+  <entry>RAID6</entry>
+  <entry>4</entry>
+  <entry><!-- optional -->Opzionale</entry>
+  <entry><!-- yes -->sì</entry>
+  <entry>
+<!--    Size of the smallest partition multiplied by (number of devices in
+    RAID minus two)
+-->
+    La dimensione della partizione più piccola moltiplicata per il numero
+    di device in RAID meno 2.
+  </entry>
+</row>
+
+<row>
+  <entry>RAID10</entry>
+  <entry>2</entry>
+  <entry><!-- optional -->Opzionale</entry>
+  <entry><!-- yes -->sì</entry>
+  <entry>
+<!--
+    Total of all partitions divided by the number of chunk copies (defaults to two)
+-->
+    La somma di tutte le partizioni diviso per il numero di pezzi per copia
+    (il numero predefinito è 2)
+  </entry>
+</row>
+
 </tbody></tgroup></informaltable>
 
 </para><para>
@@ -263,7 +354,7 @@ HOWTO</ulink>.
 </para><para>
 
 <!--
-To create a MD device, you need to have the desired partitions it
+To create an MD device, you need to have the desired partitions it
 should consist of marked for use in a RAID.  (This is done in
 <command>partman</command> in the <guimenu>Partition
 settings</guimenu> menu where you should select <menuchoice>
@@ -362,8 +453,8 @@ number of active devices and the number of spare devices which will
 form the MD. Next, you need to select from the list of available RAID
 partitions those that will be active and then those that will be
 spare. The count of selected partitions must be equal to the number
-provided few seconds ago. Don't worry. If you make a mistake and
-select different number of partitions, the &d-i; won't let you
+provided earlier. Don't worry. If you make a mistake and
+select a diffeent number of partitions, &d-i; won't let you
 continue until you correct the issue.
 -->
 
@@ -371,22 +462,57 @@ RAID1 è leggermente più complesso. Prima viene chiesto il numero di
 partizioni attive e il numero di partizioni di scorta per il nuovo device
 MD. Poi è necessario scegliere dall'elenco delle partizioni RAID disponibili
 quali saranno quelle attive e quali saranno quelle di scorta. Il numero totale
-di partizioni deve coincidere con quello specificato poco prima. Se durante la
-selezione si compie un errore e si seleziona un numero sbagliato di partizioni
-il &d-i; non permette di proseguire con l'installazione fino a quando non si
-corregge questo errore.
+di partizioni deve coincidere con quello specificato in precedenza. Se
+durante la selezione si compie un errore e si sceglie un numero sbagliato
+di partizioni &d-i; non permette di proseguire con l'installazione fino
+a quando non si corregge questo errore.
 
 </para></listitem>
 <listitem><para>
 
 <!--
-RAID5 has a similar setup procedure as RAID1 with the exception that you
+RAID5 has a setup procedure similar to RAID1 with the exception that you
 need to use at least <emphasis>three</emphasis> active partitions.
 -->
 
 La procedura di configurazione di RAID5 è simile a quella per RAID1 con una
 eccezione, è necessario usare almeno <emphasis>tre</emphasis> partizioni
 attive.
+
+</para></listitem>
+<listitem><para>
+
+<!--
+RAID6 also has a setup procedure similar to RAID1 except that at least
+<emphasis>four</emphasis> active partitions are required.
+-->
+
+Anche RAID6 ha una procedura di configurazione simile a quella per RAID1
+con un'eccezione: sono necessarie almeno <emphasis>quattro</emphasis>
+partizioni.
+
+</para></listitem>
+<listitem><para>
+
+<!--
+RAID10 again has a setup procedure similar to RAID1 except in expert
+mode. In expert mode, &d-i; will ask you for the layout.
+The layout has two parts. The first part is the layout type. It is either
+<literal>n</literal> (for near copies), <literal>f</literal> (for far
+copies), or <literal>o</literal> (for offset copies). The second part is
+the number of copies to make of the data. There must be at least that
+many active devices so that all of the copies can be distributed onto
+different disks.
+-->
+
+Infine anche RAID10 ha una procedura di configurazione simile a quella
+per RAID1 tranne quando viene eseguita in modalità esperto. Infatti, in
+tale modalità, &d-i; chiede il layout che può essere <literal>n</literal>
+(per le copie vicine), <literal>f</literal> (per le copie lontane) oppure
+<literal>o</literal> (per copie in offset). La seconda parte è il numero
+di copie dei dati da fare. Deve essere almeno uguale al numero di
+dispositivi attivi in modo che tutte le copie siano scritte su dischi
+diversi.
 
 </para></listitem>
 </itemizedlist>
@@ -413,7 +539,7 @@ video) e usare le altre tre partizioni (2 attive e 1 di scorta) in RAID1
 </para><para>
 
 <!--
-After you setup MD devices to your liking, you can
+After you set up MD devices to your liking, you can
 <guimenuitem>Finish</guimenuitem> <command>mdcfg</command> to return
 back to the <command>partman</command> to create filesystems on your
 new MD devices and assign them the usual attributes like mountpoints.

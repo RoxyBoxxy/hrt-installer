@@ -69,6 +69,12 @@ int di_parser_rfc822_read (char *begin, size_t size, di_parser_info *info, di_pa
 
   while (cur < end)
   {
+    if (*cur == '\n')
+    {
+      cur++;
+      continue;
+    }
+
     nr++;
 
     if (entry_new)
@@ -185,7 +191,7 @@ wildcard:
       field_string.size = 0;
 
       fip = di_hash_table_lookup (info->table, &field_string);
-          
+
       if (fip)
       {
         field_modifier_string.string = field_begin;
@@ -196,13 +202,8 @@ wildcard:
 
 next:
       cur = value_end + 1;
-      if (cur >= end)
+      if (cur >= end || *cur == '\n')
         break;
-      if (*cur == '\n')
-      {
-        while (cur < end && *++cur == '\n');
-        break;
-      }
     }
 
     if (entry_finish && entry_finish (act, user_data))
@@ -244,15 +245,9 @@ cleanup:
 static void callback (const di_rstring *field, const di_rstring *value, void *data)
 {
   FILE *f = data;
-  if (fwrite (field->string, field->size, 1, f) < 1)
-  {
-    /* FIXME: can't handle write errors, but appease _FORTIFY_SOURCE=2 */
-  }
+  fwrite (field->string, field->size, 1, f);
   fputs (": ", f);
-  if (fwrite (value->string, value->size, 1, f) < 1)
-  {
-    /* FIXME: can't handle write errors, but appease _FORTIFY_SOURCE=2 */
-  }
+  fwrite (value->string, value->size, 1, f);
   fputs ("\n", f);
 }
 

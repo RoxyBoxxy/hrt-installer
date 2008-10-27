@@ -237,12 +237,6 @@ Function ShowGraphics
   Var /GLOBAL user_interface
   Var /GLOBAL gtk
 
-  ${If} $windows_boot_method == direct
-    ; as a workaround for bug #469533 in loadlin, we force text mode
-    StrCpy $user_interface text
-    Goto end_of_user_interface_choice
-  ${Endif}
-
 !ifndef NETWORK_BASE_URL
   Var /GLOBAL predefined_user_interface
   ReadINIStr $predefined_user_interface $d\win32-loader.ini "installer" "user_interface"
@@ -271,8 +265,6 @@ Function ShowGraphics
     StrCpy $user_interface $predefined_user_interface
   ${Endif}
 !endif
-
-end_of_user_interface_choice:
 
 ${If} $user_interface == "graphical"
   StrCpy $gtk "gtk/"
@@ -658,10 +650,9 @@ Section "Debian-Installer Loader"
   DetailPrint "$(generating)"
   FileOpen $0 $c\grub.cfg w
   FileWrite $0 "\
-search	--set /debian/initrd.gz$\n\
 linux	/debian/linux $preseed_cmdline$\n\
 initrd	/debian/initrd.gz$\n\
-boot"
+boot$\n"
   FileClose $0
 
 ; ********************************************** cpio hack

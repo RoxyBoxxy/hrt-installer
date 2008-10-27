@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: debian-boot@lists.debian.org\n"
-"POT-Creation-Date: 2008-09-26 00:09+0000\n"
+"POT-Creation-Date: 2008-10-26 00:10+0000\n"
 "PO-Revision-Date: 2007-03-18 19:17+0100\n"
 "Last-Translator: SZERVÁC Attila <sas@321.hu>\n"
 "Language-Team: Hungarian\n"
@@ -33,7 +33,7 @@ msgstr ""
 "telepítés automatizálására."
 
 #. Tag: para
-#: preseed.xml:23 preseed.xml:662
+#: preseed.xml:23 preseed.xml:663
 #, no-c-format
 msgid ""
 "The configuration fragments used in this appendix are also available as an "
@@ -1008,7 +1008,10 @@ msgstr "Van pár fontos szabály az elő-beállító fájlok írásakor."
 
 #. Tag: para
 #: preseed.xml:574
-#, no-c-format
+#, fuzzy, no-c-format
+#| msgid ""
+#| "Put only a single space or tab between type and value: any additional "
+#| "whitespace will be interpreted as belonging to the value."
 msgid ""
 "Put only a single space or tab between type and value: any additional "
 "whitespace will be interpreted as belonging to the value."
@@ -1018,19 +1021,25 @@ msgstr ""
 
 #. Tag: para
 #: preseed.xml:578
-#, no-c-format
+#, fuzzy, no-c-format
+#| msgid ""
+#| "A line can be split into multiple lines by appending a backslash "
+#| "(<quote><literal>\\</literal></quote>) as the line continuation "
+#| "character. A good place to split a line is after the question name; a bad "
+#| "place is between type and value."
 msgid ""
 "A line can be split into multiple lines by appending a backslash "
 "(<quote><literal>\\</literal></quote>) as the line continuation character. A "
 "good place to split a line is after the question name; a bad place is "
-"between type and value."
+"between type and value. Split lines will be joined into a single line with "
+"all leading/trailing whitespace condensed to a single space."
 msgstr ""
 "Egy sor többre vágható egy rep (<quote><literal>\\</literal></quote>) "
 "hozzáfűzésével, mint sor folytató karakter. Jó például sorokat törni a "
 "kérdés neve után; rossz a típus és érték között."
 
 #. Tag: para
-#: preseed.xml:584
+#: preseed.xml:585
 #, no-c-format
 msgid ""
 "For debconf variables (templates) used in the installer itself, the owner "
@@ -1042,7 +1051,7 @@ msgid ""
 msgstr ""
 
 #. Tag: para
-#: preseed.xml:592
+#: preseed.xml:593
 #, no-c-format
 msgid ""
 "Most questions need to be preseeded using the values valid in English and "
@@ -1054,7 +1063,7 @@ msgstr ""
 "classname> részben), ahol a lefordított értékeket kell használni."
 
 #. Tag: para
-#: preseed.xml:598
+#: preseed.xml:599
 #, no-c-format
 msgid ""
 "Some questions take a code as value instead of the English text that is "
@@ -1064,7 +1073,7 @@ msgstr ""
 "szöveg helyett."
 
 #. Tag: para
-#: preseed.xml:604
+#: preseed.xml:605
 #, no-c-format
 msgid ""
 "The easiest way to create a preconfiguration file is to use the example file "
@@ -1075,7 +1084,7 @@ msgstr ""
 "való munka."
 
 #. Tag: para
-#: preseed.xml:609
+#: preseed.xml:610
 #, no-c-format
 msgid ""
 "An alternative method is to do a manual installation and then, after "
@@ -1088,7 +1097,7 @@ msgstr ""
 "csomagból, ez a debconf és a telepítő cdebconf adatbázist egy fájlba teszi:"
 
 #. Tag: screen
-#: preseed.xml:616
+#: preseed.xml:617
 #, no-c-format
 msgid ""
 "$ debconf-get-selections --installer &gt; <replaceable>file</replaceable>\n"
@@ -1098,7 +1107,7 @@ msgstr ""
 "$ debconf-get-selections &gt;&gt; <replaceable>fájl</replaceable>"
 
 #. Tag: para
-#: preseed.xml:618
+#: preseed.xml:619
 #, no-c-format
 msgid ""
 "However, a file generated in this manner will have some items that should "
@@ -1109,7 +1118,7 @@ msgstr ""
 "tartalmaz, a példa fájl jobb kezdés a legtöbb felhasználónak."
 
 #. Tag: para
-#: preseed.xml:626
+#: preseed.xml:627
 #, no-c-format
 msgid ""
 "This method relies on the fact that, at the end of the installation, the "
@@ -1123,7 +1132,7 @@ msgstr ""
 "E fájlok érzékeny adatai miatt, alapban őket csak a root olvashatja."
 
 #. Tag: para
-#: preseed.xml:634
+#: preseed.xml:635
 #, no-c-format
 msgid ""
 "The directory <filename>/var/log/installer</filename> and all files in it "
@@ -1134,7 +1143,7 @@ msgstr ""
 "<classname>installation-report</classname> csomag törlésekor."
 
 #. Tag: para
-#: preseed.xml:642
+#: preseed.xml:643
 #, no-c-format
 msgid ""
 "To check possible values for questions, you can use <command>nano</command> "
@@ -1150,7 +1159,7 @@ msgstr ""
 "és a változókhoz rendelt értékeket adja."
 
 #. Tag: para
-#: preseed.xml:650
+#: preseed.xml:651
 #, no-c-format
 msgid ""
 "To check if the format of your preconfiguration file is valid before "
@@ -1162,14 +1171,14 @@ msgstr ""
 "cfg</replaceable></command> parancsot."
 
 #. Tag: title
-#: preseed.xml:661
+#: preseed.xml:662
 #, fuzzy, no-c-format
 #| msgid "Contents of the preconfiguration file"
 msgid "Contents of the preconfiguration file (for &releasename;)"
 msgstr "Az elő-beállító fájl tartalma"
 
 #. Tag: para
-#: preseed.xml:667
+#: preseed.xml:668
 #, no-c-format
 msgid ""
 "Note that this example is based on an installation for the Intel x86 "
@@ -1183,13 +1192,13 @@ msgstr ""
 "és az architektúrának megfelelő debconf beállításokra kell cserélni."
 
 #. Tag: title
-#: preseed.xml:678
+#: preseed.xml:679
 #, no-c-format
 msgid "Localization"
 msgstr "Honosítás"
 
 #. Tag: para
-#: preseed.xml:679
+#: preseed.xml:680
 #, no-c-format
 msgid ""
 "Setting localization values will only work if you are using initrd "
@@ -1200,19 +1209,26 @@ msgstr ""
 "az előíró fájl csak e kérdések után töltődik be."
 
 #. Tag: para
-#: preseed.xml:685
-#, no-c-format
+#: preseed.xml:686
+#, fuzzy, no-c-format
+#| msgid ""
+#| "The locale can be used to specify both language and country. To specify "
+#| "the locale as a boot parameter, use <userinput>locale=<replaceable>en_US</"
+#| "replaceable></userinput>."
 msgid ""
-"The locale can be used to specify both language and country. To specify the "
-"locale as a boot parameter, use <userinput>locale=<replaceable>en_US</"
-"replaceable></userinput>."
+"The locale can be used to specify both language and country and can be any "
+"combination of a language supported by &d-i; and a recognized country. If "
+"the combination does not form a valid locale, the installer will "
+"automatically select a locale that is valid for the selected language. To "
+"specify the locale as a boot parameter, use "
+"<userinput>locale=<replaceable>en_US</replaceable></userinput>."
 msgstr ""
 "A helyi beállítás a nyelvet és országot is megadja. Indító paraméterként "
 "való megadása így lehetséges: <userinput>locale=<replaceable>hu_HU</"
 "replaceable></userinput>."
 
 #. Tag: screen
-#: preseed.xml:691
+#: preseed.xml:695
 #, no-c-format
 msgid ""
 "# Locale sets language and country.\n"
@@ -1222,13 +1238,18 @@ msgstr ""
 "d-i debian-installer/locale string hu_HU"
 
 #. Tag: para
-#: preseed.xml:693
-#, no-c-format
+#: preseed.xml:697
+#, fuzzy, no-c-format
+#| msgid ""
+#| "Keyboard configuration consists of selecting a keyboard architecture and "
+#| "a keymap. In most cases the correct keyboard architecture is selected by "
+#| "default, so there's normally no need to preseed it. The keymap must be "
+#| "valid for the selected keyboard architecture."
 msgid ""
 "Keyboard configuration consists of selecting a keyboard architecture and a "
 "keymap. In most cases the correct keyboard architecture is selected by "
-"default, so there's normally no need to preseed it. The keymap must be valid "
-"for the selected keyboard architecture."
+"default, so there's normally no need to preseed it. The keymap must be known "
+"to the &d-i; for the selected keyboard architecture."
 msgstr ""
 "A billentyűzet beállítás egy billentyűzet architektúra és billentyű-kiosztás "
 "választásából áll. Általában alapból a helyes billentyűzet architektúra "
@@ -1236,7 +1257,7 @@ msgstr ""
 "a választott billentyűzet architektúrára."
 
 #. Tag: screen
-#: preseed.xml:700
+#: preseed.xml:704
 #, no-c-format
 msgid ""
 "# Keyboard selection.\n"
@@ -1252,7 +1273,7 @@ msgstr ""
 "#d-i console-keymaps-usb/keymap select mac-usb-hu"
 
 #. Tag: para
-#: preseed.xml:702
+#: preseed.xml:706
 #, no-c-format
 msgid ""
 "To skip keyboard configuration, preseed <classname>console-tools/archs</"
@@ -1264,7 +1285,7 @@ msgstr ""
 "billentyű-kiosztás marad aktív."
 
 #. Tag: para
-#: preseed.xml:711
+#: preseed.xml:715
 #, no-c-format
 msgid ""
 "The changes in the input layer for 2.6 kernels have made the keyboard "
@@ -1276,13 +1297,13 @@ msgstr ""
 "(<userinput>at</userinput>) billentyű-kiosztás választandó."
 
 #. Tag: title
-#: preseed.xml:721
+#: preseed.xml:725
 #, no-c-format
 msgid "Network configuration"
 msgstr "Hálózat beállítás"
 
 #. Tag: para
-#: preseed.xml:722
+#: preseed.xml:726
 #, no-c-format
 msgid ""
 "Of course, preseeding the network configuration won't work if you're loading "
@@ -1297,7 +1318,7 @@ msgstr ""
 "indító paraméterekkel."
 
 #. Tag: para
-#: preseed.xml:730
+#: preseed.xml:734
 #, no-c-format
 msgid ""
 "If you need to pick a particular interface when netbooting before loading a "
@@ -1308,7 +1329,7 @@ msgstr ""
 "paramétert: <userinput>interface=<replaceable>eth1</replaceable></userinput>."
 
 #. Tag: para
-#: preseed.xml:736
+#: preseed.xml:740
 #, fuzzy, no-c-format
 #| msgid ""
 #| "Although preseeding the network configuration is normally not possible "
@@ -1335,19 +1356,19 @@ msgstr ""
 "tartalmazza:"
 
 #. Tag: screen
-#: preseed.xml:746
+#: preseed.xml:750
 #, no-c-format
 msgid "killall.sh; netcfg"
 msgstr "killall.sh; netcfg"
 
 #. Tag: para
-#: preseed.xml:748
+#: preseed.xml:752
 #, no-c-format
 msgid "The following debconf variables are relevant for network configuration."
 msgstr ""
 
 #. Tag: screen
-#: preseed.xml:754
+#: preseed.xml:758
 #, fuzzy, no-c-format
 #| msgid ""
 #| "# netcfg will choose an interface that has link if possible. This makes "
@@ -1476,7 +1497,7 @@ msgstr ""
 "#d-i netcfg/dhcp_hostname string radish"
 
 #. Tag: para
-#: preseed.xml:756
+#: preseed.xml:760
 #, no-c-format
 msgid ""
 "Please note that <command>netcfg</command> will automatically determine the "
@@ -1489,13 +1510,13 @@ msgid ""
 msgstr ""
 
 #. Tag: title
-#: preseed.xml:772
+#: preseed.xml:776
 #, no-c-format
 msgid "Mirror settings"
 msgstr "Tükör beállítások"
 
 #. Tag: para
-#: preseed.xml:773
+#: preseed.xml:777
 #, no-c-format
 msgid ""
 "Depending on the installation method you use, a mirror may be used to "
@@ -1509,7 +1530,7 @@ msgstr ""
 "rendszerhez."
 
 #. Tag: para
-#: preseed.xml:780
+#: preseed.xml:784
 #, no-c-format
 msgid ""
 "The parameter <classname>mirror/suite</classname> determines the suite for "
@@ -1519,7 +1540,7 @@ msgstr ""
 "rendszerhez használt készletet."
 
 #. Tag: para
-#: preseed.xml:785
+#: preseed.xml:789
 #, no-c-format
 msgid ""
 "The parameter <classname>mirror/udeb/suite</classname> determines the suite "
@@ -1536,7 +1557,7 @@ msgstr ""
 "suite</classname> érték ugyanaz, mint a <classname>mirror/suite</classname>."
 
 #. Tag: screen
-#: preseed.xml:797
+#: preseed.xml:801
 #, fuzzy, no-c-format
 msgid ""
 "# If you select ftp, the mirror/country string does not need to be set.\n"
@@ -1564,13 +1585,13 @@ msgstr ""
 "#d-i mirror/udeb/suite string testing"
 
 #. Tag: title
-#: preseed.xml:802
+#: preseed.xml:806
 #, no-c-format
 msgid "Clock and time zone setup"
 msgstr "Óra és időzóna beállítás"
 
 #. Tag: screen
-#: preseed.xml:804
+#: preseed.xml:808
 #, fuzzy, no-c-format
 msgid ""
 "# Controls whether or not the hardware clock is set to UTC.\n"
@@ -1593,13 +1614,13 @@ msgstr ""
 "d-i time/zone string US/Eastern"
 
 #. Tag: title
-#: preseed.xml:809
+#: preseed.xml:813
 #, no-c-format
 msgid "Partitioning"
 msgstr "Particionálás"
 
 #. Tag: para
-#: preseed.xml:810
+#: preseed.xml:814
 #, no-c-format
 msgid ""
 "Using preseeding to partition the harddisk is very much limited to what is "
@@ -1616,7 +1637,7 @@ msgstr ""
 "recepttel. Jelenleg nem lehet több lemezt particionálni előírással."
 
 #. Tag: para
-#: preseed.xml:821
+#: preseed.xml:825
 #, no-c-format
 msgid ""
 "The identification of disks is dependent on the order in which their drivers "
@@ -1627,18 +1648,16 @@ msgstr ""
 "esetén ügyelj nagyon, hogy a helyeset válaszd az előírás előtt."
 
 #. Tag: screen
-#: preseed.xml:829
+#: preseed.xml:833
 #, fuzzy, no-c-format
 msgid ""
 "# If the system has free space you can choose to only partition that space.\n"
-"# Note: this must be preseeded with a localized (translated) value.\n"
-"#d-i partman-auto/init_automatically_partition \\\n"
-"#      select Guided - use the largest continuous free space\n"
+"#d-i partman-auto/init_automatically_partition select biggest_free\n"
 "\n"
 "# Alternatively, you can specify a disk to partition. The device name must\n"
 "# be given in traditional non-devfs format.\n"
-"# For example, to use the first SCSI/SATA hard disk:\n"
 "# Note: A disk must be specified, unless the system has only one disk.\n"
+"# For example, to use the first SCSI/SATA hard disk:\n"
 "#d-i partman-auto/disk string /dev/sda\n"
 "# In addition, you'll need to specify the method to use.\n"
 "# The presently available methods are: \"regular\", \"lvm\" and \"crypto\"\n"
@@ -1648,17 +1667,16 @@ msgid ""
 "# contains an old LVM configuration, the user will normally receive a\n"
 "# warning. This can be preseeded away...\n"
 "d-i partman-lvm/device_remove_lvm boolean true\n"
+"# The same applies to pre-existing software RAID array:\n"
+"d-i parman-md/device_remove_md boolean true\n"
 "# And the same goes for the confirmation to write the lvm partitions.\n"
 "d-i partman-lvm/confirm boolean true\n"
 "\n"
-"# You can choose from any of the predefined partitioning recipes.\n"
-"# Note: this must be preseeded with a localized (translated) value.\n"
-"d-i partman-auto/choose_recipe \\\n"
-"       select All files in one partition (recommended for new users)\n"
-"#d-i partman-auto/choose_recipe \\\n"
-"#       select Separate /home partition\n"
-"#d-i partman-auto/choose_recipe \\\n"
-"#       select Separate /home, /usr, /var, and /tmp partitions\n"
+"# You can choose one of the three predefined partitioning recipes:\n"
+"# - atomic: all files in one partition\n"
+"# - home:   separate /home partition\n"
+"# - multi:  separate /home, /usr, /var, and /tmp partitions\n"
+"d-i partman-auto/choose_recipe select atomic\n"
 "\n"
 "# Or provide a recipe of your own...\n"
 "# The recipe format is documented in the file devel/partman-auto-recipe."
@@ -1691,8 +1709,7 @@ msgid ""
 "# This makes partman automatically partition without confirmation, provided\n"
 "# that you told it what to do using one of the methods above.\n"
 "d-i partman/confirm_write_new_label boolean true\n"
-"d-i partman/choose_partition \\\n"
-"       select Finish partitioning and write changes to disk\n"
+"d-i partman/choose_partition select finish\n"
 "d-i partman/confirm boolean true"
 msgstr ""
 "# Ha a rendszeren van szabad hely, választható particionálás csak ide.\n"
@@ -1757,13 +1774,13 @@ msgstr ""
 "d-i partman/confirm boolean true"
 
 #. Tag: title
-#: preseed.xml:834
+#: preseed.xml:838
 #, no-c-format
 msgid "Partitioning using RAID"
 msgstr "Particionálás RAID használatával"
 
 #. Tag: para
-#: preseed.xml:835
+#: preseed.xml:839
 #, fuzzy, no-c-format
 #| msgid ""
 #| "You can also use preseeding to set up partitions on software RAID arrays. "
@@ -1784,14 +1801,20 @@ msgstr ""
 "itt: <xref linkend=\"preseed-bootloader\"/>."
 
 #. Tag: para
-#: preseed.xml:845
-#, no-c-format
+#: preseed.xml:849
+#, fuzzy, no-c-format
+#| msgid ""
+#| "This type of automated partitioning is easy to get wrong. It is also a "
+#| "very new component that may still have some bugs or missing error "
+#| "handling. The responsibility to get the various recipes right (so they "
+#| "make sense and don't conflict) lies with the user. Check <filename>/var/"
+#| "log/syslog</filename> if you run into problems."
 msgid ""
-"This type of automated partitioning is easy to get wrong. It is also a very "
-"new component that may still have some bugs or missing error handling. The "
-"responsibility to get the various recipes right (so they make sense and "
-"don't conflict) lies with the user. Check <filename>/var/log/syslog</"
-"filename> if you run into problems."
+"This type of automated partitioning is easy to get wrong. It is also "
+"functionality that receives relatively little testing from the developers of "
+"&d-i;. The responsibility to get the various recipes right (so they make "
+"sense and don't conflict) lies with the user. Check <filename>/var/log/"
+"syslog</filename> if you run into problems."
 msgstr ""
 "Az önműködő particionálás e típusát könnyű elvéteni. Ez egy nagyon új "
 "komponens, melyben még lehetnek hibák vagy hiányzó hiba-kezelés. A különböző "
@@ -1799,20 +1822,8 @@ msgstr ""
 "felhasználótól függ. Hibák esetén lásd a <filename>/var/log/syslog</"
 "filename> fájlt."
 
-#. Tag: para
-#: preseed.xml:853
-#, no-c-format
-msgid ""
-"Note that only RAID 0 and RAID 1 have been tested by the developers of the "
-"component. RAID 5 is untested. Advanced RAID setup with degraded arrays or "
-"spare devices has only been tested lightly."
-msgstr ""
-"Csak a RAID 0 és RAID 1 tesztelt. A RAID 5 teszteletlen. A haladó RAID "
-"beállítás csökkentett tömbökkel és tartalék eszközökkel csak kevéssé "
-"tesztelt."
-
 #. Tag: screen
-#: preseed.xml:861
+#: preseed.xml:859
 #, fuzzy, no-c-format
 #| msgid ""
 #| "# NOTE: this option is of beta release quality and should be used "
@@ -1910,8 +1921,7 @@ msgid ""
 "# This makes partman automatically partition without confirmation.\n"
 "d-i partman-md/confirm boolean true\n"
 "d-i partman/confirm_write_new_label boolean true\n"
-"d-i partman/choose_partition \\\n"
-"       select Finish partitioning and write changes to disk\n"
+"d-i partman/choose_partition select finish\n"
 "d-i partman/confirm boolean true"
 msgstr ""
 "# Megjegyzés: e mód béta állapotú és óvatosan használandó\n"
@@ -1962,13 +1972,13 @@ msgstr ""
 "d-i partman/confirm boolean true"
 
 #. Tag: title
-#: preseed.xml:866
+#: preseed.xml:864
 #, no-c-format
 msgid "Base system installation"
 msgstr "Az Alaprendszer telepítése"
 
 #. Tag: para
-#: preseed.xml:867
+#: preseed.xml:865
 #, no-c-format
 msgid ""
 "There is actually not very much that can be preseeded for this stage of the "
@@ -1979,7 +1989,7 @@ msgstr ""
 "telepítéséhez vannak kérdések."
 
 #. Tag: screen
-#: preseed.xml:874
+#: preseed.xml:872
 #, fuzzy, no-c-format
 msgid ""
 "# Select the initramfs generator used to generate the initrd for 2.6 "
@@ -1995,13 +2005,13 @@ msgstr ""
 "#d-i base-installer/kernel/linux/initramfs-generators string yaird"
 
 #. Tag: title
-#: preseed.xml:879
+#: preseed.xml:877
 #, no-c-format
 msgid "Account setup"
 msgstr "Fiók beállítások"
 
 #. Tag: para
-#: preseed.xml:880
+#: preseed.xml:878
 #, no-c-format
 msgid ""
 "The password for the root account and name and password for a first regular "
@@ -2013,7 +2023,7 @@ msgstr ""
 "emphasis> kódok."
 
 #. Tag: para
-#: preseed.xml:887
+#: preseed.xml:885
 #, no-c-format
 msgid ""
 "Be aware that preseeding passwords is not completely secure as everyone with "
@@ -2028,7 +2038,7 @@ msgstr ""
 "elkövetett nyers erejű támadást."
 
 #. Tag: screen
-#: preseed.xml:897
+#: preseed.xml:895
 #, fuzzy, no-c-format
 msgid ""
 "# Skip creation of a root account (normal user account will be able to\n"
@@ -2080,14 +2090,14 @@ msgstr ""
 "#d-i passwd/user-password-crypted password [MD5 hash]"
 
 #. Tag: para
-#: preseed.xml:899
+#: preseed.xml:897
 #, no-c-format
 msgid ""
 "The <classname>passwd/root-password-crypted</classname> and "
 "<classname>passwd/user-password-crypted</classname> variables can also be "
 "preseeded with <quote>!</quote> as their value. In that case, the "
 "corresponding account is disabled. This may be convenient for the root "
-"account, provided of course that an alternative method is setup to allow "
+"account, provided of course that an alternative method is set up to allow "
 "administrative activities or root login (for instance by using SSH key "
 "authentication or <command>sudo</command>)."
 msgstr ""
@@ -2099,26 +2109,26 @@ msgstr ""
 "command>)."
 
 #. Tag: para
-#: preseed.xml:909
+#: preseed.xml:907
 #, no-c-format
 msgid ""
 "The following command can be used to generate an MD5 hash for a password:"
 msgstr ""
 
 #. Tag: screen
-#: preseed.xml:913
+#: preseed.xml:911
 #, no-c-format
 msgid "$ echo \"r00tme\" | mkpasswd -s -m md5"
 msgstr "$ echo \"r00tmagam\" | mkpasswd -s -m md5"
 
 #. Tag: title
-#: preseed.xml:919
+#: preseed.xml:917
 #, no-c-format
 msgid "Apt setup"
 msgstr "Az APT beállítása"
 
 #. Tag: para
-#: preseed.xml:920
+#: preseed.xml:918
 #, no-c-format
 msgid ""
 "Setup of the <filename>/etc/apt/sources.list</filename> and basic "
@@ -2131,7 +2141,7 @@ msgstr ""
 "válaszoktól függően. További (úgynevezett helyi) tárak is megadhatók."
 
 #. Tag: screen
-#: preseed.xml:928
+#: preseed.xml:926
 #, fuzzy, no-c-format
 msgid ""
 "# You can choose to install non-free and contrib software.\n"
@@ -2187,13 +2197,13 @@ msgstr ""
 "#d-i debian-installer/allow_unauthenticated string true"
 
 #. Tag: title
-#: preseed.xml:933
+#: preseed.xml:931
 #, no-c-format
 msgid "Package selection"
 msgstr "Csomag választás"
 
 #. Tag: para
-#: preseed.xml:934
+#: preseed.xml:932
 #, no-c-format
 msgid ""
 "You can choose to install any combination of tasks that are available. "
@@ -2201,73 +2211,73 @@ msgid ""
 msgstr "Az elérhető feladatok bármely kombinációja használható. Például:"
 
 #. Tag: userinput
-#: preseed.xml:943
+#: preseed.xml:941
 #, no-c-format
 msgid "standard"
 msgstr "szabvány"
 
 #. Tag: userinput
-#: preseed.xml:946
+#: preseed.xml:944
 #, no-c-format
 msgid "desktop"
 msgstr "asztal"
 
 #. Tag: userinput
-#: preseed.xml:949
+#: preseed.xml:947
 #, no-c-format
 msgid "gnome-desktop"
 msgstr "gnome-desktop"
 
 #. Tag: userinput
-#: preseed.xml:952
+#: preseed.xml:950
 #, no-c-format
 msgid "kde-desktop"
 msgstr "kde-desktop"
 
 #. Tag: userinput
-#: preseed.xml:955
+#: preseed.xml:953
 #, no-c-format
 msgid "web-server"
 msgstr "web-kiszolgáló"
 
 #. Tag: userinput
-#: preseed.xml:958
+#: preseed.xml:956
 #, no-c-format
 msgid "print-server"
 msgstr "nyomtató-kiszolgáló"
 
 #. Tag: userinput
-#: preseed.xml:961
+#: preseed.xml:959
 #, no-c-format
 msgid "dns-server"
 msgstr "dns-kiszolgáló"
 
 #. Tag: userinput
-#: preseed.xml:964
+#: preseed.xml:962
 #, no-c-format
 msgid "file-server"
 msgstr "fájl-kiszolgáló"
 
 #. Tag: userinput
-#: preseed.xml:967
+#: preseed.xml:965
 #, no-c-format
 msgid "mail-server"
 msgstr "levél-kiszolgáló"
 
 #. Tag: userinput
-#: preseed.xml:970
+#: preseed.xml:968
 #, no-c-format
 msgid "sql-database"
 msgstr "sql-adatbázis"
 
 #. Tag: userinput
-#: preseed.xml:973
+#: preseed.xml:971
 #, no-c-format
 msgid "laptop"
 msgstr "laptop"
 
 #. Tag: para
-#: preseed.xml:977
+#: preseed.xml:975
 #, no-c-format
 msgid ""
 "You can also choose to install no tasks, and force the installation of a set "
@@ -2279,7 +2289,7 @@ msgstr ""
 "<userinput>szabvány</userinput> feladatot."
 
 #. Tag: para
-#: preseed.xml:983
+#: preseed.xml:981
 #, no-c-format
 msgid ""
 "If you want to install some individual packages in addition to packages "
@@ -2294,7 +2304,7 @@ msgstr ""
 "listája, mely lehetővé teszi, hogy a kernelnek is könnyen átadható legyen."
 
 #. Tag: screen
-#: preseed.xml:993
+#: preseed.xml:991
 #, fuzzy, no-c-format
 msgid ""
 "#tasksel tasksel/first multiselect standard, web-server\n"
@@ -2328,13 +2338,13 @@ msgstr ""
 "#popularity-contest popularity-contest/participate boolean false"
 
 #. Tag: title
-#: preseed.xml:998
+#: preseed.xml:996
 #, no-c-format
 msgid "Boot loader installation"
 msgstr "Boot betöltő telepítés"
 
 #. Tag: screen
-#: preseed.xml:1000
+#: preseed.xml:998
 #, fuzzy, no-c-format
 msgid ""
 "# Grub is the default boot loader (for x86). If you want lilo installed\n"
@@ -2390,7 +2400,7 @@ msgstr ""
 "#d-i grub-installer/bootdev  string (hd0,0) (hd1,0) (hd2,0)"
 
 #. Tag: para
-#: preseed.xml:1002
+#: preseed.xml:1000
 #, no-c-format
 msgid ""
 "An MD5 hash for a password for <classname>grub</classname> can be generated "
@@ -2399,13 +2409,13 @@ msgid ""
 msgstr ""
 
 #. Tag: title
-#: preseed.xml:1012
+#: preseed.xml:1010
 #, fuzzy, no-c-format
 msgid "Finishing up the installation"
 msgstr "A telepítés első szakaszának vége"
 
 #. Tag: screen
-#: preseed.xml:1014
+#: preseed.xml:1012
 #, fuzzy, no-c-format
 msgid ""
 "# During installations from serial console, the regular virtual consoles\n"
@@ -2434,79 +2444,13 @@ msgstr ""
 "#d-i cdrom-detect/eject boolean false"
 
 #. Tag: title
-#: preseed.xml:1019
-#, no-c-format
-msgid "X configuration"
-msgstr "X beállítás"
-
-#. Tag: para
-#: preseed.xml:1020
-#, no-c-format
-msgid ""
-"Preseeding Debian's X config is possible, but you probably need to know some "
-"details about the video hardware of the machine, since Debian's X "
-"configurator does not do fully automatic configuration of everything."
-msgstr ""
-"Természetesen a Debian X beállítás előírása is lehetséges, de tudni kell "
-"hozzá pár adatot a videó hardverről, mert a Debian X beállító nem végez "
-"mindenre teljesen automata beállítást."
-
-#. Tag: screen
-#: preseed.xml:1028
-#, no-c-format
-msgid ""
-"# X can detect the right driver for some cards, but if you're preseeding,\n"
-"# you override whatever it chooses. Still, vesa will work most places.\n"
-"#xserver-xorg xserver-xorg/config/device/driver select vesa\n"
-"\n"
-"# A caveat with mouse autodetection is that if it fails, X will retry it\n"
-"# over and over. So if it's preseeded to be done, there is a possibility of\n"
-"# an infinite loop if the mouse is not autodetected.\n"
-"#xserver-xorg xserver-xorg/autodetect_mouse boolean true\n"
-"\n"
-"# Monitor autodetection is recommended.\n"
-"xserver-xorg xserver-xorg/autodetect_monitor boolean true\n"
-"# Uncomment if you have an LCD display.\n"
-"#xserver-xorg xserver-xorg/config/monitor/lcd boolean true\n"
-"# X has three configuration paths for the monitor. Here's how to preseed\n"
-"# the \"medium\" path, which is always available. The \"simple\" path may "
-"not\n"
-"# be available, and the \"advanced\" path asks too many questions.\n"
-"xserver-xorg xserver-xorg/config/monitor/selection-method \\\n"
-"       select medium\n"
-"xserver-xorg xserver-xorg/config/monitor/mode-list \\\n"
-"       select 1024x768 @ 60 Hz"
-msgstr ""
-"# Az X képes megtalálni a megfelelő meghajtót egyes kártyákhoz, de "
-"előírással\n"
-"# ez felülbírálható. A vesa szinte mindig megy.\n"
-"#xserver-xorg xserver-xorg/config/device/driver select vesa\n"
-"\n"
-"# Az egér ön-felismerésről tudni kell, hogy ha nem megy, az X újra és újra\n"
-"# megpróbálja. Tehát ha ez elő van írva,\n"
-"# végtelen ciklus keletkezhet, ha nem sikerül.\n"
-"#xserver-xorg xserver-xorg/autodetect_mouse boolean true\n"
-"\n"
-"# A monitor felismerése ajánlott.\n"
-"xserver-xorg xserver-xorg/autodetect_monitor boolean true\n"
-"# Vedd ki a megjegyzésből LCD kijelző esetén.\n"
-"#xserver-xorg xserver-xorg/config/monitor/lcd boolean true\n"
-"# A monitor beállításához X alá 3 mód van. Itt a\n"
-"# \"medium\" előírása, mely mindig elérhető. A \"simple\" módszer néha nem\n"
-"# elérhető, az \"advanced\" túl sokat kérdez.\n"
-"xserver-xorg xserver-xorg/config/monitor/selection-method \\\n"
-"       select medium\n"
-"xserver-xorg xserver-xorg/config/monitor/mode-list \\\n"
-"       select 1024x768 @ 60 Hz"
-
-#. Tag: title
-#: preseed.xml:1033
+#: preseed.xml:1017
 #, no-c-format
 msgid "Preseeding other packages"
 msgstr "Más csomagok előírása"
 
 #. Tag: screen
-#: preseed.xml:1035
+#: preseed.xml:1019
 #, no-c-format
 msgid ""
 "# Depending on what software you choose to install, or if things go wrong\n"
@@ -2526,19 +2470,19 @@ msgstr ""
 "#   debconf-get-selections >> fájl"
 
 #. Tag: title
-#: preseed.xml:1042
+#: preseed.xml:1026
 #, no-c-format
 msgid "Advanced options"
 msgstr "Haladó lehetőségek"
 
 #. Tag: title
-#: preseed.xml:1045
+#: preseed.xml:1029
 #, no-c-format
 msgid "Running custom commands during the installation"
 msgstr "Egyéni parancs futtatása telepítéskor"
 
 #. Tag: para
-#: preseed.xml:1046
+#: preseed.xml:1030
 #, no-c-format
 msgid ""
 "A very powerful and flexible option offered by the preconfiguration tools is "
@@ -2548,7 +2492,7 @@ msgstr ""
 "szkriptek futtatása a telepítés egyes pontjain."
 
 #. Tag: screen
-#: preseed.xml:1054
+#: preseed.xml:1038
 #, no-c-format
 msgid ""
 "# d-i preseeding is inherently not secure. Nothing in the installer checks\n"
@@ -2588,13 +2532,13 @@ msgstr ""
 "#d-i preseed/late_command string apt-install zsh; in-target chsh -s /bin/zsh"
 
 #. Tag: title
-#: preseed.xml:1059
+#: preseed.xml:1043
 #, no-c-format
 msgid "Using preseeding to change default values"
 msgstr "Előírás használata alap értékek módosítására"
 
 #. Tag: para
-#: preseed.xml:1060
+#: preseed.xml:1044
 #, fuzzy, no-c-format
 msgid ""
 "It is possible to use preseeding to change the default answer for a "
@@ -2625,7 +2569,7 @@ msgstr ""
 "quote> paraméterekre nem."
 
 #. Tag: para
-#: preseed.xml:1074
+#: preseed.xml:1058
 #, fuzzy, no-c-format
 msgid ""
 "If you are preseeding using boot parameters, you can make the installer ask "
@@ -2653,13 +2597,13 @@ msgstr ""
 "quote> paraméterekre nem."
 
 #. Tag: title
-#: preseed.xml:1089
+#: preseed.xml:1073
 #, no-c-format
 msgid "Chainloading preconfiguration files"
 msgstr "Előíró fájlok lánc-betöltése"
 
 #. Tag: para
-#: preseed.xml:1090
+#: preseed.xml:1074
 #, no-c-format
 msgid ""
 "It is possible to include other preconfiguration files from a "
@@ -2674,7 +2618,7 @@ msgstr ""
 "fájlba és pontosabb beállításokat egyes konfigurációkhoz más fájlokba."
 
 #. Tag: screen
-#: preseed.xml:1100
+#: preseed.xml:1084
 #, fuzzy, no-c-format
 msgid ""
 "# More than one file can be listed, separated by spaces; all will be\n"
@@ -2725,7 +2669,7 @@ msgstr ""
 "#d-i preseed/run string foo.sh"
 
 #. Tag: para
-#: preseed.xml:1102
+#: preseed.xml:1086
 #, no-c-format
 msgid ""
 "It is also possible to chainload from the initrd or file preseeding phase, "
@@ -2740,6 +2684,76 @@ msgstr ""
 "előírás végrehajtását adja a hálózat feléledésekor. Ezt óvatosan kell tenni, "
 "mert 2 önálló előírás fut, így például kétszer lefuthat a preseed/early "
 "parancs, másodszor a hálózat feléledése után."
+
+#~ msgid ""
+#~ "Note that only RAID 0 and RAID 1 have been tested by the developers of "
+#~ "the component. RAID 5 is untested. Advanced RAID setup with degraded "
+#~ "arrays or spare devices has only been tested lightly."
+#~ msgstr ""
+#~ "Csak a RAID 0 és RAID 1 tesztelt. A RAID 5 teszteletlen. A haladó RAID "
+#~ "beállítás csökkentett tömbökkel és tartalék eszközökkel csak kevéssé "
+#~ "tesztelt."
+
+#~ msgid "X configuration"
+#~ msgstr "X beállítás"
+
+#~ msgid ""
+#~ "Preseeding Debian's X config is possible, but you probably need to know "
+#~ "some details about the video hardware of the machine, since Debian's X "
+#~ "configurator does not do fully automatic configuration of everything."
+#~ msgstr ""
+#~ "Természetesen a Debian X beállítás előírása is lehetséges, de tudni kell "
+#~ "hozzá pár adatot a videó hardverről, mert a Debian X beállító nem végez "
+#~ "mindenre teljesen automata beállítást."
+
+#~ msgid ""
+#~ "# X can detect the right driver for some cards, but if you're "
+#~ "preseeding,\n"
+#~ "# you override whatever it chooses. Still, vesa will work most places.\n"
+#~ "#xserver-xorg xserver-xorg/config/device/driver select vesa\n"
+#~ "\n"
+#~ "# A caveat with mouse autodetection is that if it fails, X will retry it\n"
+#~ "# over and over. So if it's preseeded to be done, there is a possibility "
+#~ "of\n"
+#~ "# an infinite loop if the mouse is not autodetected.\n"
+#~ "#xserver-xorg xserver-xorg/autodetect_mouse boolean true\n"
+#~ "\n"
+#~ "# Monitor autodetection is recommended.\n"
+#~ "xserver-xorg xserver-xorg/autodetect_monitor boolean true\n"
+#~ "# Uncomment if you have an LCD display.\n"
+#~ "#xserver-xorg xserver-xorg/config/monitor/lcd boolean true\n"
+#~ "# X has three configuration paths for the monitor. Here's how to preseed\n"
+#~ "# the \"medium\" path, which is always available. The \"simple\" path may "
+#~ "not\n"
+#~ "# be available, and the \"advanced\" path asks too many questions.\n"
+#~ "xserver-xorg xserver-xorg/config/monitor/selection-method \\\n"
+#~ "       select medium\n"
+#~ "xserver-xorg xserver-xorg/config/monitor/mode-list \\\n"
+#~ "       select 1024x768 @ 60 Hz"
+#~ msgstr ""
+#~ "# Az X képes megtalálni a megfelelő meghajtót egyes kártyákhoz, de "
+#~ "előírással\n"
+#~ "# ez felülbírálható. A vesa szinte mindig megy.\n"
+#~ "#xserver-xorg xserver-xorg/config/device/driver select vesa\n"
+#~ "\n"
+#~ "# Az egér ön-felismerésről tudni kell, hogy ha nem megy, az X újra és "
+#~ "újra\n"
+#~ "# megpróbálja. Tehát ha ez elő van írva,\n"
+#~ "# végtelen ciklus keletkezhet, ha nem sikerül.\n"
+#~ "#xserver-xorg xserver-xorg/autodetect_mouse boolean true\n"
+#~ "\n"
+#~ "# A monitor felismerése ajánlott.\n"
+#~ "xserver-xorg xserver-xorg/autodetect_monitor boolean true\n"
+#~ "# Vedd ki a megjegyzésből LCD kijelző esetén.\n"
+#~ "#xserver-xorg xserver-xorg/config/monitor/lcd boolean true\n"
+#~ "# A monitor beállításához X alá 3 mód van. Itt a\n"
+#~ "# \"medium\" előírása, mely mindig elérhető. A \"simple\" módszer néha "
+#~ "nem\n"
+#~ "# elérhető, az \"advanced\" túl sokat kérdez.\n"
+#~ "xserver-xorg xserver-xorg/config/monitor/selection-method \\\n"
+#~ "       select medium\n"
+#~ "xserver-xorg xserver-xorg/config/monitor/mode-list \\\n"
+#~ "       select 1024x768 @ 60 Hz"
 
 #~ msgid ""
 #~ "An MD5 hash for a password can be generated using the following command."

@@ -1,5 +1,5 @@
 <!-- retain these comments for translator revision tracking -->
-<!-- original version: 55679 -->
+<!-- original version: 56473 -->
 
 <!--
 Be carefull with the format of this file as it is parsed to generate
@@ -618,6 +618,7 @@ Voreinstellungsdatei ist Folgendes:
 
 <informalexample><screen>
 &lt;owner&gt; &lt;question name&gt; &lt;question type&gt; &lt;value&gt;
+( &lt;Eigentümer&gt; &lt;Name der Frage&gt; &lt;Typ der Frage&gt; &lt;Wert&gt; )
 </screen></informalexample>
 
 </para><para>
@@ -629,20 +630,24 @@ eine Voreinstellungsdatei schreibt:
 
 <itemizedlist>
 <listitem><para>
-  Fügen Sie zwischen Typ und Wert nur ein einzelnes Leerzeichen oder Tab ein;
-  jedes zusätzliche Leerzeichen wird interpretiert, als ob es zum Wert gehört.
+  Fügen Sie zwischen Typ und Wert nur ein einzelnes Leerzeichen oder einen Tab
+  ein; jedes zusätzliche Leerzeichen wird interpretiert, als ob es zum Wert
+  gehört. Wenn Sie einen leeren Wert angeben möchten, sollte hinter dem Typ
+  nur ein einzelnes Leerzeichen oder ein Tab folgen.
 </para></listitem>
 <listitem><para>
   Eine Zeile kann in mehrere aufgeteilt werden, indem ein Backslash
   (<quote><literal>\</literal></quote>) als Zeilenvorsetzungszeichen angefügt
   wird. Eine gute Stelle, um die Zeile aufzuteilen, ist hinter dem Namen der Frage;
-  eine schlechte ist zwischen Typ und Wert.
+  eine schlechte ist zwischen Typ und Wert. Eine Zeile inmitten des Wertes
+  aufzuteilen wird normalerweise nicht unterstützt; einzige Ausnahme sind
+  Partitionierungsrezepte.
 </para></listitem>
 <listitem><para>
   Für debconf-Variablen (Templates), die im Installer selbst benutzt werden,
   muss der Eigentümer (owner) auf <quote>d-i</quote> gesetzt werden; um
   Variablen im neu installierten System voreinzustellen, muss der Name des
-  Paketes, das die entsprechenden debconf-Templates enthält, verwendet werden.
+  Pakets, das die entsprechenden debconf-Templates enthält, verwendet werden.
   Nur Variablen, deren Eigentümer auf einen anderen Wert als <quote>d-i</quote>
   gesetzt ist, werden der debconf-Datenbank des installierten Systems
   zugewiesen.
@@ -767,8 +772,8 @@ d-i debian-installer/locale string de_DE
 Die Tastaturkonfiguration besteht aus der Auswahl der Tastaturarchitektur
 und der Tastaturbelegung. In den meisten Fällen ist die richtige
 Architektur bereits standardmäßig vorgewählt, sodass Sie normalerweise
-nicht voreingestellt werden muss. Die Tastaturbelegung muss zur
-ausgewählten Architektur passen.
+nicht voreingestellt werden muss. Die Tastaturbelegung muss dem
+&d-i; für die ausgewählte Architektur bekannt sein.
 
 <informalexample role="example"><screen>
 # Auswahl der Tastatur.
@@ -995,19 +1000,15 @@ Voreinstellung nutzen.
 <informalexample role="example"><screen>
 # Wenn das System freien Platz auf der Platte hat, können Sie festlegen, nur
 # diesen Platz zu partitionieren.
-# NOTE: this must be preseeded with a localized (translated) value.
-# HINWEIS: die Voreinstellungswerte für diese Frage müssen lokalisiert
-# (übersetzt) sein.
-#d-i partman-auto/init_automatically_partition \
-#      select Geführt - den größten freien Speicherbereich benutzen
+#d-i partman-auto/init_automatically_partition select biggest_free
 
 # Alternativ können Sie eine Festplatte angeben, die partitioniert
 # werden soll. Der Gerätename muss im traditionellen Format (nicht devfs)
 # angegeben werden.
+# Hinweis: es muss zwingend eine Festplatte angegeben werden, außer wenn das
+# System nur eine einzige Festplatte hat.
 # Um z.B. die erste SCSI/SATA-Festplatte zu nutzen, kann die folgende Zeile
 # verwendet werden:
-# Hinweis: es muss eine Festplatte angegeben werden, außer wenn das System nur
-# eine einzige Festplatte hat.
 #d-i partman-auto/disk string /dev/sda
 # Zusätzlich müssen Sie angeben, welche Partitionierungsmethode genutzt werden
 # soll. Derzeit verfügbare Methoden: "regular", "lvm" und "crypto"
@@ -1017,19 +1018,16 @@ d-i partman-auto/method string lvm
 # alte LVM-Konfiguration enthält, wird dem Benutzer normalerweise eine Warnung
 # angezeigt. Diese kann aber durch Voreinstellung unterdrückt werden...
 d-i partman-lvm/device_remove_lvm boolean true
-# Das gleiche gilt für die Bestätigung, die LVM-Partitionen zu schreiben.
+# Das Gleiche gilt für bereits existierende Software-RAID-Arrays:
+d-i parman-md/device_remove_md boolean true
+# Ebenfalls für die Bestätigung, die LVM-Partitionen zu schreiben.
 d-i partman-lvm/confirm boolean true
 
 # Sie können eines der vordefinierten Partitionierungsrezepte wählen:
-# NOTE: this must be preseeded with a localized (translated) value.
-# HINWEIS: die Voreinstellungswerte für diese Frage müssen lokalisiert
-# (übersetzt) sein.
-d-i partman-auto/choose_recipe \
-       select Alle Dateien auf eine Partition (für Anfänger empf.)
-#d-i partman-auto/choose_recipe \
-#       select Separate /home-Partition
-#d-i partman-auto/choose_recipe \
-#       select Separate /home-, /usr-, /var- und /tmp-Partitionen
+# - atomic: alle Dateien in einer Partition
+# - home:   separate /home-Partition
+# - multi:  separate /home-, /usr-, /var- und /tmp-Partitionen
+d-i partman-auto/choose_recipe select atomic
 
 # Oder erstellen Sie ein eigenes Rezept...
 # Das Rezept-Format ist in der Datei devel/partman-auto-recipe.txt
@@ -1062,8 +1060,7 @@ d-i partman-auto/choose_recipe \
 # vorausgesetzt, Sie haben mit einer der obigen Methoden festgelegt, wie
 # partitioniert werden soll.
 d-i partman/confirm_write_new_label boolean true
-d-i partman/choose_partition \
-       select Finish partitioning and write changes to disk
+d-i partman/choose_partition select finish
 d-i partman/confirm boolean true
 </screen></informalexample>
 
@@ -1074,7 +1071,7 @@ d-i partman/confirm boolean true
 <para>
 
 Sie können auch Voreinstellung verwenden, um Partitionen auf einem
-Software-RAID einzurichten. Es werden RAID-Level 0, 1 und 5 unterstützt
+Software-RAID einzurichten. Es werden RAID-Level 0, 1, 5, 6 und 10 unterstützt
 sowie die Einrichtung von degradierten Arrays und die Festlegung von
 Reserve-Geräten. Wenn Sie RAID 1 verwenden, können Sie voreinstellen,
 dass grub auf allen Geräten im Verbund installiert wird; siehe
@@ -1085,17 +1082,11 @@ dass grub auf allen Geräten im Verbund installiert wird; siehe
 <warning><para>
 
 Bei dieser Art von automatisierter Partitionierung kann leicht etwas
-falsch laufen. Auch ist diese Installer-Komponente recht neu und könnte noch
-Fehler enthalten bzw. nicht vorhandene Fehlerbehandlung. Die Verantwortung,
+falsch laufen. Auch ist diese Installer-Komponente von den Entwicklern des
+&d-i; relativ wenig getestet worden. Die Verantwortung,
 die verschiedenen Rezepte richtig hinzubekommen (so dass Sie Sinn machen
 und nicht miteinander kollidieren), liegt beim Benutzer! Schauen Sie in
-<filename>/var/log/syslog</filename>, wenn Probleme auftreten.
-
-</para><para>
-
-Bedenken Sie, dass nur RAID 0 und RAID 1 von den Entwicklern dieser Komponente
-getestet wurden. RAID 5 ist noch ungetestet. Erweiterte RAID-Einstellungen mit
-degradierten Arrays und Reserve-Geräten wurden nur oberflächlich getestet.
+<filename>/var/log/syslog</filename> nach, wenn Probleme auftreten.
 
 </para></warning>
 
@@ -1129,7 +1120,8 @@ degradierten Arrays und Reserve-Geräten wurden nur oberflächlich getestet.
 # Parameter sind:
 # &lt;raidtype&gt; &lt;devcount&gt; &lt;sparecount&gt; &lt;fstype&gt; &lt;mountpoint&gt; \
 #          &lt;devices&gt; &lt;sparedevices&gt;
-# RAID-Level 0, 1 und 5 werden unterstützt; mehrere Geräte werden mit "#" getrennt.
+# RAID-Level 0, 1, 5, 6 und 10 werden unterstützt; mehrere Geräte werden durch 
+# "#" getrennt.
 #d-i partman-auto-raid/recipe string \
 #    1 2 0 ext3 /                                           \
 #          /dev/discs/disc0/part1#/dev/discs/disc1/part1    \
@@ -1144,8 +1136,7 @@ degradierten Arrays und Reserve-Geräten wurden nur oberflächlich getestet.
 # Dies veranlasst partman, automatisch ohne Nachfrage zu partitionieren.
 d-i partman-md/confirm boolean true
 d-i partman/confirm_write_new_label boolean true
-d-i partman/choose_partition \
-       select Finish partitioning and write changes to disk
+d-i partman/choose_partition select finish
 d-i partman/confirm boolean true
 </screen></informalexample>
 
@@ -1451,47 +1442,8 @@ d-i finish-install/reboot_in_progress note
 
   </sect2>
 
-  <sect2 id="preseed-X">
-  <title>Konfiguration des X-Server-Systems</title>
-<para>
-
-Die Konfiguration von Debian's X-System voreinzustellen ist möglich, aber
-Sie müssen vielleicht einige Details über die Video-Hardware des Rechners
-kennen, da Debian's X-Konfigurationsprogramm nicht in jedem Fall eine
-vollautomatische Konfiguration durchführen kann.
-
-</para>
-
-<informalexample role="example"><screen>
-# X kann den richtigen Treiber für einige Grafikkarten erkennen, aber wenn
-# Sie eine Voreinstellung treffen, überschreiben Sie diese Auswahl. Vesa
-# sollte aber in den meisten Fällen funktionieren.
-#xserver-xorg xserver-xorg/config/device/driver select vesa
-
-# Das Problem mit der automatischen Mauserkennung ist: wenn es schief geht,
-# wird X es wieder und wieder versuchen. Wenn also automatische Erkennung
-# voreingestellt ist, besteht die Gefahr einer Endlosschleife, falls die
-# Maus nicht erkannt werden kann.
-#xserver-xorg xserver-xorg/autodetect_mouse boolean true
-
-# Die automatische Erkennung des Monitors wird empfohlen.
-xserver-xorg xserver-xorg/autodetect_monitor boolean true
-# Entfernen Sie hier das Kommentarzeichen, wenn Sie ein LCD-Display haben.
-#xserver-xorg xserver-xorg/config/monitor/lcd boolean true
-# Die X-Konfiguration bietet drei mögliche Wege für die Konfiguration des
-# Monitors. Dies ist die Voreinstellung für "medium", was immer verfügbar
-# ist. Der einfache Weg ("simple") ist nicht immer verfügbar und "advanced"
-# (erweitert) stellt zu viele Fragen.
-xserver-xorg xserver-xorg/config/monitor/selection-method \
-       select medium
-xserver-xorg xserver-xorg/config/monitor/mode-list \
-       select 1024x768 @ 60 Hz
-</screen></informalexample>
-
-  </sect2>
-
   <sect2 id="preseed-other">
-  <title>Andere Pakete voreinstellen</title>
+  <title>Voreinstellung anderer Pakete</title>
 
 <informalexample role="example"><screen>
 # Abhängig davon, welche Software Sie zur Installation auswählen oder ob
@@ -1506,7 +1458,6 @@ xserver-xorg xserver-xorg/config/monitor/mode-list \
 
   </sect2>
  </sect1>
-
 
  <sect1 id="preseed-advanced">
  <title>Erweiterte Optionen</title>

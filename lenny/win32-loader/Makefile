@@ -49,8 +49,8 @@ win32-loader.exe: main.nsi maps.ini \
 	$(MAKENSIS) main.nsi
 	du -h win32-loader.exe
 
-license: license.in
-	sed -e "s/@VERSION@/$(VERSION)/g" < $^ > $@
+license: license.in debian/changelog
+	sed -e "s/@VERSION@/$(VERSION)/g" < $< > $@
 
 plugins/cpuid/test64.dll: plugins/cpuid/cpuid.c plugins/cpuid/plugin.c
 	$(CC) $(CFLAGS) $^ -shared -o $@
@@ -118,6 +118,10 @@ netboot/stable/autorun.inf netboot/daily/autorun.inf: autorun.inf
 netboot/stable/win32-loader.ini netboot/daily/win32-loader.ini: win32-loader.ini
 	mkdir -p netboot/{stable,daily}
 	todos < $< > $@
+
+netboot/stable/win32-loader.exe netboot/daily/win32-loader.exe: win32-loader.exe
+	mkdir -p netboot/{stable,daily}
+	cp $^ $@
 
 netboot/stable/% netboot/daily/%: %
 	mkdir -p netboot/{stable,daily}

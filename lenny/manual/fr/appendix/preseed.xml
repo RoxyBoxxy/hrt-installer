@@ -1,4 +1,4 @@
-<!-- original version: 55679 -->
+<!-- original version: 56510 -->
 
 <!--
 Be carefull with the format of this file as it is parsed to generate
@@ -579,7 +579,8 @@ Voici quelques règles pour écrire un fichier de préconfiguration.
   Une ligne peut être divisée en ajoutant une barre oblique inverse
   (<quote><literal>\</literal></quote>) pour signifier la continuation de la ligne.
   Il vaut mieux couper la ligne après le nom de la question.
-  Ce n'est pas très heureux de la couper entre le type et la valeur.
+  Ce n'est pas très heureux de la couper entre le type et la valeur. Les lignes coupées
+  seront réunies en une seule ligne et tous les espaces superflus condensés en un seul.
 </para></listitem>
 <listitem><para>
   Le propriétaire des variables debconf utilisées dans l'installateur lui-même
@@ -679,11 +680,14 @@ qu'après que les questions ont été posées.
 </para><para>
 
 Une locale peut être choisie pour indiquer à la fois la langue et le pays.
+Toute combinaison d'une langue reconnue par l'installateur et d'un pays valable
+est acceptée. Si la combinaison ne forme pas une locale valable, l'installateur
+choisira automatiquement une locale correspondant à la langue sélectionnée.
 Pour indiquer une locale sous forme de paramètre d'amorçage, écrivez&nbsp;:
 <userinput>locale=<replaceable>fr_FR</replaceable></userinput>.
 
 <informalexample role="example"><screen>
-# indiquer à la fois la langue et le pays :
+# Pour indiquer à la fois la langue et le pays :
 d-i debian-installer/locale string fr_FR
 </screen></informalexample>
 
@@ -691,7 +695,8 @@ d-i debian-installer/locale string fr_FR
 
 La configuration du clavier consiste à déclarer son architecture et la carte clavier.
 La plupart du temps le type est correctement détecté et il n'y a pas besoin de
-le préconfigurer. La carte clavier doit être compatible avec le type du clavier.
+le préconfigurer. La carte clavier doit être connue par l'installateur debian et
+être compatible avec le type du clavier.
 
 <informalexample role="example"><screen>
 # Choix du clavier.
@@ -903,14 +908,12 @@ sera choisi avant de préconfigurer son partitionnement.
 <informalexample role="example"><screen>
 # Si le système possède un espace libre, vous pouvez ne partitionner que cet
 # espace.
-# Note : la valeur du choix doit être traduite.
-#d-i partman-auto/init_automatically_partition	\
-#    select Assisté - utiliser le plus grand espace disponible
+#d-i partman-auto/init_automatically_partition select biggest_free
 
 # Vous pouvez aussi choisir un disque entier. Le nom du disque doit être
-# donné selon le format traditionnel. Par exemple, pour utiliser le premier disque
-# SCSI/SATA :
+# donné selon le format traditionnel.
 # Note : un disque doit être spécifié, sauf si le système n'en possède qu'un.
+# Par exemple, pour utiliser le premier disque SCSI/SATA :
 #d-i partman-auto/disk string /dev/sda
 # Il faudra aussi indiquer la méthode à utiliser.
 # Actuellement les méthodes disponibles sont : regular, lvm et crypto.
@@ -920,17 +923,16 @@ d-i partman-auto/method string lvm
 # configuration LVM, l'utilisateur recevra normalement un avertissement.
 # Cet avertissement peut être évité :  
 d-i partman-lvm/device_remove_lvm boolean true
-# De même pour la confirmation de créer les partitions lvm :
+# De même pour un Raid logiciel existant déjà :
+d-i parman-md/device_remove_md boolean true
+# Et aussi pour la confirmation concernant la création de partitions lvm :
 d-i partman-lvm/confirm boolean true
 
-# Vous pouvez choisir parmi tous les schémas prédéfinis...
-# Note : la valeur du choix doit être traduit.
-d-i partman-auto/choose_recipe \
-    select All files in one partition (recommended for new users)
-#d-i partman-auto/choose_recipe \
-#   select Separate /home partition
-#d-i partman-auto/choose_recipe \
-#   select Separate /home, /usr, /var, and /tmp partitions
+# Vous pouvez choisir l'un des trois schémas prédéfinis...
+# - atomic: tous les fichiers dans une seule partition
+# - home:   partition /home distincte
+# - multi:  partitions /home, /usr, /var, et /tmp séparées
+d-i partman-auto/choose_recipe select atomic
 
 #...ou donner vous-même votre schéma.
 # Le format des schémas est expliqué dans le fichier 
@@ -960,11 +962,10 @@ d-i partman-auto/choose_recipe \
 #                      method{ swap } format{ }                \
 #              .
 
-# Si vous avez indiqué la méthode à utiliser, Partman créera automatiquement
+# Si vous avez indiqué la méthode à utiliser, partman créera automatiquement
 # les partitions sans demander de confirmation.
 d-i partman/confirm_write_new_label boolean true
-d-i partman/choose_partition \
-   select Finish partitioning and write changes to disk
+d-i partman/choose_partition select finish
 d-i partman/confirm boolean true
 </screen></informalexample>
 
@@ -975,7 +976,7 @@ d-i partman/confirm boolean true
 <para>
 
 Il est aussi possible de préconfigurer le partitionnement d'un RAID logiciel.
-Les niveaux 0,1 et 5 sont acceptés, de même que la création d'ensemble dégradé et
+Les niveaux 0,1,5,6 et 10 sont acceptés, de même que la création d'ensemble dégradé et
 de périphériques de rechange.
 Si vous utilisez RAID 1, vous pouvez préconfigurer grub pour qu'il s'installe sur tous
 les périphériques de l'ensemble, voyez <xref linkend="preseed-bootloader"/>.
@@ -984,15 +985,12 @@ les périphériques de l'ensemble, voyez <xref linkend="preseed-bootloader"/>.
 <warning><para>
 
 Il est facile de se tromper avec ce type de partitionnement automatique.
-C'est aussi un nouveau composant de l'installateur, des bogues peuvent exister et
-la gestion de certaines erreurs peut manquer. Donner les bonnes formules est de
-la responsabilité de chacun. Consultez le fichier <filename>/var/log/syslog</filename>
+C'est aussi une nouvelle fonctionnalité qui a été relativement peu testée par les développeurs 
+de l'installateur. Donner les bonnes formules est de la responsabilité de chacun.
+Consultez le fichier <filename>/var/log/syslog</filename>
 si vous rencontrez des problèmes.
 </para>
-<para>
-Seuls RAID 0 et RAID 1 ont été testés par les développeurs. RAID 5 n'est pas testé.
-Le RAID avec ensemble dégradé ou périphériques de rechange n'a été que très peu testé.
-</para></warning>
+</warning>
 
 <informalexample><screen>
 # NOTE: cette option est en mode bêta et doit être utilisée avec précaution.
@@ -1022,7 +1020,7 @@ Le RAID avec ensemble dégradé ou périphériques de rechange n'a été que tr�
 # Paramètres :
 # &lt;raidtype&gt; &lt;devcount&gt; &lt;sparecount&gt; &lt;fstype&gt; &lt;mountpoint&gt; \
 #          &lt;devices&gt; &lt;sparedevices&gt;
-# Les niveaux RAID 0, 1 et 5 sont acceptés. Les périphériques sont séparés par "#".
+# Les niveaux RAID 0, 1, 5, 6 et 10 sont acceptés. Les périphériques sont séparés par "#".
 #d-i partman-auto-raid/recipe string \
 #    1 2 0 ext3 /                                           \
 #          /dev/discs/disc0/part1#/dev/discs/disc1/part1    \
@@ -1321,40 +1319,6 @@ d-i finish-install/reboot_in_progress note
 #d-i debian-installer/exit/poweroff boolean true
 </screen></informalexample>
 
-</sect2>
-
-  <sect2 id="preseed-X">
-  <title>Configuration du serveur X</title>
-<para>
-
-Préconfigurer le serveur X est possible, mais vous devrez sans doute 
-connaître les caractéristiques du matériel video de votre machine. Le
-configurateur Debian du serveur X ne configure rien automatiquement.
-</para>
-<informalexample role="example"><screen>
-# X peut détecter le bon pilote pour certaines cartes, mais si vous faites une
-# préconfiguration, vous annulez ce qu'il aura choisi. Cependant vesa
-# fonctionne la plupart du temps.
-#xserver-xorg xserver-xorg/config/device/driver select vesa
-
-# Pour la détection automatique de la souris, il faut savoir que si elle
-# échoue, X recommence sans fin le processus. Donc, s'il y a préconfiguration,
-# une boucle infinie peut apparaître si la souris n'est pas détectée.
-#xserver-xorg xserver-xorg/autodetect_mouse boolean true
-
-# La détection automatique du moniteur est recommandée.
-xserver-xorg xserver-xorg/autodetect_monitor boolean true
-# Décommentez la ligne suivante si vous possédez un écran LCD.
-#xserver-xfree86 xserver-xfree86/config/monitor/lcd boolean true
-# X possède trois méthodes pour la configuration du moniteur. Voici comment
-# présélectionner la méthode « medium », qui est toujours disponible.
-# La méthode « simple » peut ne pas être disponible et la méthode
-# « advanced » pose trop de questions.
-xserver-xorg xserver-xorg/config/monitor/selection-method \
-       select medium
-xserver-xorg xserver-xorg/config/monitor/mode-list \
-       select 1024x768 @ 60 Hz
-</screen></informalexample>
 </sect2>
 
   <sect2 id="preseed-other">
