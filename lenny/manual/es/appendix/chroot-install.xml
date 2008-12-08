@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<!-- original version: 44410 -->
+<!-- original version: 55631 -->
 <!-- revisado jfs, 21 noviembre 2004 -->
 <!-- revisado rudy, 24 feb. 2005 -->
 <!-- actualizado jfs, 23 marzo 2006 -->
 <!-- actualizado jfs, enero 2007 -->
+<!-- actualizado igortamara, nov 17 2008 -->
+<!-- revisado jfs, nov 24 2008 -->
 
  <sect1 id="linux-upgrade">
  <title>Instalar &debian; desde un sistema Unix/Linux</title>
@@ -31,6 +33,19 @@ tratar con hardware que no puede utilizarse de forma sencilla con
 los distintos mecanismos de instalación o arranque disponibles.
 
 </para>
+
+<note><para>
+
+Dado que este proceso es, en gran parte, manual ha de tener en cuenta que
+tendrá que hacer gran parte de la configuración básica del sistema por su cuenta.
+Para poder hacer esto necesitará más conocimientos de Debian y en general de Linux
+que si fuera a hacer una instalación normal. No espere que el resultado de este procedimiento
+sea un sistema idéntico al que uno obtendría si realizara la instalación normalmente.
+También debería tener en cuenta que este procedimiento solamente describe los pasos
+básicos para configurar un sistema. Es posible que puedan tener que realizarse
+pasos adicionales en la instalación y/o configuración.
+
+</para></note>
 
   <sect2>
   <title>Primeros pasos</title>
@@ -181,6 +196,7 @@ función de su arquitectura:
 <userinput>alpha</userinput>,
 <userinput>amd64</userinput>,
 <userinput>arm</userinput>,
+<userinput>armel</userinput>,
 <userinput>hppa</userinput>,
 <userinput>i386</userinput>,
 <userinput>ia64</userinput>,
@@ -219,6 +235,51 @@ ejemplo:
 </screen></informalexample>
 
 </para>
+
+   <sect3>
+   <title>Crear ficheros de dispositivos</title>
+<para>
+
+Llegados a este punto el directorio <filename>/dev/</filename> contiene solamente ficheros
+de dispositivos muy básicos. Es posible que necesite ficheros de dispositivo adicionales
+para llevar a cabo los pasos siguientes de la instalación. Hay varias formas
+de hacerlo y el método que vaya a usar dependerá del sistema inicial que esté
+usando para la instalación, de si desea usar un núcleo modular o no, de si
+pretende usar dispositivos de archivos dinámicos (p.ej. con
+<classname>udev</classname>) o estáticos para el nuevo sistema.
+
+</para><para>
+
+Algunas de las opciones disponibles son las siguientes:
+
+<itemizedlist>
+<listitem><para>
+
+cree un conjunto predeterminado de ficheros de dispositivo estáticos con
+<informalexample><screen>
+# cd /dev
+# MAKEDEV generic
+</screen></informalexample>
+
+</para></listitem>
+<listitem><para>
+
+cree manualmente solamente ficheros de dispositivos específicos con
+<command>MAKEDEV</command>
+
+</para></listitem>
+<listitem><para>
+
+Monte <filename>/dev</filename> del sistema original encima del directorio <filename>/dev</filename>
+del sistema objetivo utilizando un enlace de montaje («bind mount», N. del T.)
+Ha de tener en cuenta que los programas de postinstalación de algunos paquetes
+pueden tratar de crear ficheros de dispositivos. Utilice esta opción con precaución.
+
+</para></listitem>
+</itemizedlist>
+
+</para>
+   </sect3>
 
    <sect3>
    <title>Montar particiones</title>
@@ -414,10 +475,10 @@ algunas fuentes adicionales para poder acceder a paquetes fuente y a
 actualizaciones de seguridad:
 
 <informalexample><screen>
-deb-src http://ftp.us.debian.org/debian etch main
+deb-src http://ftp.us.debian.org/debian &releasename; main
 
-deb http://security.debian.org/ etch/updates main
-deb-src http://security.debian.org/ etch/updates main
+deb http://security.debian.org/ &releasename;/updates main
+deb-src http://security.debian.org/ &releasename;/updates main
 </screen></informalexample>
 
 Asegúrese de ejecutar <userinput>aptitude update</userinput> después
@@ -551,6 +612,13 @@ La segunda orden instalará <command>grub</command> (en este caso en el
 MBR de <literal>hda</literal>). La última orden creará un
 <filename>/boot/grub/menu.lst</filename> funcional.
 
+</para><para>
+
+Estos ejemplos asumen que se ha creado el fichero de dispositov 
+<filename>/dev/hda</filename>. Existen métodos alternativos para 
+instalar <command>grub</command>,
+pero están fuera del alcance de este apéndice.
+
 </para><para arch="x86">
 
 Aquí tiene un ejemplo básico de /etc/lilo.conf:
@@ -562,6 +630,7 @@ install=menu
 delay=20
 lba32
 image=/vmlinuz
+initrd=/initrd.img
 label=Debian
 </screen></informalexample>
 
