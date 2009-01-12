@@ -45,7 +45,7 @@ decode_recipe () {
 			line=''
 			;;
 		    ::)
-			db_metaget $line description
+			db_metaget $line description || RET=''
 			name="${RET:-Unnamed.$unnamed}"
 			line=''
 			;;
