@@ -222,7 +222,12 @@ if [ "$ARCH" = powerpc/powermac_oldworld ]; then
 fi
 
 # Set initramfs to MODULES=dep and regenerate the initramfs
-sed -i -e 's/MODULES=most/MODULES=dep/g' /target/etc/initramfs-tools/initramfs.conf
+cat > /target/etc/initramfs-tools/conf.d/quik-installer <<EOF
+# Driver inclusion policy selected by quik-installer
+# Note: this setting overrides the value set in the file
+# /etc/initramfs-tools/initramfs.conf
+MODULES=dep
+EOF
 in-target update-initramfs -u || true
 
 # Done!
