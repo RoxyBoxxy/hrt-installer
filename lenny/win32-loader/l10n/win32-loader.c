@@ -1,6 +1,6 @@
 /*
  *  win32-loader.c -- l10n support
- *  Copyright (C) 2007, 2008  Robert Millan <rmh@aybabtu.com>
+ *  Copyright (C) 2007,2008,2009  Robert Millan <rmh@aybabtu.com>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -78,6 +78,14 @@ main (int argc, char **argv)
   langstring ("unsupported_version_of_windows",	_("This program doesn't support Windows $windows_version yet."));
   langstring ("amd64_on_i386",			_("The version of Debian you're trying to install is designed to run on modern, 64-bit computers.  However, your computer is incapable of running 64-bit programs.\n\nUse the 32-bit (\"i386\") version of Debian, or the Multi-arch version which is able to install either of them.\n\nThis installer will abort now."));
   langstring ("i386_on_amd64",			_("Your computer is capable of running modern, 64-bit operating systems.  However, the version of Debian you're trying to install is designed to run on older, 32-bit hardware.\n\nYou may still proceed with this install, but in order to take the most advantage of your computer, we recommend that you use the 64-bit (\"amd64\") version of Debian instead, or the Multi-arch version which is able to install either of them.\n\nWould you like to abort now?"));
+/*
+  translate:
+  "system partition" and "boot partition" are defined by Microsoft to mean the opposite of what a
+  normal person would expect they mean, so please keep the quotes, and translate them as literally
+  as possible.  Also, I suggest you use the same term used in http://support.microsoft.com/kb/314470
+  if that is available for your language.
+ */
+  langstring ("cant_find_system_partition",	_("Unable to find \"system partition\", assuming it is the same as the \"boot partition\" ($c)."));
   langstring ("expert1",			_("Select install mode:"));
   langstring ("expert2",			_("Normal mode.  Recommended for most users."));
   langstring ("expert3",			_("Expert mode.  Recommended for expert users who want full control of the install process."));
@@ -125,7 +133,7 @@ main (int argc, char **argv)
   langstring ("registering_ntldr",		_("Registering Debian-Installer in NTLDR"));
   langstring ("registering_bootmgr",		_("Registering Debian-Installer in BootMgr"));
   langstring ("error_bcdedit_extract_id",	_("Error: failed to parse bcdedit.exe output."));
-  langstring ("boot_ini_not_found",		_("Error: boot.ini not found.  Is this really Windows $windows_version?"));
+  langstring ("system_file_not_found",		_("Error: $0 not found.  Is this really Windows $windows_version?"));
   langstring ("warning1",			_("VERY IMPORTANT NOTICE:\\n\\n"));
 /*
   translate:

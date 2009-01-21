@@ -1,5 +1,5 @@
 ; Debian-Installer Loader
-; Copyright (C) 2007,2008  Robert Millan <rmh@aybabtu.com>
+; Copyright (C) 2007,2008,2009  Robert Millan <rmh@aybabtu.com>
 ;
 ; This program is free software: you can redistribute it and/or modify
 ; it under the terms of the GNU General Public License as published by
@@ -33,7 +33,6 @@ RequestExecutionLevel admin
 !include FileFunc.nsh
 !include WinMessages.nsh
 !insertmacro GetRoot
-!insertmacro un.GetRoot
 
 !addplugindir plugins
 !addplugindir plugins/cpuid
@@ -122,9 +121,6 @@ Function ShowExpert
 
 ; ********************************************** Initialise $preseed_cmdline
   StrCpy $preseed_cmdline " "
-; ********************************************** Initialise $c
-  ; FIXME: this line is duplicated in the uninstaller.  keep in sync!
-  ${GetRoot} $WINDIR $c
 
 !ifndef NETWORK_BASE_URL
 ; ********************************************** Initialise $d
@@ -168,9 +164,6 @@ readme_file_not_found:
   ${Endif}
 !endif
 
-  StrCpy $INSTDIR "$c\debian"
-  SetOutPath $INSTDIR
-
   ; Windows version is another abort condition
   Var /GLOBAL windows_version
   Var /GLOBAL windows_boot_method
@@ -199,6 +192,31 @@ readme_file_not_found:
   MessageBox MB_OK|MB_ICONSTOP $(unsupported_version_of_windows)
   Quit
 windows_version_ok:
+
+; ********************************************** Initialise $c
+; We set it to the "System partition" (see http://en.wikipedia.org/wiki/System_partition_and_boot_partition)
+
+  ${If} $windows_boot_method == ntldr
+  ${OrIf} $windows_boot_method == bootmgr
+    systeminfo::find_system_partition
+    Pop $c
+    ${If} $c == failed
+      ${GetRoot} $WINDIR $c
+      MessageBox MB_OK|MB_ICONEXCLAMATION $(cant_find_system_partition)
+    ${Endif}
+    Goto c_is_initialized
+  ${Endif}
+  ${If} $windows_boot_method == direct
+    ; Doesn't really matter.
+    ${GetRoot} $WINDIR $c
+    Goto c_is_initialized
+  ${Endif}
+c_is_initialized:
+  ; For the uninstaller
+  WriteRegStr HKLM "Software\Debian\Debian-Installer Loader" "system_drive" "$c"
+
+  StrCpy $INSTDIR "$c\debian"
+  SetOutPath $INSTDIR
 
   File /oname=$PLUGINSDIR\expert.ini	templates/binary_choice.ini
   WriteINIStr $PLUGINSDIR\expert.ini "Field 1" "Text" $(expert1)
@@ -656,102 +674,43 @@ boot$\n"
   FileClose $0
 
 ; ********************************************** cpio hack
-  File /oname=$PLUGINSDIR\cpio.exe /usr/share/win32/cpio.exe
-  File /oname=$PLUGINSDIR\gzip.exe /usr/share/win32/gzip.exe
+  File /oname=$INSTDIR\cpio.exe /usr/share/win32/cpio.exe
+  File /oname=$INSTDIR\gzip.exe /usr/share/win32/gzip.exe
 
   StrCpy $0 "$INSTDIR\initrd.gz"
   DetailPrint "$(appending_preseeding)"
 
-  FileOpen $0 $PLUGINSDIR\preseed.cfg w
+  FileOpen $0 $INSTDIR\preseed.cfg w
   FileWrite $0 "$preseed_cfg$\n"
   FileClose $0
 
   ; cpio awkward CLI, meet Winf**k awkward CLI
-  FileOpen $0 $PLUGINSDIR\cpio_list w
+  FileOpen $0 $INSTDIR\cpio_list w
   FileWrite $0 "preseed.cfg"
   FileClose $0
 
-  FileOpen $0 $PLUGINSDIR\cpio.bat w
+  ; IMPORTANT!!  All files accessed by this script must be in the same
+  ; filesystem as the script itself, because cmd.exe/command.com gets
+  ; confused when using absolute paths.  This is why $INSTDIR is used
+  ; instead of $PLUGINSDIR.
+  FileOpen $0 $INSTDIR\cpio.bat w
   FileWrite $0 "\
-cd $PLUGINSDIR$\r$\n\
 cpio.exe -o -H newc < cpio_list > newc_chunk$\r$\n\
-attrib -r $INSTDIR\initrd.gz$\r$\n\
-gzip.exe -1 < newc_chunk >> $INSTDIR\initrd.gz$\r$\n\
+attrib -r initrd.gz$\r$\n\
+gzip.exe -1 < newc_chunk >> initrd.gz$\r$\n\
 "
   FileClose $0
 
-  nsExec::Exec '"$PLUGINSDIR\cpio.bat"'
+  nsExec::Exec '"$INSTDIR\cpio.bat"'
   Pop $0
   ${If} $0 != 0
-    StrCpy $0 "cpio.bat"
+    StrCpy $0 "$INSTDIR\cpio.bat"
     MessageBox MB_OK|MB_ICONSTOP "$(error_exec)"
     Quit
   ${Endif}
 
 ; ********************************************** Do bootloader last, because it's the most dangerous
   ${If} $windows_boot_method == ntldr
-    Var /GLOBAL boot_ini
-
-    ; boot.ini is in the "System partition" (see http://en.wikipedia.org/wiki/System_partition_and_boot_partition)
-    ;
-    ; We have no idea where that could be, so we just probe everything.
-    ; This is REALLY ugly, but do we have a better way?
-
-    StrCpy $boot_ini "$c\boot.ini"
-    IfFileExists "$boot_ini" found_boot_ini
-    StrCpy $boot_ini "c:\boot.ini"
-    IfFileExists "$boot_ini" found_boot_ini
-    StrCpy $boot_ini "d:\boot.ini"
-    IfFileExists "$boot_ini" found_boot_ini
-    StrCpy $boot_ini "e:\boot.ini"
-    IfFileExists "$boot_ini" found_boot_ini
-    StrCpy $boot_ini "f:\boot.ini"
-    IfFileExists "$boot_ini" found_boot_ini
-    StrCpy $boot_ini "g:\boot.ini"
-    IfFileExists "$boot_ini" found_boot_ini
-    StrCpy $boot_ini "h:\boot.ini"
-    IfFileExists "$boot_ini" found_boot_ini
-    StrCpy $boot_ini "i:\boot.ini"
-    IfFileExists "$boot_ini" found_boot_ini
-    StrCpy $boot_ini "j:\boot.ini"
-    IfFileExists "$boot_ini" found_boot_ini
-    StrCpy $boot_ini "k:\boot.ini"
-    IfFileExists "$boot_ini" found_boot_ini
-    StrCpy $boot_ini "l:\boot.ini"
-    IfFileExists "$boot_ini" found_boot_ini
-    StrCpy $boot_ini "m:\boot.ini"
-    IfFileExists "$boot_ini" found_boot_ini
-    StrCpy $boot_ini "n:\boot.ini"
-    IfFileExists "$boot_ini" found_boot_ini
-    StrCpy $boot_ini "o:\boot.ini"
-    IfFileExists "$boot_ini" found_boot_ini
-    StrCpy $boot_ini "p:\boot.ini"
-    IfFileExists "$boot_ini" found_boot_ini
-    StrCpy $boot_ini "q:\boot.ini"
-    IfFileExists "$boot_ini" found_boot_ini
-    StrCpy $boot_ini "r:\boot.ini"
-    IfFileExists "$boot_ini" found_boot_ini
-    StrCpy $boot_ini "s:\boot.ini"
-    IfFileExists "$boot_ini" found_boot_ini
-    StrCpy $boot_ini "t:\boot.ini"
-    IfFileExists "$boot_ini" found_boot_ini
-    StrCpy $boot_ini "u:\boot.ini"
-    IfFileExists "$boot_ini" found_boot_ini
-    StrCpy $boot_ini "v:\boot.ini"
-    IfFileExists "$boot_ini" found_boot_ini
-    StrCpy $boot_ini "w:\boot.ini"
-    IfFileExists "$boot_ini" found_boot_ini
-    StrCpy $boot_ini "x:\boot.ini"
-    IfFileExists "$boot_ini" found_boot_ini
-    StrCpy $boot_ini "y:\boot.ini"
-    IfFileExists "$boot_ini" found_boot_ini
-    StrCpy $boot_ini "z:\boot.ini"
-    IfFileExists "$boot_ini" found_boot_ini
-
-    MessageBox MB_OK|MB_ICONSTOP $(boot_ini_not_found)
-    Quit
-found_boot_ini:
-
 !ifdef NETWORK_BASE_URL
     Push "false"
     Push "g2ldr"
@@ -779,13 +738,13 @@ found_boot_ini:
       Quit
 !endif
     DetailPrint "$(registering_ntldr)"
-    SetFileAttributes "$boot_ini" NORMAL
-    SetFileAttributes "$boot_ini" SYSTEM|HIDDEN
+    SetFileAttributes "$c\boot.ini" NORMAL
+    SetFileAttributes "$c\boot.ini" SYSTEM|HIDDEN
     ; Sometimes timeout isn't set.  This may result in ntldr booting straight to
     ; Windows (bad) or straight to Debian-Installer (also bad)!  Force it to 30
     ; just in case.
-    WriteIniStr "$boot_ini" "boot loader" "timeout" "30"
-    WriteIniStr "$boot_ini" "operating systems" "$c\g2ldr.mbr" '"$(d-i_ntldr)"'
+    WriteIniStr "$c\boot.ini" "boot loader" "timeout" "30"
+    WriteIniStr "$c\boot.ini" "operating systems" "$c\g2ldr.mbr" '"$(d-i_ntldr)"'
   ${Endif}
 
   ${If} $windows_boot_method == direct
@@ -881,8 +840,7 @@ FunctionEnd
 
 Section "Uninstall"
   ; Initialise $c
-  ; FIXME: this line is duplicated in the installer.  keep in sync!
-  ${un.GetRoot} $WINDIR $c
+  ReadRegStr $c HKLM "Software\Debian\Debian-Installer Loader" "system_drive"
 
   SetFileAttributes "$c\boot.ini" NORMAL
   SetFileAttributes "$c\boot.ini" SYSTEM|HIDDEN
@@ -909,10 +867,5 @@ Section "Uninstall"
   Delete $c\g2ldr
   Delete $c\g2ldr.mbr
   Delete $c\grub.cfg
-  Delete $INSTDIR\loadlin.exe
-  Delete $INSTDIR\loadlin.pif
-  Delete $INSTDIR\linux
-  Delete $INSTDIR\initrd.gz
-  Delete /REBOOTOK $INSTDIR\Uninstall.exe
-  RMDir /REBOOTOK $INSTDIR
+  RMDir /r /REBOOTOK $INSTDIR
 SectionEnd
