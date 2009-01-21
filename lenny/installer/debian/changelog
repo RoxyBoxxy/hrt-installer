@@ -1,3 +1,48 @@
+debian-installer (2008xxxx) unstable; urgency=low
+
+  [ Martin Michlmayr ]
+  * Fix off-by-one: the QNAP initrd should be padded to exactly 4 MB,
+    not 4 MB - 1 byte.
+
+  [ Otavio Salvador ]
+  * Add pata-modules on cdrom images (i386 and amd64) to enable support
+    for Marvell controllers and others.
+
+  [ Frans Pop ]
+  * Update minimum memory/diskspace requirements in x86 syslinux help
+    screens. New values are the same as in the Installation Guide.
+
+  [ Samuel Thibault ]
+  * Add uinput-modules to cdrom, netboot and hd-media images (amd64, alpha,
+    i386, ppc64, ia64 and powerpc) to improve brltty device support.
+
+  [ Otavio Salvador ]
+  * Apply patch from Jurij Smakov to add usb-storage to cdrom and netboot
+    images (sparc) to allow firmware to be loaded from a usb devices.
+    Closes: #505789.
+
+  [ Frans Pop ]
+  * Add option in syslinux configuration to return to graphical boot menu
+    from the help screens. Based on research done by Franklin Piat.
+    Closes: #505750.
+  * Rename syslinux adamd*.cfg files to amdad*.cfg.
+  * Rename syslinux *text.cfg files to *txt.cfg. This is needed because
+    adamdtext.cfg is one character too long which means it was never actually
+    included in the menu for multi-arch images.
+
+  [ Franklin Piat ]
+  * Add help text for help option in graphical syslinux boot menu to indicate
+    how to return to the menu from the help screens.
+    The new configuration also improves editing the command line from the
+    graphical syslinux menu if it flows over into a second line.
+
+  [ Frans Pop ]
+  * Add ext2-modules to hd-media images for i386, amd64 and powerpc.
+    Closes: #510015.
+  * Update copyright to 2009.
+
+ -- Frans Pop <fjp@debian.org>  Wed, 07 Jan 2009 21:37:46 +0100
+
 debian-installer (20081029) unstable; urgency=low
 
   * Disable powerpc floppy. Fixes a FTBFS in powerpc architecture.
