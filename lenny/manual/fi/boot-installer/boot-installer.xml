@@ -1,0 +1,3521 @@
+<!-- Start of file boot-installer/boot-installer.xml -->
+<!-- $Id: boot-installer.xml 58161 2009-04-07 08:44:16Z fjp $ -->
+
+<chapter id="boot-installer"
+><title
+>Asennusjärjestelmän käynnistäminen</title>
+
+<!-- Include only archs that are documented to avoid build-errors -->
+<!-- The arch="..." condition can be deleted when al archs are present -->
+ <sect1 arch="alpha;arm;x86;ia64;m68k;mips;mipsel;s390;powerpc;sparc">
+ <title
+>Asentimen käynnistäminen suoritinperheellä &arch-title;</title>
+
+<!-- This info is so architecture dependent, that I have turned the   -->
+<!-- structure inside out for this chapter. Each arch has a document. -->
+<!-- Note: arch hppa is currently missing -->
+
+<warning arch="x86;powerpc"
+><para
+>Jos järjestelmässä on mitään muita käyttöjärjestelmiä, jotka halutaan säilyttää (ns. dual boot), varmista, että ne on sammutettu kunnolla <emphasis
+>ennen kuin</emphasis
+> käynnistät asentimen. Käyttöjärjestelmän asentaminen, kun toinen käyttöjärjestelmä on lepotilassa (keskeytystilassa levyllä), saattaisi aiheuttaa vahinkoa keskeytetyn käyttöjärjestelmän tilalle, mistä voisi seurata ongelmia kun se käynnistetään uudelleen. </para
+></warning>
+<note condition="gtk"
+><para
+>Ohjeet asentimen graafisen käyttöliittymän käynnistämiseen löytyvät kohdasta <xref linkend="graphical"/>. </para
+></note>
+
+
+<!-- Start of file boot-installer/alpha.xml -->
+<!-- $Id: alpha.xml 43789 2007-01-03 09:27:39Z vorlon $ -->
+
+ <sect2 arch="alpha" id="alpha-firmware">
+ <title
+>Alphan konsolin laiteohjelmisto</title>
+<para
+>Konsolin laiteohjelmisto on tallennettu flash-ROMiin ja se käynnistyy kun Alpha-järjestelmään kytketään virta tai tehdään reset. Alpha-järjestelmillä käytetään kahta erilaista konsolimäärittelyä, ja niin ollen konsolin laiteohjelmistosta on saatavilla kaksi luokkaa: </para>
+
+<itemizedlist>
+<listitem
+><para
+><emphasis
+>SRM-konsoli</emphasis
+>, perustuu Alpha Console Subsystem -määrittelyyn, joka tarjoaa käyttöympäristön käyttöjärjestelmille OpenVMS, Tru64 UNIX, ja Linux. </para
+></listitem>
+<listitem
+><para
+><emphasis
+>ARC-, AlphaBIOS-, tai ARCSBIOS-konsoli</emphasis
+>, perustuu Advanced RISC Computing (ARC) -määrittelyyn, joka tarjoaa käyttöympäristön Windows NT:lle. </para
+></listitem>
+</itemizedlist>
+
+<para
+>Käyttäjän kannalta tärkein ero SRM:n ja ARC:n välillä on, että konsolin valinta rajoittaa mahdollisia osiointitapoja sillä kiintolevyllä, jolta laite käynnistetään. </para
+><para
+>ARC vaatii käytettävän MS-DOS-osiotaulua (jollaisia <command
+>cfdisk</command
+> luo) käynnistyslevylle. Niin ollen MS-DOS-osiotaulut ovat <quote
+>alkuperäinen</quote
+> osioiden muoto kun käynnistetään ARC:lta. Itse asiassa, koska AlphaBIOS sisältää osiointisovelluksen, saatat mieluummin osioida levyt laiteohjelmiston valikoista ennen Linuxin asentamista. </para
+><para
+>Sitävastoin SRM <emphasis
+>ei ole yhteensopiva</emphasis
+> <footnote
+> <para
+> Täsmällisemmin sanottuna, Console Subsystem -määrittelyn vaatima käynnistyssektorin muoto on ristiriidassa DOS-osiotaulun sijainnin kanssa. </para
+> </footnote
+> MS-DOS-osiotaulujen kanssa. Koska Tru64 Unix käyttää BSD-levynimiömuotoa, tämä on <quote
+>alkuperäinen</quote
+> SRM-asennuksille. </para
+><para
+>GNU/Linux on Alphan ainoa käyttöjärjestelmä joka voidaan käynnistää molemmista konsolityypeistä, mutta &debian; &release; tukee käynnistämistä vain SRM:ään pohjautuvilla järjestelmillä. Jos käytössä on Alpha johon ei ole saatavilla mitään SRM:n versiota, jos halutaan kaksoiskäynnistää Windows NT:n kanssa, tai jos käynnistyslaite vaatii ARC-konsolin tukea BIOS:n alkuarvojen asettamiseen, ei &debian; &release;:n asenninta voi käyttää. &debian; &release;:aa voidaan silti ajaa noilla järjestelmillä käyttämällä muuta asennustaltiota; esimerkiksi voidaan asentaa Debian Woody MILO:lla ja päivittää. </para
+><para
+>Koska <command
+>MILO</command
+> ei ole saatavilla millekään nyt tuotannossa olevalle Alpha-järjestelmälle (helmikuussa 2000), ja koska enää ei ole välttämätöntä ostaa OpenVMS- tai Tru64-käyttöoikeutta jotta SRM-laiteohjelmistoa voisi käytää vanhassa Alphassa, suositellaan käytettävän SRM:ää jos mahdollista. </para
+><para
+>Seuraava taulukko on yhteenveto saatavilla olevista ja tuetuista järjestelmätyyppi/konsoli -pareista. (katso <xref linkend="alpha-cpus"/> selitys järjestelmätyyppien nimistä). Alla tarkoittaa <quote
+>ARC</quote
+> mitä tahansa ARC-määrittelyn mukaista konsolia. </para
+><para>
+
+<informaltable
+><tgroup cols="2">
+<thead>
+<row>
+  <entry
+>Järjestelmätyyppi</entry>
+  <entry
+>Tuetut konsolityypit</entry>
+</row>
+</thead>
+
+<tbody>
+<row>
+  <entry
+>alcor</entry>
+  <entry
+>ARC tai SRM</entry>
+</row
+><row>
+  <entry
+>avanti</entry>
+  <entry
+>ARC tai SRM</entry>
+</row
+><row>
+  <entry
+>book1</entry>
+  <entry
+>Vain SRM</entry>
+</row
+><row>
+  <entry
+>cabriolet</entry>
+  <entry
+>ARC tai SRM</entry>
+</row
+><row>
+  <entry
+>dp264</entry>
+  <entry
+>Vain SRM</entry>
+</row
+><row>
+  <entry
+>eb164</entry>
+  <entry
+>ARC tai SRM</entry>
+</row
+><row>
+  <entry
+>eb64p</entry>
+  <entry
+>ARC tai SRM</entry>
+</row
+><row>
+  <entry
+>eb66</entry>
+  <entry
+>ARC tai SRM</entry>
+</row
+><row>
+  <entry
+>eb66p</entry>
+  <entry
+>ARC tai SRM</entry>
+</row
+><row>
+  <entry
+>jensen</entry>
+  <entry
+>Vain SRM</entry>
+</row
+><row>
+  <entry
+>lx164</entry>
+  <entry
+>ARC tai SRM</entry>
+</row
+><row>
+  <entry
+>miata</entry>
+  <entry
+>ARC tai SRM</entry>
+</row
+><row>
+  <entry
+>mikasa</entry>
+  <entry
+>ARC tai SRM</entry>
+</row
+><row>
+  <entry
+>mikasa-p</entry>
+  <entry
+>Vain SRM</entry>
+</row
+><row>
+  <entry
+>nautilus</entry>
+  <entry
+>ARC (katso emolevyn käsikirja) tai SRM</entry>
+</row
+><row>
+  <entry
+>noname</entry>
+  <entry
+>ARC tai SRM</entry>
+</row
+><row>
+  <entry
+>noritake</entry>
+  <entry
+>Vain SRM</entry>
+</row
+><row>
+  <entry
+>noritake-p</entry>
+  <entry
+>Vain SRM</entry>
+</row
+><row>
+  <entry
+>pc164</entry>
+  <entry
+>ARC tai SRM</entry>
+</row
+><row>
+  <entry
+>rawhide</entry>
+  <entry
+>Vain SRM</entry>
+</row
+><row>
+  <entry
+>ruffian</entry>
+  <entry
+>Vain ARC</entry>
+</row
+><row>
+  <entry
+>sable</entry>
+  <entry
+>Vain SRM</entry>
+</row
+><row>
+  <entry
+>sable-g</entry>
+  <entry
+>Vain SRM</entry>
+</row
+><row>
+  <entry
+>sx164</entry>
+  <entry
+>ARC tai SRM</entry>
+</row
+><row>
+  <entry
+>takara</entry>
+  <entry
+>ARC tai SRM</entry>
+</row
+><row>
+  <entry
+>xl</entry>
+  <entry
+>Vain ARC</entry>
+</row
+><row>
+  <entry
+>xlt</entry>
+  <entry
+>Vain ARC</entry>
+</row>
+
+</tbody>
+</tgroup>
+</informaltable>
+
+</para
+><para
+>Yleensä mikään näistä konsoleista ei osaa käynnistää Linuxia suoraan, joten tarvitaan välittävän käynnistyslataimen apua. SRM-konsolille käytetään pientä laitealustariippumatonta käynnistyslatainta <command
+>aboot</command
+>. Katso (harmittavasti vanhentuneesta) ohjeesta <ulink url="&url-srm-howto;"
+>SRM HOWTO</ulink
+> lisätietoja <command
+>aboot</command
+>:sta. </para
+><para condition="FIXME"
+>Seuraavat kappaleet ovat woodyn asennusohjeesta, ne ovat tässä mukana selailtavaksi; ne saattavat olla hyödyllisiä jollekulle myöhemmin kun Debian taas tukee asennuksia MILO:n avulla. </para
+><para condition="FIXME"
+>Yleensä mikään näistä konsoleista ei osaa käynnistää Linuxia suoraan, joten tarvitaan välittävän käynnistyslataimen apua. Linuxin käynnistyslataimista kaksi on paljon käytettyjä: <command
+>MILO</command
+> ja <command
+>aboot</command
+>. </para
+><para condition="FIXME"
+><command
+>MILO</command
+> on itsekin konsoli, joka korvaa ARC:n tai SRM:n muistissa. <command
+>MILO</command
+> voidaan käynnistää sekä ARC:sta että SRM:stä ja on ainoa tapa käynnistää Linux ARC-konsolista. <command
+>MILO</command
+> on laitealustariippuva (erilainen <command
+>MILO</command
+> tarvitaan jokaiselle järjestelmätyypille) ja on saatavilla vain niille järjestelmille, joille näkyy ARC-tuki alla olevassa taulukossa. Katso myös (harmittavasti vanhentunut) <ulink url="&url-milo-howto;"
+>MILO HOWTO</ulink
+>. </para
+><para condition="FIXME"
+><command
+>aboot</command
+> on pieni laitealustariippumaton käynnistyslatain, joka toimii vain SRM:llä. Katso (myös harmittavasti vanhentuneesta) ohjeesta <ulink url="&url-srm-howto;"
+>SRM HOWTO</ulink
+> lisätietoja <command
+>aboot</command
+>:sta. </para
+><para condition="FIXME"
+>Yleensä on siis kolme mahdollista tilannetta, riippuen järjestelmän konsolin laiteohjelmistosta ja onko <command
+>MILO</command
+> saatavilla vai ei:<informalexample
+><screen>
+SRM -&gt; aboot
+SRM -&gt; MILO
+ARC -&gt; MILO
+</screen
+></informalexample
+> Koska <command
+>MILO</command
+> ei ole saatavilla millekään nyt tuotannossa olevalle Alpha-järjestelmälle (helmikuussa 2000), ja koska enää ei ole välttämätöntä ostaa OpenVMS- tai Tru64-käyttöoikeutta jotta SRM-laiteohjelmistoa voisi käyttää vanhassa Alphassa, suositellaan SRM:ää käytettävän uusissa GNU/Linux-asennuksissa, paitsi jos halutaan kaksoiskäynnistää Windows NT:n kanssa. </para
+><para
+>Enemmistössä AlphaServereistä ja kaikissa nykyisissä palvelin- ja työasemamalleissa on sekä SRM että AlphaBIOS laiteohjelmistossa. Niin sanotuissa <quote
+>half-flash</quote
+>-koneissa kuten erilaiset testiemolevyt, on mahdollista vaihtaa versiosta toiseen tallentamalla flash-muistiin uusi laiteohjelmisto. Lisäksi kun SRM on asennettu, on mahdollista käynnistää ARC/AlphaBIOS levykeeltä (komennolla <command
+>arc</command
+>). Yllä mainituista syistä suositellaan vaihtamista SRM:ään ennen kuin &debian; asennetaan. </para
+><para
+>Kuten muissakin suoritinperheissä, olisi asennettava laiteohjelmiston uusin saatavilla oleva versio <footnote
+> <para
+> Paitsi Jensenillä, missä laiteohjelmiston version 1.7 jälkeen Linux ei ole tuettu &mdash; katso osoitteesta <ulink url="&url-jensen-howto;"
+></ulink
+> lisätietoja. </para
+> </footnote
+> ennen &debian;in asennusta. Alphalle laiteohjelmiston päivityksiä voi noutaa osoitteesta <ulink url="&url-alpha-firmware;"
+>Alpha Firmware Updates</ulink
+>. </para>
+ </sect2>
+
+
+  <sect2 arch="alpha"
+><title
+>Käynnistys TFTP:llä</title>
+<para
+>SRM:ssä Ethernetliitäntöjen nimen alussa on <userinput
+>ewa</userinput
+>, ja ne luetellaan komennon <userinput
+>show dev</userinput
+> tulosteessa, tähän tapaan (hieman muokattu): <informalexample
+><screen>
+&gt;&gt;&gt; show dev
+ewa0.0.0.9.0               EWA0              08-00-2B-86-98-65
+ewb0.0.0.11.0              EWB0              08-00-2B-86-98-54
+ewc0.0.0.2002.0            EWC0              00-06-2B-01-32-B0
+</screen
+></informalexample
+> Ensin on asetettava käynnistyksessä käytettävä protokolla: <informalexample
+><screen>
+&gt;&gt;&gt; set ewa0_protocols bootp
+</screen
+></informalexample
+> Sitten tarkistetaan, että liitännän tyyppi on oikein: <informalexample
+><screen>
+&gt;&gt;&gt; set ewa0_mode <replaceable
+>mode</replaceable>
+</screen
+></informalexample
+> Kelvollisten tyyppien luettelon näkee komennolla <userinput
+>&gt;&gt;&gt;set ewa0_mode</userinput
+>. </para
+><para
+>Jos halutaan käynnistää ensimmäisestä Ethernet-liitännästä, kirjoitetaan:<informalexample
+><screen>
+&gt;&gt;&gt; boot ewa0 -flags ""
+</screen
+></informalexample
+> Tällöin käynnistetään käyttäen netboot-otoksessa mukana olevien ytimen oletusparametreja. </para
+><para
+>Jos halutaan käyttää konsolia sarjaportissa, <emphasis
+>on käytettävä</emphasis
+> ytimelle parametria <userinput
+>console=</userinput
+>. Tämä voidaan tehdä SRM:n komennon <userinput
+>boot</userinput
+> parametrilla <userinput
+>-flags</userinput
+>. Sarjaporttien nimi on sama kuin niitä vastaavan tiedosto nimi hakemistossa <userinput
+>/dev</userinput
+>. Lisäksi on tietyt Debianin asentimen tarvitsemat oletusvalitsimet toistettava kun annetaan ytimelle lisäparametreja. Esimerkiksi, kun halutaan käynnistää laitteelta <userinput
+>ewa0</userinput
+> ja käyttää ensimmäistä sarjaporttia konsolina, kirjoitetaan: <informalexample
+><screen
+>&gt;&gt;&gt; boot ewa0 -flags &quot;root=/dev/ram ramdisk_size=16384 console=ttyS0&quot;
+</screen
+></informalexample>
+
+</para>
+  </sect2>
+
+  <sect2 arch="alpha"
+><title
+>Käynnistäminen CD-levyltä SRM-konsolilla</title>
+<para
+>&debian; -asennuslevyillä on useita etukäteen määriteltyjä käynnistysvalitsimia VGA:lle ja sarjapäätteille. Kirjoittamalla <informalexample
+><screen>
+&gt;&gt;&gt; boot xxxx -flags 0
+</screen
+></informalexample
+> käynnistetään käyttäen VGA-konsolia. <replaceable
+>xxxx</replaceable
+> on CD-asema SRM-merkintätavalla. Ensimmäiseen sarjaporttiin kytkettyä päätettä käytetään konsolina kirjoittamalla <informalexample
+><screen>
+&gt;&gt;&gt; boot xxxx -flags 1
+</screen
+></informalexample
+> ja jos konsoli on toisessa sarjaportissa, kirjoitetaan <informalexample
+><screen
+>&gt;&gt;&gt; boot xxxx -flags 2
+</screen
+></informalexample>
+
+</para>
+  </sect2>
+
+  <sect2 arch="alpha" condition="FIXME">
+  <title
+>Käynnistäminen CD-levyltä ARC- tai AlphaBIOS-konsolilta</title>
+<para
+>ARC-konsolilta käynnistetään CD-levyltä etsimällä suoritinarkkitehtuurin koodinimi (katso <xref linkend="alpha-cpus"/>), määrittämällä käynnistyslataimeksi <filename
+>\milo\linload.exe</filename
+> ja OS Path:in arvoksi "OS Selection Setup"-valikossa <filename
+>\milo\<replaceable
+>subarch</replaceable
+></filename
+> (missä <replaceable
+>subarch</replaceable
+> on asiaankuuluva suoritinarkkitehtuurin nimi). Ruffianit ovat poikkeus: käynnistyslataimena on käytettävä <filename
+>\milo\ldmilo.exe</filename
+>. </para>
+  </sect2>
+
+
+  <sect2 arch="alpha" condition="supports-floppy-boot">
+  <title
+>Käynnistäminen levykkeiltä SRM-konsolilla</title>
+<para
+>Kirjoita SRM-kehotteeseen (<prompt
+>&gt;&gt;&gt;</prompt
+>) seuraava komento:<informalexample
+><screen>
+&gt;&gt;&gt; boot dva0 -flags 0
+</screen
+></informalexample
+> mahdollisesti korvaten <filename
+>dva0</filename
+> oikealla laitenimellä. Tavallisesti <filename
+>dva0</filename
+> on levyke; kirjoittamalla <informalexample
+><screen>
+&gt;&gt;&gt; show dev
+</screen
+></informalexample
+> näkee laiteluettelon (esim. jos halutaan käynnistää CD-levyltä). Huomaa, että käynnistettäessä MILO:n avulla, parametri <command
+>-flags</command
+> ohitetaan joten voidaan kirjoittaa vain <command
+>boot dva0</command
+>. Jos kaikki toimii kuten pitää, käynnistyy Linux-ydin hetken kuluttua. </para
+><para
+>Jos käynnistettäessä halutaan antaa ytimen parametreja <command
+>aboot</command
+>:n kautta, käytetään seuraavaa komentoa:<informalexample
+><screen>
+&gt;&gt;&gt; boot dva0 -file linux.bin.gz -flags "root=/dev/fd0 load_ramdisk=1 arguments"
+</screen
+></informalexample
+> (kaikki kirjoitetaan samalle riville), korvaten, jos tarpeen, <filename
+>dva0</filename
+>:n tilalle oikea SRM:n laitenimi, <filename
+>fd0</filename
+>:n tilalle Linuxin käynnistyslaite ja <filename
+>arguments</filename
+>:in tilalle halutut ytimen parametrit. </para
+><para
+>Jos <command
+>MILO</command
+>:n avulla käynnistettäessä halutaan antaa ytimen parametreja, on käynnistys keskeytettävä kun on päästy MILO:on. Katso <xref linkend="booting-from-milo"/>. </para>
+  </sect2>
+
+
+  <sect2 arch="alpha" condition="supports-floppy-boot">
+  <title
+>Käynnistäminen levykkeiltä ARC- tai AlphaBIOS-konsolilta</title>
+
+<para
+>OS Selection -valikossa, aseta käynnistyslataimeksi <command
+>linload.exe</command
+> ja "OS Path" arvoon <command
+>milo</command
+>. Käynnistä tällä uudella valikon kohdalla. </para>
+  </sect2>
+
+ <sect2 arch="alpha" condition="FIXME" id="booting-from-milo"
+><title
+>Käynnistäminen MILO:lla</title>
+<para
+>Käynnistystaltiolla olevan MILO:n asetukset on tehty jatkamaan suoraan Linuxiin automaattisesti. Jos tätä ei haluta, riittää painaa välilyöntiä MILO:n lähtölaskennan aikana. </para
+><para
+>Haluttaessa määrittää kaikki yksityiskohdat tarkkaan (esimerkiksi antaa lisäparametreja), voidaan käyttää tämän tapaista komentoa: <informalexample
+><screen>
+MILO
+> boot fd0:linux.bin.gz root=/dev/fd0 load_ramdisk=1 <!-- parametreja -->
+</screen
+></informalexample
+> Jos käynnistetään muulta laitteelta kuin levyke, kirjoita yllä olevassa esimerkissä <filename
+>fd0</filename
+>:n tilalle oikean laitteen nimi Linuxin merkintätavalla. Komennolla <command
+>help</command
+> näkee lyhyen MILO:n komentojen luettelon. </para>
+ </sect2>
+<!--   End of file boot-installer/alpha.xml -->
+
+<!-- Start of file boot-installer/arm.xml -->
+<!-- $Id: arm.xml 36639 2006-04-23 06:26:34Z jfs $ -->
+
+  <sect2 arch="arm" id="boot-tftp"
+><title
+>Käynnistäminen TFTP:llä</title>
+
+
+<!-- Start of file boot-installer/intro-net.xml -->
+<!-- $Id: intro-net.xml 11648 2004-03-22 00:37:46Z joeyh $ -->
+
+<para
+>Käynnistäminen verkosta edellyttää verkkoyhteyttä ja TFTP-käynnistyspalvelinta (DHCP, RARP, tai BOOTP). </para
+><para arch="hppa"
+>Vanhoissa järjestelmissä kuten 715 saatetaan joutua käyttämään RBOOT-palvelinta BOOTP:n tilalla. </para
+><para
+>Verkosta käynnistämistä tukeva asennustapa kuvataan kohdassa <xref linkend="install-tftp"/>. </para>
+<!--   End of file boot-installer/intro-net.xml -->
+
+   <sect3 arch="arm"
+><title
+>Käynnistäminen TFTP:llä Netwinderissa</title>
+<para
+>Netwindereissa on kaksi verkkoliitäntää: 10 Mbit NE2000-yhteensoiva kortti (johon yleensä viitataan nimellä <literal
+>eth0</literal
+>) ja 100 Mbit Tulip-kortti. Otoksen noutamisessa 100 Mbit-kortilla saattaa olla pulmia, joten suositellaan käytettävän 10 Mbit-liitäntää (se, jossa lukee <literal
+>10 Base-T</literal
+>). </para>
+<note
+><para
+>Asennusjärjestelmän käynnistämiseen tarvitaan NeTTrom 2.2.1 tai uudempi, suositellaan versiota 2.3.3. Harmittavasti laiteohjelmatiedostoja ei tällä hetkellä ole saatavilla käyttöoikeussyistä. Jos tämä tilanne muuttuu, uudet otokset saattavat löytyä osoitteesta <ulink url="http//www.netwinder.org/"
+></ulink
+>. </para
+></note>
+<para
+>Kun Netwinderia käynnistetään on käynnistysprosessi keskeytettävä lähtölaskennan aikana. Tällöin päästään muuttamaan muutamia laiteohjelmisto asetuksia joilla asennin saadaan käynnistettyä. Ensiksi, ladataan oletusasetukset: <informalexample
+><screen>
+    NeTTrom command-&gt; load-defaults
+</screen
+></informalexample
+> Lisäksi on tehtävä verkkoasetukset, joko kiinteällä osoitteella: <informalexample
+><screen>
+    NeTTrom command-&gt; setenv netconfig_eth0 flash
+    NeTTrom command-&gt; setenv eth0_ip 192.168.0.10/24
+</screen
+></informalexample
+> missä 24 on verkon peiton bittien lukumäärä, tai vaihtuvalla osoitteella: <informalexample
+><screen>
+    NeTTrom command-&gt; setenv netconfig_eth0 dhcp
+</screen
+></informalexample
+> Mahdollisesti on tehtävä myös <userinput
+>route1</userinput
+>-asetukset jos TFTP-palvelin ei ole paikallisessa aliverkossa. Katso mallia näistä asetuksista ja anna TFTP-palvelimen osoite ja otoksen sijainti. Asetukset voi sitten tallentaa flash-muistiin. <informalexample
+><screen>
+    NeTTrom command-&gt; setenv kerntftpserver 192.168.0.1
+    NeTTrom command-&gt; setenv kerntftpfile boot.img
+    NeTTrom command-&gt; save-all
+</screen
+></informalexample
+> Nyt on laiteohjelmistolle kerrottava että pitää käynnistää TFTP-otos: <informalexample
+><screen>
+    NeTTrom command-&gt; setenv kernconfig tftp
+    NeTTrom command-&gt; setenv rootdev /dev/ram
+</screen
+></informalexample
+> Jos Netwinderin asennuksessa käytetään sarjapäätettä, on lisättävä seuraava asetus: <informalexample
+><screen>
+    NeTTrom command-&gt; setenv cmdappend root=/dev/ram console=ttyS0,115200
+</screen
+></informalexample
+> Toinen tapa on käyttää näppäimistöä ja näyttöä jolloin käytetään asetuksia: <informalexample
+><screen>
+    NeTTrom command-&gt; setenv cmdappend root=/dev/ram
+</screen
+></informalexample
+> Komennolla <command
+>printenv</command
+> näkee ympäristömuuttujien arvot. Kun on varmistettu asetusten olevan oikein, voidaan otos ladata: <informalexample
+><screen>
+    NeTTrom command-&gt; boot
+</screen
+></informalexample
+> Jos tulee pulmia on ohje <ulink url="http://www.netwinder.org/howto/Firmware-HOWTO.html"
+>detailed HOWTO</ulink
+> saatavilla. </para>
+   </sect3>
+
+   <sect3 arch="arm"
+><title
+>Käynnistäminen TFTP:llä CATS:illa</title>
+<para
+>Käytä CATS-koneilla komentoa <command
+>boot de0:</command
+> tai vastaavaa Cyclonen kehotteessa. </para>
+   </sect3>
+  </sect2>
+
+
+  <sect2 arch="arm"
+><title
+>Käynnistäminen CD-levyltä</title>
+
+
+<!-- Start of file boot-installer/intro-cd.xml -->
+<!-- $Id: intro-cd.xml 39614 2006-08-07 15:50:11Z fjp $ -->
+
+<para
+>Useimmille käyttäjille on helpointa käyttää Debianin CD-levykokoelmaa. Jos käsillä on CD-kokoelma, ja jos tietokone tukee käynnistystä suoraan CD-levyltä, hienoa! Riittää kun <phrase arch="x86"
+> teet koneen asetukset siten, että se käynnistyy CD-levyltä kuten neuvotaan kohdassa <xref linkend="boot-dev-select"/>, </phrase
+> asetat levyn asemaan, käynnistät ja jatkat seuraavaan lukuun. </para
+><para
+>Huomaa, että jotkin CD-asemat saattavat vaatia erikoisajureita, eikä niitä niin ollen voi käyttää asennuksen alkuvaiheissa. Jos ilmenee, ettei tavallinen CD-levyltä käynnistäminen toimi tietokoneella, lue tästä luvusta uudestaan kohdat vaihtoehtoisista ytimistä ja asennustavoista jotka saattaisivat tässä tilanteessa toimia. </para
+><para
+>Vaikka käynnistäminen CD-levyltä ei toimisikaan, voitaneen Debianin järjestelmän osat ja tarvittavat paketit asentaa CD-levyltä. Riittää kun käynnistää joltain muulta taltiolta, esimerkiksi levykkeeltä. Kun on aika asentaa käyttöjärjestelmä, peruskokoonpano ja lisäpaketteja, säädetään asennusjärjestelmä asentamaan ne CD-levyltä. </para
+><para
+>Jos ilmenee pulmia, katso kohtaa <xref linkend="boot-troubleshooting"/>. </para>
+<!--   End of file boot-installer/intro-cd.xml -->
+
+<para
+>Cyclonen konsolin kehotteesta käynnistetään CD-levyltä komennolla <command
+>boot cd0:cats.bin</command
+> </para>
+  </sect2>
+
+
+  <sect2 arch="arm" id="boot-firmware"
+><title
+>Käynnistäminen laiteohjelmistosta</title>
+
+
+<!-- Start of file boot-installer/intro-firmware.xml -->
+<!-- $Id: intro-firmware.xml 35309 2006-03-07 19:31:05Z tbm $ -->
+
+<para
+>Kuluttajalaitteet jotka käynnistyvät suoraan laitteen flash-muistilta ovat yleistymässä. Asennin voidaan kirjoittaa flash-muistiin, jolloin se käynnistyy automaattisesti kun laite käynnistetään uudelleen. </para
+><note
+><para
+>Useissa tapauksissa ei takuu ole voimassa enää sulautetun laitteen laiteohjelmiston muuttamisen jälkeen. Joskus ei myöskään ole mahdollista palauttaa alkuperäistä laiteohjelmistoa jos flashille kirjoituksessa ilmenee ongelmia. Tästä syystä on oltava huolellinen ja noudatettava ohjeita tarkkaan. </para
+></note>
+
+<!--   End of file boot-installer/intro-firmware.xml -->
+
+   <sect3 arch="arm" id="boot-firmware-nslu2"
+><title
+>NSLU2:n käynnistäminen</title>
+<para
+>Asentimen laiteohjelmisto voidaan tallentaa flashiin kolmella tavalla: </para>
+
+    <sect4 arch="arm"
+><title
+>Käytetään NSLU2:n webbikäyttöliittymää</title>
+<para
+>Mene "administration"-osaan ja valitse valikosta <literal
+>Upgrade</literal
+>. Levyltä voidaan nyt selata aiemmin noudettu asennusotos. Sitten painetaan <literal
+>Start Upgrade</literal
+>-painiketta, vahvistetaan, odotetaan muutama minuutti ja vahvistetaan taas. Laite käynnistyy suoraan asentimeen. </para>
+    </sect4>
+
+    <sect4 arch="arm"
+><title
+>Verkon kautta Linuxista/Unixista</title>
+<para
+>Miltä tahansa Linux- tai Unix-koneelta voidaan komennolla <command
+>upslug2</command
+> päivittää laite verkon kautta. Tämä ohjelmisto on paketoitu Debianiin. Ensiksi on NSLU2 asetettava päivitystilaan:<orderedlist
+> <listitem
+><para
+> Irrota kaikki levyt ja laitteet USB-porteista. </para
+></listitem
+> <listitem
+><para
+> Sammuta NSLU2 </para
+></listitem
+> <listitem
+><para
+> Paina ja pidä pohjassa reset-nappula (pieni reikä takana aivan virtaliittimen yläpuolella). </para
+></listitem
+> <listitem
+><para
+> Paina ja päästä ylös käynnistysnappula, NSLU2 käynnistyy. </para
+></listitem
+> <listitem
+><para
+> Katsele ready/status lediä, 10 sekunnin kuluttua se vaihtuu keltaisesta punaiseksi. Päästä reset-nappula heti ylös. </para
+></listitem
+> <listitem
+><para
+> NSLU2:n ready/status-ledi välkyy vuorotellen punaisena ja vihreänä (ennen ensimmäistä vihreää on yhden sekunnin viive). NSLU2 on nyt päivitystilassa. </para
+></listitem
+> </orderedlist
+> Lue <ulink url="http://www.nslu2-linux.org/wiki/OpenSlug/UsingTheBinary"
+>NSLU2-Linux pages</ulink
+> -ohje jos tässä on pulmia. Kun NSLU2 on päivitystilassa, uusi otos voidaan kirjoittaa flashiin: <informalexample
+><screen>
+sudo upslug2 -i di-nslu2.bin
+</screen
+></informalexample
+> Huomaa, että työkalu näyttää myös NSLU2:n MAC-osoitteen, josta saattaa olla hyötyä DHCP-palvelimen asetuksia kirjoitettaessa. Kun koko otos on kirjoitettu ja varmennettu, käynnistyy laite automaattisesti uudelleen. Muista kytkeä USB-levy takaisin tässä kohtaa, muuten asennin ei löydä sitä. </para>
+    </sect4>
+
+    <sect4 arch="arm"
+><title
+>Verkon kautta Windowsista</title>
+<para
+>Windowsille on <ulink url="http://www.everbesthk.com/8-download/sercomm/firmware/all_router_utility.zip"
+>työkalu</ulink
+> laiteohjelmiston päivittämiseen verkon kautta. </para>
+    </sect4>
+   </sect3>
+  </sect2>
+<!--   End of file boot-installer/arm.xml -->
+<!-- &boot-installer-hppa.xml; -->
+
+<!-- Start of file boot-installer/x86.xml -->
+<!-- $Id: x86.xml 58178 2009-04-08 07:13:21Z fjp $ -->
+
+  <sect2 arch="x86"
+><title
+>Käynnistäminen CD-levyltä</title>
+
+
+<!-- Start of file boot-installer/intro-cd.xml -->
+<!-- $Id: intro-cd.xml 39614 2006-08-07 15:50:11Z fjp $ -->
+
+<para
+>Useimmille käyttäjille on helpointa käyttää Debianin CD-levykokoelmaa. Jos käsillä on CD-kokoelma, ja jos tietokone tukee käynnistystä suoraan CD-levyltä, hienoa! Riittää kun <phrase arch="x86"
+> teet koneen asetukset siten, että se käynnistyy CD-levyltä kuten neuvotaan kohdassa <xref linkend="boot-dev-select"/>, </phrase
+> asetat levyn asemaan, käynnistät ja jatkat seuraavaan lukuun. </para
+><para
+>Huomaa, että jotkin CD-asemat saattavat vaatia erikoisajureita, eikä niitä niin ollen voi käyttää asennuksen alkuvaiheissa. Jos ilmenee, ettei tavallinen CD-levyltä käynnistäminen toimi tietokoneella, lue tästä luvusta uudestaan kohdat vaihtoehtoisista ytimistä ja asennustavoista jotka saattaisivat tässä tilanteessa toimia. </para
+><para
+>Vaikka käynnistäminen CD-levyltä ei toimisikaan, voitaneen Debianin järjestelmän osat ja tarvittavat paketit asentaa CD-levyltä. Riittää kun käynnistää joltain muulta taltiolta, esimerkiksi levykkeeltä. Kun on aika asentaa käyttöjärjestelmä, peruskokoonpano ja lisäpaketteja, säädetään asennusjärjestelmä asentamaan ne CD-levyltä. </para
+><para
+>Jos ilmenee pulmia, katso kohtaa <xref linkend="boot-troubleshooting"/>. </para>
+<!--   End of file boot-installer/intro-cd.xml -->
+
+<!-- We'll comment the following section until we know exact layout -->
+<!--
+CD #1 of official Debian CD-ROM sets for &arch-title; will present a
+<prompt
+>boot:</prompt
+> prompt on most hardware. Press
+<keycap
+>F4</keycap
+> to see the list of kernel options available
+from which to boot. Just type your chosen flavor name (idepci,
+vanilla, compact, bf24) at the <prompt
+>boot:</prompt
+> prompt
+followed by &enterkey;.
+
+</para
+><para>
+
+If your hardware doesn't support booting of multiple images, put one
+of the other CDs in the drive. It appears that most SCSI CD-ROM drives
+do not support <command
+>isolinux</command
+> multiple image booting, so users
+with SCSI CD-ROMs should try either CD2 (vanilla) or CD3 (compact),
+or CD5 (bf2.4).
+
+</para
+><para>
+
+CD's 2 through 5 will each boot a
+different ``flavor'' depending on which CD-ROM is
+inserted. See <xref linkend="kernel-choice"/> for a discussion of the
+different flavors.  Here's how the flavors are laid out on the
+different CD-ROMs:
+
+<variablelist>
+<varlistentry>
+<term
+>CD 1</term
+><listitem
+><para>
+
+Allows a selection of kernel images to boot from (the idepci flavor is
+the default if no selection is made).
+
+</para
+></listitem
+></varlistentry>
+<varlistentry>
+<term
+>CD 2</term
+><listitem
+><para>
+
+Boots the <quote
+>vanilla</quote
+> flavor.
+
+</para
+></listitem
+></varlistentry>
+<varlistentry>
+<term
+>CD 3</term
+><listitem
+><para>
+
+Boots the <quote
+>compact</quote
+> flavor.
+
+</para
+></listitem
+></varlistentry>
+<varlistentry>
+<term
+>CD 4</term
+><listitem
+><para>
+
+Boots the <quote
+>idepci</quote
+> flavor.
+
+</para
+></listitem
+></varlistentry>
+<varlistentry>
+<term
+>CD 5</term
+><listitem
+><para>
+
+Boots the <quote
+>bf2.4</quote
+> flavor.
+
+</para
+></listitem
+></varlistentry>
+
+ </variablelist>
+
+</para
+><para>
+
+-->
+
+  </sect2>
+
+  <sect2 arch="x86" id="boot-win32">
+  <title
+>Käynnistäminen Windowsista</title>
+<para
+>Asentimen käynnistäminen Windowsista vaatii ensin asennustaltion noutamisen CD- tai DVD-levylle tai muistitikulle kohdassa <xref linkend="official-cdrom"/> tai <xref linkend="boot-usb-files"/> kuvatulla tavalla. </para
+><para
+>Jos asennustaltio on CD-ROM tai DVD-rom, esiasennusohjelman pitäisi käynnistyä automaattisesti, kun laitat levyn asemaan. Jos Windows ei käynnistä sitä automaattisesti tai käytät USB-muistia, voit ajaa ohjelman käsin ajamalla levyltä tai muistitikulta ohjelman <command
+>setup.exe</command
+>. </para
+><para
+>Kun ohjelma on käynnistynyt, kysytään muutamia valmistavia kysymyksiä
+ja järjestelmä valmistetaan käynnistämään &debian; asennin. </para>
+  </sect2>
+
+<!-- FIXME the documented procedure does not exactly work, commented out
+     until fixes
+
+  <sect2 arch="x86" id="install-from-dos">
+  <title
+>Booting from a DOS partition</title>
+
+
+<para>
+
+Boot into DOS (not Windows) without any drivers being loaded.  To do
+this, you have to press <keycap
+>F8</keycap
+> at exactly the right
+moment (and optionally select the <quote
+>safe mode command prompt only</quote>
+option).  Enter the subdirectory for the flavor you chose, e.g.,
+
+<informalexample
+><screen
+>
+cd c:\install
+</screen
+></informalexample
+>.
+
+Next, execute <command
+>install.bat</command
+>.
+The kernel will load and launch the installer system.
+
+</para
+><para>
+
+Please note, there is currently a loadlin problem (#142421) which
+precludes <filename
+>install.bat</filename
+> from being used with the
+bf2.4 flavor. The symptom of the problem is an
+<computeroutput
+>invalid compressed format</computeroutput
+> error.
+
+</para>
+  </sect2>
+
+END FIXME -->
+
+  <sect2 arch="x86" id="boot-initrd">
+  <title
+>Käynnistäminen Linuxista <command
+>LILO</command
+>:lla tai <command
+>GRUB</command
+>:lla</title>
+
+<para
+>Asentimen käynnistämiseksi kiintolevyltä on tarvittavat tiedostot ensin noudettava ja tallennettava, kuten neuvotaan kohdasssa <xref linkend="boot-drive-files"/>. </para>
+
+<para
+>Jos tarkoitus on käyttää kiintolevyä vain käynnistämiseen ja noutaa sitten kaikki verkosta, olisi noudettava tiedosto <filename
+>netboot/debian-installer/&architecture;/initrd.gz</filename
+> ja sitä vastaava ydin <filename
+>netboot/debian-installer/&architecture;/linux</filename
+>. Tällöin on mahdollista osioida uudelleen levy josta asennin käynnistetään, vaikkakin tämä olisi tehtävä huolella. </para>
+
+<para
+>Toinen mahdollisuus, mikäli on tarkoitus pitää kiintolevyllä oleva osio ennallaan asennuksen aikana, on noutaa tiedosto <filename
+>hd-media/initrd.gz</filename
+> ja sitä vastaava  ydin, sekä kopioida CD:n ISO-otos levylle (varmista tiedoston nimen  lopussa olevan <literal
+>.iso</literal
+>). Asennin voi tällöin käynnistyä levyltä ja asentaa CD-otoksesta, eikä verkkoa tarvita. </para>
+
+<para
+><command
+>LILO</command
+>:a varten on tehtävä kaksi välttämätöntä asetusta tiedostossa <filename
+>/etc/lilo.conf</filename
+>: <itemizedlist
+> <listitem
+><para
+> jotta <filename
+>initrd.gz</filename
+>-asennin ladataan käynnistyksen aikana; </para
+></listitem
+> <listitem
+><para
+> jotta <filename
+>vmlinuz</filename
+>-ydin käyttää muistilevyä juuriosionaan. </para
+></listitem
+> </itemizedlist
+> Tässä on esimerkki tiedostosta <filename
+>/etc/lilo.conf</filename
+>: </para
+><para>
+
+<informalexample
+><screen
+>image=/boot/newinstall/vmlinuz
+       label=newinstall
+       initrd=/boot/newinstall/initrd.gz
+</screen
+></informalexample
+> Yksityiskohtaisempaa tietoa löytyy man-sivuilta <citerefentry
+><refentrytitle
+>initrd</refentrytitle
+> <manvolnum
+>4</manvolnum
+></citerefentry
+> ja <citerefentry
+><refentrytitle
+>lilo.conf</refentrytitle
+> <manvolnum
+>5</manvolnum
+></citerefentry
+>. Käynnistä nyt <userinput
+>lilo</userinput
+> ja käynnistä sitten tietokone uudelleen. </para
+><para
+><command
+>GRUB</command
+>:n käyttö on hyvin samantapaista. Etsi tiedosto <filename
+>menu.lst</filename
+> hakemistosta <filename
+>/boot/grub/</filename
+> (joskus se on hakemistossa <filename
+>/boot/boot/grub/</filename
+>), lisää seuraavat rivit: <informalexample
+><screen>
+title  New Install
+kernel (hd0,0)/boot/newinstall/vmlinuz
+initrd (hd0,0)/boot/newinstall/initrd.gz
+</screen
+></informalexample
+> ja käynnistä uudelleen. </para
+><para
+>Huomaa, että <userinput
+>ramdisk_size</userinput
+>-arvoa voidaan joutua muuttamaan vastaamaan initrd-otoksen kokoa. Tästä eteenpäin ei pitäisi olla mitään eroa <command
+>GRUB</command
+>:n ja <command
+>LILO</command
+>:n välillä. </para>
+  </sect2>
+
+  <sect2 arch="x86" condition="bootable-usb" id="usb-boot">
+  <title
+>Käynnistys USB-muistilta</title>
+<para
+>Oletetaan että kaikki kohdissa <xref linkend="boot-dev-select"/> ja <xref linkend="boot-usb-files"/> mainitut valmistelut on tehty. Nyt vain asetetaan USB-muisti johonkin vapaaseen USB-liittimeen ja käynnistetään tietokone. Järjestelmän pitäisi käynnistyä ja näkyä kehote <prompt
+>boot:</prompt
+>. Tässä voidaan kirjoittaa käynnistysparametreja, tai painaa vain &enterkey;. </para>
+  </sect2>
+
+  <sect2 arch="x86" condition="supports-floppy-boot" id="floppy-boot">
+  <title
+>Käynnistäminen levykkeiltä</title>
+<para
+>Tarvittavat levykeotokset on jo noudettu ja kirjoitettu levykkeille kohdassa <xref linkend="create-floppy"/>. </para
+><para
+>Asentimen boot-levykkeeltä käynnistetään asettamalla se ensisijaiseen levykeasemaan, sammuttamalla järjestelmä tavanomaiseen tapaan ja kytkemällä virta takaisin. </para
+><para
+>Asennettaessa LS-120-asemalta (ATAPI-versio) levykkeitä käyttäen, on määritettävä levykeaseman virtuaalinen sijainti. Tämä tehdään käynnistysparametrilla <emphasis
+>root=</emphasis
+>, johon annetaan laite johon ide-floppy laitteen kuvaa. Jos LS-120 on kytkettynä esimerkiksi ensimmäisenä IDE-laitteena (master) toisessa IDE-kaapelissa, kirjoitetaan käynnistyskehotteessa <userinput
+>linux root=/dev/hdc</userinput
+>. </para
+><para
+>Huomaa, että joissakin koneissa <keycombo
+><keycap
+>Control</keycap
+> <keycap
+>Alt</keycap
+> <keycap
+>Delete</keycap
+></keycombo
+> ei palauta konetta kunnolliseen alkutilaan, joten suositellaan <quote
+>virtanappulan</quote
+> käyttöä. Jos asennetaan koneella olevasta käyttöjärjestelmästä (esim. DOS-ikkunasta) ei vaihtoehtoa ole. Muussa tapauksessa, käytä virtanappulaa kun laitetta käynnistetään. </para
+><para
+>Tietoja ladataan levykkeeltä ja näkyviin pitäisi tulla ruutu, jossa levyke esitellään ja jonka alareunassa on kehote <prompt
+>boot:</prompt
+>. </para
+><para
+>Kun on painettu &enterkey;, pitäisi näkyä <computeroutput
+>Loading...</computeroutput
+>, jonka jälkeen tulee <computeroutput
+>Uncompressing Linux...</computeroutput
+>, ja sitten suunnilleen ruudullinen tietoja laitteistosta. Lisää tietoa tästä asennusprosessin vaiheesta löytyy kohdasta <xref linkend="kernel-msgs"/>. </para
+><para
+>Kun on käynnistetty boot-levykkeeltä, pyydetään root-levykettä. Aseta root-levyke asemaan ja paina &enterkey;, jolloin sen sisältö ladataan muistiin. Asennusohjelma <command
+>debian-installer</command
+> eli Debianin asennin käynnistyy automaattisesti. </para>
+  </sect2>
+
+  <sect2 arch="x86" id="boot-tftp"
+><title
+>Käynnistys TFTP:llä</title>
+
+
+<!-- Start of file boot-installer/intro-net.xml -->
+<!-- $Id: intro-net.xml 11648 2004-03-22 00:37:46Z joeyh $ -->
+
+<para
+>Käynnistäminen verkosta edellyttää verkkoyhteyttä ja TFTP-käynnistyspalvelinta (DHCP, RARP, tai BOOTP). </para
+><para arch="hppa"
+>Vanhoissa järjestelmissä kuten 715 saatetaan joutua käyttämään RBOOT-palvelinta BOOTP:n tilalla. </para
+><para
+>Verkosta käynnistämistä tukeva asennustapa kuvataan kohdassa <xref linkend="install-tftp"/>. </para>
+<!--   End of file boot-installer/intro-net.xml -->
+
+<para
+>i386:lla on erilaisia tapoja käynnistää TFTP:llä </para>
+
+   <sect3
+><title
+>NIC tai emolevy joka tukee PXE:tä</title>
+<para
+>Mahdollisesti verkkokortilla tai emolevyllä on PXE-käynnistys. Se on <trademark class="trade"
+>Intel</trademark
+>in muokkaama TFTP-käynnistys. Jos PXE löytyy, voi olla mahdollista asettaa BIOS käynnistämään verkosta. </para>
+   </sect3>
+
+   <sect3
+><title
+>NIC jossa on BootROM verkosta käynnistämiseen</title>
+<para
+>Verkkokortti osaa ehkä käynnistyä TFTP:llä. </para
+><para condition="FIXME"
+>Kerro meille (<email
+>&email-debian-boot-list;</email
+>) kuinka se onnistui. Viittaa tähän ohjeeseen. </para>
+   </sect3>
+
+   <sect3
+><title
+>Etherboot</title>
+<para
+><ulink url="http://www.etherboot.org"
+>etherboot project</ulink
+> tarjoaa käynnistyslevykkeitä, ja jopa bootrommeja, jotka osaavat käynnistyä TFTPbootilla. </para>
+   </sect3>
+  </sect2>
+
+  <sect2 arch="x86" id="boot-screen">
+  <title
+>Käynnistysruutu</title>
+<para
+>Kun asennin käynnistyy, pitäisi näkyä ystävällinen grafiikkaruutu jossa on Debianin logo ja valikko: <informalexample
+><screen>
+Installer boot menu
+
+Install
+Graphical install
+Advanced options       >
+Help
+
+Press ENTER to boot or TAB to edit a menu entry
+</screen
+></informalexample
+> Joissain asennustavoissa puuttuu valinta <quote
+>Graphical install</quote
+>. </para
+><para
+>Tavallista asennusta varten valitse joko <quote
+>Install</quote
+> tai 
+<quote
+>Graphical install</quote
+> käyttämällä joko näppäimistön 
+nuolinäppäimiä tai kirjoittamalla ensimmäinen (korostettu) kirjain 
+&mdash; ja käynnistä asennin painamalla &enterkey;. </para
+><para
+>Valikon kohdasta <quote
+>Advanced options</quote
+> päästään alimenuun josta asennin voidaan käynnistää expert-tilassa, hätäkäynnistyksenä tai automaattisia asennuksia varten. </para
+><para
+>Jos halutaan tai on tarve lisätä käynnistysvalitsimia joko asentimelle tai ytimelle, painetaan &tabkey;. Tämä näyttää valikon valittua kohtaa vastaavan oletuskäynnistyskomennon ja valitsimien lisääminen on mahdollista. Neuvontaruuduissa (katso edempänä) on luettelo joistakin yleisistä valitsimista. Painamalla &enterkey; asennin käynnistyy annetuilla valitsimilla; painamalla &escapekey; palataan käynnistysvalikkoon ja tehdyt muutokset perutaan.  </para
+><para
+>Valitsemalla <quote
+>Help</quote
+> näytetään ensimmäinen neuvontaruutu, jossa on neuvontaruutujen sisällysluettelo. Huomaa, ettei ole mahdollista palata käynnistusvalikkoon kun neuvontaruudut on näytetty. Neuvontaruudut F3 ja F4 näyttävät kuitenkin komentoja jotka ovat sama asia kuin valikossa mainitut käynnistystavat. Kaikissa neuvontaruuduissa on käynnistyskehote johon käynnistyskomento voidaan kirjoittaa: 
+<informalexample
+><screen>
+Press F1 for the help index, or ENTER to boot:
+</screen
+></informalexample
+> 
+Käynnistyskehotteessa voidaan joko käynnistää asennin oletusvalitsimilla painamalla suoraan &enterkey; tai kirjoittaa haluttu käynnistyskomento ja tarvittaessa käynnistysvalitsimet. Joitakin mahdollisesti hyödyllisiä käynnistysvalitsimia löytyy neuvontaruuduista. Jos komentoriville lisätään valitsimia, on ensin kirjoitettava käynnistystapa (oletus on <userinput
+>install</userinput
+>) ja välilyönti ennen ensimmäistä valitsinta (esim. <userinput
+>install fb=false</userinput
+>). <note
+><para
+>Tässä vaiheessa näppäimistön näppäinasetteluna käytetään American English. Tästä syystä näytölle tulevat merkit eivät ehkä ole ne jotka (kielikohtaisista) näppäinhatuista voisi luulla valitsimia kirjoitettaessa. Wikipediassa on <ulink url="&url-us-keymap;"
+>US näppäimistön näppäinasettelu</ulink
+> josta voidaan katsoa näppäimet joita kuuluu painaa. </para
+></note>
+<note
+><para
+>Käytettäessä järjestelmää jossa BIOS:n asetukset on tehty käyttämään sarjapäätettä konsolina, ei graafinen aloitusruutu ehkä näy kun asennin käynnistyy; ehkä ei näy edes käynnistysvalikkoa. Samoin voi käydä asennettaessa tekstikäyttöliittymän VGA-konsolille tarjoavan etähallintalaitten kautta. Näitä laitteita ovat esimerkiksi Compaq:in <quote
+>integrated Lights Out</quote
+> (iLO) ja HP:n <quote
+>Integrated Remote Assistant</quote
+> (IRA). </para
+><para
+>Graafinen käynnistysruutu voidaan ohittaa joko painamalla sokkona &escapekey; jotta saadaan käynnistyskehote tekstinä, tai (taas sokkona) painetaan <quote
+>H</quote
+> ja sen jälkeen &enterkey; valitsemaan yllä kuvattu valikon kohta <quote
+>Help</quote
+>. Tämän jälkeen näppäimien painallusten pitäisi kaiuttua kehotteeseen. Asenninta estetään käyttämästä ruutupuskuria (framebuffer) asennusta jatkettaessa lisäämällä käynnistyskomentoon <userinput
+>fb=false</userinput
+>, kuten neuvontaruudussa lukee. </para
+></note>
+</para>
+
+  </sect2>
+<!--   End of file boot-installer/x86.xml -->
+
+<!-- Start of file boot-installer/ia64.xml -->
+<!-- $Id: ia64.xml 43841 2007-01-04 01:45:08Z fjp $ -->
+
+  <sect2 arch="ia64"
+><title
+>Käynnistäminen CD-levyltä</title>
+
+
+<!-- Start of file boot-installer/intro-cd.xml -->
+<!-- $Id: intro-cd.xml 39614 2006-08-07 15:50:11Z fjp $ -->
+
+<para
+>Useimmille käyttäjille on helpointa käyttää Debianin CD-levykokoelmaa. Jos käsillä on CD-kokoelma, ja jos tietokone tukee käynnistystä suoraan CD-levyltä, hienoa! Riittää kun <phrase arch="x86"
+> teet koneen asetukset siten, että se käynnistyy CD-levyltä kuten neuvotaan kohdassa <xref linkend="boot-dev-select"/>, </phrase
+> asetat levyn asemaan, käynnistät ja jatkat seuraavaan lukuun. </para
+><para
+>Huomaa, että jotkin CD-asemat saattavat vaatia erikoisajureita, eikä niitä niin ollen voi käyttää asennuksen alkuvaiheissa. Jos ilmenee, ettei tavallinen CD-levyltä käynnistäminen toimi tietokoneella, lue tästä luvusta uudestaan kohdat vaihtoehtoisista ytimistä ja asennustavoista jotka saattaisivat tässä tilanteessa toimia. </para
+><para
+>Vaikka käynnistäminen CD-levyltä ei toimisikaan, voitaneen Debianin järjestelmän osat ja tarvittavat paketit asentaa CD-levyltä. Riittää kun käynnistää joltain muulta taltiolta, esimerkiksi levykkeeltä. Kun on aika asentaa käyttöjärjestelmä, peruskokoonpano ja lisäpaketteja, säädetään asennusjärjestelmä asentamaan ne CD-levyltä. </para
+><para
+>Jos ilmenee pulmia, katso kohtaa <xref linkend="boot-troubleshooting"/>. </para>
+<!--   End of file boot-installer/intro-cd.xml -->
+
+  <note>
+  <title
+>CD-levyn sisältö</title>
+
+<para
+>Debianin asennus-CD:itä on kolmea perusmallia. <emphasis
+>Business Card</emphasis
+> -levyllä on mahdollisimman pieni asennus joka mahtuu käyntikortin kokoiselle CD-levylle. Sitä käytettäessä on oltava verkkoyhteys jonka kautta asennetaan loput peruskokoonpanosta ja saadaan käyttökelpoinen järjestelmä. <emphasis
+>Network Install</emphasis
+> -levyllä on kaikki peruskokoonpanoon tarvittavat paketit, mutta verkkoyhteydellä noudetaan Debianin asennuspalvelimesta kokonaiseen järjestelmään haluttavat lisäpaketit. <emphasis
+>Debianin asennuslevykokoemalla</emphasis
+> voidaan asentaa kokonainen järjestelmä suuresta valikoimasta paketteja käyttämättä verkkoyhteyttä. </para>
+  </note>
+
+<para
+>IA-64-suoritinperhe käyttää Intelin seuraavan sukupolven Extensible Firmware Interfacea (EFI). Toisin kuin perinteinen x86 BIOS, joka tietää käynnistyslaitteesta vain osiotaulun ja pääkäynnistyslohkon (MBR), EFI pystyy lukemaan ja kirjoittamaan tiedostoja osioista joilla on tiedostojärjestelmänä FAT16 tai FAT32. Tämä yksinkertaistaa usein mystistä järjestelmän käynnistämisprosessia. Järjestelmän käynnistyslataimella ja sitä tukevalla EFI-laiteohjelmistolla on kokonainen tiedostojärjestelmä johon tallentaa koneen käynnistämisessä tarpeelliset tiedostot. Tämä tarkoittaa, että IA-64-järjestelmän järjestelmälevyllä on ylimääräinen levyosio EFI:n käytössä eikä vain yksinkertainen pääkäynnistyslohko kuten tavanomaisemmissa järjestelmissä. </para
+><para
+>Debianin asennus-CD:llä on pieni EFI-osio missä ovat käynnistyslatain <command
+>ELILO</command
+>, sen asetustiedostot, asentimen ydin ja ensimmäinen muistilevy (initrd). Myös ajossa olevalla järjestelmällä on EFI-osio. Siellä ovat järjestelmän käynnistämiseen tarvittavat tiedostot. Tiedostot ovat luettavissa EFI:n komentotulkista kuten alla selitetään.  </para
+><para
+>Useimmat <command
+>ELILO</command
+> toiminnan yksityiskohdat sen ladatessa ja käynnistäessä järjestelmää ovat läpinäkyviä järjestelmän asentimelle. Asentimen on kuitenkin tehtävä EFI-osio ennen peruskokoonpanon asentamista. Muuten <command
+>ELILO</command
+>:n asennus epäonnistuu, jolloin järjestelmää ei voi käynnistää kiintolevyltä. EFI-osiolle varataan tila ja sille tehdään tiedostojärjestelmä asentimen osiointivaiheessa, ennen kuin mitään paketteja ladataan järjestelmälevylle. Osiointivaihe varmistaa myös, että sopiva EFI-osio löytyy ennen kuin se päästää asennuksen jatkumaan. </para
+><para
+>EFI-alkulatausohjelma näytetään viimeisena kohtana laiteohjelmiston alkuasetuksissa. Se näyttää valikon, josta käyttäjä voi valita asetuksen. Riippuen mallista ja muista järjestelmään ladatuista ohjelmistoista tämä valikko vaihtelee järjestelmittäin. Valikossa pitäisi näkyä ainakin kaksi kohtaa, <command
+>Boot Option Maintenance Menu</command
+> ja <command
+>EFI Shell (Built-in)</command
+>. Olisi parempi käyttää ensimmäistä kohtaa, mutta jos tuo valinta ei ole käytettävissä tai CD-levy ei sitä käyttäen syystä tai toisesta käynnisty, käytä toista vaihtoehtoa. </para>
+
+  <warning>
+  <title
+>TÄRKEÄÄ</title>
+<para
+>EFI-alkulatausohjelma valitsee oletustoiminnon käynnistykseen, yleensä se on valikon ensimmäinen kohta, ennalta määritellyn ajan kuluttua (sekunteina). Tämä näkyy ruudun alareunassa lähtölaskentana. Kun aika on kulunut ja järjestelmä käynnistyy oletustoiminnolla, on kone ehkä käynnistettävä uudelleen jotta asennusta voidaan jatkaa. Jos oletustoiminto on EFI Shell, voidaan alkulatausohjelmaan palata komennolla <command
+>exit</command
+> EFI Shellin kehotteessa. </para>
+  </warning>
+
+  <sect3 arch="ia64" id="bootable-cd">
+  <title
+>Valinta 1: Käynnistäminen Boot Option Maintenance -valikosta</title>
+ 
+
+<itemizedlist>
+
+<listitem
+><para
+>Aseta levy DVD- tai CD-asemaan ja käynnistä kone. Laiteohjelmisto näyttää EFI Boot Manager -sivun kun järjestelmän alkuasetukset ovat valmiit. </para
+></listitem>
+
+<listitem
+><para
+>Valitse <command
+>Boot Maintenance Menu</command
+> nuolinäppäimillä ja paina &enterkey;. Tällöin näytetään uusi valikko. </para
+></listitem>
+
+<listitem
+><para
+>Valitse <command
+>Boot From a File</command
+> nuolinäppäimillä ja paina &enterkey;. Tällöin näytetään luettelo laiteohjelmiston tunnistamista laitteista. Näkyvissä pitäisi olla kaksi valikon riviä joissa on joko <command
+>Debian Inst [Acpi ...</command
+> tai <command
+>Removable Media Boot</command
+>. Jos tutkit valikon rivin loppuosan, huomaat että laitteen ja ohjaimen tietojen pitäisi olla samat. </para
+></listitem>
+
+<listitem
+><para
+>Voidaan valita jompi kumpi CD- tai DVD-asemaan viittaavista riveistä. Valitse nuolinäppäimillä ja painamalla &enterkey;. Jos valitaan <command
+>Removable Media Boot</command
+> kone tekee heti alkukäynnistyksen. Jos sitävastoin valitaan <command
+>Debian Inst [Acpi ...</command
+>, se näyttää CD-levyn käynnistysosion hakemistolistauksen, jolloin on edettävä seuraavaan lisäkohtaan. </para
+></listitem>
+
+<listitem
+><para
+>Tämä kohta on tehtävä vain jos valittiin <command
+>Debian Inst [Acpi ...</command
+>. Hakemistolistaus näyttää myös <command
+>[Treat like Removable Media Boot]</command
+> toiseksi viimeisellä rivillä. Valitse tämä rivi nuolinäppäimillä ja painamalla &enterkey;. Tämä aloittaa käynnistyslatauksen. </para
+></listitem>
+
+</itemizedlist>
+
+<para
+>Nämä vaiheet käynnistävät Debianin käynnistyslataimen joka näyttää valikon, josta valitaan käynnistysydin ja valitsimia. Jatka valitsemaan käynnistysydin ja valitsimia. </para>
+  </sect3>
+
+  <sect3 arch="ia64" id="boot-with-efi">
+  <title
+>Valinta 2: Käynnistäminen EFI Shell:stä</title>
+<para
+>Jos valinta 1 ei jostain syystä toimi, käynnistä kone uudelleen ja kun EFI Boot Manager -ruutu näkyy siinä pitäisi olla valinta <command
+>EFI Shell [Built-in]</command
+>. Käynnistä Debianin asennus-CD seuraavasti: </para>
+
+<itemizedlist>
+
+<listitem
+><para
+>Aseta levy DVD- tai CD-asemaan ja käynnistä kone. Laiteohjelmisto näyttää EFI Boot Manager -sivun ja valikon kun järjestelmän alkuasetukset on tehty. </para
+></listitem>
+
+<listitem
+><para
+>Valitse <command
+>EFI Shell</command
+> nuolinäppäimillä ja paina &enterkey;. EFI Shell tutkii kaikki käynnistyskelpoiset laitteet ja näyttää ne konsolissa ennen kehotetta. Laitteiden tunnistetuista käynnistyskelpoisista osioista näytetään laitenimi <filename
+>fs<replaceable
+>n</replaceable
+>:</filename
+>. Kaikkien muiden tunnistettujen osioiden nimenä on <filename
+>blk<replaceable
+>n</replaceable
+>:</filename
+>. Jos CD asetettiin asemaan juuri ennen komentotulkin käynnistymistä, tämä voi kestää muutaman ylimääräisen sekunnin kun asema käynnistyy. </para>
+</listitem>
+
+<listitem
+><para
+>Etsi komentotulkin tulosteesta CD-asemaa. Sen on todennäköisesti laite <filename
+>fs0:</filename
+> vaikkakin mutkin laitteet joissa on käynnystyskelpoisia osioita näkyvät muodossa <filename
+>fs<replaceable
+>n</replaceable
+></filename
+>. </para
+></listitem>
+
+<listitem
+><para
+>Komennolla <command
+>fs<replaceable
+>n</replaceable
+>:</command
+> ja painamalla &enterkey; valitaan laite, jossa <replaceable
+>n</replaceable
+> on CD-aseman osion numero. Komentotulkki näyttää nyt osion numeron kehotteena. </para
+></listitem>
+
+<listitem
+><para
+>Kirjoita komento <command
+>elilo</command
+> ja paina &enterkey;. Tämä käynnistää käynnistyslatauksen. </para
+></listitem>
+
+</itemizedlist>
+
+<para
+>Kuten valinnalla 1, nämä vaiheet käynnistävät Debianin käynnistyslataimen. Se näyttää valikkoruudun josta valitaan käynnistysydin ja asetuksia. Voidaan käyttää myös lyhyemään komentoa <command
+>fs<replaceable
+>n</replaceable
+>:elilo</command
+> komentotulkin kehotteessa. Jatka valitsemaan käynnistysydin ja asetukset. </para>
+
+  </sect3>
+
+  <sect3 arch="ia64" id="serial-console">
+  <title
+>Asentaminen sarjapäätteen avulla</title>
+
+<para
+>Asennus voidaan tehdä näyttöä ja näppäimistöä käyttäen tai sarjapäätteeltä. Näyttö/näppäimistö valitaan kohdasta jossa lukee [VGA console]. Sarjaportin kautta olevalla yhteydellä asennetaan valitsemalla kohta jossa lukee [<replaceable
+>BAUDIT</replaceable
+> baud serial console], missä <replaceable
+>BAUDIT</replaceable
+> on sarjayhteyden nopeus. Valikossa on valmiiksi yleisimmin käytetyt nopeusasetukset laitteelle ttyS0. </para
+><para
+>Useimmiten halutaan asentimen käyttävän samaan nopeusasetusta kuin on yhteydellä EFI-konsolliin. Jos et ole varma mikä tämä nopeus on, sen voi katsoa komennolla <command
+>baud</command
+> EFI:n komentotulkissa. </para
+><para
+>Jos valikossa ei ole valmiina haluttua sarjaporttia tai nopeusasetusta, voidaan jonkin valikon rivin asetukset korvata. Esimerkiksi käytettäessä 57600 baudin yhteyttä laitteella ttyS1, kirjoitetaan <command
+>console=ttyS1,57600n8</command
+> teksti-ikkunaan <classname
+>Boot:</classname
+>. </para>
+
+<note
+><para
+>Useimmat IA-64-koneet toimitetaan konsolin oletusasetuksella 9600 baudia. Tämä asetus on hitaahko, ja asennusprosessi kirjoittaa jokaista ruutua merkittävän ajan. Kannattaa harkita joko nopeuden nostamista tai asennusta tekstitilassa. Katso ohjevalikosta <classname
+>Params</classname
+> miten asennin käynnistetään tekstitilassa. </para
+></note>
+
+<warning
+><para
+>Jos valitaan väärä konsolityyppi, päästään valitsemaan ydin ja käynnistysparametrit, mutta sekä näyttö että näppäimistö lakkaavat toimimasta heti ytimen käynnistyttyä, jolloin on tehtävä uudelleenkäynnistys ennen kuin asennus voidaan alottaa. </para
+></warning>
+  </sect3>
+
+  <sect3 arch="ia64" id="kernel-option-menu">
+  <title
+>Käynnistysytimen ja parametrien valinta</title>
+
+<para
+>Käynnistyslatain näyttää lomakkeen jossa on valikko ja teksti-ikkunan jossa on <classname
+>Boot:</classname
+>-kehote. Nuolinäppäimillä valitaan valikon kohta ja näppäimistöllä kirjoitettu teksti tulee teksti-ikkunaan. Ohjetekstiruudut saa näkyviin painamalla funktionäppäimiä. Ohjeteksti <classname
+>General</classname
+> selittää valikon kohdat ja ohjeteksti <classname
+>Params</classname
+> yleiset komentorivin parametrit. </para
+><para
+>Tutustu <classname
+>General</classname
+>-ohjeruudussa ytimien ja asennukseen sopivimpien asennustilojen kuvauksiin. Myöskin olisi luettava kohdasta <xref linkend="boot-parms"/> mitä lisäparametreja haluttaisiin asettaa teksti-ikkunassa <classname
+>Boot:</classname
+>. Valittua ytimen versiota käytetään sekä asennusprosessissa että asennettavassa järjestelmässä. Jos asennuksen aikana ilmenee olgelmia ytimen kanssa, lienevät  samat ongelmat edessä myös asennetussa järjestelmässä. Seuraavat vaiheet valitsevat ja käynnistävät asennuksen: </para>
+
+<itemizedlist>
+
+<listitem
+><para
+>Valitse nuolinäppäimillä tarpeisiisi parhaiten sopiva ytimen versio ja asennustapa. </para
+></listitem>
+
+<listitem
+><para
+>Kirjoita asennusparametrit näppäimistöllä. Teksti näytetään heti teksti-ikkunassa. Tämä on se paikka mihin ytimen parametrit (kuten sarjakonsolin asetukset) kirjoitetaan. </para
+></listitem>
+
+<listitem
+><para
+>Paina &enterkey;. Tällöin ydin ladataan ja käynnistetään. Ydin näyttää tavanomaiset käynnistysviestinsä ja niiden jälkeen tulee Debian Installerin ensimmäisen ruutu. </para
+></listitem>
+
+</itemizedlist>
+
+<para
+>Asennusta jatketaan seuraavassa luvussa missä tehdään kieliasetukset, verkkoasetukset ja levyosiot. </para>
+  </sect3>
+  </sect2>
+
+  <sect2 arch="ia64" id="boot-tftp"
+><title
+>Käynnistys TFTP:llä</title>
+
+<para
+>IA-64-järjestelmän käynnistäminen verkosta tehdään samaan tapaan kuin käynnistäminen CD-levyltä. Ainoa ero on asennusytimen lataustapa. EFI Boot Manager osaa ladata ja käynnistää ohjelmia verkossa olevalta palvelimelta. Kun asennusydin on ladattu ja käynnistyy, järjestelmän asennus käy läpi samat vaiheet kuin CD-levyltä asennettaessa, paitsi että peruskokoonpanon paketit asennetaan verkosta eikä CD-asemasta. </para>
+
+
+<!-- Start of file boot-installer/intro-net.xml -->
+<!-- $Id: intro-net.xml 11648 2004-03-22 00:37:46Z joeyh $ -->
+
+<para
+>Käynnistäminen verkosta edellyttää verkkoyhteyttä ja TFTP-käynnistyspalvelinta (DHCP, RARP, tai BOOTP). </para
+><para arch="hppa"
+>Vanhoissa järjestelmissä kuten 715 saatetaan joutua käyttämään RBOOT-palvelinta BOOTP:n tilalla. </para
+><para
+>Verkosta käynnistämistä tukeva asennustapa kuvataan kohdassa <xref linkend="install-tftp"/>. </para>
+<!--   End of file boot-installer/intro-net.xml -->
+
+<para
+>IA-64-järjestelmän käynnistäminen verkosta vaatii kaksi suoritinperhekohtaista toimenpidettä. Käynnistyspalvelimella on DHCP:n tai TFTP:n asetuksissa noudettavaksi ohjelmaksi asetettava <command
+>elilo</command
+>. Asiakaskoneessa on EFI-alkulatausohjelmassa määritettävä uusi asetus, jotta lataus verkosta on käytössä. </para>
+
+  <sect3 arch="ia64" id="boot-tftp-server">
+  <title
+>Palvelimen asetukset</title>
+<para
+>Sopiva asetus TFTP:lle IA-64-järjestelmän käynnistämiseksi verkosta näyttää suunnilleen tältä: <informalexample
+><screen>
+host mcmuffin {
+        hardware ethernet 00:30:6e:1e:0e:83;
+        fixed-address 10.0.0.21;
+        filename "debian-installer/ia64/elilo.efi";
+}
+</screen
+></informalexample
+> Huomaa, että tavoitteena on saada ohjelma <command
+>elilo.efi</command
+> käynnistettyä asiakaskoneella. </para
+><para
+>Pura tiedosto <filename
+>netboot.tar.gz</filename
+> tftp-palvelimen juurena käytettävään hakemistoon. Tavallisia tftp:n juurihakemistoja ovat <filename
+>/var/lib/tftp</filename
+> ja <filename
+>/tftpboot</filename
+>. Tämä luo hakemistopuun <filename
+>debian-installer</filename
+> jossa on IA-64-järjestelmän käynnistystiedostot. </para
+><para>
+
+<informalexample
+><screen
+># cd /var/lib/tftp
+# tar xvfz /home/user/netboot.tar.gz
+./
+./debian-installer/
+./debian-installer/ia64/
+[...]
+</screen
+></informalexample
+> Tiedostossa <filename
+>netboot.tar.gz</filename
+> on asetustiedosto <filename
+>elilo.conf</filename
+>, jonka pitäisi toimia useimmissa kokoonpanoissa. Jos tähän tiedostoon kuitenkin joudutaan tekemään muutoksia, se löytyy hakemistosta <filename
+>debian-installer/ia64/</filename
+>. On mahdollista käyttää jokaiselle asiakaskoneelle omaa asetustiedostoa nimeämällä ne asiakaskoneen IP-osoitteella heksajärjestelmässä ja lisäämällä sukunimi <filename
+>.conf</filename
+>. Tällöin ei käytetä tiedostoa nimeltä <filename
+>elilo.conf</filename
+>. Katso lisätietoja paketin <classname
+>elilo</classname
+> mukana tulevista ohjeista. </para>
+  </sect3>
+
+  <sect3 arch="ia64" id="boot-tftp-client">
+  <title
+>Asiakaskoneen asetukset</title>
+<para
+>Asiakaskoneen asetuksien teko tukemaan käynnistystä TFTP:llä aloitetaan käynnistämällä EFI:in ja menemällä valikkoon <guimenu
+>Boot Option Maintenance Menu</guimenu
+>. <itemizedlist
+> <listitem
+><para
+> Lisää käynnistykselle valinta. </para
+></listitem
+> <listitem
+><para
+> Pitäisi näkyä yksi tai useampia rivejä joissa on teksti <guimenuitem
+>Load File [Acpi()/.../Mac()]</guimenuitem
+>. Mikäli näitä rivejä on useampi, valitse se jossa on käynnistettäessä käytettävän verkkoliitännän MAC-osoite. Siirrä nuolinäppäimillä korostus valinnnan kohdalle ja paina &enterkey;. </para
+></listitem
+> <listitem
+><para
+> Pistä käynnistysvalinnan nimeksi <userinput
+>Netboot</userinput
+> tai vastaavaa, tallenna ja poistu takaisin käynnistysvalintojen valikkoon.  </para
+></listitem
+> </itemizedlist
+> Nyt pitäisi näkyä juuri tehty käynnistysvalinta, ja sen valitsemisen pitäisi käynnistää DHCP-kysely, joka johtaa tiedoston <filename
+>elilo.efi</filename
+> noutamiseen TFTP:Llä palvelimelta. </para
+><para
+>Käynnistyslatain näyttää kehotteensa sen jälkeen kun sen on noutanut ja käsitellyt asetustiedostonsa. Tässä eteenpäin asennuksessa on samat vaiheet kuin asennettaessa CD-levyltä. Valitse käynnistysvalinta kuten yllä ja kun ytimen lataus verkosta on valmis, se käynnistää Debian Installerin. </para
+><para
+>Asennusta jatketaan seuraavassa luvussa missä tehdään kieliasetukset, verkkoasetukset ja levyosiot. </para>
+  </sect3>
+  </sect2>
+<!--   End of file boot-installer/ia64.xml -->
+
+<!-- Start of file boot-installer/m68k.xml -->
+<!-- $Id: m68k.xml 45435 2007-02-26 18:29:36Z wouter $ -->
+
+  <sect2 arch="m68k"
+><title
+>Asennustavan valinta</title>
+
+<para
+>Joissakin suoritinperheen &arch-title; suoritinarkkitehtuureissa on mahdollista käynnistää joko 2.4.x- tai 2.2.x-ydin. Kun valinta on mahdollinen, yritä käyttää 2.4.x-ydintä. Asentimen pitäisi käyttää vähemmän muistia 2.4.x-ytimellä, koska 2.2.x-ytimen tuki vaatii kiintän kokoisen muistilevyn ja 2.4.x käyttää tmpfs:ää. </para
+><para
+>Jos käytät linux-ydintä 2.2.x, on annettava ytimen parametri &ramdisksize;. </para
+><para
+>Varmista, että yksi ytimen parametreista on <userinput
+>root=/dev/ram</userinput
+>. </para
+><para
+>Lue <ulink url="&url-m68k-cts-faq;"
+>cts's &arch-title; debian-installer FAQ</ulink
+> jos on vaikeuksia. </para>
+
+<itemizedlist>
+	<listitem
+><para
+><xref linkend="m68k-boot-amiga"/></para
+></listitem>
+	<listitem
+><para
+><xref linkend="m68k-boot-atari"/></para
+></listitem>
+	<listitem
+><para
+><xref linkend="m68k-boot-bvme6000"/></para
+></listitem>
+	<listitem
+><para
+><xref linkend="m68k-boot-mac"/></para
+></listitem>
+	<listitem
+><para
+><xref linkend="m68k-boot-mvme"/></para
+></listitem>
+	<listitem
+><para
+><xref linkend="m68k-boot-q40"/></para
+></listitem>
+</itemizedlist>
+
+
+    <sect3 id="m68k-boot-amiga"
+><title
+>Amiga</title>
+<para
+>Amigalla ainoa asennustapa on kiintolevyltä (katso <xref linkend="m68k-boot-hd"/>). <emphasis
+>Toisin sanoen CD-levyltä ei voida käynnistää.</emphasis
+> </para
+><para
+>Amigalla ei tällä hetkellä bogl toimi, joten bogl-virheiden ilmetessa on lisättävä käynnistysparametri <userinput
+>fb=false</userinput
+>. </para>
+    </sect3>
+
+    <sect3 id="m68k-boot-atari"
+><title
+>Atari</title>
+<para
+>Atarin asennin voidaan käynnistää joko kiintolevyltä (katso <xref linkend="m68k-boot-hd"/>) tai levykkeiltä (katso <xref linkend="boot-from-floppies"/>). <emphasis
+>Toisin sanoen CD-levyltä ei voida käynnistää.</emphasis
+> </para
+><para
+>Atarilla ei tällä hetkellä bogl toimi, joten bogl-virheiden ilmetessa on lisättävä käynnistysparametri <userinput
+>fb=false</userinput
+>. </para>
+    </sect3>
+
+    <sect3 id="m68k-boot-bvme6000"
+><title
+>BVME6000</title>
+<para
+>BVME6000:lla asennin voidaan käynnistää CD-levyltä (katso <xref linkend="m68k-boot-cdrom"/>), levykkeiltä (see <xref linkend="boot-from-floppies"/>) tai verkosta (katso <xref linkend="boot-tftp"/>). </para>
+    </sect3>
+
+    <sect3 id="m68k-boot-mac"
+><title
+>Macintosh</title>
+<para
+>Macilla ainoa asennustapa on kiintolevyltä (katso <xref linkend="m68k-boot-hd"/>). <emphasis
+>Toisin sanoen CD-levyltä ei voida käynnistää.</emphasis
+> Maceille ei ole toimivaa 2.4.x-ydintä. </para
+><para
+>Mikäli laitteistossa on 53c9x-piirillä toimiva SCSI-väylä, saatetaan joutua käyttämään ytimen parametria <userinput
+>mac53c9x=1,0</userinput
+>. Quadra 950 tapaisilla koneilla, joissa on kaksi SCSI-väylää, on sitävastoin käytettävä <userinput
+>mac53c9x=2,0</userinput
+>. Toinen tapa on antaa parametri muodossa <userinput
+>mac53c9x=-1,0</userinput
+> jolloin automaattitunnistus jää päälle, mutta SCSI disconnect otetaan pois päältä. Huomaa, että tämä parametri on tarpeellinen vain jos kiintolevyjä on enemmän kuin yksi; muussa tapauksessa järjestelmä toimii nopeammin jos sitä ei käytetä. </para>
+    </sect3>
+
+    <sect3 id="m68k-boot-mvme"
+><title
+>MVME147 ja MVME16x</title>
+<para
+>MVME147:lle ja MVME16x:lle asennin voidaan käynnistää joko levykkeiltä (katso <xref linkend="boot-from-floppies"/>) tai verkosta (katso <xref linkend="boot-tftp"/>). <emphasis
+>Toisin sanoen CD-levyltä ei voida käynnistää.</emphasis
+> </para>
+    </sect3>
+
+    <sect3 id="m68k-boot-q40"
+><title
+>Q40/Q60</title>
+<para
+>Q40/Q60:lle ainoa asennustapa on kiintolevyltä (katso <xref linkend="m68k-boot-hd"/>). <emphasis
+>Toisin sanoen CD-levyltä ei voida käynnistää.</emphasis
+> </para>
+    </sect3>
+
+  </sect2>
+
+  <sect2 arch="m68k" id="m68k-boot-hd"
+><title
+>Käynnistäminen kiintolevyltä</title>
+
+
+<!-- Start of file boot-installer/intro-hd.xml -->
+<!-- $Id: intro-hd.xml 28672 2005-06-26 10:06:30Z fjp $ -->
+
+<para
+>Käynnistäminen koneessa jo olevasta käyttöjärjestelmäst on usein kätevä tapa; joillekin järjestelmille se on ainoa tuettu asennustapa. </para
+><para
+>Käynnistettäessä asennin kiintolevyltä on tarvittavat tiedostot pitänyt jo noutaa ja tallentaa kohdassa <xref linkend="boot-drive-files"/>. </para>
+<!--   End of file boot-installer/intro-hd.xml -->
+
+<para
+>Kiintolevyltä käynnistettäessä voidaan käyttää ainakin kuutta erilaista muistilevyä, kolmea eri tyyppiä ja jokainen joko 2.2.x-linuxytimen tuen kera tai ilman (katso <ulink url="&disturl;/main/installer-&architecture;/current/images/MANIFEST"
+>MANIFEST</ulink
+>:istä lisätietoja). </para
+><para
+>Kolme eri muistilevyn tyyppiä ovat <filename
+>cdrom</filename
+>, <filename
+>hd-media</filename
+>, ja <filename
+>nativehd</filename
+>. Näiden muistilevyjen erona on vain se, mistä ne hakevat asennettavat paketit. Muistilevy <filename
+>cdrom</filename
+> noutaa debianin asentimen paketit CD-levyltä. <filename
+>hd-media</filename
+> käyttää kiintolevyllä olevaa tiedostoa, joka on CD-levyn ISO-otos. Lopuksi <filename
+>nativehd</filename
+> noutaa paketit verkosta. </para>
+
+<itemizedlist>
+	<listitem
+><para
+><xref linkend="m68k-boothd-amiga"/></para
+></listitem>
+	<listitem
+><para
+><xref linkend="m68k-boothd-atari"/></para
+></listitem>
+	<listitem
+><para
+><xref linkend="m68k-boothd-mac"/></para
+></listitem>
+	<listitem
+><para
+><xref linkend="m68k-boothd-q40"/></para
+></listitem>
+</itemizedlist>
+
+
+    <sect3 id="m68k-boothd-amiga"
+><title
+>Käynnistäminen AmigaOS:stä</title>
+<para
+>Käynnistä <command
+>Workbench</command
+>:ssä Linuxin asennusprosessi kaksoisnapsauttamalla kuvaketta <guiicon
+>StartInstall</guiicon
+> hakemistossa <filename
+>debian</filename
+>. </para
+><para
+>Joudut ehkä painamaan &enterkey; kahdesti kun Amigan asennusohjelma on tulostanut joitakin virheenjäljitystietoja ikkunaan. Tämän jälkeen on muutaman sekunnin viive. Seuraavaksi pitäisi näkyä musta ruutu jossa on valkoista tekstiä, siinä näkyy kaikenlaista ytimen virheenjäljitystietoa. Ruudun vieritys saattaa toimia niin nopeasti, ettei viestejä ehdi lukea, mutta sillä ei ole väliä. Muutaman sekunnin kuluttua asennusohjelman pitäisi käynnistyä automaattisesti, joten voidaan jatkaa kohtaan <xref linkend="d-i-intro"/>. </para>
+    </sect3>
+
+
+    <sect3 id="m68k-boothd-atari"
+><title
+>Käynnistäminen Atari TOS:sta</title>
+<para
+>Käynnistä GEM-työpöydällä Linuxin asennusprosessi kaksoisnapsauttamalla kuvaketta <guiicon
+>bootstra.prg</guiicon
+> hakemistossa <filename
+>debian</filename
+> ja napsauttamalla painiketta <guibutton
+>Ok</guibutton
+> ohjelman asetusten valintaikkunassa. </para
+><para
+>Joudut ehkä painamaan &enterkey; kahdesti kun Atarin käynnistyslatain on tulostanut joitakin virheenjäljitystietoja ikkunaan. Tämän jälkeen ruutu muuttuu harmaaksi, ja tulee muutaman sekunnin viive. Seuraavaksi pitäisi näkyä musta ruutu jossa on valkoista tekstiä, siinä näkyy kaikenlaista ytimen virheenjäljitystietoa. Ruudun vieritys saattaa toimia niin nopeasti, ettei viestejä ehdi lukea, mutta sillä ei ole väliä. Muutaman sekunnin kuluttua asennusohjelman pitäisi käynnistyä automaattisesti, joten voidaan jatkaa kohtaan <xref linkend="d-i-intro"/>. </para>
+    </sect3>
+
+
+    <sect3 id="m68k-boothd-mac"
+><title
+>Käynnistäminen MacOS:stä</title>
+<para
+>Alkuperäinen Mac-järjestelmä on säilytettävä ja käynnistettävä siitä. <emphasis
+>Olennaista</emphasis
+> on, että käynnistettäessä MacOS:ää valmisteltaessa Penguin-linuxlataimen käynnistämistä, pidetään <keycap
+>Vaihto</keycap
+>-näppäintä pohjassa jotta estetään laajennosten lataaminen. Jos MacOS:ää käytetään vain linuxin lataamiseen, voidaan poistaa kaikki laajennokset ja järjestelmäikkunat Macin Järjestelmäkansiosta, tällöin ei tarvitse pitää <keycap
+>Vaihto</keycap
+>-näppäintä pohjassa. Muutoin laajennokset saattavat jäädä käyntiin ja aiheuttavat satunnaisia ongelmia ajossa olevalle linux-ytimelle. </para
+><para
+>Maceissä on käytettävä käynnistyslatainta <command
+>Penguin</command
+>, joka on saatavilla <ulink url="&url-m68k-mac;"
+>Linux/mac68k sourceforge -verkkoprojektilta</ulink
+>. Jos käytettävissä ei ole <command
+>Stuffit</command
+>-pakkausohjelman tekemiä tiedostoja käsitteleviä työkaluja, voidaan tiedosto tallentaa MacOS-levykkeelle toisella minkä tahansa laitealustan GNU/Linux-koneella ja käyttää komentoja <command
+>hmount</command
+>, <command
+>hcopy</command
+> ja <command
+>humount</command
+> työkalukokoelmasta <classname
+>hfsutils</classname
+>. </para
+><para
+>Käynnistä MacOS:n työpöydällä Linuxin asennusprosessi kaksoisnapsauttamalla kuvaketta <guiicon
+>Penguin Prefs</guiicon
+> hakemistossa <filename
+>Penguin</filename
+>. <command
+>Penguin</command
+>-käynnistin käynnistyy. Valitse <guimenu
+>File</guimenu
+>-valikossa kohta <guimenuitem
+>Settings</guimenuitem
+>, napsauta välilehteä <guilabel
+>Kernel</guilabel
+>. Valitse ytimen (<filename
+>vmlinuz</filename
+>) ja muistilevyn (<filename
+>initrd.gz</filename
+>) otokset hakemistossa <filename
+>install</filename
+> painamalla niitä vastaavia painikkeita oikeassa yläkulmassa, ja etenemällä tiedostonvalintaikkunoissa niiden kohdalle. </para
+><para
+>Käynnistysparametrit asetetaan Penguinissa valitsemalla <guimenu
+>File</guimenu
+> -&gt; <guimenuitem
+>Settings...</guimenuitem
+>, sitten vaihdetaan välilehteen <guilabel
+>Options</guilabel
+>. Käynnistysparametrit voidaan kirjoittaa tekstinsyöttöalueeseen. Mikäli näitä asetuksia halutaan käyttää aina, valitaan <guimenu
+>File</guimenu
+> -&gt; <guimenuitem
+>Save Settings as Default</guimenuitem
+>. </para
+><para
+>Sulje <guilabel
+>Settings</guilabel
+>-valintaikkuna, tallenna asetukset ja käynnistä alkulataus valikon <guimenu
+>File</guimenu
+> kohdasta <guimenuitem
+>Boot Now</guimenuitem
+>. </para
+><para
+><command
+>Penguin</command
+>-käynnistin tulostaa joitakin virheenjäljitystietoja ikkunaan. Tämän jälkeen ruutu muuttuu harmaaksi, ja tulee muutaman sekunnin viive. Seuraavaksi näkyy musta ruutu jossa on valkoista tekstiä, siinä näkyy kaikenlaista  ytimen virheenjäljitystietoa. Ruudun vieritys saattaa toimia niin nopeasti, ettei viestejä ehdi lukea, mutta sillä ei ole väliä.  Muutaman sekunnin kuluttua asennusohjelman pitäisi käynnistyä automaattisesti, joten voidaan jatkaa kohtaan <xref linkend="d-i-intro"/>. </para>
+
+    </sect3>
+
+    <sect3 id="m68k-boothd-q40"
+><title
+>Käynnistäminen Q40/Q60:stä</title>
+
+<para
+>FIXME </para
+><para
+>Asennusohjelman pitäisi käynnistyä automaattisesti, joten voidaan jatkaa kohtaan <xref linkend="d-i-intro"/> </para>
+
+    </sect3>
+  </sect2>
+
+
+  <sect2 arch="m68k" id="m68k-boot-cdrom"
+><title
+>Käynnistäminen CD-levyltä</title>
+<para
+>Tällä hetkellä suoritinperheen &arch-title; ainoa CD-levyltä käynnistystä tukeva suoritinarkkitehtuuri on BVME6000. </para>
+
+
+<!-- Start of file boot-installer/intro-cd.xml -->
+<!-- $Id: intro-cd.xml 39614 2006-08-07 15:50:11Z fjp $ -->
+
+<para
+>Useimmille käyttäjille on helpointa käyttää Debianin CD-levykokoelmaa. Jos käsillä on CD-kokoelma, ja jos tietokone tukee käynnistystä suoraan CD-levyltä, hienoa! Riittää kun <phrase arch="x86"
+> teet koneen asetukset siten, että se käynnistyy CD-levyltä kuten neuvotaan kohdassa <xref linkend="boot-dev-select"/>, </phrase
+> asetat levyn asemaan, käynnistät ja jatkat seuraavaan lukuun. </para
+><para
+>Huomaa, että jotkin CD-asemat saattavat vaatia erikoisajureita, eikä niitä niin ollen voi käyttää asennuksen alkuvaiheissa. Jos ilmenee, ettei tavallinen CD-levyltä käynnistäminen toimi tietokoneella, lue tästä luvusta uudestaan kohdat vaihtoehtoisista ytimistä ja asennustavoista jotka saattaisivat tässä tilanteessa toimia. </para
+><para
+>Vaikka käynnistäminen CD-levyltä ei toimisikaan, voitaneen Debianin järjestelmän osat ja tarvittavat paketit asentaa CD-levyltä. Riittää kun käynnistää joltain muulta taltiolta, esimerkiksi levykkeeltä. Kun on aika asentaa käyttöjärjestelmä, peruskokoonpano ja lisäpaketteja, säädetään asennusjärjestelmä asentamaan ne CD-levyltä. </para
+><para
+>Jos ilmenee pulmia, katso kohtaa <xref linkend="boot-troubleshooting"/>. </para>
+<!--   End of file boot-installer/intro-cd.xml -->
+
+  </sect2>
+
+
+  <sect2 arch="m68k" id="boot-tftp"
+><title
+>Käynnistys TFTP:llä</title>
+
+
+<!-- Start of file boot-installer/intro-net.xml -->
+<!-- $Id: intro-net.xml 11648 2004-03-22 00:37:46Z joeyh $ -->
+
+<para
+>Käynnistäminen verkosta edellyttää verkkoyhteyttä ja TFTP-käynnistyspalvelinta (DHCP, RARP, tai BOOTP). </para
+><para arch="hppa"
+>Vanhoissa järjestelmissä kuten 715 saatetaan joutua käyttämään RBOOT-palvelinta BOOTP:n tilalla. </para
+><para
+>Verkosta käynnistämistä tukeva asennustapa kuvataan kohdassa <xref linkend="install-tftp"/>. </para>
+<!--   End of file boot-installer/intro-net.xml -->
+
+<para
+>VMEbus-järjestelmien käynnistyttyä näkyy LILO:n kehote <prompt
+>Boot:</prompt
+>. Käynnistä Linux ja varsinainen Debianin asennus vt102-pääte-emulaatiota käyttäen kirjoittamalla kehotteeseen joku seuraavista: <itemizedlist>
+<listitem
+><para
+>Kirjoittamalla <screen
+>i6000 &enterkey;</screen
+> asennetaan BVME4000/6000 </para
+></listitem>
+<listitem
+><para
+>kirjoittamalla <screen
+>i162 &enterkey;</screen
+> asennetaan MVME162 </para
+></listitem>
+<listitem
+><para
+>kirjoittamalla <screen
+>i167 &enterkey;</screen
+> asennetaan MVME166/167 </para
+></listitem>
+    </itemizedlist>
+
+</para
+><para
+>Loppuun voidaan lisätä merkkijono <screen
+>TERM=vt100</screen
+> jolloin käytetään vt100-pääte-emulointia, esim. <screen
+>i6000 TERM=vt100 &enterkey;</screen
+>. </para>
+  </sect2>
+
+
+  <sect2 arch="m68k" id="boot-from-floppies">
+  <title
+>Käynnistäminen levykkeiltä</title>
+<para
+>Useimmille suoritinperheen &arch-title; laitteille suositellaan käynnistämistä koneen omasta tiedostojärjestelmästä. </para
+><para
+>Tällä hetkellä tuetaan levykkeeltä käynnistämistä vain Atarilla ja VME:llä (VME:llä on oltava SCSI-levykeasema). </para>
+ </sect2>
+<!--   End of file boot-installer/m68k.xml -->
+
+<!-- Start of file boot-installer/mips.xml -->
+<!-- $Id: mips.xml 35613 2006-03-19 04:18:28Z tbm $ -->
+
+
+  <sect2 arch="mips" id="boot-tftp"
+><title
+>Käynnistys TFTP:llä</title>
+
+   <sect3>
+   <title
+>SGI:n käynnistäminen TFTP:llä</title>
+<para
+>SGI:n koneilla käynnistetään linux ja aloitetaan Debianin asennus kirjoittamalla komentotulkkiin <informalexample
+><screen>
+bootp():
+</screen
+></informalexample
+>. Jotta tämä toimisi, voidaan joutua ensin poistamaan ympäristömuuttuja <envar
+>netaddr</envar
+>. Kirjoita komentotulkissa <informalexample
+><screen>
+unsetenv netaddr
+</screen
+></informalexample
+>. </para>
+  </sect3>
+
+   <sect3>
+   <title
+>Broadcom BCM91250A: ja BCM91480B:n käynnistäminen TFTP:llä</title>
+<para
+>Broadcomin testiemolevyillä BCM91250A ja BCM91480B on ladattava SiByl-käynnistyslatain TFTP:llä, se sitten lataa ja käynnistää Debianin asentimen. Useimmissa tapauksissa noudetaan ensin IP-osoite DHCP:llä mutta on mahdollista asettaa kiinteä osoite. DHCP otetaan käyttöön seuraavalla CFE-kehotteeseen kirjoitettavalla komennolla:<informalexample
+><screen>
+ifconfig eth0 -auto
+</screen
+></informalexample
+> Kun IP-osoite on saatu, ladataan SiByl tällä komennolla: <informalexample
+><screen>
+boot 192.168.1.1:/boot/sibyl
+</screen
+></informalexample
+> Komennossa oleva IP-osoite on korvattava TFTP-palvelimen nimellä tai IP-osoitteella. Tämän komennon jälkeen asennin ladataan automaattisesti. </para>
+</sect3>
+  </sect2>
+
+  <sect2 arch="mips"
+><title
+>Käynnistysparametrit</title>
+
+   <sect3>
+   <title
+>SGI:n käynnistäminen TFTP:llä</title>
+<para
+>SGI:n koneilla voidaan käynnistysparametreja lisätä komentotulkissa <command
+>bootp():</command
+>-komennon loppuun. </para
+><para
+><command
+>bootp():</command
+>-komennon jälkeen voidaan kirjoittaa käynnistettävän tiedoston polkunimi, jos bootp/dhcp-palvelin ei nimeä antanut. Esimerkki:<informalexample
+><screen>
+bootp():/boot/tftpboot.img
+</screen
+></informalexample
+> Ytimelle voi antaa lisää parametreja <command
+>append</command
+>:n avulla: <informalexample
+><screen
+>bootp(): append="root=/dev/sda1"
+</screen
+></informalexample>
+
+</para>
+  </sect3>
+
+   <sect3>
+   <title
+>Broadcom BCM91250A: ja BCM91480B:n käynnistäminen TFTP:llä</title>
+<para
+>CFE-kehotteessa ei voi suoraan antaa käynnistysparametreja. On muokattava tiedostoa <filename
+>/boot/sibyl.conf</filename
+> TFTP-palvelimella ja lisättävä parametrit muuttujaan <replaceable
+>extra_args</replaceable
+>. </para>
+  </sect3>
+
+  </sect2>
+<!--   End of file boot-installer/mips.xml -->
+
+<!-- Start of file boot-installer/mipsel.xml -->
+<!-- $Id: mipsel.xml 35612 2006-03-19 03:34:30Z tbm $ -->
+
+  <sect2 arch="mipsel" id="boot-tftp"
+><title
+>Käynnistys TFTP:llä</title>
+
+   <sect3>
+   <title
+>Cobaltin käynnistys TFTP:llä</title>
+<para
+>Tarkkaan ottaen Cobalt ei käytä TFTP:tä vaan NFS:ää. On asennettava NFS-palvelin ja tallennettava asentimen tiedostot hakemistoon <filename
+>/nfsroot</filename
+>. Cobaltia käynnistettäessä on painettava oikeaa ja vasenta kohdistinnäppäintä samaan ajkaa jolloin laite käynnistyy verkosta NFS:llä. Sitten ruudulla näkyy useita valintoja. Asennustapoja on seuraavat kaksi: <itemizedlist>
+<listitem
+><para
+>SSH:lla (oletus): tässä tapauksessa asennin tekee verkkoasetukset DHCP:llä ja käynnistää SSH-palvelimen. Se näyttää sitten satunnaisen salasanan ja muuta kirjautumistietoa (kuten IP-osoitteen) Cobaltin LCD-näytöllä. Kun laitteeseen kirjaudutaan SSH:lla voidaan asennus aloittaa. </para
+></listitem>
+<listitem
+><para
+>Sarjapäätteellä: Käytä nollamodeemikaapelia Cobaltin sarjaportissa (käytä 115200 bittiä sekunnissa) ja tee asennus tällä tavoin. Tämä ei ole mahdollista Qube 2700 (Qube1) -koneilla, koska niissä ei ole sarjaporttia. </para
+></listitem>
+</itemizedlist>
+
+</para>
+  </sect3>
+
+   <sect3>
+<!-- Note to translators: this is the same section as in mips.xml -->
+   <title
+>Broadcom BCM91250A: ja BCM91480B:n käynnistäminen TFTP:llä</title>
+<para
+>Broadcomin testiemolevyillä BCM91250A ja BCM91480B on ladattava SiByl-käynnistyslatain TFTP:llä, se sitten lataa ja käynnistää Debianin asentimen. Useimmissa tapauksissa noudetaan ensin IP-osoite DHCP:llä mutta on mahdollista asettaa kiinteä osoite. DHCP otetaan käyttöön seuraavalla CFE-kehotteeseen kirjoitettavalla komennolla:<informalexample
+><screen>
+ifconfig eth0 -auto
+</screen
+></informalexample
+> Kun IP-osoite on saatu, ladataan SiByl tällä komennolla: <informalexample
+><screen>
+boot 192.168.1.1:/boot/sibyl
+</screen
+></informalexample
+> Komennossa oleva IP-osoite on korvattava TFTP-palvelimen nimellä tai IP-osoitteella. Tämän komennon jälkeen asennin ladataan automaattisesti. </para>
+</sect3>
+  </sect2>
+
+  <sect2 arch="mipsel"
+><title
+>Käynnistysparametrit</title>
+
+   <sect3>
+   <title
+>Cobaltin käynnistys TFTP:llä</title>
+<para
+>Käynnistysparametreja ei voi antaa suoraan. On muokattava tiedostoa <filename
+>/nfsroot/default.colo</filename
+> NFS-palvelimella ja lisättävä parametrit muuttujaan <replaceable
+>args</replaceable
+>. </para>
+  </sect3>
+
+   <sect3>
+<!-- Note to translators: this is the same section as in mips.xml -->
+   <title
+>Broadcom BCM91250A: ja BCM91480B:n käynnistäminen TFTP:llä</title>
+<para
+>CFE-kehotteessa ei voi suoraan antaa käynnistysparametreja. On muokattava tiedostoa <filename
+>/boot/sibyl.conf</filename
+> TFTP-palvelimella ja lisättävä parametrit muuttujaan <replaceable
+>extra_args</replaceable
+>. </para>
+  </sect3>
+
+  </sect2>
+<!--   End of file boot-installer/mipsel.xml -->
+
+<!-- Start of file boot-installer/s390.xml -->
+<!-- $Id: s390.xml 43745 2007-01-01 13:52:38Z fjp $ -->
+
+  <sect2 arch="s390"
+><title
+>s390:n rajoitukset</title>
+<para
+>Jotta asennusjärjestelmää voitaisiin käyttää S/390:lla, on oltava toimivat verkkoasetukset ja ssh-istunto. </para
+><para
+>Käynnistysprosessi alkaa verkkoasetuksilla, tulee kehote useista verkon asetuksista. Jos asetukset onnistuvat, kirjaudutaan järjestelmään käynnistämällä ssh-istunto, joka käynnistää tavanomaisen asennusjärjestelmän. </para>
+  </sect2>
+
+
+  <sect2 arch="s390"
+><title
+>s390:n käynnistysparametrit</title>
+<para
+>S/390:lla käynnistysparametrit voidaan lisätä parm-tiedostoon. Tiedostossa voi käyttää joko ACSII- tai EBCDIC-merkkejä. Esimerkki parm-tiedostosta <filename
+>parmfile.debian</filename
+> tulee asennusotosten mukana. </para>
+  </sect2>
+<!--   End of file boot-installer/s390.xml -->
+
+<!-- Start of file boot-installer/powerpc.xml -->
+<!-- $Id: powerpc.xml 56248 2008-10-03 17:07:28Z fjp $ -->
+
+  <sect2 arch="powerpc" id="boot-cd"
+><title
+>Käynnistäminen CD-levyltä</title>
+
+
+<!-- Start of file boot-installer/intro-cd.xml -->
+<!-- $Id: intro-cd.xml 39614 2006-08-07 15:50:11Z fjp $ -->
+
+<para
+>Useimmille käyttäjille on helpointa käyttää Debianin CD-levykokoelmaa. Jos käsillä on CD-kokoelma, ja jos tietokone tukee käynnistystä suoraan CD-levyltä, hienoa! Riittää kun <phrase arch="x86"
+> teet koneen asetukset siten, että se käynnistyy CD-levyltä kuten neuvotaan kohdassa <xref linkend="boot-dev-select"/>, </phrase
+> asetat levyn asemaan, käynnistät ja jatkat seuraavaan lukuun. </para
+><para
+>Huomaa, että jotkin CD-asemat saattavat vaatia erikoisajureita, eikä niitä niin ollen voi käyttää asennuksen alkuvaiheissa. Jos ilmenee, ettei tavallinen CD-levyltä käynnistäminen toimi tietokoneella, lue tästä luvusta uudestaan kohdat vaihtoehtoisista ytimistä ja asennustavoista jotka saattaisivat tässä tilanteessa toimia. </para
+><para
+>Vaikka käynnistäminen CD-levyltä ei toimisikaan, voitaneen Debianin järjestelmän osat ja tarvittavat paketit asentaa CD-levyltä. Riittää kun käynnistää joltain muulta taltiolta, esimerkiksi levykkeeltä. Kun on aika asentaa käyttöjärjestelmä, peruskokoonpano ja lisäpaketteja, säädetään asennusjärjestelmä asentamaan ne CD-levyltä. </para
+><para
+>Jos ilmenee pulmia, katso kohtaa <xref linkend="boot-troubleshooting"/>. </para>
+<!--   End of file boot-installer/intro-cd.xml -->
+
+<para
+>Tällä hetkellä ainoat suoritinperheen &arch-title; suoritinarkkitehturit jotka tukevat CD-levyltä käynnistämistä ovat PReP ja New World PowerMacit. PowerMaceilla pidä pohjassa näppäintä <keycap
+>c</keycap
+>, tai näppäimiä <keycap
+>Command</keycap
+>, <keycap
+>Option</keycap
+>, <keycap
+>Shift</keycap
+>, ja <keycap
+>Delete</keycap
+> käynnistyksen aikana jotta käynnistys tapahtuu CD-levyltä. </para
+><para
+>OldWorld PowerMacit eivät käynnisty Debian-CD:ltä, koska OldWorld-tietokoneissa on Mac OS ROM CD -latausajurin oltava CD-levyllä, eikä tästä ajurista ole saatavilla vapaata versiota. Kaikissa OldWorld-koneissa on levykeasema, joten käynnistä asennin levykkeeltä ja pistä sitten asennin noutamaan tarvittavat tiedostot CD-levyltä. </para
+><para
+>Jos tietokone ei käynnisty suoraan CD-levyltä, on silti mahdollista käyttää Cd-levyä asennuksessa. NewWorld-koneilla voidaan myös OpenFirmwaren komennolla tehdä käynnistys CD-levyltä. Seuraa kohdan <xref linkend="boot-newworld"/> ohjeita kiintolevyltä käynnistämiseen, paitsi että OF:n kehotteessa käytetään polkua komentoon <command
+>yaboot</command
+> CD:llä, kuten tässä <informalexample
+><screen
+>0 &gt; boot cd:,\install\yaboot
+</screen
+></informalexample>
+
+</para>
+  </sect2>
+
+  <sect2 arch="powerpc" id="install-drive">
+  <title
+>Käynnistys kiintolevyltä</title>
+
+
+<!-- Start of file boot-installer/intro-hd.xml -->
+<!-- $Id: intro-hd.xml 28672 2005-06-26 10:06:30Z fjp $ -->
+
+<para
+>Käynnistäminen koneessa jo olevasta käyttöjärjestelmäst on usein kätevä tapa; joillekin järjestelmille se on ainoa tuettu asennustapa. </para
+><para
+>Käynnistettäessä asennin kiintolevyltä on tarvittavat tiedostot pitänyt jo noutaa ja tallentaa kohdassa <xref linkend="boot-drive-files"/>. </para>
+<!--   End of file boot-installer/intro-hd.xml -->
+
+<!--
+  <sect3
+><title
+>Booting CHRP from OpenFirmware</title>
+
+<para>
+
+  <emphasis
+>Not yet written.</emphasis>
+
+</para>
+   </sect3>
+-->
+
+   <sect3
+><title
+>OldWorld PowerMacien käynnistäminen MacOS:stä</title>
+<para
+>Jos BootX otettiin käyttöön kohdassa <xref linkend="files-oldworld"/>, voidaan sitä käyttää asennusjärjestelmän käynnistämiseen. Kaksoisnapsauta sovelluksen <guiicon
+>BootX</guiicon
+> kuvaketta. Napsauta painiketta <guibutton
+>Options</guibutton
+> ja valitse <guilabel
+>Use Specified RAM Disk</guilabel
+>. Tällöin pääsee valitsemaan tiedoston <filename
+>ramdisk.image.gz</filename
+>. Tietokoneen ominaisuudet saattavat vaatia valintaruudun <guilabel
+>No Video Driver</guilabel
+> merkitsemistä. Sammuta sitten MacOS painikkeella <guibutton
+>Linux</guibutton
+>, se käynnistää asentimen. </para>
+   </sect3>
+
+
+  <sect3 id="boot-newworld">
+  <title
+>NewWorld Macien käynnistäminen OpenFirmwaresta</title>
+<para
+>Tiedostot <filename
+>vmlinux</filename
+>, <filename
+>initrd.gz</filename
+>, <filename
+>yaboot</filename
+>, ja <filename
+>yaboot.conf</filename
+> on tallennettu paikoilleen HFS-osion juureen jo kohdassa <xref linkend="files-newworld"/>. Nyt on käynnistettävä OpenFirmware (katso <xref linkend="invoking-openfirmware"/>. Kirjoita kehotteeseen <informalexample
+><screen>
+0 &gt; boot hd:<replaceable
+>x</replaceable
+>,yaboot
+</screen
+></informalexample
+> korvaten <replaceable
+>x</replaceable
+> sen HFS-osion numerolla, johon ydin ja yabootin tiedoston tallennettiin. Paina rivin lopuksi &enterkey;. Joillakin koneilla on kirjoitettava <userinput
+>ide0:</userinput
+> eikä <userinput
+>hd:</userinput
+>. Kuluu muutama sekunti lisää, ja näkyy yabootin kehote:<informalexample
+><screen>
+boot:
+</screen
+></informalexample
+> Yabootin <prompt
+>boot:</prompt
+>-kehotteessa kirjoitetaan joko <userinput
+>install</userinput
+> tai <userinput
+>install video=ofonly</userinput
+>, ja painetaan &enterkey;. Parametrilla <userinput
+>video=ofonly</userinput
+> saadaan suurin mahdollinen yhteensopivuus; käytä sitä jos <userinput
+>install</userinput
+> ei toimi. Debianin asentimen pitäisi käynnistyä. </para>
+   </sect3>
+  </sect2>
+
+  <sect2 arch="powerpc" condition="bootable-usb" id="usb-boot">
+  <title
+>Käynnistys USB-muistilta</title>
+<para
+>Tämänhetkisen tiedon mukaan NewWorld PowerMacit tukevat käynnistystä USB-muistilta. </para>
+
+<para
+>Varmistu, että kaikki kohdan <xref linkend="boot-usb-files"/> valmistelut on tehty. Macintoshin käynnistämiseksi USB-muistilta on käytettävä Open Firmwaren kehotetta, koska Open Firmwaren oletusarvo on, ettei USB-muistilaitteita etsitä. Katso <xref linkend="invoking-openfirmware"/>. </para
+><para
+>On selvitettävä mihin kohtaan laitepuuta USB-muistilaitteet ilmaantuvat, koska tällä hetkellä <command
+>ofpath</command
+> ei osaa löytää niitä automaattisesti. Open Firmwaren kehotteessa saa komennoilla <userinput
+>dev / ls</userinput
+> ja <userinput
+>devalias</userinput
+> luettelon kaikista tunnetuista laitteista ja laitteiden toisista nimistä. Tekijän laitteistossa, jossa on erilaisia USB-muisteja, toimivat seuraavan kaltaiset polkunimet: <filename
+>usb0/disk</filename
+>, <filename
+>usb0/hub/disk</filename
+>, <filename
+>/pci@f2000000/usb@1b,1/disk@1</filename
+>, ja <filename
+>/pci@f2000000/usb@1b,1/hub@1/disk@1</filename
+> </para
+><para
+>Kun USB-muistin kohta laitepuussa on selvinnyt, käynnistä asennin tämäntapaisella komennolla: <informalexample
+><screen>
+boot <replaceable
+>usb0/disk</replaceable
+>:<replaceable
+>2</replaceable
+>,\\:tbxi
+</screen
+></informalexample
+> <replaceable
+>2</replaceable
+> tarkoittaa Apple_HFS- tai Apple_Bootstrap-osiota johon käynnistys otos aiemmin kopioitiin, ja <userinput
+>,\\:tbxi</userinput
+> saa Open Firmwaren käynnistämään tiedoston jonka HFS-tiedostotyyppi on "tbxi" (ts. <command
+>yaboot</command
+>) hakemistossa johon aiemmin kohdistettiin komento <command
+>hattrib -b</command
+>. </para
+><para
+>Järjestelmän pitäisi nyt käynnistyä, ja näkyviin tulla kehote <prompt
+>boot:</prompt
+>. Tässä voidaan kirjoittaa valinnaisia käynnistysparametreja tai painaa vaan &enterkey;. </para
+><warning
+><para
+>Tämä käynnistystapa on uutuus, ja voi olla vaikea saada toimimaan joissakin NewWorld-koneissa. Jos pulmia ilmenee, ole hyvä ja tee asennusraportti. Asennusraportin teko selitetään kohdassa <xref linkend="submit-bug"/>. </para
+></warning>
+  </sect2>
+
+  <sect2 arch="powerpc" id="boot-tftp"
+><title
+>Käynnistys TFTP:llä</title>
+
+
+<!-- Start of file boot-installer/intro-net.xml -->
+<!-- $Id: intro-net.xml 11648 2004-03-22 00:37:46Z joeyh $ -->
+
+<para
+>Käynnistäminen verkosta edellyttää verkkoyhteyttä ja TFTP-käynnistyspalvelinta (DHCP, RARP, tai BOOTP). </para
+><para arch="hppa"
+>Vanhoissa järjestelmissä kuten 715 saatetaan joutua käyttämään RBOOT-palvelinta BOOTP:n tilalla. </para
+><para
+>Verkosta käynnistämistä tukeva asennustapa kuvataan kohdassa <xref linkend="install-tftp"/>. </para>
+<!--   End of file boot-installer/intro-net.xml -->
+
+<para
+>Tällä hetkellä PReP ja New World PowerMacit tukevat käynnistystä verkosta. </para
+><para
+>Koneilla joissa on Open Firmware, kuten NewWorld Power Macit, mene boot monitoriin (katso <xref linkend="invoking-openfirmware"/>) ja kirjoita komento 
+<informalexample
+><screen>
+0 &gt; boot enet:0
+</screen
+></informalexample>
+Jos tämä ei toimi, on ehkä tiedostonimi lisättävä näin:
+<informalexample
+><screen>
+0 &gt; boot enet:0,yaboot
+</screen
+></informalexample>
+PReP- ja CHRP-koneissa voi olla erilaisia tapoja verkon nimeämiseen. PReP-koneella olisi kokeiltava 
+<informalexample
+><screen>
+<userinput
+>boot net:<replaceable
+>palvelimen_ip-osoite</replaceable
+>,<replaceable
+>tiedosto</replaceable
+>,<replaceable
+>asiakaskoneen_ip-osoite</replaceable
+></userinput
+>.
+</screen
+></informalexample>
+Joissakin PReP-järjestelmissä (esim. Motorolan PowerStack-koneilla)
+saattaa komento <userinput
+>help boot</userinput
+> näyttää kuvauksen
+komennoista ja käytettävissä olevista valitsimista. </para>
+  </sect2>
+
+
+  <sect2 arch="powerpc" condition="supports-floppy-boot">
+  <title
+>Käynnistäminen levykkeiltä</title>
+<para
+>Käynnistäminen levykkeiltä on tuettu suoritinperheellä &arch-title;, vaikkakin se yleensä soveltuu vain OldWorld-koneille. NewWorld-koneissa ei ole levykeasemaa, ja koneeseen liitetyltä USB-levykeasemalta käynnistystä ei ole tuettu. </para
+><para
+>Tarvittavat levykeotokset on jo noudettu ja kirjoitettu levykkeille kohdassa <xref linkend="create-floppy"/>. </para
+><para
+>Levykkeeltä <filename
+>boot-floppy-hfs.img</filename
+> käynnistetään asettamalla se levykeasemaan kun laite on sammutettu, ja painamalla sitten virtanappulaa. </para
+><note
+><para
+>Niille joille Macintoshin levyketoiminnot eivät ole tuttuja: ennen käynnistystä koneeseen asetettu levyke on se josta laitteisto ensimmäiseksi käynnistyy. Jos levykkeellä ei ole kunnollista käynnistystiedostoa, se poistetaan asemasta ja laite etsii käynnistyskelpoisia osioita kiintolevyltä. </para
+></note
+><para
+>Käynnistyksen jälkeen pyydetään levykettä <filename
+>root.bin</filename
+>. Aseta levyke asemaan ja paina &enterkey;. Asennusohjelma käynnistyy automaattisesti kun juuritiedostojärjestelmä on ladattu muistiin. </para>
+  </sect2>
+
+
+  <sect2 arch="powerpc"
+><title
+>PowerPC:n käynnistysparametrit</title>
+<para
+>Useat vanhat Applen näytöt käyttivät 640x480 67Hz -toimintatilaa. Jos kuva on vinksallaan vanhassa Applen näytössä, kokeile lisätä käynnistysparametri <userinput
+>video=atyfb:vmode:6</userinput
+>, joka valitsee tuon toimintatilan useimmissa Mach64- ja Rage-näytönohjaimissa. Jos näytönohjain on Rage 128, käytä <userinput
+>video=aty128fb:vmode:6</userinput
+>. </para>
+  </sect2>
+<!--   End of file boot-installer/powerpc.xml -->
+
+<!-- Start of file boot-installer/sparc.xml -->
+<!-- $Id: sparc.xml 58021 2009-03-30 16:53:10Z cjwatson $ -->
+
+  <sect2 arch="sparc" id="boot-tftp"
+><title
+>Käynnistys TFTP:llä</title>
+
+
+<!-- Start of file boot-installer/intro-net.xml -->
+<!-- $Id: intro-net.xml 11648 2004-03-22 00:37:46Z joeyh $ -->
+
+<para
+>Käynnistäminen verkosta edellyttää verkkoyhteyttä ja TFTP-käynnistyspalvelinta (DHCP, RARP, tai BOOTP). </para
+><para arch="hppa"
+>Vanhoissa järjestelmissä kuten 715 saatetaan joutua käyttämään RBOOT-palvelinta BOOTP:n tilalla. </para
+><para
+>Verkosta käynnistämistä tukeva asennustapa kuvataan kohdassa <xref linkend="install-tftp"/>. </para>
+<!--   End of file boot-installer/intro-net.xml -->
+
+<para
+>Koneissa joissa on OpenBoot, riittää käynnistää asennettavan koneen boot monitor (katso <xref linkend="invoking-openboot"/>). Komennolla <userinput
+>boot net</userinput
+> käynnistetään TFTP- tai RARP-palvelimelta. Komennolla <userinput
+>boot net:bootp</userinput
+> tai <userinput
+>boot net:dhcp</userinput
+> käynnistetään TFTP- ja BOOTP- tai DHCP-palvelimelta. </para>
+  </sect2>
+
+
+  <sect2 arch="sparc"
+><title
+>Käynnistäminen CD-levyltä</title>
+
+
+<!-- Start of file boot-installer/intro-cd.xml -->
+<!-- $Id: intro-cd.xml 39614 2006-08-07 15:50:11Z fjp $ -->
+
+<para
+>Useimmille käyttäjille on helpointa käyttää Debianin CD-levykokoelmaa. Jos käsillä on CD-kokoelma, ja jos tietokone tukee käynnistystä suoraan CD-levyltä, hienoa! Riittää kun <phrase arch="x86"
+> teet koneen asetukset siten, että se käynnistyy CD-levyltä kuten neuvotaan kohdassa <xref linkend="boot-dev-select"/>, </phrase
+> asetat levyn asemaan, käynnistät ja jatkat seuraavaan lukuun. </para
+><para
+>Huomaa, että jotkin CD-asemat saattavat vaatia erikoisajureita, eikä niitä niin ollen voi käyttää asennuksen alkuvaiheissa. Jos ilmenee, ettei tavallinen CD-levyltä käynnistäminen toimi tietokoneella, lue tästä luvusta uudestaan kohdat vaihtoehtoisista ytimistä ja asennustavoista jotka saattaisivat tässä tilanteessa toimia. </para
+><para
+>Vaikka käynnistäminen CD-levyltä ei toimisikaan, voitaneen Debianin järjestelmän osat ja tarvittavat paketit asentaa CD-levyltä. Riittää kun käynnistää joltain muulta taltiolta, esimerkiksi levykkeeltä. Kun on aika asentaa käyttöjärjestelmä, peruskokoonpano ja lisäpaketteja, säädetään asennusjärjestelmä asentamaan ne CD-levyltä. </para
+><para
+>Jos ilmenee pulmia, katso kohtaa <xref linkend="boot-troubleshooting"/>. </para>
+<!--   End of file boot-installer/intro-cd.xml -->
+
+<para
+>Useimmat OpenBootin versiot tukevat komentoa <userinput
+>boot cdrom</userinput
+>, joka on vain toinen nimi käynnistykselle SCSI-laitteelta jonka ID on 6 (tai toissijaisen IDE-liitännän isäntälevyltä IDE-levyjä käyttävässä koneessa). </para>
+  </sect2>
+
+  <sect2 arch="sparc"
+><title
+>IDPRO:min viestit</title>
+<para
+>Jos käynnistäminen ei onnistu, ja vikailmoitukset koskevat <quote
+>IDPROM</quote
+>:ia, on mahdollista etä NVRAM:in paristo on tyhjentynyt. NVRAM:iin tallennetaan laitteiston asetukset. Katso lisätietoja osoitteesta <ulink url="&url-sun-nvram-faq;"
+>Sun NVRAM FAQ</ulink
+>. </para>
+  </sect2>
+<!--   End of file boot-installer/sparc.xml -->
+
+ </sect1>
+
+
+<!-- Start of file boot-installer/parameters.xml -->
+<!-- $Id: parameters.xml 57693 2009-02-27 05:55:08Z cjwatson $ -->
+
+ <sect1 id="boot-parms"
+><title
+>Käynnistysparametrit</title>
+<para
+>Käynnistysparametrit ovat Linuxin ytimen parametreja, joilla varmistetaan oheislaitteita käytettävän asianmukaisesti. Enimmäkseen ydin osaa tunnistaa oheislaitteiden tiedot automaattisesti. Joissain tapauksissa on ydintä kuitenkin hieman autettava. </para
+><para
+>Jos järjestelmän käynnistämistä yritetään ensimmäistä kertaa, kokeile käynnistysparametrien oletusarvoja (eli älä anna mitään parametreja) ja katso toimiiko kaikki oikein. Luultavasti toimii. Jos ei toimi, voidaan myöhemmin käynnistää uudestaan ja etsiä erikoisparametreja jotka kertovat järjestelmälle laitteistosta. </para
+><para
+><ulink url="http://www.tldp.org/HOWTO/BootPrompt-HOWTO.html"
+> Linux BootPrompt HOWTO</ulink
+>:sta löytyy tietoa monista käynnistysparametreista, mukaan lukien vinkkejä epämääräisille laitteille. Tämä luku on vain luonnos tärkeimmistä parametreista. Joitakin yleisiä kompastuskiviä on selitetty kohdassa <xref linkend="boot-troubleshooting"/>. </para
+><para
+>Kun ydin käynnistyy, viestin <informalexample
+><screen>
+Memory:<replaceable
+>avail</replaceable
+>k/<replaceable
+>total</replaceable
+>k available
+</screen
+></informalexample
+> pitäisi näkyä kohtalaisen alussa. <replaceable
+>total</replaceable
+> pitäisi olla koneen kaiken keskusmuistin määrä kilotavuissa. Jos tämä ei vastaa koneeseen asennettua muistia, on käytettävä parametria <userinput
+>mem=<replaceable
+>ram</replaceable
+></userinput
+>, missä <replaceable
+>ram</replaceable
+> on muistin määrä. Yksikkö ilmoitetaan kirjaimella <quote
+>k</quote
+> kilotavuille ja <quote
+>m</quote
+>:llä megatavuille. Esimerkiksi sekä <userinput
+>mem=65536k</userinput
+> että <userinput
+>mem=64m</userinput
+> tarkoittavat 64 Mt keskusmuistia. </para
+><para condition="supports-serial-console"
+>Käytettäessä käynnistyksessä sarjapäätettä, osaa ydin yleensä havaita tämän automaattisesti. Jos myös näytönohjain (framebuffer) ja näppäimistö ovat kiinni sarjapäätettä käyttäen käynnistettävässä tietokoneessa, pitää ehkä antaa ytimelle parametri <userinput
+>console=<replaceable
+>laite</replaceable
+></userinput
+>, missä <replaceable
+>laite</replaceable
+> on sarjaportti, joka yleensä on suunnilleen <filename
+>ttyS0</filename
+>. </para
+><para arch="sparc"
+>Suoritinperheellä &arch-title; sarjaporttien laitenimet ovat <filename
+>ttya</filename
+> tai <filename
+>ttyb</filename
+>. Toinen tapa antaa OpenPROM:n muuttujille <envar
+>input-device</envar
+> ja <envar
+>output-device</envar
+> arvoksi <filename
+>ttya</filename
+>. </para>
+
+
+  <sect2 id="installer-args"
+><title
+>Debianin asentimen parametrit</title>
+<para
+>Asennusjärjestelmä tunnistää muutamia lisäparametreja<footnote
+> <para
+> Nykyisillä ytimillä (versio 2.6.9 tai uudempi) voidaan käyttää 32:ta komentorivin parametriä ja 32:ta ympäristömuuttujaa. Jos nämä rajat ylitetään, tapahtuu kernel panic. </para
+> </footnote
+>, jotka voivat olla hyödyllisiä. </para
+><para
+>Useilla parametreilla on <quote
+>lyhyt muoto</quote
+> auttamaan ytimen komentorivivalitsimien rajoitusten välttämisessä ja helpottamaan parametrien kirjoittamista. Jos parametrilla on lyhyt muoto, se näytetään hakasulkeissa (tavallisen) pitkän muodon jälkeen. Myös tämän ohjeen esimerkeissä käytetään tavallisesti lyhyttä muotoa.  </para>
+
+<variablelist>
+<varlistentry>
+<term
+>debconf/priority (priority)</term>
+<listitem
+><para
+>Tämä parametri määrää, kuinka alhaisen prioriteetin viestit näytetään. </para
+><para
+>Oletusasennus käyttää asetusta <userinput
+>priority=high</userinput
+>. Tämä tarkoittaa, että näytetään viestit, joiden prioriteetti on korkea tai kriittinen, mutta prioriteetin keskitaso ja matala viestit ohitetaan. Jos tulee pulmia, asennin säätää prioriteettia tarpeen mukaan. </para
+><para
+>Jos käynnistysparametriksi lisätään <userinput
+>priority=medium</userinput
+>, näytetään asennusvalikko ja pystytään tarkemmin säätämään asennusta. Kun käytetään <userinput
+>priority=low</userinput
+>, näytetään kaikki viestit (tämä on sama kuin käynnistystapa <emphasis
+>expert</emphasis
+>). Kun asetus on <userinput
+>priority=critical</userinput
+>, asennusjärjestelmä näyttää vain kriittiset viestit ja yrittää tehdä oikeat valinnat kyselemättä turhia. </para
+></listitem>
+</varlistentry>
+
+
+<varlistentry>
+<term
+>DEBIAN_FRONTEND</term>
+<listitem
+><para
+>Tämä parametri määrää asentimen käyttämän käyttöliittymän tyypin. Tällä hetkellä ovat mahdollisia parametrin arvot: <itemizedlist
+> <listitem
+> <para
+><userinput
+>DEBIAN_FRONTEND=noninteractive</userinput
+></para
+> </listitem
+><listitem
+> <para
+><userinput
+>DEBIAN_FRONTEND=text</userinput
+></para
+> </listitem
+><listitem
+> <para
+><userinput
+>DEBIAN_FRONTEND=newt</userinput
+></para
+> </listitem
+><listitem
+> <para
+><userinput
+>DEBIAN_FRONTEND=gtk</userinput
+></para
+> </listitem
+> </itemizedlist
+> Käyttöliittymän oletusarvo on <userinput
+>DEBIAN_FRONTEND=newt</userinput
+>. <userinput
+>DEBIAN_FRONTEND=text</userinput
+> saattaa olla parempi sarjapäättellä tehtäville asennuksille. Yleensä vain käyttöliittymä <userinput
+>newt</userinput
+> on saatavilla oletusasennustaltioilla. Graafista asenninta tukevilla suoritinperheillä graafinen asennin käyttää <userinput
+>gtk</userinput
+>-käyttöliittymää. </para
+></listitem>
+</varlistentry>
+
+
+<varlistentry>
+<term
+>BOOT_DEBUG</term>
+<listitem
+><para
+>Asettamalla tämän käynnistysparametrin arvoksi 2 asentimen käynnistysprosessi tekee yksityiskohtaisen lokin. Arvolla 3 ovat vianjäljitykseen tarkoitetut komentotulkit käytössä asennusprosessin tärkeissä vaiheissa. (Käynnistystä jatketaan poistumalla komentotulkista.) <variablelist>
+<varlistentry>
+<term
+><userinput
+>BOOT_DEBUG=0</userinput
+></term>
+<listitem
+><para
+>Tämä on oletusarvo</para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><userinput
+>BOOT_DEBUG=1</userinput
+></term>
+<listitem
+><para
+>Tavallista yksityiskohtaisempi.</para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><userinput
+>BOOT_DEBUG=2</userinput
+></term>
+<listitem
+><para
+>Paljon vianjäljitystietoa.</para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><userinput
+>BOOT_DEBUG=3</userinput
+></term>
+<listitem
+><para
+>Käynnistysprosessin valikoiduissa kohdissa käynnistetään komentotulkki. Jatka käynnistystä poistumalla komentotulkista. </para
+></listitem>
+</varlistentry>
+</variablelist>
+
+</para
+></listitem>
+</varlistentry>
+
+
+<varlistentry>
+<term
+>INSTALL_MEDIA_DEV</term>
+<listitem
+><para
+>Tämän parametrin arvo on sen laitteen polkunimi, josta Debianin asennin ladataan. Esimerkiksi <userinput
+>INSTALL_MEDIA_DEV=/dev/floppy/0</userinput
+> </para
+><para
+>Normaalisti käynnistyslevyke etsii root-levykettä kaikista levykeasemista. Tällä parametrilla saadaan etsintä kohdistumaan vain yhteen nimettyyn laitteeseen. </para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+>vähämuisti</term>
+<listitem
+><para
+>Voidaan käyttää pakottamaan asennin käyttämään käytettävissä olevan muistin määrään perustuvaa oletusarvoa suurempaa vähäisen muistin tasoa. Mahdolliset arvot ovat 1 ja 2. Katso myös <xref linkend="lowmem"/>. </para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+>debian-installer/framebuffer (fb)</term>
+<listitem
+><para
+>Joissakin suoritinperheissä käytetään ruutupuskuria (framebuffer), jotta asennus olisi saatavilla useilla kielillä. Jos ruutupuskuri aiheuttaa pulmia, se voidaan ottaa pois käytöstä parametrilla <userinput
+>fb=false</userinput
+>. Pulman oireita ovat virheilmoitukset btermistä tai bogl:stä, tyhjä ruutu tai jumittuminen muutaman minuutin sisällä asennuksen alusta. </para
+><para arch="x86"
+>Myöskin parametrilla <userinput
+>video=vga16:off</userinput
+> saadaan ydin jättämään ruutupuskuri käyttämättä. Pulmista on ilmoitettu Dell Inspironeilla joissa on näytönohjaimena Mobile Radeon. </para
+><para arch="m68k"
+>Pulmista on ilmoitettu Amiga 1200:lla ja SE/30:llä. </para
+><para arch="hppa"
+>Pulmista on ilmoitettu hppa:lla. </para
+><note arch="sparc"
+><para
+>Joillakin järjestelmillä ilmenneiden näyttöpulmien vuoksi on ruutupuskkuri oletusarvona <emphasis
+>pois käytöstä</emphasis
+> suoritinperheellä &arch-title;. Tästä voi olla seurauksena ruma ruutu laitteissa jotka tukisivat ruutupuskuria kunnolla, kuten ATI:n näytönohjainta käyttävät mallit. Jos asentimessa näkyy näyttöpulmia, voidaan kokeilla käynnistämistä parametrilla <userinput
+>debian-installer/framebuffer=true</userinput
+> tai lyhyemmin <userinput
+>fb=true</userinput
+>. </para
+></note
+></listitem>
+</varlistentry>
+
+<varlistentry arch="not-s390">
+<term
+>debian-installer/theme (theme)</term>
+<listitem
+><para
+>Teema määrää asentimen käyttöliittymän ulkonäön (värit, kuvakkeet, jne.). Saatavilla olevat teemat ovat käyttöliittymäkohtaisia. Tällä hetkellä käyttöliittymillä newt ja gtk on on näkövammaisille suunniteltuna vain teema <quote
+>dark</quote
+>. Aseta teema käynnistämällä parametrilla <userinput
+>theme=<replaceable
+>dark</replaceable
+></userinput
+>. </para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+>netcfg/disable_dhcp</term>
+<listitem
+><para
+>Oletusarvona &d-i; yrittää automaattisesti noutaa verkkoasetukset DHCP:llä. Jos tämä onnistuu, ei saatuja asetuksia pääse näkemään ja muuttamaan. Verkkoasetukset pääsee tekemään itse vain jos DHCP epäonnistuu. </para
+><para
+>Mikäli paikallisverkossa on DHCP-palvelin, mutta sen käyttöä halutaan välttää, esimerkiksi koska sen antamat verkkoasetukset ovat väärin, voidaan käyttää parametria <userinput
+>netcfg/disable_dhcp=true</userinput
+>. Tämä estää verkkoasetusten noutamisen DHCP:llä ja tiedot voi kirjoittaa itse. </para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+>hw-detect/start_pcmcia</term>
+<listitem
+><para
+>Mikäli PCMCIA-palvelut aiheuttavat pulmia, aseta tämä arvoon <userinput
+>false</userinput
+>. Tämä on tunnetusti tarpeen jollakin läppäreillä. </para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+>disk-detect/dmraid/enable (dmraid)</term>
+<listitem
+><para
+>Aseta arvoksi <userinput
+>tosi</userinput
+> ottaaksesi käyttöön tuen SATA RAID -levyille (kutsutaan myös nimillä ATA RAID, BIOS RAID ja fake RAID) asentimessa. Tuki on tällä hetkellä kokeiluasteella. Lisätietoja löytyy <ulink url="&url-d-i-wiki;"
+>Debian-asennin wikistä</ulink
+>. </para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+>preseed/url (url)</term>
+<listitem
+><para
+>Anna url noudettavaan valmiiden vastausten tiedostoon. Tiedosto noudetaan asennuksen automatisoimiseksi. Katso <xref linkend="automatic-install"/>. </para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+>preseed/file (file)</term>
+<listitem
+><para
+>Anna valmiiden vastausten tiedoston polkunimi. Tiedosto noudetaan asennuksen automatisoimiseksi. Katso <xref linkend="automatic-install"/>. </para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+>preseed/interactive</term>
+<listitem
+><para
+>Asettamalla arvoksi <userinput
+>true</userinput
+> näytetään kysymykset vaikka niihin olisi valmis vastaus. Tämä saattaa olla hyödyllistä testattaessa tai jäljitettäessä vikaa valmiiden vastausten tiedostosta. Huomaa, ettei tällä ole mitään vaikutusta käynnistysparametreina välitettyihin parametreihin, mutta niitä varten on toinen merkintätapa. Katso lisätietoja <xref linkend="preseed-seenflag"/>. </para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+>auto-install/enable (auto)</term>
+<listitem
+><para
+>Viivästä kysymyksiä jotka normaalisti kysytään ennen kuin valmiit vastaukset ovat käytettävissä kunnes verkon asetukset on tehty. Katso kohdasta <xref linkend="preseed-auto"/> yksityiskohtaisempia ohjeita tämän hyödyntämisestä asennuksen automatisoinnissa. </para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+>finish-install/keep-consoles</term>
+<listitem
+><para
+>Sarjapäätteeltä tai hallinnointikonsolista tapahtuvien asennusten aikana tavalliset virtuaalikonsolit (VT1:stä VT6:een) on tavallisesti poistettu käytöstä tiedostossa <filename
+>/etc/inittab</filename
+>. Asetus arvoon <userinput
+>true</userinput
+> estää tämän. </para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+>cdrom-detect/eject</term>
+<listitem
+><para
+>Oletusarvona &d-i; poistaa automaattisesti asennuksessa käytetyn levyn asemasta ennen uudelleenkäynnistystä. Tämä saattaa olla tarpeetonta, jos tietokone ei automaattisesti käynnisty CD-levyltä. Joissakin tapauksissa se voi olla jopa ei-toivottavaa, esimerkiksi jos CD-asema ei osaa vetää levyä takaisin sisään eikä käyttäjä ole paikalla työntämässä sitä asemaan. Monet kelkattomat, ohuet ja caddyä käyttävät asemat eivät osaa ladata levyä asemaan automaattisesti. </para
+><para
+>Automaattinen levyn poisto asemasta estetään asettamalla arvoksi <userinput
+>false</userinput
+>, ja huomaa, että joutunet varmistamaan ettei kone käynnisty automaattisesti CD-asemalta asennuksen ensimmäisen vaiheen jälkeen. </para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+>debian-installer/allow_unauthenticated</term>
+<listitem
+><para
+>Oletusarvona asennin vaatii varastoalueiden autentikointia tunnetulla gpg-avaimella. Autentikoinnin saa pois päältä arvolla <userinput
+>true</userinput
+>. <emphasis role="bold"
+>Varoitus: ei turvallista, ei suositella</emphasis
+>. </para
+></listitem>
+</varlistentry>
+
+<varlistentry arch="alpha;m68k;mips;mipsel">
+<term
+>ramdisk_size</term>
+<listitem
+><para
+>Jos tätä parametria tarvitaan, sille pitäisi olla oikea arvo jo asetettuna; muuta arvoa vain jos käynnistysaikaisista virheistä ilmenee, ettei muistilevyä voitu ladata kokonaan. Arvon yksikkö on kt. </para
+></listitem>
+</varlistentry>
+
+<varlistentry condition="gtk">
+<term
+>mouse/protocol</term>
+<listitem
+><para
+>Hiiren protokolla voidaan asettaa gtk-käyttöliittymälle (graafinen asennin) tällä valitsimella. Tuetut arvot ovat<footnote
+> <para
+> Katso man-sivulta <citerefentry
+><refentrytitle
+>directfbrc</refentrytitle
+> <manvolnum
+>5</manvolnum
+></citerefentry
+> lisätietoja. </para
+> </footnote
+>: <userinput
+>PS/2</userinput
+>, <userinput
+>IMPS/2</userinput
+>, <userinput
+>MS</userinput
+>, <userinput
+>MS3</userinput
+>, <userinput
+>MouseMan</userinput
+> ja <userinput
+>MouseSystems</userinput
+>. Oletusprotokollan pitäisi toimia oikein useimmissa tapauksissa. </para
+></listitem>
+</varlistentry>
+
+<varlistentry condition="gtk">
+<term
+>mouse/device</term>
+<listitem
+><para
+>Hiiren laitetiedosto voidaan asettaa gtk-käyttöliittymälle (graafinen asennin) tällä valitsimella. Tämä on tarpeen lähinnä sarjaporttiin kytketylle hiirelle (sarjahiiri). Esimerkki: <userinput
+>mouse/device=<replaceable
+>/dev/ttyS1</replaceable
+></userinput
+>. </para
+></listitem>
+</varlistentry>
+
+<varlistentry condition="gtk">
+<term
+>mouse/left</term>
+<listitem
+><para
+>Gtk-käyttöliittymään (graafinen asennin) voidaan  hiiri vaihtaa vasenkätiseksi asettamalla tämän parametrin arvoksi <userinput
+>true</userinput
+>. </para
+></listitem>
+</varlistentry>
+
+<varlistentry condition="gtk">
+<term
+>directfb/hw-accel</term>
+<listitem
+><para
+>Gtk-käyttöliittymässä (graafinen asennin) on directfb:n laitteistokiihdytys oletusarvona pois päältä. Sen saa päälle asettamalla tämän parametrin arvoksi <userinput
+>true</userinput
+>. </para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+>rescue/enable</term>
+<listitem
+><para
+>Asettamalla arvoksi <userinput
+>true</userinput
+> käynnistetään pelastustila eikä tavallinen asennus. Katso <xref linkend="rescue"/>. </para
+></listitem>
+</varlistentry>
+
+</variablelist>
+
+   <sect3 id="preseed-args">
+   <title
+>Valmiita vastauksia käynnistysparametreilla</title>
+<para
+>Muutamaa poikkeusta lukuunottamatta käynnistysparametrilla voidaan antaa arvo mihin tahansa asennuksen aikana kysyttävään kysymykseen. Tosin tämä on hyödyllistä vain erikoistapauksissa. Yleisiä ohjeita tämän tekemisestä löytyy kohdasta <xref linkend="preseed-bootparms"/>. Esimerkkejä joistakin tapauksista on seuraavassa luettelossa. </para>
+
+<variablelist>
+
+<varlistentry>
+<term
+>debian-installer/locale (locale)</term>
+<listitem
+><para
+>Voidaan käyttää antamaan asennukselle sekä kieli että maa. Tämä toimii vain jos maa-asetusto on tuettu Debianissa. Käytä esimerkiksi <userinput
+>locale=sv_FI</userinput
+> valitsemaan kieleksi ruotsi ja maaksi Suomi. </para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+>anna/choose_modules (modules)</term>
+<listitem
+><para
+>Voidaan käyttää lataamaan automaattisesti asentimen osia joita ei oletusarvoisesti ladata. Esimerkkejä mahdollisesti hyödyllisistä valinnaisista osista ovat <classname
+>openssh-client-udeb</classname
+> (jotta komentoa <command
+>scp</command
+> voidaan käyttää asennuksen aikana)<phrase arch="not-s390"
+> ja <classname
+>ppp-udeb</classname
+> (katso <xref linkend="pppoe"/>)</phrase
+>. </para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+>netcfg/disable_dhcp</term>
+<listitem
+><para
+>Aseta arvoksi <userinput
+>true</userinput
+>, jos DHCP halutaan pois käytöstä ja pakotetaan kiinteät verkkoasetukset. </para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+>mirror/protocol (protocol)</term>
+<listitem
+><para
+>Asennin käyttää oletusarvoisesti http-protokollaa tiedostojen noutamiseen Debianin asennuspalvelimilta eikä vaihto ftp:hen ole mahdollista asennuksen aikana käytettäessä tavallista prioriteettia. Asettamalla tämän parametrin arvoksi <userinput
+>ftp</userinput
+> pakotetaan asennin käyttämään tuota protokollaa. Huomaa, ettei ftp-palvelinta voi valita listasta, vaan konenimi on kirjoitettava itse. </para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+>tasksel:tasksel/first (tasks)</term>
+<listitem
+><para
+>Voidaan käyttää valitsemaan tehtäviä, jotka eivät ole käytettävissä vuorovaikutteisessa tehtävälistassa, kuten tehtävä <literal
+>kde-desktop</literal
+>. Katso lisätietoja kohdasta <xref linkend="pkgsel"/>. </para
+></listitem>
+</varlistentry>
+
+</variablelist>
+
+   </sect3>
+
+   <sect3 id="module-parms">
+   <title
+>Parametrien välittäminen ytimen moduuleille</title>
+<para
+>Jos ajurit on käännetty mukaan ytimeen, niille voidaan välittää parametreja ytimen ohjeissa kuvatulla tavalla. Jos ajurit kuitenkin on käännetty moduuleina, ja koska moduulit ladataan asennuksen aikana hieman eri tavalla kuin käynnistettäessä asennettua järjestelmää, ei parametreja ole mahdollista välittää tavalliseen tapaan. Sen sijaan on käytettävä asentimen tunnistamaa erikoismerkintää. Asennin varmistaa asetusten tallentuvan oikeisiin asetustiedostoihin ja tulevan sitä kautta käyttöön myös kun moduulit oikeasti ladataan. Parametrit välitetään automaattisesti myös asennetun järjestelmän asetustiedostoihin. </para
+><para
+>Huomaa, että nykyään on harvinaista jos moduuleille on pakko välittää parametreja. Useimmissa tapauksissa ydin osaa tunnistaa järjestelmän laitteiston ja asettaa hyvät oletusarvot. Joissakin tapauksissa saattaa kuitenkin olla välttämätöntä asettaa parametrien arvo itse. </para
+><para
+>Moduulien paremetrit annetaan tässä muodossa: <informalexample
+><screen>
+<replaceable
+>moduulin_nimi</replaceable
+>.<replaceable
+>parametrin_nimi</replaceable
+>=<replaceable
+>arvo</replaceable>
+</screen
+></informalexample
+> Jos on annettava useita parametreja samalle tai eri moduuleille, toista vaan yllä olevaa. Esimerkiksi vanha 3Comin verkkokortti asetetaan käyttämään BNC-liitäntää (coax) ja keskeytystä IRQ 10 seuraavasti: <informalexample
+><screen
+>3c509.xcvr=3 3c509.irq=10
+</screen
+></informalexample>
+
+</para>
+   </sect3>
+
+   <sect3 id="module-blacklist">
+   <title
+>Ytimen moduulien lisääminen kieltolistalle</title>
+<para
+>Joskus saattaa olla tarpeen lisätä moduuli kieltolistalle, jotta ydin ja udev eivät lataa sitä automaattisesti. Yksi mahdollinen syy on, että tietty moduuli aiheuttaa harmia asennettavan koneen laitteistolla. Toisinaan ydin luettelee kaksi eri ajuria samalle laitteelle. Tällöin laite ei ehkä toimi oikein jos ajurit aiheuttavat ristiriidan tai jos väärä ajuri ladataan ensin. </para
+><para
+>Moduuli lisätään kieltolistalle tähän tapaan:  <userinput
+><replaceable
+>moduulin_nimi</replaceable
+>.blacklist=yes</userinput
+>. Tämän jälkeen moduuli on kieltolistalla tiedostossa <filename
+>/etc/modprobe.d/blacklist.local</filename
+> sekä asennuksen aikana että asennetussa järjestelmässä. </para
+><para
+>Huomaa, että kieltolistasta huolimatta asennusjärjestelmä saattaa itse ladata moduulin. Tämä voidaan estää suorittamalla asennus expert-tilassa ja poistamalla valinta moduulin kohdalta laitetunnistuksen aikana näkyvästä luettelosta. </para>
+   </sect3>
+  </sect2>
+ </sect1>
+<!--   End of file boot-installer/parameters.xml -->
+
+<!-- Start of file boot-installer/trouble.xml -->
+<!-- $Id: trouble.xml 56669 2008-11-17 22:21:26Z jfs $ -->
+
+ <sect1 id="boot-troubleshooting">
+ <title
+>Asennusprosessin vianetsintä</title>
+ 
+
+  <sect2 arch="not-s390" id="unreliable-cd">
+  <title
+>CD-levyjen luotettavuus</title>
+<para
+>Joskus asennin ei käynnisty CD-levyltä. Erityisesti näin voi käydä vanhoilla CD-asemilla. Myöskin voi sattua, että vaikka asennin on käynnistynyt CD-levyltä, se ei tunnista levyä tai asennuksen aikana tulee lukuvirheitä. </para
+><para
+>Näihin pulmiin on monia mahdollisia syitä. Tässä luetellaan vain joitakin yleisiä tapauksia ja yleisiä toimintaohjeita. Lopusta saat huolehtia itse. </para
+><para
+>Ensiksi kannattaa kokeilla kahta hyvin yksinkertaista juttua. <itemizedlist>
+<listitem
+><para
+>Jos CD-levy ei käynnisty, tarkista että se asetettiin asemaan oikein ja ettei se ole likainen. </para
+></listitem>
+<listitem
+><para
+>Mikäli asennin ei tunnista CD-levyä, yritä käynnistää uudelleen valikosta <menuchoice
+> <guimenuitem
+>Detect and mount CD-ROM</guimenuitem
+> </menuchoice
+>. Jotkin DMA:han liittyvät jutut vanhoissa CD-asemissa ratkeavat tunnetusti tällä tavalla. </para
+></listitem>
+</itemizedlist>
+
+</para
+><para
+>Jos tämä ei toimi, kokeile seuraavien alilukujen ehdotuksia. Useimmat, mutta eivät kaikki, ehdotukset pätevät sekä CD- että DVD-levyille, mutta käytämme yksinkertaisuuden vuoksi termiä CD. </para
+><para
+>Jos asennus ei onnistu CD-levyltä, kokeile muita saatavilla olevia asennustapoja. </para>
+
+  <sect3>
+  <title
+>Yleisiä pulmia</title>
+
+<itemizedlist>
+  <listitem
+><para
+>Eräät vanhat CD-asemat eivät tue uusilla kirjoittavilla CD-asemilla suurilla nopeuksilla kirjoitettujen levyjen lukemista. </para
+></listitem>
+  <listitem
+><para
+>Vaikka tietokone käynnistyisikin CD-levyltä ongelmitta, ei se välttämättä tarkoita Linuxin tukevan kyseistä CD-asemaa (tai täsmällisemmin ohjainta, johon  CD-asema on kytketty). </para
+></listitem>
+  <listitem
+><para
+>Jotkut vanhat CD-asemat eivät toimi oikein jos <quote
+>direct memory access</quote
+> (DMA) on käytössä. </para
+></listitem>
+</itemizedlist>
+
+  </sect3>
+
+  <sect3>
+  <title
+>Miten pulmia tutkitaan ja ehkä selvitetään</title>
+<para
+>Jos CD-levy ei käynnisty, kokeile alla lueteltuja ehdotuksia. <itemizedlist>
+  <listitem
+><para
+>Tarkista että BIOS oikeasti tukee CD-levyltä käynnistämistä (vanhat koneet luultavasti eivät tue) ja että CD-asema tukee käytettyä taltiota. </para
+></listitem>
+  <listitem
+><para
+>Jos noudit ISO-otoksen, tarkista otoksen md5sum-tarkistussumman vastaavan otoksen summaa tiedostossa <filename
+>MD5SUMS</filename
+>. Tiedoston pitäisi olla samassa paikassa kuin noudettu otos. <informalexample
+><screen>
+$ md5sum <replaceable
+>debian-testing-i386-netinst.iso</replaceable>
+a20391b12f7ff22ef705cee4059c6b92  <replaceable
+>debian-testing-i386-netinst.iso</replaceable>
+</screen
+></informalexample
+> Seuraavaksi kannattaa tarkistaa, että myöskin poltetun CD-levyn md5sum täsmää. Seuraavan komennon pitäisi toimia. Se käyttää otoksen kokoa lukeakseen oikean määrän tavuja levyltä. <informalexample
+><screen
+>$ dd if=/dev/cdrom | \
+
+> head -c `stat --format=%s <replaceable
+>debian-testing-i386-netinst.iso</replaceable
+>` | \
+
+> md5sum
+a20391b12f7ff22ef705cee4059c6b92  -
+262668+0 records in
+262668+0 records out
+134486016 bytes (134 MB) copied, 97.474 seconds, 1.4 MB/s
+</screen
+></informalexample>
+
+  </para
+></listitem>
+</itemizedlist>
+
+</para
+><para
+>Jos järjestelmä ei havaitse CD-levyä, kun asennin on käynnistynyt onnistuneesti, auttaa joskus kun vaan koitetaan uudestaan. Jos CD-asemia on useita, yritä vaihtaa levy toiseen asemaan. Jos se ei toimi, tai jos levy tunnistetaan mutta tulee lukuvirheitä, yritä alla lueteltuja ehdotuksia. Tähän tarvitaan perustiedot Linuxista. Komentojen antamiseksi on ensin vaihdettava toiseen virtuaalikonsoliin (VT2) ja käynnistettävä siihen komentotulkki. <itemizedlist>
+  <listitem
+><para
+>Vaihtamalla konsoliin VT4 tai lukemalla tiedostoa <filename
+>/var/log/syslog</filename
+> (käytä komentoa <command
+>nano</command
+> teksturina) näkee tarkat virheilmoitukset. Tämän jälkeen katso myös komennon <command
+>dmesg</command
+> tuloste. </para
+></listitem>
+  <listitem
+><para
+>Tarkista komennon <command
+>dmesg</command
+> tulosteesta tunnistuiko CD-asema. Pitäisi näkyä jotain seuraavan kaltaista (rivit eivät välttämättä ole suoraan peräkkäin): <informalexample
+><screen>
+Probing IDE interface ide1...
+hdc: TOSHIBA DVD-ROM SD-R6112, ATAPI CD/DVD-ROM drive
+ide1 at 0x170-0x177,0x376 on irq 15
+hdc: ATAPI 24X DVD-ROM DVD-R CD-R/RW drive, 2048kB Cache, UDMA(33)
+Uniform CD-ROM driver Revision: 3.20
+</screen
+></informalexample
+> Jos tuollaista ei näy, on todennäköistä ettei linux tunnistanut ohjainta jossa CD-asema on kiinni, tai sitä ei ehkä tueta lainkaan. Jos tiedät mikä ajuri ohjeimelle tarvitaan, voit kokeilla sen lataamista itse komennolla <command
+>modprobe</command
+>. </para
+></listitem>
+  <listitem
+><para
+>Tarkista, että CD-asemalle on laitetiedosto hakemistossa <filename
+>/dev/</filename
+>. Alla olevassa esimerkissä se olisi tiedosto <filename
+>/dev/hdc</filename
+>. Pitäisi olla myös <filename
+>/dev/cdrom</filename
+>. </para
+></listitem>
+  <listitem
+><para
+>Tarkista komennolla <command
+>mount</command
+> onko CD-levy jo liitetty; jos ei ole, kokeile sen liittämistä itse: <informalexample
+><screen>
+$ mount /dev/<replaceable
+>hdc</replaceable
+> /cdrom
+</screen
+></informalexample
+> Tarkista tuleeko komennon jälkeen virheilmoituksia. </para
+></listitem>
+  <listitem
+><para
+>Tarkista onko DMA päällä:  <informalexample
+><screen>
+$ cd /proc/<replaceable
+>ide</replaceable
+>/<replaceable
+>hdc</replaceable>
+$ grep dma settings
+using_dma      1       0       1       rw
+</screen
+></informalexample
+> <quote
+>1</quote
+> ensimmäisessä sarakkeessa <literal
+>using_dma</literal
+>:n jälkeen tarkoittaa sen olevan päällä. Jos se on, kokeile sen ottamista pois käytöstä: <informalexample
+><screen>
+$ echo -n "using_dma:0" 
+>settings
+</screen
+></informalexample
+> Varmistu, että ollaan CD-asemaa vastaavan laitteen hakemistossa. </para
+></listitem>
+  <listitem
+><para
+>Jos asennuksen aikana ilmenee pulmia, yritä tarkistaa onko CD-levy kunnollinen lähellä asentimen päävalikon alariviä olevalla toiminnolla. Tätä toimintoa voidaan käyttää myös yleistestinä, jolla nähdään saadaanko levy luettua luotettavasti. </para
+></listitem>
+</itemizedlist>
+
+</para>
+  </sect3>
+  </sect2>
+
+  <sect2 condition="supports-floppy-boot" id="unreliable-floppies">
+  <title
+>Levykkeen luotettavuus</title>
+
+<para
+>Levykkeeltä Debianin asentavilla näyttäisi suurin ongelma olevan levykkeiden luotettavuus. </para
+><para
+>Käynnistyslevykkeen kanssa on eniten vaikeuksia, koska laitteisto lukee sitä suoraan ennen kuin Linux käynnistyy. Usein laitteisto ei lue yhtä luotettavasti kuin Linuxin levykeajuri, ja saattaa yksinkertaisesti lopettaa antamatta virheilmoitusta jos tulee lukuvirheitä. Myöskin ajurilevykkeiden kanssa voi tulla vikoja, joista useimmat ilmenevät syöttöä ja tulostusta koskevien virheilmoitusten tulvana. </para
+><para
+>Jos asennus jumittuu jonkin tietyn levykkeen kohdalla, kannattaa ensimmäiseksi yrittää sen kirjoittamista <emphasis
+>toiselle</emphasis
+> levykkeelle, tämä ehkä poistaa vian. Vanhan levykkeen alustus uudelleen ei ehkä riitä, vaikka levykeen alustus ja kirjoitus näyttäisi sujuvan virheittä. Joskus kannattaa levyke kirjoittaa toisella koneella. </para
+><para
+>Eräs käyttäjä ilmoittaa, että hänen piti kirjoittaa otos levykkeelle <emphasis
+>kolme</emphasis
+> kertaa ennen kuin yksi levyke vihdoin toimi. </para
+><para
+>Tavallisesti ei tarvitse noutaa levykeotoksia uudelleen, mutta jos pulmia ilmenee on aina hyödyllistä tarkistaa, että levykkeet noudettiin oikein tarkistamalla niiden md5sum-tarkistussummat. </para
+><para
+>Toiset käyttäjät ovat ilmoittaneet, että vain käynnistämällä muutaman kerran sama levyke asemassa saattaa käynnistys vihdoin onnistua. Kaikki tämä johtuu viallisista laitteista tai laiteohjelmiston levykeajureista. </para>
+  </sect2>
+
+  <sect2
+><title
+>Käynnistysasetukset</title>
+
+<para
+>Jos ilmenee pulmia ja ydin jumittuu käynnistyksen aikana, ei tunnista oheislaitteita joita koneessa oikeasti on, tai asemia ei tunnisteta kunnolla, on ensiksi tarkistettava käynnistysparametrit, kuten kerrotaan kohdassa <xref linkend="boot-parms"/>. </para
+><para
+>Usein pulmat katoavat poistamalla lisälaitekortit ja oheislaitteet, ja yrittämällä käynnistystä uudelleen. <phrase arch="x86"
+>Korttimodeemit, äänikortit ja Plug-n-Play-laitteet ovat erityisiä ongelmapesiä.</phrase
+> </para
+><para
+>Jos koneessa on asennettuna paljon muistia, enemmän kuin 512 Mt, ja asennin jumittuu ydintä käynnistettäessä, voi olla tarpeen antaa käynnistysparametri rajoittamaan ytimen näkemän muistin määrää, kuten <userinput
+>mem=512m</userinput
+>. </para>
+  </sect2>
+
+  <sect2 arch="x86" id="i386-boot-problems">
+  <title
+>Yleisiä suoritinperheen &arch-title; asennuspulmia</title>
+<para
+>Muutamat yleiset asennuspulmat voidaan selvittää tai välttää antamalla asentimelle sopivia käynnistysparametreja. </para
+><para
+>Joissakin tietokoneissa levykeasemassa on <quote
+>inverted DCL</quote
+>. Jos levykkeestä tulee lukuvirheitä, vaikka levyke tiedetään kunnolliseksi, kokeile parametria <userinput
+>floppy=thinkpad</userinput
+>. </para
+><para
+>Joissakin tietokoneissa, kuten IBM PS/1 tai ValuePoint (joissa on ST-506-levyajurit), ei IDE-levyä ehkä tunnisteta oikein. Yritä taas ensin ilman parametreja ja kokeile josko IDE-asema tunnistuu oikein. Jos ei, selvitä levyn geometria (sylinterit, päät ja sektorit) ja käytä parametria <userinput
+>hd=<replaceable
+>sylinterit</replaceable
+>,<replaceable
+>päät</replaceable
+>,<replaceable
+>sektorit</replaceable
+></userinput
+>. </para
+><para
+>Jos kone on hyvin vanha, ja ydin jumittuu kun se on tulostanut rivin <computeroutput
+>Checking 'hlt' instruction...</computeroutput
+>, olisi kokeiltava käynnistysparametria <userinput
+>no-hlt</userinput
+>, joka ottaa tämän testin pois käytöstä. </para
+><para
+>Jotkin laitteet (erityisesti kannettavat) joiden näytön natiivin tarkkuuden kuvasuhde ei ole 4:3 (t.s. ei ole esimerkiksi 800x600 tai 1024x768) saattavat näyttää tyhjän ruudun kun asennin on käynnistetty. Tässä tapauksessa saattaa auttaa käynnistysvalitsin <userinput
+>vga=788</userinput
+><footnote
+> <para
+> Valitsin <userinput
+>vga=788</userinput
+> käynistää VESA-ruutupuskurin tarkkuudella 800x600. Tämä toimii todennäköisesti, mutta ei ehkä ole paras mahdollinen tarkkuus laitteelle. Luettelo tuetuista tarkkuuksista saadaan käyttämällä <userinput
+>vga=ask</userinput
+>, mutta olisi huomattava ettei luettelo välttämättä ole kattava. </para
+> </footnote
+>. Jos se ei toimi, kokeile lisätä tarkennin <userinput
+>fb=false</userinput
+>. </para
+><para
+>Jos näytön kuva on pielessä ytimen käynnistyessä, esimerkiksi kokonaan valkoinen, kokonaan musta tai värillistä pistemössöä, saattaa koneessa olla hankala näytönohjain, joka ei vaihda ruutupuskuroituun tilaan kunnolla. Tällöin voidaan käynnistysparametrilla <userinput
+>fb=false</userinput
+> ottaa ruutupuskuroitu konsoli pois käytöstä. Konsolin ominaisuuksien rajoitukset sallivat vain suppean joukon kieliä asennuksen aikana. Katso yksityiskohtia kohdasta <xref linkend="boot-parms"/>. </para>
+
+  <sect3>
+  <title
+>Järjestelmä jumittuu PCMCIA:n asetuksia tehtäessä</title>
+<para
+>Joidenkin Dellin tekemien läppärimallien tiedetään kaatuvan, kun PCMCIA-laitteiden tunnistus yrittää käsitellä tiettyjä laiteosoitteita. Muissakin läppäreissä saattaa esiintyä vastaavia vikoja. Jos tämmöinen vika ilmenee, eikä PCMCIA-tukea tarvita asennuksen aikana, voidaan PCMCIA ottaa pois käytöstä käynnistysparametrilla <userinput
+>hw-detect/start_pcmcia=false</userinput
+>. PCMCIA:n asetukset voidaan tehdä kun asennus on valmis ja poistaa pulmia aiheuttavien osoitteiden arvoalue pois käytöstä. </para
+><para
+>Toinen tapa on käynnistää asennin expert-tilassa. Tällöin kysytään laitteiston tarvitsemia asetuksia osoitteiden arvoalueista. Jos asennettava kone on esimerkiksi yksi yllä mainituista Dellin läppäreistä, pitäisi siihen kirjoittaa <userinput
+>exclude port 0x800-0x8ff</userinput
+>. Saatavilla on myös luettelo yleisistä osoitteiden arvoalueiden asetuksista ohjeessa <ulink url="http://pcmcia-cs.sourceforge.net/ftp/doc/PCMCIA-HOWTO-1.html#ss1.12"
+>System resource settings section of the PCMCIA HOWTO</ulink
+>. Huomaa, että pilkut, jos niitä on, on jätettävä pois kun tätä arvoa kirjoitetaan asentimelle. </para>
+   </sect3>
+
+   <sect3>
+   <title
+>Järjestelmä jumittuu ladattaessa USB-moduuleita</title>
+<para
+>Normaalisti ydin yrittää asentaa USB-moduuleita ja USB-näppäimistön ajurin tukeakseen joitakin ei-standardeja USB-näppäimistöjä. Eräissä rikkinäisissä USB-järjestelmissä ajuri kuitenkin jumittuu sitä ladattaessa. Pulman voi ehkä kiertää ottamalla USB-ohjaimen pois käytöstä emolevyn BIOSissa. Toinen tapa on antaa käynnistyskomentotulkissa parametri <userinput
+>nousb</userinput
+>. </para>
+   </sect3>
+  </sect2>
+
+  <sect2 arch="sparc" id="sparc-boot-problems">
+  <title
+>Yleisiä suoritinperheen &arch-title; asennuspulmia</title>
+<para
+>Muutamat yleiset asennuspulmat kannattaa mainita. </para>
+   <sect3>
+   <title
+>Videosignaali väärään paikkaan</title>
+<para
+>Laitealustalla &arch-title; on varsin yleistä, että koneessa on kaksi näytönohjainta, esimerksi ATI:n kortti ja Sun Creator 3D. Joissakin tapauksissa tämä aiheuttaa videosignaalin menemisen väärään paikkaan kohta kun järjestelmä on käynnistynyt. Tavallisesti näytössä näkyy vain : <informalexample
+><screen>
+Remapping the kernel... done
+Booting Linux...
+</screen
+></informalexample
+> Ongelman voi kiertää joko poistamalla yhden näytönohjainkorteista tai ottamalla pois käytöstä sen jota ei käytetä OpenProm:n käynnistysvaiheessa käyttämällä ytimen parametria. Esimerkiksi ATI:n kortin saa pois käytöstä käynnistämällä asentimen parametrilla <userinput
+>video=atyfb:off</userinput
+>. </para
+><para
+>Huomaa, että lisäksi saatat joutua lisäämään tämän parametrin itse silon asetuksiin (muokkaa tiedostoa <filename
+>/target/etc/silo.conf</filename
+> ennen uudelleenkäynnistystä) ja, jos asennettiin X11, muokkaa näyttöajuria tiedostossa <filename
+>/etc/X11/xorg.conf</filename
+>. </para>
+   </sect3>
+
+   <sect3>
+   <title
+>Käynnistys tai asennus CD-levyltä ei toimi</title>
+<para
+>Joitakin Sparc-järjestelmiä on tunnetusti vaikea käynnistää CD-levyltä, ja vaikka ne käynnistyisivätkin, saattaa olla selittämättömiä pulmia asennuksen aikana. Useimmat viat on raportoitu SunBlade-järjestelmistä. </para
+><para
+>Suosittelemme asentamaan tuollaiset järjestelmät käynnistämällä asennin verkosta. </para>
+   </sect3>
+  </sect2>
+
+  <sect2 id="kernel-msgs">
+  <title
+>Ytimen käynnistysviestien tulkinta</title>
+
+<para
+>Käynnistyksen aikana saattaa näkyä useita tämän tapaisia viestejä: <computeroutput
+>can't find <replaceable
+>jotain</replaceable
+> </computeroutput
+>, tai <computeroutput
+> <replaceable
+>jotain</replaceable
+> not present</computeroutput
+>, <computeroutput
+>can't initialize <replaceable
+>jotain</replaceable
+> </computeroutput
+>, tai jopa <computeroutput
+>this driver release depends on <replaceable
+>jotain</replaceable
+> </computeroutput
+>. Useimmat näistä viesteistä ovat harmittomia. Niitä näkyy, koska asennusydin on tehty toimimaan useiden erilaisten oheislaitteiden kanssa. Tietenkään missään tietokoneessa ei ole kaikkia mahdollisia oheislaitteita, joten ydin saattaa näyttää muutamia valituksia oheislaitteista joita koneessa ei ole. Järjestelmä saattaa myös seisahtua hetkeksi. Näin tapahtuu kun odotetaan jonkin laitteen vastausta, eikä sitä laitetta ole tietokoneessa. Jos järjestelmän käynnistäminen kestää sietämättömän kauan, voit myöhemmin tehdä muokatun ytimen (katso <xref linkend="kernel-baking"/>). </para>
+  </sect2>
+
+
+  <sect2 id="problem-report">
+  <title
+>Asennuspulmista ilmoittaminen</title>
+<para
+>Jos asennusta ei saa tehtyä loppuun vaikka käynnistysvaihe toimi, saattaa valikon toiminto <guimenuitem
+>Save debug logs</guimenuitem
+> olla hyödyllinen. Sillä voidaan järjestelmän virhelokit ja asentimen asetustiedostot tallentaa levykkelle, tai noutaa ne webbiselaimella. Tämä tieto saattaa auttaa vikojen jäljittämisessä ja korjaamisessa. Jos lähetät vikailmoitukset, halunnet liittää nämä tiedot vikailmoitukseen. </para
+><para
+>Muut asiaankuuluvat asennusviestit löytyvät asennuksen aikana hakemistosta <filename
+>/var/log/</filename
+>, ja hakemistosta <filename
+>/var/log/installer/</filename
+> kun tietokone on käynnistynyt asennettuun järjestelmään. </para>
+  </sect2>
+
+  <sect2 id="submit-bug">
+  <title
+>Asennusraporttien lähettäminen</title>
+<para
+>Jos pulmia on vieläkin, ole hyvä ja lähetä asennusraportti. Olisi hyvä lähettää asennusraportti myös onnistuneesta asennuksesta, jotta saamme mahdollisimman paljon tietoa mahdollisimman monista laitteistokokoonpanoista. </para
+><para
+>Huomaa, että asennusraporttisi julkaistaan Debianin vianjäljitysjärjestelmässä (BTS) ja lähetetään edelleen julkiselle sähköpostilistalle. Varmistu, että käytät sähköpostiosoitetta jonka julkistamista et pane pahaksesi. </para
+><para
+>Jos käytössä on toimiva Debian-järjestelmä, on helpoin tapa asennusraportin lähettämiseen pakettien <classname
+>installation-report</classname
+> ja <classname
+>reportbug</classname
+> asentaminen (<command
+>aptitude install installation-report reportbug</command
+>), tee <classname
+>reportbug</classname
+>in asetukset kuten neuvotaan kohdassa <xref linkend="mail-outgoing"/>. Tämän jälkeen kirjoitetaan komento <command
+>reportbug installation-reports</command
+>. </para
+><para
+>Alternatively you can use this template when filling out installation reports, and file the report as a bug report against the <classname
+>installation-reports</classname
+> pseudo package, by sending it to <email
+>submit@bugs.debian.org</email
+>. <informalexample
+><screen>
+Package: installation-reports
+
+Boot method: &lt;How did you boot the installer? CD? floppy? network?&gt;
+Image version: &lt;Full URL to image you downloaded is best&gt;
+Date: &lt;Date and time of the install&gt;
+
+Machine: &lt;Description of machine (eg, IBM Thinkpad R32)&gt;
+Processor:
+Memory:
+Partitions: &lt;df -Tl will do; the raw partition table is preferred&gt;
+
+Output of lspci -knn (or lspci -nn):
+
+Base System Installation Checklist:
+[O] = OK, [E] = Error (please elaborate below), [ ] = didn't try it
+
+Initial boot:           [ ]
+Detect network card:    [ ]
+Configure network:      [ ]
+Detect CD:              [ ]
+Load installer modules: [ ]
+Detect hard drives:     [ ]
+Partition hard drives:  [ ]
+Install base system:    [ ]
+Clock/timezone setup:   [ ]
+User/password setup:    [ ]
+Install tasks:          [ ]
+Install boot loader:    [ ]
+Overall install:        [ ]
+
+Comments/Problems:
+
+&lt;Description of the install, in prose, and any thoughts, comments
+      and ideas you had during the initial install.&gt;
+</screen
+></informalexample
+> In the bug report, describe what the problem is, including the last visible kernel messages in the event of a kernel hang. Describe the steps that you did which brought the system into the problem state. </para>
+  </sect2>
+ </sect1>
+<!--   End of file boot-installer/trouble.xml -->
+
+</chapter>
+<!--   End of file boot-installer/boot-installer.xml -->

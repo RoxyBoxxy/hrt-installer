@@ -1,0 +1,2744 @@
+<!-- Start of file using-d-i/using-d-i.xml -->
+<!-- $Id: using-d-i.xml 56428 2008-10-15 09:35:28Z fjp $ -->
+
+
+ <chapter id="d-i-intro"
+><title
+>Debianin asentimen käyttö</title>
+
+ <sect1
+><title
+>Asentimen toiminta</title>
+<para
+>Debianin asennin koostuu useista kunkin asennuksen toiminnon suorittavasta osasta. Kukin varta vasten kirjoitettu osa tekee työnsä kysyen käyttäjältä tarvittaessa. Kysymyksillä on tärkeysjärjestys, ja asentimen käynnistyessä säädetään jätetäänkö vähäpätöisemmät kysymykset kysymättä. </para
+><para
+>Oletusasennuksessa kysytään vain välttämättömät (korkea prioriteetti) kysymykset. Tällöin asennus on sangen automaattinen eikä käyttäjän tarvitse tehdä paljoakaan. Asentimen osat suoritetaan automaattisesti järjestyksessä; suoritettavat osat riippuvat käytetystä asennustavasta ja laitteistosta. Jos kysymystä ei kysytä, käytetään oletusarvoa. </para
+><para
+>Pulmatilanteessa käyttäjä näkee virheruudun ja mahdollisesti asentimen valikon, josta voidaan valita vaihtoehtoinen toiminto. Käyttäjä vastaa jokaisen osan kysmyksiin järjestyksessä, eikä näe valikkoa lainkaan jos pulmatilanteita ei tule. Ilmoitukset vakavista virheistä asetetaan <quote
+>kriittiselle</quote
+> prioriteetille, jotta ne näytettäisiin käyttäjälle aina. </para
+><para
+>Joitakin asentimen käyttämiä oletusarvoja voidaan muuttaa antamalla tarkentimia &d-i; -asentimen käynnistyessä. Haluttaessa esimerkiksi pakottaa kiinteät verkkoasetukset (oletusarvona käytetään DHCP:tä jos se on saatavilla), lisätään tarkennin <userinput
+>netcfg/disable_dhcp=true</userinput
+>. Käytettävissä olevat tarkentimet löytyvät <xref linkend="installer-args"/>. </para
+><para
+>Edistyneet käyttäjät saattavat käyttää mieluummin valikkoa, jolloin jokaisen vaiheen valitsee käyttäjä eikä asennin suorita vaiheita automaattisesti järjestyksessä. Valikon saa käyttöön tarkentimella <userinput
+>priority=medium</userinput
+>. </para
+><para
+>Mikäli ytimen moduuleille on asennettaessa annettava tarkentimia laitteistovaatimusten takia, on asennin käynnistettävä <quote
+>expert</quote
+> -tilassa. Tämä tehdään joko käynnistämällä asennin komennolla <command
+>expert</command
+> tai käyttämällä tarkenninta <userinput
+>priority=low</userinput
+>. Expert-tilassa &d-i; asentimen toiminta on täysin käyttäjän määrättävissä. </para
+><para condition="gtk"
+>Tällä laitearkkitehtuurilla &d-i; tukee kahta erilaista käyttöliittymää: tekstipohjaista ja graafista. Tekstikäyttöliittymä on oletusarvo paitsi jos käynnistysvalikossa valittiin <quote
+>Graphical install</quote
+>. Lisätietoja graafisesta asentimesta kertoo <xref linkend="graphical"/>. </para
+><para condition="not-gtk"
+>Tällä laitearkkitehtuurilla asennin käyttää tekstipohjaista käyttöliittymää. Tällä hetkellä ei ole saatavilla graafista käyttöliittymää. </para
+><para
+>Hiiri ei toimi merkkipohjaisessa käyttöliittymässä. Valintaikkunoissa liikutaan käyttämällä tässä mainittuja näppäimiä. <keycap
+>Sarkain</keycap
+> tai <keycap
+>nuoli oikealle</keycap
+> siirtyvät <quote
+>eteenpäin</quote
+>, ja <keycombo
+> <keycap
+>Vaihto</keycap
+> <keycap
+>Sarkain</keycap
+> </keycombo
+> tai <keycap
+>nuoli vasemmalle</keycap
+> siirtyvät <quote
+>taaksepäin</quote
+> näytön painikkeissa ja valinnoissa. <keycap
+>nuoli ylös</keycap
+> ja <keycap
+>nuoli alas</keycap
+> liikkuvat vieritettävässä luettelossa ja myös vierittävät luetteloa. Lisäksi pitkissä luetteloissa voi sanan alkukirjaimella siirtyä suoraan listan kirjaimella alkavien sanojen kohtaan ja <keycap
+>Page Up</keycap
+> ja <keycap
+>Page Down</keycap
+> siirtyvät luettelossa ruudullisen kerrallaan. <keycap
+>Välilyönti</keycap
+> merkitsee esimerkiksi valintaruudun. Hyväksy valinta painamalla &enterkey;. </para
+><para arch="s390"
+>S/390 ei tue virtuaalikonsoleita. Lokien katseluun voidaan avata toinen ja kolmas ssh-istunto. </para
+><para
+>Virheilmoitukset ja lokit ohjataan neljänteen konsoliin. Tähän konsoliin pääsee näppäinyhdistelmällä <keycombo
+> <keycap
+> Vasen Alt</keycap
+><keycap
+>F4</keycap
+> </keycombo
+> (Pidä vasenta <keycap
+>Alt</keycap
+>-näppäintä painettuna samalla kun painat funktionäppäintä <keycap
+>F4</keycap
+>); asentimeen palataan painamalla <keycombo
+> <keycap
+>Vasen Alt</keycap
+><keycap
+>F1</keycap
+> </keycombo
+>. </para
+><para
+>Nämä viestit ovat myös tiedostossa <filename
+>/var/log/syslog</filename
+>. Tämä loki kopioidaan asennuksen jälkeen tiedostoon <filename
+>/var/log/installer/syslog</filename
+> asennetussa järjestelmässä. Muut asentimen ilmoitukset löytyvät asennuksen aikana hakemistosta <filename
+>/var/log/</filename
+> ja tietokoneen käynnistettyä asennetun järjestelmän hakemistosta <filename
+>/var/log/installer/</filename
+>. </para>
+ </sect1>
+
+
+  <sect1 id="modules-list"
+><title
+>Osien esittely</title>
+<para
+>Tässä on luettelo asentimen osista ja lyhyt kuvaus kunkin osan tehtävistä. Yksityiskohtaista tietoa kunkin osan käytöstä on <xref linkend="module-details"/>. </para>
+
+<variablelist>
+<varlistentry>
+
+<term
+>päävalikko</term
+><listitem
+><para
+>Näyttää käyttäjälle osaluettelon asentimen toimintojen aikana, ja käynnistää osan kun se valitaan. Päävalikon kysymysten prioriteetiksi asetetaan keskitaso, joten prioriteetin ollessa korkea tai kriittinen (oletusarvo on korkea), valikkoa ei näytetä. Jos tapahtuu käyttäjän puuttumista vaativa virhe, kysymyksen prioriteettia voidaan laskea väliaikaisesti jotta korjaustoimintoja voi tehdä, ja tällöin valikko saattaa tulla näkyviin. </para
+><para
+>Käynnissä olevasta asentimen osasta pääsee päävalikkoon valitsemalla &BTN-GOBACK;-painike riittävän monta kertaa. </para
+></listitem>
+</varlistentry>
+<varlistentry>
+
+<term
+>localechooser</term
+><listitem
+><para
+>Valitaan maa-asetusto asennukselle ja asennettavalle järjestelmälle: kieli, maa ja maa-asetukset. Asennin näyttää viestit valitulla kielellä, paitsi jos käännöstä ei ole tehty kokonaan, jolloin osa viesteistä saatetaan näyttää englanniksi. </para
+></listitem>
+</varlistentry>
+<varlistentry>
+
+<term
+>kbd-chooser</term
+><listitem
+><para
+>Luettelo josta valitaan koneen näppäimistöä vastaava malli. </para
+></listitem>
+</varlistentry>
+<varlistentry>
+
+<term
+>hw-detect</term
+><listitem
+><para
+>Tunnistaa automaattisesti suurimman osan tietokoneen laitteistosta, mukaan lukien verkkokortit, kiintolevyt ja PCMCIA. </para
+></listitem>
+</varlistentry>
+<varlistentry>
+
+<term
+>cdrom-detect</term
+><listitem
+><para
+>Etsii ja liittää Debianin asennusrompun. </para
+></listitem>
+</varlistentry>
+<varlistentry>
+
+<term
+>netcfg</term
+><listitem
+><para
+>Tekee verkkoasetukset, jotta tietokone pääsee Internettiin. </para
+></listitem>
+</varlistentry>
+<varlistentry>
+
+<term
+>iso-scan</term
+><listitem
+><para
+>Etsii ISO-otoksia (<filename
+>.iso</filename
+>-tiedostoja) kiintolevyiltä. </para
+></listitem>
+</varlistentry>
+<varlistentry>
+
+<term
+>choose-mirror</term
+><listitem
+><para
+>Asennuspaketit valitaan noudettavaksi jostain luettelon Debianin asennuspalvelimista. </para
+></listitem>
+</varlistentry>
+<varlistentry>
+
+<term
+>cdrom-checker</term
+><listitem
+><para
+>Tarkistaa rompun eheyden. Näin voi varmistua rompun tulleen kunnollisena perille. </para
+></listitem>
+</varlistentry>
+<varlistentry>
+
+<term
+>lowmem</term
+><listitem
+><para
+>Lowmem pyrkii tunnistamaan pienellä keskusmuistilla varustetun järjestelmän jolloin &d-i; kikkailee tarpeettomia osia pois muistista (jonkin verran toiminnallisuutta menetetään). </para
+></listitem>
+</varlistentry>
+<varlistentry>
+
+<term
+>anna</term
+><listitem
+><para
+>Anna's Not Nearly APT. Asentaa valitulta asennuspalvelimelta tai rompulta noudetut paketit. </para
+></listitem>
+</varlistentry>
+<varlistentry>
+
+<term
+>clock-setup</term
+><listitem
+><para
+>Asettaa järjestelmän kellon oikeaan aikaan ja selvittää onko kello asetettu maailmanaikaan. </para
+></listitem>
+</varlistentry>
+<varlistentry>
+
+<term
+>tzsetup</term
+><listitem
+><para
+>Valitaan aiemmin valitun maan perusteella aikavyöhyke. </para
+></listitem>
+</varlistentry>
+<varlistentry>
+
+<term
+>partman</term
+><listitem
+><para
+>Järjestelmän kiintolevyille tehdään osioita, luodaan tiedostojärjestelmiä valittuihin osioihin ja liitetään ne liitoskohtiin. Eikä tässä vielä kaikki, mukana on myös kiinnostavia toimintoja kuten automaattinen osiointi ja tuki LVM:lle. Tämä on Debianin suositeltu osiointiohjelma. </para
+></listitem>
+</varlistentry>
+<varlistentry>
+
+<term
+>partitioner</term
+><listitem
+><para
+>Järjestelmän kiintolevyille tehdään levyosiot. Sopiva osiointisovellus valitaan laitearkkitehtuurin perusteella. </para
+></listitem>
+</varlistentry>
+<varlistentry>
+
+<term
+>partconf</term
+><listitem
+><para
+>Näyttää osioluettelon, ja luo tiedostojärjestelmät valituille osioille käyttäjän komentojen mukaisesti. </para
+></listitem>
+</varlistentry>
+<varlistentry>
+
+<term
+>lvmcfg</term
+><listitem
+><para
+>Auttaa <firstterm
+>LVM</firstterm
+>:n (Logical Volume Manager eli loogisten levyniteiden hallintaohjelma) asetusten teossa. </para
+></listitem>
+</varlistentry>
+<varlistentry>
+
+<term
+>mdcfg</term
+><listitem
+><para
+>Tehdään <firstterm
+>RAID</firstterm
+>:n (Redundant Array of Inexpensive Disks) asetukset. Tämä ohjelmallisesti toteutettu RAID on tavallisesti parempi kuin halpa IDE (mukamas rautatason) RAID-ohjain uudehkoilla emolevyillä. </para
+></listitem>
+</varlistentry>
+<varlistentry>
+
+<term
+>base-installer</term
+><listitem
+><para
+>Asennetaan niukin peruskokoonpano, jolla Linux saadaan käyttöön tietokonetta käynnistettäessä. </para
+></listitem>
+</varlistentry>
+<varlistentry>
+
+<term
+>user-setup</term
+><listitem
+><para
+>Tehdään pääkäyttäjälle salasana ja tehdään tavallinen käyttäjä. </para
+></listitem>
+</varlistentry>
+<varlistentry>
+
+<term
+>apt-setup</term
+><listitem
+><para
+>APT:n asetukset tehdään enimmäkseen automaattisesti asennustaltion mukaisesti. </para
+></listitem>
+</varlistentry>
+<varlistentry>
+
+<term
+>pkgsel</term
+><listitem
+><para
+>Valitaan ja asennetaan lisää ohjelmia ohjelmalla <classname
+>tasksel</classname
+>. </para
+></listitem>
+</varlistentry>
+<varlistentry>
+
+<term
+>os-prober</term
+><listitem
+><para
+>Tunnistetaan tietokoneeseen asennetut käyttöjärjestelmät ja välitetään tämä tieto bootloader-installerille, joka ehkä tarjoaa niitä lisättäväksi käynnistyslataimen valikkoon. Tällä tavalla voidaan helposti tietokonetta käynnistettäessä valita käyttöjärjestelmä. </para
+></listitem>
+</varlistentry>
+<varlistentry>
+
+<term
+>bootloader-installer</term
+><listitem
+><para
+>Jotta tietokone voisi käynnistyä muutenkin kuin levykkeeltä tai rompulta asentaa kukin käynnistyslataimen asentimista käynnistyslataimen kiintolevylle. Useat käynnistyslataimista sallivat käynnistettävän käyttöjärjestelmän valitsemisen jokaisella tietokoneen käynnistyskerralla. </para
+></listitem>
+</varlistentry>
+<varlistentry>
+
+<term
+>komentotulkki</term
+><listitem
+><para
+>Komentotulkki voidaan käynnistää valikosta tai konsoliin numero kaksi. </para
+></listitem>
+</varlistentry>
+<varlistentry>
+
+<term
+>tallenna lokit</term
+><listitem
+><para
+>Tarjoaa virhetilanteessa kirjoitusmahdollisuuden levykkeelle, verkkolevylle, kiintolevylle tai muulle taltiolle jotta myöhemmin voidaan lähettää tarkka ilmoitus asentimen viasta Debianin kehittäjille. </para
+></listitem>
+</varlistentry>
+
+</variablelist>
+
+ </sect1>
+
+
+<!-- Start of file using-d-i/components.xml -->
+<!-- $Id: components.xml 56257 2008-10-04 14:42:49Z fjp $ -->
+
+ <sect1 id="module-details">
+ <title
+>Yksittäisten osien käyttäminen</title>
+<para
+>Tässä luvussa kerrotaan tarkasti kustakin asentimen osasta. Osat on ryhmitelty asentimen käyttäjän varmaankin tunnistamiin vaiheisiin. Osat ovat siinä järjestyksessä kuin niitä käytettän asennuksen aikana. Huomaa ettei kaikkia osia käytetä jokaisessa asennuksessa; osan käyttö riippuu asennustavasta ja laitteistosta. </para>
+
+  <sect2 id="di-setup">
+  <title
+>Debianin asentimen asetusten teko ja laiteasetukset</title>
+<para
+>Debianin asentimen käynnistyttyä näytetään sen ensimmäinen ruutu. Tässä kohtaa asentimen toiminnot ovat vielä hyvin rajoitetut. Se ei tiedä paljoakaan laitteistosta, käytettävästä kielestä eikä oikeastaan edes mitä sen pitäisi tehdä. Ei huolta, asennin on varsin näppärä ja voi automaattisesti tunnistaa laitteistoa, etsiä muut asentimen osat ja päivittää itsensä monipuoliseksi asennusjärjestelmäksi. Asentimelle on kuitenkin kerrottava joitakin tietoja, joita se ei voi päätellä automaattisesti (kuten haluttu kieli, näppäimistöasettelu ja käytettävä asennuspalvelin). </para
+><para
+>Asennin tekee <firstterm
+>laitetunnistusta</firstterm
+> useaan kertaan tässä vaiheessa. Ensimmäisen kerran tarkoituksena on löytää erityisesti asentimen osien lataamiseen tarvittavaa laitteistoa (esim. romppuasema tai verkkokortti). Koska tämän ensimmäisen kerran aikana eivät kaikki ajurit vielä välttämättä ole saatavilla, on laitetunnistusta tehtävä lisää myöhemmin. </para
+><para arch="not-s390"
+>Laitteiston tunnistuksen aikana &d-i; tarkistaa tarvitseeko jonkin laitteen ajuri laiteohjelmiston lataamista. Jos laiteohjelmistoa tarvitaan mutta se ei ole saatavilla, näytetään valintaikkuna jolla laiteohjelmisto voidaan ladata irrotettavalta taltiolta. Lisätietoja kertoo <xref linkend="loading-firmware"/>. </para>
+
+
+<!-- Start of file using-d-i/modules/lowmem.xml -->
+<!-- $Id: lowmem.xml 49849 2007-10-21 12:12:33Z fjp $ -->
+
+  <sect3 id="lowmem">
+  <title
+>Käytettävissä olevan muistin määrä / niukan muistin tila</title>
+
+<para
+>Asentimen ensimmäisiä toimia on käytettävissä olevan muistin määrän selvittäminen. Jos muistin määrä on rajoitettu, tämä osa muuttaa asennustapahtumaa mahdollistamaan &debian; -järjestelmän asentamisen. </para
+><para
+>Ensimmäiseksi asennin supistaa muistin käyttöä ottamalla käännökset pois käytöstä, mistä syystä asennus voidaan tehdä vain englanniksi. Voit tietysti silti kotoistaa asennetun järjestelmän kun asennus on valmis. </para
+><para
+>Jos tämä ei riitä, asennin supistaa muistin käyttöä lisää lataamalla vain ne osat jotka ovat välttämättömiä perusjärjestelmän asennuksen loppuunsaattamiseen. Tämä rajoittaa asennusjärjestelmän toiminnallisuutta. On mahdollista valita itse lisää osia ladattavaksi, mutta huomaa jokaisen osan kuluttavan muistia ja voi siten aiheuttaa asennuksen epäonnistumisen. </para
+><para
+>Jos asennin toimii supistetun muistin tilassa, suositellaan tehtäväksi verraten suuri sivutusosio (64&ndash;128 Mt). Sivutusosiota käytetään näennäismuistina ja siten se lisää järjestelmän käytössä olevaa muistia. Asennin ottaa sivutusosion käyttöön mahdollisimman aikaisessa vaiheessa. Huomaa sivutusosion runsaan käytön hidastavan järjestelmää ja saattavan aiheuttaa runsaasti levytoimintoja. </para
+><para
+>Näistä toimista huolimatta järjestelmä saattaa yhä jumittua, saattaa tulla odottamattomia virheitä tai ydin lopettaa prosesseja muistin loppuessa (jolloin tulee <quote
+>Out of memory</quote
+> -viestejä konsolille VT4 ja järjestelmälokiin). </para
+><para
+>On esimerkiksi ilmoitettu suuren ext3-tiedostojärjestelmän luomisen epäonnistuvan supistetun muistin tilassa kun sivutustilaa on liian vähän. Jos suurempi sivutustila ei auta, yritä luoda ext2-tiedostojärjestelmä (joka on asetimen olennainen osa). On mahdollista muuttaa ext2-osio ext3:ksi asennuksen jälkeen. </para
+><para
+>Asentimen voi pakottaa käyttämään oletusarvoa suurempaa supistetun muistin tasoa käynnistysvalitsimella <quote
+>lowmem</quote
+> kuten kertoo <xref linkend="installer-args"/>. </para>
+   </sect3>
+<!--   End of file using-d-i/modules/lowmem.xml -->
+
+<!-- Start of file using-d-i/modules/localechooser.xml -->
+<!-- $Id: localechooser.xml 56423 2008-10-15 08:23:57Z fjp $ -->
+
+
+   <sect3 id="localechooser">
+   <title
+>Maa-asetuston valinta</title>
+
+<para
+>Useimmissa tapauksissa ensimmäiset kysymykset koskevat maa-asetuston valintaa sekä asennukselle että asennettavalle järjestelmälle. Maa-asetusto koostuu kielen, maan ja maa-asetusten valinnasta.  </para
+><para
+>Valittua kieltä käytetään tästä lähtien asennustapahtumassa, kunhan valintaikkunoille on käännös käytettävissä. Jos käyttökelpoista käännöstä valitulle kielelle ei ole käytettävissä, asennin käyttää englantia. </para
+><para
+>Myöhemmin asennustapahtumassa asetetaan aikavyöhykkeen ja Debianin asennuspalvelimen oletusarvot valitun maan mukaisiksi. Kieltä ja maata yhdessä käytetään maa-asetusten oletusarvoihin ja näppäimistön valinnan apuna. </para
+><para
+>Haluttu kieli pyydetään valitsemaan ensimmäiseksi. Kielten nimet ovat luettelossa sekä englanniksi (vasen puoli) että omakielisinä; oikeanpuoleisissa nimissä käytetään kielen omaa merkistöä. Luettelo on lajiteltu englanninkielisten nimien mukaan. Ylimpänä luettelossa on ylimääräinen valinta <quote
+>C</quote
+>-maa-asetusto valittavaksi kielen sijaan. <quote
+>C</quote
+>-maa-asetuston valitsemalla asennus jatkaa englannin kielellä; asennetussa järjestelmässä ei ole maa-asetusten tukea koska <classname
+>locales</classname
+>-paketti jätetään asentamatta. </para
+><para
+>Valittaessa kieli joka on virallinen kieli useammassa kuin yhdessä maassa<footnote
+> <para
+>Täsmällisemmin: jos kyseiselle kielelle on monta maa-asetustoa eri maatunnuksilla. </para
+> </footnote
+>, näytetään luettelo kyseisistä maista. Maa jota ei ole luettelossa voidaan valita valinnalla <guimenuitem
+>Other</guimenuitem
+> (luettelon viimeinen). Näin päästään mannerluetteloon, mantereen valinta vie luetteloon mantereen maista. </para
+><para
+>Mikäli kieltä vastaa vain yksi maa, tuo maa valitaan automaattisesti. Tässä tapauksessa on mahdollista valita toinen maa vain alentamalla ensin debconfin prioriteetti keskitasoon, ja menemällä sen jälkeen uudelleen kielen valintaan asentimen päävalikossa.  </para
+><para
+>Maa-asetuksen oletus asetetaan valitun kielen ja maan perusteella. Jos asennus tehdään keskitason tai alhaisella prioriteetilla, tarjotaan mahdollisuus valita muu oletus maa-asetukselle ja lisää maa-asetustoja muodostettavaksi asennettuun järjestelmään. </para>
+   </sect3>
+<!--   End of file using-d-i/modules/localechooser.xml -->
+
+<!-- Start of file using-d-i/modules/kbd-chooser.xml -->
+<!-- $Id: kbd-chooser.xml 53452 2008-05-20 20:00:16Z tbm $ -->
+
+   <sect3 id="kbd-chooser">
+   <title
+>Näppäimistön valinta</title>
+
+<para
+>Näppäimistöt tavataan sovittaa kielessä käyttyjen merkkien mukaan. Valitse näppäimistöasettelu joka vastaa käytettävää näppäimistöä, tai valitse sitä muistuttava jos oikeaa näppäinasettelua ei ole tarjolla. Kun asennus on valmis, on näppäimistöasetteluja tarjolla enemmään (käynnistä <command
+>kbdconfig</command
+> pääkäyttäjänä kun asennus on valmis).  </para
+><para
+>Siirrä korostus halutun näppäimistön kohdale ja paina &enterkey;. Korostusta siirretään nuolinäppäimillä; ne ovat samassa paikassa kaikissa näppäimistöasetteluissa, joten nuolinäppäimiin ei näppäimistöasetukset vaikuta. "extended"-näppämistössä on <keycap
+>F1</keycap
+> &mdash; <keycap
+>F10</keycap
+> -näppäimet ylärivissä. </para
+><para arch="powerpc"
+>US-näppäimistöille on kaksi näppäinasettelua; qwerty/mac-usb-us (Apple USB) sijoittaa funktionäppäimen Alt näppäimeen <keycap
+>Command/Apple</keycap
+> (näppäimistöllä <keycap
+>välilyönti</keycap
+>-näppäimen vieressä kuten <keycap
+>Alt</keycap
+> PC:n näppäimistössä), kun taas qwerty/us (Standard) asettelussa Alt on <keycap
+>Option</keycap
+>-näppäimessä (näppäinhatussa "alt" useimmissa Mac-näppäimistöissä). Asetteluilla ei ole muuta eroa. </para>
+   </sect3>
+<!--   End of file using-d-i/modules/kbd-chooser.xml -->
+
+<!-- Start of file using-d-i/modules/s390/netdevice.xml -->
+<!-- $Id: netdevice.xml 11648 2004-03-22 00:37:46Z joeyh $ -->
+<!--   End of file using-d-i/modules/s390/netdevice.xml -->
+
+<!-- Start of file using-d-i/modules/ddetect.xml -->
+<!-- $Id: ddetect.xml 11648 2004-03-22 00:37:46Z joeyh $ -->
+<!--   End of file using-d-i/modules/ddetect.xml -->
+
+<!-- Start of file using-d-i/modules/cdrom-detect.xml -->
+<!-- $Id: cdrom-detect.xml 11648 2004-03-22 00:37:46Z joeyh $ -->
+<!--   End of file using-d-i/modules/cdrom-detect.xml -->
+
+<!-- Start of file using-d-i/modules/iso-scan.xml -->
+<!-- $Id: iso-scan.xml 23058 2004-10-12 23:51:17Z cjwatson $ -->
+
+   <sect3 id="iso-scan">
+   <title
+>Etsitään Debianin asentimen ISO-otosta</title>
+<para
+>Kun asennustapa on <emphasis
+>hd-media</emphasis
+> on tietyssä kohtaa löydettävä ja liitettävä Debianin asentimen ISO-otos josta saadaan loput asennuksen tiedostoista. Asentimen osa <command
+>iso-scan</command
+> tekee juuri tämän. </para
+><para
+>Ensin komento <command
+>iso-scan</command
+> liittää automaattisesti kaikki lohkolaitteet (ts. osiot) joilla on jokin tunnistettu tiedostojärjestelmä ja etsii järjestyksessä tiedostonimiä jotka päättyvät <filename
+>.iso</filename
+> (tai <filename
+>.ISO</filename
+>). On syytä huomata ensimmäisen yrityksen tutkivan vain tiedostoja juurihakemistossa ja ensimmäisen tason alihakemistoissa (ts. <filename
+>/<replaceable
+>jotain</replaceable
+>.iso</filename
+>, <filename
+>/data/<replaceable
+>jotain</replaceable
+>.iso</filename
+> löytyvät, mutta ei <filename
+>/data/tmp/<replaceable
+>jotain</replaceable
+>.iso</filename
+>). Kun iso-otos on löytynyt <command
+>iso-scan</command
+> tutkii sisällön perusteella onko tiedosto kelvollinen Debianin iso-otos vai ei. Jos on, homma on valmis. Jos ei ole, <command
+>iso-scan</command
+> etsii toisen otoksen. </para
+><para
+>Jos ensimmäinen yritys löytää iso-otos epäonnistuu, <command
+>iso-scan</command
+> kysyy suoritetaanko perusteellisempi etsintä. Tällöin ei etsitä vain ensimmäisten tasojen hakemistoista vaan tutkitaan koko tiedostojärjestelmä. </para
+><para
+>Mikäli <command
+>iso-scan</command
+> ei löydä asentimen iso-otosta, uudelleenkäynnistä takaisin alkuperäiseen käyttöjärjestelmään ja tarkista otoksen nimen olevan oikein (päättyy <filename
+>.iso</filename
+>), otoksen olevan tiedostojärjestelmällä jonka &d-i; tunnistaa ja otoksen olevan kelvollinen (tarkistussumma täsmää). Kokeneet Unix-käyttäjät osaisivat tehdä tämän ilman uudelleenkäynnistystä toisella konsolilla. </para>
+   </sect3>
+<!--   End of file using-d-i/modules/iso-scan.xml -->
+
+<!-- Start of file using-d-i/modules/anna.xml -->
+<!-- $Id: anna.xml 11648 2004-03-22 00:37:46Z joeyh $ -->
+<!--   End of file using-d-i/modules/anna.xml -->
+
+<!-- Start of file using-d-i/modules/netcfg.xml -->
+<!-- $Id: netcfg.xml 50619 2007-12-25 09:20:39Z fjp $ -->
+
+   <sect3 id="netcfg">
+   <title
+>Verkkoasetusten teko</title>
+
+<para
+>Jos tähän kohtaan tultaessa asennin havaitsee laitteistossa useamman kuin yhden verkkolaitteen, kysytään mitä laitetta käytetään <emphasis
+>ensisijaisena</emphasis
+> verkkoliitäntänä eli mitä liitäntää asennin käyttää. Muiden liitäntöjen asetuksia ei tehdä tässä kohdassa. Muiden liitäntöjen asetuksia voi tehdä kun asennus on valmis; katso <citerefentry
+><refentrytitle
+>interfaces</refentrytitle
+> <manvolnum
+>5</manvolnum
+> </citerefentry
+> man-sivulta. </para
+><para
+>Oletusarvona asennin yrittää tehdä verkoasetukset automaattisesti DHCP:llä. Jos DHCP toimii, homma on valmis. Jos ei toimi, syitä voi olla monta alkaen irti olevasta verkkojohdosta vääriin DHCP:n asetuksiin. Tai ehkä paikallisverkossa ei ole lainkaan DHCP-palvelinta. Lisätietoa löytyy neljännen konsolin virheilmoituksista. Oli miten oli, asennin kysyy yritetäänkö uudelleen vai teetkö verkkoasetukset itse. DHCP-palvelimet saattavat joskus olla hyvin hitaita vastaamaan, joten kannattaa yrittää uudelleen jos kaiken pitäisi toimia. </para
+><para
+>Jos teet verkkoasetukset itse, asennin kysyy muutamia kysymyksiä paikallisverkosta, tärkeimpinä <computeroutput
+>IP-osoite</computeroutput
+>, <computeroutput
+>verkon peitto</computeroutput
+>, <computeroutput
+>yhdyskäytävä</computeroutput
+>, <computeroutput
+>nimipalvelimien osoitteet</computeroutput
+> ja <computeroutput
+>tietokoneen nimi</computeroutput
+>. Mikäli koneessa on langaton verkkolaite, kysytään <computeroutput
+>Wireless ESSID</computeroutput
+> ja <computeroutput
+>WEP-avain</computeroutput
+>. Täytä kentät <xref linkend="needed-info"/> mukaisesti. </para
+><note
+><para
+>Nyt teknisiä tiedonjyviä jotka ehkä on hyvä tietää: ohjelma olettaa verkon IP-osoitteen olevan bitwise-AND koneen IP-osoitteesta ja verkon peitosta. Ohjelma laskee yleislähetysosoitteen oletusarvoksi bitwise-OR koneen IP-osoitteesta ja verkon peiton negaatiosta. Myös yhdyskäytävä arvataan. Jos näitä tietoja ei ole saatavilla, kannattaa käyttää ohjelman arvauksia &mdash; ne voidaan tarvittaessa muuttaa kun asennus on valmis muokkaamalla tiedostoa <filename
+>/etc/network/interfaces</filename
+>. </para
+></note>
+   </sect3>
+<!--   End of file using-d-i/modules/netcfg.xml -->
+
+<!-- Start of file using-d-i/modules/choose-mirror.xml -->
+<!-- $Id: choose-mirror.xml 43658 2006-12-29 18:52:39Z fjp $ -->
+
+<!--
+Hmm. This really does need documenting :-/
+
+- Component is only selected and executed if the installer needs to load
+  installer components or the base system from the network
+  (either local or the internet).
+- This means you first have to configure a network interface.
+- Mirror selection is delayed until apt-setup for CD-based installs (except
+  businesscard)
+- A list of countries is displayed with the default based on the country you
+  selected earlier.
+- Selection of a local mirror (at top of the list: manual selection).
+- After selecting a country, a list of mirrors in the country will be shown.
+  (not for ftp)
+- Forcing to ftp can be done using "protocol=ftp"
+- Note that not all mirrors are equal (see http://www.nl.debian.org/mirror/list)
+
+- The selected mirror will be tested.
+- How to handle problems with mirrors.
+-->
+<!--   End of file using-d-i/modules/choose-mirror.xml -->
+<!-- tzsetup is included in clock-setup -->
+
+<!-- Start of file using-d-i/modules/clock-setup.xml -->
+<!-- $Id: clock-setup.xml 50618 2007-12-25 09:18:06Z fjp $ -->
+
+   <sect3 id="clock-setup">
+   <title
+>Kello aikaan</title>
+
+<para
+>Asennin yrittää ensin muodostaa yhteyden Internetin aikapalvelimiin (yhteyskäytäntönä <firstterm
+>NTP</firstterm
+>) jotta järjestelmän kello saadaan asetettua oikeaan aikaan. Jos tämä ei onnistu, asennin olettaa käynnistyksen aikana laitekellosta saadun kellonajan ja päiväyksen olevan oikein. Ei ole mahdollista itse asettaa järjestelmän kellonaikaa asennuksen aikana. </para>
+
+
+<!-- Start of file using-d-i/modules/tzsetup.xml -->
+<!-- $Id: tzsetup.xml 50620 2007-12-25 09:22:03Z fjp $ -->
+
+<!-- As tzsetup is invoked from inside clock-setup, this is not a
+     separate section -->
+
+<para
+>Asennuksen alussa valitun maan perusteella asennin päättää näytetäänkö aikavyöhykkeiden luettelo. Jos maassa on käytössä vain yksi aikavyöhyke, ei luetteloa näytetä ja tuo aikavyöhyke otetaan käyttöön enemmittä kyselyittä. </para
+><para
+>Jos jostain syystä halutaan asettaa asennetulle järjestelmälle aikavyöhyke joka <emphasis
+>ei</emphasis
+> vastaa valittua sijaintia, on kaksi mahdollisuutta.  </para>
+
+<orderedlist>
+<listitem>
+
+<para
+>Yksinkertaisin tapa on valita toinen aikavyöhyke asennuksen valmistuttua ja kun on käynnistetty uusi järjestelmä. Tämä tehdään komennolla: <informalexample
+><screen
+># dpkg-reconfigure tzdata
+</screen
+></informalexample>
+
+</para>
+
+</listitem
+><listitem>
+
+<para
+>Toinen tapa on asettaa aikavyöhyke aivan asennuksen alussa käynnistysvalitsimella <userinput
+>time/zone=<replaceable
+>arvo</replaceable
+></userinput
+>. Arvon pitää tietenkin olla kelvollinen aikavyöhyke, esimerkiksi <userinput
+>Europe/London</userinput
+> tai <userinput
+>UTC</userinput
+>. </para>
+
+</listitem>
+</orderedlist>
+
+<para
+>Automaattiasennuksissa aikavyöhyke voidaan asettaa myös valmiilla vastauksilla. </para>
+<!--   End of file using-d-i/modules/tzsetup.xml -->
+
+   </sect3>
+<!--   End of file using-d-i/modules/clock-setup.xml -->
+
+  </sect2>
+
+  <sect2 id="di-partition">
+  <title
+>Osioiden teko ja liitoskohtien valinta</title>
+<para
+>Kun laitetunnistus on suoritettu viimeisen kerran pitäisi asentimessa olla tässä kohtaa täysi toiminnallisuus, käyttäjäkohtaiset muutokset ja valmius tositoimiin. Kuten luvun otsikosta käy ilmi, parin seuraavan osan päätehtävät ovat levyosioiden teko, tiedostojärjestelmien luonti, liitoskohdat ja haluttaessa näihin liittyvät jutskat kuten RAID, loogisten levyniteiden hallinta LVM tai salatut laitteet. </para>
+
+
+<!-- Start of file using-d-i/modules/s390/dasd.xml -->
+<!-- $Id: dasd.xml 11648 2004-03-22 00:37:46Z joeyh $ -->
+<!--   End of file using-d-i/modules/s390/dasd.xml -->
+
+<!-- Start of file using-d-i/modules/partman.xml -->
+<!-- $Id: partman.xml 56425 2008-10-15 08:50:59Z fjp $ -->
+
+<para
+>Jos osioiden teko kauhistuttaa tai kaivataan tarkempaa tietoa luetaan <xref linkend="partitioning"/>. </para>
+<warning arch="sparc"
+><para
+>Jos kiintolevyä käytettiin aikaisemmin Solariksessa, osiointisovellus ei ehkä tunnista levyn kokoa oikein. Uuden osiotaulun luominen ei korjaa tilannetta. Sitävastoin levyn muutaman ensimmäisen sektorin <quote
+>nollaaminen</quote
+> auttaa: <informalexample
+><screen>
+# dd if=/dev/zero of=/dev/hd<replaceable
+>X</replaceable
+> bs=512 count=2; sync
+</screen
+></informalexample
+> Huomaa, että tämän jälkeen levyllä olevaan tietoon ei enää pääse käsiksi. </para
+></warning>
+<para
+>Ensimmäinen vaihtoehto on tehdä levyosiot automaattisesti koko levylle tai levyn käyttämättömään osaan. Tätä kutsutaan myös <quote
+>ohjatuksi</quote
+> osioinniksi. Jos automaattista osiointia ei haluta, valitaan <guimenuitem
+>Tee levyosiot itse</guimenuitem
+> valikosta. </para>
+
+   <sect3 id="partman-auto">
+   <title
+>Ohjattu osiointi</title>
+<para
+>Ohjatussa osionnissa saattaa olla kolmekin vaihtoehtoa: luodaan osiot suoraan kiintolevylle (perinteinen tapa), käytetään loogisten levyniteiden hallintaohjelmaa (LVM) tai käytetän salattua LVM:ää<footnote
+> <para
+> Asennin salaa LVM-levyniteen 256 bitin AES-avaimella ja käyttää ytimen <quote
+>dm-crypt</quote
+>-tukea </para
+> </footnote
+>.  </para>
+<note
+><para
+>(salattu) LVM ei ehkä ole käytettävissä kaikille suoritinperheille. </para
+></note>
+<para
+>Käytettäessä LVM:ää tai salattua LVM:ää luo asennin useimmat osiot yhden ison osion sisälle; saavutettu etu on ison osion sisällä olevien osioiden koon helppo muuttaminen. Salattua LVM:ää käytettäessä iso osio ei ole luettavissa jos ei tiedä salauslausetta, jolloin saadaan lisää tietoturvaa (henkilökohtaisille) tiedoille. </para
+><para
+>Salattua LVM:ää käytettäessä asennin myös pyyhkii levyn tiedot kirjoittamalla sinne satunnaista tietoa. Tämä parantaa tietoturvaa vielä lisää (koska ei enää voi tietää mitkä kohdat levystä ovat käytössä ja myös koska näin on varmasti pyyhitty kaikki tiedot aikaisemmista asennuksista), mutta saattaa viedä jonkin aikaa, levyn koosta riippuen. </para>
+<note
+><para
+>Jos valitsit ohjatun osioinnin LVM:ää tai salattua LVM:ää käyttäen, on joitakin osiotaulun muutoksia kirjoitettava valitulle levylle kun LVM:än asetuksia tehdään. Käytännössä nämä muutokset pyyhkivät kaikki tiedot jotka nyt ovat valitulla kiintolevyllä eikä pyyhkimistä voi myöhemmin perua. Asennin kuitenkin pyytää vahvistusta muutoksille ennen kuin ne kirjoitetaan levylle. </para
+></note>
+<para
+>Jos valitaan ohjattu osiointi (joko perinteinen tai (salattua) LVM:ää käyttäen) koko levylle, pyydetään ensimmäiseksi valitsemaan käytettävä levy. Tarkista kaikkien levyjen olevan luettelossa ja, jos levyjä on monta, varmistu oikean levyn valinnasta. Levyjen järjestys luettelossa saattaa poiketa totutusta. Levyjen kokoja voi käyttää apuna levyjen tunnistamisessa. </para
+><para
+>Kaikki valittavalla levyllä olevat tiedot tullaan poistamaan, mutta aina ennen muutosten kirjoittamista levylle pyydetään vahvistusta. Jos valittiin perinteinen osiointi, voidaan kaikki muutokset perua viimeiseen vaiheeseen asti; (salattua) LVM:ää käytettäessä peruminen ei ole mahdollista. </para
+><para
+>Seuraavaksi voidaan valita alla olevassa taulukossa luetelluista mallineista. Mallineilla on etunsa ja haittansa, joista muutamia käsittelee <xref linkend="partitioning"/>. Jos olet epävarma, valitse ensimmäinen. Kannattaa muistaa ohjatun osionnin tarvitsevan tietyn vähimmäismäärän käyttämätöntä tilaa levyllä toimiakseen. Jos käytettävissä ei ole ainakin noin 1 Gt tilaa (riippuu mallineesta), ohjattu osiointi ei toimi. </para>
+
+<informaltable>
+<tgroup cols="3">
+<thead>
+<row>
+  <entry
+>Osioinnin mallineet</entry>
+  <entry
+>Vähimmäistila</entry>
+  <entry
+>Tehdyt osiot</entry>
+</row>
+</thead>
+
+<tbody>
+<row>
+  <entry
+>Kaikki tiedostot yhdessä levyosiossa</entry>
+  <entry
+>600 Mt</entry>
+  <entry
+><filename
+>/</filename
+>, sivutus</entry>
+</row
+><row>
+  <entry
+>Erillinen /home-osio</entry>
+  <entry
+>500 Mt</entry>
+  <entry
+><filename
+>/</filename
+>, <filename
+>/home</filename
+>, sivutus </entry>
+</row
+><row>
+  <entry
+>Erilliset /home-, /usr-, /var- ja /tmp-osiot</entry>
+  <entry
+>1 Gt</entry>
+  <entry
+><filename
+>/</filename
+>, <filename
+>/home</filename
+>, <filename
+>/usr</filename
+>, <filename
+>/var</filename
+>, <filename
+>/tmp</filename
+>, sivutus </entry>
+</row>
+
+</tbody
+></tgroup
+></informaltable>
+
+<para
+>Valittaessa ohjattu osioiden teko käyttäen (salattua) LVM:ää, asennin luo myös erillisen /boot-osion. Muut osiot, mukaan lukien sivutusosio, luodaan LVM-osion sisälle. </para
+><para arch="ia64"
+>Valittaessa ohjattu osiointi IA-64-järjestelmälle, asennin luo lisäosion EFI-käynnistyslataimelle. Osion tiedostojärjestelmä on käynnistyskelpoinen FAT16. Myös tiedostojärjestelmävalikossa on ylimääräinen valinta osion tekemiseksi EFI-käynnistysosioksi. </para
+><para arch="alpha"
+>Valittaessa ohjattu osionti Alpha-järjestelmässä tehdään levyn alkuun osio ilman tiedostojärjestelmää aboot-käynnistyslataimelle. </para
+><para
+>Mallineen valinnan jälkeen seuraava ruutu näyttää uuden osiotaulun, josta ilmenee tehdäänkö osiolle tiedostojärjestelmä ja jos niin millainen, ja niiden liitoskohdat. </para
+><para
+>Osioiden luettelo voisi olla vaikka tämän näköinen: <informalexample
+><screen>
+  IDE1 master (hda) - 6.4 GB WDC AC36400L
+        #1 ensisij.   16.4 MB  B f ext2       /boot
+        #2 ensisij.  551.0 MB      swap       swap
+        #3 ensisij.    5.8 GB      ntfs
+           ens/log    8.2 MB      VAPAA TILA
+
+  IDE1 slave (hdb) - 80.0 GB ST380021A
+        #1 ensisij.   15.9 MB      ext3
+        #2 ensisij.  996.0 MB      fat16
+        #3 ensisij.    3.9 GB      xfs        /home
+        #5 looginen    6.0 GB    f ext3       /
+        #6 looginen    1.0 GB    f ext3       /var
+        #7 looginen  498.8 MB      ext3
+        #8 looginen  551.5 MB      swap       swap
+        #9 looginen   65.8 GB      ext2
+</screen
+></informalexample
+> Esimerkki näyttää kaksi IDE-levyä jaettuna useisiin osioihin; ensimmäisellä levyllä on hieman vapaata tilaa. Osion rivillä on osion numero, tyyppi, koko, lisäilmaisimia, tiedostojärjestelmä ja (mahdollinen) liitoskohta. Huomaa: tätä nimenomaista kokoonpanoa ei voi tehdä ohjatulla osioinnilla mutta se on esimerkki itse osiot tekemällä mahdollisista vaihtoehdoista. </para
+><para
+>Opastettu osioiden teko päättyy tähän. Jos muodostettu osiotaulu kelpaa, valitaan <guimenuitem
+>Lopeta osioiden teko ja tallenna muutokset levylle</guimenuitem
+> uuden osiotaulun ottamiseksi käyttöön (kuten tämän luvun lopussa kerrotaan). Jos pitää tehdä muutoksia, valitaan <guimenuitem
+>Kumoa osioihin tehdyt muutokset</guimenuitem
+> ja tehdään ohjattu osiointi uudelleen, tai muokataan ehdotettuja muutoksia kuten jäljempänä neuvotaan tehtäessä osiot itse. </para>
+   </sect3>
+
+   <sect3 id="partman-manual">
+   <title
+>Tee osiot itse</title>
+<para
+>Yllä näytetyn kaltainen ruutu näytetään jos valitaan osioiden teko itse, paitsi että näytetään käytössä oleva osiotaulu ilman liitoskohtia. Tästä lähtien tämä luku käsittelee osiotaulun tekemistä itse ja osioiden käyttöä asennettavassa Debian-järjestelmässä. </para
+><para
+>Mikäli valittu levy on käyttämätön jossa ei ole osioita eikä vapaata tilaa, tarjotaan tehtäväksi uusi osiotaulu (välttämätöntä jotta uusia osioita voi tehdä). Tämän jälkeen taulukossa pitäisi valitun levyn alapuolella näkyä uusi rivi <quote
+>VAPAA TILA</quote
+>. </para
+><para
+>Valittaessa jokin vapaa tila tarjotaan luotavaksi uusi osio. Asennin kysyy koon, tyypin (ensisijainen tai looginen) ja paikan (vapaan tilan alussa vai lopussa). Tämän jälkeen näytetään yksityiskohtainen kooste uudesta osiosta. Tärkein asetus on <guimenuitem
+>Käyttö:</guimenuitem
+>, joka määrää tehdäänkö osioon tiedostojärjestelmä vai käytetäänkö sitä sivutustilana, ohjelmallisesti tehtynä RAIDina, salattuna tiedostojärjestelmänä tai ei käytetä lainkaan. Muihin asetuksiin kuuluvat liitoskohta, liitosvalitsimet ja käynnistyskelpoisuuden ilmaisin; näytettävät asetukset riippuvat osion käyttötavasta.  Esivalitut oletukset voi vapaasti vaihtaa mieleisekseen. Esim. valinnalla <guimenuitem
+>Käyttö:</guimenuitem
+> osiolle voi valita toisen tiedostojärjestelmän tai käyttää sitä sivutusosiona, ohjelmallisesi toteutettuna RAID-laitteena, LVM:ään, tai jättää käyttämättä. Toinen näppärä ominaisuus on tiedon kopiointi olemassa olevasta osiosta tähän osioon. Kun osio on kuten halutaan, valitaan <guimenuitem
+>Tämän osion asetukset on tehty</guimenuitem
+> ja palataan komennon <command
+>partman</command
+> aloitusruutuun. </para
+><para
+>Osion asetuksia muuttavaan valikkoon pääsee valitsemalla osio. Tämä on sama ruutu kuin uutta osiota tehtäessä, joten muutettavat asetuksetkin ovat samat. Pikavilkaisulla ehkä huomaamatta jäävä mahdollisuus on osion koon muuttaminen valitsemalla osion koon näyttävä kohta. Tämä toimii ainakin osioille joiden tiedostojärjestelmä on fat16, fat32, ext2, ext3 tai sivutus. Osion voi myös poistaa tästä valikosta. </para
+><para
+>Tarkista että luodaan ainakin kaksi osiota: yksi <emphasis
+>juuri</emphasis
+>-tiedostojärjestelmälle (jonka liitoskohdan on oltava <filename
+>/</filename
+>) ja toinen <emphasis
+>sivutus</emphasis
+>-osiolle. Jos juuritiedostojärjestelmän liittäminen unohtuu, <command
+>partman</command
+> ei suostu jatkamaan ennen kuin tämä on tehty. </para
+><para arch="ia64"
+>Jos EFI-käynnistysosion valitseminen ja sen tiedostojärjestelmä unohtuvat, komento <command
+>partman</command
+> huomaa tämän eikä suostu jatkamaan ennen kuin nämä on tehty. </para
+><para
+>Komennon <command
+>partman</command
+> toiminnallisuutta voi lisätä asentimen moduuleilla, mutta tähän vaikuttaa laitearkkitehtuuri. Jos kaikkia luvattuja toimintoja ei löydy, tarkista onko kaikki tarvittavat moduulit ladattu (esim. <filename
+>partman-ext3</filename
+>, <filename
+>partman-xfs</filename
+> tai <filename
+>partman-lvm</filename
+>). </para
+><para
+>Kun osiot on tehty halutulla tavalla, valitaan <guimenuitem
+>Lopeta osioiden teko ja tallenna muutokset levylle</guimenuitem
+> osiointivalikosta. Ruudulla näkyy yhteenveto levyille tehtävistä muutoksista ja vahvistuksen jälkeen tiedostojärjestelmät luodaan valitulla tavalla. </para>
+   </sect3>
+<!--   End of file using-d-i/modules/partman.xml -->
+
+<!-- Start of file using-d-i/modules/autopartkit.xml -->
+<!-- $Id: autopartkit.xml 11648 2004-03-22 00:37:46Z joeyh $ -->
+<!--   End of file using-d-i/modules/autopartkit.xml -->
+
+<!-- Start of file using-d-i/modules/partitioner.xml -->
+<!-- $Id: partitioner.xml 11648 2004-03-22 00:37:46Z joeyh $ -->
+
+<!--   End of file using-d-i/modules/partitioner.xml -->
+
+<!-- Start of file using-d-i/modules/partconf.xml -->
+<!-- $Id: partconf.xml 11648 2004-03-22 00:37:46Z joeyh $ -->
+<!--   End of file using-d-i/modules/partconf.xml -->
+
+<!-- Start of file using-d-i/modules/mdcfg.xml -->
+<!-- $Id: mdcfg.xml 56427 2008-10-15 09:07:45Z fjp $ -->
+
+   <sect3 id="mdcfg">
+   <title
+>Monilevylaitteen asetukset (ohjelmallisesti toteutettu RAID)</title>
+<para
+>Jos koneessa on useampi kiintolevy<footnote
+> <para
+>Jos ollaan tarkkoja, MD-laitteen voi luoda myös samalla kiintolevyllä olevista osioista, mutta sillä ei saavuteta mitään etua. </para
+> </footnote
+>, voidaan komennolla <command
+>mdcfg</command
+> saada levyjärjestelmästä parempaa suorituskykyä ja/tai parempaa luotettavuutta. Tämmöinen järjestely on <firstterm
+>monilevylaite</firstterm
+> (tai tunnetuimman toteutuksensa mukaan <firstterm
+>ohjelmallisesti toteutettu RAID</firstterm
+>). </para
+><para
+>MD on periaatteessa joukko eri levyillä olevia osiota jotka yhdistetään <emphasis
+>loogiseksi</emphasis
+> laitteeksi. Tätä laitetta voidaan käyttää kuten tavallista levyosiota (ts. komennolla <command
+>partman</command
+> sille voi tehdä tiedostojärjestelmän, määrätä liitoskohdan, jne.). </para
+><para
+>Saavutettu etu riippuu luotavan MD-laitteen tyypistä. Tällä hetkellä tuettuja ovat:
+<variablelist
+> 
+<varlistentry
+> <term
+>RAID0</term>
+<listitem
+><para
+>Pääasiassa suorituskykyä parantamaan. RAID0 jakaa kirjoitettavan tiedon <firstterm
+>raidoksi</firstterm
+> ja jakaa raidat tasan levypakan levyille. Tämä saattaa nopeuttaa luku- ja kirjoitustoimintoja, mutta yhden levyn hajotessa menetetaan <emphasis
+>kaikki</emphasis
+> tieto (paloja tiedoista on toimivilla levyllä tai levyillä, puuttuvat palat <emphasis
+>olivat</emphasis
+> hajonneella levyllä). </para>
+<para
+>Tyypillinen RAID0:n käyttö on videon muokkaukseen tehty levyosio. </para>
+</listitem
+></varlistentry>
+
+<varlistentry
+> <term
+>RAID1</term>
+<listitem
+><para
+>Sopii luotettavuutta korostaviin sovelluksiin. Se muodostuu useasta (tavallisesti kahdesta) saman kokoisesta osiosta ja jokaisella osiolla on täsmälleen samat tiedot. Tästä seuraa kolme seikkaa. Ensinnäkin yhden levyn hajotessa tieto on yhä peilattuna muilla levyillä. Toiseksi, käyttökelpoista levytilaa on vain osa levypakan koosta (tarkemmin sanottuna pakan pienimmän osion verran). Kolmanneksi, tiedostojen lukutoiminnot tapahtuvat levyiltä vuorotellen, mikä saattaa parantaa suorituskykyä palvelimella, esimerkiksi tiedostopalvelimella, jossa lukutoimintoja tapahtuu useammin kuin kirjoituksia.</para>
+<para
+>Levypakassa voi olla varalevy joka otetaan käyttöön hajonneen levyn tilalle. </para>
+</listitem
+></varlistentry>
+
+<varlistentry
+><term
+>RAID5</term>
+<listitem
+><para
+>Tämä on hyvä kompromissi nopeudesta, luotettavuudesta ja hukkaan menevästä levytilasta. RAID5 jakaa kirjoitettavan tiedon raitoihin ja jakaa raidat tasan yhtä lukuunottamatta pakan levyille (samaan tapaan kuin RAID0). Toisin kuin RAID0, RAID5 laskee lisäksi <firstterm
+>pariteettitietoa</firstterm
+>, joka kirjoitetaan omalle levylleen. Pariteettilevy ei ole koko ajan sama (se olisi RAID4), vaan sitä vaihdetaan säännöllisesti, joten paritettitietoa kirjoitetaan tasaisesti kaikille levyille. Kun yksi levy hajoaa, tiedon puuttuva osa voidaan laskea jäljelle jääneistä tietoa sisältävistä levyistä ja pariteettitiedosta. Tarvitaan vähintään kolme käytössä olevaa osiota muodostamaan RAID5. Levypakassa voi olla varalevy joka otetaan käyttöön hajonneen levyn tilalle. </para>
+<para
+>Kuten nähdään, RAID5 on luotettavuudeltaan verrattavissa RAID1:een, mutta levytilaa menee vähemmän hukkaan. Toisaalta se saattaa olla hieman RAID0:aa hitaampi kirjoitustoiminnoissa, koska pariteetin laskemiseen kuluu aikaa. </para>
+</listitem>
+</varlistentry>
+
+<varlistentry
+><term
+>RAID6</term>
+<listitem
+><para
+>Samantapainen kuin RAID5, paitsi että pariteettilevyjä on kaksi eikä yksi.</para>
+<para
+>RAID6-pakka selviää kahden levyn rikkoutumisesta. </para
+></listitem>
+</varlistentry>
+
+<varlistentry
+><term
+>RAID10</term>
+<listitem
+><para
+>RAID10 yhdistää raidat (kuten RAID0) ja peilauksen (kuten RAID1). Se luo <replaceable
+>n</replaceable
+> kopiota kirjoitettavasta datasta ja jakaa ne levyosioille siten että mitkään saman datan kopiot eivät ole samalla laitteella. Oletusarvo <replaceable
+>n</replaceable
+>:lle on 2, mutta sen arvoa voidaan muuttaa expert-toimintatilassa. Levyosioita on oltava ainakin <replaceable
+>n</replaceable
+>. RAID10 käyttää erilaisia asetteluja kopioiden jakamiseen. Oletus on near copies. Tällöin kaikki kopiot ovat suunnilleen samoilla kohdin kaikilla levyillä. Far copies sijoittaa kopiot eri kohtiin eri levyillä. Offset copy kopioi raidan eikä yksittäisiä kopioita. </para>
+<para
+>RAID10 käyttämällä voidaan saavuttaa luotettavuus ja vikasietoisuus ilman pariteetin laskemista. </para>
+</listitem>
+</varlistentry>
+
+</variablelist>
+Yhteenvetona: <informaltable
+> <tgroup cols="5">
+<thead>
+<row>
+  <entry
+>Tyyppi</entry>
+  <entry
+>Levyjä vähintään</entry>
+  <entry
+>Varalevy</entry>
+  <entry
+>Toipuuko levyrikosta?</entry>
+  <entry
+>Käytettävissä oleva tila</entry>
+</row>
+</thead>
+
+<tbody>
+<row>
+  <entry
+>RAID0</entry>
+  <entry
+>2</entry>
+  <entry
+>ei</entry>
+  <entry
+>ei</entry>
+  <entry
+>Pienimmän osion koko kertaa pakan levyjen määrä</entry>
+</row>
+
+<row>
+  <entry
+>RAID1</entry>
+  <entry
+>2</entry>
+  <entry
+>haluttaessa</entry>
+  <entry
+>kyllä</entry>
+  <entry
+>Pakan pienimmän osion koko</entry>
+</row>
+
+<row>
+  <entry
+>RAID5</entry>
+  <entry
+>3</entry>
+  <entry
+>haluttaessa</entry>
+  <entry
+>kyllä</entry>
+  <entry
+>Pakan pienimmän osion koko kertaa (pakan levyjen määrä vähennettynä yhdellä) </entry>
+</row>
+
+<row>
+  <entry
+>RAID6</entry>
+  <entry
+>4</entry>
+  <entry
+>haluttaessa</entry>
+  <entry
+>kyllä</entry>
+  <entry
+>Pakan pienimmän osion koko kertaa (pakan levyjen määrä vähennettynä kahdella) </entry>
+</row>
+
+<row>
+  <entry
+>RAID10</entry>
+  <entry
+>2</entry>
+  <entry
+>haluttaessa</entry>
+  <entry
+>kyllä</entry>
+  <entry
+>Kaikkien osioiden määrä jaettuna kimpalekopioiden määrällä (oletusarvo kaksi) </entry>
+</row>
+
+</tbody
+></tgroup
+></informaltable>
+
+</para
+><para
+>Lisää tietoa ohjelmallisesti toteutetusta RAIDista löytyy ohjeesta <ulink url="&url-software-raid-howto;"
+>Software RAID HOWTO</ulink
+>. </para
+><para
+>RAID-pakkaan kuuluvat osiot on merkittävä ennen MD-laitteen luomista. (Tämä tehdään komennolla <command
+>partman</command
+> valikossa <guimenu
+>Osion asetukset:</guimenu
+> jossa olisi valittava <menuchoice
+> <guimenu
+>Käyttö:</guimenu
+> <guimenuitem
+>fyysinen nide RAIDia varten</guimenuitem
+> </menuchoice
+>. </para
+><note
+><para
+>Varmistu, että suunniteltua osiointimallia käyttävä laite voidaan käynnistää. Yleensä on tarpeen luoda erillinen <filename
+>/boot</filename
+>-tiedostojärjestelmä kun juuritiedostojärjestelmälle (<filename
+>/</filename
+>) on käytössä RAID. Useimmat käynnistyslataimet <phrase arch="x86"
+>(mukaan lukien lilo ja grub)</phrase
+> tukevat peilattua (ei raitoja käyttävää) RAID1:stä, joten yksi mahdollisuus olisi <filename
+>/</filename
+> on RAID5 ja <filename
+>/boot</filename
+> on RAID1. </para
+></note>
+<warning
+><para
+>MD-laitteiden tuki on varsin uusi ominaisuus asentimessa. Joidenkin RAID-tasojen voi ilmetä pulmia samoin kuin joidenkin käynnistyslataimien yhteydessä käytettäessä MD-laitetta juuritiedostojärjestelmälle (liitoskohtana <filename
+>/</filename
+>). Edistyneemmät käyttäjät osannevat kiertää jotkin näistä pulmista suorittamalla joitakin asetusten tekoja tai asennuksen vaiheita komentotulkista. </para
+></warning
+><para
+>Seuraavaksi olisi valittava <guimenuitem
+>Tee ohjelmallisesti toteutetun RAID-laitteen asetukset</guimenuitem
+> komennon <command
+>partman</command
+> päävalikosta. (Valikko tulee näkyviin vasta kun ainakin yksi osio on merkitty olemaan <guimenuitem
+>fyysinen nide RAIDia varten</guimenuitem
+>.) Komennon <command
+>mdcfg</command
+> ensimmäisessä ruudussa valitaan <guimenuitem
+>Luo MD-laite</guimenuitem
+>. Asennin näyttää luettelon tuettujen MD-laitteiden tyypeistä, näistä olisi valittava yksi (esim. RAID1). Jatko riippuu MD-laitteelle valitusta tyypistä. </para>
+
+<itemizedlist>
+<listitem
+><para
+>RAID0 on yksinkertainen &mdash; asennin näyttää luettelon käytettävissä olevista RAID-osiosta ja tarvitsee vain valita mistä osioista muodostetaan MD. </para
+></listitem>
+<listitem
+><para
+>RAID1 on hieman mutkikkaampi. Ensin kysytään MD:hen käytettävien levyjen ja varalevyjen määrät. Seuraavaksi on valittava käytettävissä olevien RAID-osioiden joukosta levyinä ja varalevyinä käytettävät. Valittujen osioiden määrän on täsmättävä MD:lle ilmoitettuihin määriin. Älä huoli vaikka tulee virhe; asennin ei päästä jatkamaan ennen kuin levyjen määrät täsmäävät. </para
+></listitem>
+<listitem
+><para
+>RAID5:n käyttöönotto on samantapaista kuin RAID1:n, paitsi että on valittava ainakin <emphasis
+>kolme</emphasis
+> levyosiota.  </para
+></listitem>
+<listitem
+><para
+>RAID6:n käyttöönotto on samantapaista kuin RAID1:n, paitsi että on valittava ainakin <emphasis
+>neljä</emphasis
+> levyosiota.  </para
+></listitem>
+<listitem
+><para
+>RAID10:n asetukset tehdään samaan tapaan kuin RAID1:lle, paitsi expert-tilassa. Siinä &d-i; kysyy asettelua. Asettelussa on kaksi osaa. Ensimmäinen osa on asettelun tyyppi. Se on joko <literal
+>n</literal
+> (near copies), <literal
+>f</literal
+> (far copies) tai <literal
+>o</literal
+> (offset copies). Toisessa osassa asetetaan datasta tehtävien kopioiden määrä. Aktiivisia laitteita on oltava vähintään kopioiden määrä, jotta jokainen kopio saadaan eri levylle. </para
+></listitem>
+</itemizedlist>
+
+<para
+>MD-laitteita voi aivan hyvin olla eri tyyppisiä samalla kertaa. Jos esimerkiksi MD-laitteille on käytettävissä kolme 200 Gt kiintolevyä, joissa jokaisessa on kaksi 100 Gt osiota, voidaan kunkin levyn ensimmäisestä osiosta muodostaa RAID0 (nopea 300 Gt osio videon käsittelyyn) ja käyttää muut kolme osiota (2 käytössä ja yksi varalla) RAID1:een (hyvin luotettava 100 Gt <filename
+>/home</filename
+>-osio). </para
+><para
+>Kun MD-laitteiden asetukset ovat valmiit, palataan <command
+>partman</command
+>-komentoon valitsemalla <guimenuitem
+>Lopeta</guimenuitem
+> <command
+>mdcfg</command
+>:n valikosta. <command
+>partman</command
+> tekee uusille MD-laitteille tiedostojärjestelmät ja säätää niiden ominaisuuksia, esimerkiksi liitoskohdat. </para>
+   </sect3>
+<!--   End of file using-d-i/modules/mdcfg.xml -->
+
+<!-- Start of file using-d-i/modules/partman-lvm.xml -->
+<!-- $Id: partman-lvm.xml 56326 2008-10-06 23:03:54Z fjp $ -->
+
+   <sect3 id="partman-lvm">
+   <title
+>Loogisten levyniteiden hallintaohjelman (LVM) asetukset</title>
+<para
+>Pääkäyttäjänä tai <quote
+>edistyneenä</quote
+> käyttäjänä tietokonetta käyttäneet ovat varmasti nähneet jonkun levyosion (tavallisesti kaikkein tärkeimmän) olevan liian täynnä, jonkin muun osion ollessa samaan aikaan melkein käyttämätön. Tilannetta piti korjailla siirtämällä tiedostoja, symbolisilla linkeillä jne. </para
+><para
+>Tällaisen tilanteen voi välttää käyttämällä loogisten levyniteiden hallintaohjelmaa (LVM). Yksinkertaistettuna LVM osaa yhdistää levyosiot (LVM käyttää termiä <firstterm
+>fyysiset levyniteet</firstterm
+>) näennäislevyksi (niin sanotuksi <firstterm
+>levynideryhmäksi</firstterm
+>, joka voidaan jakaa näennäisosioksi (<firstterm
+>loogisiksi levyniteiksi</firstterm
+>). Etuna tässä on, että loogisessa levyniteessä (ja tietysti levynideryhmissä joista se muodostuu) voi olla osia jotka ovat eri fyysisillä kiintolevyllä. </para
+><para
+>Kun 160 Gt <filename
+>/home</filename
+>-osioon huomataan tarvittavan lisää tilaa, voidaan yksinkertaisesti lisätä tietokoneeseen uusi 300 Gt levy, liittää se vanhaan levynideryhmään ja muuttaa <filename
+>/home</filename
+>-tiedostojärjestelmän sisältävän loogisen levyniteen kokoa ja hups vaan &mdash; käyttäjillä on taas tilaa "uudella" 460 Gt osiolla. Tämä esimerkki on tietenkin hieman yksinkertaistettu. Jos <ulink url="&url-lvm-howto;"
+>LVM HOWTO</ulink
+> ei vielä ole luettu siihen kannattaisi tutustua. </para
+><para
+>LVM:n käyttöönotto asentimessa on sangen helppoa <command
+>partman</command
+> sisältää kaiken tarvittavan tuen. Ensin on merkittävä LVM:n fyysisinä levyniteinä käyttämät levyosiot. (Tämä tehdään ohjelman <command
+>partman</command
+> valikossa <guimenu
+>Osion asetukset:</guimenu
+>, jossa olisi valittava <menuchoice
+> <guimenu
+>Käyttö:</guimenu
+> <guimenuitem
+>fyysinen levynide LVM:lle</guimenuitem
+> </menuchoice
+>. </para
+><para
+>Palattaessa komennon <command
+>partman</command
+> pääruutuun, nähdään uusi valinta <guimenuitem
+>Tee levyniteiden hallintaohjelman asetukset</guimenuitem
+>. Kun se on valittu, pyydetään ensin vahvistamaan osiotaulun vireillä olevat muutokset (jos niitä on), jonka jälkeen näytetään LVM:n asetusvalikko. Valikon yläpuolella näkyy yhteenveto LVM:n asetuksista. Itse valikko on yhteysriippuva eli näyttää vain mahdolliset toiminnot. Mahdolliset toiminnot ovat: <itemizedlist>
+  <listitem
+><para
+><guimenuitem
+>Näytä asetukset yksityiskohtaisesti</guimenuitem
+>: näyttää LVM:n rakenteen, loogisten levyniteiden nimet, koot ja muuta </para
+></listitem>
+  <listitem
+><para>
+    <guimenuitem
+>Luo levynideryhmä</guimenuitem>
+  </para
+></listitem>
+  <listitem
+><para>
+    <guimenuitem
+>Luo looginen nide</guimenuitem>
+  </para
+></listitem>
+  <listitem
+><para>
+    <guimenuitem
+>Poista levynideryhmä</guimenuitem>
+  </para
+></listitem>
+  <listitem
+><para>
+    <guimenuitem
+>Poista looginen nide</guimenuitem>
+  </para
+></listitem>
+  <listitem
+><para>
+    <guimenuitem
+>Kasvata levynideryhmää</guimenuitem>
+  </para
+></listitem>
+  <listitem
+><para>
+    <guimenuitem
+>Pienennä levynideryhmää</guimenuitem>
+  </para
+></listitem>
+  <listitem
+><para
+><guimenuitem
+>Lopeta</guimenuitem
+>: palaa komennon <command
+>partman</command
+> pääruutuun </para
+></listitem>
+</itemizedlist>
+
+</para
+><para
+>Tuon valikon toiminnoilla luodaan ensin levynideryhmä ja sitten sen sisään loogisia levyniteitä. </para
+><para
+>Kun on palattu komennon <command
+>partman</command
+> pääruutuun, näkyvät luodut loogiset levyniteet samalla tavalla kuin tavalliset osiot (ja niitä olisi samalla tavalla käsiteltäväkin). </para>
+   </sect3>
+<!--   End of file using-d-i/modules/partman-lvm.xml -->
+
+<!-- Start of file using-d-i/modules/partman-crypto.xml -->
+<!-- $Id: partman-crypto.xml 56427 2008-10-15 09:07:45Z fjp $ -->
+
+   <sect3 id="partman-crypto">
+   <title
+>Salattujen levyniteiden asetukset</title>
+<para
+>Asennin osaa tehdä salattuja osioita. Kaikki salatulle osiolle tallennettavat tiedostot kirjoitetaan heti salattuna. Pääsy salattuihin tietoihin sallitaan vasta kun on annettu salattua osiota luotaessa käytetty <firstterm
+>salausavain</firstterm
+> . Tämä ominaisuus on käytännöllinen suojaamaan salassapidettävää tietoa kannettavan tietokoneen tai kiintolevyn varastamisen varalta. Varas saattaa saada kiintolevyn käsiinsä, mutta ilman oikeaa salausavainta levyn sisältö näyttää satunnaiselta mössöltä.  </para
+><para
+>Kaksi tärkeintä salattavaa osiota ovat: kotihakemistot, joissa on käyttäjien omat tiedostot, ja sivutusosio, johon saatetaan tallentaa tilapäisesti luottamuksellista tietoa ohjelman suorituksen aikana. Mikään ei tietenkään estä salaamasta kaikkia muitakin kiinnostavia osiota. Esimerkiksi osioita <filename
+>/var</filename
+> mihin tietokantapalvelimet, postipalvelimet tai tulostuspalvelimet tallentavat tietojaan tai osiota <filename
+>/tmp</filename
+> johon useat ohjelmat tallentavat mahdollisesti kiinnostavia tilapäistiedostoja. Jotkut saattavat haluta salata tiedostojärjestelmän kokonaan. Ainoa poikkeus on osio <filename
+>/boot</filename
+> jonka on oltava salaamaton, koska tällä hetkellä ei ole mitään keinoa ladata ydin salatulta osiolta. </para
+><note
+><para
+>On syytä huomata salattujen osioiden käsittelyn olevan hitaampaa toistuvien salaus- ja purkutoimien takia. Käsittelynopeuteen vaikuttavat tietokoneen suorituskyky, salausmenetelmä ja avaimen pituus. </para
+></note
+><para
+>Salausta käytetään luomalla uusi osio osioinnin päävalikossa valittuun vapaaseen tilaan. Toinen tapa on valita olemassa oleva osio (esim. tavallinen osio, LVM:n looginen levynide tai RAID-levynide). <guimenu
+>Osion asetukset:</guimenu
+> valikossa on valittava <guimenuitem
+>fyysinen levynide salaukselle</guimenuitem
+> valintaluettelosta <menuchoice
+> <guimenu
+>Käyttö</guimenu
+> </menuchoice
+>. Valikko vaihtuu näyttämään useita salauksen asetuksia osiolle. </para
+><para
+>Debianin asennin tukee useita salausmenetelmiä. Oletusmenetelmä on <firstterm
+>dm-crypt</firstterm
+> (mukana uusissa Linux-ytimissä, toimii LVM:n fyysisille levyniteille), toinen on <firstterm
+>loop-AES</firstterm
+> (vanhempi, ylläpidetään erillään Linuxin lähdekoodeista). Oletuksen käyttöä suositellaan jos ei ole pakottavaa syytä muuhun. </para
+><para
+>Katsotaan ensin salausmenetelmän <userinput
+>Device-mapper (dm-crypt)</userinput
+> yhteydessä käytettäviä valitsimia. Tässäkin, kuten aina, kannattaa käyttää oletusarvoja jos on epävarma koska oletusarvot on huolella valittu tietoturvasyistä. <variablelist>
+
+<varlistentry>
+<term
+>Salausmenetelmä: <userinput
+>aes</userinput
+></term>
+
+<listitem
+><para
+>Tällä valitaan <firstterm
+>salausmenetelmä</firstterm
+> osion tietojen salaamiseen. &d-i; tukee tällä hetkellä seuraavia lohkosalauksia: <firstterm
+>aes</firstterm
+>, <firstterm
+>blowfish</firstterm
+>, <firstterm
+>serpent</firstterm
+> ja <firstterm
+>twofish</firstterm
+>. Tässä ohjeessa ei ole mahdollista vertailla salaustapojen eroja, valintaa saattaa kuitenkin helpottaa salausmenetelmän <emphasis
+>AES</emphasis
+> valinta American National Institute of Standards and Technology:n vakiosalausmenetelmäksi 2000-luvulla. </para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+>Avaimen koko: <userinput
+>256</userinput
+></term>
+
+<listitem
+><para
+>Tässä annetaan salausavaimen pituus. Avaimen suurempi pituus yleensä parantaa salausta. Toisaalta, pidempi avain yleensä hidastaa salausta. Salausmenetelmä määrää käytettävissä olevat avaimien pituudet. </para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+>IV-menetelmä: <userinput
+>cbc-essiv:sha256</userinput
+></term>
+
+<listitem
+><para
+><firstterm
+>Satunnaissiemenen alustusalgoritmia</firstterm
+> tai <firstterm
+>IV</firstterm
+>-menetelmää käytetään salakirjoituksessa varmistamaan että salakirjoitusmenetelmän soveltaminen samaan <firstterm
+>selväkieliseen tietoon</firstterm
+> käyttäen samaa salausavainta tuottaa aina erilaisen <firstterm
+>salakirjoitetun tiedon</firstterm
+>. Tavoitteena on ettei kräkkeri voi päätellä tietoa salatun tiedon toistuvista hahmoista. </para
+><para
+>Tarjolla olevista vaihtoehdoista on oletuksena oleva <userinput
+>cbc-essiv:sha256</userinput
+> tällä hetkellä vähiten haavoittuva tunnetuille hyökkäyksille. Käytä muita salausmenetelmiä vain kun on varmistettava yhteensopivuus aikaisemmin asennetun järjestelmän kanssa, jos siinä ei voi käyttää uudempia salausmenetelmiä. </para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+>Salausavain: <userinput
+>Tunnuslause</userinput
+></term>
+
+<listitem
+><para
+>Tässä valitaan tälle osiolle käytettävän salausavaimen tyyppi. <variablelist>
+ <varlistentry>
+ <term
+>Tunnuslause</term>
+ <listitem
+><para
+>Salausavain muodostetaan<footnote
+> <para
+> Tunnuslauseen käyttäminen salausavaimena tarkoittaa tällä hetkellä osiolle käytettävän <ulink url="&url-luks;"
+>LUKS</ulink
+>. </para
+></footnote
+> myöhemmin asennuksen aikana kysyttävästä tunnuslauseesta. </para
+></listitem>
+ </varlistentry>
+
+ <varlistentry>
+ <term
+>Satunnainen avain</term>
+ <listitem
+><para
+>Uusi salausavain muodostetaan satunnaisesta aineistosta aina kun salattua osiota otetaan käyttöön. Toisin sanoen: Joka kerta kun järjestelmä sammutetaan osion tiedot menetetään salausavaimen kadotessa muistista. (Avainta voi tietenkin yrittää arvata kokeilemalla kaikki mahdollisuudet, mutta jollei salausmenetelmässä ole tuntematonta heikkoutta tähän ei riitä ihmisen ikä.) </para
+><para
+>Satunnaiset avaimet ovat käteviä sivutusosiolle, koska tunnuslausetta ei tarvitse muistaa eikä luottamuksellista tietoa tarvitse pyyhkiä sivutusosiolta ennen tietokoneen sammuttamista. Toisaalta <emphasis
+>ei ole</emphasis
+> mahdollista käyttää uusimpien Linux-ytimien <quote
+>suspend-to-disk</quote
+> -toimintoa, koska sivutusosiolle kirjoitetun tiedon lukeminen on mahdotonta (käynnistettäessä suspendin jälkeen). </para
+></listitem>
+ </varlistentry>
+ </variablelist>
+
+</para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+>Tiedot pyyhitään: <userinput
+>kyllä</userinput
+></term>
+
+<listitem
+><para
+>Määritetään kirjoitetaanko osion tietojen päälle satunnaisella aineistolla ennen salauksen käyttöönottoa. Tätä suositellaan, koska muuten salauksen murtaja voisi huomata osion käytössä ja käyttämättä olevat osat. Lisäksi aikaisemmista asennuksista jääneen tiedon palauttaminen on vaikeampaa<footnote
+> <para
+>Virastoilla joiden lyhenteessä on kolme kirjainta uskotaan olevan välineet tiedon palauttamiseen vaikka magneto-optisen taltion päälle olisi kirjoitettu montakin kertaa. </para
+></footnote
+>. </para
+></listitem>
+</varlistentry>
+
+</variablelist>
+
+</para
+><para
+>Valittaessa <menuchoice
+> <guimenu
+>Salausmenetelmä:</guimenu
+> <guimenuitem
+>Loopback (loop-AES)</guimenuitem
+> </menuchoice
+>, valikko vaihtuu näyttämään seuraavat valitsimet: <variablelist>
+<varlistentry>
+<term
+>Salaus: <userinput
+>AES256</userinput
+></term>
+
+<listitem
+><para
+>Toisin kuin dm-cryptin kohdalla, käytettäessä loop-AES:ää salausmenetelmän ja avainen pituuden valinnat on yhdistetty, joten molemmat valitaan samalla kertaa. Katso edeltäneistä luvuista tietoa salausmenetelmistä ja avaimen pituudesta. </para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+>Salausavain: <userinput
+>Avaintiedosto (GnuPG)</userinput
+></term>
+
+<listitem
+><para
+>Valitaan tälle osiolle käytettävän salausavaimen tyyppi. <variablelist>
+ <varlistentry>
+ <term
+>Avaintiedosto (GnuPG)</term>
+ <listitem
+><para
+>Salausavain lasketaan satunnaisesta aineistosta asennuksen aikana. Lisäksi tämä avain salataan ohjelmalla <application
+>GnuPG</application
+>, joten sen käyttämiseen tarvitaan oikea tunnuslause (tunnuslause kysytään myöhemmin asennuksen aikana). </para
+></listitem>
+ </varlistentry>
+
+ <varlistentry>
+ <term
+>Satunnainen avain</term>
+ <listitem
+><para
+>Katso aiempaa lukua satunnaisavaimista. </para
+></listitem>
+ </varlistentry>
+ </variablelist>
+
+</para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+>Tiedot pyyhitään: <userinput
+>kyllä</userinput
+></term>
+
+<listitem
+><para
+>Katso aiempaa lukua tiedon pyyhkimisestä. </para
+></listitem>
+</varlistentry>
+
+</variablelist>
+
+</para
+><para
+>Kun salatuille osioille on valittu halutut ominaisuudet, palataan takaisin osioinnin päävalikkoon. Valikossa pitäisi nyt olla valinta <guimenu
+>Tee salattujen levyniteiden asetukset</guimenu
+>. Kun se on valittu, pyydetään vahvistamaan tietojen pyyhkiminen tyhjennettäviksi merkityiltä osioilta ja mahdollisesti muitakin toimenpiteitä kuten uuden osiotaulun kirjoittaminen. Isoilla osiolla tämä saattaa kestää hyvän tovin. </para
+><para
+>Seuraavaksi pyydetään kirjoittamaan tunnuslause sitä käyttäville osioille. Hyvän tunnuslauseen tulisi olla pidempi kuin 8 merkkiä, siinä pitäisi olla sekä kirjaimia, numeroita että muita merkkejä eikä löytyä sanakirjasta tai olla käyttäjään liittyvää tietoa (kuten syntymäpäiviä, harrastuksia, lemmikkien nimiä, perheenjäsenten tai sukulaisten nimiä jne.). </para
+><warning
+><para
+>Ennen tunnuslauseen kirjoittamista olisi varmistuttava näppäimistön asetuksien olevan oikein ja näppäimistä tulevan oikeat merkit. Tämän voi varmistaa vaihtamalla toiseen virtuaalikonsoliin ja kirjoittamalla jotain tekstiä kehoitteeseen. Näin ei myöhemmin tule yllätystä jos vaikka tunnuslausetta kirjoitetaan qwerty-näppäimistöllä kun asennuksen aikana näppäinasettelu oli azerty. Näin voisi käydä monesta syystä. Ehkä asennuksen aikana vaihdettiin näppäinasettelua, tai valittua näppäinasettelua ei ole vielä otettu käyttöön kirjoitettaessa juuritiedostojärjestelmän tunnuslausetta. </para
+></warning
+><para
+>Jos salausavainten luomiseen valittiin jokin muu tapa kuin tunnuslause, luodaan salausavaimet nyt. Koska ydin ei ehkä vielä ole ennättänyt kerätä riittävää määrää satunnaisuutta asennuksen ollessa vasta alkuvaiheessa, toiminto voi kestää kauan. Toimintoa voidaan nopeuttaa luomalla satunnaisuutta: esim. painelemalla satunnaisia näppäimiä tai vaihtamalla komentotulkkiin virtuaalikonsolilla kaksi ja tekemällä verkko- ja levyliikennettä (noudetaan tiedostoja, kopioimalla isoja tiedostoja <filename
+>/dev/null</filename
+>iin jne.). Tämä toistetaan kaikille salattaville osioille. </para
+><para
+>Osiointivalikkoon palattua nähdään salatut osiot lisäosioina joiden asetukset voidaan tehdä samalla tavalla kuin tavallisten osioiden. Seuraavassa esimerkissä nähdään kaksi eri osiota. Ensimmäinen on salattu dm-crypt:llä, toinen loop-AES:llä. 
+<informalexample
+><screen>
+Encrypted volume (<replaceable
+>sda2_crypt</replaceable
+>) - 115.1 GB Linux device-mapper
+     #1 115.1 GB  F ext3
+
+Loopback (<replaceable
+>loop0</replaceable
+>) - 515.2 MB AES256 keyfile
+     #1 515.2 MB  F ext3
+</screen
+></informalexample
+> Nyt on osioille annettava liitoskohdat ja vaihdettava tiedostojärjestelmien tyyppiä jos oletusarvot eivät kelpaa. </para
+><para
+>Huomioi suluissa olevat tunnukset (esimerkissä <replaceable
+>sda2_crypt</replaceable
+> ja <replaceable
+>loop0</replaceable
+>) ja kullekin salatulle osiolle annettu liitoskohta. Näitä tietoja tarvitaan myöhemmin kun asennettu järjestelmä käynnistetään. Tavallisen käynnistyksen ja salattuja osioita käyttävän käynnistyksen eroja käsitellään myöhemmin kohdassa <xref linkend="mount-encrypted-volumes"/>. </para
+><para
+>Kun osiointi on halutunlainen voidaan asennusta jatkaa. </para>
+   </sect3>
+<!--   End of file using-d-i/modules/partman-crypto.xml -->
+  </sect2>
+  
+  <sect2 id="di-install-base">
+  <title
+>Perusjärjestelmän asennus</title>
+<para
+>Vaikkakin tämä vaihe sujuu kaikkein vaivattomimmin, siinä kuluu huomattava osa asennukseen menevästä ajasta koska noudetaan, tarkistetaan ja puretaan koko perusjärjestelmä. Jos tietokone tai nettiyhteys on hidas, tässä saattaa kulua toinenkin tovi. </para>
+
+
+<!-- Start of file using-d-i/modules/base-installer.xml -->
+<!-- $Id: base-installer.xml 43573 2006-12-27 02:20:58Z fjp $ -->
+
+<para
+>Perusjärjestelmän asennuksen aikana ilmoitukset pakettien purkamisesta ja asetuksista ohjataan laitteelle <userinput
+>tty4</userinput
+>. Tähän päätteeseen pääsee painamalla <keycombo
+><keycap
+>Vasen Alt</keycap
+><keycap
+>F4</keycap
+></keycombo
+>; takaisin asentimeen pääsee painamalla <keycombo
+><keycap
+>Vasen Alt</keycap
+><keycap
+>F1</keycap
+></keycombo
+>. </para
+><para
+>Myös tämän asennusvaiheen ilmoitukset purkamisesta ja asetuksista ohjataan tiedostoon <filename
+>/var/log/syslog</filename
+>. Voit tarkistaa ne sieltä jos asennukseen käytetään sarjapäätettä. </para
+><para
+>Asennuksen yhdeydessä asennetaa Linux-ydin. Oletusprioriteettia käytettäessä asennin valitse parhaiten laitteistolle sopivan ytimen. Käytettäessä pienempää prioriteettia ydin voidaan valita luettelosta. </para>
+<!--   End of file using-d-i/modules/base-installer.xml -->
+  </sect2>
+
+  <sect2 id="di-user-setup">
+  <title
+>Käyttäjät ja salasanat</title>
+<para
+>Kun perusjärjestelmä on asennettu, päästään tekemään käyttäjätunnus <quote
+>root</quote
+> ja/tai tunnus ensimmäiselle käyttäjälle. Muita käyttäjätunnuksia voidaan luoda kun asennus on valmis. </para>
+
+
+<!-- Start of file using-d-i/modules/user-setup.xml -->
+<!-- $Id: user-setup.xml 50618 2007-12-25 09:18:06Z fjp $ -->
+
+   <sect3 id="user-setup-root">
+   <title
+>Asetetaan pääkäyttäjän salasana</title>
+
+<!-- TODO: Document sudo setup (no root password); medium/low prio only -->
+
+<para
+>Pääkäyttäjän tunnus <emphasis
+>root</emphasis
+> on superkäyttäjä; root ohittaa kaikki järjestelmän suojaukset. Pääkäyttäjän tunnusta olisi käytettävä vain järjestelmän ylläpitoon, ja vain kun se on välttämätöntä. </para
+><para
+>Luotavissa salasanoissa olisi oltava ainakin 6 merkkiä ja sekä isoja että pieniä kirjaimia, samoin kuin välimerkkejä. Ole erityisen huolellinen luotaessa salasanaa pääkäyttäjälle, tuolla tunnuksella on rajoittamattomat oikeudet. Älä käytä sanakirjasta löytyviä sanoja eikä arvattavissa olevia henkilötietoja. </para
+><para
+>Vaikka kuka tahansa kysyisi mikä on pääkäyttäjän salasana, on syytä olla erittäin varovainen. Pääkäyttäjän salasanaa ei tavallisesti pitäisi kertoa muille kuin järjestelmän ylläpitäjille. </para>
+  </sect3>
+
+  <sect3 id="make-normal-user">
+  <title
+>Luo tavallisen käyttäjän tunnus</title>
+
+<para
+>Asennin kysyy halutaanko tässä kohtaa luoda käyttäjätunnus tavalliselle käyttäjälle. Tunnus on tarkoitettu henkilökohtaiseeen käyttöön. Pääkäyttäjän tunnusta <emphasis
+>ei</emphasis
+> pidä käyttää tavalliseen käyttöön eikä henkilökohtaisena kirjautumistunnuksena. </para
+><para
+>Ja miksi ei? No yksi syy on pääkäyttäjän rajoittamattomat oikeudet, joilla voi helposti saada aikaan korjaamatonta vahinkoa. Toinen syy on, että käyttäjä voidaan höynäyttää käynnistämään <emphasis
+>troijalainen</emphasis
+> &mdash; haittaohjelma joka pääkäyttäjän oikeuksia käyttämällä avaa reikiä järjestelmän suojauksiin käyttäjän huomaamatta. Kaikki hyvät kirjat Unix-järjestelmien ylläpidosta kertovat tästä lisää &mdash; kannattaisi perehtyä jos ei ole tehnyt ylläpitoa aiemmin. </para
+><para
+>Ensimmäiseen kehotteeseen kirjoitetaan käyttäjän koko nimi. Sitten kysytään käyttäjätunnus; useimmiten etunimi tai jotain vastaavaa on ihan hyvä ja etunimi onkin oletusarvo. Lopuksi kirjoitetaan käyttäjälle salasana. </para
+><para
+>Haluttaessa luoda lisää käyttäjätunnuksia asennuksen jälkeen käytetään komentoa <command
+>adduser</command
+>. </para>
+   </sect3>
+<!--   End of file using-d-i/modules/user-setup.xml -->
+  </sect2>
+
+  <sect2 id="di-install-software">
+  <title
+>Asennetaan lisää ohjelmia</title>
+<para
+>Kun perusjärjestelmä on asennettu, on käytössä toimiva mutta rajoitettu järjestelmä. Useimmat haluavat asentaa lisää ohjelmia sovittaakseen järjestelmän omiin tarpeisiinsa, ja asentimessa voidaan tehdä tämäkin. Tämä vaihe saattaa kestää vielä kauemmin kuin perusjärjestelmän asentaminen jos tietokone tai verkkoyhteys on hidas. </para>
+
+
+<!-- Start of file using-d-i/modules/apt-setup.xml -->
+<!-- $Id: apt-setup.xml 51744 2008-03-06 04:21:56Z fjp $ -->
+
+   <sect3 id="apt-setup">
+   <title
+>Tehdään apt:n asetukset</title>
+
+<para
+>Eräs &debian;iin paketteja asentava työkalu on ohjelma nimeltä <command
+>apt-get</command
+> joka tulee ohjelmapaketissa <classname
+>apt</classname
+>.<footnote
+> <para
+> Huomaa, että asennukset tekevä ohjelma on itse asiassa <command
+>dpkg</command
+>. Se on kuitenkin alemman tason työkalu. <command
+>apt-get</command
+> on korkeamman tason työkalu joka osaa käynnistää komennon <command
+>dpkg</command
+> tarpeen mukaan. Se osaa noutaa paketteja rompulta, verkosta tai mistä vaan. Se osaa myös asentaa muita paketteja joita tarvitaan jotta asennettava paketti toimisi oikein. </para
+></footnote
+> Muut paketinhallinnan edustaohjelmat, kuten <command
+>aptitude
+></command
+> ja <command
+>synaptic</command
+> ovat myös käytettävissä. Näitä edustaohjelmia suositellaan uusille käyttäjille, koska ne yhdistävät lisäominaisuuksia kuten pakettien etsimisen ja tilanäytöt näppärään käyttöliittymään. Itse asiassa <command
+>aptitude</command
+> nyt nykyään suositeltu työkalu pakettien hallintaan. </para
+><para
+>Asetukset on tehtävä jotta <command
+>apt</command
+> tietää mistä paketteja noudetaan. Asetukset tallennetaan tiedostoon <filename
+>/etc/apt/sources.list</filename
+>. Tiedostoa voi tutkia ja muuttaa mieleisekseen kun asennus on valmis. </para
+><para
+>Oletusprioriteetilla asennettaessa asennin huolehtii asetuksien teosta enimmäkseen automaattisesti, valitun asennustavan perusteella ja mahdollisesti käyttämällä aiemmin asennuksen aikana tehtyjä valintoja. Useimmissa tapauksissa asennin lisää tietoturvapäivitysten asennuspalvelimen automaattisesti, ja <quote
+>volatile</quote
+>-asennuspalvelimen jos asennetaan vakaata jakelua. </para
+><para
+>Jos asennetaan alemmalla prioriteetilla (esim. expert-tilassa) päästään itse tekemään enemmän valintoja. Voidaan valita käytetäänkö tietoturva- ja/tai volatile-asennuspalvelimia. Lisäksi on mahdollista lisätä paketteja jakelun <quote
+>contrib</quote
+> ja <quote
+>non-free</quote
+> -osista.  </para>
+
+    <sect4 id="apt-setup-cdset">
+    <title
+>Asennus monelta CD- tai DVD-levyltä</title>
+
+<para
+>Jos asennetaan CD- tai DVD-levyltä joka on osa monen levyn kokoelmaa, asennin kysyy onko lisää romppuja joiden sisällysluettelo pitäisi lukea. Jos romppuja on lisää, tämä kannattanee tehdä jotta asennin voi käyttää niillä olevia paketteja. </para
+><para
+>Jos käytettävissä ei ole enempää CD- tai DVD-levyjä, ei se haittaa: niiden käyttäminen ei ole pakollista. Jos myöskään verkossa olevaa asennuspalvelinta (kuten seuraavassa luvussa selitetään) ei ole käytettävissä saattaa olla ettei voida asentaa kaikkia seuraavassa vaiheessa valittaviin tehtäviin kuuluvia paketteja. </para>
+<note
+><para
+>Paketit kootaan CD-levyille (ja DVD-levyille) suosituimmat ensin. Tällöin useimmiten tarvitaan vain kokoelman ensimmäisiä levyjä ja hyvin harvat käyttävät kokoelman viimeisillä levyillä olevia paketteja. </para
+><para
+>Tämä tarkoittaa myös että koko levykokoelman ostaminen tai noutaminen on rahan haaskausta koska useimpia niistä ei kuitenkaan koskaan käytetä. Useimmissa tapauksissa on parempi hankkia vain kolmesta kahdeksaan ensimmäistä CD:tä ja asentaa mahdolliset puuttuvat paketit Internetistä asennuspalvelimelta. Sama pätee DVD-levyjen kokoelmalle: ensimmäinen DVD, tai ehkä kaksi ensimmäistä DVD:tä, riittää useimmille.  </para
+><para
+>Hyvä nyrkkisääntö on ensimmäisten kolmen CD:n riittävän tavalliseen työpöytäasennukseen (käytetään GNOME-työpöytäympäristöä). Vaihtoehtoisia työpöytäympäristöjä (KDE tai Xfce) varten tarvitaan lisää CD-levyjä. Ensimmäinen DVD-levy riittää mainiosti kaikille kolmelle työpöytäympäristölle. </para
+></note>
+<para
+>Jos usean levyn sisällysluettelo on luettu, kehottaa asennin vaihtamaan levyä tarvittaessa paketteja muulta kuin asemassa olevalta levyltä. Huomaa, että pitäisi lukea sisällysluettelo vain samaan kokoelmaan kuuluvilta levyiltä. Ei ole väliä missä järjestyksessä niiden sisällysluettelo luetaan, mutta numerojärjestystä käyttämällä ei niin helposti sählää. </para>
+    </sect4>
+
+    <sect4 id="apt-setup-mirror">
+    <title
+>Asentaminen verkossa olevalta asennuspalvelimelta</title>
+
+<para
+>Useimmissa asennuksissa kysytään käytetäänkö verkossa olevaa asennuspalvelinta pakettilähteenä. Useimmiten oletusvastaus on aivan hyvä, mutta on muutamia poikkeuksia.  </para
+><para
+>Jos <emphasis
+>ei</emphasis
+> asenneta täydeltä CD- tai DVD-levyltä tai ei käytetä täyttä CD/DVD-levyotosta, olisi käytettävä asennuspalvelinta verkosta, koska muuten tulee asennettua vain hyvin suppea järjestelmä. Jos kuitenkin käytössä on rajoitettu Internet-yhteys, on parasta <emphasis
+>ettei</emphasis
+> asennuksen seuraavassa vaiheessa valita <literal
+>työpöytä</literal
+>-tehtävää.  </para
+><para
+>Jos asennetaan täydeltä CD-levyltä tai käytetään täyttä CD-otosta, ei ole välttämätöntä käyttää asennuspalvelinta verkosta. Asennuspalvelimen käyttöä suositellaan koska yhdellä CD:llä on vain sangen rajoitettu määrä paketteja. Mikäli Internet-yhteys on rajoitettu, saattaa silti olla parasta <emphasis
+>ettei</emphasis
+> tässä kohtaa valita asennuspalvelinta verkosta, vaan saatetaan asennus loppuun tyytyen CD-levyn valikoimaan ja asennuksen jälkeen (eli kun asennettu järjestelmä on käynnistetty) lisätään paketteja valikoiden.  </para
+><para
+>Asennettaessa DVD-levyltä tai käytettäessä DVD-otosta pitäisi kaikkien asennuksen aikana tarvittavien pakettien olla ensimmäisellä levyllä. Samoin jos on luettu usean CD-levyn sisällysluettelo kuten edellisessä luvussa kerrottiin. Verkossa olevan asennuspalvelimen käyttö ei ole pakollista. </para
+><para
+>Verkossa olevan asennuspalvelimen lisäämisellä on etuna CD/DVD-levyjen tekemisen jälkeen tulleiden ja puolijulkaisussa julkistettujen päivitysten saaminen käyttöön asennuksen aikana. Näin saadaan CD/DVD-kokoelman käyttöikää jatkettua vaarantamatta asennetun järjestelmän tietoturvaa tai vakautta. </para
+><para
+>Yhteenveto: verkossa olevan asennuspalvelimen valitseminen on enimmäkseen hyväksi, paitsi jos Internet-yhteys ei ole kovin hyvä. Jos paketin uusin versio on saatavilla CD/DVD-levyltä, asennin käyttää aina sitä. Asennuspalvelinta käytettäessä noudettavan datan määrä riippuu siis <orderedlist>
+<listitem
+><para
+>asennuksen seuraavassa vaiheessa valittavista tehtävistä </para
+></listitem>
+<listitem
+><para
+>noiden tehtävien tarvitsemista paketeista </para
+></listitem>
+<listitem
+><para
+>mitkä noista paketeista ovat luetuilla CD- tai DVD-levyillä ja </para
+></listitem>
+<listitem
+><para
+>onko levyillä olevien pakettien päivitettyjä versioita saatavilla asennuspalvelimelta (joko tavalliselta asennuspalvelimelta tai tietoturvapäivitysten tai volatilepäivitysten palvelimelta). </para
+></listitem>
+</orderedlist>
+
+</para
+><para
+>Huomaa viimeisen kohdan tarkoittavan, että vaikka verkossa oleva asennuspalvelin jätetään valitsematta käyttöön, saatetaan joitakin paketteja silti noutaa Internetistä jos niille on päivitys tietoturva- tai volatile-palvelimella ja nämä päivitykset on otettu käyttöön. </para>
+</sect4>
+   </sect3>
+<!--   End of file using-d-i/modules/apt-setup.xml -->
+
+<!-- Start of file using-d-i/modules/pkgsel.xml -->
+<!-- $Id: pkgsel.xml 58142 2009-04-05 21:59:12Z fjp $ -->
+
+   <sect3 id="pkgsel">
+   <title
+>Ohjelmien valinta ja asentaminen</title>
+
+<para
+>Asennuksen aikana on mahdollista valita asennettavat lisäohjelmat. Jotta vältyttäisiin yksittäisten asennuspakettien valitsemiselta &num-of-distrib-pkgs; saatavilla olevan paketin joukosta, tässä asentimen osassa valitaan ja asennetaan ennalta määriteltyjä ohjelmakokoelmia jotta tietokone saadaan nopeasti valmiiksi erilaisiin tehtäviin. </para
+><para
+>On siis mahdollista valita ensin <emphasis
+>tehtäviä</emphasis
+> ja asentaa myöhemmin yksittäisiä paketteja. Tehtävät ovat löyhästi yhteenkuuluvia pakettikokoelmia muutamaan tietokoneella työhön tai tehtävään, kuten <quote
+>Työpöytäympäristö</quote
+>, <quote
+>WWW-palvelin</quote
+>, tai <quote
+>Tulostuspalvelin</quote
+><footnote
+> <para
+> On hyvä tietää asentimen tekevän tehtävien luettelon käynnistämällä komennon <command
+>tasksel</command
+>. Se voidaan käynnistää milloin vain asennuksen jälkeen asentamaan (tai poistamaan) paketteja, tai voidaan käyttää yksittäisten pakettien asentamiseen komentoa <command
+>aptitude</command
+>. Asennuksen jälkeen saadaan nimetty paketti asennettua komennolla <userinput
+>aptitude install <replaceable
+>paketinnimi</replaceable
+></userinput
+>, missä <replaceable
+>paketinnimi</replaceable
+> on asennettavan paketin nimi. </para
+> </footnote
+>. <xref linkend="tasksel-size-list"/> luettelee asennettavien tehtävien tilatarpeet. </para
+><para
+>Jotkin tehtävät saattavat olla esivalittuja, tähän vaikuttavat asennettavan tietokoneen ominaisuudet. Valinnat voidaan poistaa jos niitä ei haluta. Tässä kohtaa voi jopa poistaa valinnan kaikista tehtävistä. </para>
+<note
+><para
+>Tehtävä <quote
+>Työpöytäympäristö</quote
+> asentaa GNOME-työpöytäympäristön paitsi jos käytetään KDE:tä tai Xfce:tä varten tehtyjä erikoislevyjä. </para
+><para
+>Asennuksen aikana ei ole mahdollista valita muuta työpöytäympäristöä. <emphasis
+>On</emphasis
+> kuitenkin mahdollista saada &d-i; asentamaan KDE-työpöytäympäristö GNOME:n sijaan valmiita vastauksia käyttämällä (katso <xref linkend="preseed-pkgsel"/>) tai lisäämällä käynnistysvalitsin <literal
+>desktop=kde</literal
+> käynnistyskehotteeseen asenninta käynnistettäessä. Mahdollista on myös valita kevyempi työpöytäympäristö Xfce valitsimella <literal
+>desktop=xfce</literal
+>. </para
+><para
+>Huomaa tämän toimivan vain mikäli KDE:n tai Xfce:n tarvitsemat asennuspaketit ovat noudettavissa. Asennettaessa yhdeltä täydeltä CD-otokselta, ne on noudettava asennuspalvelimelta koska useimmat tarvittavat paketit ovat vasta kokoelman myöhemmillä CD-levyillä. KDE:n tai Xfce:n asentaminen tällä tavalla pitäisi sujua oikein hyvin jos käytetään DVD-otosta tai mitä tahansa muuta asennustapaa. </para
+><para
+>Palvelintehtävät asentavat ohjelmia suunnilleen seuraavasti. DNS-palvelin: <classname
+>bind9</classname
+>; Tiedostopalvelin: <classname
+>samba</classname
+>, <classname
+>nfs</classname
+>; Postipalvelin: <classname
+>exim4</classname
+>, <classname
+>spamassassin</classname
+>, <classname
+>uw-imap</classname
+>; Tulostuspalvelin: <classname
+>cups</classname
+>; SQL-palvelin: <classname
+>postgresql</classname
+>; WWW-palvelin: <classname
+>apache2</classname
+>. </para
+></note>
+<para
+>Kun tehtävät on valittu, painetaan &BTN-CONT;. Tässä kohtaa komento <command
+>aptitude</command
+> asentaa paketit joista valitut tehtävät muodostuvat. Jos jokin ohjelmista tarvitsee lisätietoja käyttäjältä, se näyttää kehotteen asennuksen aikana </para>
+<note
+><para
+>Asentimen merkkipohjaisessa käyttöliittymässä tehtävän valinta merkitään välilyöntinäppäimellä. </para
+></note>
+<para
+>Kannattaa huomata erityisesti Työpöytätehtävän olevan hyvin kookas. Erityisesti asennettaessa tavalliselta rompulta noutamalla rompulta puuttuvat paketit asennuspalvelimelta, asennin saattaa haluta noutaa suuren määrän paketteja verkosta. Jos Internet-yhteys on verraten hidas, tähän voi kulua pitkä aika. Ei ole mahdollisuutta peruuttaa pakettien asennusta kun se on alkanut. </para
+><para
+>Vaikka paketit olisivatkin mukana rompulla, asennin saattaa silti noutaa ne asennuspalvelimelta jos palvelimella oleva versio on uudempi kuin rompulla oleva. Asennettaessa vakaata jakelua, näin voi käydä päivitysversion (alkuperäisen vakaan julkaisun päivitys) julkaisun jälkeen; asennettaessa testattavaa jakelua näin käy jos käytetään vanhaa otosta. </para>
+   </sect3>
+<!--   End of file using-d-i/modules/pkgsel.xml -->
+  </sect2>
+	
+  <sect2 id="di-make-bootable">
+  <title
+>Järjestelmä käynnistymään kiintolevyltä</title>
+
+<para condition="supports-nfsroot"
+>Asennettaessa levytöntä työasemaa ei koneen levyltä käynnistäminen tietenkään ole mielekästä, jolloin tämä vaihe ohitetaan. <phrase arch="sparc"
+>Kannattanee määritellä OpenBoot käyttämään oletusarvona verkkokäynnistystä; katso <xref linkend="boot-dev-select-sun"/>.</phrase
+> </para>
+
+
+<!-- Start of file using-d-i/modules/os-prober.xml -->
+<!-- $Id: os-prober.xml 33725 2006-01-03 19:39:07Z fjp $ -->
+
+   <sect3 id="os-prober">
+   <title
+>Etsitään muita käyttöjärjestelmiä</title>
+
+<para
+>Asennin etsii muita tietokoneelle asennettuja käyttöjärjestelmiä ennen kuin käynnistyslatain asennetaan. Jos tuettu käyttöjärjestelmä löytyy, tästä kerrotaan käynnistyslatainta asennettaessa ja asetukset tehdään sallimaan myös tämän käyttöjärjestelmän käynnistyminen Debianin lisäksi. </para
+><para
+>Huomaa useiden käyttöjärjestelmien käynnistämisen samalla koneella olevan yhä hieman kikkailua. Muiden käyttöjärjestelmien löytämisen ja asetusten tekemisen automatiikka on erilainen joka laitearkkitehtuurille ja jopa arkkitehtuurin muunnoksillekin. Jos automatiikka ei toimi olisi käytetyn alkulatausohjelman ohjeista etsittävä lisätietoa. </para>
+   </sect3>
+<!--   End of file using-d-i/modules/os-prober.xml -->
+
+<!-- Start of file using-d-i/modules/alpha/aboot-installer.xml -->
+<!-- $Id: aboot-installer.xml 43573 2006-12-27 02:20:58Z fjp $ -->
+
+  <sect3 arch="alpha">
+  <title
+>Asennetaan <command
+>aboot</command
+> kiintolevylle</title>
+<para
+>Jos valitaan tämä valitsin kun käynnistyslaitteena on SRM, asennin kirjoittaa komennon <command
+>aboot</command
+> ensimmäiselle sektorille sille levylle johon Debian asennettiin. Ole <emphasis
+>hyvin</emphasis
+> varovainen &mdash; <emphasis
+>ei ole</emphasis
+> mahdollista käyttää monikäynnistystä jos muut käyttöjärjestelmät (esim. GNU/Linux, Free/Open/NetBSD, OSF/1 alias Digital Unix alias Tru64 Unix tai OpenVMS) ovat samalla levyllä. Jos samalla levyllä on Debianin lisäksi toinenkin käyttöjärjestelmä, on GNU/Linux käynnistettävä levykkeeltä. </para>
+  </sect3>
+<!--   End of file using-d-i/modules/alpha/aboot-installer.xml -->
+
+<!-- Start of file using-d-i/modules/hppa/palo-installer.xml -->
+<!-- $Id: palo-installer.xml 14602 2004-05-02 16:31:59Z mck-guest $ -->
+
+  <sect3 arch="hppa">
+  <title
+>Käynnistyslataimen <command
+>palo</command
+> asennin</title>
+<para
+>PA-RISC-arkkitehtuurin käynnistyslatain on <quote
+>palo</quote
+>. Komento <command
+>PALO</command
+> on asetuksiltaan ja käytöltään samantapainen kuin <command
+>LILO</command
+> muutamin eroin. Ensiksikin <command
+>PALO</command
+> sallii minkä tahansa käynnistysosiolla olevan ytimen käynnistämisen. Tämän mahdollistaa <command
+>PALO</command
+>:n kyky lukea Linux-osioiden tiedostoja. </para
+><para condition="FIXME"
+>hppa KORJAAMUT ( tarvitaan lisätietoja ) </para>
+  </sect3>
+<!--   End of file using-d-i/modules/hppa/palo-installer.xml -->
+
+<!-- Start of file using-d-i/modules/x86/grub-installer.xml -->
+<!-- $Id: grub-installer.xml 46722 2007-05-07 15:34:13Z fjp $ -->
+
+  <sect3 arch="x86">
+  <title
+>Asennetaan käynnistyslatain <command
+>GRUB</command
+> kiintolevylle</title>
+<para
+>Arkkitehtuurin &architecture; käynnistyslatain on <quote
+>grub</quote
+>. Grub on joustava ja varmatoiminen käynnistyslatain ja hyvä valinta sekä aloittelijoille että vanhoille parroille. </para
+><para
+>Oletusarvona grub asennetaan pääkäynnistyslohkoon (MBR), jolloin grub ohjaa käynnistyksen kokonaan. Haluttaessa grub voidaan asentaa muuallekin. Lisätietoja löytyy grub:n man-sivulta. </para
+><para
+>Jos grub:ia ei haluta asentaa, palaa painikkeella &BTN-GOBACK; takaisin päävalikkoon, ja valitse siellä haluttu käynnistyslatain. </para>
+  </sect3>
+<!--   End of file using-d-i/modules/x86/grub-installer.xml -->
+
+<!-- Start of file using-d-i/modules/x86/lilo-installer.xml -->
+<!-- $Id: lilo-installer.xml 49849 2007-10-21 12:12:33Z fjp $ -->
+
+  <sect3 arch="x86">
+  <title
+>Asennetaan käynnistyslatain <command
+>LILO</command
+> kiintolevylle</title>
+<para
+>Arkkitehtuurin &architecture; toinen käynnistyslatain on <quote
+>LILO</quote
+>. Ohjelma on vanha, mutkikas ja sisältää paljon toiminnallisuutta, mukaan lukien käynnistysvalikot DOS, Windows ja OS/2 käyttöjärjestelmille. Lue huolellisesti ohjeet hakemistosta <filename
+>/usr/share/doc/lilo</filename
+> jos on tehtävä jotain erikoista; lue myös <ulink url="&url-lilo-howto;"
+>LILO mini-HOWTO</ulink
+>. </para>
+<note
+><para
+>Tällä hetkellä LILO tekee valikkoon rivit vain <firstterm
+>ketjuladattaville</firstterm
+> (chainloaded) käyttöjärjestelmille. Tästä syystä voidaan joutua lisäämään rivit GNU/Linux- ja GNU/Hurd-järjestelmille asennuksen jälkeen. </para
+></note>
+<para
+>&d-i; näyttää kolme vaihtoehtoa käynnistyslataimen <command
+>LILO</command
+> asennusapaikaksi: <variablelist>
+<varlistentry>
+<term
+>Pääkäynnistyslohko (MBR)</term
+><listitem
+><para
+>Komento <command
+>LILO</command
+> ohjaa käynnistyksen kokonaan. </para
+></listitem
+></varlistentry>
+<varlistentry>
+<term
+>uusi Debianin osio</term
+><listitem
+><para
+>Valitse tämä jos haluat käyttää jotain muuta käynnistyslatainta. <command
+>LILO</command
+> asentuu uuden Debian-osion alkuun ja toimii toissijaisena käynnistyslataimena. </para
+></listitem
+></varlistentry>
+<varlistentry>
+<term
+>Muu valinta</term
+><listitem
+><para
+>Hyödyllinen kokeneille käyttäjille jotka haluavat asentaa <command
+>LILO</command
+>:n jonnekin muualle. Tällöin kysytään mihin asennus halutaan tehdä. Voidaan käyttää vanhoja nimiä kuten <filename
+>/dev/hda</filename
+> tai <filename
+>/dev/sda</filename
+>. </para
+></listitem
+></varlistentry>
+</variablelist>
+
+</para
+><para
+>Jos Windows 9x:n (tai MS-DOS:n) käynnistäminen ei enää onnistu tämän jälkeen, on käytettävä Windows 9x:n (tai MS-DOS:n) käynnistyslevykettä ja komentoa <userinput
+>fdisk /mbr</userinput
+> jotta MS-DOS:n pääkäynnistystietue saadaan takaisin &mdash; tämä tarkoittaa että on käytettävä jotain muuta keinoa Debianin käynnistämiseen! </para>
+  </sect3>
+<!--   End of file using-d-i/modules/x86/lilo-installer.xml -->
+
+<!-- Start of file using-d-i/modules/ia64/elilo-installer.xml -->
+<!-- $Id: elilo-installer.xml 43573 2006-12-27 02:20:58Z fjp $ -->
+
+  <sect3 arch="ia64">
+  <title
+>Asennetaan käynnistyslatain <command
+>ELILO</command
+> kiintolevylle</title>
+<para
+>Arkkitehtuurin &architecture; käynnistyslatain on <quote
+>elilo</quote
+>. Se on tehty x86-arkkitehtuurin <quote
+>lilo</quote
+> mallina ja käyttää samantapaista asetustiedostoa. elilo ei kuitenkaan kirjoita levyn MBR:ään tai osion alkuun, vaan kopioi tarvittavat tiedostot erilliseen EFI-osioon jossa on FAT-tiedostojärjestelmä ja muokkaa laiteohjelmiston <guimenuitem
+>EFI Boot Manager</guimenuitem
+> -valikkoa löytämään tiedostot osiosta. Oikeastaan komento <command
+>elilo</command
+> koostuu kahdesta osasta. Komento <filename
+>/usr/sbin/elilo</filename
+> huolehtii osiosta ja kopioi siihen tiedostot. Ohjelma <filename
+>elilo.efi</filename
+> kopioidaan EFI-osioon josta <quote
+>EFI Boot Manager</quote
+> käynnistää sen lataamaan ja käynnistämään Linux-ytimen. </para
+><para
+><quote
+>elilo</quote
+>:n asetukset ja asennus tehdään perusasennuksen pakettien asennuksen lopuksi. &d-i; näyttää luettelon EFI-osioksi sopivista levyosioista. Luettelosta valitaan aiemmin asennuksen aikana valmisteltu osio, tavallisesti osio on samalla levyllä kuin <emphasis
+>juuri</emphasis
+>-tiedostojärjestelmä. </para>
+
+  <warning
+><title
+>Valitse oikea levyosio!</title>
+
+<para
+>Osion valintaperusteena on FAT-tiedostojärjestelmä ja <emphasis
+>käynnistyskelpoisuuden</emphasis
+> ilmaisin päällä. &d-i; saattaa näyttää useita vaihtoehtoja, sen mukaan mitä järjestelmän kaikki levyt tutkimalla on löytynyt, mukaan lukien muiden järjestelmälevyjen EFI-osiot ja EFI:n vianjäljitusosiot. Huomaa, että <command
+>elilo</command
+> saattaa tyhjentää osion aikaisemmista tiedoista tekemällä siihen uuden tiedostojärjestelmän. </para
+></warning>
+
+  </sect3>
+
+  <sect3 arch="ia64">
+  <title
+>EFI-osion sisältö</title>
+
+<para
+>EFI-osiolla on FAT-tiedostojärjestelmä ja se sijaitsee jollain järjestelmän kiintolevyllä, tavallisesti samalla levyllä kuin <emphasis
+>juuri</emphasis
+>-tiedostojärjestelmä. Se ei tavallisesti ole liitettynä järjestelmän ollessa käynnissä koska osiota tarvitsee vain <quote
+>EFI Boot Manager</quote
+> järjestelmän lataamiseen, ja komento <command
+>elilo</command
+> kirjoittaa liittämättömään tiedostojärjestelmään. <command
+>/usr/sbin/elilo</command
+> kirjoittaa seuraavat tiedostot EFI-osion hakemistoon <filename
+>efi/debian</filename
+> asennuksen aikana. Huomaa että <quote
+>EFI Boot Manager</quote
+> löytää tiedostot polusta <filename
+>fs<replaceable
+>n</replaceable
+>:\\efi\\debian</filename
+>. Tiedostojärjestelmässä voi olla muitakin tiedostoja, niitä kertyy järjestelmää päivitettäessä tai asetuksia muokattaessa.EFI-osiolla on FAT-tiedostojärjestelmä ja se sijaitsee jollain järjestelmän kiintolevyllä, tavallisesti samalla levyllä kuin <emphasis
+>juuri</emphasis
+>-tiedostojärjestelmä. Se ei tavallisesti ole liitettynä järjestelmän ollessa käynnissä koska osiota tarvitsee vain <quote
+>EFI Boot Manager</quote
+> järjestelmän lataamiseen, ja komento <command
+>elilo</command
+> kirjoittaa liittämättömään tiedostojärjestelmään. <command
+>/usr/sbin/elilo</command
+> kirjoittaa seuraavat tiedostot EFI-osion hakemistoon <filename
+>efi/debian</filename
+> asennuksen aikana. Huomaa että <quote
+>EFI Boot Manager</quote
+> löytää tiedostot polusta <filename
+>fs<replaceable
+>n</replaceable
+>:\\efi\\debian</filename
+>. Tiedostojärjestelmässä voi olla muitakin tiedostoja, niitä kertyy järjestelmää päivitettäessä tai asetuksia muokattaessa. </para>
+
+<variablelist>
+
+<varlistentry>
+<term
+><filename
+>elilo.conf</filename
+></term>
+<listitem
+><para
+>Tämän asetustiedoston käynnistyslatain lukee käynnistyessään. Se on tiedoston <filename
+>/etc/elilo.conf</filename
+> kopio jossa tiedostonimet on korjattu viittaamaan EFI-osion tiedostoihin.Tämän asetustiedoston käynnistyslatain lukee käynnistyessään. Se on tiedoston <filename
+>/etc/elilo.conf</filename
+> kopio jossa tiedostonimet on korjattu viittaamaan EFI-osion tiedostoihin. </para
+></listitem
+></varlistentry>
+
+<varlistentry>
+<term
+><filename
+>elilo.efi</filename
+></term>
+<listitem
+><para
+>Tämä on käynnistyslatainohjelma jonka <quote
+>EFI Boot Manager</quote
+> suorittaa järjestelmän käynnistämiseksi. Ohjelma on <quote
+>EFI Boot Manager</quote
+> -valikon riviä <guimenuitem
+>Debian GNU/Linux</guimenuitem
+> vastaava valinta. </para
+></listitem
+></varlistentry>
+
+<varlistentry>
+<term
+><filename
+>initrd.img</filename
+></term>
+<listitem
+><para
+>Tämä on ytimen käynnistyksessä käytettävä ensimmäinen juuritiedostojärjestelmä. Se on kopio tiedostossa <filename
+>/etc/elilo.conf</filename
+> mainitusta tiedostosta. Debianin vakioasennuksessa se olisi symbolisella linkillä <filename
+>/initrd.img</filename
+> osoitettu tiedosto hakemistossa <filename
+>/boot</filename
+>. </para
+></listitem
+></varlistentry>
+
+<varlistentry>
+<term
+><filename
+>readme.txt</filename
+></term>
+<listitem
+><para
+>Pieni tekstitiedosto varoittamaan hakemiston olevan komennon <command
+>elilo</command
+> käytössä ja kaikkien muutosten katoavan kun <filename
+>/usr/sbin/elilo</filename
+> suoritetaan seuraavan kerran. </para
+></listitem
+></varlistentry>
+
+<varlistentry>
+<term
+><filename
+>vmlinuz</filename
+></term>
+<listitem
+><para
+>Tämä on varsinainen ydin pakatussa muodossa. Se on kopio tiedostosta joka mainitaan tiedostossa <filename
+>/etc/elilo.conf</filename
+>. Debianin vakioasennuksessa se olisi symbolisella linkillä <filename
+>/vmlinuz</filename
+> osoitettu tiedosto hakemistossa <filename
+>/boot</filename
+>. </para
+></listitem
+></varlistentry>
+
+</variablelist>
+
+  </sect3>
+<!--   End of file using-d-i/modules/ia64/elilo-installer.xml -->
+
+<!-- Start of file using-d-i/modules/mips/arcboot-installer.xml -->
+<!-- $Id: arcboot-installer.xml 35613 2006-03-19 04:18:28Z tbm $ -->
+
+  <sect3 arch="mips">
+  <title
+>Käynnistyslataimen <command
+>arcboot</command
+> asennin</title>
+<para
+>SGI:n koneilla käynnistyslatain on <command
+>arcboot</command
+>. Se on asennettava ytimen kanssa samalle kiintolevylle (asennin tekee tämän automaattisesti). Arcbootin erilaisten kokoonpanojen asetukset ovat tiedostossa <filename
+>/etc/arcboot.conf</filename
+>. Jokaisella kokoonpanolla on yksikäsitteinen nimi, asentimen tekemän nimenä on oletusarvona <quote
+>linux</quote
+>. Kun arcboot on asennettu, järjestelmä voidaan käynnistää kiintolevyltä joitakin varusohjelmiston ympäristömuuttujia säätämällä
+<informalexample
+><screen>
+<userinput
+> setenv SystemPartition scsi(<replaceable
+>scsi</replaceable
+>)disk(<replaceable
+>disk</replaceable
+>)rdisk(0)partition(0)</userinput>
+<userinput
+> setenv OSLoadPartition scsi(<replaceable
+>scsi</replaceable
+>)disk(<replaceable
+>disk</replaceable
+>)rdisk(0)partition(<replaceable
+>partnr</replaceable
+>)</userinput>
+<userinput
+> setenv OSLoader arcboot</userinput>
+<userinput
+> setenv OSLoadFilename <replaceable
+>config</replaceable
+></userinput>
+<userinput
+> setenv AutoLoad yes</userinput>
+</screen
+></informalexample
+> varusohjelmiston kehotteessa, ja kirjoittamalla sitten <command
+>boot</command
+>. </para>
+
+<variablelist>
+<varlistentry>
+<term
+> <replaceable
+>scsi</replaceable
+> </term>
+<listitem
+><para
+>on SCSI-väylä jolta käynnistetään, se on <userinput
+>0</userinput
+> yhdysrakenteisille ohjaimille </para
+></listitem>
+</varlistentry>
+<varlistentry>
+<term
+> <replaceable
+>levy</replaceable
+> </term>
+<listitem
+><para
+>on SCSI ID sille levylle johon <command
+>arcboot</command
+> on asennettu </para
+></listitem>
+</varlistentry>
+<varlistentry>
+<term
+> <replaceable
+>partnr</replaceable
+> </term>
+<listitem
+><para
+>on sen osion numero jossa <filename
+>/etc/arcboot.conf</filename
+> sijaitsee </para
+></listitem>
+</varlistentry>
+<varlistentry>
+<term
+> <replaceable
+>config</replaceable
+> </term>
+<listitem
+><para
+>on kokoonpanon nimi tiedostossa <filename
+>/etc/arcboot.conf</filename
+>, oletusarvona <quote
+>linux</quote
+>. </para
+></listitem>
+</varlistentry>
+</variablelist>
+
+  </sect3>
+<!--   End of file using-d-i/modules/mips/arcboot-installer.xml -->
+
+<!-- Start of file using-d-i/modules/mipsel/colo-installer.xml -->
+<!-- $Id: colo-installer.xml 14337 2004-04-24 15:05:40Z mck-guest $ -->
+<!--   End of file using-d-i/modules/mipsel/colo-installer.xml -->
+
+<!-- Start of file using-d-i/modules/powerpc/yaboot-installer.xml -->
+<!-- $Id: yaboot-installer.xml 14975 2004-05-08 13:28:15Z mck-guest $ -->
+
+  <sect3 arch="powerpc">
+  <title
+>Asennetaan käynnistyslatain <command
+>Yaboot</command
+> kiintolevylle</title>
+<para
+>Uudet (vuoden 1998 jälkeiset) PowerMac:it käyttävät käynnistyslatainta <command
+>yaboot</command
+>. Asennin tekee <command
+>yaboot</command
+>:n asetukset automaattisesti, tarvitaan vain pieni 820 kt <quote
+>bootstrap</quote
+>-niminen osio tyypiltään <emphasis
+>Apple_Bootstrap</emphasis
+>. Osio piti luoda aiemmin osioinnin yhteydessä. Jos tämä vaihe sujuu virheittä, järjestelmän pitäisi pystyä käynnistymään levyltä ja OpenFirmware on valittu käynnistämään &debian;. </para>
+  </sect3>
+<!--   End of file using-d-i/modules/powerpc/yaboot-installer.xml -->
+
+<!-- Start of file using-d-i/modules/powerpc/quik-installer.xml -->
+<!-- $Id: quik-installer.xml 14975 2004-05-08 13:28:15Z mck-guest $ -->
+
+  <sect3 arch="powerpc">
+  <title
+>Asennetaan käynnistyslatain <command
+>Quik</command
+> kiintolevylle</title>
+<para
+>OldWorld Power Macintosh -koneiden käyttämä käynnistyslatain on <command
+>quik</command
+>. Sitä voi käyttää myös CHRP-koneille. Asennin yrittää tehdä <command
+>quik</command
+>:n asetukset automaattisesti. Tämä tiedetään toimivaksi 7200, 7300, ja 7600 Powermac:eille, ja joillekin Power Computingin klooneille. </para>
+  </sect3>
+<!--   End of file using-d-i/modules/powerpc/quik-installer.xml -->
+
+<!-- Start of file using-d-i/modules/s390/zipl-installer.xml -->
+<!-- $Id: zipl-installer.xml 14602 2004-05-02 16:31:59Z mck-guest $ -->
+
+  <sect3 arch="s390">
+  <title
+>Käynnistyslataimen <command
+>zipl</command
+> asennin</title>
+<para
+>Arkkitehtuurin &arch-title; käynnistyslatain on <quote
+>zipl</quote
+>. <command
+>ZIPL</command
+> on asetuksiltaan ja käytöltään samantapainen kuin <command
+>LILO</command
+> muutamin eroin. Lue <quote
+>LINUX for &arch-title; Device Drivers and Installation Commands</quote
+> IBM:n developerWorks -www-sivustolta jos haluat tietää ohjelmasta <command
+>ZIPL</command
+> enemmän. </para>
+  </sect3>
+<!--   End of file using-d-i/modules/s390/zipl-installer.xml -->
+
+<!-- Start of file using-d-i/modules/sparc/silo-installer.xml -->
+<!-- $Id: silo-installer.xml 24582 2004-12-27 02:16:29Z cjwatson $ -->
+
+  <sect3 arch="sparc">
+  <title
+>Asennetaan käynnistyslatain <command
+>SILO</command
+> kiintolevylle</title>
+<para
+>Arkkitehtuurin &architecture; vakiokäynnistyslataion on <quote
+>silo</quote
+>. Sen ohjeet löytyvät hakemistosta <filename
+>/usr/share/doc/silo/</filename
+>. Komento <command
+>SILO</command
+> on asetuksiltaan ja käytöltään samantapainen kuin <command
+>LILO</command
+> muutamin eroin. Ensiksikin <command
+>SILO</command
+> sallii minkä tahansa käynnistysosiolla olevan ytimen käynnistämisen. Tämän mahdollistaa <command
+>SILO</command
+>:n kyky lukea Linux-osioiden tiedostoja. Toiseksi, tiedosto <filename
+>/etc/silo.conf</filename
+> luetaan käynnistyksen aikana, jolloin ei tarvitse suorittaa komentoa <command
+>silo</command
+> uudestaan kun on asennettu uusi ydin, kuten pitää tehdä kun käytössä on <command
+>LILO</command
+>. <command
+>LILO</command
+> osaa lukea myös UFS-osioita, eli se osaa käynnistää myös SunOS/Solaris-osioita. Tämä on hyödyllistä jos GNU/Linux halutaan asentaa olemassa olevan SunOS/Solaris-asennuksen rinnalle. </para>
+  </sect3>
+<!--   End of file using-d-i/modules/sparc/silo-installer.xml -->
+
+<!-- Start of file using-d-i/modules/nobootloader.xml -->
+<!-- $Id: nobootloader.xml 25513 2005-02-07 23:43:27Z fjpop-guest $ -->
+
+   <sect3 id="nobootloader">
+   <title
+>Jatketaan ilman käynnistyslatainta</title>
+
+<para
+>Tällä valinnalla voidaan asennus saattaa loppuun asentamatta mitään käynnistyslatainta. Näin voidaan tehdä joko koska arkkitehtuurille/arkkitehtuurin muunnokselle ei ole käynnistyslatainta tai sitä ei haluta (esim. käytetään jo asennettua käynnistyslatainta). <phrase arch="m68k"
+>Valinta on erityisen hyödyllinen jos tietokone on Macintosh, Atari tai Amiga, joissa alkuperäinen käyttöjärjestelmä on pidettävä käyttökunnossa koska GNU/Linux käynnistetään sen kautta.</phrase
+> </para
+><para
+>Tehtäessä käynnistyslataimen asetukset itse, olisi asennetun ytimen nimi tarkistettava hakemistosta <filename
+>/target/boot</filename
+>. Hakemistosta olisi myös katsottava onko siellä <firstterm
+>initrd</firstterm
+>; jos on, käynnistyslataimelle lienee kerrottava sen käyttämisestä. Muuta tarvittavaa tietoa ovat juuritiedostojärjestelmälle valittu levy ja osio, ja mikäli <filename
+>/boot</filename
+> asennettiin erilliselle osiolle, myös sen levy ja osio. </para>
+   </sect3>
+<!--   End of file using-d-i/modules/nobootloader.xml -->
+  </sect2>
+
+  <sect2 id="di-finish">
+  <title
+>Päätetään asennus</title>
+<para
+>Tämä on viimeinen vaihe Debianin asennuksessa. Asennin tekee viime hetken tehtävät. Pääasiassa siistitään työn jälkiä jotka &d-i; jätti. </para>
+
+
+<!-- Start of file using-d-i/modules/clock-setup-finish.xml -->
+<!-- $Id: clock-setup-finish.xml 50618 2007-12-25 09:18:06Z fjp $ -->
+
+   <sect3 id="system-clock">
+   <title
+>Tehdään kellon asetukset</title>
+
+<para
+>Asennin kysynee onko tietokoneen kello maailmanajassa (UTC). Jos mahdollista tätä ei kysytä vaan asennin yrittää päätellä esimerkiksi muiden asennettujen käyttöjärjestelmien perusteella onko kello maailmanajassa. </para
+><para
+>Expert-asennuksessa päästään aina valitsemaan onko kello maailmanajassa vai paikallisessa ajassa. <phrase arch="m68k;powerpc"
+>Macintosh-järjestelmässä laitekello on tavallisesti asetettu paikalliseen aikaan. Käytettäessä monikäynnistystä valitaan paikallinen aika.</phrase
+> <phrase arch="x86"
+>Järjestelmät joissa on asennettuna (myös) DOS tai Windows on laitekello tavallisesti paikallisessa ajassa. Käytettäessä monikäynnistystä valitaan paikallinen aika.</phrase
+> </para
+><para
+>Tässä kohdin &d-i; yrittää myös kellonajan tallentamista järjestelmän laitekelloon. Tallennettava aika on maailmanaika tai paikallinen aika edellä tehdyn valinnan mukaiseti. </para>
+
+   </sect3>
+<!--   End of file using-d-i/modules/clock-setup-finish.xml -->
+
+<!-- Start of file using-d-i/modules/finish-install.xml -->
+<!-- $Id: finish-install.xml 50618 2007-12-25 09:18:06Z fjp $ -->
+
+   <sect3 id="finish-install">
+   <title
+>Järjestelmän uudelleenkäynnistys</title>
+
+<para arch="not-s390"
+>Käynnistystaltion (romppu, levyke, jne) poistamisesta annetaan kehote. Sen jälkeen laite käynnistetään uudelleen uuteen Debian-järjestelmään. </para
+><para arch="s390"
+>Viimeisen kehotteen jälkeen järjestelmä sammutetaan koska uudelleenkäynnistystä ei tueta arkkitehtuurilla &arch-title;. Sitten on GNU/Linux käynnistettävä IPL:llä siltä DASD:tä joka valittiin juuritiedostojärjestelmäksi asennuksen ensimmäisten vaiheiden aikana. </para>
+   </sect3>
+<!--   End of file using-d-i/modules/finish-install.xml -->
+  </sect2>
+
+  <sect2 id="di-miscellaneous">
+  <title
+>Sekalaista</title>
+<para
+>Tässä luvussa käsiteltäviä asentimen osia ei tavallisesti käytetä, vaan ne ovat käytettävissä jos jotain menee pieleen. </para>
+
+
+<!-- Start of file using-d-i/modules/save-logs.xml -->
+<!-- $Id: save-logs.xml 33725 2006-01-03 19:39:07Z fjp $ -->
+
+   <sect3 id="save-logs">
+   <title
+>Asentimen lokien tallentaminen</title>
+
+<para
+>Jos asennus onnistuu, asennuksen aikana kertyneet lokitiedostot tallennetaan automaattisesti uuden Debian-järjestelmän hakemistoon <filename
+>/var/log/installer/</filename
+>. </para
+><para
+>Kohdan <guimenuitem
+>Tallenna vianetsinnän lokit</guimenuitem
+> valitseminen päävalikosta mahdollista lokien tallentamisen levykkeelle, verkkolevylle, kiintolevylle tai muulle taltiolle. Tämä voi olla hyödyksi jos asennuksen aikana ilmenee vakavia virheitä ja lokeja halutaan tutkia toisella koneella tai liittää lokit asennusraporttiin. </para>
+   </sect3>
+<!--   End of file using-d-i/modules/save-logs.xml -->
+
+<!-- Start of file using-d-i/modules/cdrom-checker.xml -->
+<!-- $Id: cdrom-checker.xml 14337 2004-04-24 15:05:40Z mck-guest $ -->
+<!--   End of file using-d-i/modules/cdrom-checker.xml -->
+
+<!-- Start of file using-d-i/modules/shell.xml -->
+<!-- $Id: shell.xml 56326 2008-10-06 23:03:54Z fjp $ -->
+
+   <sect3 id="shell">
+   <title
+>Komentotulkin käyttö ja lokien lukeminen</title>
+
+<para
+>Asennuksen aikana pääsee komentotulkkiin monella tavalla. Useimmissa järjestelmissä ja jos ei asenneta sarjapäätettä käyttäen, on helpoin tapa vaihtaa toiseen <emphasis
+>virtuaalikonsoliin</emphasis
+> painamalla <keycombo
+><keycap
+>Vasen Alt</keycap
+> <keycap
+>F2</keycap
+></keycombo
+><footnote
+> <para
+> Eli pidät pohjassa <keycap
+>Alt</keycap
+>-näppäintä <keycap
+>Välilyönnin</keycap
+> vasemmalla puolella ja funktionäppäintä <keycap
+>F2</keycap
+> samaan aikaan. </para
+> </footnote
+> (Mac-näppäimistöllä, <keycombo
+><keycap
+>Option</keycap
+> <keycap
+>F2</keycap
+></keycombo
+>). Vaihda takaisin asentimeen näppäilemällä  <keycombo
+><keycap
+>Vasen Alt</keycap
+> <keycap
+>F1</keycap
+></keycombo
+>. </para
+><para condition="gtk"
+>Graafista asenninta käytettäessä katso myös <xref linkend="gtk-using"/>. </para
+><para
+>Jos ei voi vaihtaa toiseen konsoliin, on päävalikossa toiminto <guimenuitem
+>Käynnistä komentotulkki</guimenuitem
+>. Takaisin päävalikkoon pääsee painamalla &BTN-GOBACK; tarpeeksi monta kertaa. Asentimeen pääsee takaisin komentotulkin komennolla <userinput
+>exit</userinput
+> joka sulkee komentotulkin. </para
+><para
+>Tässä vaiheessa on käynnistetty muistilevyltä ja Unix-komentoja on käytettävissä rajoitetusti. Käytettävissä olevat ohjelmat näkee komennolla <command
+>ls /bin /sbin /usr/bin /usr/sbin</command
+> ja komennolla <command
+>help</command
+>. Komentotulkki on Bourne-tulkin klooni nimeltä <command
+>ash</command
+> ja siinä on muutamia kivoja ominaisuuksia kuten tekstintäydennys ja komentohistoria. </para
+><para
+>Muokkaa ja katsele tiedostoja teksturilla <command
+>nano</command
+>. Asennusjärjestelmän lokitiedostot löytyvät hakemistosta <filename
+>/var/log</filename
+>. </para>
+<note
+><para
+>Vaikkakin voit tehdä komentotulkissa periaatteessa mitä vain käytettävissä olevilla komennoilla voi, komentotulkki on varsinaisesti tarkoitettu käytettäväksi jos jokin menee vikaan ja virheenjäljitykseen. </para
+><para
+>Tämän tekeminen itse komentotulkissa saattaa häiritä asennusta ja johtaa virheisiin tai vaillinaisseen asennukseen. Erityisesti olisi aina annettava asentimen itse ottaa sivutusosio käyttöön eikä tehdä sitä itse komentotulkissa. </para
+></note>
+   </sect3>
+<!--   End of file using-d-i/modules/shell.xml -->
+
+<!-- Start of file using-d-i/modules/network-console.xml -->
+<!-- $Id: network-console.xml 56141 2008-09-26 10:45:05Z lunar $ -->
+
+   <sect3 id="network-console">
+   <title
+>Etäasennus</title>
+
+<para arch="not-s390"
+>Yksi asentimen kiinnostava osa on <firstterm
+>verkkopääte</firstterm
+>. Sitä käyttäen voidaan iso osa asennuksesta tehdä verkon kautta SSH:lla etäkäyttönä. Verkon käyttö edellyttää asennuksen ensimmäisten vaiheiden suorittamista konsolilta, ainakin verkon asetusten tekemiseen asti (Mutta tämän osan voi automatisoida, katso <xref linkend="automatic-install"/>.) </para
+><para arch="not-s390"
+>Tätä asentimen osaa ei oletusarvona ladata asentimen päävalikkoon, joten se on otettava käyttöön erikseen valitsemalla. Jos asennetaan rompulta, on käynnistettävä keskitason prioriteetilla tai muutoin käynnistettävä asentimen päävalikko ja valittava <guimenuitem
+>Lataa asentimen osia rompulta</guimenuitem
+> ja lisäosien luettelosta valittava <guimenuitem
+>Jatka etäasennuksena käyttäen SSH:ta.</guimenuitem
+>. Latauksen onnistuminen ilmenee uutena valikon kohtana <guimenuitem
+>Jatka etäasennuksena käyttäen SSH:ta.</guimenuitem
+>. </para
+><para arch="s390"
+>Arkkitehtuurille &arch-title; tämä on asennuksen oletustapa verkkoasetusten tultua tehdyksi. </para
+><para
+><phrase arch="not-s390"
+>Kun tämä uusi kohta on valittu, kysytään seuraavaksi</phrase
+> <phrase arch="s390"
+>Seuraavaksi kysytään</phrase
+> uutta salasanaa ja sille vahvistusta. Salasanalla saa yhteyden asennettavaan järjestelmään. Tässä kaikki. Nyt pitäisi näkyä ruutu jossa neuvotaan kirjautumaan etäyhteydellä käyttäjänä <emphasis
+>installer</emphasis
+> käyttäen juuri annettua salasanaa. Toinen tässä ruudussa oleva tärkeä kohta on asennettavan järjestelmän sormenjälki. Tämä on toimitettava tietoturvallisesti <quote
+>etäasennuksen tekevälle henkilölle</quote
+>. </para
+><para
+>Mikäli asennusta halutaan jatkaa paikallisena asennuksena, voidaan milloin tahansa paina &enterkey;, jolla palataan päävalikkoon mistä voidaan valita toinen asentimen osa. </para
+><para
+>Nyt vaihdetaan verkkokaapelin toiseen päähän. Ennen aloittamista on pääte asetettava käyttämään UTF-8-merkkikoodausta, koska sitä asennusjärjestelmä käyttää. Jos näin ei tehdä, etäasennuksen voi silti tehdä mutta ruudulla saattaa olla kummallisia ilmiöitä kuten rikkinäisiä valintaikkunan reunoja tai lukukelvottomia ei-ascii-merkkejä. Yhteys asennettavaan järjestelmään muodostetaan kirjoittamalla:
+<informalexample
+><screen>
+<prompt
+>$</prompt
+> <userinput
+>ssh -l installer <replaceable
+>asennettava_kone</replaceable
+></userinput>
+</screen
+></informalexample
+> Yllä <replaceable
+>asennettava_kone_host</replaceable
+> on joko asennettavan koneen konenimi tai IP-osoite. Ennen varsinaista sisäänkirjautumista näytetään etäkoneen sormenjälki ja käyttäjän on vahvistettava se oikeaksi. </para
+><note
+><para
+>Asentimen <command
+>ssh</command
+>-palvelin käyttää oletusasetuksia jossa ei ole mukana keep-alive -pakettien lähetystä. Periaatteessa yhteyden asennettavaan järjestelmään pitäisi pysyä auki toistaiseksi. Joissakin tapauksissa &mdash; paikallisverkon asetukset vaikuttavat &mdash; yhteys saattaa katketa oltuaan jonkin aikaa jouten. Eräs tyypillinen tilanne jossa näin käy on jos asiakaskoneen ja asennettavan koneen välillä on Network Address Translation (NAT). Riippuu missä kohtaa asennusta yhteys katkesi voiko asennusta jatkaa kun yhteys on muodostettu uudelleen. </para
+><para
+>Yhteyden katkeamiselta voidaan ehkä välttyä lisäämällä valitsin <userinput
+>-o&nbsp;ServerAliveInterval=<replaceable
+>arvo</replaceable
+></userinput
+> <command
+>ssh</command
+>-yhteyttä käynnistettäessä, tai lisäämällä tuo asetus <command
+>ssh</command
+>:n asetustiedostoon. Huomaa kuitenkin että joissakin tapauksissa tämän valitsimen lisääminen <emphasis
+>aiheuttaa</emphasis
+> yhteyden katkeamisen (esimerkiksi jos keep-alive -paketteja lähetetään lyhyen verkkoyhteyden katkoksen aikana, josta <command
+>ssh</command
+> olisi muuten toipunut). Sitä oli siis käytettävä vain tarvittaessa. </para
+></note>
+
+<note
+><para
+>Jos asennetaan useita koneita peräkkäin ja niillä sattuu olemaan sama IP-numero tai konenimi, <command
+>ssh</command
+> kieltäytyy muodostamasta yhteyttä. Koneiden sormenjälki ei ole sama, joka tavallisesti on merkki tekeytymisestä muuksi koneeksi. Mikäli tästä ei varmasti ole kyse, voidaan koneen rivi poistaa tiedostosta <filename
+>~/.ssh/known_hosts</filename
+><footnote
+> <para
+> Seuraava komento poistaa konetta vastaavan rivin: <command
+>ssh-keygen -R &lt;<replaceable
+>hostname</replaceable
+>|<replaceable
+>IP&nbsp;address</replaceable
+>&gt;</command
+>.</para
+></footnote
+> ja yrittää uudelleen. </para
+></note
+><para
+>Kirjautumisen jälkeen näkyy aloitusruutu jossa on kaksi vaihtoehtoa, <guimenuitem
+>Käynnistä valikko</guimenuitem
+> ja <guimenuitem
+>Käynnistä komentotulkki</guimenuitem
+>. Ensimmäinen vie asentimen päävalikkoon, jossa asennusta voidaan jatkaa tavanomaiseen tapaan. Jälkimmäinen käynnistää komentotulkin jossa etäjärjestelmää voidaan tutkia ja mahdollisesti korjata. Toista päävalikkoa ei pidä käynnistää, mutta komentotulkkeja voi käynnistää useampia. </para
+><warning
+><para
+>Kun etäasennus SSH:ta käyttäen on käynnistetty, olisi vältettävä palaamista paikallisella konsolilla käynnissä olevaan asentimeen. Jos niin tehdään, saattaa uuden järjestelmän asetukset tallentava tietokanta mennä sekaisin. Tästä taas voi olla seurauksena epäonnistunut asennus tai asennettu järjestelmä toimii huonosti. </para
+></warning>
+
+   </sect3>
+<!--   End of file using-d-i/modules/network-console.xml -->
+  </sect2>
+ </sect1>
+<!--   End of file using-d-i/components.xml -->
+
+<!-- Start of file using-d-i/loading-firmware.xml -->
+<!-- $Id: loading-firmware.xml 56290 2008-10-05 15:18:02Z fjp $ -->
+
+ <sect1 id="loading-firmware" arch="not-s390">
+ <title
+>Puuttuvan laitetiedoston lataaminen</title>
+<para
+>Kuten <xref linkend="hardware-firmware"/> kertoo, joillekin laitteille on ladattava laiteohjelmisto. Joissakin tapauksissa laite ei toimi lainkaan jos laiteohjelmisto ei ole käytettävissä; joskus puuttuva laiteohjelmisto ei vaikuta perustoimintoihin ja laiteohjelmistoa tarvitaan vain lisäominaisuuksien saamiseen käyttöön. </para
+><para
+>Mikäli laiteajuri vaatii laiteohjelmistoa jota ei ole saatavilla, &d-i; näyttää valintaikkunan josta laiteohjelmiston lataus voidaan valita. Mikäli tämä valitaan, &d-i; käy läpi käytettävissä olevat laitteet ja etsii irrallisia laiteohjelmatiedostoja tai paketteja joissa on laiteohjelmistoja. Jos näitä löytyy, laiteohjelmisto kopioidaan oikeaan paikkaan (<filename
+>/lib/firmware</filename
+>) ja laiteajuria vastaava moduuli ladataan uudelleen. </para>
+<note
+><para
+>Läpikäytävät laitteet ja tuetut tiedostojärjestelmät riippuvat laitearkkitehtuurista, asennustavasta ja asennuksen vaiheesta. Erityisesti asennuksen aikaisissa vaiheissa laiteohjelmiston lataus onnistuu todennäköisimmin levykkeeltä tai USB-muistilta joissa on FAT-tiedostojärjestelmä. <phrase arch="x86"
+>Jos laite on i386 tai amd64 laiteohjelmisto voidaan ladata myös MMC- tai SD-kortilta</phrase
+>. </para
+></note>
+<para
+>Huomaa että laiteohjelmiston lataamisen voi ohittaa jos on tiedossa että laite toimii ilmankin tai jos laitetta ei tarvita asennuksen aikana. </para>
+<warning
+><para
+>Tuki laiteohjelmiston lataamiselle on yhä jonkin verran alkeellinen ja todennäköisesti paranee tulevissa asentimen julkaisuissa. Tällä hetkellä &d-i; esimerkiksi ei näytä mitään varoitusta jos on valittu puuttuvan laiteohjelmiston lataaminen mutta vaadittua laiteohjelmaa ei löydy. Toivottavasti vioista ilmoitetaan asennusraportilla (katso <xref linkend="submit-bug"/>). </para
+></warning>
+
+  <sect2
+><title
+>Taltion valmistelu</title>
+<para
+>Vaikkakin joissakin tapauksissa laiteohjelmisto voidaan ladata myös kiintolevyn osiolta, tavallisin tapa on ladata laiteohjelmisto irrotettavalta taltiolta kuten levyke tai USB-muisti. Laiteohjelmiston tiedostot tai paketit on tallennettava taltion tiedostojärjestelmän juurihakemistoon tai hakemistoon nimeltä <filename
+>/firmware</filename
+>. Suositellaan käytettäväksi tiedostojärjestelmää FAT koska se on varmimmin tuettu asennuksen ensimmäisten vaiheiden aikana. </para
+><para
+>Yleisimpien laiteohjelmistojen ajan tasalla olevat paketit ovat saatavilla tar-tiedostoina: <itemizedlist
+> <listitem
+><para
+> <ulink url="&url-firmware-tarballs;"
+></ulink
+> </para
+></listitem
+> </itemizedlist
+> Nouda julkaisua vastaava tar-tiedosto ja pura se taltion tiedostojärjestelmään. </para
+><para
+>Jos tarvittava laiteohjelmisto ei ole mukana tar-tiedostossa, voidaan yksittäisiä laiteohjelmistopaketteja ladata myös Debian-asennuspalvelimen (epävapaasta) osiosta. Seuraavassa katsauksessa pitäisi olla luettelo useimmista saatavilla olevista laiteohjelmistopaketeista mutta sen kattavuutta ei taata ja luettelossa saattaa olla mukana muitakin kuin laiteohjelmistopaketteja. <itemizedlist
+> <listitem
+><para
+> <ulink url="&url-firmware-packages;"
+></ulink>
+</para
+></listitem>
+</itemizedlist>
+
+</para
+><para
+>On myös mahdollista kopioda yksittäisiä laiteohjelmistotiedostoja taltiolle. Irtotiedostoja saadaan esimerkiksi jo asennetusta järjestelmästä tai laitevalmistajalta. </para>
+  </sect2>
+
+  <sect2
+><title
+>Laiteohjelmisto ja asennettu järjestelmä</title>
+<para
+>Asennuksen aikana ladatut laiteohjelmistot kopioidaan automaattisesti asennettuun järjestelmään. Useimmissa tapauksissa tämä varmistaa laiteohjelmistoa tarvitsevan laitteen toimivan oikein myös kun on käynnistetty asennettuun järjestelmään. Jos asennettu järjestelmä kuitenkin käyttää eri versiota ytimestä kuin asennin on pieni mahdollisuus ettei laiteohjelmistoa voida ladata versioerojen vuoksi. </para
+><para
+>Jos laiteohjelmisto ladattiin laiteohjelmistopaketista, &d-i; asentaa asennettuun järjestelmään myös kyseisen paketin ja lisää automaattisesti APT:n pakettivaraston osion non-free tiedostoon <filename
+>sources.list</filename
+>. Tästä on se etu, että laiteohjelmiston pitäisi päivittyä automaattisesti jos uusi versio julkaistaan. </para
+><para
+>Jos laiteohjelmiston lataus ohitettiin asennuksen aikana, kyseinen laite ei luultavasti toimi asennetussa järjestelmässä ennen kuin laiteohjelmisto (tai laiteohjelmistopaketti) on asennettu käyttäjän toimesta. </para>
+<note
+><para
+>Jos laiteohjelmisto ladattiin irrallisista laiteohjelmistotiedostoista, ei asennettuun järjestelmään kopioitu laiteohjelmisto päivity automaattisesti jos ei vastaavaa laiteohjelmistopakettia (jos sellainen on saatavilla) asenneta asennuksen valmistuttua.  </para
+></note>
+  </sect2>
+ </sect1>
+<!--   End of file using-d-i/loading-firmware.xml -->
+
+</chapter>
+
+<!--   End of file using-d-i/using-d-i.xml -->

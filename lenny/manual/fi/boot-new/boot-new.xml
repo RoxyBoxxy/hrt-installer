@@ -1,0 +1,473 @@
+<!-- Start of file boot-new/boot-new.xml -->
+<!-- $Id: boot-new.xml 56817 2008-11-30 08:13:01Z fjp $ -->
+
+<chapter id="boot-new">
+ <title
+>Asennetun Debian-järjestelmän käynnistäminen</title>
+
+ <sect1 id="base-boot"
+><title
+>Totuuden hetki</title>
+<para
+>Sähköinsinöörit tapaavat katsoa järjestelmän ensimmäisellä käynnisyskerralla toimiiko se vai <quote
+>tulevatko savut ulos</quote
+>. </para
+><para arch="x86"
+>Jos teit oletusasennuksen, pitäisi järjestelmän käynnistettäessä näkyä ensimmäiseksi <classname
+>grub</classname
+>in tai ehkä <classname
+>lilo</classname
+>n valikko. Valikon ensimmäiset kohdat ovat uusi Debian-järjestelmäsi. Jos koneessa oli muita käyttöjärjestelmiä (Windows, esimerkiksi) jotka asennusjärjestelmä havaitsi, luetellaan ne valikossa alempana. </para
+><para
+>Ei pidä pelästyä jos järjestelmä ei käynnisty kunnolla. Jos asennus onnistui, todennäköisesti Debianin käynnistymisen estävä vika on sangen pieni. Useimmissa tapauksissa vika on korjattavissa tekemättä asennusta uudestaan. Yksi käytettävissä oleva tapa käynnistysvikojen korjaamiseen on asentimen sisäänrakennettu pelastustila (katso <xref linkend="rescue"/>). </para
+><para
+>Jos Debian ja Linux ovat uusia sinulle, saatat tarvita kokeneempien käyttäjien tukea. <phrase arch="x86"
+>Suoraan tietoverkosta apua löytyy IRC-kanavilta #debian ja #debian-boot IRC-verkossa OFTC. Toinen tapa on käyttää <ulink url="&url-list-subscribe;"
+>debian-user-sähköpostilistaa</ulink
+>.</phrase
+> <phrase arch="not-x86"
+>Vähemmän käytetyille laitealustoille kuten &arch-title; on paras tapa kysyä <ulink url="&url-list-subscribe;"
+>debian-&arch-listname;-sähköpostilistalla</ulink
+>.</phrase
+> Voit myöskin tehdä asennusraportin kuten selitetään kohdassa <xref linkend="submit-bug"/>. Katso, että kuvaat vian selkeästi ja liitä mukaan virheilmoitukset jotka voivat auttaa muita vian etsinnässä. </para
+><para arch="x86"
+>Jos tietokoneella oli muita käyttöjärjestelmiä, joita ei havaittu tai ei tunnistettu oikein, ole hyvä ja tee asennusraportti. </para>
+
+  <sect2 arch="m68k"
+><title
+>BVME 6000 Käynnistys</title>
+<para
+>Jos olet juuri tehnyt levyttömän asennuksen BVM tai Motorola VMEbus-koneelle: kun järjestelmä on ladannut ohjelma <command
+>tftplilo</command
+> TFTP-palvelimelta, kirjoita kehotteeseen <prompt
+>LILO Boot:</prompt
+> jokin seuraavista: <itemizedlist>
+<listitem
+><para
+><userinput
+>b6000</userinput
+> ja paina &enterkey; käynnistetään BVME 4000/6000 </para
+></listitem
+><listitem
+><para
+><userinput
+>b162</userinput
+> ja paina &enterkey; käynnistetään MVME162 </para
+></listitem
+><listitem
+><para
+><userinput
+>b167</userinput
+> ja paina &enterkey; käynnistetään MVME166/167 </para
+></listitem>
+</itemizedlist>
+
+</para>
+
+   </sect2>
+
+  <sect2 arch="m68k"
+><title
+>Macintosh käynnistys</title>
+
+<para
+>Siirry asennustiedostojen hakemistoon ja käynnistä <command
+>Penguin</command
+>-käynnistin, pitämällä pohjassa <keycap
+>command</keycap
+>-näppäintä. Siirry valintaikkunaan <userinput
+>Settings</userinput
+> (<keycombo
+> <keycap
+>command</keycap
+> <keycap
+>T</keycap
+> </keycombo
+>), ja etsi ytimen valitsimien rivi, se on suunnilleen <userinput
+>root=/dev/ram ramdisk_size=15000</userinput
+>. </para
+><para
+>Riville on muutettava <userinput
+>root=/dev/<replaceable
+>yyyy</replaceable
+></userinput
+>. Kirjoita <replaceable
+>yyyy</replaceable
+> tilalle sen osion Linux-nimi johon järjestelmä asennettiin (esim. <filename
+>/dev/sda1</filename
+>); tämä piti kirjoittaa muistiin aiemmin. Erityisesti pienille ruuduille suositellaan <userinput
+>fbcon=font:VGA8x8</userinput
+> (tai <userinput
+>video=font:VGA8x8</userinput
+> versiota 2.6 vanhemmilla ytimillä) parantamaan luettavuutta. Tämän voi muuttaa milloin vain. </para
+><para
+>Jos GNU/Linux:ia ei haluta käynnistää heti joka kerta tietokoneen käynnistyessä, otetaan <userinput
+>Auto Boot</userinput
+> -valinta pois. Asetukset tallennetaan tiedostoon <filename
+>Prefs</filename
+> valitsemalla <userinput
+>Save Settings As Default</userinput
+>. </para
+><para
+>Seuraavaksi valitaan <userinput
+>Boot Now</userinput
+> (<keycombo
+> <keycap
+>command</keycap
+> <keycap
+>B</keycap
+> </keycombo
+>) käynnistämään juuri asennettu GNU/Linux eikä RAMdisk-asennusjärjestelmää. </para
+><para
+>Debianin pitäisi käynnistyä ja pitäisi näkyä samat viestit kuin ensimmäistä kertaa asenninta käynnistettäessä ja niiden jälkeen uusia viestejä. </para>
+   </sect2>
+
+
+  <sect2 arch="powerpc"
+><title
+>OldWorld PowerMacs</title>
+<para
+>Jos tietokone ei käynnisty asennuksen päätyttyä, ja viimeinen viesti on kehote <prompt
+>boot:</prompt
+>, yritä kirjoittaa <userinput
+>Linux</userinput
+> ja paina &enterkey;. (Oletusasetusten nimiönä tiedostossa <filename
+>quik.conf</filename
+> on Linux). Tiedostossa <filename
+>quik.conf</filename
+> määritellyt nimiöt näytetään painamalla <keycap
+>Sarkain</keycap
+> <prompt
+>boot:</prompt
+>-kehotteessa. On mahdollista myös käynnistää asennin uudestaan ja muokata tiedostoa <filename
+>/target/etc/quik.conf</filename
+> jonka valinta <guimenuitem
+>Install Quik on a Hard Disk</guimenuitem
+> kirjoittaa. Vinkkejä komennon <command
+>quik</command
+> käytöstä on sivulla <ulink url="&url-powerpc-quik-faq;"
+></ulink
+>. </para
+><para
+>Käynnistys takaisin MacOS:ään palauttamatta nvram:ia alkuarvoihin, kirjoitetaan  <userinput
+>bye</userinput
+> OpenFirmwaren kehotteeseen (olettaen ettei MacOS:ää ole poistettu koneelta). OpenFirmwaren kehotteeseen pääsee pitämällä pohjassa <keycombo
+> <keycap
+>command</keycap
+> <keycap
+>option</keycap
+> <keycap
+>o</keycap
+> <keycap
+>f</keycap
+> </keycombo
+> -näppäimiä kun tietokone on käynnistetty virtakytkimestä. Mikäli OpenFirmwaren nvramin asetukset on palautettava MacOS:n alkuarvoihin jotta MacOS voidaan taas käynnistää, pidetään pohjassa <keycombo
+> <keycap
+>command</keycap
+> <keycap
+>option</keycap
+> <keycap
+>p</keycap
+> <keycap
+>r</keycap
+> </keycombo
+> kun tietokone on käynnistetty virtakytkimestä. </para
+><para
+>Jos asennettu järjestelmä käynnistetään komennolla <command
+>BootX</command
+> haluttu ydin vain valitaan hakemistosta <filename
+>Linux Kernels</filename
+>, poistetaan ramdisk-valinta ja lisätään asennuksen juuriosio; esim. <userinput
+>/dev/hda8</userinput
+>. </para>
+   </sect2>
+
+
+  <sect2 arch="powerpc"
+><title
+>NewWorld PowerMacs</title>
+<para
+>G4-koneilla ja iBookeilla pidetään pohjassa <keycap
+>option</keycap
+> ja näkyviin tulee graafinen käyttöliittymä jossa on painike jokaiselle käynnistettävälle käyttöjärjestelmälle; &debian; on painike jossa on kuvakkeena pieni pingviini. </para
+><para
+>Jos MacOS säilytettiin ja se jossain vaiheessa muuttaa OpenFirmwaren muuttujaa <envar
+>boot-device</envar
+> pitäisi OpenFirmwaren oletusarvot palauttaa. Tämä tehdään pitämällä pohjassa <keycombo
+> <keycap
+>command</keycap
+> <keycap
+>option</keycap
+> <keycap
+>p</keycap
+> <keycap
+>r</keycap
+> </keycombo
+> -näppäimiä kun tietokone käynnistetään virtakytkimestä. </para
+><para
+>Tiedostossa <filename
+>yaboot.conf</filename
+> määritellyt nimiöt näytetään kun painetaan <keycap
+>Sarkain</keycap
+> kehotteessa <prompt
+>boot:</prompt
+>. </para
+><para
+>OpenFirmwaren alkuarvojen palauttaminen G3 tai G4-koneilla saa &debian;:in käynnistymään oletuksena (jos osiot on tehty oikein ja Apple_Bootstrap-osio on ensimmäisenä). Jos &debian; on SCSI-levyllä ja MacOS IDE-levyllä tämä ei ehkä toimi ja OpenFirmwaressa on asetettava muuttuja <envar
+>boot-device</envar
+>, komento <command
+>ybin</command
+> tekee tämän tavallisesti automaattisesti. </para
+><para
+>Kun &debian; käynnistetään ensimmäistä kertaa halutut lisävalitsimet (kuten kaksoiskäynnistyksen valitsimet) lisätään tiedostoon <filename
+>/etc/yaboot.conf</filename
+> ja käynnistetään <command
+>ybin</command
+> jotta muuttuneet tiedot päivitetään käynnistysosioon. Kannattaa lukea lisätietoja sivulta <ulink url="&url-powerpc-yaboot-faq;"
+>yaboot HOWTO</ulink
+>. </para>
+   </sect2>
+ </sect1>
+
+
+<!-- Start of file boot-new/mount-encrypted.xml -->
+<!-- $Id: mount-encrypted.xml 56326 2008-10-06 23:03:54Z fjp $ -->
+
+ <sect1 id="mount-encrypted-volumes">
+ <title
+>Salattujen levyniteiden liittäminen</title>
+
+<para
+>Jos asennuksen aikana tehtiin salattuja levyniteitä ja niille annettiin liitoskohdat, pyydetään jokaisen levyniteen tunnuslause käynnistyksen aikana. Tässä kohtaa dm-crypt ja loop-AES toimivat hieman eri tavoin. </para>
+
+  <sect2 id="mount-dm-crypt">
+  <title
+>dm-crypt</title>
+
+<para
+>Osioille joiden salausmenetelmä on dm-crypt näytetään käynnistyksen aikana seuraava kehote:<informalexample
+><screen>
+Starting early crypto disks... <replaceable
+>part</replaceable
+>_crypt
+(starting)
+Enter LUKS Passphrase:
+</screen
+></informalexample
+> <replaceable
+>part</replaceable
+> kehotteen ensimmäisellä rivillä on osio, esim. sda2 tai md0. Nyt varmaan mietit <emphasis
+>minkä levyniteen</emphasis
+> tunnuslause pitäisi kirjoittaa. Onko kyseessä <filename
+>/home</filename
+>? Vai <filename
+>/var</filename
+>? Jos salattuja osioita on vain yksi, on tämä tietysti helppoa ja kirjoitetaan vain levynidettä tehtäessä asetettu tunnuslause. Jos salattuja osioita tehtiin enemmän kuin yksi, ovat <xref linkend="partman-crypto"/> lopuksi tietenkin tekemäsi muistiinpanot tarpeen. Jos et kirjoittanut muistiin miten <filename
+><replaceable
+>part</replaceable
+>_crypt</filename
+> kuvautuvat liitoskohdiksi, voit vieläkin selvittää ne katsomalla asennetun järjestelmän tiedostoista <filename
+>/etc/crypttab</filename
+> ja <filename
+>/etc/fstab</filename
+>. </para
+><para
+>Kehotteen ulkonäkö voi olla muuttunut kun liitetään salattua juuritiedostojärjestelmää, riippuen käynnistyksessä käytetyn initrd:n tehneestä initramfs-generaattorista. Alla oleva esimerkki on initrd:stä jonka teki <classname
+>initramfs-tools</classname
+>: <informalexample
+><screen
+>Begin: Mounting <emphasis
+>root file system</emphasis
+>... ...
+Begin: Running /scripts/local-top ...
+Enter LUKS passphrase:
+</screen
+></informalexample>
+
+</para
+><para
+>Tunnuslausetta kirjoitettaessa ei näytetä mitään merkkejä (ei edes tähteä eli asteriskia). Väärän tunnuslauseen voi kirjoittaa kaksi kertaa. Kolmannella kerralla käynnistys ohittaa levyniteen ja aloittaa seuraavan tiedostojärjestelmän liittämisen. Katso lisätietoja <xref linkend="crypto-troubleshooting"/>. </para
+><para
+>Kun kaikki tunnuslauseet on kirjoitettu käynnistyksen pitäisi jatkua tavalliseen tapaan. </para>
+  </sect2>
+
+  <sect2 id="mount-loop-aes">
+  <title
+>loop-AES</title>
+
+<para
+>loop-AES:llä salattuille osioille näytetään käynnistyksen aikana seuraava kehote: <informalexample
+><screen
+>Checking loop-encrypted file systems.
+Setting up /dev/loop<replaceable
+>X</replaceable
+> (/<replaceable
+>mountpoint</replaceable
+>)
+Password:
+</screen
+></informalexample>
+
+</para
+><para
+>Tunnuslausetta kirjoitettaessa ei näytetä mitään merkkejä (ei edes tähteä eli asteriskia). Väärän tunnuslauseen voi kirjoittaa kaksi kertaa. Kolmannella kerralla käynnistys ohittaa levyniteen ja aloittaa seuraavan tiedostojärjestelmän liittämisen. Katso lisätietoja <xref linkend="crypto-troubleshooting"/>. </para
+><para
+>Kun kaikki tunnuslauseet on kirjoitettu käynnistyksen pitäisi jatkua tavalliseen tapaan. </para>
+  </sect2>
+
+  <sect2 id="crypto-troubleshooting">
+  <title
+>Vikojen etsintää</title>
+
+<para
+>Mikäli salattuja levyniteitä jäi liittämättä käynnistyksessä väärän tunnuslauseen takia, on ne liitettävä käynnistyksen jälkeen käsin. Erilaisia tilanteita on useita. </para>
+
+<itemizedlist>
+<listitem
+><para
+>Juuriosion jääminen liittämättä estää käynnistymisen ja tietokone on käynnistettävä uudelleen jotta päästään yrittämään uudestaan. </para
+></listitem>
+<listitem
+><para
+>Helpoin tapaus on salattu osio jossa on <filename
+>/home</filename
+> tai <filename
+>/srv</filename
+> kaltaisia tiedostojärjestelmiä. Ne voidaan helposti liittää järjestelmän käynnistyttyä. Jos käytössä on loop-AES tämä tehdään yhdellä komennolla: <informalexample
+><screen>
+<prompt
+>#</prompt
+> <userinput
+>mount <replaceable
+>/liitoskohta</replaceable
+></userinput>
+<prompt
+>Password:</prompt>
+</screen
+></informalexample
+> missä <replaceable
+>/liitoskohta</replaceable
+> korvataan oikealla liitoskohdalla (esim. <filename
+>/home</filename
+>). Ainoa ero tavalliseen liittämiseen on levyniteen tunnuslauseen kysyminen. </para
+><para
+>Jos käytössä on dm-crypt on homma hieman hankalampi. Levyniteet on ensin rekisteröitävä sovelluksella <application
+>device mapper</application
+> suorittamalla: <informalexample
+><screen>
+<prompt
+>#</prompt
+> <userinput
+>/etc/init.d/cryptdisks start</userinput>
+</screen
+></informalexample
+> Komento tutkii kaikki tiedostossa <filename
+>/etc/crypttab</filename
+> mainitut levyniteet ja luo tarvittavat laitteet hakemistoon <filename
+>/dev</filename
+> kun oikeat tunnuslauseet on kirjoitettu. (Levyniteet jotka jo on rekisteröity ohitetaan, joten komennon voi huoletta toistaa useita kertoja). Kun rekisteröinti on onnistunut, levyniteet voidaan liittää tavalliseen tapaan: <informalexample
+><screen
+><prompt
+>#</prompt
+> <userinput
+>mount <replaceable
+>/liitoskohta</replaceable
+></userinput
+>
+</screen
+></informalexample>
+
+</para
+></listitem>
+<listitem
+><para
+>Jos ei-välttämättömien järjestelmätiedostojen levyniteitä ei voitu liittää (<filename
+>/usr</filename
+> tai <filename
+>/var</filename
+>), järjestelmän pitäisi silti käynnistyä ja ja levyniteet voida liittää kuten edellisessä tapauksessa. On kuitenkin (uudelleen) käynnistettävä kaikki palvelut jotka ovat käynnissä oletusajotasolla (runlevel), koska hyvin todennäköisesti ne eivät käynnistyneet. Helpoin tapa on vaihtaan ensimmäiselle ajotasolle ja takaisin komennolla <informalexample
+><screen>
+    <prompt
+>#</prompt
+> <userinput
+>init 1</userinput>
+    </screen
+></informalexample
+> komentotulkissa ja painamalla <keycombo
+> <keycap
+>Control</keycap
+> <keycap
+>D</keycap
+> </keycombo
+> kun kysytään pääkäyttäjän salsanaa. </para
+></listitem>
+</itemizedlist>
+
+  </sect2>
+ </sect1>
+<!--   End of file boot-new/mount-encrypted.xml -->
+
+ <sect1 id="login">
+ <title
+>Sisäänkirjautuminen</title>
+
+<para
+>Kun järjestelmä on käynnistynyt, näytetään sisäänkirjautumisen kehote. Käytä sisäänkirjautumisessa asennuksen aikana valitsemaasi henkilökohtaista tunnusta ja salasanaa. Järjestelmä on nyt käyttövalmis. </para
+><para
+>Uusi käyttäjä halunnee tutustua järjestelmään jo asennettuun ohjeistoon aloitellessaan järjestelmän käyttöä. Tällä hetkellä ohjeistoja on useita, erilaisia ohjeistoja yhdistävä työ etenee. Tässä muutamia aloituskohtia. </para
+><para
+>Asentamiesi sovellusten mukana tulleet ohjeet löytyvät hakemistosta <filename
+>/usr/share/doc/</filename
+>, sovelluksen mukaan nimetystä alihakemistosta (tai tarkemmin sanottuna sovellusta vastaavan Debian-paketin mukaan nimetystä). Laajemmat ohjeet ovat kuitenkin usein pakattuna erillisiin ohjepaketteihin, joita oletusarvoisesti ei yleensä asenneta. Esimerkiksi pakettienhallintatyökalun <command
+>apt</command
+> ohjeet löytyvät paketeista <classname
+>apt-doc</classname
+> tai <classname
+>apt-howto</classname
+>. </para
+><para
+>Lisäksi hakemistopuussa <filename
+>/usr/share/doc/</filename
+> on muutamia erikoishakemistoja. Linux HOWTO:t on asennettu (pakattuina) <emphasis
+>.gz</emphasis
+>-tiedostoina hakemistoon <filename
+>/usr/share/doc/HOWTO/en-txt/</filename
+>. Kun komento <command
+>dhelp</command
+> on asennettu voidaan www-selaimella lukea ohjeiden hakemisto tiedostosta <filename
+>/usr/share/doc/HTML/index.html</filename
+>. </para
+><para
+>Helppo tapa näiden ohjeiden lukemiseen tekstiselaimella on seuraavat komennot: <informalexample
+><screen>
+$ cd /usr/share/doc/
+$ w3m .
+</screen
+></informalexample
+> Piste komennon <command
+>w3m</command
+> jäljessä tarkoittaa nykyhakemiston sisällön näyttämistä. </para
+><para
+>Jos graafinen työpöytäympäristö on asennettuna, voidaan myös sen selainta käyttää. Käynnistä selain Sovellusvalikosta ja kirjoita <userinput
+>/usr/share/doc/</userinput
+> osoitekenttään. </para
+><para
+>Toinen tapa on katsoa komennoilla <userinput
+>info <replaceable
+>komento</replaceable
+></userinput
+> tai <userinput
+>man <replaceable
+>komento</replaceable
+></userinput
+> useimpien komentotulkin kehotteessa käytettävien komentojen ohje. Komento <userinput
+>help</userinput
+> näyttää ohjeita komentotulkin sisäänrakennetuista komennoista. Lisäksi kirjoittamalla komento ja <userinput
+>--help</userinput
+> saadaan tavallisesti lyhyt yhteenveto komennon käytöstä. Jos komento vierittää tulosteet ruudun yläreunasta näkymättömiin, kirjoita <userinput
+>|&nbsp;more</userinput
+> komennon jälkeen samalle riville seisauttamaan tulostusta. Luettelon kaikista tietyllä kirjaimella alkavista komennoista saa kirjoittamalla kirjaimen ja kaksi sarkainta. </para>
+
+ </sect1>
+</chapter>
+<!--   End of file boot-new/boot-new.xml -->

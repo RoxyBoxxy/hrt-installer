@@ -1,0 +1,1563 @@
+<!-- Start of file appendix/random-bits.xml -->
+<!-- $Id: random-bits.xml 45239 2007-02-18 19:38:12Z fjp $ -->
+
+<appendix id="random-bits"
+><title
+>여러가지 내용</title>
+
+
+<!-- Start of file appendix/files.xml -->
+<!-- $Id: files.xml 58142 2009-04-05 21:59:12Z fjp $ -->
+
+
+ <sect1 id="linuxdevices"
+><title
+>리눅스 장치</title>
+<para
+>리눅스에서는 <filename
+>/dev</filename
+> 디렉토리 아래에 여러가지 특수 파일이 들어 있습니다. 이 파일을 장치 파일이라고 하고, 이 파일은 일반 파일과는 다르게 동작합니다. 장치 파일 중에 가장 많은 종류가 블럭 장치와 캐릭터 장치에 대한 장치 파일입니다. 이 파일은 (리눅스 커널에 들어 있는) 실제 드라이버에 대한 인터페이스 역할을 합니다. (그리고 리눅스 커널에 들어 있는 드라이버는 하드웨어에 접근합니다.) 흔하지는 않지만 또 다른 종류의 장치 파일이 있는데, <firstterm
+>파이프</firstterm
+>라고 합니다. 아래 표에 중요한 장치 파일 몇 개가 쓰여 있습니다. </para
+><para>
+
+<informaltable
+><tgroup cols="2"
+><tbody>
+<row>
+  <entry
+><filename
+>fd0</filename
+></entry>
+  <entry
+>첫번째 플로피 드라이브</entry>
+</row
+><row>
+  <entry
+><filename
+>fd1</filename
+></entry>
+  <entry
+>두번째 플로피 드라이브</entry>
+</row>
+</tbody
+></tgroup
+></informaltable>
+
+<informaltable
+><tgroup cols="2"
+><tbody>
+<row>
+  <entry
+><filename
+>hda</filename
+></entry>
+  <entry
+>첫번째 IDE 포트 마스터에 달린 IDE 하드디스크 / CD-ROM</entry>
+</row
+><row>
+  <entry
+><filename
+>hdb</filename
+></entry>
+  <entry
+>첫번째 IDE 포트 슬레이브에 달린 IDE 하드디스크 / CD-ROM</entry>
+</row
+><row>
+  <entry
+><filename
+>hdc</filename
+></entry>
+  <entry
+>두번째 IDE 포트 마스터에 달린 IDE 하드디스크 / CD-ROM</entry>
+</row
+><row>
+  <entry
+><filename
+>hdd</filename
+></entry>
+  <entry
+>두번째 IDE 포트 슬레이브에 달린 IDE 하드디스크 / CD-ROM</entry>
+</row
+><row>
+  <entry
+><filename
+>hda1</filename
+></entry>
+  <entry
+>첫번째 IDE 하드디스크의 첫번째 파티션</entry>
+</row
+><row>
+  <entry
+><filename
+>hdd15</filename
+></entry>
+  <entry
+>네번째 IDE 하드디스크의 열다섯번째 파티션</entry>
+</row>
+</tbody
+></tgroup
+></informaltable>
+
+<informaltable
+><tgroup cols="2"
+><tbody>
+<row>
+  <entry
+><filename
+>sda</filename
+></entry>
+  <entry
+>SCSI ID가 가장 낮은 (0번) SCSI 하드디스크</entry>
+</row
+><row>
+  <entry
+><filename
+>sdb</filename
+></entry>
+  <entry
+>SCSI ID가 다음 번호인 (1번) SCSI 하드디스크</entry>
+</row
+><row>
+  <entry
+><filename
+>sdc</filename
+></entry>
+  <entry
+>SCSI ID가 다음 번호인 (2번) SCSI 하드디스크</entry>
+</row
+><row>
+  <entry
+><filename
+>sda1</filename
+></entry>
+  <entry
+>첫번째 SCSI 하드디스크의 첫번째 파티션</entry>
+</row
+><row>
+  <entry
+><filename
+>sdd10</filename
+></entry>
+  <entry
+>네번째 SCSI 하드디스크의 열번째 파티션</entry>
+</row>
+</tbody
+></tgroup
+></informaltable>
+
+<informaltable
+><tgroup cols="2"
+><tbody>
+<row>
+  <entry
+><filename
+>sr0</filename
+></entry>
+  <entry
+>SCSI ID가 가장 낮은 SCSI CD-ROM</entry>
+</row
+><row>
+  <entry
+><filename
+>sr1</filename
+></entry>
+  <entry
+>SCSI ID가 다음 번호인 (2번) SCSI CD-ROM</entry>
+</row>
+</tbody
+></tgroup
+></informaltable>
+
+<informaltable
+><tgroup cols="2"
+><tbody>
+<row>
+  <entry
+><filename
+>ttyS0</filename
+></entry>
+  <entry
+>시리얼 포트 0, MS-DOS에서는 COM1</entry>
+</row
+><row>
+  <entry
+><filename
+>ttyS1</filename
+></entry>
+  <entry
+>시리얼 포트 1, MS-DOS에서는 COM2</entry>
+</row
+><row>
+  <entry
+><filename
+>psaux</filename
+></entry>
+  <entry
+>PS/2 마우스 장치</entry>
+</row
+><row>
+  <entry
+><filename
+>gpmdata</filename
+></entry>
+  <entry
+>가짜 장치, GPM (마우스) 데몬에서 나온 데이터의 리피터</entry>
+</row>
+</tbody
+></tgroup
+></informaltable>
+
+<informaltable
+><tgroup cols="2"
+><tbody>
+<row>
+  <entry
+><filename
+>cdrom</filename
+></entry>
+  <entry
+>CD-ROM 드라이브에 대한 심볼릭 링크</entry>
+</row
+><row>
+  <entry
+><filename
+>mouse</filename
+></entry>
+  <entry
+>마우스 장치 파일에 대한 심볼릭 링크</entry>
+</row>
+</tbody
+></tgroup
+></informaltable>
+
+<informaltable
+><tgroup cols="2"
+><tbody>
+<row>
+  <entry
+><filename
+>null</filename
+></entry>
+  <entry
+>이 장치로 들어가는 데이터는 모두 사라집니다</entry>
+</row
+><row>
+  <entry
+><filename
+>zero</filename
+></entry>
+  <entry
+>이 장치에서 끊임없이 0을 읽을 수 있습니다</entry>
+</row>
+</tbody
+></tgroup
+></informaltable>
+
+</para>
+
+  <sect2 arch="not-s390" id="device-mouse">
+  <title
+>마우스 설정하기</title>
+<para
+>마우스는 리눅스 콘솔과 (gpm 사용) X 윈도우 환경 모두에서 사용할 수 있습니다. 보통 <filename
+>gpm</filename
+>과 X 서버 자체를 설치하기만 하면 마우스를 사용할 수 있습니다. 두 환경 모두 마우스 장치로 <filename
+>/dev/input/mice</filename
+>를 사용합니다. 마우스 프로토콜은 gpm에서는 <userinput
+>exps2</userinput
+>, X 환경에서는 <userinput
+>ExplorerPS/2</userinput
+>입니다. 설정 파일은 <filename
+>/etc/gpm.conf</filename
+>와 <filename
+>/etc/X11/xorg.conf</filename
+>입니다. </para
+><para
+>마우스를 사용하려면 특정 커널 모듈을 읽어들여야 할 수 있습니다. 대부분 올바른 모듈을 자동으로 찾아내지만, 예전 시리얼 마우스나 버스 마우스<footnote
+><para
+>시리얼 마우스는 일반적으로 9핀 D형 커넥터를 사용하고 버스마우스는 8핀 둥근 커넥터를 사용합니다. PS/2마우스의 6핀 커넥터나 ADB 마우스의 4핀 커넥터와 혼동할 수 있습니다.</para
+></footnote
+>, 매우 오래된 컴퓨터의 마우스는 찾아내지 못할 수 있습니다. 여러가지 마우스 종류의 리눅스 커널 모듈은 아래 표에 있습니다:<informaltable
+><tgroup cols="2"
+><thead
+> <row
+> <entry
+>모듈</entry
+> <entry
+>설명</entry
+> </row
+> </thead
+><tbody
+> <row
+> <entry
+>psmouse</entry
+> <entry
+>PS/2 마우스 (자동으로 찾아냄)</entry
+> </row
+> <row
+> <entry
+>usbhid</entry
+> <entry
+>USB 마우스 (자동으로 찾아냄)</entry
+> </row
+> <row
+> <entry
+>sermouse</entry
+> <entry
+>대부분의 시리얼 마우스</entry
+> </row
+> <row
+> <entry
+>logibm</entry
+> <entry
+>Logitech 어댑터카드에 연결된 버스 마우스</entry
+> </row
+> <row
+> <entry
+>inport</entry
+> <entry
+>ATI나 마이크로소프트 InPort카드에 연결된 버스마우스</entry
+> </row
+></tbody
+></tgroup
+></informaltable
+> 마우스 드라이버 모듈을 읽어들이려면 <command
+>modconf</command
+> 명령을 (같은 이름의 패키지에 들어 있습니다) 사용할 수 있습니다. 모듈은 <userinput
+>kernel/drivers/input/mouse</userinput
+> 분류에 있습니다. </para
+><para arch="powerpc"
+>최근 커널에서는 단추가 1개인 마우스로도 단추 3개 마우스를 에뮬레이션할 수 있습니다. 다음 줄을 <filename
+>/etc/sysctl.conf</filename
+> 파일에 추가하십시오. <informalexample
+><screen
+># 단추 3개 마우스 에뮬레이션
+# 에뮬레이션 켜기
+/dev/mac_hid/mouse_button_emulation = 1
+# 가운데 마우스 단추 신호를 F11 키로 보냅니다
+/dev/mac_hid/mouse_button2_keycode = 87
+# 오른쪽 마우스 단추 신호를 F12 키로 보냅니다
+/dev/mac_hid/mouse_button3_keycode = 88
+# 기타 키의 경우 showkey로 그 키의 코드를 알 수 있습니다.
+</screen
+></informalexample>
+
+</para>
+  </sect2>
+ </sect1>
+
+ <sect1 id="tasksel-size-list">
+ <title
+>태스크마다 필요한 디스크 공간</title>
+<para
+>모든 표준 패키지를 포함하고 기본 2.6 커널을 사용하면 i386 아키텍처의 표준 설치 용량은 &std-system-size;MB의 디스크 공간을 차지합니다. <quote
+>표준 시스템</quote
+> 태스크를 선택하지 않으면 최소의 베이스 시스템 설치는 &base-system-size;MB를 차지합니다. </para>
+<important
+><para
+>두 경우 모두, 설치가 끝나고 임시 파일을 지운 <emphasis
+>후에</emphasis
+> 실제 차지하는 디스크 용량입니다. 저널링 파일과 같이 파일 시스템에서 사용하는 오버헤드는 감안하지 않았습니다. 즉 이보다 더 큰 디스크 공간이 설치하는 <emphasis
+>도중에도</emphasis
+> 필요하고 시스템을 실제 사용할 때도 필요합니다. </para
+></important>
+<para
+>다음 표는 aptitude에서 표시하는 값으로 (tasksel에 들어 있는) 태스크에 필요한 용량입니다. 태스크 중에는 겹치는 부분이 있기 때문에 두 개의 태스크를 같이 설치하면 숫자를 합친 전체 크기보다는 작을 수도 있습니다. </para
+><para
+>파티션의 크기를 결정할 때, 표준 설치의 크기에 다음 표에 있는 크기를 더해야 합니다. <quote
+>설치 크기</quote
+>에 들어 있는 크기의 대부분은 <filename
+>/usr</filename
+> 및 <filename
+>/lib</filename
+>에서 차지합니다. <quote
+>다운로드 크기</quote
+>는 (일시적으로) <filename
+>/var</filename
+>에 필요합니다. </para
+><para>
+
+<informaltable
+><tgroup cols="4">
+<thead>
+<row>
+  <entry
+>태스크</entry>
+  <entry
+>설치 크기 (MB)</entry>
+  <entry
+>다운로드 크기 (MB)</entry>
+  <entry
+>설치하는데 필요한 공간 (MB)</entry>
+</row>
+</thead>
+
+<tbody>
+<row>
+  <entry
+>데스크탑 환경</entry>
+  <entry
+>&task-desktop-inst;</entry>
+  <entry
+>&task-desktop-dl;</entry>
+  <entry
+>&task-desktop-tot;</entry>
+</row>
+
+<row>
+  <entry
+>노트북 컴퓨터<footnote
+> <para
+>데스크탑 환경 태스크와 노트북 태스크는 많은 부분이 겹칩니다. 둘 다 설치한다면 노트북 태스트가 추가로 차지하는 디스크 공간은 수 메가바이트에 불과합니다. </para>
+
+  </footnote
+></entry>
+  <entry
+>&task-laptop-inst;</entry>
+  <entry
+>&task-laptop-dl;</entry>
+  <entry
+>&task-laptop-tot;</entry>
+</row>
+
+<row>
+  <entry
+>웹 서버</entry>
+  <entry
+>&task-web-inst;</entry>
+  <entry
+>&task-web-dl;</entry>
+  <entry
+>&task-web-tot;</entry>
+</row>
+
+<row>
+  <entry
+>인쇄 서버</entry>
+  <entry
+>&task-print-inst;</entry>
+  <entry
+>&task-print-dl;</entry>
+  <entry
+>&task-print-tot;</entry>
+</row>
+
+<row>
+  <entry
+>DNS 서버</entry>
+  <entry
+>&task-dns-inst;</entry>
+  <entry
+>&task-dns-dl;</entry>
+  <entry
+>&task-dns-tot;</entry>
+</row>
+
+<row>
+  <entry
+>파일 서버</entry>
+  <entry
+>&task-file-inst;</entry>
+  <entry
+>&task-file-dl;</entry>
+  <entry
+>&task-file-tot;</entry>
+</row>
+
+<row>
+  <entry
+>메일 서버</entry>
+  <entry
+>&task-mail-inst;</entry>
+  <entry
+>&task-mail-dl;</entry>
+  <entry
+>&task-mail-tot;</entry>
+</row>
+
+<row>
+  <entry
+>SQL 데이터베이스</entry>
+  <entry
+>&task-sql-inst;</entry>
+  <entry
+>&task-sql-dl;</entry>
+  <entry
+>&task-sql-tot;</entry>
+</row>
+
+</tbody>
+</tgroup
+></informaltable>
+
+<note
+><para
+><emphasis
+>데스크탑</emphasis
+> 태스크는 그놈 데스크탑 환경을 설치합니다. </para
+></note>
+
+</para
+><para
+>영어가 아닌 언어로 설치한다면 <command
+>tasksel</command
+>에서 자동으로 <firstterm
+>지역화 태스크</firstterm
+>를 (해당 언어에 대한 태스크가 있다면) 설치합니다. 언어마다 필요한 공간이 다릅니다. 다운로드하고 설치하는데 최대 350MB까지의 공간이 있어야 합니다. </para>
+ </sect1>
+<!--   End of file appendix/files.xml -->
+
+<!-- Start of file appendix/chroot-install.xml -->
+<!-- $Id: chroot-install.xml 58143 2009-04-05 22:48:58Z fjp $ -->
+
+ <sect1 id="linux-upgrade">
+ <title
+>유닉스/리눅스 시스템에서 &debian; 설치하기</title>
+
+<para
+>이 부분에서는 (이 안내서의 다른 부분에 설명한) ncurses 기반 메뉴 방식 설치 프로그램을 사용하지 않고, 기존 유닉스 혹은 리눅스 시스템을 이용해 &debian; 배포판을 설치하는 방법을 설명합니다. 이 <quote
+>크로스 설치</quote
+> 하우투는 Red Hat, Mandrake, SUSE에서 &debian; 배포판으로 바꾸려는 사용자에게 필요한 부분입니다. 여기서는 유닉스 계열의 명령어를 입력하는 방법이나 파일 시스템을 돌아다니는 데 익숙해져 있다고 가정합니다. 여기서 <prompt
+>$</prompt
+> 표시는 사용자의 기존 시스템에서 입력하는 명령어이고, <prompt
+>#</prompt
+> 표시는 데비안 chroot에서 입력하는 명령어를 말합니다. </para
+><para
+>새로 설치한 데비안 시스템을 필요에 맞게 설정하기만 하면, 기존 사용자 데이터를 (있다면) 옮겨와서 계속 사용할 수 있습니다. 즉 <quote
+>다운타임이 없는</quote
+> &debian; 설치입니다. 또 이 방법은 여러가지 부팅 미디어나 설치 미디어가 동작하지 않는 하드웨어에서 좋은 설치 방법입니다. </para>
+
+<note
+><para
+>이 과정은 대부분을 수동으로 해야 하므로, 시스템의 수많은 기초적인 설정을 직접 해야 합니다. 이렇게 하려면 보통 방법으로 설치할 때 필요한 것보다 데비안과 리눅스에 대한 지식이 훨씬 더 많이 필요합니다. 또 이렇게 설치한 시스템이 보통 방법으로 설치한 것과 완전히 동일할 거라고 기대해서도 안 됩니다. 또 이 과정은 시스템을 준비하는 기초 단계일 뿐이고, 추가로 설치 및 설정 과정이 더 필요할 수도 있습니다. </para
+></note>
+
+  <sect2>
+  <title
+>시작하기</title>
+<para
+>기존 유닉스용 파티션 도구를 이용해 하드 드라이브를 필요한 대로 다시 파티션하십시오. 최소한 파일 시스템 한 개를 스왑으로 만드십시오. 콘솔만 설치하는 경우는 약 350MB의 공간이 필요하고 X를 설치한다면 약 1GB가 (그놈이나 KDE같은 데스크탑 환경을 설치한다면 이보다 더) 필요합니다. </para
+><para
+>그리고 파티션에 파일 시스템을 만드십시오. 예를 들어 <filename
+>/dev/hda6</filename
+> 파티션에 ext3 파일 시스템을 만드는 경우라면 (여기 예제에서 루트 파티션입니다): <informalexample
+><screen>
+# mke2fs -j /dev/<replaceable
+>hda6</replaceable>
+</screen
+></informalexample
+> ext2 파일 시스템을 만드는 경우라면 <userinput
+>-j</userinput
+> 옵션을 빼십시오. </para
+><para
+>스왑을 초기화하고 활성화하십시오 (아래의 파티션 번호를 데비안 스왑 파티션에 맞게 바꾸십시오): <informalexample
+><screen>
+# mkswap /dev/<replaceable
+>hda5</replaceable>
+# sync; sync; sync
+# swapon /dev/<replaceable
+>hda5</replaceable>
+</screen
+></informalexample
+> 한 파티션을 <filename
+>/mnt/debinst</filename
+>에 (루트 (<filename
+>/</filename
+>) 파일 시스템을 설치할 위치) 마운트하십시오. 마운트 위치 이름은 마음대로 정한 것이고, 아래에서 계속 사용합니다. <informalexample
+><screen
+># mkdir /mnt/debinst
+# mount /dev/<replaceable
+>hda6</replaceable
+> /mnt/debinst
+</screen
+></informalexample>
+
+</para>
+<note
+><para
+>파일 시스템의 일부를 (예를 들어 /usr) 별도의 파티션에 마운트하려면, 다음 단계로 넘어가기 전에 그 디렉토리를 수동으로 만들어서 마운트해야 합니다. </para
+></note>
+  </sect2>
+
+  <sect2>
+  <title
+><command
+>debootstrap</command
+> 설치</title>
+<para
+>데비안 베이스 시스템을 설치할 때 데비안 설치 프로그램이 사용하는 프로그램은, 공식적으로 <command
+>debootstrap</command
+>입니다. <command
+>debootstrap</command
+>은 <command
+>wget</command
+>과 <command
+>ar</command
+>을 사용하지만, 그 밖에는 <classname
+>/bin/sh</classname
+>와 기본 유닉스/리눅스 도구<footnote
+><para
+> 여기엔 GNU 기본 유틸리티와 <command
+>sed</command
+>, <command
+>grep</command
+>, <command
+>tar</command
+>와<command
+>gzip</command
+>같은 명령을 포함합니다. </para
+> </footnote
+>만 있으면 됩니다. 기존 시스템에 <command
+>wget</command
+>과 <command
+>ar</command
+>이 없으면 설치하십시오. 그리고 <command
+>debootstrap</command
+>을 다운로드하고 설치하십시오. </para>
+
+<!-- The files linked to here are from 2004 and thus currently not usable
+<para>
+
+If you have an rpm-based system, you can use alien to convert the
+.deb into .rpm, or download an rpm-ized version at
+<ulink url="http://people.debian.org/~blade/install/debootstrap"
+></ulink>
+
+</para>
+-->
+
+<para
+>아니면 다음 방법을 이용해 수동으로 설치할 수도 있습니다. 먼저 .deb 파일을 풀 작업용 폴더를 만드십시오: <informalexample
+><screen>
+# mkdir work
+# cd work
+</screen
+></informalexample
+> 바이너리 파일은 데비안 아카이브에 있습니다. (아키텍처에 맞는 파일을 선택하도록 하십시오.) <ulink url="http://ftp.debian.org/debian/pool/main/d/debootstrap/"
+> 패키지 풀</ulink
+>에서 <command
+>debootstrap</command
+> .deb 파일을 다운로드하고, 패키지를 작업용 폴더에 복사하고, 파일을 풀어 내십시오. 이 파일을 설치하려면 루트 권한이 필요합니다. <informalexample
+><screen
+># ar -x debootstrap_0.X.X_all.deb
+# cd /
+# zcat /full-path-to-work/work/data.tar.gz | tar xv
+</screen
+></informalexample>
+
+</para>
+  </sect2>
+
+  <sect2>
+  <title
+><command
+>debootstrap</command
+> 실행</title>
+<para
+><command
+>debootstrap</command
+>을 실행하면 필요한 파일을 아카이브에서 직접 다운로드합니다. 아래의 명령어 예제에서 <userinput
+>&archive-mirror;/debian</userinput
+>을 아무 데비안 아카이브 미러로 바꿀 수 있습니다. 네트워크에서 가까이 있는 미러로 하는 게 좋습니다. 미러 목록은 <ulink url="http://www.debian.org/misc/README.mirrors"
+></ulink
+>에 있습니다. </para
+><para
+>&releasename; &debian; CD를 <filename
+>/cdrom</filename
+>에 마운트했다면 http URL 대신에 file URL을 쓸 수 있습니다: <userinput
+>file:/cdrom/debian/</userinput
+> </para
+><para
+><command
+>debootstrap</command
+> 명령에서 <replaceable
+>ARCH</replaceable
+>를 다음 중의 하나로 바꾸십시오: <userinput
+>alpha</userinput
+>, <userinput
+>amd64</userinput
+>, <userinput
+>arm</userinput
+>, <userinput
+>armel</userinput
+>, <userinput
+>hppa</userinput
+>, <userinput
+>i386</userinput
+>, <userinput
+>ia64</userinput
+>, <userinput
+>m68k</userinput
+>, <userinput
+>mips</userinput
+>, <userinput
+>mipsel</userinput
+>, <userinput
+>powerpc</userinput
+>, <userinput
+>s390</userinput
+>, <userinput
+>sparc</userinput
+>. <informalexample
+><screen
+># /usr/sbin/debootstrap --arch ARCH &releasename; \
+     /mnt/debinst http://ftp.us.debian.org/debian
+</screen
+></informalexample>
+
+</para>
+  </sect2>
+
+  <sect2>
+  <title
+>베이스 시스템 설정</title>
+<para
+>이렇게 하면 디스크 안에 임시 시스템이 아니라 완전한 데비안 시스템이 갖춰졌습니다. <command
+>chroot</command
+>로 그 안에 들어갑니다: <informalexample
+><screen>
+# LANG=C chroot /mnt/debinst /bin/bash
+</screen
+></informalexample
+> chroot로 들어간 다음에 터미널 정의를 데비안 베이스 시스템과 맞게 맞춰야 할 것입니다. 예를 들어: <informalexample
+><screen
+># export TERM=<replaceable
+>xterm-color</replaceable
+>
+</screen
+></informalexample>
+
+</para>
+
+   <sect3>
+   <title
+>장치 파일 만들기</title>
+<para
+>이렇게 하면 <filename
+>/dev/</filename
+>에는 아주 기초적인 장치 파일만 들어 있게 됩니다. 다음 단계로 진행하려면 장치 파일이 몇 개 더 필요합니다. 여러가지 방법이 있고, 이 중에 어떤 방법을 이용할 지는 설치에 사용하는 호스트 시스템이 무엇이냐에 따라, 그리고 모듈식 커널을 이용할 것인가 아닌가, 그리고 새 시스템에 동적인 (예를 들어 <classname
+>udev</classname
+> 사용) 장치 파일을 사용할 지 고정 장치 파일을 사용할 지에 따라 달라집니다. </para
+><para
+>사용할 수 있는 옵션 몇 가지를 설명하면: <itemizedlist>
+<listitem
+><para
+>다음 명령으로 기본적인 고정 장치 파일을 만듭니다 <informalexample
+><screen
+># cd /dev
+# MAKEDEV generic
+</screen
+></informalexample>
+
+</para
+></listitem>
+<listitem
+><para
+><command
+>MAKEDEV</command
+>를 이용해 수동으로 장치 파일을 직접 지정해서 만듭니다 </para
+></listitem>
+<listitem
+><para
+>호스트 시스템의 /dev를 대상 시스템의 /dev 디렉토리에 연결합니다. 어떤 패키지는 postinst 스크립트를 실행하면서 장치 파일을 만들 수도 있습니다. 그러므로 이 옵션은 주의해서 사용해야 합니다. </para
+></listitem>
+</itemizedlist>
+
+</para>
+   </sect3>
+
+   <sect3>
+   <title
+>파티션 마운트하기</title>
+<para
+><filename
+>/etc/fstab</filename
+>을 만들어야 합니다. <informalexample
+><screen>
+# editor /etc/fstab
+</screen
+></informalexample
+> 여기에 있는 예제를 필요에 맞게 수정하면 됩니다: <informalexample
+><screen>
+# /etc/fstab: static file system information.
+#
+# file system    mount point   type    options                  dump pass
+/dev/XXX         /             ext3    defaults                 0    1
+/dev/XXX         /boot         ext3    ro,nosuid,nodev          0    2
+
+/dev/XXX         none          swap    sw                       0    0
+proc             /proc         proc    defaults                 0    0
+
+/dev/fd0         /media/floppy auto    noauto,rw,sync,user,exec 0    0
+/dev/cdrom       /media/cdrom  iso9660 noauto,ro,user,exec      0    0
+
+/dev/XXX         /tmp          ext3    rw,nosuid,nodev          0    2
+/dev/XXX         /var          ext3    rw,nosuid,nodev          0    2
+/dev/XXX         /usr          ext3    rw,nodev                 0    2
+/dev/XXX         /home         ext3    rw,nosuid,nodev          0    2
+</screen
+></informalexample
+> <userinput
+>mount -a</userinput
+> 명령으로 <filename
+>/etc/fstab</filename
+>에 지정한 파일 시스템을 모두 마운트하십시오. 아니면 다음 명령으로 파일 시스템을 하나하나 마운트하십시오: <informalexample
+><screen>
+# mount /path   # 예를 들어: mount /usr
+</screen
+></informalexample
+> 현재 데비안 시스템은 <filename
+>/media</filename
+> 아래에 이동식 미디어의 마운트 위치가 들어 있지만, <filename
+>/</filename
+>에 호환성 유지를 위해 심볼릭 링크를 만들어 놓았습니다. 필요하면 이 심볼릭 링크를 만드십시오. 예를 들어: <informalexample
+><screen>
+# cd /media
+# mkdir cdrom0
+# ln -s cdrom0 cdrom
+# cd /
+# ln -s media/cdrom
+</screen
+></informalexample
+> proc 파일 시스템은 여러번 어느 위치에서든 마운트할 수 있습니다. (하지만 /proc을 관행적으로 사용합니다.) <userinput
+>mount -a</userinput
+> 명령을 사용하지 않았다면, 계속하시기 전에 꼭 proc을 마운트하십시오. <informalexample
+><screen
+># mount -t proc proc /proc
+</screen
+></informalexample>
+
+</para
+><para
+><userinput
+>ls /proc</userinput
+> 명령을 실행하면 여러 파일이 들어 있는 디렉토리 내용을 표시합니다. 이 명령이 실패하면 chroot 바깥에서 proc을 마운트할 수 있습니다: <informalexample
+><screen
+># mount -t proc proc /mnt/debinst/proc
+</screen
+></informalexample>
+
+</para>
+   </sect3>
+
+   <sect3>
+   <title
+>시간대 설정하기</title>
+<para
+><filename
+>/etc/default/rcS</filename
+>에 파일에 들어 있는 옵션입니다. 하드웨어 시계를 UTC로 설정할 지, 지역별 시간으로 설정할 지 판단합니다. 다음 명령으로 이 부분을 설정하고, 해당 지역의 시간대를 설정합니다. <informalexample
+><screen
+># editor /etc/default/rcS
+# tzconfig
+</screen
+></informalexample>
+
+</para>
+   </sect3>
+
+   <sect3>
+   <title
+>네트워크 설정하기</title>
+<para
+>네트워크를 설정하려면, <filename
+>/etc/network/interfaces</filename
+>, <filename
+>/etc/resolv.conf</filename
+>, <filename
+>/etc/hostname</filename
+>과 <filename
+>/etc/hosts</filename
+> 파일을 편집하십시오. <informalexample
+><screen>
+# editor /etc/network/interfaces 
+</screen
+></informalexample
+> 다음은 <filename
+>/usr/share/doc/ifupdown/examples</filename
+>에 들어 있는 예제입니다: <informalexample
+><screen>
+######################################################################
+# /etc/network/interfaces -- configuration file for ifup(8), ifdown(8)
+# See the interfaces(5) manpage for information on what options are
+# available.
+######################################################################
+
+# We always want the loopback interface.
+#
+auto lo
+iface lo inet loopback
+
+# To use dhcp:
+#
+# auto eth0
+# iface eth0 inet dhcp
+
+# An example static IP setup: (broadcast and gateway are optional)
+#
+# auto eth0
+# iface eth0 inet static
+#     address 192.168.0.42
+#     network 192.168.0.0
+#     netmask 255.255.255.0
+#     broadcast 192.168.0.255
+#     gateway 192.168.0.1
+</screen
+></informalexample
+> 네임서버와 search 명령을 <filename
+>/etc/resolv.conf</filename
+>에 입력하십시오: <informalexample
+><screen>
+# editor /etc/resolv.conf
+</screen
+></informalexample
+> 간단한 예제 <filename
+>/etc/resolv.conf</filename
+>: <informalexample
+><screen>
+search hqdom.local
+nameserver 10.1.1.36
+nameserver 192.168.9.100
+</screen
+></informalexample
+> 시스템의 호스트이름을 입력하십시오 (2글자에서 63글자까지): <informalexample
+><screen>
+# echo DebianHostName &gt; /etc/hostname
+</screen
+></informalexample
+> 그리고 IPv6를 지원하는 기본적인 <filename
+>/etc/hosts</filename
+> 파일은: <informalexample
+><screen>
+127.0.0.1 localhost DebianHostName
+
+# The following lines are desirable for IPv6 capable hosts
+::1     ip6-localhost ip6-loopback
+fe00::0 ip6-localnet
+ff00::0 ip6-mcastprefix
+ff02::1 ip6-allnodes
+ff02::2 ip6-allrouters
+ff02::3 ip6-allhosts
+</screen
+></informalexample
+> 네트워크 카드가 여러개라면, <filename
+>/etc/modules</filename
+>에 드라이버 모듈 이름을 적당한 순서로 맞춰야 합니다. 그래야 부팅할 때 각 카드가 의도한 해당 인터페이스 이름으로 (eth0, eth1 등) 연결됩니다. </para>
+   </sect3>
+
+   <sect3>
+   <title
+>APT 설정하기</title>
+<para
+>debootstrap은 아주 기본적인 <filename
+>/etc/apt/sources.list</filename
+> 파일을 만드므로 추가 패키지를 설치할 수 있습니다. 하지만 이 외에 소스를 추가해야 할 경우가 있습니다. 예를 들어 보안 업데이트의 소스 패키지를 설정할 수 있습니다: <informalexample
+><screen>
+deb-src http://ftp.us.debian.org/debian &releasename; main
+
+deb http://security.debian.org/ &releasename;/updates main
+deb-src http://security.debian.org/ &releasename;/updates main
+</screen
+></informalexample
+> <filename
+>sources.list</filename
+> 파일을 고친 다음에 꼭 <userinput
+>aptitude update</userinput
+>를 실행하십시오. </para>
+   </sect3>
+
+   <sect3>
+   <title
+>로캘 및 키보드 설정하기</title>
+<para
+>영어가 아닌 언어를 사용할 때 로캘을 설정하려면 <classname
+>locales</classname
+> 지원 패키지를 설치하고 그 패키지를 설정하십시오. 지금은 UTF-8 로캘 사용을 권장합니다: <informalexample
+><screen>
+# aptitude install locales
+# dpkg-reconfigure locales
+</screen
+></informalexample
+> 키보드를 설정하려면 (키보드 설정이 필요한 경우): <informalexample
+><screen
+># aptitude install console-data
+# dpkg-reconfigure console-data
+</screen
+></informalexample>
+
+</para
+><para
+>chroot 안에서는 키보드를 설정할 수 없으니 유의하십시오. 다시 시작한 다음에 설정합니다. </para>
+   </sect3>
+  </sect2>
+
+  <sect2>
+  <title
+>커널 설치</title>
+<para
+>이 시스템을 부팅하려면, 리눅스 커널과 부트로더가 있어야 합니다. 패키지로 만들어져 있는 커널은 다음 명령으로 찾아 보십시오: <informalexample
+><screen
+># apt-cache search linux-image
+</screen
+></informalexample>
+
+</para
+><para
+>패키지로 만든 커널을 사용하려면, <filename
+>/etc/kernel-img.conf</filename
+> 설정 파일을 미리 만드십시오. 예제 파일은 다음과 같습니다: <informalexample
+><screen
+># Kernel image management overrides
+# See kernel-img.conf(5) for details
+do_symlinks = yes
+relative_links = yes
+do_bootloader = yes
+do_bootfloppy = no
+do_initrd = yes
+link_in_boot = no
+</screen
+></informalexample>
+
+</para
+><para
+>이 파일 및 여러가지 옵션에 대한 자세한 정보는, <classname
+>kernel-package</classname
+> 패키지를 설치하면 생기는 해당 맨페이지를 참고하십시오. 해당 옵션 값을 시스템에 맞추시기를 권장합니다. </para
+><para
+>그리고 설치하려는 커널 패키지를 패키지 이름을 이용해 설치하십시오. <informalexample
+><screen>
+# aptitude install linux-image-<replaceable
+>&kernelversion;-arch-etc</replaceable>
+</screen
+></informalexample
+> 패키지로 만든 커널을 설치하기 전에 <filename
+>/etc/kernel-img.conf</filename
+> 파일을 만들어 두지 않았다면, 설치하면서 몇 가지 질문을 받게 될 수 있습니다. </para>
+  </sect2>
+
+  <sect2>
+<title
+>부트로더 설정하기</title>
+<para
+>&debian; 시스템을 부팅 가능하게 하려면, 부트로더를 설정해서 루트 파티션에서 설치한 커널을 읽어들이도록 하십시오. <command
+>debootstrap</command
+>은 부트로더를 설치하지 않는다는 점에 주의하십시오. 하지만 <command
+>aptitude</command
+>을 데비안 chroot 안에서 사용하면 부트로더를 설치할 수 있습니다. </para
+><para arch="x86"
+><userinput
+>info grub</userinput
+> 혹은 <userinput
+>man lilo.conf</userinput
+> 명령으로 부트로더 설정 방법을 미리 알아보십시오. 데비안을 설치할 때 사용했던 기존 시스템을 계속 유지하는 경우라면, 기존의 grub <filename
+>menu.lst</filename
+> 혹은 <filename
+>lilo.conf</filename
+>에 데비안에 해당하는 항목을 추가하십시오. <filename
+>lilo.conf</filename
+>의 경우, 파일을 새로운 시스템으로 복사해 와서 편집할 수도 있습니다. 편집을 마친 다음에는 <command
+>lilo</command
+>를 실행하십시오. (<command
+>lilo</command
+>를 실행하면 실행하는 시스템에 상대적인 <filename
+>lilo.conf</filename
+> 파일을 사용하게 됩니다.) </para
+><para arch="x86"
+><classname
+>grub</classname
+> 설정은 다음과 같이 쉽습니다: <informalexample
+><screen>
+# aptitude install grub
+# grub-install /dev/<replaceable
+>hda</replaceable>
+# update-grub
+</screen
+></informalexample
+> 두 번째 명령이 <command
+>grub</command
+>을 설치합니다. (이 경우에는 <literal
+>hda</literal
+>의 MBR에 설치합니다.) 마지막 명령은 올바르게 동작하는 <filename
+>/boot/grub/menu.lst</filename
+> 파일을 만듭니다. </para
+><para
+>앞서 <filename
+>/dev/hda</filename
+> 장치 파일을 만들었다고 가정합니다. <command
+>grub</command
+>을 설치하는 다른 방법도 있지만, 이 부록이 다룰 범위를 벗어나는 내용입니다. </para
+><para arch="x86"
+>다음은 기초적인 <filename
+>/etc/lilo.conf</filename
+> 예제입니다: <informalexample
+><screen
+>boot=/dev/<replaceable
+>hda6</replaceable>
+root=/dev/<replaceable
+>hda6</replaceable>
+install=menu
+delay=20
+lba32
+image=/vmlinuz
+initrd=/initrd.img
+label=Debian
+</screen
+></informalexample>
+
+</para
+><para arch="x86"
+>사용하는 부트로더에 따라 <filename
+>/etc/kernel-img.conf</filename
+> 파일 내용을 약간 바꿀 수 있습니다. </para
+><para arch="x86"
+><classname
+>grub</classname
+> 부트로더의 경우, <literal
+>do_bootloader</literal
+> 옵션을 <quote
+>no</quote
+>로 해야 합니다. 또 데비안 커널을 설치하거나 지울 때마다 자동으로 <filename
+>/boot/grub/menu.lst</filename
+> 파일을 업데이트하려면 다음 줄을 추가합니다: <informalexample
+><screen>
+postinst_hook = update-grub
+postrm_hook   = update-grub
+</screen
+></informalexample
+> <classname
+>lilo</classname
+> 부트로더의 경우, <literal
+>do_bootloader</literal
+>는 <quote
+>yes</quote
+>로 놔둬야 합니다. </para
+><para arch="powerpc"
+><userinput
+>man yaboot.conf</userinput
+> 명령으로 부트로더 설정 방법을 미리 알아보십시오. 데비안을 설치할 때 사용한 기존 시스템을 유지하는 경우라면, 기존의 <filename
+>yaboot.conf</filename
+>에 데비안에 해당하는 항목을 추가하십시오. 파일을 새로운 시스템으로 복사해 와서 편집할 수도 있습니다. 편집을 마친 다음에는 ybin을 실행하십시오. (ybin을 실행하면 실행하는 시스템에 상대적인 <filename
+>yaboot.conf</filename
+> 파일을 사용하게 됩니다.) </para
+><para arch="powerpc"
+>다음은 기초적인 <filename
+>/etc/yaboot.conf</filename
+> 예제입니다: <informalexample
+><screen>
+boot=/dev/hda2
+device=hd:
+partition=6
+root=/dev/hda6
+magicboot=/usr/lib/yaboot/ofboot
+timeout=50
+image=/vmlinux
+label=Debian
+</screen
+></informalexample
+> 일부 컴퓨터에서는, <userinput
+>hd:</userinput
+>가 아니라 <userinput
+>ide0:</userinput
+>을 써야 할 수도 있습니다. </para>
+  </sect2>
+
+  <sect2>
+<title
+>마지막 처리</title>
+<para
+>앞에서 말한 것처럼, 설치한 시스템은 아주 기초적인 시스템입니다. 시스템을 좀 더 괜찮게 만드려면, 쉬운 방법으로 <quote
+>standard</quote
+> 우선 순위의 모든 패키지를 설치하면 됩니다: <informalexample
+><screen>
+# tasksel install standard
+</screen
+></informalexample
+> 물론 <command
+>aptitude</command
+>를 이용해 패키지를 하나하나 선택해서 설치할 수도 있습니다. </para
+><para
+>설치한 다음에 <filename
+>/var/cache/apt/archives/</filename
+> 밑에 다운로드한 패키지가 많이 들어 있게 됩니다. 다음 명령을 실행하면 디스크 공간을 좀 더 확보할 수 있습니다: <informalexample
+><screen
+># aptitude clean
+</screen
+></informalexample>
+
+</para>
+  </sect2>
+ </sect1>
+<!--   End of file appendix/chroot-install.xml -->
+
+<!-- Start of file appendix/plip.xml -->
+<!-- $Id: plip.xml 39644 2006-08-08 22:08:57Z jfs $ -->
+
+ <sect1 id="plip" arch="x86">
+ <title
+>패러렐 라인 IP를 (PLIP) 이용해 &debian; 설치하기</title>
+
+<para
+>이 부분은 이더넷 카드는 없지만 게이트웨이 컴퓨터와 널 모뎀 케이블을 (널 프린터 케이블이라고도 합니다) 통해 연결되어 있는 컴퓨터에 &debian;를 설치하는 방법을 설명합니다. 게이트웨이 컴퓨터는 데비안 미러가 있는 네트워크에 (예를 들어 인터넷에) 연결되어 있어야 합니다. </para
+><para
+>이 부록의 예제에서는 전화접속 연결을 통해 (ppp0) 인터넷에 연결된 게이트웨이와 PLIP 연결을 합니다. 타겟 컴퓨터와 소스 컴퓨터 각각에 IP 주소로 192.168.0.1 및 192.168.0.2를 사용합니다. (게이트웨이에 연결되어 있는 네트워크에서 이 IP 주소는 사용하지 말아야 합니다.) </para
+><para
+>설치할 때 설정한 PLIP 연결은 설치한 시스템을 다시 시작한 다음에도 사용할 수 있습니다. (<xref linkend="boot-new"/> 참고.) </para
+><para
+>시작하기 전에, 소스와 타겟 컴퓨터 모두에 대해 BIOS 설정의 패러렐 포트 부분을 (IO 베이스 주소 및 IRQ) 확인해야 합니다. 가장 많이 쓰는 값은 <literal
+>io=0x378</literal
+>, <literal
+>irq=7</literal
+>입니다. </para>
+
+  <sect2>
+  <title
+>요구 사항</title>
+
+<itemizedlist>
+<listitem
+><para
+>데비안을 설치할 <emphasis
+>타겟</emphasis
+>이라고 하는 대상 컴퓨터. </para
+></listitem>
+<listitem
+><para
+>시스템 설치 미디어. <xref linkend="installation-media"/> 참고. </para
+></listitem>
+<listitem
+><para
+>인터넷에 연결된 <emphasis
+>소스</emphasis
+>라고 하는 컴퓨터, 게이트웨이로 동작합니다. </para
+></listitem>
+<listitem
+><para
+>DB-25 널모뎀 케이블. 이 케이블에 대한 정보 및 케이블을 직접 만드는 방법은 <ulink url="&url-plip-install-howto;"
+>PLIP-Install-HOWTO</ulink
+>를 참고하십시오. </para
+></listitem>
+</itemizedlist>
+
+  </sect2>
+
+  <sect2>
+  <title
+>소스 설정하기</title>
+<para
+>다음 쉘 스크립트는 소스 컴퓨터를 (ppp0를 사용한) 인터넷 게이트웨이로 설정하는 예제입니다. <informalexample
+><screen
+>#!/bin/sh
+
+# 커널에서 실행중인 모듈을 없애 충돌을 방지하고
+# 다시 수동으로 설정합니다.
+modprobe -r lp parport_pc
+modprobe parport_pc io=<replaceable
+>0x378</replaceable
+> irq=<replaceable
+>7</replaceable>
+modprobe plip
+
+# plip 인터페이스를 설정합니다 (이 경우는 plip0, dmesg | grep plip 명령으로 확인하십시오)
+ifconfig <replaceable
+>plip0 192.168.0.2</replaceable
+> pointopoint <replaceable
+>192.168.0.1</replaceable
+> netmask 255.255.255.255 up
+
+# gateway 설정
+modprobe iptable_nat
+iptables -t nat -A POSTROUTING -o <replaceable
+>ppp0</replaceable
+> -j MASQUERADE
+echo 1 
+> /proc/sys/net/ipv4/ip_forward
+</screen
+></informalexample>
+
+</para>
+  </sect2>
+
+  <sect2>
+  <title
+>타겟 설치</title>
+<para
+>설치 미디어를 부팅하십시오. 설치는 전문가 모드에서 실행해야 합니다. 부팅 프롬프트에서 <userinput
+>expert</userinput
+>를 입력하십시오. 커널 모듈의 파라미터를 설정하려면, 부팅 파라미터에도 설정해야 합니다. 예를 들어, 설치 프로그램을 부팅하고 partport_pc 모듈의 <quote
+>io</quote
+> 및 <quote
+>irq</quote
+> 파라미터의 값을 설정하려면, 다음을 부팅 파라미터에 입력하십시오: <informalexample
+><screen>
+expert parport_pc.io=<replaceable
+>0x378</replaceable
+> parport_pc.irq=<replaceable
+>7</replaceable>
+</screen
+></informalexample
+> 아래는 설치 단계에서 입력해야 할 사항들입니다. </para>
+
+<orderedlist>
+<listitem
+><para>
+
+<guimenuitem
+>CD에서 설치 프로그램 컴포넌트 읽어들이기</guimenuitem>
+
+</para
+><para
+>목록에서 <userinput
+>plip-modules</userinput
+> 옵션을 선택하십시오. 그러면 설치 시스템에서 PLIP 드라이버를 사용할 수 있습니다. </para
+></listitem>
+<listitem
+><para>
+
+<guimenuitem
+>네트워크 하드웨어 검색</guimenuitem>
+
+</para>
+
+ <itemizedlist>
+ <listitem
+><para
+>만약 타겟에 네트워크 카드가 <emphasis
+>있으면</emphasis
+>, 검색한 드라이버 모듈의 목록이 표시됩니다. &d-i;에서 plip을 강제로 사용하려면 목록에 있는 드라이버 모듈을 모두 선택 해제하십시오. 물론 타겟에 네트워크 카드가 없으면 이 목록은 표시하지 않습니다. </para
+></listitem>
+ <listitem
+><para
+>앞에서 네트워크 카드를 찾지 못했거나 선택하지 않았으므로, 목록에서 선택한 네트워크 드라이버 모듈을 설치합니다. <userinput
+>plip</userinput
+> 모듈을 선택하십시오. </para
+></listitem>
+ </itemizedlist>
+
+</listitem>
+<listitem
+><para>
+
+<guimenuitem
+>네트워크 설정</guimenuitem>
+ 
+ <itemizedlist>
+ <listitem
+><para
+>DHCP로 네트워크 자동 설정: 아니오 </para
+></listitem>
+ <listitem
+><para
+>IP 주소: <userinput
+><replaceable
+>192.168.0.1</replaceable
+></userinput
+> </para
+></listitem>
+ <listitem
+><para
+>포인트 투 포인트 주소: <userinput
+><replaceable
+>192.168.0.2</replaceable
+></userinput
+> </para
+></listitem>
+ <listitem
+><para
+>네임서버 주소: 소스에서 사용한 같은 주소를 입력합니다. (<filename
+>/etc/resolv.conf</filename
+> 파일 참고.) </para
+></listitem>
+ </itemizedlist>
+
+</para
+></listitem>
+</orderedlist>
+
+  </sect2>
+ </sect1>
+<!--   End of file appendix/plip.xml -->
+
+<!-- Start of file appendix/pppoe.xml -->
+<!-- $Id: pppoe.xml 57313 2009-01-16 17:16:38Z fjp $ -->
+
+ <sect1 id="pppoe" arch="not-s390">
+ <title
+>PPP 오버 이더넷을 (PPPoE) 이용해 &debian; 설치하기</title>
+
+<para
+>어떤 국가에서는 PPP 오버 이더넷이 (PPPoE) 초고속 인터넷 연결에서 (ADSL 혹은 케이블) 인터넷 서비스 제공자에게 연결하는 일반적인 프로토콜입니다. PPPoE 연결은 기본값으로는 지원하지 않지만 아주 간단히 동작하게 만들 수 있습니다. 여기서 그 방법을 설명합니다. </para
+><para
+>설치할 때 설정한 PPPoE 연결은 설치한 시스템을 다시 시작한 다음에도 사용할 수 있습니다. (<xref linkend="boot-new"/> 참고.) </para
+><para
+>설치할 때 PPPoE를 설정하고 사용하는 옵션을 사용하려면, CD-ROM/DVD 이미지중 하나를 사용해야 합니다. 다른 설치 방법에서는 지원하지 않습니다. (예를 들어 netboot<phrase condition="supports-floppy-boot"
+>혹은 플로피</phrase
+>에서는 지원하지 않습니다.) </para
+><para
+>PPPoE를 통한 설치는 다른 설치와 거의 동일합니다. 아래에서 다른 부분을 설명합니다. </para>
+
+<itemizedlist>
+<listitem
+><para
+>부팅 파라미터로 <userinput
+>modules=ppp-udeb</userinput
+>을 사용해 설치 프로그램을 부팅하십시오<footnote arch="x86"
+> <para
+> 부팅 파라미터를 추가하는 방법은 <xref linkend="boot-screen"/> 부분을 참고하십시오. </para
+> </footnote
+>. 이렇게 하면 자동으로 PPPoE 설정을 하는 컴포넌트를 (<classname
+>ppp-udeb</classname
+>) 읽어들여서 실행합니다. </para
+></listitem>
+<listitem
+><para
+>마찬가지로 설치 처음 단계를 계속 하십시오.  (언어, 국가 및 키보드 선택. 그리고 필요한 경우 설치 프로그램 컴포넌트를 추가로 읽어들이기<footnote
+> <para
+> <classname
+>ppp-udeb</classname
+> 컴포넌트를 이 단계에서 추가 컴포넌트로 읽어들입니다. 중간이나 낮은 우선 순위로 설치한다면 (전문가 모드), 부팅 프롬프트에서 <quote
+>modules</quote
+> 파라미터를 설정하지 않고 <classname
+>ppp-udeb</classname
+>을 선택할 수 있습니다. </para
+> </footnote
+>.) </para
+></listitem>
+<listitem
+><para
+>다음 단계는 네트워크 하드웨어 찾기입니다. 시스템에 들어 있는 모든 이더넷 카드를 찾습니다. </para
+></listitem>
+<listitem
+><para
+>그 다음에 실제로 PPPoE 설정을 시작합니다. 설치 프로그램에서 검색한 모든 이더넷 장치에 대해서 PPPoE 콘센트레이터(PPPoE 연결을 처리하는 서버)가 있는 지 찾아 봅니다. </para
+><para
+>첫번째 시도할 때 콘센트레이터를 찾지 못하는 경우도 있습니다. 네트워크가 느리거나 너무 로드가 심하거나 서버에 문제가 있는 경우 이런 일이 발생할 수 있습니다. 대부분의 경우 다시 한번 콘센트레이터를 검색해 보면 성공합니다. 다시 시도해 보려면 설치 프로그램의 메인 메뉴에서 <guimenuitem
+>PPPoE 연결 설정 및 시작</guimenuitem
+>을 선택하십시오. </para
+></listitem>
+<listitem
+><para
+>콘센트레이터를 찾으면, 로그인 정보를 (PPPoE 사용자 이름 및 암호) 입력할 수 있게 물어봅니다. </para
+></listitem>
+<listitem
+><para
+>여기서 설치 프로그램은 입력한 정보를 이용해 PPPoE에 연결합니다. 올바른 정보를 입력했다면, PPPoE 연결을 설정하고 PPPoE를 이용해 인터넷에 연결해 (필요한 경우) 패키지를 인터넷에서 받아올 수 있게 됩니다. 로그인 정보가 틀렸거나 기타 오류가 발생한 경우에는 설치 프로그램이 멈춥니다. 하지만 <guimenuitem
+>PPPoE 연결 설정 및 시작</guimenuitem
+>을 선택하면 다시 설정을 할 수 있습니다. </para
+></listitem>
+</itemizedlist>
+
+ </sect1>
+<!--   End of file appendix/pppoe.xml -->
+
+<!-- Start of file appendix/graphical.xml -->
+<!-- $Id: graphical.xml 56145 2008-09-26 10:47:02Z lunar $ -->
+
+ <sect1 condition="gtk" id="graphical">
+ <title
+>그래픽 설치 프로그램</title>
+<para
+>그래픽 버전의 설치 프로그램은 일부의 아키텍처에서만 (&arch-title; 포함) 사용할 수 있습니다. 그래픽 설치 프로그램의 기능은 일반 설치 프로그램과 완전히 동일하고 (거의 같은 프로그램을 이용합니다) 프론트엔드만 다릅니다. </para
+><para
+>기능이 동일하긴 하지만, 그래픽 설치 프로그램은 분명한 장점이 몇가지 있습니다. 가장 큰 장점은 더 많은 언어를 지원한다는 점입니다. 즉 일반적인 <quote
+>newt</quote
+> 프론트엔드에서 표시할 수 없는 문자셋을 사용하는 언어까지 지원합니다. 또 마우스를 사용하기 때문에 사용하기 편리하고, 경우에 따라서는 여러 개의 질문을 한 화면에 표시할 수도 있습니다. </para
+><para arch="x86"
+>그래픽 설치 프로그램은 모든 CD 이미지 및 hd-media 설치 방법에서 사용할 수 있습니다. 그래픽 설치 프로그램으로 부팅하려면 간단히 부팅 메뉴에서 관련 옵션을 선택하면 됩니다. 전문가 모드 및 응급 모드에서는 <quote
+>Advanced options</quote
+> 메뉴에서 선택할 수 있습니다. 예전에 사용했던 부팅 방법이었던 <userinput
+>installgui</userinput
+>, <userinput
+>expertgui</userinput
+>, <userinput
+>rescuegui</userinput
+>도 <quote
+>Help</quote
+> 옵션 다음에 나오는 부팅 프롬프트에서 입력하면 사용할 수 있습니다. </para
+><para arch="x86"
+>네트워크 부팅할 수 있는 그래픽 설치 프로그램 이미지도 있습니다. 또 특별히 <quote
+>미니</quote
+> ISO 이미지<footnote id="gtk-miniiso"
+> <para
+> 미니 ISO 이미지는 <xref linkend="downloading-files"/>에 설명한 데비안 미러에서 다운로드할 수 있습니다. <quote
+>netboot/gtk/mini.iso</quote
+> 파일을 찾아 보십시오. </para
+> </footnote
+>도 있어서 테스트할 때 특히 유용하게 쓸 수 있습니다. </para
+><para arch="powerpc"
+>&arch-title; 아키텍처의 경우, 실험적인 <quote
+>미니</quote
+> ISO 이미지밖에 없습니다<footnote id="gtk-miniiso"
+> <para
+> 미니 ISO 이미지는 <xref linkend="downloading-files"/>에 설명된 데비안 미러에서 다운로드할 수 있습니다. <quote
+>netboot/gtk/mini.iso</quote
+>를 찾아 보십시오. </para
+> </footnote
+>. ATI 그래픽 카드를 사용하는 거의 모든 PowerPC 시스템에서 동작하지만, 그 외의 시스템에서는 동작하지 않을 것입니다. </para
+><para
+>그래픽 설치 프로그램을 시작할 때에도 일반 설치 프로그램과 마찬가지로 부팅 파라미터를 추가할 수 있습니다. 그러한 파라미터 중의 하나를 이용하면 마우스를 왼손으로 사용하도록 설정할 수 있습니다. 그리고 마우스 장치와 (예를 들어 시리얼 마우스의 경우) 마우스 프로토콜을 선택하는 파라미터도 있습니다. 파라미터에 대한 정보는 <xref linkend="boot-parms"/><phrase arch="x86"
+> 및 <xref linkend="boot-screen"/></phrase
+> 부분을 참고하십시오. </para>
+<note
+><para
+>그래픽 설치 프로그램은 일반 설치 프로그램보다 훨씬 많은 메모리를 (&minimum-memory-gtk;) 차지합니다. 충분한 메모리가 없는 경우, 자동으로 보통의 <quote
+>newt</quote
+> 프론트엔드로 실행합니다. </para
+><para
+>시스템의 메모리가 &minimum-memory;보다 작으면 (일반 설치 프로그램이 동작하는 경우에도) 그래픽 설치 프로그램이 시작하지 못하고 실패합니다. 메모리가 작은 시스템의 경우 일반 설치 프로그램 사용을 권장합니다. </para
+></note>
+
+  <sect2 id="gtk-using">
+  <title
+>그래픽 설치 프로그램 사용하기</title>
+<para
+>앞에서 말한 것처럼, 그래픽 설치 프로그램은 보통의 설치 프로그램과 동일하게 동작합니다. 그러므로 이 안내서를 그대로 이용해 설치를 마칠 수 있습니다. </para
+><para
+>마우스보다 키보드를 사용하고 싶다면, 두 가지를 미리 알아둬야 합니다. 접힌 목록을 펼치려면 (예를 들어 대륙별로 묶여진 국가를 선택할 때), <keycap
+>+</keycap
+>와 <keycap
+>-</keycap
+> 키를 이용합니다. 질문에 대해 여러 개의 항목을 선택하려면 (예를 들어 태스크를 선택할 때), 선택한 다음에 먼저 탭을 눌러 &BTN-CONT; 단추로 이동하고 엔터를 누르면 해당 선택을 (선택하는 게 아니라) 토글합니다. </para
+><para
+>다른 콘솔로 바꾸려면, X 윈도우 시스템과 마찬가지로 <keycap
+>Ctrl</keycap
+> 키를 이용할 수 있습니다. 예를 들어 VT2로 (첫번째 디버깅 쉘) 이동하려면: <keycombo
+> <keycap
+>Ctrl</keycap
+> <keycap
+>왼쪽 Alt</keycap
+> <keycap
+>F2</keycap
+> </keycombo
+>를 누릅니다. 그래픽 설치 프로그램은 VT5에서 동작하므로 <keycombo
+> <keycap
+>왼쪽 Alt</keycap
+> <keycap
+>F5</keycap
+> </keycombo
+> 키를 누르면 VT5로 돌아갑니다. </para>
+  </sect2>
+
+  <sect2 id="gtk-issues">
+  <title
+>알려진 문제점</title>
+<para
+>설치 프로그램의 그래픽 프론트엔드는 비교적 새로 등장한 기능이고, 그래서 알려진 문제점이 몇 가지 있습니다. 이 문제를 해결하는 중입니다. </para>
+
+<itemizedlist>
+<listitem
+><para
+>일부 화면에서는 아직 화면의 열이 안 맞을 수도 있습니다. </para
+></listitem>
+<listitem
+><para
+>터치패드 지원은 아직 완전하지 않습니다. </para
+></listitem>
+</itemizedlist>
+
+  </sect2>
+ </sect1>
+<!--   End of file appendix/graphical.xml -->
+
+</appendix>
+<!--   End of file appendix/random-bits.xml -->

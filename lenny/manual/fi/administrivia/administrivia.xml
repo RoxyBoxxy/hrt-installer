@@ -1,0 +1,102 @@
+<!-- Start of file administrivia/administrivia.xml -->
+<!-- $Id: administrivia.xml 43043 2006-11-30 12:08:35Z fjp $ -->
+
+<appendix id="administrivia">
+ <title
+>Hallinnolliset tiedot</title>
+
+
+ <sect1 id="about">
+ <title
+>Tietoa tästä ohjeesta</title>
+
+<para
+>This manual was created for Sarge's debian-installer, based on the Woody installation manual for boot-floppies, which was based on earlier Debian installation manuals, and on the Progeny distribution manual which was released under GPL in 2003. </para
+><para
+>Tämä ohje on kirjoitettu DocBook XML -kuvauskielellä. Tulostusmuodot tuotetaan ohjelmallisesti paketteja <classname
+>docbook-xml</classname
+> ja <classname
+>docbook-xsl</classname
+> käyttäen. </para
+><para
+>Tämän ohjeen ylläpidettävyyttä parannetaan hyödyntämällä lukuisia XML:n ominaisuuksia, esimerkiksi entiteettejä ja profiloinnin attribuutteja. Niitä käytetään kuten ohjelmointikielten muuttujia ja ehtorakenteita. Tämän ohjeen XML-lähdekoodissa on tietoa kaikista eri arkkitehtuureista &mdash; profiloinnin attribuuteilla erotetaan arkkitehtuuririippuvat osat. </para
+><para condition="about-langteam"
+>Tämän version suomentaja on Tapio Lehtonen tale@debian.org. Aikaisempia Debianin asennusohjeita ovat suomentaneet myös Panu Hällfors, Tommi Vainikainen ja Antti-Juhani Kaijanaho. Tarkistusluvusta kiitos lokalisointi.org:n postituslistalle laatu. </para>
+ </sect1>
+
+ <sect1 id="contributing">
+ <title
+>Ohjetalkoisiin osallistuminen</title>
+
+<para
+>Vikailmoituksia ja parannusehdotuksia tälle ohjeelle lienee kätevintä lähettää vikailmoituksena paketille <classname
+>installation-guide</classname
+>. Tutustu pakettiin <classname
+>reportbug</classname
+> tai lue <ulink url="&url-bts;"
+>Debianin vianseurantajärjestelmän</ulink
+> ohjeet. Olisi mukavaa jos tarkistaisit onko viasta jo mainittu <ulink url="&url-bts;debian-installer-manual"
+>asennusohjeen aktiivisten vikojen luettelossa</ulink
+>. Tunnettuun vikaan voi lähettää vahvistuksen tai lisätietoa sähköpostilla osoitteeseen <email
+><replaceable
+>XXXX</replaceable
+>@bugs.debian.org</email
+>, missä <replaceable
+>XXXX</replaceable
+> on vian numero. </para
+><para
+>Vieläkin parempi olisi toimittaa korjaustiedosto noutamalla tämän ohjeen <ulink url="&url-d-i-websvn;"
+>DocBook-lähdekoodi</ulink
+>. Auttaa voi vaikkei DocBook olisikaan tuttu, sillä alkuun pääsee ohjeen hakemistossa olevalla lunttilapulla (<filename
+>cheatsheet.xml</filename
+>). DocBook on HTML:n kaltaista, mutta tarkoitettu tekstin merkityksen ilmaisemiseen eikä ulkoasun muokkaamiseen. Korjaustiedostot ovat tervetulleita sähköpostituslistalle debian-boot (katso jäljempää). Lähdekoodien noutaminen SVN:n avulla neuvotaan <ulink url="&url-d-i-readme;"
+>README</ulink
+> -tiedostossa lähdekoodihakemiston juuressa. </para
+><para
+>Toivomme <emphasis
+>ettei</emphasis
+> tämän ohjeen tekijöihin oteta yhteyttä suoraan. Keskustelua muun muassa tästä ohjeesta käydään &d-i; -postituslistalla, listan osoite on <email
+>debian-boot@lists.debian.org</email
+>. Ohjeet listalle liittymiseen löytyvät sivulta <ulink url="&url-debian-lists-subscribe;"
+>Postilistoille liittyminen</ulink
+>, tai <ulink url="&url-debian-list-archives;"
+>Debianin sähköpostilistojen arkistoja</ulink
+> voi selata netistä. </para>
+
+ </sect1>
+
+ <sect1 id="contributors">
+ <title
+>Tärkeimmät avustajat</title>
+
+<para
+>Tämän ohjeen kirjoittivat alunperin Bruce Perens, Sven Rudolph, Igor Grobman, James Treacy ja Adam Di Carlo. Asennus-Howton:n kirjoitti Sebastian Ley. Useat Debianin käyttäjät ja kehittäjät osallistuivat tämän ohjeen kirjoittamiseen. Erityisesti on huomattava Michael Schmitz (m68k:n tuki), Frank Neumann (<ulink url="&url-m68k-old-amiga-install;"
+>Amiga install manual</ulink
+>:n alkuperäinen tekijä), Arto Astala, Eric Delaunay/Ben Collins (tietoa SPARC:sta), Tapio Lehtonen jaStéphane Bortzmeyer jotka ovat tehneet lukuisia korjauksia. Kiitämme Pascal Le Bailia USB-muistitikuilta käynnistämiseen liittyvistä hyödyllisistä tiedoista. Miroslav Kuře on kirjoittanut paljon Sargen debian-asentimen uusista ominaisuuksista. </para
+><para
+>Erittäin hyödyllistä tekstiä ja tietoa löytyi Jim Minthan ohjeesta Howto for network booting (URL ei saatavilla), <ulink url="&url-debian-faq;"
+>Debianin VUKK:sta</ulink
+>, <ulink url="&url-m68k-faq;"
+>Linux/m68k FAQ:sta</ulink
+>, <ulink url="&url-sparc-linux-faq;"
+>Linux for SPARC Prosessors FAQ:sta</ulink
+>, <ulink url="&url-alpha-faq;"
+>Linux/Alpha FAQ:sta</ulink
+> muiden muassa. Näiden vapaasti saatavilla olevien ja täynnä tietoa olevien lähteiden ylläpitäjille on annettava tunnustusta. </para
+><para
+>Tämän ohjeen chrooted-asennuksia käsittelevä osuus <xref linkend="linux-upgrade"/> on osittain lainattu dokumenteista joiden tekijänoikeuden omistaa Karsten M. Self. </para
+><para arch="x86"
+>PLIP:tä käyttäviä asennuksia käsittelevä osuus (<xref linkend="plip"/> pohjautuu Gilles Lamiralin ohjeeseen <ulink url="&url-plip-install-howto;"
+>PLIP Install Howto</ulink
+>. </para>
+ </sect1>
+
+ <sect1 id="trademarks">
+ <title
+>Tavaramerkit</title>
+<para
+>Kaikki tavaramerkit ovat omistajiensa omistamia. </para>
+ </sect1>
+</appendix>
+
+<!--   End of file administrivia/administrivia.xml -->
