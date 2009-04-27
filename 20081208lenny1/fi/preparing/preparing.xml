@@ -1,0 +1,1741 @@
+<!-- Start of file preparing/preparing.xml -->
+<!-- $Id: preparing.xml 16467 2004-05-30 08:11:23Z mck-guest $ -->
+
+<chapter id="preparing">
+ <title
+>Ennen &debian;in asennusta</title>
+<para
+>Tässä luvussa käsitellään Debianin asentamisen valmistelevia toimia, jotka tehdään ennen kuin asenninta edes käynnistetään. Tähän kuuluvat varmuuskopioiden ottaminen, tietojen kerääminen laitteistosta ja tarvittavan tiedon etsiminen. </para>
+
+
+<!-- Start of file preparing/install-overview.xml -->
+<!-- $Id: install-overview.xml 56322 2008-10-06 13:20:07Z fjp $ -->
+
+ <sect1 id="install-overview">
+ <title
+>Katsaus asennusprosessiin</title>
+<para
+>Ensin huomio uudelleenasennuksista. Tilanne joka vaatisi Debianin asentamisen kokonaan uudelleen on hyvin harvinainen; ehkäpä kiintolevyn mekaaninen hajoaminen olisi tyypillisin tapaus. </para
+><para
+>Useiden paljon käytettyjen käyttöjärjestelmien kanssa voidaan joutua asentamaan alusta asti kun on tapahtunut vakava virhe tai kun päivitetään uuteen käyttöjärjestelmän versioon. Vaikka täysin uutta asennusta ei tarvitsisikaan tehdä, joutuu usein asentamaan käytetyt ohjelmat uudelleen, jotta ne toimisivat kunnolla uudessa käyttöjärjestelmässä. </para
+><para
+>Käytettäessä &debian;ia, on paljon todennäköisempää, että vikatilanteessa käyttöjärjestelmä voidaan korjata eikä sitä tarvitse asentaa uudelleen. Päivitykset eivät koskaan vaadi kaiken asentamista uudelleen; Debian osaa aina päivittää itse itsensä. Lisäksi ohjelmat ovat melkein aina yhteensopivia peräkkäisissä Debianin julkaisuissa. Jos ohjelman uusi versio vaatii uudempia tukiohjelmia, Debianin paketointijärjestelmä varmistaa kaikkien tarpeellisten ohjelmien löytyvän ja tulevan asennetuiksi automaattisesti. Korostetaan vielä, että paljon työtä on tehty, jotta uuudelleen asennus ei olisi välttämätöntä, joten uudelleenasennusta olisi pidettävä viimeisenä vaihtoehtona. Asenninta <emphasis
+>ei</emphasis
+> ole tarkoitettu uudelleenasennukseen jo asennetun järjestelmän päälle.  </para
+><para
+>Tässä on luettelo asennusprosessin vaiheista: </para>
+
+<orderedlist>
+<listitem
+><para
+>Siltä levyltä johon asennetaan pitäisi kopioda kaikki tiedot varmuuskopioksi. </para
+></listitem>
+<listitem
+><para
+>Kerää tietoja tietokoneesta ja kaikki tarvittavat ohjeet ennen kuin asennus aloitetaan. </para
+></listitem>
+<listitem
+><para
+>Luo Debianille osioitavaksi kelpaavaa tilaa kiintolevylle. </para
+></listitem>
+<listitem
+><para
+>Etsi ja/tai nouda asennusohjelmisto ja tietokoneen tarvitsemat erikoisajurit (asennettaessa Debian-rompulta ei erikoisajureista tarvitse välittää) </para
+></listitem>
+<listitem
+><para
+>Valmistele käynnistysnauhat/-levykkeet tai USB-muistit, tai tallenna käynnistystiedostot kiintolevylle (asennettaessa Debian-rompulta voidaan useimmiten käynnistää rompulta). </para
+></listitem>
+<listitem
+><para
+>Käynnistä asennusjärjestelmä. </para
+></listitem>
+<listitem arch="not-s390"
+><para
+>Valitse asennuskieli. </para
+></listitem>
+<listitem arch="not-s390"
+><para
+>Käynnistä Ethernetliitäntä, jos se on käytettävissä. </para
+></listitem>
+
+<listitem arch="s390"
+><para
+>Tee yhden verkkoliitännän asetukset. </para
+></listitem>
+<listitem arch="s390"
+><para
+>Avaa ssh-yhteys uuteen järjestelmään. </para
+></listitem>
+<listitem arch="s390"
+><para
+>Liitä yksi tai useampi DASD (Direct Access Storage Device). </para
+></listitem>
+
+<listitem
+><para
+>Luo ja liitä ne osiot joihin Debian asennetaan. </para
+></listitem>
+<listitem
+><para
+>Katsele kun automaattisesti noudetaan/asennetaan <firstterm
+>peruskokoonpano</firstterm
+> tai sen asetukset tehdään. </para
+></listitem>
+<listitem
+><para
+>Asenna <firstterm
+>käynnistyslatain</firstterm
+> käynnistämään &debian; ja/tai tietokoneen vanha käyttöjärjestelmä. </para
+></listitem>
+<listitem
+><para
+>Käynnistää uusi asennettu järjestelmä ensimmäistä kertaa. </para
+></listitem>
+</orderedlist>
+
+<para condition="gtk"
+>Laitealustalla &arch-title; on mahdollista käyttää <phrase arch="x86"
+>graafista</phrase
+> <phrase arch="powerpc"
+>kokeiltavana olevaa graafista</phrase
+> asennusjärjestelmää. Lisätietoja tästä graafisesta asentimesta kertoo <xref linkend="graphical"/>. </para
+><para
+>Jos asennuksen aikana tulee pulmia, auttaa kun tietää mitkä paketit ovat mukana missäkin vaiheessa. Esitellään tämän asennusdraaman pääosia näyttelevät ohjelmat: </para
+><para
+>Tämä ohje on pääasiassa Debianin asentimen, <classname
+>debian-installer</classname
+>, käyttöohje. Asennin tunnistaa laitteiston ja lataa sopivat ajurit, tekee verkkoasetukset <classname
+>dhcp-client</classname
+>:n avulla, käynnistää <classname
+>debootstrap</classname
+>in asentamaan peruskokoonpanon paketit ja käynnistää <classname
+>tasksel</classname
+>in, jonka avulla valitaan lisää ohjelmia asennettavaksi. Useat muut ohjelmat näyttelevät pienempiä osia tässä prosessissa, mutta <classname
+>debian-installer</classname
+>in työ on päättynyt, kun uusi järjestelmä käynnistetään ensimmäisen kerran. </para
+><para
+>Järjestelmää voi sovittaa omiin tarpeisiinsa valitsemalla <classname
+>tasksel</classname
+>in avulla erilaisia esimääriteltyjä ohjelmakokoelmia, kuten webbipalvelin tai työpöytäympäristö. </para
+><para
+>Yksi tärkeä valinta asennuksen aikana on päättää, asennetaanko graafinen työpöytäympäristö, joka muodostuu X Window -järjestelmästä ja yhdestä saatavilla olevasta graafisesta työpöytäympäristöstä. Jos ei valita asennettavaksi <quote
+>Desktop environment</quote
+>, saadaan komentoriviltä käytettävä perusjärjestelmä. Desktop Environmentin (eli työpöytäympäristön) asentaminen on valinnaista, koska se vaatii varsin paljon levytilaa, ja koska useat &debian; järjestelmät ovat palvelinkoneita joissa ei oikeastaan ole lainkaan käyttöä graafiselle työpöytäympäristölle. </para
+><para arch="not-s390"
+>On huomattava, että X Window -järjestelmä ja <classname
+>debian-installer</classname
+> ovat täysin erilliset järjestelmät, ja X Window on itse asiassa paljon monimutkaisempi. Tämän ohjeen piiriin ei kuulu X Window -järjestelmän asennus ja vianjäljitys. </para>
+ </sect1>
+<!--   End of file preparing/install-overview.xml -->
+
+<!-- Start of file preparing/backup.xml -->
+<!-- $Id: backup.xml 43730 2006-12-31 22:10:55Z fjp $ -->
+
+ <sect1 id="backup">
+ <title
+>Ota varmuuskopiot koneen tiedoista!</title>
+<para
+>Ennen kuin aloitat, muista ottaa varmuuskopio jokaisesta tietokoneella nyt olevasta tiedostosta. Jos tietokoneella on nyt vain esiasennettu käyttöjärjestelmä, on kiintolevy luultavimmin osioitava uudelleen jotta saadaan tilaa &debian;ille. Aina kun levy osioidaan on varauduttava kaikkien tietojen menetykseen, riippumatta siitä millä ohjelmalla osiot tehdään. Asennuksessa käytettävät ohjelmat ovat hyvin luotettavia ja useimmat ovat olleet vuosia käytössä; mutta ne ovat myös mahtiohjelmia ja lipsahdus voi tuhota paljon. Vaikka varmuuskopiot onkin otettu, ole varovainen ja mieti vastauksia ja toimintoja. Kaksi minuuttia miettimistä voi säästää tunteja tarpeetonta työtä. </para
+><para
+>Tehtäessä monikäynnistystä on varmistuttava käsillä olevan kaikkien koneella olevien käyttöjärjestelmien asennustaltiot. Erityisesti kun käynnistyslevy osioidaan uudelleen, voidaan joutua asentamaan käyttöjärjestelmän käynnistyslatain uudelleen, tai useissa tapauksissa koko käyttöjärjestelmä ja kaikki muutetuilla osiolla olevat tiedostot. </para>
+
+<para arch="m68k"
+>Ainoa tuettu asennustapa m68k-järjestelmille on käynnistäminen koneen kiintolevyltä tai levykkeeltä käyttäen AmigaOS/TOS/MacOS-pohjautuvaa bootstrappia. Näillä koneilla tarvitaan alkuperäinen käyttöjärjestelmä Linuxin käynnistämiseen. Poikkeus on BVM- ja Motorola VMEbus-tietokoneet, joilla Linuxin käynnistämiseen tarvitaan <quote
+>BVMBug</quote
+> tai <quote
+>16xBug</quote
+> käynnistys-ROMia. </para>
+
+ </sect1>
+<!--   End of file preparing/backup.xml -->
+
+<!-- Start of file preparing/needed-info.xml -->
+<!-- $Id: needed-info.xml 56150 2008-09-26 10:48:26Z lunar $ -->
+
+ <sect1 id="needed-info">
+ <title
+>Tarvittavat tiedot</title>
+
+  <sect2>
+  <title
+>Ohjeet</title>
+
+   <sect3>
+   <title
+>Asennusohje</title>
+
+<para condition="for_cd"
+>Tämä ohje jota parhaillaan luet, saatavilla tekstitiedostona, HTML- tai PDF-muodossa. </para>
+
+<itemizedlist condition="for_cd"
+>&list-install-manual-files; </itemizedlist>
+
+<para condition="for_wdo"
+>Ohje jota parhaillaan luet. Se on virallinen versio Debianin julkaisun &releasename; Asennusohjeesta, saatavilla <ulink url="&url-release-area;/installmanual"
+>useina tiedostomuotoina ja käännöksinä</ulink
+>. </para>
+
+<para condition="for_alioth"
+>Ohje jota parhaillaan luet. Se on virallinen versio Debianin julkaisun &releasename; Asennusohjeesta, saatavilla <ulink url="&url-d-i-alioth-manual;"
+>useina tiedostomuotoina ja käännöksinä</ulink
+>. </para>
+
+</sect3>
+
+
+   <sect3
+><title
+>Laitteiston ohjekirjat</title>
+<para
+>Sisältävät usein hyödyllistä tietoa laitteiston asetusten teosta ja käytöstä. </para>
+
+ <!-- We need the arch dependence for the whole list to ensure proper xml
+      as long as not architectures have a paragraph -->
+ <itemizedlist arch="x86;m68k;alpha;sparc;mips;mipsel">
+<listitem arch="x86"
+><para>
+
+<ulink url="&url-hardware-howto;"
+>Linux Hardware Compatibility HOWTO</ulink>
+
+</para
+></listitem>
+
+<listitem arch="m68k"
+><para>
+
+<ulink url="&url-m68k-faq;"
+>Linux/m68k FAQ</ulink>
+
+</para
+></listitem>
+
+<listitem arch="alpha"
+><para>
+
+<ulink url="&url-alpha-faq;"
+>Linux/Alpha FAQ</ulink>
+
+</para
+></listitem>
+
+<listitem arch="sparc"
+><para>
+
+<ulink url="&url-sparc-linux-faq;"
+>Linux for SPARC Processors FAQ</ulink>
+
+</para
+></listitem>
+
+<listitem arch="mips;mipsel"
+><para>
+
+<ulink url="&url-linux-mips;"
+>Linux/Mips seittisivusto</ulink>
+
+</para
+></listitem>
+
+</itemizedlist>
+   </sect3>
+
+
+   <sect3 arch="s390">
+   <title
+>&arch-title; laitteiston ohjekirjat</title>
+<para
+>Asennusohjeet ja laiteajurit (DASD, XPRAM, konsoli, nauha, z90 crypto, chandev, verkko) Linuxille suoritinperheellä &arch-title; käyttäen ydintä 2.4 </para>
+
+<itemizedlist>
+<listitem
+><para>
+
+<ulink url="http://oss.software.ibm.com/developerworks/opensource/linux390/docu/l390dd08.pdf"
+>Laiteajurit ja asennuskomennot</ulink>
+
+</para
+></listitem>
+</itemizedlist>
+
+<para
+>IBM Redbook joka kertoo miten Linux ja z/VM voidaan monikäynnistää zSeries koneilla ja suoritinperheellä &arch-title;. </para>
+
+<itemizedlist>
+<listitem
+><para>
+
+<ulink url="http://www.redbooks.ibm.com/pubs/pdfs/redbooks/sg244987.pdf"
+>Linux suoritinperheelle &arch-title;</ulink>
+
+</para
+></listitem>
+</itemizedlist>
+
+<para
+>IBM Redbook joka kuvaa suurkoneelle saatavilla olevat Linux-jakelut. Kirjassa ei ole lukua Debianista, mutta asennuksen peruskäsitteet ovat samat kaikille &arch-title;-jakeluille. </para>
+
+<itemizedlist>
+<listitem
+><para>
+
+<ulink url="http://www.redbooks.ibm.com/pubs/pdfs/redbooks/sg246264.pdf"
+>Linux IBM eServer zSeries -koneille ja suoritinperheelle &arch-title;: Jakelut</ulink>
+
+</para
+></listitem>
+</itemizedlist>
+   </sect3>
+
+  </sect2>
+
+  <sect2 id="fsohi">
+  <title
+>Laitetietojen löytäminen</title>
+<para
+>Useissa tapauksissa asennin osaa automaattisesti tunnistaa laitteet. Mutta varmuuden vuoksi suositellaan tutustumista tietokoneen laitteisiin ennen asennusta. </para
+><para
+>Laitetietoja voidaan kerätä seuraavista paikoista: </para>
+
+<itemizedlist>
+<listitem
+><para
+>Jokaisen tietokoneen osan mukana tulleet käsikirjat. </para
+></listitem>
+<listitem
+><para
+>Tietokoneen BIOS-asetusten ruudut. Ruudut näkee painamalla näppäinyhdistelmää tietokoneen käynnistyessä. Tarkista oikea näppäinyhdistelmä käsikirjasta. Se on usein <keycap
+>Delete</keycap
+>-näppäin. </para
+></listitem>
+<listitem
+><para
+>Kunkin osan pakkauslaatikot. </para
+></listitem>
+
+<listitem arch="x86"
+><para
+>Windowsin Ohjauskeskuksen ikkuna Järjestelmä. </para
+></listitem>
+<listitem
+><para
+>Toisen käyttöjärjestelmän järjestelmäkomennot ja -työkalut, mukaan lukien tiedostoselaimen näytöt. Tällä tavalla löytyy tietoa erityisesti keskusmuistista ja kiintolevytilasta. </para
+></listitem>
+<listitem
+><para
+>Järjestelmän pääkäyttäjä tai Internet-palveluntarjoaja. Näiltä tahoilta saa tietää verkkoasetukset ja sähköpostin asetukset. </para
+></listitem>
+</itemizedlist>
+
+<para>
+
+<table>
+<title
+>Asennuksessa tarvittavat tiedot laitteista</title>
+<tgroup cols="2">
+<thead>
+<row>
+  <entry
+>Laite</entry
+><entry
+>Mahdollisesti tarvittava tieto</entry>
+</row>
+</thead>
+
+<tbody>
+<row arch="not-s390">
+  <entry morerows="5"
+>Kiintolevyt</entry>
+  <entry
+>Lukumäärä.</entry>
+</row>
+<row arch="not-s390"
+><entry
+>Niiden keskinäinen järjestys.</entry
+></row>
+<!-- "not-m68k;not-s390" would really turn out to be everything... -->
+<row arch="alpha;arm;hppa;x86;ia64;mips;mipsel;powerpc;sparc">
+  <entry
+>Voivat olla IDE (toinen nimi PATA), SATA vai SCSI.</entry>
+</row>
+<row arch="m68k">
+  <entry
+>Ovatko ne IDe vai SCSI (useimmissa m68k-tietokoneissa SCSI).</entry>
+</row>
+<row arch="not-s390"
+><entry
+>Käytettävissä oleva vapaa tila.</entry
+></row>
+<row arch="not-s390"
+><entry
+>Osiot.</entry
+></row>
+<row arch="not-s390">
+  <entry
+>Osiot joihin muut käyttöjärjestelmät on asennettu.</entry>
+</row>
+
+<row arch="not-s390">
+  <entry morerows="5"
+>Näyttö</entry>
+  <entry
+>Malli ja valmistaja.</entry>
+</row>
+<row arch="not-s390"
+><entry
+>Tuetut näyttötarkkuudet.</entry
+></row>
+<row arch="not-s390"
+><entry
+>Vaakapoikkeutustaajuus.</entry
+></row>
+<row arch="not-s390"
+><entry
+>Pystypoikkeutustaajuus.</entry
+></row>
+<row arch="not-s390">
+  <entry
+>Tuettu värisyvyys (värien määrä).</entry>
+</row>
+<row arch="not-s390"
+><entry
+>Näytön koko.</entry
+></row>
+
+<row arch="not-s390">
+  <entry morerows="3"
+>Hiiri</entry>
+  <entry
+>Tyyppi: sarjahiiri, PS/2 tai USB.</entry>
+</row>
+<row arch="not-s390"
+><entry
+>Portti.</entry
+></row>
+<row arch="not-s390"
+><entry
+>Valmistaja.</entry
+></row>
+<row arch="not-s390"
+><entry
+>Nappuloiden määrä.</entry
+></row>
+
+<row arch="not-s390">
+  <entry morerows="1"
+>Verkko</entry>
+  <entry
+>Malli ja valmistaja.</entry>
+</row>
+<row arch="not-s390"
+><entry
+>Verkkoliitännän tyyppi.</entry
+></row>
+
+<row arch="not-s390">
+  <entry morerows="1"
+>Tulostin</entry>
+  <entry
+>Malli ja valmistaja.</entry>
+</row>
+<row arch="not-s390"
+><entry
+>Tuetut tulostustarkkuudet.</entry
+></row>
+
+<row arch="not-s390">
+  <entry morerows="2"
+>Näytönohjain</entry>
+  <entry
+>Malli ja valmistaja.</entry>
+</row>
+<row arch="not-s390"
+><entry
+>Käytettävissä oleva näyttömuisti.</entry
+></row>
+<row arch="not-s390">
+  <entry
+>Tuetut tarkkuudet ja värisyyvyydet (näitä tulisi verrata näytön tukemiin).</entry>
+</row>
+
+<row arch="s390">
+  <entry morerows="1"
+>DASD</entry>
+  <entry
+>Laitenumero(t).</entry>
+</row>
+<row arch="s390"
+><entry
+>Käytettävissä oleva vapaa tila.</entry
+></row>
+
+<row arch="s390">
+  <entry morerows="2"
+>Verkko</entry>
+  <entry
+>Verkkoliitännän tyyppi.</entry>
+</row>
+<row arch="s390"
+><entry
+>Laitenumerot.</entry
+></row>
+<row arch="s390"
+><entry
+>OSA-korteille suhteellinen sovittimen numero.</entry
+></row>
+
+</tbody
+></tgroup
+></table>
+
+</para>
+  </sect2>
+
+  <sect2>
+  <title
+>Laitteiden yhteensopivuus</title>
+
+<para
+>Useat merkkituotteet toimivat Linuxissa ongelmitta. Lisäksi Linuxin laitetuki paranee päivittäin. Linux ei kuitenkaan vielä tue yhtä paljoa erilaisia laitteita kuin jotkin käyttöjärjestelmät. </para
+><para arch="x86"
+>Erityisesti Linux ei tavallisesti pysty käyttämään laitetta, joka vaatii toimiakseen käynnissä olevan Windowsin. </para
+><para arch="x86"
+>Vaikkakin joitakin erityisesti Windowsille tehtyjä laitteita saadaan toimimaan Linuxissa, se vaatii tavallisesti ylimääräistä vaivaa. Lisäksi erityisesti Windowsille tehdyn laitteen Linux-laiteajurit ovat tavallisesti sopivia vain yhdelle tietylle Linux-ytimen versiolle. Niinpä ne voivat vanhentua nopeasti. </para
+><para arch="x86"
+>Niin kutsutut windows-modeemit ovat yleisimpiä tämäntyyppisistä laitteista. Kuitenkin myös tulostimet ja muut oheislaitteet voivat olla erityisesti Windowsia varten tehtyjä. </para
+><para
+>Laitteiston yhteensopivuus voidaan tarkistaa: <itemizedlist>
+<listitem
+><para
+>Etsimällä valmistajan webbisivulta uusia ajureita. </para
+></listitem>
+<listitem
+><para
+>Lukemalla webbisivuilta tai käsikirjoista tietoa emuloinnista. Tuntemattomammat merkit saattavat joskus toimia tunnetumman merkin ajureilla tai asetuksilla. </para
+></listitem>
+<listitem
+><para
+>Etsimällä suoritinperheelle omistautuneilta webbisivuilta luetteloa Linux-yhteensopivista laitteista. </para
+></listitem>
+<listitem
+><para
+>Etsimällä Internetistä muiden käyttäjien kokemuksia. </para
+></listitem>
+</itemizedlist>
+
+</para>
+  </sect2>
+
+  <sect2>
+  <title
+>Verkkoasetukset</title>
+
+<para
+>Jos tietokone on kytkettynä verkkoon 24 tuntia vuorokaudessa (ts. Ethernet tai vastaava liitäntä &mdash; ei PPP-yhteys), olisi nämä asetukset kysyttävä verkon vastuuhenkilöltä. <itemizedlist>
+<listitem
+><para
+>Konenimi (tämän voi ehkä keksiä itse). </para
+></listitem>
+<listitem
+><para
+>Verkkoaluenimi. </para
+></listitem>
+<listitem
+><para
+>Tietokoneen IP-osoite. </para
+></listitem>
+<listitem
+><para
+>Verkossa käytettävä verkon peitto. </para
+></listitem>
+<listitem
+><para
+>Oletusyhdyskäytävän IP-osoite, jos verkossa <emphasis
+>on</emphasis
+> yhdyskäytävä. </para
+></listitem>
+<listitem
+><para
+>Nimipalvelimena (DNS) käytettävä verkon kone. </para
+></listitem>
+</itemizedlist>
+
+</para
+><para
+>Jos verkon vastuuhenkilö kertoo DHCP-palvelimen olevan käytettävissä ja että sen käyttö on suositeltavaa, ei näitä tietoja tarvita, koska DHCP-palvelin tarjoaa tiedot asennuksen aikana suoraan tietokoneelle. </para
+><para
+>Jos käytössä on langaton verkko, olisi vielä selvitettävä: <itemizedlist>
+<listitem
+><para
+>Langattoman verkon ESSID. </para
+></listitem>
+<listitem
+><para
+>WEB-salausavain (jos käytössä). </para
+></listitem>
+</itemizedlist>
+
+</para>
+  </sect2>
+
+ </sect1>
+<!--   End of file preparing/needed-info.xml -->
+
+<!-- Start of file preparing/minimum-hardware-reqts.xml -->
+<!-- $Id: minimum-hardware-reqts.xml 48637 2007-07-24 08:09:08Z fjp $ -->
+
+ <sect1 id="minimum-hardware-reqts">
+<title
+>Vähimmäisvaatimukset laitteistolle</title>
+<para
+>Kun tiedot laitteistosta on kerätty, tarkistetaan laitteiston sallivan halutun asennustavan. </para
+><para arch="not-s390"
+>Käyttötarkoitus saattaa sallia laitteiston, joka ei täytä alla olevassa taulukossa mainittuja suosituksia. Useimmat käyttäjät kuitenkin turhautuvat jos jättävät huomiotta nämä suositukset. </para
+><para arch="x86"
+>Pöytätietokoneen olisi oltava vähintään 1 GHz Pentium 4. </para
+><para arch="m68k"
+>m68k asennuksiin suositellaan 68030 tai parempaa suoritinta. Hieman suositeltua pienemmälläkin levyllä saattaa tulla toimeen. </para
+><para arch="powerpc"
+>Kaikki OldWorld ja NewWorld PowerPC-koneet toimivat hyvin pöytätietokoneena. </para>
+
+<table>
+<title
+>Suositellut vähimmäisvaatimukset laitteistolle</title>
+<tgroup cols="4">
+<thead>
+<row>
+  <entry
+>Asennustapa</entry>
+  <entry
+>Muisti (vähintää)</entry>
+  <entry
+>Muisti (suositus)</entry>
+  <entry
+>Kiintolevy</entry>
+</row>
+</thead>
+
+<tbody>
+<row>
+  <entry
+>Ei työpöytää</entry>
+  <entry
+>64 Mt</entry>
+  <entry
+>256 Mt</entry>
+  <entry
+>1 Gt</entry>
+</row
+><row arch="not-s390">
+  <entry
+>Työpöytäympäristö</entry>
+  <entry
+>64 Mt</entry>
+  <entry
+>512 Mt</entry>
+  <entry
+>5 gigatavua</entry>
+</row>
+
+</tbody
+></tgroup
+></table>
+
+<para
+>Todelliset muistin vähimmäisvaatimukset ovat paljon pienemmät kuin tässä taulukossa mainitut luvut. Laitealusta vaikuttaa vähimmäisvaatimukseen, Debianin asennus on mahdollista niinkin pienellä muistilla kuin 20 Mt (s390:lle) tai 48 Mt (i386 ja amd64). Sama tilanne on levytilan tarpeessa, erityisesti jos asennettavat sovellukset valitaan tarkkaan; katso <xref linkend="tasksel-size-list"/> jossa on lisätietoa levytilan tarpeesta. </para
+><para arch="not-s390"
+>Graafista työpöytäympäristöä on mahdollista käyttää vanhoilla tai pienitehoisilla koneilla, mutta tällöin suositellaan asennettavaksi ikkunointiohjelma joka on vähemmän tehosyöppö kuin GNOME- tai KDE-työpöytäympäristöt; sopivia vaihtoehtoja ovat ainakin <classname
+>xfce4</classname
+>, <classname
+>icewm</classname
+> and <classname
+>wmaker</classname
+>, mutta muitakin on tarjolla. </para
+><para
+>On melkein mahdotonta antaa yleisiä muistin tai levytilan kokovaatimuksia palvelinasennuksille, koska ne riippuvat niin paljon siitä mihin palvelinta käytetään. </para
+><para
+>Muista, ettei näihin kokoihin sisälly muu tavallisesti koneessa oleva tieto, kuten käyttäjien tiedostot, sähköpostit ja muu tieto. On aina parasta varata omille tiedostoilleen ja tiedoilleen runsaasti tilaa. </para
+><para
+>Näissä suosituksissa on huomioitu &debian;in itse sujuvaan toimintaansa tarvitsema levytila. Erityisesti <filename
+>/var</filename
+>-osio sisältää paljon Debianin omaa tilatietoa tavallisten tietojen kuten lokitiedostojen lisäksi. Sovelluksen <command
+>dpkg</command
+> tiedostot (joissa on tiedot kaikista asennetuista paketeista) voivat helposti viedä 40 Mt. Lisäksi <command
+>apt-get</command
+> tallentaa noudetut paketit <filename
+>/var</filename
+>-osioon ennen kuin ne asennetaan. Osiolle <filename
+>/var</filename
+> olisi tavallisesti annettava tilaa ainakin 200 Mt ja paljon enemmän jos asennetaan graafinen työpöytäympäristö. </para>
+
+ </sect1>
+
+<!--   End of file preparing/minimum-hardware-reqts.xml -->
+
+<!-- Start of file preparing/non-debian-partitioning.xml -->
+<!-- $Id: non-debian-partitioning.xml 56322 2008-10-06 13:20:07Z fjp $ -->
+
+ <sect1 id="non-debian-partitioning">
+ <title
+>Monikäynnistettävän koneen osiointi etukäteen</title>
+<para
+>Levyn osiointi tarkoittaa levyn jakamista osiin. Jokainen osa on riippumaton muista. Osiointia voisi verrata talon väliseinien pystyttämiseen; huonekalujen lisääminen yhteen huoneeseen ei vaikuta muihin. </para
+><para arch="s390"
+>Aina kun tässä luvussa puhutaan <quote
+>levyistä</quote
+>, olisi ymmärrettävä tarkoitettavan DASD:tä tai VM minilevyä käsiteltäessä suoritinperhettä &arch-title;. Lisäksi kone tarkoittaa tässä tapauksessa LPAR:ia tai VM vierasta. </para
+><para
+>Jos koneessa on jo käyttöjärjestelmä <phrase arch="x86"
+> (Windows 9x, Windows NT/2000/XP, OS/2, MacOS, Solaris, FreeBSD, &hellip;) </phrase
+> <phrase arch="alpha"
+> (Tru64 (Digital UNIX), OpenVMS, Windows NT, FreeBSD, &hellip;) </phrase
+> <phrase arch="s390"
+> (VM, z/OS, OS/390, &hellip;) </phrase
+> <phrase arch="m68k"
+> (Amiga OS, Atari TOS, Mac OS, &hellip;) </phrase
+> ja Linux halutaan asentaa samalle levylle, on levy osioitava uudelleen. Debian vaatii omat levyosionsa. Sitä ei voi asentaa Windowsin tai MacOS:n osioihin. Debian saattaa pysytä jakamaan joitakin osioita muiden Linux-järjestelmien kanssa, mutta sitä ei käsitellä tässä. Vähimmäisvaatimuksena on oma osio Debianin juuritiedostojärjestelmälle. </para
+><para
+>Tiedot levyllä jo olevista osioita löytyvät käyttöjärjestelmän osiointityökalujen avulla<phrase arch="x86"
+>, kuten fdisk tai PartitionMagic</phrase
+><phrase arch="powerpc"
+>, kuten Drive Setup, HD Toolkit, tai MacTools</phrase
+><phrase arch="m68k"
+>, kuten HD SC Setup, HDToolBox, tai SCSITool</phrase
+><phrase arch="s390"
+>, kuten VM diskmap</phrase
+>. Osiointityökaluilla on aina mahdollista katsoa levyllä olevien osioiden tiedot tekemättä muutoksia. </para
+><para
+>Periaatteessa muutoksien tekeminen osioon jossa jo on tiedostojärjestelmä tuhoaa sen sisällön kokonaan. Niinpä olisi aina tehtävä varmuuskopiot ennen kuin osioihin kosketaan. Käytetään taas talovertausta: huonekalut on parasta siirtää pois tieltä ennen väliseinien siirtämistä, muuten huonekalut menevät pirstaleiksi. </para
+><para arch="hppa" condition="FIXME">
+
+<emphasis
+>FIXME: write about HP-UX disks?</emphasis>
+
+</para
+><para
+>Jos tietokoneessa on useampi kiintolevy, on mahdollista varata yksi kiintolevy kokonaan Debianin käyttöön. Tällöin ei tuota levyä tarvitse osioida ennen asennusjärjestelmän käynnistämistä; asentimeen kuuluva osiointisovellus hoitaa homman kätevästi. </para
+><para
+>Jos tietokoneessa on vain yksi kiintolevy, ja levyllä oleva käyttöjärjestelmä halutaan kokonaan korvata &debian;illa, voidaan tässäkin tapauksessa tehdä osiot asennusprosessin osana (<xref linkend="di-partition"/>), kun asennusjärjestelmä on käynnistetty. Tämä kuitenkin toimii vain jos asennusjärjestelmä on tarkoitus käynnistää nauhalta, rompulta tai verkkokäynnistyksellä. Mieti tätä: jos käynnistetään kiintolevyllä olevilta tiedostoilta, ja sitten asennusjärjestelmä osioi saman levyn pyyhkien asennustiedostot pois, on parasta toivoa asennuksen onnistuvan ensimmäisellä yrittämällä. Ainakin tässä tapauksessa olisi oltava vaihtoehtoinen tapa herättää tietokone taas toimintaan, esimerkiksi alkuperäisen käyttöjärjestelmän asennusnauhoilta tai -rompuilta. </para
+><para
+>Jos tietokoneella on jo useita levyosioita, ja saadaan riittävästi tilaa poistamalla tai korvaamalla niistä yksi tai useampia, ei tässäkään tapauksessa ole tarpeen tehdä osioita etukäteen, vaan voidaan odottaa ja käyttää Debianin asentimen osiointisovellusta. Alla olevat ohjeet olisi silti luettava läpi, koska useissa erikoistilanteissa, joihin vaikuttaa esimerkiksi osioiden järjestys osiotaulussa, on kaikesta huolimatta pakko osioida ennen asennusta. </para
+><para arch="x86"
+>Jos tietokoneella on DOS:n ja Windowsin käyttämä FAT- tai NTFS-tiedostojärjestelmä, voidaan odottaa ja käyttää Debianin asentimen osiointisovellusta tiedostojärjestelmien koon muuttamiseen. </para
+><para
+>Jos mikään yllä olevista tapauksista ei sovellu, on kiintolevy osioitava ennen asennuksen käynnistämistä jotta Debianille saadaan osioitavaksi kelpaavaa levytilaa. Jos jotkin osioista tulevat olemaan muiden käyttöjärjestelmien käytössä, on ne osiot luotava kunkin käyttöjärjestelmän omalla osiointisovelluksella. Suositellaan että <emphasis
+>ei</emphasis
+> yritetä luoda &debian;in osioita muiden käyttöjärjestelmien työkaluilla. Olisi luotava kunkin käyttöjärjestelmän omilla työkaluilla ne osiot jotka halutaan säilyttää. </para
+><para
+>Jos tarkoituksena on asentaa tietokoneelle useampi kuin yksi käyttöjärjestelmä, olisi kaikki muut käyttöjärjestelmät asennettava ennen kuin aloitetaan Linuxin asennus. Windowsin ja muiden käyttöjärjestelmien asentimet saattavat estää Linuxin käynnistymisen, tai haluavat tehdä uudet tiedostojärjestelmät muiden käyttöjärjestelmien osioihin. </para
+><para
+>Toimenpiteiden seuraukset on mahdollista korjata, mutta muiden käyttöjärjestelmien asentaminen ensiksi on helpointa. </para
+><para arch="powerpc"
+>Jotta OpenFirmware käynnistäisi &debian;in automaattisesti, olisi Linux-osioiden sijaittava ennen muita osioita, erityisesti ennen MacOS-käynnistysosioita. Tämä olisi huomioitava kun osiot tehdään ennen asennusta; Linuxille on luotava paikkaa varaava osio joka sijaitsee levyllä <emphasis
+>ennen</emphasis
+> muita käynnistysosioita (Applen levyajureille varatut pienet osiot eivät ole käynnistysosioita.). Paikkaa varaava osioi voidaan myöhemmin poistaa Linuxin osiointisovelluksella varsinaisen asennuksen aikana, ja korvata se Linuxin osioilla. </para
+><para
+>Jos koneessa on nyt yksi levy jolla on yksi osio (yleinen tapa pöytätietokoneissa), ja halutaan monikäynnistää koneen oma käyttöjärjestelmä ja Debian, on tehtävä seuraavasti: <orderedlist>
+<listitem
+><para
+>Tehdään varmuuskopio kaikista koneen tiedostoista. </para
+></listitem>
+<listitem
+><para
+>Käynnistetään koneen oman käyttöjärjestelmän asennustaltiolta, esimerkiksi romppu tai nauha. <phrase arch="powerpc"
+>Kun käynnistetään MacOS-rompulta, pidä näppäintä <keycap
+>c</keycap
+> alhaalla koneen käynnistyessä. Tämä pakottaa koneen käyttämään rompulla olevaa MacOS-järjestelmää.</phrase
+> </para
+></listitem>
+<listitem
+><para
+>Tee koneen oman käyttöjärjestelmän osio(t) sen omilla työkaluilla. Tee Debianille joko paikkaa varaava osio tai käyttämätöntä levytilaa. </para
+></listitem>
+<listitem
+><para
+>Asenna koneen oma käyttöjärjestelmä sen omaan osioon </para
+></listitem>
+<listitem
+><para
+>Käynnistä koneen oma käyttöjärjestelmä varmistuaksesi kaiken olevan kunnossa, ja noutaaksesi Debianin asentimen käynnistystiedostot. </para
+></listitem>
+<listitem
+><para
+>Käynnistä Debianin asennin jatkaaksesi Debianin asennusta. </para
+></listitem>
+</orderedlist>
+
+</para>
+
+
+<!-- Start of file preparing/nondeb-part/alpha.xml -->
+<!-- $Id: alpha.xml 43576 2006-12-27 03:35:13Z fjp $ -->
+
+
+  <sect2 arch="alpha"
+><title
+>Osiointi Tru64 Unixissa</title>
+<para
+>Tru64 Unix, joka aikaisemmin tunnettiin nimellä Digital Unix, joka taas oli aikaisemmin OSF/1, käyttää BSD:n <quote
+>disk label</quote
+> -tyyppistä osiointimallia, jossa sallitaan enintään kahdeksan osiota levyä kohti. Linuxissa ensimmäisen osion numero on <quote
+>1</quote
+> ja viimeisen <quote
+>8</quote
+>. Unixissa ensimmäinen osio on <quote
+>a</quote
+> ja viimeinen <quote
+>h</quote
+>. Linux-ytimissä versiossa 2.2 alkaen vastaa <quote
+>1</quote
+> aina <quote
+>a</quote
+>:ta, <quote
+>2</quote
+> aina <quote
+>b</quote
+>:tä ja niin edelleen. Esimerkiksi osio joka Tru64 Unixissa on <filename
+>rz0e</filename
+>, olisi Linuxissa <filename
+>sda5</filename
+>. </para
+><para
+>Tru64:n levyosiot voivat olla limittäin. Jopa niin, että jos Tru64 käyttää levyä, on sen <quote
+>c</quote
+>-osion sisällettävä koko levy (jolloin se on limittäin kaikkien muiden ei-tyhjien osioidan kanssa). Linuxissa on tämän takia <filename
+>sda3</filename
+> sama kuin <filename
+>sda</filename
+> (ja jos on useita levyjä, <filename
+>sdb3</filename
+> on sama kuin <filename
+>sdb</filename
+> jne.). Debianin asentimen käyttämä osiointisovellus partman ei kuitenkaan tällä hetkellä osaa käsitellä limittäisiä osioita. Tästä syystä ei tällä hetkellä suositella Tru64:n ja Debianin sijoittamista samalle levylle. Tru64-levyillä olevat osiot voidaan liittää Debianissa kun asennus on valmis. </para
+><para
+>Toinen vaatimus on, että <quote
+>a</quote
+>-osion on sijaittava aivan levyn alussa, jotta levyn käynnistyslohko sisältyy aina osion levynimiöön. Jos Debian halutaan käynnistää levyltä, on osion koon oltava ainakin 2 Mt jotta siihen mahtuu aboot ja ehkä ydin. Huomaa, että tämä osio vaaditaan vain yhteensopivuuden vuoksi; siihen ei saa pistää tiedostojärjestelmää tai sen sisältö tuhoutuu. </para
+><para
+>On mahdollista ja järkevääkin käyttää samaa sivutusosiota sekä Unixille että Linuxille. Tällöin osiolle on tehtävä <command
+>mkswap</command
+> aina kun järjestelmä käynnistetään Linuxiin Unixin jälkeen, koska Unix rikkoo sivutusosion tunnisteen. Kätevintä lienee suorittaa <command
+>mkswap</command
+> Linuxin käynnistystiedostossa ennen kuin sivutustila otetaan käyttöön komennolla <command
+>swapon -a</command
+>. </para
+><para
+>Jos Unixin osiota halutaan liittää Linuxissa, on huomattava Digital Unixin käyttävän kahta erilaista tiedostojärjestelmää, UFS ja AdvFS, joista Linux ymmärtää vain ensimmäistä. </para>
+  </sect2>
+
+  <sect2 arch="alpha"
+><title
+>Osiointi Windows NT:ssä</title>
+
+<para
+>Windows NT käyttää PC-tyylistä osiotaulua. Jos levyllä olevia FAT- tai NTFS-osioita halutaan muokata, suositellaan käytettäväksi Windows NT:n omia työkaluja (tai levyn voi osioida mukavammin myös AlphaBIOS-asetusvalikosta). Muussa tapauksessa ei ole välttämättä tarpeen tehdä osiontia Windowsista; Linuxin osiointityökalut osaavat homman yleensä paremmin. Huomaa NT:tä käytettäessä Levynhallinta (Disk Administrator) saattaa tarjoutua kirjoittamaan <quote
+>harmittoman tunnisteen</quote
+> ei-windows-levyille jos sellaisia on. <emphasis
+>Älä milloinkaan</emphasis
+> salli sen tehdä sitä, koska tämä tunniste tuhoaa osiotiedot. </para
+><para
+>Jos Linux aiotaan käynnistää ARC/AlphaBIOS/ARCSBIO-konsolista, tarvitaan (pieni) FAT-osio MILO:a varten. 5 Mt riittää mainiosti. Jos Windows NT on asennettuna, sen 6 Mt:n käynnistysosiota voidaan käyttää tähän tarkoitukseen. Debian &releasename; ei tue MILO:n asentamista. Jos MILO on jo asennettuna tai se asennetaan muulta taltiolta, Debian voidaan silti käynnistää ARC:sta. </para>
+  </sect2>
+<!--   End of file preparing/nondeb-part/alpha.xml -->
+
+<!-- Start of file preparing/nondeb-part/x86.xml -->
+<!-- $Id: x86.xml 43576 2006-12-27 03:35:13Z fjp $ -->
+
+
+  <sect2 arch="x86"
+><title
+>Osiointi DOS:sta tai Windowsista</title>
+<para
+>Muokattaessa olemassa olevia FAT- tai NTFS-osioita, suositellaan käytettäväksi alla olevaa osiointimallia tai Windowsin tai DOS:in omia työkaluja. Muussa tapauksessa ei ole välttämättä tarpeen tehdä osioita DOS:sta tai Windowsista; Linuxin osiointityökalut osaavat homman yleensä paremmin. </para
+><para
+>Mutta jos käytetään isoa IDE-levyä eikä ole LBA-osoitteita, overlay-ajuria (joita kiintolevyvalmistajat joskus toimittavat) tai uutta (jälkeen 1998) BIOS:ia joka tukee isojen levyjen osoitelaajennuksia, on Debianin käynnistysosio sijoitettava levylle huolella. Tässä tapauksessa on käynnistysosio sijoitettava levyn ensimmäisten 1024 sylinterin alueelle (useimmiten noin 524 Mt, ilman BIOS:n levyosoitemuunnosta). Tämä saattaa edellyttää levyllä olevan FAT- tai NTFS-osion siirtämistä. </para>
+
+   <sect3 id="lossless">
+   <title
+>Uudelleenosiointi tietoja hävittämättä DOS:sta, Win-32:sta tai OS/2:sta </title>
+
+<para
+>Yksi yleisimpiä asennuksia on asennus tietokoneeseen jossa on jo DOS (mukaan lukien Windows 3.1), Win32 (kuten Windows 95, 98, Me, NT, 2000, XP) tai OS/2, ja Debian halutaan asentaa samalle levylle tuhoamatta aikaisempaa käyttöjärjestelmää. Huomaa asentimen tukevan DOS:n ja Windowsin käyttämien FAT- ja NTFS-tiedostojärjestelmien koon muuttamista. Asennin vain käynnistetään, valitaan <menuchoice
+> <guimenuitem
+>Osioi itse</guimenuitem
+> </menuchoice
+>, valitaan osio jonka kokoa muutetaan ja määritetään sen uusi koko. Niinpä useimmissa tapauksissa ei ole tarpeen käyttää alla kuvauttua menettelyä. </para
+><para
+>Ennen jatkamista olisi päätettävä millaisiin osiin levy halutaan jakaa. Tässä luvussa kuvattu tapaa jakaa osion vain kahteen osaan. Toisessa on alkuperäinen käyttöjärjestelmä ja toista käytetään Debianille. Debianin asennuksen aikana voidaan valita miten Debianin osuutta käytetään, esimerkiksi sivustilana tai tiedostojärjestelmälle. </para
+><para
+>Tarkoituksena on siirtää kaikki osiolla olevat tiedot osion alkuun ennen osiotietojen muuttamista, jotta mitään tietoja ei katoa. On tärkeää, että tietojen siirtämisen ja osion koon muuttamisen välissä tehdään mahdollisimman vähän levytoimintoja, jottei kirjoitettaisi tiedostoa osion loppuosaan. Tällöin osiosta vapautuva tila pienenee. </para
+><para
+>Ensin tarvitaan ohjelma <command
+>fips</command
+>, joka on saatavilla hakemistosta <filename
+>tools/</filename
+> lähimmästä Debianin asennuspalvelimesta. Pura zipattu tiedosto ja kopioi tiedostot <filename
+>RESTORRB.EXE</filename
+>, <filename
+>FIPS.EXE</filename
+> ja <filename
+>ERRORS.TXT</filename
+> käynnistyslevykkeelle. Käynnistyslevyke voidaan tehdä komennolla <command
+>sys a:</command
+> DOS:issa. Halunnet lukea komennon <command
+>fips</command
+> mukana tulevat erittäin hyvät ohjeet. Ohjeet on pakko lukea jos käytetään levyä pakkaavaa ajuria tai levyn kokorajoituksen korjausohjelmaa (disk manager). Tee levyke ja lue ohjeet <emphasis
+>ennen kuin</emphasis
+> eheytät kiintolevyn. </para
+><para
+>Seuraavaksi on siirrettävä kaikki tieto levyosion alkuun. Komento <command
+>defrag</command
+>, joka tulee vakiona DOS 6.0:n ja myöhempien versioiden mukana, hoitaa homman helposti. Katso komennon <command
+>fips</command
+> ohjeista luettelo muista siirtämisen osaavista ohjelmista. Huomaa, että käytettäessä Windows 9x:ää, on komento <command
+>defrag</command
+> käynnistettävä Windowsista, koska DOS ei ymmärrä VFAT-tiedostojärjestelmää. VFAT tukee pitkiä tiedostonimiä joita Windows 95 ja uudemmat käyttävät. </para
+><para
+>Kun eheytysohjelma on ajettu (voi kestää kauan isolle levylle), käynnistä uudelleen käynnistyslevykkeellä johon <command
+>fips</command
+> kopioitiin. Kirjoita vain <command
+>a:\\fips</command
+> ja toimi ohjeiden mukaan. </para
+><para
+>Huomaa, että saatavilla on monia muita sovelluksia osioiden muokkaukseen, jos <command
+>fips</command
+> ei sattuisi toimimaan. </para>
+   </sect3>
+
+   <sect3 id="partitioning-for-dos"
+><title
+>Osioiden teko DOS:lle</title>
+
+<para
+>Jos Linux-työkaluilla tehdään osioita DOS-levyille tai muutetaan DOS-osioiden kokoa, ovat useat käyttäjät törmänneet ongelmiin käyttäessään näin saatuja FAT-osiota. Esimerkiksi on ilmoitettu hitaudesta, toistuvista pulmista komennon <command
+>scandisk</command
+> kanssa tai muista omituisista virheistä DOS:ssa tai Windowsissa. </para
+><para
+>Näyttää siltä, että luotaessa DOS-osio tai muutettaessa DOS-osion kokoa, on tarpeen täyttää muutama ensimmäinen sektori nollilla. Tämä olisi tehtävä ennen kuin käynnistetään DOS:n komento <command
+>format</command
+> suorittamalla seuraava komento Linuxista: <informalexample
+><screen
+># dd if=/dev/zero of=/dev/hdXX bs=512 count=4
+</screen
+></informalexample>
+
+</para>
+   </sect3>
+  </sect2>
+<!--   End of file preparing/nondeb-part/x86.xml -->
+
+<!-- Start of file preparing/nondeb-part/m68k.xml -->
+<!-- $Id: m68k.xml 43576 2006-12-27 03:35:13Z fjp $ -->
+
+
+  <sect2 arch="m68k"
+><title
+>Osiointi AmigaOS:stä</title>
+<para
+>Jos käyttöjärjestelmänä on AmigaOS, voidaan ohjelmalla <command
+>HDToolBox</command
+> muokata alkuperäisiä osioita ennen asennusta. </para>
+  </sect2>
+
+  <sect2 arch="m68k"
+><title
+>Osiointi Atari TOS:sta</title>
+<para
+>Atarin osioiden tunnisteet ovat kolmen ASCII-merkin sanoja. Käytä tiedostojärjestelmälle <quote
+>LNX</quote
+> ja sivutusosioille <quote
+>SWP</quote
+>. Käytettäessä asenninta rajoitetun muistin (low memory mode) -tilassa, tarvitaan myös pieni Minix-osio (noin 2 Mt), jonka osiotunniste on <quote
+>MNX</quote
+>. Jos osiotunnisteet ovat väärin, ei Debianin asennusprosessi tunnista osioita ja lisäksi TOS yrittää käyttää Linux-osioita, jolloin kiintolevyajuri menee sekaisin eikä levyä pysty käyttämään. </para
+><para
+>Kolmannen osapuolen osiointityökaluja on runsaasti saatavilla (Atarin <command
+>harddisk</command
+>-työkaluohjelma ei salli osion tunnisteen muuttamista); tämä ohje ei voi kuvata niitä kaikkia yksityiskohtaisesti. Seuraava kuvaus kattaa komennon <command
+>SCSITool</command
+> (valmistaja on Hard+Soft GmBH). <orderedlist>
+<listitem
+><para
+>Käynnistä <command
+>SCSITool</command
+> ja valitse levy joka halutaan osioida(Valikko <guimenu
+>Disk</guimenu
+>, kohta <guimenuitem
+>select</guimenuitem
+>). </para
+></listitem>
+<listitem
+><para
+>Valikosta <guimenu
+>Partition</guimenu
+> valitaan joko <guimenuitem
+>New</guimenuitem
+> jolla lisätään uusia osioita tai muutetaan osioiden kokoa, tai <guimenuitem
+>Change</guimenuitem
+> jolla muutetaan yhtä osiota. Valinta <guimenuitem
+>New</guimenuitem
+> on luultavasti paras valinta, paitsi jos olet jo luonut oikean kokoiset osiot ja haluat vain muuttaa osion tunnistetta. </para
+></listitem>
+<listitem
+><para
+>Valinnan <guimenuitem
+>New</guimenuitem
+> jälkeen, valitse <guilabel
+>existing</guilabel
+> alkuasetuksia pyytävässä valintaikkunassa. Seuraavassa ikkunassa näkyy luettelo levyn osioista. Luetteloa voi muokata vierityspainikkeilla tai napsauttamalla pylväsdiagrammeja. Osioluettelon ensimmäinen sarake on osion tyyppi; sitä muokataan napsauttamalla tekstikenttää. Kun osioiden asetusten muuttaminen on valmis, muutokset tallennetaan poistumalla ikkunasta painikkeella <guibutton
+>OK</guibutton
+>. </para
+></listitem>
+<listitem
+><para
+>Valinnan <guimenuitem
+>Change</guimenuitem
+> jälkeen, valitse luettelosta muutettava osio, ja valitse <guilabel
+>other systems</guilabel
+> valintaikkunassa. Seuraavassa ikkunassa on yksityiskohtaiset tiedot tämän osion sijainnista, ja osion tunnistetta voi muuttaa. Tallenna muutokset poistumalla ikkunasta painikkeella <guibutton
+>OK</guibutton
+>. </para
+></listitem>
+<listitem
+><para
+>Kirjoita muistiin Linuxin käyttämät nimet jokaisesta Linuxia varten luodusta tai muutetusta osiosta &mdash; katso <xref linkend="device-names"/>. </para
+></listitem>
+<listitem
+><para
+>Lopeta ohjelman <command
+>SCSITool</command
+> suoritus valikon <guimenu
+>File</guimenu
+> toiminnolla <guimenuitem
+>Quit</guimenuitem
+>. Tietokone käynnistyy uudestaan jotta TOS varmasti käyttää muutettua osiotaulua. Jos TOS/GEM-osioita muutettiin, ne ovat käyttökelvottomia ja niille on luotava uudet tiedostojärjestelmät (tätä varten neuvoimme ottamaan varmuuskopiot kaikesta mitä levyllä on). </para
+></listitem>
+</orderedlist>
+
+</para
+><para
+>Linux/m68k:lle on osiointityökalu nimeltä <command
+>atari-fdisk</command
+> asennusjärjestelmässä, mutta tällä hetkellä suositellaan levyn osioimista TOS partition editorilla tai jollain levytyökalulla. Jos käytetyssä osiointityökalussa ei ole mahdollisuutta muokata osion tyyppiä, tämä välttämätön vaihe voidaan tehdä myöhemmin (käynnistysmuistilevyltä). <command
+>SCSITool</command
+> on ainoa tietämämme osiointityökalu joka osion tyypin voi vaihtaa miksi vaan. Muitakin saattaa olla, valitse työkalu joka sopii käyttöösi. </para>
+</sect2>
+
+  <sect2 arch="m68k"
+><title
+>Osiointi MacOS:stä</title>
+<para
+>Kokeiltuihin Macintoshin osiointisovelluksiin kuuluvat <command
+>pdisk</command
+>, <command
+>HD SC Setup</command
+> 7.3.5 (Apple), <command
+>HDT</command
+> 1.8 (FWB), <command
+>SilverLining</command
+> (LaCie), ja <command
+>DiskTool</command
+> (Tim Endres, GPL). Ohjelmista <command
+>HDT</command
+> ja <command
+>SilverLining</command
+> on oltava täysversiot. Applen sovellus vaatii korjauksen, jotta se tunnistaisi kolmannen osapuolen levyt (ohjeet korjauksen asentamisen komennolle <command
+>HD SC Setup</command
+> komentoa <command
+>ResEdit</command
+> käyttäen löytyvät osoitteesta <ulink url="http://www.euronet.nl/users/ernstoud/patch.html"
+></ulink
+>). </para
+><para
+>IDE-levyjä käyttäville Maceille on käyttämätön tila Linuxia varten tehtävä sovelluksella <command
+>Apple Drive Setup</command
+>, ja osiointi on saatettava loppuun Linuxissa. Toinen tapa on käyttää <ulink url="http://homepage.mac.com/alk/downloads/pdisk.sit.hqx"
+>Alsoftilta</ulink
+> saatavaa pdiskin MacOS-versiota. </para>
+</sect2>
+
+<!--   End of file preparing/nondeb-part/m68k.xml -->
+
+<!-- Start of file preparing/nondeb-part/sparc.xml -->
+<!-- $Id: sparc.xml 43732 2007-01-01 08:16:06Z fjp $ -->
+
+
+  <sect2 arch="sparc"
+><title
+>Osiointi SunOS:stä</title>
+
+<para
+>Osiointi SunOS:stä onnistuu oikein hyvin; itse asiassa suositellaan osiointia SunOS:stä ennen Debianin asennusta jos tarkoituksena on monikäynnistää SunOS ja Debian samalla koneella. Linux-ydin ymmärtää Sunin levynimiöt, joten siitä ei tule pulmia. SILO tulee sekä Linuxin että SunOS:n käynnistämistä joko EXT2- (Linux), UFS- (SunOS), romfs- ja iso9660- (romppu) tiedostojärjestelmiltä. </para>
+  </sect2>
+
+  <sect2 arch="sparc"
+><title
+>Osiointi Linuxista tai muusta käyttöjärjestelmästä</title>
+
+<para
+>Käytettiinpä mitä osiointitapaa tahansa, on varmistuttava että tehdään <quote
+>Sun disk label</quote
+> käynnistyslevylle. Tämä on ainoa osiotaulun tyyppi jota OpenBoot PROM ymmärtää, ja niin ollen ainoa mikä kelpaa käynnistyslevylle. Komennossa <command
+>fdisk</command
+> luodaan Sun disk label näppäimellä <keycap
+>s</keycap
+>. Tämä pitää tehdä vain levyille joilla ei vielä ole Sun disk labelia. Jos käytät levyä jolle on aiemmin tehty osiot PC:llä (tai jonkin muun laitearkkitehtuurin koneella), on tehtävä uusi osiotaulu, tai erittäin todennäköisesti tulee ongelmia levyn geometrian kanssa. </para
+><para
+>Luultavasti käytät <command
+>SILO</command
+>:a käynnistyslataimena (pieni ohjelma joka käynnistää käyttöjärjestelmän ytimen). <command
+>SILO</command
+> asettaa tiettyjä vaatimuksia osioiden koolle ja sijainnille; katso <xref linkend="partitioning"/>. </para>
+  </sect2>
+<!--   End of file preparing/nondeb-part/sparc.xml -->
+
+<!-- Start of file preparing/nondeb-part/powerpc.xml -->
+<!-- $Id: powerpc.xml 28672 2005-06-26 10:06:30Z fjp $ -->
+
+
+  <sect2 arch="powerpc"
+><title
+>Osioiden teko MacOS/OSX:lle</title>
+
+<para
+>Sovellus <application
+>Apple Drive Setup</application
+> löytyy MacOS-rompun hakemistosta <filename
+>Utilities</filename
+>. Se ei muokkaa olemassa olevia osioita; se osaa vain koko levyn osioinnin yhdellä kertaa. <application
+>Drive Setup</application
+> ei näytä levyajurin osioita. </para
+><para
+>Muista luoda paikkaa varaava osio GNU/Linuxille, mieluiten levyn ensimmäiseksi osioksi. Osion tyypillä ei ole väliä, se poistetaan ja korvataan myöhemmin Debianin asentimen toimesta. </para
+><para
+>Mikäli tarkoituksena on asentaa sekä MacOS 9 että OS X, on parasta luoda erilliset osiot kummallekin. Jos ne asennetaan samaan osioon, sovellusta <application
+>Startup Disk</application
+> (ja uudelleenkäynnistystä) on käytettävä valitsemaan käyttöjärjestelmien välillä; käynnistyvää järjestelmää ei voi valita käynnistyksen aikana. Kun ne on asennettu erillisiin osioihin, näkyy oma valinta sekä OS 9:lle että OS X:lle kun näppäintä <keycap
+>option</keycap
+> pidettään pohjassa käynnistyksen aikana. Myös <application
+>yabootin</application
+> käynnistysvalikkoon voidaan asentaan kummallekin oma valinta. Startup Disk myöskin piilottaa kaikki muut liitettävät osiot, joka voi vaikuttaa GNU/Linuxin käynnistämiseen. Sekä OS 9 että OS X -osiot ovat käytettävissä molemmista käyttöjärjestelmistä OS 9 ja OS X. </para
+><para
+>GNU/Linux ei voi käyttää UFS-osioilla olevia tietoja, mutta tukee HFS+ (eli MacOS Extended) -osioita. OS X vaatiin jomman kumman näistä tyypeistä käynnistysosiokseen. MacOS 9 voidaan asentaa joko HFS (eli MacOS Standard) tai HFS+ -osiolle. Jotta tiedostoja voi vaihtaa MacOS- ja GNU/Linux-järjestelmien välillä, on kätevää tehdä tiedostojen vaihtoon tarkoitettu osio. Osiotyypit HFS, HFS+ ja MS-DOS FAT ovat kaikki tuettuja sekä MacOS:ssä että Linuxissa. </para>
+  </sect2>
+<!--   End of file preparing/nondeb-part/powerpc.xml -->
+
+ </sect1>
+<!--   End of file preparing/non-debian-partitioning.xml -->
+
+<!-- Start of file preparing/pre-install-bios-setup.xml -->
+<!-- $Id: pre-install-bios-setup.xml 43696 2006-12-31 02:03:44Z fjp $ -->
+
+ <sect1 id="pre-install-bios-setup">
+ <title
+>Laiteasetukset ja käyttöjärjestelmän asetukset ennen asennusta</title>
+<para
+>Tässä luvussa käydään askel askeleeltä läpi laiteasetukset, jos niitä on, jotka on tehtävä ennen Debianin asennusta. Yleensä on tarkistettava ja ehkä muutettava tietokoneen laiteohjelmiston asetuksia. <quote
+>Laiteohjelmisto</quote
+> on laitteiston käyttämä perusohjelmisto; sen tärkein tehtävä on alkulatauksen yhteydessä (kun laitteistoon on kytketty virta). Myös tiedossa olevat laiteiston ominaisuudet jotka vaikuttavat &debian;in luotettavuuteen on korostettu. </para>
+
+
+<!-- Start of file preparing/bios-setup/i386.xml -->
+<!-- $Id: i386.xml 56425 2008-10-15 08:50:59Z fjp $ -->
+
+<!-- This section is heavily outdated. It only really describes
+     older BIOSes and not the current situation. Most of it is not
+     really relevant for AMD64, but a general description would be.
+     File should be renamed to x86.xml if a more general text is
+     written. -->
+
+  <sect2 arch="x86" id="bios-setup"
+><title
+>BIOSin asetusvalikon käynnistäminen</title>
+
+<para
+>BIOS toteuttaa perustoiminnallisuuden tietokoneen käynnistämiseen. Sen avulla käyttöjärjestelmä pääsee käsiksi laitteistoon. Luultavimmin tietokoneessa on BIOS-valikko, josta BIOSin asetukset tehdään. Ennen asennusta <emphasis
+>on varmistuttava</emphasis
+> BIOSin asetusten olevan oikein; väärät asetukset saattavat johtaa satunnaisiin kaatumisiin tai Debianin asennus ei onnistu. </para
+><para
+>Tämän luvun loppu on kopioitu ohjeesta <ulink url="&url-pc-hw-faq;"
+></ulink
+>, jossa kerrotaan <quote
+>Miten pääsen CMOS-asetusten valikkoon?</quote
+>. Miten BIOS-asetuksiin (eli <quote
+>CMOS</quote
+>iin) päästään riippuu BIOS-ohjelmiston valmistajasta: </para>
+
+<!-- From: burnesa@cat.com (Shaun Burnet) -->
+<variablelist>
+
+<varlistentry>
+ <term
+>AMI BIOS</term>
+ <listitem
+><para
+><keycap
+>Delete</keycap
+>  POSTin (power on self test) aikana </para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+ <term
+>Award BIOS</term>
+ <listitem
+><para
+><keycombo
+> <keycap
+>Ctrl</keycap
+><keycap
+>Alt</keycap
+><keycap
+>Esc</keycap
+> </keycombo
+>, tai <keycap
+>Delete</keycap
+> POSTin aikana </para
+></listitem>
+</varlistentry>
+
+<varlistentry
+><term
+>DTK BIOS</term>
+ <listitem
+><para
+><keycap
+>Esc</keycap
+> POSTin aikana </para
+></listitem>
+</varlistentry>
+
+<varlistentry
+><term
+>IBM PS/2 BIOS</term>
+ <listitem
+><para
+><keycombo
+> <keycap
+>Ctrl</keycap
+><keycap
+>Alt</keycap
+><keycap
+>Insert</keycap
+> </keycombo
+> kun ensin on painettu <keycombo
+> <keycap
+>Ctrl</keycap
+><keycap
+>Alt</keycap
+><keycap
+>Delete</keycap
+> </keycombo
+> </para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+ <term
+>Phoenix BIOS</term>
+ <listitem
+><para
+><keycombo
+> <keycap
+>Ctrl</keycap
+><keycap
+>Alt</keycap
+><keycap
+>Esc</keycap
+> </keycombo
+> tai <keycombo
+> <keycap
+>Ctrl</keycap
+><keycap
+>Alt</keycap
+><keycap
+>S</keycap
+> </keycombo
+> tai <keycap
+>F1</keycap
+> </para
+></listitem>
+</varlistentry>
+</variablelist>
+
+<para
+>Muiden BIOS-toimintojen käynnistämisestä löytyy tietoa osoitteesta <ulink url="&url-invoking-bios-info;"
+></ulink
+>. </para
+><para
+>Joissakin prosessoriperheen &arch-title; koneissa ei ole CMOS-asetusten tekoa BIOSissa. Niissä tarvitaan sovellus CMOSin asetusten muuttamiseen. Jos konetta varten ei ole Asennus- tai Diagnostics-levykettä, voi kokeilla jotain shareware/freeware-ohjelmaa. Yritä etsiä osoitteesta <ulink url="&url-simtel;"
+></ulink
+>. </para>
+  </sect2>
+
+  <sect2 arch="x86" id="boot-dev-select"
+><title
+>Käynnistyslaitteen valinta</title>
+
+<para
+>BIOS-valikoissa on usein mahdollista valita miltä laitteelta käynnistetään. Tee asetus siten, että käynnistettävää järjestelmää etsitään laitteelta <filename
+>A:</filename
+> (ensimmäinen levykeasema), sitten valinnaisesti ensimmäiseltä romppuasemalta (saattaa olla laitteena <filename
+>D:</filename
+> tai <filename
+>E:</filename
+>), ja sitten laitteelta <filename
+>C:</filename
+> (ensimmäinen kiintolevy). Tällä asetuksella voi käynnistää joko levykkeeltä tai rompulta, jotka ovat Debianin kaksi yleisintä asennustaltiota. </para
+><para
+>Jos tietokoneessa on uudehko SCSI-ohjain johon on liitetty romppuasema, on tavallisesti mahdollista käynnistää rompulta. Riittää kun ohjaimen SCSI-BIOS:ssa otetaan käyttöön rompulta käynnistäminen. </para
+><para
+>Toinen suosittu tapa on käynnistää USB-muistilta (käytetään myös nimeä USB-muistitikku). Jotkin BIOSit osaavat käynnistää suoraan USB-laitteelta, jotkut eivät osaa. BIOS on ehkä asetettava käynnistymään laitteelta <quote
+>Removable drive</quote
+> tai jopa <quote
+>USB-ZIP</quote
+> jotta USB-laitteelta voi käynnistää. </para
+><para
+>Tässä on muutamia ohjeita käynnistysjärjestyksen asettamisesta. Muista palauttaa käynnistysjärjestys kun Linux on asennettu, jotta tietokone käynnistyy taas kiintolevyltä. </para>
+
+   <sect3 id="ctbooi">
+   <title
+>Käynnistysjärjestyksen vaihtaminen IDE-levyjä käyttävässä koneessa</title>
+
+<orderedlist>
+<listitem
+><para
+>Kun tietokone käynnistyy, paina näppäimiä joilla pääsee BIOSin asetusohjelmaan. Näppäin on usein <keycap
+>Delete</keycap
+>. Katso oikea näppäin tai näppäimet kuitenkin laitteen ohjeista. </para
+></listitem>
+<listitem
+><para
+>Etsi asetusohjelmasta käynnistysjärjestys. Eri BIOSeissa se on eri paikassa, mutta yritä etsiä kenttää jossa on luettelo levyasemista. </para
+><para
+>Tyypillisiä luetteloita IDE-levyille on C, A, cdrom tai A, C, cdrom. </para
+><para
+>C on kiintolevy ja A on levykeasema. </para
+></listitem>
+<listitem
+><para
+>Vaihda käynnistysjärjestystä siten että romppu tai levyke on ensimmäisenä. Tavallisesti näppäimillä <keycap
+>Page Up</keycap
+> tai <keycap
+>Page Down</keycap
+> näkee mahdolliset valinnat. </para
+></listitem>
+<listitem
+><para
+>Tallenna muutokset. Näytöllä näkyvistä ohjeista ilmenee miten muutokset tallennetaan tällä tietokoneella. </para
+></listitem>
+</orderedlist>
+   </sect3>
+
+   <sect3 id="ctboos">
+   <title
+>Käynnistysjärjestyksen vaihtaminen SCSI-levyjä käyttävässä koneessa</title>
+<para>
+
+<orderedlist>
+<listitem
+><para
+>Paina SCSI-asetukset tekevään ohjelmaan vievää näppäintä koneen käynnistyessä. </para
+><para
+>SCSI-asetukset tekevä ohjelman voidaan käynnistää koneen käynnistyttyä muistin tarkistuksen jälkeen ja kun ruudulla näkyy miten BIOSin asetuksiin pääsee. </para
+><para
+>Käytettävä näppäin vaihtelee ohjelmittain. Se on usein  <keycombo
+><keycap
+>Ctrl</keycap
+><keycap
+>F2</keycap
+></keycombo
+>. Katso oikea näppäin tai näppäimet kuitenkin laitteen ohjeista. </para
+></listitem>
+<listitem
+><para
+>Etsi käynnistysjärjestystä muuttava toiminto. </para
+></listitem>
+<listitem
+><para
+>Aseta käynnistysjärjestys siten, että romppuaseman SCSI ID on luettelossa ensimmäisenä. </para
+></listitem>
+<listitem
+><para
+>Tallenna muutokset. Näytöllä näkyvistä ohjeista ilmenee kuinka muutokset tallennetaan tällä tietokoneella. Usein on painettava näppäintä <keycap
+>F10</keycap
+>. </para
+></listitem>
+</orderedlist>
+
+</para>
+   </sect3>
+  </sect2>
+
+  <sect2 arch="x86">
+  <title
+>Sekalaisia BIOSin asetuksia</title>
+
+   <sect3 id="cd-settings"
+><title
+>Romppuasetukset</title>
+<para
+>Jotkin BIOSit (kuten Award BIOS) sallivat rompun nopeuden asettamisen automaattisesti. Tätä olisi vältettävä, ja asetettava nopeus esimerkiksi hitaimpaan arvoon. Jos tulee <userinput
+>seek failed</userinput
+> -virheitä, tämä asetus saataa olla syynä. </para>
+   </sect3>
+
+   <sect3
+><title
+>Jatkettu muisti ja laajennettu muisti</title>
+<para
+>Jos tietokoneessa on sekä jatkettua muistia (ex<emphasis
+>ten</emphasis
+>ded) että laajennettua muistia (ex<emphasis
+>pan</emphasis
+>ded), tee asetukset niin, että jatkettua muistia on mahdollisimman paljon ja laajennettua muistia mahdollisimman vähän. Linux tarvitsee jatkettua muistia eikä voi käyttää laajennettua muistia. </para>
+   </sect3>
+
+   <sect3
+><title
+>Virustorjunta</title>
+<para
+>Ota pois päältä kaikki BIOSin virustorjuntaominaisuudet. Jos tietokoneessa on virusten torjuntaan lisälaitekortti tai muu erikoislaite, varmista sen olevan pois käytöstä tai poista se koneesta kun GNU/Linux on käynnissä. Ne eivät ole yhteensopivia GNU/Linuxin kanssa; lisäksi tiedostojärjestelmän oikeuksien ja Linux-ytimen suojatun muistin ansiosta virukset ovat lähes tuntemattomia<footnote
+> <para
+>Haluttaessa voidaan käynnistyssektorin suojaus ottaa käyttöön asennuksen jälkeen. Tästä ei ole Linuxissa lisäturvaa mutta jos koneessa käytetään myös Windowsia se saattaa estää katastrofin. Pääkäynnistyslohkoon (MBR) ei ole mitään tarvetta kajotan sen jälkeen kun alkulatausohjelma on siihen asennettu. </para
+> </footnote
+> </para>
+   </sect3>
+
+   <sect3
+><title
+>Varjomuisti</title>
+<para
+>Emolevy saattaa tarjota käyttöön <emphasis
+>varjomuistia</emphasis
+> (<emphasis
+>shadow RAM</emphasis
+>) tai BIOSin välimuistia (BIOS caching). Asetuksissa voi olla <quote
+>Video BIOS Shadow</quote
+>, <quote
+>C800-CBFF Shadow</quote
+>, jne. <emphasis
+>Ota pois käytöstä</emphasis
+> (Disable) kaikki varjomuistit. Varjomuisti nopeuttaa emolevyn ja joidenkin ohjainkorttien lukumuistin käyttöä. Linux ei käynnistyttyään käytä näitä lukumuisteja koska se käyttää omia nopeampia 32-bittiä ohjelmiaan eikä lukumuisteissa olevia 16-bittisiä ohjelmia. Varjomuistin ottaminen pois käytöstä saattaa vapauttaa osan muistista ohjelmien käyttöön tavallisena muistina. Varjomuistin pitäminen käytössä saattaa sotkea oheislaitteiden käyttöä Linuxissa. </para>
+   </sect3>
+
+   <sect3
+><title
+>Muistiaukko</title>
+<para
+>Jos BIOS-asetuksissa on jotain tämän tapaista: <quote
+>15&ndash;16 MB Memory Hole</quote
+>, ota se pois käytöstä. Linux odottaa löytävänsä tuosta kohtaa muistia jos tietokoneessa on muistia noin paljon. </para
+><para
+>Olemme saaneet ilmoituksen Intel Endeavor -emolevystä jossa on asetus <quote
+>LFB</quote
+> eli <quote
+>Linear Frame Buffer</quote
+>. Asetuksella on kaksi arvoa: <quote
+>Disabled</quote
+> ja <quote
+>1 Megabyte</quote
+>. Käytä arvoa <quote
+>1 Megabyte</quote
+>. Kun asetus oli Disabled, järjestelmä ei lukenut asennuslevykettä oikein, ja kaatui lopulta. Tätä kirjoitettaessa emme ymmärrä mitä oikein tapahtuu &mdash; se toimi tuolla asetuksella ja ilman sitä ei toiminut. </para>
+   </sect3>
+
+<!-- no other platforms other than x86 provide this sort of thing, AFAIK -->
+
+   <sect3
+><title
+>Edistynyt virranhallinta (APM)</title>
+<para
+>Jos emolevy osaa edistyneen virranhallinnan (Advanced Power Management), tee sen asetukset siten että APM säätelee virranhallintaa. Ota pois käytöstä doze, standby, suspend, nap ja sleep, ja ota pois kiintolevyn ajastettu pysäytys. Linux pystyy säätämään nämä tilat ja osaa tehdä virranhallinnan paremmin kuin BIOS. </para>
+   </sect3>
+  </sect2>
+<!--   End of file preparing/bios-setup/i386.xml -->
+
+<!-- Start of file preparing/bios-setup/m68k.xml -->
+<!-- $Id: m68k.xml 28672 2005-06-26 10:06:30Z fjp $ -->
+
+
+  <sect2 arch="m68k" id="firmware-revs">
+  <title
+>Laiteohjelmiston versiot ja vanhan käyttöjärjestelmän asetukset</title>
+
+<para
+>Suoritinperheen &arch-title; koneet osaavat tavallisesti tehdä asetukset automaattisesti eikä laiteohjelmiston asetuksiin tarvitse koskea. Olisi kuitenkin varmistuttava käytettävän soveltuvia ROMmeja ja järjestelmän korjaustiedostoja. Macintoshilla suositellaan MacOS:n versiota 
+>= 7.1 koska versiossa 7.0.1 on videoajureissa vika joka estää käynnistyslatainta poistamasta videokeskeytyksiä käytöstä, mistä syystä käynnistys jumittuu. BVM:n VMEbus-järjestelmissä olisi varmistuttava käytettävän käynnistys-ROMien versiota BVMBug G tai suurempi. BVMBug käynnistys-ROMit eivät kuulu BVM-järjestelmien vakiokokoonpanoon, mutta ovat pyynnöstä saatavilla BVM:ltä maksutta. </para>
+
+  </sect2>
+
+<!--   End of file preparing/bios-setup/m68k.xml -->
+
+<!-- Start of file preparing/bios-setup/powerpc.xml -->
+<!-- $Id: powerpc.xml 54285 2008-07-13 12:09:54Z fjp $ -->
+
+
+  <sect2 arch="powerpc" id="invoking-openfirmware">
+  <title
+>OpenFirmwaren käynnistäminen</title>
+<para
+>Tavallisesti BIOS-asetusten muuttaminen suoritinperheen &arch-title; koneilla ei ole tarpeen (BIOS = OpenFirmware). PReP ja CHRP käyttävät OpenFirmwarea, mutta harmittavasti OpenFirmwaren käynnistamistapa vaihtelee valmistajittain. On luettava koneen mukana tullutta laitteiston ohjekirjaa. </para
+><para
+>Suoritinperheen &arch-title; Macintosheissa, OpenFirmware käynnistetään näppäilemällä <keycombo
+><keycap
+>Command (apila/Apple)</keycap
+> <keycap
+>Option</keycap
+> <keycap
+>o</keycap
+> <keycap
+>f</keycap
+></keycombo
+> koneen käynnistyessä. Yleensä näppäimien painalluksia tarkistetaan kellon heläyksen jälkeen, mutta tämä vaihtelee malleittain. Katso osoitteesta <ulink url="&url-netbsd-powerpc-faq;"
+></ulink
+> lisää vinkkejä. </para
+><para
+>OpenFirmwaren kehote on tämän näköinen: <informalexample
+><screen>
+ok
+0 &gt;
+</screen
+></informalexample
+> Huomaa, että vanhemman mallisilla suoritinperheen &arch-title; Maceilla OpenFirmwaren oletuskonsoli ja joskus ainoa mahdollinen konsoli on sarjaportti (modeemiportti). Jos OpenFirmware käynnistetään näissä koneissa, näkyy vain musta ruutu. Tällöin OpenFirmwarea on käytettävä modeemiporttiin yhdistetystä toisesta koneesta pääteohjelmalla. </para
+><para
+>OldWorld Beige G3 -koneilla OpenFirmware on rikki, OF:n versiot 2.0f1 ja 2.4. Nämä koneet luultavimmin eivät osaa käynnistyä kiintolevyltä päivittämättömällä laiteohjelmistolla. Apuohjelman <application
+>System Disk 2.3.1</application
+> mukana on korjauspäivitys, se on saatavilla Applelta osoitteesta <ulink url="ftp://ftp.apple.com/developer/macosxserver/utilities/SystemDisk2.3.1.smi.bin"
+></ulink
+>. Kun apuohjelma on purettu MacOS:ssä ja käynnistetty, valitaan painike <guibutton
+>Save</guibutton
+> jolloin laiteohjelmiston korjaukset asennetaan nvram:iin. </para>
+  </sect2>
+<!--   End of file preparing/bios-setup/powerpc.xml -->
+
+<!-- Start of file preparing/bios-setup/sparc.xml -->
+<!-- $Id: sparc.xml 43641 2006-12-29 05:23:38Z fjp $ -->
+
+
+  <sect2 arch="sparc" id="invoking-openboot"
+><title
+>OpenBootin käynnistäminen</title>
+
+<para
+>OpenBoot toteuttaa perustoiminnallisuuden suoritinperheen &arch-title; tietokoneen käynnistämiseen. Tämä on samantapaista kuin BIOS:n tehtävät x86-suoritinperheessä, vaikkakin paljon hienommin tehty. Sunin käynnistys-PROMeissa on mukana forth-tulkki. Sen avulla voi tehdä monenlaisia jutskia kuten vianmääritystä ja yksinkertaisia komentosarjoja. </para
+><para
+>Käynnistyskehotteeseen pääsee pitämällä näppäintä <keycap
+>Stop</keycap
+> pohjassa (vanhoissa type 4 -näppäimistöissä käytetään <keycap
+>L1</keycap
+>-näppäintä. Jos on PC-näppäimistön sovitin, käytetään näppäintä <keycap
+>Break</keycap
+>) ja painetaan näppäintä <keycap
+>A</keycap
+>. Käynnistys-PROM näyttää kehotteen, joko <userinput
+>ok</userinput
+> tai <userinput
+>&gt;</userinput
+>. Suositellaan kehotteen <userinput
+>ok</userinput
+> käyttämistä. Jos näkyy vanhanmallinen kehote, saadaan näppäintä <keycap
+>n</keycap
+> painamalla uudenmallinen. </para
+><para
+>Jos käytetään sarjapäätettä konsolina, on tietokoneelle lähetettävä break. Minicomin käyttäjä näppäilee <keycap
+>Ctrl-A F</keycap
+>, cu:n käyttäjä <keycap
+>Enter</keycap
+>, sitten kirjoitetaan <userinput
+>%~break</userinput
+>. Jos käytät jotain muuta pääteohjelmaa, lue sen ohjeet. </para>
+  </sect2>
+
+  <sect2 arch="sparc" id="boot-dev-select-sun">
+  <title
+>Käynnistyslaitteen valinta</title>
+
+<para
+>OpenBootilla voidaan määrittää käynnistyslaite ja myös vaihtaa oletuskäynnistyslaitetta. On kuitenkin tiedettävä joitakin yksityiskohtia OpenBootin laitenimistä: ne ovat hyvin erilainen kuin Linuxin käyttämät laitenimet, joita kerrotaan kohdassa <xref linkend="device-names"/>. Lisäksi komento on hieman erilainen eri OpenBootin versioissa. Lisää tietoa OpenBootista löytyy ohjeesta <ulink url="&url-openboot;"
+>Sun OpenBoot Reference</ulink
+>. </para
+><para
+>Uusilla versioilla käytetään tavallisesti OpenBootilla laitenimiä kuten <quote
+>floppy</quote
+>, <quote
+>cdrom</quote
+>, <quote
+>net</quote
+>, <quote
+>disk</quote
+>, tai <quote
+>disk2</quote
+>. Nimillä on ilmeinen merkityksensä; <quote
+>net</quote
+> tarkoittaa käynnistämistä verkosta. Lisäksi laitenimi voi määrittää levyltä tietyn osion, kuten <quote
+>disk2:a</quote
+> jolla käynnistetään levyn disk2 ensimmäiseltä osiolta. Tässä on OpenBootin kokonaisen laitenimen malli <informalexample
+> <screen>
+<replaceable
+>driver-name</replaceable
+>@
+<replaceable
+>unit-address</replaceable
+>:
+<replaceable
+>device-arguments</replaceable>
+</screen
+></informalexample
+>. OpenBootin vanhemmissa versioiossa laitteiden nimeäminen menee hieman eri tavalla: levykeaseman nimi on <quote
+>/fd</quote
+>, ja SCSI-levylaitteiden nimet ovat muotoa <quote
+>sd(<replaceable
+>controller</replaceable
+>, <replaceable
+>disk-target-id</replaceable
+>, <replaceable
+>disk-lun</replaceable
+>)</quote
+>. Uusien OpenBootin versioiden komento <userinput
+>show-devs</userinput
+> näyttää kätevästi ne laitteet joiden asetukset on tehty. Kaikki tiedot kaikista versioista löytyvät oppaaasta <ulink url="&url-openboot;"
+>Sun OpenBoot Reference</ulink
+>. </para
+><para
+>Käynnistys tietyltä laitteelta tapahtuu komennolla <userinput
+>boot <replaceable
+>device</replaceable
+></userinput
+>. Laitteesta tehdään oletuskäynnistyslaite komennolla <userinput
+>setenv</userinput
+>. Muutettavan muuttujan nimi kuitenkin vaihtelee OpenBootin versioiden mukaan. OpenBootin versioissa 1.x käytetään komentoa <userinput
+>setenv boot-from <replaceable
+>device</replaceable
+></userinput
+>. Uudemmissa OpenBootin versioissa komento on <userinput
+>setenv boot-device <replaceable
+>device</replaceable
+></userinput
+>. Huomaa, että nämä asetukset voi tehdä myös Solariksen komennolla <command
+>eeprom</command
+>, tai muokkaamalla sopivia tiedostoja hakemistossa <filename
+>/proc/openprom/options/</filename
+>, Linuxissa esimerkiksi: <informalexample
+><screen>
+# echo disk1:1 &gt; /proc/openprom/options/boot-device
+</screen
+></informalexample
+> ja Solariksessa: <informalexample
+><screen
+>eeprom boot-device=disk1:1
+</screen
+></informalexample>
+
+</para>
+  </sect2>
+<!--   End of file preparing/bios-setup/sparc.xml -->
+
+<!-- Start of file preparing/bios-setup/s390.xml -->
+<!-- $Id: s390.xml 43655 2006-12-29 17:24:08Z fjp $ -->
+
+
+  <sect2 arch="s390"
+><title
+>BIOSin asetukset</title>
+<para
+>&debian;in asentamiseksi suoritinperheen &arch-title; koneelle tai zSeries-koneelle on järjestelmään ensimmäiseksi käynnistettävä ydin. Tämän laitealustan käynnistystapa on olennaisesti muista poikkeava, erityisesti se on erilainen kuin PC-koneissa: levykeasemia ei ole lainkaan. Laitealustan parissa työskennellessä huomaa toisenkin ison eron: enimmäkseen (tai aina) työskennellään etäkäyttönä telnetin tapaisen pääteohjelman tai selaimen avulla. Tämä johtuu erikoisesta järjestelmäarkkitehtuurista jossa 3215/3270-konsoli on rivipohjainen eikä merkkipohjainen. </para
+><para
+>Tällä laitealustalla Linux toimii joko suoraan raudalla, niin kutsutussa LPAR:ssa (Logical Partition), tai VM-järjestelmän tarjoamassa virtuaalikoneessa. Kaikilla järjestelmillä voidaan käynnistää nauhalta; muutakin käynnistysmediaa voi käyttää, mutta muita ei yleensä ole käytettävissä. Esimerkiksi voidaan käyttää virtuaalikoneen virtuaalista kortinlukijaa, tai käynnistää LPAR:n HMC:ltä (Hardware Management Console) jos HMC ja tämä toiminto on käytettävissä. </para
+><para
+>Ennen varsinaisen asennuksen aloittamista, on tehtävä joitakin suunnittelu- ja valmisteluvaiheita. IBM:ltä on saatavilla ohjeet koko prosessista, ts. miten asennustaltio valmistetaan ja miten taltiolta käynnistetään. Tuon tiedon toistaminen tässä ei ole mahdollista eikä tarpeen. Tässä kuitenkin kerrotaan minkälaisia nimenomaan Debianiin liittyviä tietoja tarvitaan ja mistä ne löytää. Molempien tietolähteiden avulla on laite ja asennustaltio valmisteltava ja käynnistettävä taltiolta. Kun ruudulla näkyy istunnon tervetulotoivotus, jatketaan tämän ohjeen seuraamista Debianin asennuksen parissa. </para>
+  </sect2>
+
+  <sect2 arch="s390">
+  <title
+>Asennus suoraan rautaan ja LPAR:iin</title>
+<para
+>Lue luvusta viisi kirjasta <ulink url="http://www.redbooks.ibm.com/pubs/pdfs/redbooks/sg244987.pdf"
+> Linux for &arch-title;</ulink
+> Redbook ja luvusta 3.2 kirjasta <ulink url="http://www.redbooks.ibm.com/pubs/pdfs/redbooks/sg246264.pdf"
+> Linux for IBM eServer zSeries and &arch-title;: Distributions</ulink
+> Redbook ohjeet kuinka LPAR tehdään Linuxille. </para>
+  </sect2>
+
+  <sect2 arch="s390">
+  <title
+>Asennus VM vieraaksi</title>
+
+<para
+>Lue luvusta 6 kirjasta <ulink url="http://www.redbooks.ibm.com/pubs/pdfs/redbooks/sg244987.pdf"
+> Linux for &arch-title;</ulink
+> Redbook ja luvusta 3.1 kirjasta <ulink url="http://www.redbooks.ibm.com/pubs/pdfs/redbooks/sg246264.pdf"
+> Linux for IBM eServer zSeries and &arch-title;: Distributions</ulink
+> Redbook ohjeet kuinka VM vieras tehdään Linuxille. </para
+><para
+>Kaikki tiedostot alihakemistosta <filename
+>generic</filename
+> on kopioitava CMS-levylle. Muista kopioida <filename
+>kernel.debian</filename
+> ja <filename
+>initrd.debian</filename
+> binäärimuodossa kiinteällä 80 merkin tietueen pituudella. </para>
+  </sect2>
+
+  <sect2 arch="s390">
+  <title
+>Asennuspalvelimen tekeminen</title>
+
+<para
+>Mikäli Internet-yhteyttä ei ole käytettävissä (suoraan tai www-sovelluskäytävän kautta), on luotava paikallinen asennuspalvelin joka on käytettävissä S/390-koneesta. Tässä palvelimessa on kaikki asennettavat paketit ja niiden on oltava käytettävissä NFS:llä, HTTP:llä tai FTP:llä. </para
+><para
+>Asennuspalvelimeen on kopioitava jonkin &debian;in asennuspalvelimen tarkka hakemistorakenne, mutta vain s390:n tiedostot ja suoritinperheestä riippumattomat tiedostot tarvitaan. Kaikkien asennusromppujen sisältö voidaan myös kopioida tuollaiseen hakemistopuuhun. </para
+><para condition="FIXME">
+
+<emphasis
+>FIXME: more information needed &mdash; from a Redbook?</emphasis>
+
+</para>
+  </sect2>
+<!--   End of file preparing/bios-setup/s390.xml -->
+
+  <sect2 arch="m68k;x86;powerpc" id="hardware-issues">
+  <title
+>Varottavia laitetason ilmiöitä</title>
+
+<para arch="m68k"
+>Atari TT RAM -muistikortit ovat Linuxissa pahamaineisia muistivikojen pesiä; mikäli ilmenee outoja pulmia, yritä ajaa ainakin ydin ST-RAM:sta. Amigan käyttäjät saattavat joutua rajaamaan pois muistia booter memfileä käyttämällä. <phrase condition="FIXME"
+><emphasis
+> FIXME: more description of this needed. </emphasis
+></phrase
+> </para>
+
+   <formalpara arch="x86">
+   <title
+>Tuki USB BIOS:lle ja näppäimistöille</title>
+<para
+>Jos käytettävissä ei ole AT-tyylistä näppäimistöä vaan USB-malli, on ehkä otettava käyttöön AT-näppäimistön emulointi BIOS-asetuksissa. Tee tämä vain jos asennusjärjestelmä ei osaa käyttää näppäimistöä USB-tilassa. Päinvastainen tilanne on joissakin järjestelmissä (erityisesti läppäreissä), joissa on ehkä poistettava käytöstä legacy USB support jos näppäimistö ei toimi. Tutki emolevyn käsikirjaa ja etsi BIOS:sta kohtia <quote
+>Legacy keyboard emulation</quote
+> tai <quote
+>USB keyboard support</quote
+>. </para>
+   </formalpara>
+
+   <formalpara arch="powerpc">
+   <title
+>Näytön pimeneminen OldWorld Powermaceissa</title>
+
+<para
+>Jotkin OldWorld Powermacit, erityisesti ne joissa on <quote
+>control</quote
+>-näyttöajuri, eivät ehkä tee värikarttaa joka luotettavasti näyttäisi värit Linuxissa kun värisyvyys on enemmän kuin 256 väriä. Jos tämmöistä ilmenee näytöllä kun järjestelmä on käynnistetty uudelleen (joskus näytöllä näkyy kuva ja teksti, joskus ei mitään) tai jos näyttö menee mustaksi asentimen käynnistyksen jälkeen eikä käyttöliittymää näy, yritä muuttaa näytön värisyvyydeksi 256 väriä eikä <quote
+>tuhansia</quote
+> tai <quote
+>miljoonia</quote
+>. </para>
+   </formalpara>
+  </sect2>
+ </sect1>
+<!--   End of file preparing/pre-install-bios-setup.xml -->
+
+</chapter>
+<!--   End of file preparing/preparing.xml -->

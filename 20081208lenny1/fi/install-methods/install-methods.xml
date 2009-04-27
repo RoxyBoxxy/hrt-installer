@@ -1,0 +1,1756 @@
+<!-- Start of file install-methods/install-methods.xml -->
+<!-- $Id: install-methods.xml 11648 2004-03-22 00:37:46Z joeyh $ -->
+
+<chapter id="install-methods">
+ <title
+>Asennustaltioiden hankkiminen</title>
+
+
+<!-- Start of file install-methods/official-cdrom.xml -->
+<!-- $Id: official-cdrom.xml 28672 2005-06-26 10:06:30Z fjp $ -->
+
+ <sect1 id="official-cdrom">
+ <title
+>Viralliset &debian; romput</title>
+<para
+>&debian; on helpointa asentaa virallisilta rompuilta. Romput voi ostaa kauppiaalta (katso <ulink url="&url-debian-cd-vendors;"
+>Debianin CD-toimittajat</ulink
+> -sivulta). Jos Debianin romput on jo hankittuna ja romput kelpaavat käynnistysrompuksi asennettavalla tietokoneella, voidaan hypätä suoraan kohtaan <xref linkend="boot-installer"/>; paljon vaivaa on nähty jotta useimpien käyttäjien tarvitsemat tiedostot olisivat rompulla. Vaikkakin tarvitaan monta romppua, jotta kaikki asennuspaketit saadaan mahtumaan, on epätodennäköistä, että tarvittaisiin paketteja jotka ovat kolmannella rompulla tai sen jälkeen. Kannattaa huomata myös asennus-DVD, jolla säästää paljon hyllytilaa ja välttyy rompunvaihtotalkoilta. </para
+><para
+>Jos tietokone ei tue rompulta käynnistämistä, mutta romput ovat käytettävissä, voidaan käyttää vaihtoehtoista tapaa kuten <phrase condition="supports-floppy-boot"
+>levykettä,</phrase
+> <phrase arch="s390"
+>nauhaa, emuloitua nauhaa,</phrase
+> <phrase condition="bootable-disk"
+>kiintolevyä,</phrase
+> <phrase condition="bootable-usb"
+>USB-muistia,</phrase
+> <phrase condition="supports-tftp"
+>käynnistystä verkosta,</phrase
+> tai ytimen lataamista itse rompulta järjestelmän asentimen ensimmäiseen käynnistämiseen. Myöskin muilla tavoin käynnistämiseen tarvittavat tiedostot ovat rompulla; Debianin verkossa olevan asennuspalvelimen ja romppujen hakemistorakenne on samanlainen. Joten kun seuraavassa kerrotaan käynnistämisessä tarvittavien arkiston tiedostojen polkunimiä, löytyvät tiedostot samoista hakemistoista ja alihakemistoista rompulta. </para
+><para
+>Kun asennin on käynnistetty, se osaa noutaa kaikki muut tarvitsemansa tiedostot rompulta. </para
+><para
+>Jos romppuja ei ole, on asentimen järjestelmätiedostot noudettava netistä ja tallennettava ne <phrase arch="s390"
+>asennusnauhalle</phrase
+> <phrase condition="supports-floppy-boot"
+>levykkeelle tai</phrase
+> <phrase condition="bootable-disk"
+>kiintolevylle tai</phrase
+> <phrase condition="bootable-usb"
+>USB-muistille tai</phrase
+> <phrase condition="supports-tftp"
+>verkkoyhteyden päässä olevalle tietokoneelle</phrase
+> jotta asennin voidaan käynnistää niiltä. </para>
+
+ </sect1>
+<!--   End of file install-methods/official-cdrom.xml -->
+
+<!-- Start of file install-methods/downloading-files.xml -->
+<!-- $Id: downloading-files.xml 56139 2008-09-26 10:44:32Z lunar $ -->
+
+ <sect1 id="downloading-files">
+ <title
+>Tiedostojen noutaminen Debianin asennuspalvelimilta</title>
+
+<para
+>Lähimmän (ja siten luultavasti nopeimman) asennuspalvelimen löytää <ulink url="&url-debian-mirrors;"
+>Debianin asennuspalvelimien luettelosta</ulink
+>. </para
+><para
+>FTP:tä käytettäessä muista noutaa tiedostot Debianin asennuspalvelimelta <emphasis
+>binäärimuodossa</emphasis
+>, ei tekstimuodossa tai automaattimuodossa. </para>
+
+  <sect2 id="where-files">
+  <title
+>Mistä asennusotokset löytyvät?</title>
+
+<para
+>Asennuslevyjen otokset löytyvät jokaisesta Debianin asennuspalvelimesta hakemistosta <ulink url="&url-debian-installer;images"
+>debian/dists/&releasename;/main/installer-&architecture;/current/images/</ulink
+> &mdash; luettelossa <ulink url="&url-debian-installer;images/MANIFEST"
+>MANIFEST</ulink
+> on kaikki otokset ja niiden käyttötarkoitus. </para>
+
+
+<!-- Start of file install-methods/download/alpha.xml -->
+<!-- $Id: alpha.xml 28997 2005-07-07 21:09:22Z fjp $ -->
+
+
+   <sect3 arch="alpha"
+><title
+>Alphan asennustiedostot</title>
+<para
+>Haluttaessa käynnistää ARC-konsolin laiteohjelmistosta <command
+>MILO</command
+>:n avulla, on lisäksi valmisteltava levy johon on asennettu <command
+>MILO</command
+> ja <command
+>LINLOAD.EXE</command
+> tarjotuista levyotoksista. Katso kohdasta <xref linkend="alpha-firmware"/> löytyy lisää tietoa Alphan laiteohjelmistosta ja käynnistyslataimista. Levykeotokset <filename
+>MILO</filename
+>:n hakemistosta tiedostoina <filename
+>milo_<replaceable
+>subarchitecture</replaceable
+>.bin</filename
+>. </para
+><para
+>Harmittavasti näitä <command
+>MILO</command
+>:n otoksia ei voitu testata ja ne eivät ehkä toimi kaikilla arkkitehtuurin muunnoksilla. Jos havaitset ettei se toimi, yritä kopioida sopiva komennon <command
+>MILO</command
+> suorituskelpoinen versio levykkeelle (<ulink url="&disturlftp;main/disks-alpha/current/MILO/"
+></ulink
+>). Huomaa, että nuo <command
+>MILO</command
+>-komennot eivät tue ext2:n ominaisuutta  <quote
+>sparse superblocks</quote
+>, joten niitä ei voi käyttää ytimen lataamiseen juuri luodulta ext2-tiedostojärjestelmältä. Tämän voi kiertää tallentamalla ytimen FAT-osiolle komennon <command
+>MILO</command
+> kanssa. </para
+><para
+><command
+>MILO</command
+>:n suorituskelpoiset tiedostot toimivat vain tietyllä laitealustalla. Katso kohdasta <xref linkend="alpha-cpus"/> sopiva <command
+>MILO</command
+>-otos käytettävälle Alpha-koneelle. </para>
+   </sect3>
+<!--   End of file install-methods/download/alpha.xml -->
+
+<!-- Start of file install-methods/download/arm.xml -->
+<!-- $Id: arm.xml 55541 2008-09-03 15:16:19Z tbm $ -->
+
+
+   <sect3 arch="arm" id="netwinder-install-files">
+   <title
+>Netwinderin asennustiedostot</title>
+<para
+>Netwinderin käynnistää helpoimmin verkosta, mukana tulevaa TFTP-otosta &netwinder-boot-img; käyttämällä. </para>
+   </sect3>
+
+   <sect3 arch="arm" id="cats-install-files">
+   <title
+>CATS:in asennustiedostot</title>
+<para
+>CATS voidaan käynnistää joko verkosta tai rompulta. Ydin ja initrd saadaan otoksesta &cats-boot-img;. </para>
+   </sect3>
+
+   <sect3 arch="arm" id="nslu2-install-files">
+   <title
+>NSLU2:n asennustiedostot</title>
+<para
+>Linksys NSLU2:lle on laiteohjelmisto joka käynnistää automaattisesti Debianin asentimen <classname
+>debian-installer</classname
+>. Tämä laiteohjelmiston otos on saatavilla tiedostossa &nslu2-firmware-img;. </para>
+   </sect3>
+
+
+   <sect3 arch="arm" id="n2100-install-files">
+   <title
+>Thecus N2100:n asennustiedostot</title>
+<para
+>Thecus N2100:lle on laiteohjelmisto joka käynnistää automaattisesti Debianin asentimen <classname
+>debian-installer</classname
+>. Tämä laiteohjelmiston otos saadaan tiedostosta &n2100-firmware-img;. </para>
+   </sect3>
+
+   <sect3 arch="arm" id="glantank-install-files">
+   <title
+>GLAN Tank:n asennustiedostot</title>
+<para
+>GLAN Tank vaatii ytimen ja muistilevyn ext2-osiolla, jonka on oltava sillä levyllä johon Debian aiotaan asentaa. Nämä otokset saadaan osoitteesta &glantank-firmware-img;. </para>
+   </sect3>
+
+   <sect3 arch="arm" id="kuroboxpro-install-files">
+   <title
+>Kurobox Pro:n asennustiedostot</title>
+<para
+>Kurobox Pro vaatii ytimen ja muistilevyn ext2-osiolla, jonka on oltava sillä levyllä johon Debian aiotaan asentaa. Nämä otokset saadaan osoitteesta &kuroboxpro-firmware-img;. </para>
+   </sect3>
+
+   <sect3 arch="arm" id="mv2120-install-files">
+   <title
+>HP mv2120:n asennustiedostot</title>
+<para
+>HP vv2120:lle on laiteohjelmisto joka käynnistää automaattisesti Debianin asentimen <classname
+>debian-installer</classname
+>. Tämä otos asennetaan uphpmvault:lla Linuxissa ja muissa järjestelmissä ja HP Media Vault Firmware Recovery Utility:llä Windowsissa. Tämä laiteohjelmiston otos saadaan tiedostosta &mv2120-firmware-img;. </para>
+   </sect3>
+
+   <sect3 arch="arm" id="qnap-install-files">
+   <title
+>QNAP Turbo Station:in asennustiedostot</title>
+<para
+>QNAP Turbo Station (TS-109, TS-209 and TS-409) vaatii ytimen ja muistilevyn, jotka ovat saatavilla osoitteesta &qnap-firmware-img;. Saatavilla on komentotiedosto joka kirjoittaa nämä otokset flashmuistiin. </para>
+   </sect3>
+
+<!--   End of file install-methods/download/arm.xml -->
+
+<!-- Start of file install-methods/download/powerpc.xml -->
+<!-- $Id: powerpc.xml 28672 2005-06-26 10:06:30Z fjp $ -->
+
+<!-- commented out as it seems out of date and the links are broken
+
+   <sect3 arch="powerpc" id="newworld-install-files">
+   <title
+>NewWorld MacOS Installation Files </title>
+<para>
+
+For floppy-less installation on NewWorld Macs, it may be most
+convenient to obtain all the necessary files packaged into one Stuffit
+archive from
+<ulink url="&url-powerpc-of;"
+></ulink
+> (separate instructions are
+included in the archive). Otherwise, obtain the normal installation
+files listed above. Retrieve the files to an HFS (not HFS+) partition
+on your system.  You will also need the <filename
+>yaboot</filename
+> and
+<filename
+>yaboot.conf</filename
+> files from the
+<ulink url="&downloadable-file;new-powermac/"
+>new-powermac</ulink
+> or
+<ulink url="&downloadable-file;powermac/"
+>powermac</ulink
+> archive folder.
+However, the newest G4 PowerMacs, and those that work without MacOS 9,
+need the newest version of <command
+>yaboot</command
+>; the one in the
+archive will not work. Obtain the newest version from
+<ulink url="http://penguinppc.org/projects/yaboot/"
+></ulink
+>.
+
+</para>
+   </sect3>
+
+-->
+<!--   End of file install-methods/download/powerpc.xml -->
+
+<!-- Start of file install-methods/download/m68k.xml -->
+<!-- $Id: m68k.xml 28672 2005-06-26 10:06:30Z fjp $ -->
+
+
+   <sect3 arch="m68k" id="kernel-22">
+   <title
+>Ytimen valinta</title>
+
+<para
+>Joillakin laiteperheen m68k muunnoksilla on lukuisia asennusytimiä. Yleensä suositellaan uusimman version kokeilemista ensin. Jos muunnoksen tai tietokoneen on käytettävä version 2.2.x-ydintä, varmista että käytetään otosta joka tukee 2.2.x-ytimiä (katso <ulink url="&disturl;/main/installer-&architecture;/current/images/MANIFEST"
+>MANIFEST</ulink
+>). </para>
+<para
+>Kaikki laiteperneen m68k ytimien 2.2.x kanssa käytettävät otokset vaativat ytimen parametrin &ramdisksize;. </para>
+   </sect3>
+<!--   End of file install-methods/download/m68k.xml -->
+
+  </sect2>
+
+ </sect1>
+<!--   End of file install-methods/downloading-files.xml -->
+
+<!-- Start of file install-methods/ipl-tape.xml -->
+<!-- $Id: ipl-tape.xml 36841 2006-04-30 23:34:32Z fjp $ -->
+
+ <sect1 arch="s390" id="ipl-tape">
+ <title
+>IPL-nauhan luominen</title>
+
+<para
+>Jos käynnistäminen (IPL) rompulta ei ole mahdollista eikä VM ole käytössä, on ensin luotava IPL-nauha. Ohjeet tähän löytyvät luvusta 3.4.3 Redbookista <ulink url="http://www.redbooks.ibm.com/pubs/pdfs/redbooks/sg246264.pdf"
+> Linux for IBM eServer zSeries and S/390: Distributions</ulink
+>. Tiedostot jotka on (tässä järjestyksessä) kirjoitettava nauhalle ovat: <filename
+>kernel.debian</filename
+>, <filename
+>parmfile.debian</filename
+> ja <filename
+>initrd.debian</filename
+>. Tiedostot voi noutaa alihakemistosta <filename
+>tape</filename
+>, katso kohdasta <xref linkend="where-files"/>. </para>
+ </sect1>
+
+<!--   End of file install-methods/ipl-tape.xml -->
+
+<!-- Start of file install-methods/create-floppy.xml -->
+<!-- $Id: create-floppy.xml 45453 2007-02-27 12:58:15Z fjp $ -->
+
+ <sect1 condition="supports-floppy-boot" id="create-floppy">
+ <title
+>Levykkeiden luominen levyotoksista</title>
+<para
+>Käynnistyslevykkeitä käytetään tavallisesti viimeisenä konstina asentimen käynnistämiseen laitteilla, joita ei voi käynnistää rompulta tai muilla tavoin. </para
+><para arch="powerpc"
+>Kuulemma asentimen käynnistäminen levykkeeltä ei toimi Mac USB-levykeasemilta. </para
+><para arch="m68k"
+>Asentimen käynnistämistä levykkeeltä ei tueta Amigalla tai 68k Maceillä. </para
+><para
+>Levyotokset ovat tiedostoja, joissa on levykkeen koko sisältö <emphasis
+>käsittelemättömässä</emphasis
+> muodossa. Levyotoksia kuten <filename
+>boot.img</filename
+> ei voi suoraan kopioida levykkeelle. Tarvitaan tätä tarkoitusta varten tehty ohjelma kirjoittamaan levyotos levykkeelle <emphasis
+>käsittelemättömässä</emphasis
+> muodossa. Näin on meneteltävä, koska otokset ovat levyn käsittelemättömiä sisältöjä; tiedosto on kirjoitettava levykkeelle sektori kerrallaan. </para
+><para
+>Levykkeiden tekemiseen levyotoksista on useita tapoja. Tässä luvussa kerrotaan miten levyotoksista tehdään levykkeitä eri laitealustoilla. </para
+><para
+>Ennen kuin levykkeitä voi kirjoittaa, on ne ensin noudettava jostain Debianin asennuspalvelimesta, kuten selitetään kohdassa <xref linkend="downloading-files"/>. <phrase arch="i386"
+>Jos sinulla on asennusromppu, saattavat levykeotokset olla rompulla.</phrase
+> </para
+><para
+>Tehtiinpä levykkeet millä tavalla tahansa, on kirjoittamisen jälkeen muistettava pistää levykkeiden kirjoitussuojaus päälle, jottei niiden päälle kirjoita vahingossa. </para>
+
+  <sect2
+><title
+>Levyotosten kirjoittaminen Linuxissa tai Unixissa</title>
+<para
+>Jotta levyotostiedostoja voisi kirjoittaa levykkeille, tarvitaan luultavasti pääkäyttäjän oikeudet järjestelmään. Aseta hyvä tyhjä levyke levykeasemaan. Käytä seuraavaksi komentoa <informalexample
+><screen>
+$ dd if=<replaceable
+>tiedostonnimi</replaceable
+> of=/dev/fd0 bs=1024 conv=sync ; sync
+</screen
+></informalexample
+> missä <replaceable
+>tiedostonnimi</replaceable
+> on jokin levyotostiedostoista. <filename
+>/dev/fd0</filename
+> on yleinen levykeaseman laitenimi, se saattaa olla jotain muuta työasemallasi <phrase arch="sparc"
+>(Solariksessa se on <filename
+>/dev/fd/0</filename
+>)</phrase
+>. Komento saattaa palata kehoitteeseen ennen kuin Unix on kirjoittanut levykkeen lopppuun asti, joten tarkkaile levykeaseman merkkivaloa ja varmistu valon sammuneen ja levykkeen lakanneen pyörimästä ennen kuin poistat sen asemasta. Joissakin järjestelmissä on käytettävä komentoa, joka työntää levykkeen ulos asemasta <phrase arch="sparc"
+>(Solariksessa käytetään komentoa <command
+>eject</command
+>, katso man-sivua)</phrase
+>. </para
+><para
+>Jotkin järjestelmät yrittävät liittää levykkeen automaattisesti kun se asetetaan asemaan. Tämä ominaisuus on ehkä otettava pois käytöstä ennen kuin työasema sallii levykkeen kirjoittamisen <emphasis
+>käsittelemättömässä</emphasis
+> muodossa. Harmittavasti on käyttöjärjestelmäkohtaista miten tämä saadaan pois käytöstä. <phrase arch="sparc"
+> Solariksesssa voidaan volume management kiertää ja päästä siten käyttämään levykeasemaa suoraan. Varmikstu ensin levykeen olevan liitetty automaattisesti (komennolla <command
+>volcheck</command
+> tai tiedostojenhallinnan vastaavalla toiminnolla). Käytä sitten komentoa <command
+>dd</command
+> kuten yllä, mutta <filename
+>/dev/fd0</filename
+> tilalle kirjoitetaan <filename
+>/vol/rdsk/<replaceable
+>levykkeen_nimi</replaceable
+></filename
+>, missä <replaceable
+>levykkeen_nimi</replaceable
+> on se nimi joka levykkeelle annettiin kun se alustettiin (nimeämättömän levykkeen nimeksi tulee <filename
+>unnamed_floppy</filename
+>). Muiden järjestelmien käyttäjien on parasta kysyä järjestelmän ylläpitäjältä.</phrase
+> </para
+><para arch="powerpc"
+>Jos kirjoitetaan levyke powerpc-Linuxilla, se on poistettava asemasta. Ohjelma <command
+>eject</command
+> tekee sen mukavasti; ohjelma on ehkä asennettava. </para>
+
+  </sect2>
+
+
+<!-- Start of file install-methods/floppy/i386.xml -->
+<!-- $Id: i386.xml 39870 2006-08-16 00:35:08Z fjp $ -->
+
+
+<!--  This is not set off for i386 only, because many people will have -->
+<!--  access to a PC in order to make a floppy for other arches. -->
+
+  <sect2
+><title
+>Levyotosten kirjoittaminen DOS:ssa, Windowsissa tai OS/2:ssa</title>
+
+<para
+>Jos käytettävissä on i386- tai amd64-kone, voidaan otokset kirjoittaa levykkeille seuraavilla ohjelmilla. </para
+><para
+>Ohjelmia <command
+>rawrite1</command
+> ja <command
+>rawrite2</command
+> voidaan käyttää MS-DOS:ssa. Ohjelmia käytettäessä on ensin varmistuttava, että on käynnistetty DOS. Ohjelmien <emphasis
+>ei pitäisikään</emphasis
+> toimia Windowsin DOS-ikkunassa tai kaksoisnapsauttamalla niitä Windowsin tiedostoselaimessa. </para
+><para
+>Ohjelma <command
+>rwwrtwin</command
+> toimii Windowseissa 95, NT, 98, 2000, ME, XP ja luultavasti uudemmissa versioissa. Sitä käytettäessä on diskio.dll purettava samaan hakemistoon. </para
+><para
+>Nämä työkalut löytyvät virallisilta Debian-rompuilta hakemistosta <filename
+>/tools</filename
+>. </para>
+  </sect2>
+<!--   End of file install-methods/floppy/i386.xml -->
+
+<!-- Start of file install-methods/floppy/m68k.xml -->
+<!-- $Id: m68k.xml 45433 2007-02-26 18:10:28Z wouter $ -->
+
+
+  <sect2 arch="m68k"
+><title
+>Levyotosten kirjoittaminen Atari-järjestelmissä</title>
+<para
+>Ohjelma &rawwrite.ttp; löytyy samasta hakemistota kuin levykeotokset. Käynnistä ohjelma kaksoisnapsauttamalla ohjelman kuvaketta, ja kirjoita halutun levykeotostiedoston nimi TOS-ohjelman komentorivin valintaikkunaan. </para>
+
+  </sect2>
+
+  <sect2 arch="m68k"
+><title
+>Levykeotosten kirjoittaminen Macintosh-järjestelmissä</title>
+<para
+>Koska nykyinen julkaisu ei vielä tue asennusjärjestelmän käynnistämistä levykkeiltä, levykkeiden kirjoittamisesta ei olisi hyötyä MacIntosh-järjestelmissä. Näitä tiedostoja kuitenkin tarvitaan myöhemmin käyttöjärjestelmän ja moduulien asentamiseen. </para>
+
+  </sect2>
+<!--   End of file install-methods/floppy/m68k.xml -->
+
+<!-- Start of file install-methods/floppy/powerpc.xml -->
+<!-- $Id: powerpc.xml 28997 2005-07-07 21:09:22Z fjp $ -->
+
+
+  <sect2 arch="powerpc"
+><title
+>Levykeotosten kirjoittaminen MacOS:ssä</title>
+<para
+>Saatavilla on AppleScript-sovellus, <application
+>Make Debian Floppy</application
+>, kirjoittamaan levykkeitä annetuista levykeotostiedostoista. Se voidaan noutaa osoitteesta <ulink url="ftp://ftp2.sourceforge.net/pub/sourceforge/d/de/debian-imac/MakeDebianFloppy.sit"
+></ulink
+>. Sitä käytetään purkamalla (unstuff) se työpöydälle. Sitten levykeotostiedosto vedetään sen kuvakkeeseen. Applescriptin on oltava asennettuna ja merkittynä käyttöön extensions managerissa. Disk Copy pyytää varmistusta levykkeen pyyhkimiseen ja levykeotostiedoston kirjoittamiseen. </para
+><para
+>Voidaan käyttää myös suoraan MacOS:n apuohjelmaa <command
+>Disk Copy</command
+>, tai ilmaisohjelmaa <command
+>suntar</command
+>. Tiedosto <filename
+>root.bin</filename
+> on esimerkki levykeotoksesta. Tee levyke levykeotoksesta jollain seuraavista tavoista näillä apuohjelmilla. </para>
+
+   <sect3>
+   <title
+>Levykeotosten kirjoittaminen apuohjelmalla <command
+>Disk Copy</command
+></title>
+<para
+>Jos levykeotos luodaan tiedostoista jotka olivat alunperin virallisisilla &debian; -rompuilla, on kentillä Type ja Creator jo oikea arvo. Seuraavat <command
+>Creator-Changer</command
+>-vaiheet ovat tarpeen vain jos otostiedostot noudettiin Debianin asennuspalvelimelta. </para>
+<orderedlist>
+<listitem
+><para
+>Hanki <ulink url="&url-powerpc-creator-changer;"
+>Creator-Changer</ulink
+> ja avaa sillä tiedosto <filename
+>root.bin</filename
+>. </para
+></listitem>
+<listitem
+><para
+>Muuta kenttään Creator arvo <userinput
+>ddsk</userinput
+> (Disk Copy), ja kenttään Type arvo <userinput
+>DDim</userinput
+> (binary floppy image). Nämä kentät ovat aakkoslajit erottavia. </para
+></listitem>
+<listitem
+><para
+><emphasis
+>Tärkeää:</emphasis
+> Käytä Finderissa <userinput
+>Get Info</userinput
+>:a näyttämään Finderin tiedot levykeotoksesta, ja pistä <quote
+>X</quote
+> valintaruutuun <userinput
+>File Locked</userinput
+>, jotta MacOs ei voi poistaa käynnistyslohkoja jos otos vahingossa liitetään. </para
+></listitem>
+    <listitem
+><para
+>Hanki <command
+>Disk Copy</command
+>; jos käytössä on MacOS-järjestelmä tai MacOS-romppu, sovellus luultavasti on jo käytettävissä, muussa tapauksessa etsi osoitteesta <ulink url="&url-powerpc-diskcopy;"
+></ulink
+>. </para
+></listitem>
+<listitem
+><para
+>Käynnistä <command
+>Disk Copy</command
+>, ja valitse <menuchoice
+> <guimenu
+>Utilities</guimenu
+> <guimenuitem
+>Make a Floppy</guimenuitem
+> </menuchoice
+>. Valitse sitten <emphasis
+>locked</emphasis
+> otostiedosto valintaikkunassa. Se pyytää asettamaan levykkeen asemaan, sitten varmistusta levykkeen pyyhkimiselle. Kun on valmista pitäisi sen työntää levyke ulos. </para
+></listitem>
+</orderedlist>
+
+   </sect3>
+
+   <sect3>
+   <title
+>Levykeotosten kirjoittaminen komennolla <command
+>suntar</command
+></title>
+<para>
+
+<orderedlist>
+<listitem
+><para
+>Hanki <command
+>suntar</command
+> osoitteesta <ulink url="&url-powerpc-suntar;"
+> </ulink
+>. Käynnistä ohjelma <command
+>suntar</command
+> ja valitse <quote
+>Overwrite Sectors...</quote
+> valikosta <userinput
+>Special</userinput
+>. </para
+></listitem>
+<listitem
+><para
+>Aseta levyke asemaan pyynnön mukaan, paina sitten &enterkey; (aloita sektorista  0). </para
+></listitem>
+<listitem
+><para
+>Valitse tiedosto <filename
+>root.bin</filename
+> tiedostonavausvalintaikkunassa. </para
+></listitem>
+<listitem
+><para
+>Kun levyke on onnistuttu luomaan, valitaan <menuchoice
+> <guimenu
+>File</guimenu
+> <guimenuitem
+>Eject</guimenuitem
+> </menuchoice
+>. Mikäli levykettä kirjoitettaessa tulee virheitä, heitä levyke roskiin ja yritä toisella levykkeellä. </para
+></listitem>
+</orderedlist>
+Ennen kuin luotua levykettä käytetään, <emphasis
+>muistetaan pistää kirjoitussuoja päälle</emphasis
+>! Muuten MacOS avuliaasti pilaa levykkeen, jos epähuomiossa liittää sen MacOS:ssä. </para>
+   </sect3>
+  </sect2>
+<!--   End of file install-methods/floppy/powerpc.xml -->
+
+ </sect1>
+
+<!--   End of file install-methods/create-floppy.xml -->
+
+<!-- Start of file install-methods/boot-usb-files.xml -->
+<!-- $Id: boot-usb-files.xml 57590 2009-02-16 22:01:04Z fjp $ -->
+
+ <sect1 condition="bootable-usb" id="boot-usb-files">
+ <title
+>Tiedostojen valmistelu käynnistettäessä USB-muistilta</title>
+
+<para
+>Käynnistettäessä USB-muistilta on kaksi mahdollista asennustapaa. Ensimmäinen asentaa kokonaan verkosta. Toinen tapa on kopioida myös CD-otos USB-muistille ja käyttää sitä pakettien lähteenä, mahdollisesti asennuspalvelimen kopion kanssa. Tämä toinen tapa on yleisempi. </para
+><para
+>Ensimmäistä tapaa käytettäessä on noudettava asentimen levyotos hakemistosta <filename
+>netboot</filename
+> (kohdassa <xref linkend="where-files"/> mainitusta paikasta) ja kopioitava tuonnempana selitettävällä <quote
+>joustavalla tavalla</quote
+> tiedostot USB-muistille. </para
+><para
+>Toisen tavan asennusotokset löytyvät hakemistosta
+<filename
+>hd-media</filename
+> ja otos voidaan kopioida USB-muistille
+joko <quote
+>helpolla tavalla</quote
+> tai <quote
+>joustavalla
+tavalla</quote
+>. Tätä asennustapaa varten on noudettava myös CD-otos. Asennusotoksen ja CD-otoksen on oltava samaa paria, eli samaa &d-i; julkaisua. Jos ne ovat eri paria tulee todennäköisesti virheilmoituksia<footnote
+> <para
+>Todennäköisin virheilmoitus on ettei ytimen moduuleita löydy. Tämä tarkoittaa, että CD-otoksessa olevien ytimen moduuleiden udebit ovat eri versiota kuin ajossa olevassa ytimessä. </para
+> </footnote
+> asennuksen aikana. </para
+><para
+>USB-muistin valmisteluun tarvitaan järjestelmä, jossa GNU/Linux on jo toiminnassa ja jossa USB on tuettu. Nykyisissä GNU/Linux-järjestelmissä USB-muisti pitäisi tunnistua automaattisesti kun se kytketään koneeseen. Jos se ei tunnistu, olisi varmistuttava ytimen moduulin usb-storage olevan ladattuna. Kun USB-muisti kytketään, se kuvataan laitteeseen nimeltä <filename
+>/dev/sdX</filename
+>, missä <quote
+>X</quote
+> on jokin kirjaimista a-z. Kyseisen laitteen pitäisi ilmetä komennon <command
+>dmesg</command
+> tulosteesta sen jälkeen kun muisti on kytketty. Kun muistille kirjoitetaan, on sen kirjoitussuoja ehkä otettava pois päältä. </para>
+<warning
+><para
+>Tässä osiossa kuvatut toiminnot tuhoavat kaiken mitä laitteella jo on. Varmistu käyttäväsi USB-muistin oikeaa laitenimeä. Jos käytät väärää laitenimeä, saatat tuhota kaiken tiedon esimerkiksi koneen kiintolevyltä. </para
+></warning>
+<para
+>Huomaa, että USB-muistin olisi oltava kooltaan vähintään 256 Mt (pienempikin koko riittää jos noudatat ohjetta <xref linkend="usb-copy-flexible"/>). </para>
+
+  <sect2 id="usb-copy-easy">
+  <title
+>Tiedostojen kopiointi &mdash; helppo tapa</title>
+<para
+>Tarjolla on kaikki-yhdessä-tiedostossa -paketti <filename
+>hd-media/boot.img.gz</filename
+>, jossa on kaikki asentimen tiedostot (myös ydin) <phrase arch="x86"
+> sekä <classname
+>syslinux</classname
+> että ja asetustiedosto.</phrase
+> <phrase arch="powerpc"
+>sekä <classname
+>yaboot</classname
+> ja sen asetustiedosto.</phrase
+> </para
+><para
+>Vaikka tämä tapa on mukava, kannattaa huomata sen vakava haitta: laitteen looginen koko rajoitetaan 256 Mtavuun, vaikka USB-muisti olisi suurempi. USB-muistille on tehtävä uudet osiot ja uudet tiedostojärjestelmät jotta sen täysi koko saadaan taas käyttöön jos sitä joskus halutaan käyttää johonkin muuhun. Toinen haitta on ettei USB-muistille voi kopioida täyttä romppuotosta, ainoastaan pienemmän businesscard- tai netinst-otoksen. </para
+><para arch="x86"
+>Jos käytät tätä otosta, riittää purkaa se sellaisenaan USB-muistille. <informalexample
+><screen
+># zcat boot.img.gz &gt; /dev/<replaceable
+>sdX</replaceable
+>
+</screen
+></informalexample>
+
+</para
+><para arch="powerpc"
+>Luo tyyppiä "Apple_Bootstrap" oleva osio USB-muistille komennon <command
+>mac-fdisk</command
+> komennolla <userinput
+>C</userinput
+> ja pura otos suoraan siihen: <informalexample
+><screen
+># zcat boot.img.gz &gt; /dev/<replaceable
+>sdX2</replaceable
+>
+</screen
+></informalexample>
+
+</para
+><para
+>Tämän jälkeen liitetään USB-muisti <phrase arch="x86"
+>(<userinput
+>mount <replaceable
+>/dev/sdX</replaceable
+> /mnt</userinput
+>),</phrase
+> <phrase arch="powerpc"
+>(<userinput
+>mount /dev/<replaceable
+>sdX2</replaceable
+> /mnt</userinput
+>),</phrase
+> jossa on nyt <phrase arch="x86"
+>FAT-tiedostojärjestelmä</phrase
+> <phrase arch="powerpc"
+>HFS-tiedostojärjestelmä</phrase
+>, ja kopioidaan Debianin netinst tai businesscard ISO-otos siihen. Irrota muisti (<userinput
+>umount /mnt</userinput
+>) ja homma on valmis. </para>
+  </sect2>
+
+  <sect2 id="usb-copy-flexible">
+  <title
+>Tiedostojen kopiointi &mdash; joustava tapa</title>
+<para
+>Jos USB-muistin sisältöä halutaan muokata tai halutaan tietää tarkemmin mitä tapahtuu, olisi tiedostot kopioitava muistille seuraavalla tavalla. Tämän tavan eräs etu on &mdash; mikäli USB-muisti on riittävän suuri&mdash; mahdollisuus kopioida kokonainen CD-levyn ISO-otos sille. </para>
+
+
+<!-- Start of file install-methods/usb-setup/x86.xml -->
+<!-- $Id: x86.xml 56442 2008-10-15 18:10:38Z fjp $ -->
+
+   <sect3 arch="x86">
+   <title
+>Osioiden teko USB-muistille</title>
+<para
+>Nyt näytetään miten käytetään USB-muistin ensimmäistä osiota eikä koko muistia. </para
+><note
+><para
+>Koska useimmissa USB-muisteissa on tehtaan jäljiltä yksi FAT16-osio, ei liene tarpeen tehdä osioita uudestaan tai formatoida muistia. Jos niin kuitenkin on tehtävä, tee FAT16-osio komennolla <command
+>cfdisk</command
+> tai millä tahansa osiointityökalulla, ja luo osiolle sitten tiedostojärjestelmä seuraavasti:<informalexample
+><screen>
+# mkdosfs /dev/<replaceable
+>sdX1</replaceable>
+</screen
+></informalexample
+> Varmistu käyttäväsi USB-muistin oikeaa laitenimeä. Komento <command
+>mkdosfs</command
+> sisältyy Debianin pakettiin <classname
+>dosfstools</classname
+>. </para
+></note
+><para
+>Ytimen käynnistämiseksi USB-muistilta käynnistettäessä tallennetaan muistille käynnistyslatain. Vaikkakin minkä tahansa käynnistyslataimen (esim. <classname
+>LILO</classname
+>) pitäisi toimia, on kätevintä käyttää <classname
+>SYSLINUX</classname
+>:ia, koska se käyttää FAT16-osiota ja sen asetuksia voidaan muuttaa tekstiedostoa muokkaamalla. Mitä tahansa FAT-tiedostojärjestelmää tukevaa käyttöjärjestelmää voidaan käyttää käynnistyslataimen asetustiedoston muuttamiseen. </para
+><para
+><classname
+>SYSLINUX</classname
+> saadaan tallennettua FAT16-osioon USB-muistille asentamalla paketit <classname
+>syslinux</classname
+> ja <classname
+>mtools</classname
+> järjestelmään, ja antamalla komento: <informalexample
+><screen>
+# syslinux /dev/<replaceable
+>sdX1</replaceable>
+</screen
+></informalexample
+> Tarkista taas huolellisesti, että laitenimi on oikein. Osio ei saa olla liitettynä kun <classname
+>SYSLINUX</classname
+> käynnistetään. Komento kirjoittaa osioon käynnistyssektorin ja luo tiedoston <filename
+>ldlinux.sys</filename
+>, jossa on käynnistyslataimen koodi. </para>
+   </sect3>
+
+   <sect3 arch="x86">
+   <title
+>Asentimen levyotoksen lisääminen</title>
+<para
+>Liitä osio (<userinput
+>mount /dev/<replaceable
+>sdX1</replaceable
+> /mnt</userinput
+>) ja kopioi seuraavat tiedostot Debianin asennuspalvelimelta muistille: 
+<itemizedlist
+> <listitem
+><para
+> <filename
+>vmlinuz</filename
+> (ytimen ohjelmatiedosto) </para
+></listitem
+> 
+<listitem
+><para
+> <filename
+>initrd.gz</filename
+> (käynnistysmuistilevyn levyotos) </para
+></listitem
+> 
+</itemizedlist
+> Jos tiedostojen nimiä halutaan muuttaa, on huomattava ettei <classname
+>SYSLINUX</classname
+> osaa käsitellä muita kuin DOS:n (8.3) tiedostonimiä. </para
+><para
+>Seuraavaksi olisi tehtävä asetustiedosto
+<filename
+>syslinux.cfg</filename
+>, jossa yksinkertaisimmillaan on
+seuraavat kaksi riviä:
+<informalexample
+><screen>
+default vmlinuz
+append initrd=initrd.gz
+</screen
+></informalexample
+> 
+Asentimen graafista käyttöliittymää varten olisi toiseen riviin
+lisättävä <userinput
+>video=vesa:ywrap,mtrr vga=788</userinput
+>. </para
+><para
+>Jos käytit <filename
+>hd-media</filename
+>-otosta, on nyt kopioitava Debianin ISO-otos (businesscard, netinst tai täysi CD-otos; varmista valitsevasi se mikä mahtuu) muistille. Kun tämä on valmista, irroita USB-muisti (<userinput
+>umount /mnt</userinput
+>). </para>
+   </sect3>
+<!--   End of file install-methods/usb-setup/x86.xml -->
+
+<!-- Start of file install-methods/usb-setup/powerpc.xml -->
+<!-- $Id: powerpc.xml 56442 2008-10-15 18:10:38Z fjp $ -->
+
+   <sect3 arch="powerpc">
+   <title
+>Osioiden teko USB-muistille</title>
+<para
+>Useimmat USB-muistit eivät tehtaan jäljiltä ole sellaisia että Open Firmware osaisi käynnistää niiltä, joten muistille on tehtävä uudet osiot. Mac-järjestelmillä käytetään komentoa <userinput
+>mac-fdisk /dev/<replaceable
+>sdX</replaceable
+></userinput
+>, tehdään uusi osiotaulu komennolla <userinput
+>i</userinput
+>, ja luodaan uusi osio tyypiltään Apple_Bootstrap komennolla <userinput
+>C</userinput
+>. (Huomaa, että ensimmäinen "osio" on aina osiotaulu itse.) Kirjoita sitten <informalexample
+><screen>
+$ hformat /dev/<replaceable
+>sdX2</replaceable>
+</screen
+></informalexample
+> Varmista käyttäväsi oikeaa laitenimä USB-muistille. Komento <command
+>hformat</command
+> on Debianin paketissa <classname
+>hfsutils</classname
+>. </para
+><para
+>Ytimen käynnistämiseksi USB-muistilta käynnistettäessä tallennetaan muistille käynnistyslatain. Käynnistyslatain <command
+>yaboot</command
+> voidaan asentaa HFS-tiedostojärjestelmään ja sen asetuksia voidaan muuttaa tekstitiedostoa muokkaamalla. Mitä tahansa HFS-tiedostojärjestelmää tukevaa käyttöjärjestelmää voidaan käyttää käynnistyslataimen asetustiedoston muuttamiseen. </para
+><para
+>Vakiona <command
+>yaboot</command
+>:n kanssa tuleva komento <command
+>ybin</command
+> ei vielä ymmärrä USB-massamuisteja, joten <command
+>yaboot</command
+> on asennettava itse paketin <classname
+>hfsutils</classname
+> työkaluilla. Kirjoita <informalexample
+><screen>
+$ hmount /dev/<replaceable
+>sdX2</replaceable>
+$ hcopy -r /usr/lib/yaboot/yaboot :
+$ hattrib -c UNIX -t tbxi :yaboot
+$ hattrib -b :
+$ humount
+</screen
+></informalexample
+> Varmistu taas, että käytetään oikeaa laitenimeä. Osio ei saa olla liitettynä muuanne tätä tehtäessä. Tässä tallennetaan osioon käynnistyslatain, ja merkitään se HFS:n työkaluilla siten että Open Firmware käynnistää sen. Kun tämä on tehty, voidaan muu osa USB-muistista valmistella tavallisilla Unixin työkaluilla. </para>
+   </sect3>
+
+   <sect3 arch="powerpc">
+   <title
+>Asentimen levyotoksen lisääminen</title>
+<para
+>Liitä osio (<userinput
+>mount /dev/<replaceable
+>sdX2</replaceable
+> /mnt</userinput
+>) ja kopioi Debianin asennuspalvelimesta seuraavat tiedsotot USB-muistille: <itemizedlist>
+<listitem
+><para
+><filename
+>vmlinux</filename
+> (ytimen ohjelmatiedosto) </para
+></listitem>
+<listitem
+><para
+><filename
+>initrd.gz</filename
+> (käynnistysmuistilevyn levyotos) </para
+></listitem>
+<listitem
+><para
+><filename
+>yaboot.conf</filename
+> (yabootin asetustiedosto) </para
+></listitem>
+<listitem
+><para
+><filename
+>boot.msg</filename
+> (valinnainen käynnistysviesti) </para
+></listitem>
+</itemizedlist>
+
+</para
+><para
+>Asetustiedostossa <filename
+>yaboot.conf</filename
+> tulisi olla seuraavat rivit: <informalexample
+><screen>
+default=install
+root=/dev/ram
+
+message=/boot.msg
+
+image=/vmlinux
+        label=install
+        initrd=/initrd.gz
+        initrd-size=10000
+        read-only
+</screen
+></informalexample
+> Huomaa, että parametrin <userinput
+>initrd-size</userinput
+> arvoa voidaan joutua kasvattamaan asennettavan otoksen mukaan. </para
+><para
+>Jos käytit <filename
+>hd-media</filename
+>-otosta, on nyt kopioitava Debianin ISO-otos (businesscard, netinst tai täysi CD-otos; varmista valitsevasi se mikä mahtuu) muistille. Kun tämä on valmista, irroita USB-muisti (<userinput
+>umount /mnt</userinput
+>). </para>
+   </sect3>
+<!--   End of file install-methods/usb-setup/powerpc.xml -->
+
+  </sect2>
+
+  <!-- TODO: doesn't this section belong later? -->
+  <sect2 arch="x86">
+  <title
+>Käynnistäminen USB-muistilta</title>
+<warning
+><para
+>Jos tietokone ei käynnisty USB-muistilta, on muistilla ehkä kelvoton pääkäynnistyslohko (MBR). Tämä korjataan komennolla <command
+>install-mbr</command
+> joka on paketissa <classname
+>mbr</classname
+>: <informalexample
+><screen
+># install-mbr /dev/<replaceable
+>sdX</replaceable
+>
+</screen
+></informalexample>
+
+</para
+></warning>
+  </sect2>
+ </sect1>
+<!--   End of file install-methods/boot-usb-files.xml -->
+
+<!-- Start of file install-methods/boot-drive-files.xml -->
+<!-- $Id: boot-drive-files.xml 39614 2006-08-07 15:50:11Z fjp $ -->
+
+ <sect1 condition="bootable-disk" id="boot-drive-files">
+ <title
+>Tiedostojen valmistelu käynnistettäessä kiintolevyltä</title>
+<para
+>Asennin voidaan käynnistää käyttämällä koneessa jo olevalle kiintolevyn osiolle tallennettuja käynnistystiedostoja, joko toisesta käyttöjärjestelmästä tai käynnistämällä käynnistyslatain suoraan BIOS:sta. </para
+><para
+>Kokonaan ja <quote
+>pelkästään verkosta</quote
+> tapahtuva asennus on tehtävissä tällä tavalla. Tällöin vältetään kaikki vaihdettaviin taltioihin liittyvä sählinki, kuten romppuotosten etsiminen ja polttaminen tai liian lukuisten ja epäluotettavien levykkeiden kanssa tappeleminen. </para
+><para arch="x86"
+>Asennin ei osaa käynnistää NTFS-tiedostojärjestelmälle tallennetuista tiedostoista. </para
+><para arch="powerpc"
+>Asennin ei osaa käynnistää HFS+-tiedostojärjestelmälle tallennetuista tiedostoista. MacOS System 8.1 ja uudemmat saattavat käyttää HFS+-tiedostojärjestelmiä; NewWorld PowerMacit käyttävät kaikki HFS+:aa. Voit tarkistaa onko käytetty tiedostojärjestelmä HFS+ valitsemalla kyseiselle levyniteelle <userinput
+>Get Info</userinput
+>. HFS-tiedostojärjestelmien kohdalla näkyy <userinput
+>Mac OS Standard</userinput
+>, kun taas HFS+-tiedostojärjestelmin kohdalla on <userinput
+>Mac OS Extended</userinput
+>. Tiedostojen vaihtamiseksi MacOS:n ja Linuxin välilä on oltava HFS-osio, erityisesti noudettavien asennustiedostojen kopioimiseen. </para
+><para arch="powerpc"
+>Laitemallin mukaan (<quote
+>NewWorld</quote
+> tai <quote
+>OldWorld</quote
+>) käytetään eri ohjelmia kiintolevylle tallennetun asennusjärjestelmän käynnistämiseen. </para>
+
+  <sect2 arch="x86" id="files-lilo">
+  <title
+>Kiintolevylle tallennetun asentimen käynnistäminen sovelluksilla <command
+>LILO</command
+> tai <command
+>GRUB</command
+></title>
+<para
+>Tässä luvussa selitetään kuinka käynnistysvalikkoon lisätään tai jopa korvataan koneessa oleva Linux-asennus käyttämällä sovelluksia <command
+>LILO</command
+> tai <command
+>GRUB</command
+>.  </para
+><para
+>Käynnistyksen aikana molemmat käynnistylataimet tukevat ei vain ytimen vaan myös levyotoksen lataamista muistiin. Ydin voi käyttää tätä muistilevyä juuritiedostojärjestelmänä. </para
+><para
+>Kopioi seuraavat tiedostot Debianin asennuspalvelimelta sopivaan kohtaan kiintolevylle, esimerkiksi hakemistoon <filename
+>/boot/newinstall/</filename
+>. <itemizedlist>
+<listitem
+><para
+><filename
+>vmlinuz</filename
+> (ytimen ohjelmatiedosto) </para
+></listitem>
+<listitem
+><para
+><filename
+>initrd.gz</filename
+> (muistilevyn levyotos) </para
+></listitem>
+</itemizedlist>
+
+</para
+><para
+>Tee lopuksi käynnistyslataimen asetukset jatkamalla kohtaan <xref linkend="boot-initrd"/>. </para>
+  </sect2>
+
+
+  <sect2 arch="powerpc" id="files-oldworld">
+  <title
+>Kiintolevylle tallennetun asentimen käynnistäminen OldWorld Maceilla</title>
+<para
+>Levyke <filename
+>boot-floppy-hfs</filename
+> käynnistää Linux-asennuksen ohjelmalla <application
+>miBoot</application
+>, <application
+>miBoot</application
+>ia ei kovin helposti voi käyttää kiintolevyltä käynnistämiseen. MacOS:stä käynnistettävä <application
+>BootX</application
+> tukee käynnistämistä kiintolevylle tallennetuista tiedostoista. <application
+>BootX</application
+>ää voi käyttää myös MacOS:n ja Linuxin kaksoiskäynnistämiseen jahka Debianin asennus on valmis. Näyttää siltä, että mallissa Performa 6360 <command
+>quik</command
+> ei osaa tehdä kiintolevyä käynnistyväksi. Niinpä <application
+>BootX</application
+> on pakollinen tuolla mallilla. </para
+><para
+>Nouda ja pura (unstuff) <application
+>BootX</application
+>-jakelu, joka on saatavilla osoitteesta <ulink url="&url-powerpc-bootx;"
+></ulink
+>, tai hakemistosta <filename
+>dists/woody/main/disks-powerpc/current/powermac</filename
+> Debianin http/ftp-asennuspalvelimilla ja virallisilla Debian-rompuilla. Käytä <application
+>Stuffit Expander</application
+>ia sen purkamiseen arkistosta. Paketissa on tyhjä kansio nimeltä <filename
+>Linux Kernels</filename
+>. Nouda <filename
+>linux.bin</filename
+> ja <filename
+>ramdisk.image.gz</filename
+> kansiosta <filename
+>disks-powerpc/current/powermac</filename
+>, ja tallenna ne kansioon <filename
+>Linux Kernels</filename
+>. Sijoita sitten kansio <filename
+>Linux Kernels</filename
+> käytössä olevaan System-kansioon. </para>
+  </sect2>
+
+  <sect2 arch="powerpc" id="files-newworld">
+  <title
+>Kiintolevylle tallennetun asentimen käynnistäminen NewWorld Maceilla</title>
+<para
+>NewWorld PowerMacit tukevat käynnistystä verkosta tai ISO9660-rompulta, sekä ELF-ohjelmatiedostojen lataamista suoraan kiintolevyltä. Nämä koneet käynnistävät Linuxin suoraan <command
+>yaboot</command
+>:lla, joka tukee ytimen ja muistilevyn lataamista suoraan ext2-osiolta, sekä kaksoiskäynnistystä MacOS:n kanssa. Asentimen käynnistäminen kiintolevyltä on erityisen sovelias uusilla koneilla joissa ei ole levykeasemaa. <command
+>BootX</command
+> ei ole tuettu eikä sitä saa käyttää NewWorld PowerMaceilla. </para
+><para
+><emphasis
+>Kopioi</emphasis
+> (älä siirrä) seuraavat neljä aiemmin Debianin asennuspalvelimelta noudettua tiedostoa kiintolevyn juurihakemistoon (voidaan tehdä vetämällä jokainen tiedosto <keycap
+>option</keycap
+>-pohjassa kiintolevyn kuvakkeeseen. <itemizedlist>
+<listitem
+><para>
+
+<filename
+>vmlinux</filename>
+
+</para
+></listitem>
+<listitem
+><para>
+
+<filename
+>initrd.gz</filename>
+
+</para
+></listitem>
+<listitem
+><para>
+
+<filename
+>yaboot</filename>
+
+</para
+></listitem>
+<listitem
+><para>
+
+<filename
+>yaboot.conf</filename>
+
+</para
+></listitem>
+</itemizedlist>
+
+</para
+><para
+>Kirjoita muistiin sen MacOS-osion numero johon nämä tiedostot sijoitetaan. Jos käytettävissä on MacOS:n komento <command
+>pdisk</command
+>, voidaan sen komennolla <command
+>L</command
+> tarkistaa osion numero. Tämä osion numero tarvitaan Open Firmwaren komennossa kun asenninta käynnistetään. </para
+><para
+>Käynnistä asennin jatkamalla kohtaan <xref linkend="boot-newworld"/>. </para>
+  </sect2>
+ </sect1>
+<!--   End of file install-methods/boot-drive-files.xml -->
+
+<!-- Start of file install-methods/install-tftp.xml -->
+<!-- $Id: install-tftp.xml 56425 2008-10-15 08:50:59Z fjp $ -->
+
+ <sect1 condition="supports-tftp" id="install-tftp">
+ <title
+>Tiedostojen valmistelu verkosta käynnistämiseen TFTP:llä</title>
+<para
+>Jos tietokone on kytketty paikallisverkkoon, se voidaan ehkä käynnistää verkosta toisella koneella olevista tiedostoista TFTP:tä käyttäen. Jos asennusjärjestelmä käynnistetään toiselta koneelta, on käynnistystiedostot tallennettava toisella koneella tiettyihin paikkoihin, ja sen asetukset tehtävä siten, että asennettavan koneen käynnistämistä tuetaan. </para
+><para
+>On asennettava TFTP-palvelin, ja useille koneille tarvitaan DHCP-palvelin<phrase condition="supports-rarp"
+> tai RARP-palvelin</phrase
+><phrase condition="supports-bootp"
+> tai BOOTP-palvelin</phrase
+>. </para
+><para
+><phrase condition="supports-rarp"
+>Reverse Address Resolution Protocol (RARP) on yksi tapa kertoa asiakaskoneelle sen IP-osoite. Toinen tapa on BOOTP-protokolla. </phrase
+> <phrase condition="supports-bootp"
+>BOOTP on IP-protokolla, joka kertoo tietokoneelle sen IP-osoitteen ja verkosta löytyvän käynnistysotoksen sijainnin. </phrase
+> <phrase arch="m68k"
+> Vielä yksi tapa on käytettävissä VMEbus-järjestelmillä: IP-osoite voidaan tallentaa käynnistys-ROMiin.</phrase
+> DHCP (Dynamic Host Configuration Protocol) on joustavampi alaspäin yhteensopiva BOOTP:n laajennus. Joissakin järjestelmissä verkkoasetukset voidaan tehdä vain DHCP:llä. </para
+><para arch="powerpc"
+>PowerPC:n käyttäjien olisi NewWorld Power Macintosh -koneilla käytettävä DHCP:tä eikä BOOTP:tä. Jotkin uusimmat mallit eivät osaa käynnistyä BOOTP:llä. </para
+><para arch="alpha"
+>Toisin kuin Open Firmware jota käytetään Sparc- ja PowerPC-koneilla, <emphasis
+>ei</emphasis
+> SRM-konsoli käytä RARP:ia IP-osoitteensa hakemiseen, ja niin ollen on Alpha on käynnistettävä BOOTP:llä<footnote
+> <para
+> Alpha-järjestelmät voidaan käynnistää myös verkosta käyttämällä DECNet MOP:ia (Maintenance Operations Protocol), mutta sitä ei käsitellä tässä. Luultavasti lähin OpenVMS-operaattori auttaa ilomielin js on pakottava tarve käynnistää Linux Alphalla MOP:llä. </para
+> </footnote
+>. Verkkoliitäntöjen IP-asetukset voidaan myös kirjoittaa suoraan SRM-konsolissa. </para
+><para arch="hppa"
+>Jotkin vanhat HPPA-koneet (esim. 715/75) käyttävät RBOOTD:tä eikä BOOTP:tä. Debianissa on saatavilla paketti <classname
+>rbootd</classname
+>. </para
+><para
+>Trivial File Transfer Protocol (TFTP) siirtää käynnistyslevyn otoksen asiakaskoneelle. Periaatteessa voidaan käyttää mitä tahansa nämä protokollat toteuttavaa palvelinta millä tahansa laitealustalla. Tämän luvun esimerkeissä näytetään käyttöjärjestelmissä SunOS 4.x, SunOS 5.x (eli Solaris) ja GNU/Linux käytettävät komennot. <note arch="x86"
+><para
+>Käytettäesssä TFTP-käynnistyksessä Pre-boot Execution Environment (PXE) -menetelmää, tarvitaan <userinput
+>tsize</userinput
+>:a tukeva  TFTP-palvelin. &debian;-palvelimella paketit <classname
+>atftpd</classname
+> ja <classname
+>tftpd-hpa</classname
+> kelpaavat; suositellaan pakettia <classname
+>tftpd-hpa</classname
+>. </para
+></note>
+
+</para>
+
+
+<!-- Start of file install-methods/tftp/rarp.xml -->
+<!-- $Id: rarp.xml 39897 2006-08-16 20:36:24Z fjp $ -->
+
+
+  <sect2 condition="supports-rarp" id="tftp-rarp">
+  <title
+>RARP-palvelimen asetukset</title>
+<para
+>RARP:n asetuksia varten on tiedettävä asennettavien asiakaskoneiden Ethernet-osoitteet (eli Mac-osoitteet). Jos nämä osoitteet eivät ole tiedosssa, voidaan <phrase arch="sparc"
+> katsoa se OpenROM:n ensimmäisistä käynnistysviesteistä, käytä OpenBootin komentoa <userinput
+>.enet-addr</userinput
+>, tai </phrase
+> käynnistää <quote
+>Rescue</quote
+>-tilaan (esim. hätäkäynnistyslevykkeeltä) ja komentaa <userinput
+>/sbin/ifconfig eth0</userinput
+>. </para
+><para
+>RARP-palvelimella jossa käytetään Linux-ydintä 2.4 tai 2.6, tai käyttöjärjestelmää Solaris/SunOS, käytetään ohjelmaa <command
+>rarpd</command
+>. On varmistuttava, että asiakaskoneen Ethernet-laiteosoite on mainittu <quote
+>ethers</quote
+>-tietokannassa (joko tiedostossa <filename
+>/etc/ethers</filename
+> tai NIS/NIS+:n kautta) ja <quote
+>hosts</quote
+>-tietokannassa. Sitten on käynnistettävä RARP-taustaprosessi. Anna (pääkäyttäjänä) komento: <userinput
+>/usr/sbin/rarpd -a</userinput
+> useimmissa Linux-järjestelmissä ja käyttöjärjestelmässä SunOS 5 (Solaris 2), <userinput
+>/usr/sbin/in.rarpd -a</userinput
+> joissakin muissa Linux-järjestelmissä tai <userinput
+>/usr/etc/rarpd -a</userinput
+> käyttöjärjestelmässä SunOS 4 (Solaris 1). </para>
+  </sect2>
+<!--   End of file install-methods/tftp/rarp.xml -->
+
+<!-- Start of file install-methods/tftp/bootp.xml -->
+<!-- $Id: bootp.xml 43558 2006-12-26 19:46:26Z fjp $ -->
+
+
+  <sect2 condition="supports-bootp" id="tftp-bootp">
+  <title
+>BOOTP-palvelimen käyttöönotto</title>
+<para
+>GNU/Linuxille on saatavilla kaksi BOOTP-palvelinta. Ensimmäinen on CMU <command
+>bootpd</command
+>. Toinen on itse asiassa DHCP-palvelin: ISC <command
+>dhcpd</command
+>. &debian;issa ne sisältyvät paketteihin <classname
+>bootp</classname
+> ja <classname
+>dhcp3-server</classname
+>. </para
+><para
+>Käytettäessä CMU <command
+>bootpd</command
+>:tä, on ensin poistettava kommenttimerkki asiaankuuluvalta riviltä (tai lisättävä rivi) tiedostossa <filename
+>/etc/inetd.conf</filename
+>. &debian;issa tämä voidaan tehdä komennoilla <userinput
+>update-inetd --enable bootps</userinput
+> ja sitten <userinput
+>/etc/init.d/inetd reload</userinput
+>. Siltä varalta ettei käytettävässä BOOTP-palvelimessa ole Debiania, rivin pitäisi näyttää tällaiselta: <informalexample
+><screen>
+bootps  dgram  udp  wait  root  /usr/sbin/bootpd  bootpd -i -t 120
+</screen
+></informalexample
+> Nyt on tehtävä tiedosto <filename
+>/etc/bootptab</filename
+>. Tiedostossa on sama tuttu ja kryptinen muoto kuin vanhassa kunnon BSD:n tiedostoissa <filename
+>printcap</filename
+>, <filename
+>termcap</filename
+>, ja <filename
+>disktab</filename
+>. Katso tiedoston <filename
+>bootptab</filename
+> man-sivulta lisätietoja. CMU <command
+>bootpd</command
+>:tä varten on tiedettävä asiakaskoneen Ethernetosoite (MAC). Tässä on esimerkki tiedostosta <filename
+>/etc/bootptab</filename
+>: <informalexample
+><screen>
+client:\
+  hd=/tftpboot:\
+  bf=tftpboot.img:\
+  ip=192.168.1.90:\
+  sm=255.255.255.0:\
+  sa=192.168.1.1:\
+  ha=0123456789AB:
+</screen
+></informalexample
+> On muutettava ainakin riviä <quote
+>ha</quote
+>, joka määrittää asiakaskoneen MAC-osoitteen. Rivi <quote
+>bf</quote
+> määrittää tiedoston, joka asiakaskoneen on noudettava TFTP:llä; katso tarkempaa tietoa kohdasta <xref linkend="tftp-images"/>. <phrase arch="mips"
+> SGI-koneilla voidaan käynnistää komentotulkki ja kirjoittaa <userinput
+>printenv</userinput
+>. Muuttujan <userinput
+>eaddr</userinput
+> arvo on koneen MAC-osoite. </phrase
+> </para
+><para
+>Tähän verrattuna BOOTP:n asetusten tekeminen ISC <command
+>dhcpd</command
+>:llä on todella helppoa, koska se käsittelee BOOTP-asiakkaat DHCP-asiakkaiden erikoistapauksena. Joissakin suoritinperheissä on käytettävä monimutkaisia asetuksia asiakkaiden käynnistämiseen BOOTP:llä. Jos koneesi on joku niistä, lue <xref linkend="dhcpd"/>. Siinä tapauksessa luultavasti riittää direktiivin <userinput
+>allow bootp</userinput
+> lisääminen asiakaskoneen aliverkon asetusten lohkoon ja <command
+>dhcpd</command
+>:n käynnistäminen uudelleen komennolla <userinput
+>/etc/init.d/dhcpd3-server restart</userinput
+>. </para>
+  </sect2>
+<!--   End of file install-methods/tftp/bootp.xml -->
+
+<!-- Start of file install-methods//tftp/dhcp.xml -->
+<!-- $Id: dhcp.xml 43558 2006-12-26 19:46:26Z fjp $ -->
+
+  <sect2 id="dhcpd">
+   <title
+>DHCP-palvelimen asetukset</title>
+<para
+>Eräs vapaa DHCP-palvelinohjelmisto on ISC <command
+>dhcpd</command
+>. &debian;ille suositellaan pakettia <classname
+>dhcp3-server</classname
+>. Tässä on esimerkki sen asetustiedostosta (katso <filename
+>/etc/dhcp3/dhcpd.conf</filename
+>): <informalexample
+><screen
+>option domain-name "example.com";
+option domain-name-servers ns1.example.com;
+option subnet-mask 255.255.255.0;
+default-lease-time 600;
+max-lease-time 7200;
+server-name "servername";
+
+subnet 192.168.1.0 netmask 255.255.255.0 {
+  range 192.168.1.200 192.168.1.253;
+  option routers 192.168.1.1;
+}
+
+host clientname {
+  filename "/tftpboot/tftpboot.img";
+  server-name "servername";
+  next-server servername;
+  hardware ethernet 01:23:45:67:89:AB;
+  fixed-address 192.168.1.90;
+}
+</screen
+></informalexample>
+
+</para
+><para
+>Tässä esimerkissa on yksi palvelin, <replaceable
+>servername</replaceable
+>, joka tekee kaikki DHCP-palvelimen, TFTP-palvelimen ja verkon yhdyskäytävän työt. Asetuksen domain-name arvoa joudut lähes varmasti muuttamaan, samoin kuin palvelimen nimen ja asiakaskoneen MAC-osoitteen. Asetuksen <replaceable
+>filename</replaceable
+> on oltava TFTP:llä noudettavan tiedoston nimi. </para
+><para
+>Kun <command
+>dhcpd</command
+>:n asetustiedosto on muokattu, käynnistetään se uudestaan komennolla <userinput
+>/etc/init.d/dhcpd3-server restart</userinput
+>. </para>
+
+   <sect3 arch="x86">
+   <title
+>PXE-käynnistyksen käyttöönotto DHCP-asetuksissa</title>
+<para
+>Tässä on toinen esimerkki tiedostosta <filename
+>dhcp.conf</filename
+>. Tässä käytetään TFTP:n käynnistystapaa Pre-boot Execution Environment (PXE). <informalexample
+><screen>
+option domain-name "example.com";
+
+default-lease-time 600;
+max-lease-time 7200;
+
+allow booting;
+allow bootp;
+
+# The next paragraph needs to be modified to fit your case
+subnet 192.168.1.0 netmask 255.255.255.0 {
+  range 192.168.1.200 192.168.1.253;
+  option broadcast-address 192.168.1.255;
+# the gateway address which can be different
+# (access to the internet for instance)
+  option routers 192.168.1.1;
+# indicate the dns you want to use
+  option domain-name-servers 192.168.1.3;
+}
+
+group {
+  next-server 192.168.1.3;
+  host tftpclient {
+# tftp client hardware address
+  hardware ethernet  00:10:DC:27:6C:15;
+  filename "pxelinux.0";
+ }
+}
+</screen
+></informalexample
+> Huomaa, että PXE-käynnistyksessä asiakkaan tiedostonimi <filename
+>pxelinux.0</filename
+> on käynnistyslatain eikä ytimen ohjelmatiedosto (katso <xref linkend="tftp-images"/> tuonnempana). </para>
+   </sect3>
+  </sect2>
+<!--   End of file install-methods//tftp/dhcp.xml -->
+
+  <sect2 id="tftpd">
+  <title
+>TFTP-palvelimen käyttöönotto</title>
+<para
+>Jotta TFTP-palvelin saataisiin toimintakuntoon, on ensin varmistettava <command
+>tftpd</command
+>:n olevan käytettävissä. Tavallisesti se otetaan käyttöön kirjoittamalla tämän tapaista tiedostoon <filename
+>/etc/inetd.conf</filename
+>: <informalexample
+><screen>
+tftp dgram udp wait nobody /usr/sbin/tcpd in.tftpd /tftpboot
+</screen
+></informalexample
+> Debianin paketit tekevät tämän asetuksen yleensä oikein kun ne asennetaan. </para>
+<note
+><para
+>Perinteisesti TFTP-palvelimet ovat jakaneet hakemiston <filename
+>/tftpboot</filename
+> tiedostoja. &debian;in paketit voivat kuitenkin käyttää muita hakemistoja, jotta ne noudattaisivat <ulink url="&url-fhs-home;"
+>Filesystem Hierarchy Standard</ulink
+>-määrittelyä. Esimerkiksi <classname
+>tftpd-hpa</classname
+> käyttää oletusarvona hakemistoa <filename
+>/var/lib/tftpboot</filename
+>. Saatat joutua säätämään tämän luvun asetusesimerkkejä vastaavasti. </para
+></note>
+<para
+>Lue tiedosto <filename
+>/etc/inetd.conf</filename
+> ja muista <command
+>in.tftpd</command
+>:n parametrina oleva hakemisto<footnote
+><para
+>Kaikkien Debianissa saatavilla olevien vaihtoehtoisten <command
+>in.tftpd</command
+>-komentojen pitäisi lokata TFTP-pyynnöt oletuksena järjestelmän lokeihin. Jotkin niistä tukevat valitsinta <userinput
+>-v</userinput
+> lisäämään lokiin tulostettavaa tietoa. Näiden lokien tarkistusta suositellaan mikäli käynnistysongelmia ilmenee koska ne ovat hyvä aloituskohta vikoja jäljitettäessä. </para
+> </footnote
+>; sitä tarvitaan tuonnempana. Jos tiedostoa <filename
+>/etc/inetd.conf</filename
+> on jouduttu muuttamaan, on käynnissä olevalle <command
+>inetd</command
+>-prosessille huomautettava muutoksesta. Debian-koneella komennetaan <userinput
+>/etc/init.d/inetd reload</userinput
+>; muilla koneilla etsitään prosessin <command
+>inetd</command
+> numero ja komennetaan <userinput
+>kill -HUP <replaceable
+>inetd-pid</replaceable
+></userinput
+>. </para
+><para arch="mips"
+>Asennettaessa Debiania SGI:n koneelle kun TFTP-palvelin on GNU/Linux-kone jossa on Linux 2.4, on palvelimella tehtävä seuraavat asetukset:<informalexample
+><screen>
+# echo 1 &gt; /proc/sys/net/ipv4/ip_no_pmtu_disc
+</screen
+></informalexample
+> Tämä ottaa Path MTU discoveryn pois päältä, muuten SGI:n PROM ei osaa noutaa ydintä. Lisäksi on varmistuttava TFTP-paketteja lähetettävän portista, jonka numero on enintään 32767, tai nouto pysähtyy ensimmäisen paketin jälkeen. Taaskin se on Linux 2.4.X joka löytää tämän vian PROM:sta, ja se voidaan välttää asetuksella<informalexample
+><screen>
+# echo "2048 32767" &gt; /proc/sys/net/ipv4/ip_local_port_range
+</screen
+></informalexample
+> jolla säädetään aluetta jolta Linuxin TFTP-palvelimen valitsee käyttämänsä lähdeporttit. </para>
+  </sect2>
+
+  <sect2 id="tftp-images">
+  <title
+>Siirretään TFTP-otokset paikalleen</title>
+<para
+>Seuraavaksi on tarvittava TFTP-käynnistysotos (kohdasta <xref linkend="where-files"/>) tallennettava <command
+>tftpd</command
+>:n käynnistysotosten hakemistoon. Tuosta tiedostosta on ehkä tehtävä linkki tiedostoon jota <command
+>tftpd</command
+> käyttää tietyn asiakkaan käynnistämiseen. Harmittavasti tiedoston nimen määrää TFTP-asiakas, eikä nimeämiskäytännölle ole kunnollisia standardeja. </para
+><para arch="powerpc"
+>NewWorld Power Macintosh -koneilla on käynnistyslatain <command
+>yaboot</command
+> asetettava TFTP:n käynnistysotokseksi. <command
+>Yaboot</command
+> noutaa sitten ytimen ja muistilevyn otokset TFTP:llä. Hakemistosta <filename
+>netboot</filename
+> on noudettava seuraavat tiedostot: <itemizedlist>
+<listitem
+><para>
+
+<filename
+>vmlinux</filename>
+
+</para
+></listitem>
+<listitem
+><para>
+
+<filename
+>initrd.gz</filename>
+
+</para
+></listitem>
+<listitem
+><para>
+
+<filename
+>yaboot</filename>
+
+</para
+></listitem>
+<listitem
+><para>
+
+<filename
+>yaboot.conf</filename>
+
+</para
+></listitem>
+<listitem
+><para>
+
+<filename
+>boot.msg</filename>
+
+</para
+></listitem>
+</itemizedlist>
+
+</para
+><para arch="x86"
+>Käytettäessä PXE-käynnistystä on kaikki mitä pitäisi tarvittaman tar-arkistossa <filename
+>netboot/netboot.tar.gz</filename
+>. Pura vaan tämä arkisto <command
+>tftpd</command
+>:n käynnistysotosten hakemistoon. Varmista, että dhcp-palvelimen asetuksissa on <command
+>tftpd</command
+>:lle välitettävän käynnistettävän tiedoston nimenä <filename
+>/pxelinux.0</filename
+>. </para
+><para arch="ia64"
+>Käytettäessä PXE-käynnistystä on kaikki mitä pitäisi tarvittaman tar-arkistossa <filename
+>netboot/netboot.tar.gz</filename
+>. Pura vaan tämä arkisto <command
+>tftpd</command
+>:n käynnistysotosten hakemistoon. Varmista, että dhcp-palvelimen asetuksissa on <command
+>tftpd</command
+>:lle välitettävän käynnistettävän tiedoston nimenä <filename
+>/debian-installer/ia64/elilo.efi</filename
+>. </para>
+
+   <sect3 arch="alpha">
+   <title
+>Alphan käynnistys TFTP:llä</title>
+<para
+>Alphalla on määritettävä tiedoston nimi (suhteellisena polkuna käynnistysotosten hakemistoon) käyttämällä parametria <userinput
+>-file</userinput
+> SRM:n komennolle <userinput
+>boot</userinput
+>, tai asettamalla ympäristömuuttuja <userinput
+>BOOT_FILE</userinput
+>. Toinen tapa on välittää tiedoston nimi BOOTP:n kautta (käytä direktiiviä <userinput
+>filename</userinput
+> ISC:n <command
+>dhcpd</command
+>:ssä). Toisin kuin Open Firmwaressa, SRM:ssä <emphasis
+>ei ole mitään oletusnimeä</emphasis
+> tiedostolle, joten tiedoston nimi <emphasis
+>on määritettävä</emphasis
+> jommalla kummalla näistä tavoista. </para>
+   </sect3>
+
+   <sect3 arch="sparc">
+   <title
+>SPARC:n käynnistys TFTP:llä</title>
+<para
+>Jotkin SPARC-suoritinperheet lisäävät suoritinarkkitehtuurin nimen, kuten <quote
+>SUN4M</quote
+> tai <quote
+>SUN4C</quote
+>, tiedoston nimeen. Niinpä, jos järjestelmän suoritinarkkitehtuuri on SUN4C ja sen IP on 192.168.1.3, tiedoston nimi olisi <filename
+>C0A80103.SUN4C</filename
+>. Joissakin suoritinarkkitehtuuressa asiakaskoneen etsimän tiedoston nimi on kuitenkin vain <filename
+>asiakaskoneen-ip-heksana</filename
+>. Helppo tapa nähdä IP-osoite heksana on kirjoittaa seuraava komento komentotulkissa (olettaen että koneelle tarkoitettu IP-osoite on 10.0.0.4). <informalexample
+><screen>
+$ printf '%.2x%.2x%.2x%.2x\n' 10 0 0 4
+</screen
+></informalexample
+> Oikean tiedoston nimen saa muuttamalla kaikki kirjaimet isoiksi ja tarvittaessa liittämällä loppuun suoritinarkkitehtuurin nimen. </para
+><para
+>Jos teit tämän kaiken oikein, pitäisi OpenPROM:ssa komennolla <userinput
+>boot net</userinput
+> saada otos ladattua. Jos otosta ei löydy, yritä tarkistaa tftp-palvelimen lokeista mitä otoksen nimeä yritetään noutaa. </para
+><para
+>Joissakin sparc-järjestelmissä voidaan OpenPROM:n käynnistyskomennolla järjestelmä pakottaa käyttämään tiettyä tiedoston nimeä. Komento olisi <userinput
+>boot net minun-sparc.image</userinput
+>. Tiedoston on silti oltava hakemistossa josta TFTP-palvelin sitä etsii. </para>
+   </sect3>
+
+   <sect3 arch="m68k">
+   <title
+>BVM/Motorolan käynnistys TFTP:llä</title>
+<para
+>BVM ja Motorola VMEbus -järjestelmissä kopioi tiedostot &bvme6000-tftp-files; hakemistoon <filename
+>/tftpboot/</filename
+>. </para
+><para
+>Tee seuraavaksi käynnistys-ROM:essa tai BOOTP-palvelimella asetukset siten, että TFTP-palvelimelta ladataan ensimmäiseksi tiedostot <filename
+>tftplilo.bvme</filename
+> tai <filename
+>tftplilo.mvme</filename
+>. Katso suoritinarkkitehtuurin tiedostosta <filename
+>tftplilo.txt</filename
+> lisää järjestelmäkohtaisia asetustietoja. </para>
+   </sect3>
+
+   <sect3 arch="mips">
+   <title
+>SGI:n käynnistys TFTP:llä</title>
+<para
+>SGI:n koneilla <command
+>bootpd</command
+> noutaa TFTP-tiedoston nimen. Se annetaan joko rivillä <userinput
+>bf=</userinput
+> tiedostossa <filename
+>/etc/bootptab</filename
+> tai direktiivissä <userinput
+>filename=</userinput
+> tiedostossa <filename
+>/etc/dhcpd.conf</filename
+>. </para>
+   </sect3>
+
+   <sect3 arch="mips">
+   <title
+>Broadcom BCM91250A:n ja BCM91480B:n käynnistys TFTP:llä</title>
+<para
+>DHCP:n asetuksia ei tarvitse tehdä tavallisesta poikkeavalla tavalla, koska annetaan CFE:hen ladattavan tiedoston koko polkunimi. </para>
+   </sect3>
+
+  </sect2>
+
+<!-- FIXME: commented out since it seems too old to be usable and a current
+            way is not known
+
+  <sect2 id="tftp-low-memory">
+  <title
+>TFTP Installation for Low-Memory Systems</title>
+<para>
+
+On some systems, the standard installation RAMdisk, combined with the
+memory requirements of the TFTP boot image, cannot fit in memory.  In
+this case, you can still install using TFTP, you'll just have to go
+through the additional step of NFS mounting your root directory over
+the network as well.  This type of setup is also appropriate for
+diskless or dataless clients.
+
+</para
+><para>
+
+First, follow all the steps above in <xref linkend="install-tftp"/>.
+
+<orderedlist>
+<listitem
+><para>
+
+Copy the Linux kernel image on your TFTP server using the
+<userinput
+>a.out</userinput
+> image for the architecture you are
+booting.
+
+</para
+></listitem>
+<listitem
+><para>
+
+Untar the root archive on your NFS server (can be the same system as
+your TFTP server):
+
+<informalexample
+><screen
+>
+# cd /tftpboot
+# tar xvzf root.tar.gz
+</screen
+></informalexample>
+
+Be sure to use the GNU <command
+>tar</command
+> (other tar programs, like the
+SunOS one, badly handle devices as plain files).
+
+</para
+></listitem>
+<listitem
+><para>
+
+Export your <filename
+>/tftpboot/debian-sparc-root</filename
+> directory
+with root access to your client.  E.g., add the following line to
+<filename
+>/etc/exports</filename
+> (GNU/Linux syntax, should be similar
+for SunOS):
+
+<informalexample
+><screen
+>
+/tftpboot/debian-sparc-root <replaceable>client</replaceable>(rw,no_root_squash)
+</screen
+></informalexample>
+
+NOTE: <replaceable
+>client</replaceable
+> is the host name or IP address recognized
+by the server for the system you are booting.
+
+</para
+></listitem>
+<listitem
+><para>
+
+Create a symbolic link from your client IP address in dotted notation
+to <filename
+>debian-sparc-root</filename
+> in the
+<filename
+>/tftpboot</filename
+> directory.  For example, if the client
+IP address is 192.168.1.3, do
+
+<informalexample
+><screen
+>
+# ln -s debian-sparc-root 192.168.1.3
+</screen
+></informalexample>
+
+</para
+></listitem>
+</orderedlist>
+
+</para>
+
+  </sect2>
+
+  <sect2 condition="supports-nfsroot">
+  <title
+>Installing with TFTP and NFS Root</title>
+<para>
+
+Installing with TFTP and NFS Root is similar to
+<xref linkend="tftp-low-memory"/> because you don't want to
+load the RAMdisk anymore but boot from the newly created NFS-root file
+system.  You then need to replace the symlink to the tftpboot image by
+a symlink to the kernel image (for example,
+<filename
+>linux-a.out</filename
+>).
+
+</para
+><para>
+
+RARP/TFTP requires all daemons to be running on the same server (the
+workstation is sending a TFTP request back to the server that replied
+to its previous RARP request).
+
+</para>
+
+
+  </sect2>
+END FIXME -->
+ </sect1>
+<!--   End of file install-methods/install-tftp.xml -->
+
+<!-- Start of file install-methods/automatic-install.xml -->
+<!-- $Id: automatic-install.xml 33725 2006-01-03 19:39:07Z fjp $ -->
+
+ <sect1 id="automatic-install">
+ <title
+>Automaattinen asennus</title>
+<para
+>Asennettaessa useita tietokoneita on mahdollista tehdä täysin automaattiset asennukset. Tähän tarkoitettuja Debian-paketteja ovat <classname
+>fai</classname
+> (joka käyttää asennuspalvelinta), <classname
+>replicator</classname
+>, <classname
+>systemimager</classname
+>, <classname
+>autoinstall</classname
+>, ja Debianin asennin itse. </para>
+
+  <sect2 id="preseed">
+  <title
+>Automaattinen asennus Debianin asentimella</title>
+<para
+>Debianin asennin tukee automaattista asennusta valmiiden vastausten tiedostoilla. Valmiiden vastausten tiedosto voidaan ladata verkosta tai vaihdettavalta taltiolta, ja sillä saadaan annettua vastaukset asennusprosessin aikana kysyttyihin kysymyksiin. </para
+><para
+>Kaikki ohjeet valmiista vastauksista mukaan lukien toimiva esimerkki jota voi muokata on <xref linkend="appendix-preseed"/>. </para>
+  </sect2>
+ </sect1>
+<!--   End of file install-methods/automatic-install.xml -->
+
+</chapter>
+<!--   End of file install-methods/install-methods.xml -->

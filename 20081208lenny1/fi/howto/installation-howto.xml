@@ -1,0 +1,218 @@
+<!-- Start of file howto/installation-howto.xml -->
+<!-- $Id: installation-howto.xml 56151 2008-09-26 10:49:04Z lunar $ -->
+
+<appendix id="installation-howto">
+<title
+>Asennus-Howto</title>
+
+<para
+>Tämä ohje kuvaa &debian; version &releasename; asennuksen arkkitehtuurille &arch-title; (<quote
+>&architecture;</quote
+>) uudella asentimella &d-i;. Asennuksen pikainen läpikäynti antanee riittävästi tietoa useimpiin asennuksiin. Kun lisätieto voi olla hyödyllistä, annetaan viite yksityiskohtaisempiin kuvauksiin tämän ohjeen muissa osissa. </para>
+
+ <sect1 id="howto-preliminaries">
+ <title
+>Valmistelevat toimet</title>
+<para
+><phrase condition="unofficial-build"
+> Debianin asennin on yhä testausvaiheessa. </phrase
+> Jos löydät vikoja asennuksen aikana, ole hyvä ja tutustu lukuun <xref linkend="submit-bug"/> josta löydät ohjeen vioista ilmoittamiseen. Mikäli kysymyksiisi ei löydy vastausta tästä ohjeesta, kysy sähköpostilistalla debian-boot (&email-debian-boot-list;) tai irkissä (kanava #debian-boot IRC-verkossa OFTC). </para>
+ </sect1>
+
+ <sect1 id="howto-getting-images">
+ <title
+>Asentimen käynnistys</title>
+<para
+><phrase condition="unofficial-build"
+> CD-otokset löytyvät <ulink url="&url-d-i;"
+>&d-i;</ulink
+>:in seittisivustosta. </phrase
+> Debian-cd -työryhmä tarjoaa asenninta käyttävät CD-otokset <ulink url="&url-debian-cd;"
+>Debianin CD-sivulla</ulink
+>. Lisää tietoa CD-levyjen hankinnasta löytyy kohdasta <xref linkend="official-cdrom"/>. </para
+><para
+>Jotkut asennustavat vaativat muita kuin CD-otoksia. <phrase condition="unofficial-build"
+> <ulink url="&url-d-i;"
+>&d-i; -seittisivusto</ulink
+> sisältää muiden otosten osoitteet. </phrase
+> <xref linkend="where-files"/> selvittää miten otokset löytyvät Debianin peilikopioista. </para
+><para
+>Seuraavat aliluvut kertovat yksityiskohtaisemmin mitä otosta olisi missäkin asennustavassa käytettävä. </para>
+
+  <sect2 id="howto-getting-images-cdrom">
+  <title
+>CD-levy</title>
+
+<para
+>Netinst-CD:itä on kaksi, näillä voi asentaa version &releasename; käyttäen asenninta &d-i;. Nämä otokset on tarkoitettu käynnistymään CD-levyltä ja noutamaan lisää asennuspaketteja verkosta. Ne ovat verkkoasennusta varten, tästä nimi "netinst". Otokset eroavat siten, että täydessä verkkoasennuslevyllä on mukana peruspaketit, jotka on käyntikorttilevyn eli "businesscard CD":n kanssa noudettava netistä. Ilman verkkoyhteyttä voidaan asentaa viralliselta CD-levyltä. Virallisten CD-levyjen ensimmäinen levy riittää asennukseen. </para
+><para
+>Nouda mieluisa CD-otos ja kirjoita se CD-aihiolle. <phrase arch="x86"
+>Käynnistettäessä CD-levyltä voi olla tarpeen muuttaa BIOS:n asetuksia, kuten neuvotaan luvussa <xref linkend="bios-setup"/>. </phrase
+> <phrase arch="powerpc"
+> PowerMac käynnistyy CD-levyltä painettaessa näppäintä <keycap
+>c</keycap
+> koneen käynnistyessä. Luvussa <xref linkend="boot-cd"/> on muita tapoja käynnistää CD-levyltä. </phrase
+> </para>
+  </sect2>
+
+  <sect2 condition="supports-floppy-boot" id="howto-getting-images-floppy">
+  <title
+>Levyke</title>
+<para
+>Jos käynnistys CD-levyltä ei ole mahdollista, voidaan noutaa levykeotokset Debianin asentamiseksi. Tarvitaan <filename
+>floppy/boot.img</filename
+>, <filename
+>floppy/root.img</filename
+> ja yksi tai useampi ajurilevykkeistä. </para
+><para
+>Käynnistyslevyke on se johon kirjoitettiin <filename
+>boot.img</filename
+>. Tämä levyke kehoittaa käynnistettäessä asettamaan toisen levykkeen asemaan &mdash; käytä sitä jolle kirjoitettiin <filename
+>root.img</filename
+>. </para
+><para
+>Jos on tarkoitus asentaa verkosta, tarvitaan useimmiten <filename
+>floppy/net-drivers-1.img</filename
+>. Jos verkkoliitäntä on PCMCIA tai USB, tai harvinaisempi verkkokortti, tarvitaan myös toinen levyke, <filename
+>floppy/net-drivers-2.img</filename
+>. </para
+><para
+>Jos käytössä on CD-asema, mutta siltä ei voi käynnistää konetta, käynnistetään levykkeiltä ja käytetään otosta <filename
+>floppy/cd-drivers.img</filename
+> ajurilevykkeenä, jotta asennusta voidaan jatkaa CD-levyltä. </para
+><para
+>Levykkeet ovat hyvin epäluotettavia taltioita, kannattaa varautua toimimattomiin levykkeisiin (katso <xref linkend="unreliable-floppies"/>). Jokainen noutamasi <filename
+>.img</filename
+>-otos kirjoitetaan omalle levykkeelleen; komennolla dd laitteelle /dev/fd0 tai muulla tavoin (katso tarkemmin luvusta <xref linkend="create-floppy"/>). Levykkeitä on useampi kuin yksi, ne on hyvä merkitä tunnisteella. </para>
+  </sect2>
+
+  <sect2 condition="bootable-usb" id="howto-getting-images-usb">
+  <title
+>USB-muisti</title>
+<para
+>Asennus on mahdollista myös irrotettavalta USB-muistilaitteelta. Esimerkiksi USB-avaimenperä on kätevä asennustaltio Debianille, sen voi ottaa mukaansa kaikkialle. </para
+><para
+>Helpoin tapa valmistella USB-muisti on noutaa <filename
+>hd-media/boot.img.gz</filename
+>, ja purkaa siitä gunzipillä 256 Mt otos. Tämä otos kirjoitetaan sellaisenaan vähintään 256 Mt kokoiselle USB-muistille. Tämä tietenkin tuhoaa USB-muistin entisen sisällön. Sitten USB-muisti liitetään, siinä on nyt FAT-tiedostojärjestelmä. Seuraavaksi noudetaan Debianin verkkoasennus CD-otos ja kopioidaan otos USB-muistille; tiedostonimellä ei ole väliä kunhan sen loppuosa on <literal
+>.iso</literal
+>. </para
+><para
+>On muita joustavampia tapoja valmistella USB-muisti debian-asentimen käyttöön. Pienempienkin muistien käyttö on mahdollista. Lisätietoja löytyy luvusta <xref linkend="boot-usb-files"/>. </para
+><para arch="x86"
+>Jotkut BIOSit osaavat käynnistää USB-muistilta, jotkut eivät. BIOS-asetukset on ehkä tehtävä käynnistymään laitteelta <quote
+>removable drive</quote
+> tai <quote
+>USB-ZIP</quote
+> jotta USB-muistilta voidaan käynnistää. Jos käynnistys USB-muistilta ei onnistu, voidaan käynnistää levykkeeltä ja käyttää USB-muistia asennuksen loppuosaan. Hyödyllisiä vinkkejä ja tarkempia yksityiskohtia löytyy luvusta <xref linkend="usb-boot"/>. </para
+><para arch="powerpc"
+>Macintosh-järjestelmien käynnistäminen USB-muistilaitteelta edellyttää Open Firmwaren käytön osaamista. Luvusta <xref linkend="usb-boot"/> löytyy ohjeita. </para>
+  </sect2>
+
+  <sect2 id="howto-getting-images-netboot">
+  <title
+>Verkkokäynnistys</title>
+<para
+>&d-i; on mahdollista käynnistää kokonaan verkosta. Erilaiset verkkokäynnistystavat riippuvat arkkitehtuurista ja verkkokäynnistyksen asetuksista. Hakemiston <filename
+>netboot/</filename
+> tiedostoja voidaan käyttää &d-i;:in verkkokäynnistykseen. </para
+><para arch="x86"
+>Helpoin tapa lienee PXE-verkkokäynnistys. Pura tiedosto <filename
+>netboot/pxeboot.tar.gz</filename
+> hakemistoon <filename
+>/var/lib/tftpboot</filename
+> tai muuhun tftp-palvelimen käyttämään hakemistoon. Tee DHCP-palvelimen asetukset antamaan tiedostonimi <filename
+>/pxelinux.0</filename
+> asiakaskoneille, ja pienellä tuurilla kaikki toimii. Yksityiskohtaisemmat ohjeet löytyvät luvusta <xref linkend="install-tftp"/>. </para>
+  </sect2>
+
+  <sect2 id="howto-getting-images-hard-disk">
+  <title
+>Käynnistys kiintolevyltä</title>
+<para
+>Asennin on mahdollista käynnistää käyttämättä irrotettavia muistilaitteita koneen kiintolevyltä, jossa voi olla joku muu käyttöjärjestelmä. Nouda <filename
+>hd-media/initrd.gz</filename
+>, <filename
+>hd-media/vmlinuz</filename
+> ja Debian CD-otos kiintolevyn juurihakemistoon. Varmistu CD-otoksen tiedostonimen päättyvän <literal
+>.iso</literal
+>. Nyt pitää vain käynnistää linux initrd:llä. <phrase arch="x86"
+> <xref linkend="boot-initrd"/> selvittää yhden tavan. </phrase
+> </para>
+  </sect2>
+ </sect1>
+
+ <sect1 id="howto-installation">
+<title
+>Asennus</title>
+<para
+>Kun asennin käynnistyy näkyy asentimen aloitusruutu. Käynnistys tapahtuu näppäilemällä &enterkey;. Ohjeista selviävät muut käynnistystavat ja -parametrit (katso <xref linkend="boot-parms"/>). </para
+><para
+>Hetken päästä valitaan käytettävä kieli. Nuolinäppäimillä siirrytään kielen kohdalle ja jatketaan näppäilemällä &enterkey;. Seuraavaksi valitaan maa niiden joukosta joissa valittua kieltä puhutaan. Jos haluttu maa ei ole lyhyessä listassa, käytettävissä on myös maailman kaikkien maiden lista. </para
+><para
+>Asennin ehkä kysyy vahvistusta käytettävälle näppäinasettelulle. Käytä oletusarvoa paitsi jos tiedät paremman vaihtoehdon. </para
+><para
+>Nyt voit huilata sillä välin kun Debianin asennin tunnistaa laitteistoa ja lataa loput osansa CD-levyltä, levykkeeltä, USB-muistilta jne. </para
+><para
+>Seuraavaksi asennin tunnistaa verkkolaitteita ja yrittää tehdä verkkoasetukset DHCP:llä. Jos verkkoyhteyttä ei ole tai jos DHCP:tä ei ole, verkkoasetukset voi tehdä itse. </para
+><para
+>Seuraava askel on kellon ja aikavyöhykkeen asetus. Asennin yrittää ottaa yhteyden Internetissä olevaan aikapalvelimeen oikean kellonajan varmistamiseksi. Aikavyöhyke perustuu aiemmin valittuun maa-asetukseen ja asennin kysyy aikavyöhykettä vain, jos maassa käytetään useampia vyöhykkeitä. </para
+><para
+>Nyt tehdään levyosiot. Ensin on mahdollista tehdä levyosiot automaattisesti käyttäen koko levyä tai levyn vapaata tilaa (katso <xref linkend="partman-auto"/>). Tätä suositellaan uusille käyttäjille tai kiireisille asentajille. Jos et halua automaattista osioiden tekoa, valikosta löytyy <guimenuitem
+>Osioi itse</guimenuitem
+>. </para
+><para arch="x86"
+>Mikäli levyllä on ennestään DOS- tai Windows-osioita jotka halutaan säilyttää on syytä olla tarkkana jos osiot tehdään automaattisesti. Tehtäessä osiot itse voidaan asentimella tehdä tilaa Debianin asentamiseen muuttamalla levyllä olevien FAT- tai NTFS-osioiden kokoa: valitaan osio ja määritetään sen uusi koko. </para
+><para
+>Seuraavassa ruudussa näkyy osiotaulu, miten osiot tullaan alustamaan ja liitoskohdat. Osiota muokataan tai poistetaan valitsemalla se. Jos osiot tehtiin automaattisesti, valikossa on <guimenuitem
+>Lopeta osioiden teko ja tallenna muutokset levylle</guimenuitem
+> joka valitsemalla otetaan tehdyt osiot käyttöön. Muista varata ainakin yksi osio sivutustilaksi ja liittää yksi osio juuriosioksi <filename
+>/</filename
+>. Tarkempaa tietoa osioinnin käytöstä on kohdassa <xref linkend="di-partition"/>; liitteessä <xref linkend="partitioning"/> on yleisempää tietoa osioinnista. </para
+><para
+>Nyt &d-i; alustaa osiot ja aloittaa peruskokoonpanon asennuksen. Tämä saattaa viedä tovin. Sen jälkeen asennetaan ydin. </para
+><para
+>Aiemmin asennettu peruskokoonpano on toimiva mutta hyvin suppea asennus. Seuraavassa vaiheessa asennetaan paketteja lisäämään järjestelmän toiminnallisuutta tehtäviä valitsemalla. Ennen kuin paketteja voidaan asentaa on tehtävä <classname
+>apt</classname
+>:n asetukset, koska ne määräävät mistä paketteja noudetaan. Tehtävä <quote
+>Tavallinen järjestelmä</quote
+> on valmiiksi valittuna ja se olisi yleensä asennettava. Valitse <quote
+>Työpöytäympäristö</quote
+> jos haluat asennettavaksi graafisen käyttöliittymän. Katso kohdasta <xref linkend="pkgsel"/> lisätietoja tästä vaiheesta. </para
+><para
+>Perusjärjestelmän asennuksen jälkeen luodaan käyttäjätunnukset. Oletuksena pyydetään salasana tunnukselle <quote
+>root</quote
+> (pääkäyttäjä) ja yhden tavallisen käyttäjätunnuksen luomiseen tarvittavat tiedot. </para
+><para
+>Viimeinen vaihe on alkulatausohjelman asentaminen. Jos asennin havaitsee muita käyttöjärjestelmiä tietokoneella, niistä ilmoitetaan ja lisätään käynnistysvalikkoon. <phrase arch="x86"
+>Oletusarvona GRUB asennetaan ensimmäisen kiintolevyn pääkäynnistyslohkoon, joka yleensä on hyvä valinta. Tämä valinta voidaan ohittaa ja tehdä asennus muualle. </phrase
+> </para
+><para
+>&d-i; ilmoittaa nyt asennuksen päättyneen. Poista CD-levy tai muu käynnistyksessä käytetty taltio ja käynnistä kone näppäilemällä &enterkey;. Uuden asennetun järjestelmän pitäisi käynnistyä ja pääset kirjautumaan sisään. Tästä kerrotaan luvusta <xref linkend="boot-new"/>. </para
+><para
+>Lisätietoja asennuksesta löytyy luvusta <xref linkend="d-i-intro"/>. </para>
+ </sect1>
+
+ <sect1 id="howto-installation-report">
+ <title
+>Lähetä asennusraportti</title>
+<para
+>Jos &d-i; asensi onnistuneesti, pyytäisimme käyttämään vähän aikaasi asennusraportin lähettämiseen. Yksinkertaisin tapa on asentaa paketti reportbug (<command
+>aptitude install reportbug</command
+>), tehdä <classname
+>reportbug</classname
+>in asetukset kuten selitetään kohdassa <xref linkend="mail-outgoing"/> ja suorittaa komento <command
+>reportbug installation-reports</command
+>. </para
+><para
+>Jos asennus ei edennyt loppuun asti, on asentimessa luultavasti vika. Jotta asenninta saataisin paranneltua on meidän tiedettävä vioista. Pyytäisimme hieman aikaasi raportin lähettämiseen. Voit käyttää asennusraporttia vikailmoituksiin. Jos asennus ei onnistunut lainkaan, raportin pohja on saatavilla luvussa <xref linkend="problem-report"/>. </para>
+ </sect1>
+
+ <sect1 id="howto-installation-finally">
+ <title
+>Ja lopuksi&hellip;</title>
+<para
+>Toivomme Debianin asennuksen sujuvan mukavasti ja Debianin olevan hyödyllinen. Kannattaa lukea <xref linkend="post-install"/>. </para>
+ </sect1>
+</appendix>
+<!--   End of file howto/installation-howto.xml -->

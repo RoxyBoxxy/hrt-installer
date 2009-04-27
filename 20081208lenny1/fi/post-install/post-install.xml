@@ -1,0 +1,627 @@
+<!-- Start of file post-install/post-install.xml -->
+<!-- $Id: post-install.xml 43623 2006-12-29 03:47:48Z fjp $ -->
+
+<chapter id="post-install">
+ <title
+>Mitä seuraavaksi?</title>
+
+
+<!-- Start of file post-install/shutdown.xml -->
+<!-- $Id: shutdown.xml 39942 2006-08-18 01:43:34Z nabetaro-guest $ -->
+
+
+ <sect1 id="shutdown">
+ <title
+>Ajetaan järjestelmä alas</title>
+
+<para
+>Käynnissä olevaa Linux-järjestelmää ei saa sammuttaa tietokoneen edessä tai takana olevasta reset-nappulasta tai virtakytkimestä. Linux olisi ajettava alas siististi, muuten tiedostoja voi kadota ja/tai tulla levyvirheitä. Jos käytössä on työpöytäympäristö, on sovellusvalikossa tavallisesti tarjolla kohta <quote
+>kirjaudu ulos</quote
+> josta järjestelmä voidaan sammuttaa (tai käynnistää uudelleen). </para
+><para
+>Toinen tapa on näppäillä <keycombo
+> <keycap
+>Ctrl</keycap
+> <keycap
+>Alt</keycap
+> <keycap
+>Del</keycap
+> </keycombo
+> <phrase arch="powerpc;m68k"
+> tai <keycombo
+> <keycap
+>Control</keycap
+> <keycap
+>Vaihto</keycap
+> <keycap
+>Power</keycap
+> </keycombo
+> Macintosh-järjestelmissä</phrase
+>. Viimeinen tapa on kirjautua sisään pääkäyttäjänä ja komentaa <command
+>poweroff</command
+>, <command
+>halt</command
+> or <command
+>shutdown -h now</command
+> jos kumpikaan näppäinyhdistelmistä ei toimi tai jos mieluummin kirjoittaa komentoja; uudelleenkäynnistys tehdään komennolla <command
+>reboot</command
+>. </para>
+ </sect1>
+<!--   End of file post-install/shutdown.xml -->
+
+<!-- Start of file post-install/new-to-unix.xml -->
+<!-- $Id: new-to-unix.xml 28672 2005-06-26 10:06:30Z fjp $ -->
+
+
+ <sect1 id="unix-intro">
+ <title
+>Uusille Unix-käyttäjille</title>
+<para
+>Uuden Unix-käyttäjän lienee parasta hankkia kirjoja ja lukea niitä. Arvokasta tietoa on paljon myös teoksessa <ulink url="&url-debian-reference;"
+>Debian Reference</ulink
+>. Osoitteesta <ulink url="&url-unix-faq;"
+>list of Unix FAQs</ulink
+> löytyy useita UseNetin kirjoituksia, ne ovat myös hieno näkymä historiaan. </para
+><para
+>Linux on eräs Unix-toteutus. Osoitteessa <ulink url="&url-ldp;"
+>Linux Documentation Project (LDP)</ulink
+> on koottuna useita HOWTO-ohjeita ja netistä saatavilla olevia kirjoja Linuxista. Useimmat näistä teoksista voi asentaa omaan koneeseensa; asennetaan <classname
+>doc-linux-html</classname
+> -paketti (HTML versiot) tai <classname
+>doc-linux-text</classname
+> -paketti (tekstiversiot), ohjeet tulevat hakemistoon <filename
+>/usr/share/doc/HOWTO</filename
+>. LDP:n HOWTO-ohjeita on saatavilla myös Debian-paketteina eri kielillä. Suomenkielinen <ulink url="http://linux.fi/"
+>Linux.fi-wiki</ulink
+> kokoaa paljon ohjeita, myös aloittelijalle sopivia. </para>
+
+ </sect1>
+<!--   End of file post-install/new-to-unix.xml -->
+
+<!-- Start of file post-install/orientation.xml -->
+<!-- $Id: orientation.xml 43576 2006-12-27 03:35:13Z fjp $ -->
+
+
+ <sect1 id="debian-orientation"
+><title
+>Asennoidu oikein Debianiin</title>
+<para
+>Debian eroaa jonkin verran muista jakeluista. Myös muita Linux-jakeluita käyttäneiden olisi tiedettävä Debianista muutamia seikkoja jotta järjestelmä pysyisi hyvässä vireessä. Tämän luvun sisältö antaa suuntaviivoja, tarkoitus ei ole opettaa kädestä pitäen Debianin käyttöä, vaan olla hyvin tiivis katsaus hyvin kiireisille lukijoille. </para>
+
+  <sect2
+><title
+>Debianin paketointijärjestelmä</title>
+<para
+>Debianin paketointijärjestelmä on tärkein käsitteistä jotka olisi ymmärrettävä. Lyhyesti sanottuna, järjestelmässä on suuria osia joiden hallinnoinnista vastaa paketointijärjestelmä. Näitä osia ovat:<itemizedlist
+> <listitem
+><para
+> <filename
+>/usr</filename
+> (paitsi <filename
+>/usr/local</filename
+>) </para
+></listitem
+> <listitem
+><para
+> <filename
+>/var</filename
+> (hakemisto <filename
+>/var/local</filename
+> voidaan tehdä ja huseerata siellä vapaasti) </para
+></listitem
+> <listitem
+><para
+> <filename
+>/bin</filename
+> </para
+></listitem
+> <listitem
+><para
+> <filename
+>/sbin</filename
+> </para
+></listitem
+> <listitem
+><para
+> <filename
+>/lib</filename
+> </para
+></listitem
+> </itemizedlist
+> Jos esimerkiksi tiedosto <filename
+>/usr/bin/perl</filename
+> korvataan, se onnistuu mutta päivitettäessä paketti <classname
+>perl</classname
+> korvatun tiedoston päälle kirjoitetaan. Asiantuntevat käyttäjä voivat kiertää tämän pulman <quote
+>jäädyttämällä</quote
+> paketin komennolla <command
+>aptitude</command
+>. </para
+><para
+>Eräs parhaista asennustavoista apt. Käytettävissä on komentoriviltä toimiva <command
+>apt-get</command
+> tai kokoruudun tekstitilassa toimiva <application
+>aptitude</application
+>. Huomaa, että apt sallii pää-,  contrib- ja epävapaa-jakeluiden yhdistämisen, jolloin vientirajoitusten piirissä olevat paketitkin ovat saatavilla.  </para>
+  </sect2>
+
+  <sect2
+><title
+>Vaihtoehtoja sovelluksille</title>
+<para
+>Usein on samaan tarkoitukseen useita sovelluksia. Komennon <command
+>update-alternatives</command
+> avulla voidaan valita oma mielisovellus käyttöön jos tarjolla on useita. Kannattaa lukea man-sivu komennolle update-alteranatives. </para>
+  </sect2>
+
+  <sect2
+><title
+>Tehtävien ajastettu suoritus</title>
+<para
+>Kaikkien järjestelmän ylläpitäjän tehtäviin liittyvien tiedostojen tulisi sijaita hakemistossa <filename
+>/etc</filename
+> koska siellä on asetustiedostoja. Pääkäyttäjän ajastetut tehtävät päivittäin, viikoittain tai kuukausittain suoritettaviksi olisi tallennettava hakemistoihin <filename
+>/etc/cron.{daily,weekly,monthly}</filename
+>. Ne käynnistetään tiedostosta <filename
+>/etc/crontab</filename
+>, ja suoritetaan aakkosjärjestyksessä yksi kerrallaan. </para
+><para
+>Toisaalta, jos ajastettu tehtävä on (a) suoritettava tietyn käyttäjän oikeuksilla tai (b) suoritettava tiettyyn aikaan tai toistettava määrävälein, käytetään joko tiedostoa <filename
+>/etc/crontab</filename
+> tai mieluummin <filename
+>/etc/cron.d/jotain</filename
+>. Näissä nimenomaisissa tiedostoissa on myös lisäkenttä, joka määrää minkä käyttäjän oikeuksilla ajastettu tehtävä suoritetaan. </para
+><para
+>Kummakssakin tapauksessa muokataan tiedostoja ja cron havaitsee muutoksen automaattisesti. Erikoiskomentoja ei tarvitse käynnistää. Lisätietoa löytyy man-sivuilta cron(8), crontab(5) ja tiedostosta <filename
+>/usr/share/doc/cron/README.Debian</filename
+>. </para>
+  </sect2>
+ </sect1>
+<!--   End of file post-install/orientation.xml -->
+
+<!-- Start of file post-install/further-reading.xml -->
+<!-- $Id: further-reading.xml 30719 2005-09-21 21:05:48Z stappers $ -->
+
+ <sect1 id="further-reading"
+><title
+>Lisää lukemista ja lisätietoja</title>
+<para
+>Yksittäisestä ohjelmasta saa tietoa ensinnäkin komennoilla <userinput
+>man <replaceable
+>ohjelma</replaceable
+></userinput
+> tai <userinput
+>info <replaceable
+>ohjelma</replaceable
+></userinput
+>. </para
+><para
+>Myöskin hakemistossa <filename
+>/usr/share/doc</filename
+> on runsaasti hyödyllisiä ohjeistoja. Erityisesti <filename
+>/usr/share/doc/HOWTO</filename
+> ja <filename
+>/usr/share/doc/FAQ</filename
+> sisältävät paljon kiinnostavaa tietoa. Ennen vikailmoituksen tekemistä luetaan <filename
+>/usr/share/doc/debian/bug*</filename
+>. Ohjelman nimenomaan Debianiin liittyvistä ominaisuuksista löytyy tieto tiedostosta <filename
+>/usr/share/doc/(paketin nimi)/README.Debian</filename
+>. </para
+><para
+><ulink url="http://www.debian.org/"
+>Debianin www-sivustolla</ulink
+> on paljon tietoa Debianista. Katso erityisesti <ulink url="http://www.debian.org/doc/FAQ/"
+>Debian GNU/Linux FAQ</ulink
+> ja <ulink url="http://www.debian.org/doc/user-manuals#quick-reference"
+>Debian Reference</ulink
+>. Debianin muiden ohjeiden hakemisto on <ulink url="http://www.debian.org/doc/ddp"
+>Debian Documentation Project</ulink
+>. Debian-yhteisö tekee talkootyötä; Debianin postituslistoille liitytään <ulink url="http://www.debian.org/MailingLists/subscribe"
+>Postilistoille liittyminen</ulink
+> -sivulla. Viimeisenä mutten vähäisimpänä <ulink url="http://lists.debian.org/"
+>Debianin postituslistojen arkistot</ulink
+> sisältää suuren määrän Debian-tietoa. </para
+><para
+>Yleistä tietoa GNU/Linuxista tarjoaa <ulink url="http://www.tldp.org/"
+>Linux Documentation Project</ulink
+>. Saatavilla on HOWTO-ohjeita ja viitteitä muuhun hyvin arvokkaaseen tietoon GNU/Linux-järjestelmän osista. </para>
+
+ </sect1>
+<!--   End of file post-install/further-reading.xml -->
+
+<!-- Start of file post-install/mail-setup.xml -->
+<!-- $Id: mail-setup.xml 48595 2007-07-23 14:30:05Z cjwatson $ -->
+
+ <sect1 id="mail-setup">
+ <title
+>Järjestelmän asetukset sähköpostin käyttöönottoon</title>
+<para
+>Sähköpostin on nykyään monien elämän tärkeä osa. Koska sähköpostin asetukset voidaan tehdä monella tavalla, ja koska oikeat asetukset ovat tärkeitä joillekin Debianin varusohjelmille, pyritään tässä luvussa selvittämään perusasiat. </para
+><para
+>Sähköpostijärjestelmä muodostuu kolmesta pääosasta. Ensimmäinen on <firstterm
+>Mail User Agent</firstterm
+> (MUA), ohjelma jolla käyttäjä kirjoittaa ja lukee sähköpostit. Sitten on <firstterm
+>Mail Transfer Agent</firstterm
+> (MTA), joka huolehtii sähköpostien kuljettamisesta koneelta toiselle. Viimeisenä on <firstterm
+>Mail Delivery Agent</firstterm
+> (MDA) joka huolehtii saapuvien sähköpostien siirtämisestä käyttäjän sähköpostilaatikkoon. </para
+><para
+>Nämä kolme toimintoa voidaan toteuttaa kolmella erillisellä ohjelmalla, mutta ne voidaan myös yhdistää yhteen tai kahteen ohjelmaan. On myös mahdollista, että eri ohjelmat huolehtivat näistä toiminnoista sähköpostin tyypin mukaan. </para
+><para
+>Linux- ja Unix-järjestelmissä <command
+>mutt</command
+> on historiallisista syistä hyvin suosittu MUA. Kuten useimmat perinteistä Linux-ohjelmat siinä on tekstikäyttöliittymä. Sitä käytetään usein <command
+>exim</command
+>in tai <command
+>sendmail</command
+>in toimiessa MTA:na ja <command
+>procmail</command
+>in MDA:na. </para
+><para
+>Graafisten työpöytäympäristöjen suosion kasvaessa graafinen sähköpostiohjelma kuten GNOMEn <command
+>evolution</command
+>, KDE:n <command
+>kmail</command
+> tai Mozillan <command
+>thunderbird</command
+> (Debianissa saatavilla nimellä <command
+>icedove</command
+><footnote
+> <para
+> Syy <command
+>thunderbird</command
+>in nimemiselle <command
+>icedove</command
+>ksi on käyttöehdoissa. Yksityiskohtaisemmat tiedot eivät kuulu tämän ohjeen piiriin. </para
+> </footnote
+> lisää suosiotaan. Nämä ohjelmat yhdistävät MUA:n, MTA:n ja MDA:n toiminnot, mutta niitä voidaan &mdash; ja usein käytetäänkin &mdash; yhdessä perinteistä Linux-työkalujen kanssa. </para>
+
+  <sect2 id="mail-default">
+  <title
+>Sähköpostin oletusasetukset</title>
+<para
+>Vaikka aikoisit käyttää graafista sähköpostiohjelmaa, on tärkeää että perinteinen MTA/MDA on myös asennettuna ja asetukset oikein tehtynä. Tähän on syynä, että järjestelmän erilaiset varusohjelmat<footnote
+> <para
+> Esimerkiksi: <command
+>cron</command
+>, <command
+>quota</command
+>, <command
+>logcheck</command
+>, <command
+>aide</command
+>, &hellip; </para
+> </footnote
+> voivat kertoa järjestelmän ylläpitäjälle sähköpostilla (mahdollisista) pulmista tai muutoksista. </para
+><para
+>Tästä syystä paketit <classname
+>exim4</classname
+> ja <classname
+>mutt</classname
+> asennetaan oletusarvona (kunhan et asennuksen aikana poistanut valintaa <quote
+>standard</quote
+> tehtävästä). <classname
+>exim4</classname
+> on yhdistetty MTA/MDA joka on verraten pieni mutta hyvin joustava. Oletusarvona sen asetukset on tehty käsittelemään vain koneen sisäinen sähköposti ja lähettämään järjestelmän ylläpitäjälle (tunnus root) tarkoitettu sähköposti asennuksen aikana tehdylle tavalliselle käyttäjälle<footnote
+> <para
+> Asetus rootin sähköpostin välityksestä tavalliselle käyttäjälle on tiedostossa <filename
+>/etc/aliases</filename
+>. Jos tavallista käyttäjätunnusta ei luotu, sähköposti toimitetaan suoraan root-tunnukselle.</para
+> </footnote
+>. </para
+><para
+>Koneen sisäiset sähköpostit toimitetaan lisäämällä ne tiedostoon <filename
+>/var/mail/<replaceable
+>käyttäjätunnus</replaceable
+></filename
+>. Sähköpostit voi lukea komennolla <command
+>mutt</command
+>. </para>
+  </sect2>
+
+  <sect2 id="mail-outgoing">
+  <title
+>Sähköpostien lähetys ulkomaailmaan</title>
+<para
+>Kuten aiemmin mainittiin, asennetun Debian-järjestelmän asetukset on tehty käsittelemään vain koneen sisäinen sähköposti, ei lähettämään sähköpostia koneen ulkopuolele tai vastaanottamaan sähköpostia muualta. </para
+><para
+>Jos haluat <classname
+>exim4</classname
+>:n käsittelevän muutakin kuin koneen sisäistä sähköpostia, lue seuraavasta luvusta käytettävissä olevista perusasetuksista. Muista kokeilla, että sähköpostin lähetys ja vastaanotto toimii oikein. </para
+><para
+>Jos aiot käyttää graafista sähköpostiohjelmaa ja käytät Internetpalveluntarjoajan tai yrityksesi sähköpostipalvelinta, ei ole varsinaista tarvetta tehdä <classname
+>exim4</classname
+>:n asetuksia siten, että se käsittelisi muuta kuin koneen sisäistä sähköpostia. Riittää kun teet mieluisimman graafisen sähköpostiohjelmasi asetukset siten, että se käyttää oikeita palvelimia sähköpostin lähettämiseen ja vastaanottoon (tässä ohjeessa ei neuvota miten se tehdään). </para
+><para
+>Saatat kuitenkin tuossa tapauksessa joutua tekemään yksittäisten varusohjelmien asetuksia jotta ne osaisivat lähettää sähköpostia oikein. Yksi tälläinen varusohjelma on <command
+>reportbug</command
+>, ohjelma jolla tehdään ja lähetetään vikailmoituksia Debianin paketeista. Oletusarvona se olettaa voivansa käyttää <classname
+>exim4</classname
+>:ää vikailmoitusten lähettämiseen. </para
+><para
+>Jotta saisit <command
+>reportbug</command
+>in käyttämään käyttämään ulkoista sähköpostipalvelinta oikein, ole hyvä ja käytä komentoa <command
+>reportbug --configure</command
+> ja vastaa <quote
+>ei</quote
+> kysymykseen onko MTA käytettävissä. Sitten kysytään SMTP-palvelinta jota käytetään vikailmoitusten lähettämiseen. </para>
+  </sect2>
+
+  <sect2 id="config-mta">
+  <title
+>Exim4 Mail Transport Agentin asetukset</title>
+<para
+>Jos haluat järjestelmän käsittelevän myös muuta kuin koneen sisäistä sähköpostia, on paketin <classname
+>exim4</classname
+> asetukset tehtävä uudestaan<footnote
+> <para
+> Tietysti voit myös poistaa <classname
+>exim4</classname
+>:n ja korvata sen jollain muulla MTA/MDA:lla. </para
+></footnote
+>: <informalexample
+><screen
+># dpkg-reconfigure exim4-config
+</screen
+></informalexample>
+
+</para
+><para
+>Kun tuo komento on suoritettu (roottina), kysytään haluatko jakaa asetukset pieniin tiedostoihin. Jos olet epävarma, valitse oletusarvo. </para
+><para
+>Seuraavaksi näytetään muutamia tavallisia sähköpostiympäristöjä. Valitse lähinnä tarpeitasi vastaava. </para>
+
+<variablelist>
+<varlistentry>
+<term
+>Internetiin kytketty kone</term>
+<listitem
+><para
+>Koneessa on nettiyhteys ja sähköpostin lähetys ja vastaanotto tapahtuu suoraan SMTP:llä. Seuraavissa ruuduissa kysytään muutamia peruskysymyksi, kuten koneen sähköpostinimi tai luettelo verkkoalueista joiden posti vastaanotetaan tai välitetään. </para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+>lähetys smarthostin kautta</term>
+<listitem
+><para
+>Tässä lähtevä sähköposti välitetään toiselle koneelle, jota sanotaan <quote
+>smarthost</quote
+>iksi, joka huolehtii viestin välittämisestä vastaanottajalle. Yleensä smarthost myös tallentaa tietokoneellesi osoitetun sähköpostin, jotta koneesi ei tarvitse olla koko ajan yhteydessä nettiin. Tällöin sähköpostit on noudettava smarthostillta fetchmailin kaltaisella ohjelmalla. </para
+><para
+>Useissa tapauksissa smarthost on Internetpalveluntarjoajan sähköpostipalvelin, mistä syystä tämä valinta sopii hyvin soittoyhteyden käyttäjille. Se voi olla myös yrityksen sähköpostipalvelin, tai jopa toinen kone omassa verkossasi. </para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+>lähetys smarthostin kautta; ei paikallista sähköpostia</term>
+<listitem
+><para
+>Tämä valinta on suunnilleen sama kuin edellinen, paitsi että järjestelmän asetuksia ei tehdä käsittelemään paikallista sähköpostialuetta. Sähköposti koneen sisällä (esim. järjestelmän ylläpitäjälle) kuitenkin käsitellään. </para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+>vain paikallinen sähköpostien toimitus</term>
+<listitem
+><para
+>Tämä on järjestelmän oletusasetus. </para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+>ei tehdä asetuksia nyt</term>
+<listitem
+><para
+>Tämän voi valita jos aivan varmasti tietää mitä tekee. Valinta jättää sähköpostijärjestelmän asetukset tekemättä &mdash; sähköpostia ei voi lähettää eikä vastaanottaa ennen asetusten tekemistä, ja ehkä jää näkemättä järjestelmän lähettämiä tärkeitä viestejä. </para
+></listitem>
+</varlistentry>
+</variablelist>
+
+<para
+>Jos mikään näistä tapauksista ei vastaa tarpeitasi, tai jos asetukset on tehtävä tarkemmin, on hakemistossa <filename
+>/etc/exim4</filename
+> olevia asetustiedostoja muokattava kun asennus on valmis. Lisää tietoa <classname
+>exim4</classname
+>:stä löytyy hakemistosta <filename
+>/usr/share/doc/exim4</filename
+>; tiedosto <filename
+>README.Debian.gz</filename
+> sisältää yksityiskohtaisempaa tietoa <classname
+>exim4</classname
+>:n asetusten teosta ja selittää mistä löytyy lisätietoja. </para
+><para
+>Huomaa, että sähköpostin lähettäminen suoraan Internettiin kun käytössä ei ole virallista verkkotunnusta voi johtaa sähköpostin hylkäämiseen vastaanottavien palvelimien roskapostisuodattimissa. Käytä mieluummin Internetpalveluntarjoajasi sähköpostipalvelinta. Jos silti haluat lähettää sähköpostit suoraan, lienee tarpeen käyttää jotain muuta sähköpostiosoitetta kuin oletusarvona tehty. Jos MTA:na on käytössä <classname
+>exim4</classname
+>. tämä on mahdollsita lisäämällä tietua tiedostoon <filename
+>/etc/email-addresses</filename
+>. </para>
+  </sect2>
+ </sect1>
+<!--   End of file post-install/mail-setup.xml -->
+
+<!-- Start of file post-install/kernel-baking.xml -->
+<!-- $Id: kernel-baking.xml 40980 2006-09-26 00:27:16Z fjp $ -->
+
+ <sect1 id="kernel-baking"
+><title
+>Uuden ytimen kääntäminen</title>
+<para
+>Miksi pitäisi kääntää uusi ydin? Usein se ei olekaan välttämätöntä, sillä Debianin toimittama oletusydin toimii useimmissa laitekokoonpanoissa. Lisäksi Debianissa on usein tarjolla useita vaihtoehtoisia ytimiä. Niinpä kannattaa ensin tarkistaa onko paremmin laitteistoon sopiva vaihtoehtoinen ytimen paketti saatavilla. Saattaa kuitenkin olla hyödyllistä kääntää uusi ydin jotta: <itemizedlist>
+<listitem
+><para
+>laitteiston erikoisominaisuudet saadaan käytettyä, tai valmiiden ytimien aiheuttamat laitteistoristiriidat vältettyä </para
+></listitem>
+<listitem
+><para
+>saadaan käyttöön ytimen valitsimet joita ei tueta valmiissa ytimissä (kuten 4 Gt muistin koko) </para
+></listitem>
+<listitem
+><para
+>optimoidaan ydintä käynnistymisen nopeuttamiseksi poistamalla ajureita joita ei käytetä  </para
+></listitem>
+<listitem
+><para
+>tehdään staattisesti linkitetty ydin eikä moduuleja käyttävä </para
+></listitem>
+<listitem
+><para
+>otetaan käyttöön päivitetty ydin tai ytimen kehitysversio </para
+></listitem>
+<listitem
+><para
+>opiskellaan Linux-ytimestä lisää </para
+></listitem>
+</itemizedlist>
+
+</para>
+
+  <sect2
+><title
+>Useita asennettuja ytimiä</title>
+<para
+>Ei pidä pelätä ytimen kääntämistä. Se on hauskaa ja hyödyllistä. </para
+><para
+>Ytimen kääntämiseksi Debian-tavalla, on ensin asennettava muutamia paketteja: <classname
+>fakeroot</classname
+>, <classname
+>kernel-package</classname
+>, <classname
+>kernel-source-2.6</classname
+> ja muutamia muita jotka luultavasti ovat jo asennettuina (katso täydellinen luettelo <filename
+>/usr/share/doc/kernel-package/README.gz</filename
+>). </para
+><para
+>Tällä tavalla ytimen lähdekoodeista kootaan .deb-paketti, ja myös yhteensopiva riippuvaksi merkitty .deb ei-standardeista moduleista jos niitä käytetään. Tämä on parempi tapa käyttää useita ytimiä; hakemistoon <filename
+>/boot</filename
+> tallennetaan ydin, System.map ja koostamisessa käytetty config-tiedosto. </para
+><para
+>Huomaa, ettei ole <emphasis
+>pakollista</emphasis
+> kääntää ydintä <quote
+>Debian-tavalla</quote
+>; mutta mielestämme paketinhallinnan käyttäminen ytimien järjestyksessä pitämiseen on itse asiassa turvallisempaa ja helpompaa. Itse asiassa ytimen lähdekoodin voi noutaa suoraan Linusilta eikä paketista <classname
+>linux-source-2.6</classname
+> ja silti kääntää ytimen <classname
+>kernel-package</classname
+>-menetelmällä. </para
+><para
+>Huomaa paketin <classname
+>kernel-package</classname
+> ohjeiden kokonaisuudessaan löytyvän hakemistosta <filename
+>/usr/share/doc/kernel-package</filename
+>. Tässä luvun ohjeet opastavat lyhyesti kädestä pitäen ohjelman käytössä. </para
+><para
+>Tästä eteenpäin oletetaan käyttäjän voivan tehdä koneellaan mitä vain ja puretaan ytimen lähdekoodit kotihakemiston alle<footnote
+> <para
+> Ytimen lähdekoodit voi purkaa muuallekin ja kääntää muokatun ytimen, mutta kotihakemisto on yksinkertaisin koska ei tarvita erikoisoikeuksia. </para
+></footnote
+>. Myöskin oletetaan ytimen version olevan &kernelversion;. Varmistu työhakemiston olevan hakemisto johon ytimen lähdekoodit puretaan, ja pura ne komennolla <userinput
+>tar xjf /usr/src/linux-source-&kernelversion;.tar.bz2</userinput
+> ja vaihda työhakemistoksi <filename
+>linux-source-&kernelversion;</filename
+> jonka komento teki. </para
+><para
+>Nyt on tehtävä ytimen asetukset. Komenna <userinput
+>make xconfig</userinput
+> jos X11:n asetukset on tehty, se on asennettu ja käynnissä; muussa tapauksessa komenna <userinput
+>make menuconfig</userinput
+> (<classname
+>libncurses5-dev</classname
+> on oltava asennettuna). Lue käytönaikaiset ohjeet ajan kanssa ja valitse huolellisesti. Jos et ole varma, yleensä parempi ottaa mukaan laiteajuri (ohjelma joka huolehtii oheislaitteista kuiten verkkokorteista, SCSI-ohjaimista ja niin edelleen). On oltava varovainen: valitsimet jotka eivät liity johonkin tiettyyn laitteeseen on parasta jättää oletusarvoonsa jos et ymmärrä niitä. Älä unohda valita <quote
+>Kernel module loader</quote
+> valikosta <quote
+>Loadable module support</quote
+> (se ei ole valittuna oletusarvona). Jos sitä ei oteta mukaan, Debian-asennus kohtaa pulmia. </para
+><para
+>Siivoa lähdekoodipuu ja nollaa sovelluksen <classname
+>kernel-package</classname
+>  parametrit. Tämä tehdään komennolla <userinput
+>make-kpkg clean</userinput
+>. </para
+><para
+>Nyt käännetään ydin komennolla <userinput
+>fakeroot make-kpkg --initrd --revision=omaydin.1.0 kernel_image</userinput
+>. Versionumeron <quote
+>1.0</quote
+> voi muuttaa mieleisekseen; sitä käytetään vain ytimen koosteiden versioiden nimeämiseen. Myöskin <quote
+>omaydin</quote
+> tilalle voi kirjoittaa minkä tahansa sanan (esim. konenimen). Ytimen kääntäminen voi kestää hyvän tovin, riippuen kääntävän tietokoneen nopeudesta. </para
+><para
+> Kun käännös on valmis, oma ydin voidaan asentaa kuten mikä tahansa paketti. Pääkäyttäjänä komennetaan <userinput
+>dpkg -i ../linux-image-&kernelversion;-<replaceable
+>subarchitecture</replaceable
+>_custom.1.0_&architecture;.deb</userinput
+>. Kohta <replaceable
+>subarchitecture</replaceable
+> on valinnainen arkkitehtuurin muunnos, <phrase arch="i386"
+> kuten <quote
+>686</quote
+>, </phrase
+> riippuen käytetyistä ytimen valinnoista. Komento <userinput
+>dpkg -i</userinput
+> asentaa ytimen ja muutamia kivoja aputiedostoja. Esimerkiksi tiedosto <filename
+>System.map</filename
+> asennetaan kuten pitää (se auttaa ytimen vikojen jäljityksessä), asennetaan myös tiedosto <filename
+>/boot/config-&kernelversion;</filename
+> jossa on käytetyt ytimen asetukset. Uusi ytimen asennuspaketti on myöskin niin fiksu, että se automaattisesti päivittää käynnistyslataimen käyttämään uutta ydintä. Jos on tehty moduulien paketti, on sekin muistettava asentaa. </para
+><para
+>Nyt on aika tehdä uudelleenkäynnistys: yllä tehtyjen toimenpiteiden mahdollisesti näyttämät varoitukset on syytä lukea huolella, sitten tehdään <userinput
+>shutdown -r now</userinput
+>. </para
+><para
+>Lisätietoja Debianin ytimistä ja ytimen kääntämisestä kertoo <ulink url="&url-kernel-handbook;"
+>Debian Linux Kernel Handbook</ulink
+>. Tarvittaessa lisää tietoa sovelluksesta <classname
+>kernel-package</classname
+>, luetaan hienot ohjeet hakemistosta <filename
+>/usr/share/doc/kernel-package</filename
+>. </para>
+  </sect2>
+ </sect1>
+<!--   End of file post-install/kernel-baking.xml -->
+
+<!-- Start of file post-install/rescue.xml -->
+<!-- $Id: rescue.xml 39614 2006-08-07 15:50:11Z fjp $ -->
+
+ <sect1 id="rescue">
+ <title
+>Hajonneen järjestelmän korjaaminen</title>
+<para
+>Joskus jotain menee pieleen ja huolella asennettu järjestelmä ei enää käynnistykään. Ehkä käynnistyslataimen asetukset menivät rikki kokeiltaessa muuttaa jotain, tai ehkä uusi asennettu ydin ei käynnisty, tai ehkä kosmiset säteet osuivat kiintolevyyn ja muuttivat bitin tiedostossa <filename
+>/sbin/init</filename
+>. Oli miten oli, korjaamiseen tarvitaan toimiva järjestelmä ja pelastustila voi olla siihen omiaan. </para
+><para
+>Pelastustilaan pääsee kirjoittamalla <userinput
+>rescue</userinput
+> <prompt
+>boot:</prompt
+> -kehotteeseen, tai käynnistämällä <userinput
+>rescue/enable=true</userinput
+> käynnistysparametrilla. Asennin näyttää muutaman  ensimmäisistä ruuduistaan, näytön nurkassa on huomautus kyseessä olevan pelastustila eikä asennus. Ei tarvitse pelätä pelastustilan tuhoavan asennetun järjestelmän! Pelastustila vain hyödyntää asentimen laitetunnistusta varmistamaan levyjen, verkkoliitäntöjen ja niin edelleen olevan käytettävissä kun järjestelmää korjataan. </para
+><para
+>Nyt pitäisi näkyviin tulla osiointisovelluksen sijaan luettelo järjestelmän levyosioista, ja kehote valita niistä yksi. Tavallisesti pitää valita osio jossa on korjattava juuritiedostojärjestelmä. Voidaan valita sekä RAID ja LVM-laitteille että suoraan levylle tehtyjä osioita. </para
+><para
+>Mikäli mahdollista, asennin käynnistää komentotulkin korjattava tiedostojärjestelmä työhakemistona, kehotteeseen kirjoitetuilla komennoilla voi korjata tiedostojärjestelmää. <phrase arch="x86"
+> Jos esimerkiksi käynnistyslatain GRUB on asennettava uudelleen ensimmäisen kiintolevyn pääkäynnistyslohkoon, voidaan se tehdä komennolla <userinput
+>grub-install '(hd0)'</userinput
+>. </phrase
+> </para
+><para
+>Jos asennin ei voi käynnistää käyttökelpoista komentotulkkia valitussa juuritiedostojärjestelmässä, ehkäpä koska tiedostojärjestelmä on rikki, asennin näyttää varoituksen ja tarjoutuu sen sijaan käynnistämään komentotulkin asentimen ympäristössä. Tässä ympäristössä ei ehkä ole saatavilla yhtä paljon työkaluja, mutta useinkin riittävästi korjauksien tekemiseen. Valittu juuritiedostojärjestelmä on liitetty hakemistoon <filename
+>/target</filename
+>. </para
+><para
+>Kummassakin tapauksessa järjestelmä käynnistyy uudelleen kun komentotulkista poistutaan. </para
+><para
+>Lopuksi, huomaa että rikkoontuneen järjestelmän korjaaminen saattaa olla vaikeaa, eikä tämä ohje yritä kertoa kaikkia mahdollisia vikoja eikä niiden korjaamista. Jos pulmia ilmenee, pyydä asiantuntija-apua. </para>
+ </sect1>
+<!--   End of file post-install/rescue.xml -->
+
+</chapter>
+<!--   End of file post-install/post-install.xml -->
