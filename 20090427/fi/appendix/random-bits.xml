@@ -1,0 +1,1572 @@
+<!-- Start of file appendix/random-bits.xml -->
+<!-- $Id: random-bits.xml 45239 2007-02-18 19:38:12Z fjp $ -->
+
+<appendix id="random-bits"
+><title
+>Sekalaista</title>
+
+
+<!-- Start of file appendix/files.xml -->
+<!-- $Id: files.xml 58142 2009-04-05 21:59:12Z fjp $ -->
+
+
+ <sect1 id="linuxdevices"
+><title
+>Linuxin laitetiedostot</title>
+<para
+>Hakemistosta <filename
+>/dev</filename
+> löytyy Linuxissa erilaisia erikoistiedostoja. Nämä tiedostot ovat laitetiedostoja ja ne käyttäytyvät eri tavalla kuin tavalliset tiedostot. Tavallisimmat laitetiedostojen tyypit ovat lohkolaitteille ja merkkilaitteille. Nämä tiedostot toimivat rajapintana varsinaiseen laiteajuriin (joka on Linux-ytimessä), joka puolestaan keskustelee laitteen kanssa. Toinen harvinaisempi laitetiedosto on nimetty <firstterm
+>putki</firstterm
+>. Tärkeimmät laitetiedostojen tyypit luetellaan alla olevassa taulukoissa. </para
+><para>
+
+<informaltable
+><tgroup cols="2"
+><tbody>
+<row>
+  <entry
+><filename
+>fd0</filename
+></entry>
+  <entry
+>Ensimmäinen levykeasema</entry>
+</row
+><row>
+  <entry
+><filename
+>fd1</filename
+></entry>
+  <entry
+>Toinen levykeasema</entry>
+</row>
+</tbody
+></tgroup
+></informaltable>
+
+<informaltable
+><tgroup cols="2"
+><tbody>
+<row>
+  <entry
+><filename
+>hda</filename
+></entry>
+  <entry
+>IDE kiintolevy / romppuasema ensisijaisessa IDE-väylässä (Isäntä)</entry>
+</row
+><row>
+  <entry
+><filename
+>hdb</filename
+></entry>
+  <entry
+>IDE kiintolevy / romppuasema ensisijaisessa IDE-väylässä (orja)</entry>
+</row
+><row>
+  <entry
+><filename
+>hdc</filename
+></entry>
+  <entry
+>IDE kiintolevy / romppuasema toisessa IDE-väylässä (isäntä)</entry>
+</row
+><row>
+  <entry
+><filename
+>hdd</filename
+></entry>
+  <entry
+>IDE kiintolevy / romppuasema toisessa IDE-väylässä (orja)</entry>
+</row
+><row>
+  <entry
+><filename
+>hda1</filename
+></entry>
+  <entry
+>Ensimmäisen IDE-kiintolevyn ensimmäinen osio</entry>
+</row
+><row>
+  <entry
+><filename
+>hdd15</filename
+></entry>
+  <entry
+>Neljännen IDE-kiintolevyn viidestoista osio</entry>
+</row>
+</tbody
+></tgroup
+></informaltable>
+
+<informaltable
+><tgroup cols="2"
+><tbody>
+<row>
+  <entry
+><filename
+>sda</filename
+></entry>
+  <entry
+>SCSI-kiintolevy jolla pienin SCSI ID (alkaa nollasta)</entry>
+</row
+><row>
+  <entry
+><filename
+>sdb</filename
+></entry>
+  <entry
+>SCSI-kiintolevy jolla seuraavaksi pienin SCSI ID (esim. 1)</entry>
+</row
+><row>
+  <entry
+><filename
+>sdc</filename
+></entry>
+  <entry
+>SCSI-kiintolevy jolla seuraavaksi suurempi SCSI ID (esim. 2)</entry>
+</row
+><row>
+  <entry
+><filename
+>sda1</filename
+></entry>
+  <entry
+>Ensimmäisen SCSI-kiintolevyn ensimmäinen osio</entry>
+</row
+><row>
+  <entry
+><filename
+>sdd10</filename
+></entry>
+  <entry
+>Neljännen SCSI-kiintolevyn kymmenes osio</entry>
+</row>
+</tbody
+></tgroup
+></informaltable>
+
+<informaltable
+><tgroup cols="2"
+><tbody>
+<row>
+  <entry
+><filename
+>sr0</filename
+></entry>
+  <entry
+>SCSI-romppuasema jolla pienin SCSI ID</entry>
+</row
+><row>
+  <entry
+><filename
+>sr1</filename
+></entry>
+  <entry
+>SCSI-romppuasema jolla toiseksi pienin SCSI ID</entry>
+</row>
+</tbody
+></tgroup
+></informaltable>
+
+<informaltable
+><tgroup cols="2"
+><tbody>
+<row>
+  <entry
+><filename
+>ttyS0</filename
+></entry>
+  <entry
+>Sarjaportti 0, MS-DOS:ssa COM1</entry>
+</row
+><row>
+  <entry
+><filename
+>ttyS1</filename
+></entry>
+  <entry
+>Sarjaportti 1, MS-DOS:ssa COM2</entry>
+</row
+><row>
+  <entry
+><filename
+>psaux</filename
+></entry>
+  <entry
+>PS/2 hiiriportti</entry>
+</row
+><row>
+  <entry
+><filename
+>gpmdata</filename
+></entry>
+  <entry
+>Näennäislaite, GPM-demonin (hiiri) toistin</entry>
+</row>
+</tbody
+></tgroup
+></informaltable>
+
+<informaltable
+><tgroup cols="2"
+><tbody>
+<row>
+  <entry
+><filename
+>cdrom</filename
+></entry>
+  <entry
+>Symbolinen linkki romppuasemaan</entry>
+</row
+><row>
+  <entry
+><filename
+>mouse</filename
+></entry>
+  <entry
+>Symbolinen linkki hiiren laitetiedostoon</entry>
+</row>
+</tbody
+></tgroup
+></informaltable>
+
+<informaltable
+><tgroup cols="2"
+><tbody>
+<row>
+  <entry
+><filename
+>null</filename
+></entry>
+  <entry
+>Kaikki tälle laitteelle kirjoitettu katoaa</entry>
+</row
+><row>
+  <entry
+><filename
+>zero</filename
+></entry>
+  <entry
+>Tältä laitteelta voi lukea nollia loputtomasti</entry>
+</row>
+</tbody
+></tgroup
+></informaltable>
+
+</para>
+
+  <sect2 arch="not-s390" id="device-mouse">
+  <title
+>Hiiren asetukset</title>
+<para
+>Hiirtä voi käyttää sekä Linuxin konsolissa (gpm:n avulla) että X-ikkkunointiympäristössä. Tavallisesti riittää asentaa <filename
+>gpm</filename
+> ja X Window -järjestelmä. Molempien asetukset olisi tehtävä käyttämään hiirilaitteena <filename
+>/dev/input/mice</filename
+>. Hiiren oikea protokolla on gpm:ssä <userinput
+>exps2</userinput
+> ja X:ssä <userinput
+>ExplorerPS/2</userinput
+>. Vastaavat asetustiedostot ovat <filename
+>/etc/gpm.conf</filename
+> ja <filename
+>/etc/X11/xorg.conf</filename
+>. </para
+><para
+>Jotta hiiri toimisi on tiettyjen ytimen moduulien oltava ladattuna. Useimmissa tapauksissa oikeat moduulit tunnistetaan automaattisesti, mutta ei aina vanhanmallisille sarja- tai väylähiirille<footnote
+> <para
+> Sarjahiirissä on tavallisesti 9-reikäinen D:n muotoinen liitin; väylähiirissä on 8-piikkinen pyöreä liitin, jota ei pidä sekoittaa PS/2-hiiren 6-piikkiseen pyöreään liittimeen tai ADB-hiiren 4-piikkiseen pyöreään liittimeen. </para
+> </footnote
+>, jotka ovat sangen harvinaisia, niitä on vain hyvin vanhoissa tietokoneissa. Yhteenveto erilaisille hiirille tarvittavista Linuxin ytimen moduuleista: <informaltable
+><tgroup cols="2"
+><thead
+> <row
+> <entry
+>Moduuli</entry
+> <entry
+>Kuvaus</entry
+> </row
+> </thead
+><tbody
+> <row
+> <entry
+>psmouse</entry
+> <entry
+>PS/2-hiiri (automaattitunnistus pitäisi toimia)</entry
+> </row
+> <row
+> <entry
+>usbhid</entry
+> <entry
+>USB-hiiri (automaattitunnistus pitäisi toimia)</entry
+> </row
+> <row
+> <entry
+>sermouse</entry
+> <entry
+>Useimmat sarjahiiret</entry
+> </row
+> <row
+> <entry
+>logibm</entry
+> <entry
+>Logitechin sovitinkortissa oleva väylähiiri</entry
+> </row
+> <row
+> <entry
+>inport</entry
+> <entry
+>ATI:n tai Microsoftin InPort-kortissa oleva väylähiiri</entry
+> </row
+> </tbody
+></tgroup
+></informaltable
+> Hiiriajurin moduulin lataamisen voidaan käyttää komentoa <command
+>modconf</command
+> (tulee samannimisessä asennuspaketissa), katso kohtaa <userinput
+>kernel/drivers/input/mouse</userinput
+>. </para
+><para arch="powerpc"
+>Uudet ytimet mahdollistavat kolmipainikkeisen hiiren emuloinnin vaikka hiiressä olisi vain yksi painike. Riittää lisätä seuraavat rivit tiedostoon <filename
+>/etc/sysctl.conf</filename
+>. <informalexample
+><screen
+># 3-painikkeisen hiiren emulointi
+# emulointi päälle
+/dev/mac_hid/mouse_button_emulation = 1
+# Lähetä hiiren keskimmäisen painikkeen signaali näppäimellä F11
+/dev/mac_hid/mouse_button2_keycode = 87
+# Lähetä hiiren oikeanpuoleisen painikkeen signaali näppäimellä F12
+/dev/mac_hid/mouse_button3_keycode = 88
+# Muut näppäimet: komento showkey näyttää näppäimen koodin.
+</screen
+></informalexample>
+
+</para>
+  </sect2>
+ </sect1>
+
+ <sect1 id="tasksel-size-list">
+ <title
+>Tehtävien vaatima levytila</title>
+<para
+>Peruskokoonpanon asennus ja kaikki vakiopaketit i386-arkkitehtuurilla oletusarvona olevaa 2.6-ydintä käyttäen vie &std-system-size; Mt levytilaa. Suppea perusasennus vie &base-system-size; Mt, jos standard-tehtävää ei valita. </para>
+<important
+><para
+>Molemmissa tapauksissa tämä on todellinen käytetty levytila asennuksen <emphasis
+>jälkeen</emphasis
+> kun tilapäiset tiedostot on poistettu. Myöskään ei oteta huomioon tiedostojärjestelmän yleisrasitetta, esimerkiksi tiedosto-operaatioiden kirjanpidon tiedostoja. Tämä tarkoittaa, että tarvitaan huomattavasti enemmän levytilaa sekä asennuksen <emphasis
+>aikana</emphasis
+> että järjestelmän tavallisessa käytössä. </para
+></important>
+<para
+>Seuraavassa taulukossa luetellaan aptituden ilmoittamat koot taskselin tuntemille tehtäville. Huomaa joillakin tehtävillä olevan yhteisiä osia, joten kahden tehtävän yhteensä kuluttama levytila voi olla vähemmän kuin niiden kokojen summa. </para
+><para
+>Huomaa, että taulukossa lueteltuihin kokoihin on lisättävä peruskokoonpanon vaatima tila laskettaessa levyosioiden kokoa. Valtaosa sarakkeessa <quote
+>Koko purettuna</quote
+> olevasta tilasta kuluu hakemistosta <filename
+>/usr</filename
+>; sarakkeessa <quote
+>Koko pakattuna</quote
+> mainittu tila tarvitaan (tilapäisesti) hakemistosta <filename
+>/var</filename
+>. </para
+><para>
+
+<informaltable
+><tgroup cols="4">
+<thead>
+<row>
+  <entry
+>Tehtävä</entry>
+  <entry
+>Koko purettuna (Mt)</entry>
+  <entry
+>Koko pakattuna (Mt)</entry>
+  <entry
+>Asennuksen aikana tarvittava tila (Mt)</entry>
+</row>
+</thead>
+
+<tbody>
+<row>
+  <entry
+>Työpöytäympäristö</entry>
+  <entry
+>&task-desktop-inst;</entry>
+  <entry
+>&task-desktop-dl;</entry>
+  <entry
+>&task-desktop-tot;</entry>
+</row>
+
+<row>
+  <entry
+>Läppäri<footnote
+> <para
+>Tehtävät Läppäri ja Työpöytäympäristö menevät osittain päällekkäin. Jos molemmat asennetaan, Läppäri vaati vain muutaman Mt lisää levytilaa. </para>
+
+  </footnote
+></entry>
+  <entry
+>&task-laptop-inst;</entry>
+  <entry
+>&task-laptop-dl;</entry>
+  <entry
+>&task-laptop-tot;</entry>
+</row>
+
+<row>
+  <entry
+>Web server</entry>
+  <entry
+>&task-web-inst;</entry>
+  <entry
+>&task-web-dl;</entry>
+  <entry
+>&task-web-tot;</entry>
+</row>
+
+<row>
+  <entry
+>Print server</entry>
+  <entry
+>&task-print-inst;</entry>
+  <entry
+>&task-print-dl;</entry>
+  <entry
+>&task-print-tot;</entry>
+</row>
+
+<row>
+  <entry
+>DNS server</entry>
+  <entry
+>&task-dns-inst;</entry>
+  <entry
+>&task-dns-dl;</entry>
+  <entry
+>&task-dns-tot;</entry>
+</row>
+
+<row>
+  <entry
+>File server</entry>
+  <entry
+>&task-file-inst;</entry>
+  <entry
+>&task-file-dl;</entry>
+  <entry
+>&task-file-tot;</entry>
+</row>
+
+<row>
+  <entry
+>Mail server</entry>
+  <entry
+>&task-mail-inst;</entry>
+  <entry
+>&task-mail-dl;</entry>
+  <entry
+>&task-mail-tot;</entry>
+</row>
+
+<row>
+  <entry
+>SQL database</entry>
+  <entry
+>&task-sql-inst;</entry>
+  <entry
+>&task-sql-dl;</entry>
+  <entry
+>&task-sql-tot;</entry>
+</row>
+
+</tbody>
+</tgroup
+></informaltable>
+
+<note
+><para
+>Tehtävä <emphasis
+>Desktop</emphasis
+> asentaa GNOME-työpöytäympäristön. </para
+></note>
+
+</para
+><para
+>Jos asennuskieli on joku muu kuin englanti, <command
+>tasksel</command
+> saattaa asentaa automaattisesti <firstterm
+>kotoistustehtävän</firstterm
+>, jos sellainen on asennuskielelle saatavissa. Tilavaatimus riippuu kielestä; olisi varauduttava 350 Mt kokonaistilaan noudossa ja asennuksessa. </para>
+ </sect1>
+<!--   End of file appendix/files.xml -->
+
+<!-- Start of file appendix/chroot-install.xml -->
+<!-- $Id: chroot-install.xml 58143 2009-04-05 22:48:58Z fjp $ -->
+
+ <sect1 id="linux-upgrade">
+ <title
+>&debian;in asentaminen Unix/Linux-järjestelmästä.</title>
+
+<para
+>Tämä luku selittää miten &debian; asennetaan koneessa jo olevasta Unix- tai Linux-järjestelmästä käyttämättä valikkopohjaista asenninta josta muut osat tätä ohjetta kertovat. Tämä ohjetta <quote
+>ristiinasennuksesta</quote
+> ovat pyytäneet käyttäjät jotka vaihtavat &debian;iin järjestelmistä Red Hat, Mandrake ja SUSE. Tässä luvussa edellytetään jonkinlaista kokemusta *nix-komennoista ja tiedostojärjestelmässä liikkumisesta. Tässä luvussa <prompt
+>$</prompt
+> tarkoittaa komentoa joka kirjoitetaan koneessa jo olevassa käyttöjärjestelmässä, ja <prompt
+>#</prompt
+> tarkoittaa chroot-eristetyssä Debianissa kirjoitettavaa komentoa. </para
+><para
+>Kun uuden Debian-järjestelmän asetukset on saatu mieleisiksi, voidaan vanhan järjestelmän käyttäjien tiedot (jos niitä on) siirtää ja jatkaa koneen käyttöä. Kyseessä on siis &debian; asennus <quote
+>ilman alhaallaoloaikaa</quote
+>. Tämä on myös näppärä keino jos laitteiston kanssa on vaikeuksia käynnistys- ja asennustaltioiden kanssa. </para>
+
+<note
+><para
+>Koska tämä on enimmäkseen käsityötä, olisi huomioitava itse tehtävä huomattava määrä perusasetusten säätämistä, missä tarvitaan myös enemmän tietämystä Debianista ja Linuxista yleensä kuin asennettaessa tavallisella tavalla. Ei pidä olettaa tällä tavalla asennetun järjestelmän olevan täsmälleen samanlainen kuin tavallisesti asennetun. Huomaa myös tässä kerrottavan vain perusvaiheet järjestelmän kuntoon saattamisesa. Lisäasennukset ja/tai -asetukset saattavat olla tarpeen. </para
+></note>
+
+  <sect2>
+  <title
+>Alkuunpääsy</title>
+<para
+>Koneessa jo olevan *nix-järjestelmän osiontityökaluilla osioidaan tarvittaessa kiintolevy. On tehtävä ainakin yksi tiedostojärjestelmä ja sivutustila. Tarvitaan ainakin 350 Mt pelkästään konsolilta käytettävälle asennukselle, tai noin 1 Gt jos asennetaan X (enemmän jos asennetaan työpöytäympäristö kuten GNOME tai KDE). </para
+><para
+>Osioille on luotava tiedostojärjestelmät. Esimerkiksi jos tehdään ext3-tiedostojärjestelmä osioon <filename
+>/dev/hda6</filename
+> (se on esimerkin juuriosio): <informalexample
+><screen>
+# mke2fs -j /dev/<replaceable
+>hda6</replaceable>
+</screen
+></informalexample
+> Jos halutaankin ext2-tiedostojärjestelmä, jätetään <userinput
+>-j</userinput
+> pois. </para
+><para
+>Alustetaan sivutus ja otetaan se käyttöön (korvaa osion numero halutulla Debianin sivutusosiolla): <informalexample
+><screen>
+# mkswap /dev/<replaceable
+>hda5</replaceable>
+# sync; sync; sync
+# swapon /dev/<replaceable
+>hda5</replaceable>
+</screen
+></informalexample
+> Yksi osio on liitettävä kohtaan <filename
+>/mnt/debinst</filename
+> (asennus tehdään tähän, siitä tulee uuden järjestelmän juuritiedostojärjestelmä (<filename
+>/</filename
+>)). Liitoskohta voi olla mikä tahansa hakemisto, mutta nimeä käytetään myöhemmin. <informalexample
+><screen
+># mkdir /mnt/debinst
+# mount /dev/<replaceable
+>hda6</replaceable
+> /mnt/debinst
+</screen
+></informalexample>
+
+</para>
+<note
+><para
+>Jos osa tiedostojärjestelmästä (esim. /usr) halutaan omiin levyosioihinsa, on nämä osiot tehtävä ja liitettävä itse ennen kuin jatketaan seuraavaan kohtaan. </para
+></note>
+  </sect2>
+
+  <sect2>
+  <title
+>Asennetaan <command
+>debootstrap</command
+></title>
+<para
+>Debianin asentimen käyttämä työkaluohjelma on <command
+>debootstrap</command
+>. Se on virallinen tapa Debianin peruskokoonpanon asentamiseen. Se käyttää komentoja <command
+>wget</command
+> ja <command
+>ar</command
+>, mutta on muuten riippuvainen ainoastaan <classname
+>/bin/sh</classname
+>:sta ja Unixin/Linuxin perusohjelmista<footnote
+> <para
+> Näitä ovat GNU:n perustyökalut ja komennot kuten <command
+>sed</command
+>, <command
+>grep</command
+>, <command
+>tar</command
+> ja <command
+>gzip</command
+>. </para
+> </footnote
+>. Asenna <command
+>wget</command
+> ja <command
+>ar</command
+> jos niitä ei vielä nykyjärjestelmässä ole, ja nouda ja asenna sitten <command
+>debootstrap</command
+>. </para>
+
+<!-- The files linked to here are from 2004 and thus currently not usable
+<para>
+
+If you have an rpm-based system, you can use alien to convert the
+.deb into .rpm, or download an rpm-ized version at
+<ulink url="http://people.debian.org/~blade/install/debootstrap"
+></ulink>
+
+</para>
+-->
+
+<para
+>Tai voidaan käyttää seuraavaa menettelyä ja asentaa se itse. Tee työhakemisto johon .deb puretaan: <informalexample
+><screen>
+# mkdir work
+# cd work
+</screen
+></informalexample
+> Komennon <command
+>debootstrap</command
+> suoritettava ohjelmatiedosto on Debianin asennuspalvelimella (muista valita oikea tiedosto koneen suoritinperheelle). Nouda <command
+>debootstrap</command
+> .deb <ulink url="http://ftp.debian.org/debian/pool/main/d/debootstrap/"
+> varastoalueelta</ulink
+>, kopioi paketti työhakemistoon ja pura siitä suorituskelpoiset ohjelmatiedostot, joiden asentamiseen tarvitaan pääkäyttäjän oikeuksia. <informalexample
+><screen
+># ar -x debootstrap_0.X.X_arch.deb
+# cd /
+# zcat /kokonainen-polkunimi/work/data.tar.gz | tar xv
+</screen
+></informalexample>
+
+</para>
+  </sect2>
+
+  <sect2>
+  <title
+>Suoritetaan <command
+>debootstrap</command
+></title>
+<para
+>Komento <command
+>debootstrap</command
+> osaa noutaa tarvittavat tiedostot suoraan varastoalueelta. <userinput
+>&archive-mirror;/debian</userinput
+> tilalle voi kirjoittaa minkä tahansa Debianin asennuspalvelimen kopion, mieluiten verkon topologiassa lähellä olevan. Asennuspalvelimen kopioiden luettelo on osoitteessa <ulink url="http://www.debian.org/misc/README.mirrors"
+></ulink
+>. </para
+><para
+>Jos &releasename; &debian; -romppu on liitettynä hakemistoon <filename
+>/cdrom</filename
+>, voidaan http URL korvata tiedostoon viittaavalla URL:llä: <userinput
+>file:/cdrom/debian/</userinput
+> </para
+><para
+>Korvaa komennossa <command
+>debootstrap</command
+> <replaceable
+>ARCH</replaceable
+> jollakin seuraavista: <userinput
+>alpha</userinput
+>, <userinput
+>amd64</userinput
+>, <userinput
+>arm</userinput
+>, <userinput
+>armel</userinput
+>, <userinput
+>hppa</userinput
+>, <userinput
+>i386</userinput
+>, <userinput
+>ia64</userinput
+>, <userinput
+>m68k</userinput
+>, <userinput
+>mips</userinput
+>, <userinput
+>mipsel</userinput
+>, <userinput
+>powerpc</userinput
+>, <userinput
+>s390</userinput
+>, tai <userinput
+>sparc</userinput
+>. <informalexample
+><screen
+># /usr/sbin/debootstrap --arch ARCH &releasename; \
+     /mnt/debinst http://ftp.fi.debian.org/debian
+</screen
+></informalexample>
+
+</para>
+  </sect2>
+
+  <sect2>
+  <title
+>Perusjärjestelmän asetukset</title>
+<para
+>Nyt on levyllä oikea Debian-järjestelmä, vaikkakin varsin suppea. Siirry siihen komennolla <command
+>chroot</command
+>: <informalexample
+><screen>
+# LANG=C chroot /mnt/debinst /bin/bash
+</screen
+></informalexample
+> Kun chroot on tehty, saattaa olla tarpeen määritellä pääte yhteensopivaksi Debianin perusjärjestelmän kanssa, esimerkiksi: <informalexample
+><screen
+># export TERM=<replaceable
+>xterm-color</replaceable
+>
+</screen
+></informalexample>
+
+</para>
+
+   <sect3>
+   <title
+>Luo laitetiedostot</title>
+<para
+>Tässä kohtaa hakemistossa <filename
+>/dev/</filename
+> on vain hyvin peruslaitetiedostoja. Asennuksen seuraavissa vaiheessa saatetaan tarvita lisää laitetiedostoja. Etenemistapoja on erilaisia, ja valittavaan tapaan vaikuttaa isäntäjärjestelmä josta asennusta tehdään, käytetäänkö modulaarista ydintä vai ei, ja käytetäänkö asennettavassa järjestelmässä dynaamisia (t.s. käytössä <classname
+>udev</classname
+>) vai staattisia laitetiedostoja. </para
+><para
+>Joitakin käytettävissä olevista valitsimista: <itemizedlist>
+<listitem
+><para
+>luo oletusjoukko staattisia laitetiedostoja komennoilla: <informalexample
+><screen
+># cd /dev
+# MAKEDEV generic
+</screen
+></informalexample>
+
+</para
+></listitem>
+<listitem
+><para
+>luo itse vain tietyt laitetiedostot komennolla <command
+>MAKEDEV</command
+> </para
+></listitem>
+<listitem
+><para
+>liitä hakemisto <filename
+>/dev</filename
+> isäntäjärjestelmästä kohdejärjestelmän liitoskohtaan <filename
+>/dev</filename
+>; huomaa joidenkin pakettien postinst-komentotiedostojen saattavan yrittää laitetiedostojen luomista, joten tätä valitsinta olisi käytettävä varoen </para
+></listitem>
+</itemizedlist>
+
+</para>
+   </sect3>
+
+   <sect3>
+   <title
+>Liitetään osiot</title>
+<para
+>On luotava tiedosto <filename
+>/etc/fstab</filename
+>. <informalexample
+><screen>
+# editor /etc/fstab
+</screen
+></informalexample
+> Tästä esimerkkitiedostosta voi muokata sopivan: <informalexample
+><screen>
+# /etc/fstab: static file system information.
+#
+# file system    mount point   type    options                  dump pass
+/dev/XXX         /             ext3    defaults                 0    1
+/dev/XXX         /boot         ext3    ro,nosuid,nodev          0    2
+
+/dev/XXX         none          swap    sw                       0    0
+proc             /proc         proc    defaults                 0    0
+
+/dev/fd0         /media/floppy   auto    noauto,rw,sync,user,exec 0    0
+/dev/cdrom       /media/cdrom    iso9660 noauto,ro,user,exec      0    0
+
+/dev/XXX         /tmp          ext3    rw,nosuid,nodev          0    2
+/dev/XXX         /var          ext3    rw,nosuid,nodev          0    2
+/dev/XXX         /usr          ext3    rw,nodev                 0    2
+/dev/XXX         /home         ext3    rw,nosuid,nodev          0    2
+</screen
+></informalexample
+> Komento <userinput
+>mount -a</userinput
+> liittää kaikki tiedostossa <filename
+>/etc/fstab</filename
+> luetellut tiedostojärjestelmät, tai liitä tiedostojärjestelmät yksitellen komentamalla: <informalexample
+><screen>
+# mount /path   # esim.: mount /usr
+</screen
+></informalexample
+> Nykyiset Debian-järjestelmät tekevät liitoskohdat irrotettaville taltioille hakemistoon <filename
+>/media</filename
+>, mutta säilyttävät yhteensopivuuden takia symboliset linkit hakemistossa <filename
+>/</filename
+>. Luo linkit tarpeen mukaan, esimerkiksi:
+<informalexample
+><screen>
+# cd /media
+# mkdir cdrom0
+# ln -s cdrom0 cdrom
+# cd /
+# ln -s media/cdrom
+</screen
+></informalexample>
+
+Tiedostojärjestelmä proc voidaan liittää useita kertoja ja mielivaltaisiin liitoskohtiin, vaikkakin tapana on käyttää <filename
+>/proc</filename
+>. Jos ei käytetty komentoa <userinput
+>mount -a</userinput
+>, varmistu että proc on liitetty ennen jatkamista: <informalexample
+><screen
+># mount -t proc proc /proc
+</screen
+></informalexample>
+
+</para
+><para
+>Komennon <userinput
+>ls /proc</userinput
+> pitäisi nyt näyttää tiedostoja hakemistossa. Jos tämä ei toimi, proc voidaan ehkä liittää chroot-eristyksen ulkopuolelta: <informalexample
+><screen
+># mount -t proc proc /mnt/debinst/proc
+</screen
+></informalexample>
+
+</para>
+   </sect3>
+
+   <sect3>
+   <title
+>Aikavyöhyke</title>
+<para
+>Valinta tiedostossa <filename
+>/etc/default/rcS</filename
+> määrittää katsooko järjestelmä laitteiston kellon olevan maailmanajassa (UTC) vai paikallisessa ajassa. Seuraavalla komennolla voi tämän määrätä ja valita aikavyöhykkeen. <informalexample
+><screen
+># editor /etc/default/rcS
+# tzconfig
+</screen
+></informalexample>
+
+</para>
+   </sect3>
+
+   <sect3>
+   <title
+>Verkon asetukset</title>
+<para
+>Verkon asetukset tehdään muokkaamalla tiedostoja <filename
+>/etc/network/interfaces</filename
+>, <filename
+>/etc/resolv.conf</filename
+>, <filename
+>/etc/hostname</filename
+> ja <filename
+>/etc/hosts</filename
+>. <informalexample
+><screen>
+# editor /etc/network/interfaces
+</screen
+></informalexample
+> Tässä on muutamia yksinkertaisia esimerkkejä hakemistosta <filename
+>/usr/share/doc/ifupdown/examples</filename
+>: <informalexample
+><screen>
+######################################################################
+# /etc/network/interfaces -- configuration file for ifup(8), ifdown(8)
+# See the interfaces(5) manpage for information on what options are
+# available.
+######################################################################
+
+# We always want the loopback interface.
+#
+auto lo
+iface lo inet loopback
+
+# To use dhcp:
+#
+# auto eth0
+# iface eth0 inet dhcp
+
+# An example static IP setup: (broadcast and gateway are optional)
+#
+# auto eth0
+# iface eth0 inet static
+#     address 192.168.0.42
+#     network 192.168.0.0
+#     netmask 255.255.255.0
+#     broadcast 192.168.0.255
+#     gateway 192.168.0.1
+</screen
+></informalexample
+> Tiedostoon <filename
+>/etc/resolv.conf</filename
+> kirjoitetaan nimipalvelimet ja hakuasetuksia: <informalexample
+><screen>
+# editor /etc/resolv.conf
+</screen
+></informalexample
+> Yksinkertainen <filename
+>/etc/resolv.conf</filename
+>: <informalexample
+><screen>
+search hqdom.local\000
+nameserver 10.1.1.36
+nameserver 192.168.9.100
+</screen
+></informalexample
+> Kirjoita järjestelmän konenimi (2 - 63 merkkiä): <informalexample
+><screen>
+# echo DebianinKonenimi &gt; /etc/hostname
+</screen
+></informalexample
+> Vielä perusversio tiedostosta <filename
+>/etc/hosts</filename
+> jossa on mukana IPv6-tuki:
+<informalexample
+><screen>
+127.0.0.1 localhost DebianHostName
+
+# The following lines are desirable for IPv6 capable hosts\
+::1     ip6-localhost ip6-loopback\
+fe00::0 ip6-localnet
+ff00::0 ip6-mcastprefix
+ff02::1 ip6-allnodes
+ff02::2 ip6-allrouters
+ff02::3 ip6-allhosts
+</screen
+></informalexample
+> Jos verkkoliitäntöjä on useita, olisi ajurimoduulien nimet järjestettävä tiedostossa <filename
+>/etc/modules</filename
+> haluttuun järjestykseen. Näin on jokainen liitäntä käynnistyksessä tunnetulla nimellä (eth0, eth1, etc.). </para>
+   </sect3>
+
+   <sect3>
+   <title
+>Aptin asetukset</title>
+<para
+>Debootstrap on luonut hyvin perusversion tiedostosta <filename
+>/etc/apt/sources.list</filename
+>, jonka avulla voi asentaa lisää paketteja. Saatat kuitenkin haluta lisätä enemmän asennuslähteitä, esimerkiksi lähdekoodipaketeille ja tietoturvapäivityksille: <informalexample
+><screen>
+deb-src http://ftp.fi.debian.org/debian &releasename; main
+
+deb http://security.debian.org/ &releasename;/updates main
+deb-src http://security.debian.org/ &releasename;/updates main
+</screen
+></informalexample
+> Muista käynnistää <userinput
+>aptitude update</userinput
+> kun sources.list-tiedostoa on muutettu. </para>
+   </sect3>
+
+   <sect3>
+   <title
+>Näppäimistön asetukset ja maa-asetusto</title>
+<para
+>Maa-asetukset saadaan englannin lisäksi muidenkin kielien mukaiseksi asentamalla paketti <classname
+>locales</classname
+> ja tekemällä sen asetukset. Nyt suositellaan UTF-8-lokaalien käyttöä. <informalexample
+><screen>
+# aptitude install locales
+# dpkg-reconfigure locales
+</screen
+></informalexample
+> Näppäimistön asetukset tehdään (tarvittaessa): <informalexample
+><screen
+># aptitude install console-data
+# dpkg-reconfigure console-data
+</screen
+></informalexample>
+
+</para
+><para
+>Huomaa ettei näppäimistön asetuksia saa käyttöön kun ollaan chroot-eristettynä, mutta ne tulevat käyttöön seuraavassa käynnistyksessä. </para>
+   </sect3>
+  </sect2>
+
+  <sect2>
+  <title
+>Asennetaan ydin</title>
+<para
+>Jos tämä järjestelmä aiotaan käynnistää, haluttaneen Linux ydin ja käynnistyslatain. Saatavilla olevat ytimien valmiit asennuspaketit löytää komennolla: <informalexample
+><screen
+># apt-cache search linux-image
+</screen
+></informalexample>
+
+</para
+><para
+>Jos aiotaan käyttää valmista paketoitua ydintä, kannattaa ennen sitä luoda asetustiedosto <filename
+>/etc/kernel-img.conf</filename
+>. Tässä on esimerkkitiedosto: <informalexample
+><screen
+># Kernel image management overrides
+# See kernel-img.conf(5) for details
+do_symlinks = yes
+relative_links = yes
+do_bootloader = yes
+do_bootfloppy = no
+do_initrd = yes
+link_in_boot = no
+</screen
+></informalexample>
+
+</para
+><para
+>Yksityiskohtaisempaa tietoa tästä tiedostosta ja sen erilaisista valitsimista löytyy sen man-sivulta, joka on saatavilla kun <classname
+>kernel-package</classname
+> on asennettu. Suosittelemme, että tarkistat arvojen olevan sopivat järjestelmällesi. </para
+><para
+>Asenna sitten haluamasi ydinpaketti käyttämällä paketin nimeä. <informalexample
+><screen>
+# aptitude install linux-image-<replaceable
+>&kernelversion;-arch-etc</replaceable>
+</screen
+></informalexample
+> Jos et luonut tiedostoa <filename
+>/etc/kernel-img.conf</filename
+> ennen valmiiksi paketoidun ytimen asentamista, saatetaan sitä asennettaessa kysyä muutamia siihen viittaavia kysymyksiä. </para>
+  </sect2>
+
+  <sect2>
+<title
+>Käynnistyslataimen asetukset</title>
+<para
+>&debian; -järjestelmä saadaan käynnistyskelpoiseksi säätämällä käynnistyslatain lataamaan asennettu ydin ja käyttämään uutta juuritiedostojärjestelmää. Huomaa ettei <command
+>debootstrap</command
+> asenna käynnistyslatainta, mutta sen voi asentaa komennolla <command
+>aptitude</command
+> Debianin chroot-eristyksen sisällä. </para
+><para arch="x86"
+>Komennoilla <userinput
+>info grub</userinput
+> tai <userinput
+>man lilo.conf</userinput
+> löytyy ohjeita käynnistyslataimen asetuksista. Jos järjestelmä josta Debian asennettiin halutaan säilyttää, riittää lisätä vanhaan grubin tiedostoon <filename
+>menu.lst</filename
+> tai lilon tiedostoon <filename
+>lilo.conf</filename
+> tietue Debiania varten. Tiedoston <filename
+>lilo.conf</filename
+> voi myös kopioida uuteen järjestelmään ja muokata sitä siellä. Muokkauksen jälkeen käynnistetään komento <command
+>lilo</command
+> (muista että se käyttää tiedostoa <filename
+>lilo.conf</filename
+> siitä järjestelmästä jossa se käynnistettiin. </para
+><para arch="x86"
+><classname
+>grub</classname
+>in asentaminen ja asetusten teko on näin helppoa: <informalexample
+><screen>
+# aptitude install grub
+# grub-install /dev/<replaceable
+>hda</replaceable>
+# update-grub
+</screen
+></informalexample
+> Toinen komento asentaa <command
+>grub</command
+>in (tässä tapauksessa levyn <literal
+>hda</literal
+> pääkäynnistyslohkoon). Viimeinen komento luo järkevän ja toimivan <filename
+>/boot/grub/menu.lst</filename
+>-tiedoston. </para
+><para
+>Huomaa tässä oletettavan laitetiedoston <filename
+>/dev/hda</filename
+> olevan luotu. On muitakin tapoja asentaa <command
+>grub</command
+>, mutta niiden käsittely ei kuulu tähän liitteeseen. </para
+><para arch="x86"
+>Tässä on tiedoston <filename
+>/etc/lilo.conf</filename
+> perusversio malliksi: <informalexample
+><screen
+>boot=/dev/<replaceable
+>hda6</replaceable>
+root=/dev/<replaceable
+>hda6</replaceable>
+install=menu
+delay=20
+lba32
+image=/vmlinuz
+initrd=/initrd.img
+label=Debian
+</screen
+></informalexample>
+
+</para
+><para arch="x86"
+>Voit nyt tehdä lisämuutoksia tiedostoon <filename
+>/etc/kernel-img.conf</filename
+> valitsemasi käynnistyslataimen mukaisesti. </para
+><para arch="x86"
+>Käynnistyslataimelle <classname
+>grub</classname
+> olisi asetuksen <literal
+>do_bootloader</literal
+> arvoksi asetettava <quote
+>no</quote
+>. Jotta <filename
+>/boot/grub/menu.lst</filename
+> päivitettäisiin automaattisesti Debianin ytimiä asennettaessa tai poistettaessa, lisätään seuraavat rivit: <informalexample
+><screen>
+postinst_hook = update-grub
+postrm_hook   = update-grub
+</screen
+></informalexample
+> Käynnistyslataimelle <classname
+>lilo</classname
+> asetuksen <literal
+>do_bootloader</literal
+> arvona on säilytettävä <quote
+>yes</quote
+>. </para
+><para arch="powerpc"
+>Komennolla <userinput
+>man yaboot.conf</userinput
+> löytyy ohjeita käynnistyslataimen asetuksista. Jos järjestelmä josta Debian asennettiin halutaan säilyttää, riittää lisätä vanhaan <filename
+>yaboot.conf</filename
+> tiedostoon tietue Debiania varten. Tiedoston voi myös kopioida uuteen järjestelmään ja muokata sitä siellä. Muokkauksen jälkeen käynnistetään komento <command
+>ybin</command
+> (muista että se käyttää tiedostoa <filename
+>yaboot.conf</filename
+> siitä järjestelmästä jossa se käynnistettiin." </para
+><para arch="powerpc"
+>Tässä on tiedoston <filename
+>/etc/yaboot.conf</filename
+> perusversio malliksi: <informalexample
+><screen>
+boot=/dev/hda2
+device=hd:
+partition=6
+root=/dev/hda6
+magicboot=/usr/lib/yaboot/ofboot
+timeout=50
+image=/vmlinux
+label=Debian
+</screen
+></informalexample
+> Joissakin koneissa on ehkä käytettävä <userinput
+>ide0:</userinput
+> eikä <userinput
+>hd:</userinput
+>. </para>
+  </sect2>
+
+  <sect2>
+<title
+>Viimeistely</title>
+<para
+>Kuten aiemmin mainittiin, asennettu järjestelmä on perusmallia. Jos järjestelmästä halutaan hieman kattavampi, voidaan helpolla tavalla asentaa kaikki paketit joiden prioriteetti on <quote
+>standard</quote
+>: <informalexample
+><screen>
+# tasksel install standard
+</screen
+></informalexample
+> Voit tietenkin myös asentaa <command
+>aptitude</command
+>:lla paketteja yksitellen. </para
+><para
+>Asennuksen jälkeen hakemistossa <filename
+>/var/cache/apt/archives/</filename
+> on suuri määrä noudettuja asennuspaketteja. Levytilaa voidaan vapauttaa komennolla: <informalexample
+><screen
+># aptitude clean
+</screen
+></informalexample>
+
+</para>
+  </sect2>
+ </sect1>
+<!--   End of file appendix/chroot-install.xml -->
+
+<!-- Start of file appendix/plip.xml -->
+<!-- $Id: plip.xml 39644 2006-08-08 22:08:57Z jfs $ -->
+
+ <sect1 id="plip" arch="x86">
+ <title
+>&debian;:in asennus käyttäen Parallel Line IP:tä (PLIP)</title>
+
+<para
+>Tässä luvussa kerrotaan miten &debian; asennetaan tietokoneelle jossa ei ole Ethernetliitäntää, vain yhdyskäytävänä toimiva etätietokone johon on yhteys nollamodeemikaapelilla (eli nollatulostinkaapelilla). Yhdyskäytäväkoneen olisi oltava verkossa jossa on Debianin asennuspalvelimen kopio (esim. Internetissä).  </para
+><para
+>Tämän liitteen esimerkissä tehdään PLIP-yhteys yhdyskäytäväkoneeseen josta on soittoyhteys Internetiin (ppp0). Käytettävät IP-numerot PLIP-liitännöille ovat 192.168.0.1 tälle koneelle (kohdekone) ja 192.168.0.2 yhdyskäytäväkoneelle (on valittava osoitteet jotka eivät kuulu paikallisverkon osoiteavaruuteen). </para
+><para
+>Asennuksen aikana tehty PLIP-yhteys on käytettävissä myös kun on käynnistetty asennettuun järjestelmään (katso <xref linkend="boot-new"/>). </para
+><para
+>Ennen asennuksen aloittamista on tarkistettava BIOS:n asetuksista IO base address ja IRQ sekä kohdekoneen että yhdyskäytäväkoneen rinnakkaisportille. Yleisimmät arvot ovat <literal
+>io=0x378</literal
+>, <literal
+>irq=7</literal
+>. </para>
+
+  <sect2>
+  <title
+>Vaatimukset</title>
+
+<itemizedlist>
+<listitem
+><para
+>Kohdekone, käytetään nimeä <emphasis
+>kohde</emphasis
+>, johon Debian asennetaan </para
+></listitem>
+<listitem
+><para
+>Asennustaltio; katso <xref linkend="installation-media"/>. </para
+></listitem>
+<listitem
+><para
+>Toinen tietokone, käytetään nimeä <emphasis
+>lähde</emphasis
+>, joka on kytketty Internettiin ja toimii yhdyskäytävänä. </para
+></listitem>
+<listitem
+><para
+>DB-25 nollamodeemikaapeli. Katso ohjeesta <ulink url="&url-plip-install-howto;"
+>PLIP-Install-HOWTO</ulink
+> lisätietoja ja teko-ohjeet jos teet kaapelin itse. </para
+></listitem>
+</itemizedlist>
+
+  </sect2>
+
+  <sect2>
+  <title
+>Lähdekoneen asetukset</title>
+<para
+>Seuraava komentotiedosto on yksinkertainen esimerkki lähdekoneessa tehtävistä asetuksista jotta se toimii yhdyskäytävänä Internettiin ppp0-portin kautta. <informalexample
+><screen
+>#!/bin/sh
+
+# Poistetaan ytimestä käytössä olevat moduulit jottei tule 
+# ristiriitoja ja jotta niiden asetukset saadaan tehtyä uudelleen.
+modprobe -r lp parport_pc
+modprobe parport_pc io=<replaceable
+>0x378</replaceable
+> irq=<replaceable
+>7</replaceable>
+modprobe plip
+
+# Tehdään plip-liitännän asetukset (tässä plip0, katso dmesg | grep plip)
+ifconfig <replaceable
+>plip0 192.168.0.2</replaceable
+> pointopoint <replaceable
+>192.168.0.1</replaceable
+> netmask 255.255.255.255 up
+
+# Tehdään yhdyskäytävän asetukset
+modprobe iptable_nat
+iptables -t nat -A POSTROUTING -o <replaceable
+>ppp0</replaceable
+> -j MASQUERADE
+echo 1 
+> /proc/sys/net/ipv4/ip_forward
+</screen
+></informalexample>
+
+</para>
+  </sect2>
+
+  <sect2>
+  <title
+>Asennetaan kohdekone</title>
+<para
+>Käynnistetään kone asennustaltiolta. Asennus on suoritettava expert-tilassa; kirjoita asentimen kehotteeseen <userinput
+>expert</userinput
+>. Jos ytimien moduuleille on välitettävä parametreja, on tämäkin tehtävä asentimen kehotteessa. Esimerkiksi asennin käynnistetään ja annetaan moduulille parport_pc parametrit <quote
+>io</quote
+> ja <quote
+>irq</quote
+>: <informalexample
+><screen>
+expert parport_pc.io=<replaceable
+>0x378</replaceable
+> parport_pc.irq=<replaceable
+>7</replaceable>
+</screen
+></informalexample
+> Asennuksen aikana pitäisi kysymyksiin vastata kuten seuraavassa kerrotaan. </para>
+
+<orderedlist>
+<listitem
+><para>
+
+<guimenuitem
+>Ladattavat asentimen osat</guimenuitem>
+
+</para
+><para
+>Valitaan luettelosta kohta <userinput
+>plip-modules</userinput
+>; tämän jälkeen PLIP-ajurit ovat käytettävissä asennusjärjestelmässä. </para
+></listitem>
+<listitem
+><para>
+
+<guimenuitem
+>Tunnista verkkolaitteisto</guimenuitem>
+
+</para>
+
+ <itemizedlist>
+ <listitem
+><para
+>Jos kohdekoneessa <emphasis
+>on</emphasis
+> verkkoliitäntä, näytetään luettelo löydettyjen liitäntöjen ajurimoduuleista. Mikäli halutaan pakottaa &d-i; käyttämään plip-liitäntää eikä näitä, on poistettava valinta kaikista luettelon ajurimoduuleista. Asennin ei tietenkään näytä tätä luetteloa jos kohdekoneessa ei ole verkkoliitäntää. </para
+></listitem>
+ <listitem
+><para
+>Koska aiemmin ei löytynyt tai ei valittu verkkoliitäntää, pyytää asennin valitsemaan verkkoajurin luettelosta. Valitaan moduuli <userinput
+>plip</userinput
+>. </para
+></listitem>
+ </itemizedlist>
+
+</listitem>
+<listitem
+><para>
+
+<guimenuitem
+>Tee verkkoasetukset</guimenuitem>
+ 
+ <itemizedlist>
+ <listitem
+><para
+>Haetaanko verkkoasetukset automaattisesti DHCP:llä? </para
+></listitem>
+ <listitem
+><para
+>IP-osoite: <userinput
+><replaceable
+>192.168.0.1</replaceable
+></userinput
+> </para
+></listitem>
+ <listitem
+><para
+>kaksipisteosoite: <userinput
+><replaceable
+>192.168.0.2</replaceable
+></userinput
+> </para
+></listitem>
+ <listitem
+><para
+>Nimipalvelinten osoitteet: voidaan käyttää samoja kuin yhdyskäytäväkone (katso tiedostosta <filename
+>/etc/resolv.conf</filename
+>) </para
+></listitem>
+ </itemizedlist>
+
+</para
+></listitem>
+</orderedlist>
+
+  </sect2>
+ </sect1>
+<!--   End of file appendix/plip.xml -->
+
+<!-- Start of file appendix/pppoe.xml -->
+<!-- $Id: pppoe.xml 57313 2009-01-16 17:16:38Z fjp $ -->
+
+ <sect1 id="pppoe" arch="not-s390">
+ <title
+>&debian;:in asennus käyttäen PPPP over Ethernet:tiä (PPPoE)</title>
+
+<para
+>Joissakin maissa PPP over Ethernet (PPPoE) on yleinen yhteyskäytäntö laajakaistayhteyksille (ADSL tai kaapeli) Internetpalveluntarjoajaan. Verkkoyhteyden asetusten teko PPPoE:lle ei ole oletusarvona tuettu asentimessa, mutta saadaan toimimaan hyvin helposti. Tämä luku selittää miten. </para
+><para
+>Asennuksen aikana tehty PPPoE-yhteys on käytettävissä myös kun on käynnistetty asennettuun järjestelmään (katso <xref linkend="boot-new"/>). </para
+><para
+>Jotta PPPoE olisi käytettävissä asennuksen aikana on asennettava romppuotokselta. Se ei ole tuettu muilla asennustavoilla (esim. netboot<phrase condition="supports-floppy-boot"
+>tai levyke</phrase
+>). </para
+><para
+>Asentaminen PPPoE:n kautta on enimmäkseen samanlaista kuin muutkin asennukset. Seuraavat kohdat selittävät eroavuudet. </para>
+
+<itemizedlist>
+<listitem
+><para
+>Käynnistä asennin käynnistyparametrilla <userinput
+>modules=ppp-udeb</userinput
+>. Tällöin on käynnistyskehoitteessa kirjoitettava: <informalexample
+><screen>
+install modules=ppp-udeb
+</screen
+></informalexample
+> tai, jos mieluummin käytetään graafista asenninta: <informalexample
+><screen>
+installgui modules=ppp-udeb
+</screen
+></informalexample
+> Näin varmistetaan PPPoE:n asetusten teosta vastaavan osan (<classname
+>ppp-udeb</classname
+>) latautuminen ja automaattinen käynnistyminen. </para
+></listitem>
+<listitem
+><para
+>Tee asennuksen tavalliset ensimmäiset vaiheet (kielen, maan ja näppäinasettelun valinta; lisäosien lataus<footnote
+> <para
+> <classname
+>ppp-udeb</classname
+>:n lataus lisäosana tapahtuu tässä vaiheessa. Jos haluat asentaa prioriteetilla keskitaso tai matala (expert-tilassa), voit myös itse valita paketin <classname
+>ppp-udeb</classname
+> jolloin ei kirjoiteta <quote
+>modules</quote
+>-käynnistysparametria. </para
+> </footnote
+>). </para
+></listitem>
+<listitem
+><para
+>Seuraava vaihe on verkkosovittimien tunnistus, jotta laitteessa olevat Ethernet-kortit löytyvät. </para
+></listitem>
+<listitem
+><para
+>Tämän jälkeen aloitetaan varsinainen PPPoE:n asetusten teko. Asennin tutkii kaikista  löydetyistä Ethernet-liitännöistä onko siellä PPPoE konsentraattori (palvelin joka huolehtii PPPoE-yhteyksistä). </para
+><para
+>Konsentraattori ei aina löydy ensimmäisellä yrityksellä. Tämmöistä tapahtuu toisinaan hitaissa tai kuormitetuissa verkossa tai viallisten palvelimien kanssa. Useimmissa tapauksissa toinen yritys löytää konsentraattorin; uudelleen yritetään valitsemalla <guimenuitem
+>Tee PPPoE:n asetukset ja käynnistä yhteys</guimenuitem
+> asentimen päävalikosta. </para
+></listitem>
+<listitem
+><para
+>Kun konsentraattori on löytynyt, käyttäjälle näytetään sisäänkirjautumiskehote (PPPoE:n käyttäjätunnus ja salasana). </para
+></listitem>
+<listitem
+><para
+>Tässä kohtaa asennin käyttää annettuja tietoja ja muodostaa PPPoE-yhteyden. Jos tiedot olivat oikein, PPPoE-yhteyden asetuksien pitäisi olla tehty ja asentimen pitäisi pystyä muodostamaan yhteys Internettiin sen kautta ja noutamaan (jos tarvitaan) paketteja. Jos sisäänkirjautumisen tiedot olivat väärin tai tapahtuu jokin virhe, asennin pysähtyy, mutta asetukset voidaan tehdä uudelleen valitsemalla valikosta <guimenuitem
+>Tee PPPoE:n asetukset ja käynnistä yhteys</guimenuitem
+>. </para
+></listitem>
+</itemizedlist>
+
+ </sect1>
+<!--   End of file appendix/pppoe.xml -->
+
+<!-- Start of file appendix/graphical.xml -->
+<!-- $Id: graphical.xml 56145 2008-09-26 10:47:02Z lunar $ -->
+
+ <sect1 condition="gtk" id="graphical">
+ <title
+>Graafinen asennin</title>
+<para
+>Asentimen graafinen versio on saatavilla vain muutamille laitealustoille, mukaan lukien &arch-title;. Graafisen asentimen toiminnallisuus on käytännöllisesti katsoen sama kuin tavallisen asentimen, koska se käyttää samoja ohjelmia mutta erilaisella edustaohjelmalla. </para
+><para
+>Vaikkakin toiminnallisuus on sama, on graafisella asentimella silti muutamia merkittäviä etuja. Tärkein etu on enemmän tuettuja kieliä, nimittäin ne kielet joiden merkistöä ei tavallinen <quote
+>newt</quote
+>-edustaohjelma osaa näyttää. Käytettävyysetuja on mahdollisuus käyttää hiirtä, ja joissakin tapauksissa voidaan useita kysymyksiä esittää samalla ruudulla. </para
+><para arch="x86"
+>Graafinen asennin on käytettävissä kaikilla CD-otoksilla ja asennustavalla hd-media. Graafinen asennin käynnistetään valitsemalla se käynnistysvalikosta. Expert- ja hätäkäynnistys graafisella asentimella voidaan valita <quote
+>Lisäasetukset</quote
+>-valikosta. Aiemmin käytetyt käynnistystavat <userinput
+>installgui</userinput
+>, <userinput
+>expertgui</userinput
+> ja <userinput
+>rescuegui</userinput
+> ovat yhä käytettävissä käynnistysvalikosta valitun <quote
+>Help</quote
+>-valinnan jälkeen näkyvässä käynnistyskehotteessa. </para
+><para arch="x86"
+>Graafinen asennin on saatavilla myös verkosta käynnistettävänä otoksena. Lisäksi on myös erikoinen <quote
+>mini</quote
+> ISO-otos<footnote id="gtk-miniiso"
+> <para
+> Mini ISO-otos voidaan noutaa Debianin asennuspalvelimelta kuten <xref linkend="downloading-files"/> neuvoo. Etsi otosta <quote
+>netboot/gtk/mini.iso</quote
+>. </para
+> </footnote
+>, joka on tarkoitettu lähinnä testaamiseen. </para
+><para arch="powerpc"
+>Laitealustalle &arch-title; on tällä hetkellä saatavilla vain koekäyttöön <quote
+>mini</quote
+> ISO-otos<footnote id="gtk-miniiso"
+> <para
+> Mini ISO-otos voidaan noutaa Debianin asennuspalvelimelta kuten <xref linkend="downloading-files"/> neuvoo. Etsi otosta <filename
+>netboot/gtk/mini.iso</filename
+>. </para
+> </footnote
+>. Sen pitäisi toimia melkein kaikilla PowerPC-koneilla joissa on ATI:n näytönohjain, mutta luultavasti muissa koneissa se ei toimi. </para
+><para
+>Graafista asenninta käynnistettäessä voidaan antaa käynnistysparametrejä samalla tavalla kuin tavalliselle asentimelle. Yksi parametreista muuttaa hiiren asetuksen vasenkätiseen käyttöön. Muilla voidaan valita hiirilaite (esim. sarjahiiri) ja hiiren yhteyskäytäntö. <xref linkend="boot-parms"/> kertoo käytettävissä olevat parametrit<phrase arch="x86"
+> ja <xref linkend="boot-screen"/> kertoo miten ne välitetään</phrase
+>. </para>
+<note
+><para
+>Graafinen asennin vaati merkittävästi enemmän muistia kuin tavallinen asennin:  &minimum-memory-gtk;. Jos muistia ei ole riittävästi, palataan automaattisesti käyttämään tavallista <quote
+>newt</quote
+>-käyttöliittymää. </para
+><para
+>Jos asennettavan koneen keskusmuistin määrä on pienempi kuin &minimum-memory;, saattaa olla ettei graafinen asennin käynnisty lainkaan mutta tavallisen asentimen käynnistys onnistuu. Tavallisen asentimen käyttöä suositellaan koneissa joissa on niukasti käytettävissä olevaa muistia. </para
+></note>
+
+  <sect2 id="gtk-using">
+  <title
+>Graafisen asentimen käyttö</title>
+<para
+>Kuten jo mainittiin, graafinen asennin toimii samalla tavalla kuin tavallinen asennin ja niinpä tätä ohjetta voidaan yhtä lailla käyttää asennusohjeena. </para
+><para
+>Jos käytät näppäimistöä mieluummin kuin hiirtä, olisi tiedettävä kaksi seikkaa. Supistettu lista (käytetään esimerkiksi valittaessa maa mannerkohtaisesta luettelosta) laajennetaan käyttäen näppäimiä <keycap
+>+</keycap
+> ja <keycap
+>-</keycap
+>. Kysymyksissä joissa voidaan valita useampi kuin yksi kohta (esim. tehtävien valinnassa), on ensin siirryttävä sarkaimella &BTN-CONT;-painikkeeseen kun valinnat on tehty; Enterin painaminen tarkoittaa valinnan vaihtamista, ei painikkeen &BTN-CONT; painamista. </para
+><para
+>Toiseen konsoliin vaihdettaessa on käytettävä myös näppäintä <keycap
+>Ctrl</keycap
+>, kuten tehdään X Window -järjestelmässäkin. Esimerkiksi konsoliin VT2 (ensimmäinen virheenjäljityskomentotulkki) vaihdetaan painamalla: <keycombo
+> <keycap
+>Ctrl</keycap
+> <keycap
+>Vasen Alt</keycap
+> <keycap
+>F2</keycap
+> </keycombo
+>. Graafinen asennin toimii konsolissa VT5, joten siihen pääsee takaisin näppäilemällä <keycombo
+> <keycap
+>Vasen Alt</keycap
+> <keycap
+>F5</keycap
+> </keycombo
+>. </para>
+  </sect2>
+
+  <sect2 id="gtk-issues">
+  <title
+>Tunnetut viat</title>
+<para
+>Asentimen graafinen käyttöliittymä on uudehko mistä syystä siinä on muutamia tunnettuja puutteita. Työtä niiden korjaamiseksi jatketaan. </para>
+
+<itemizedlist>
+<listitem
+><para
+>Joissakin ruuduissa tiedot eivät vielä ole siististi muotoiltuja sarakkeisiin kuten pitäisi. </para
+></listitem>
+<listitem
+><para
+>Tasohiirien tuki ei vielä ole paras mahdollinen </para
+></listitem>
+</itemizedlist>
+
+  </sect2>
+ </sect1>
+<!--   End of file appendix/graphical.xml -->
+
+</appendix>
+<!--   End of file appendix/random-bits.xml -->

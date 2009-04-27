@@ -1,0 +1,893 @@
+<!-- Start of file partitioning/partitioning.xml -->
+<!-- $Id: partitioning.xml 11648 2004-03-22 00:37:46Z joeyh $ -->
+
+<appendix id="partitioning">
+<title
+>Osiot Debianille</title>
+
+
+<!-- Start of file partitioning/sizing.xml -->
+<!-- $Id: sizing.xml 11648 2004-03-22 00:37:46Z joeyh $ -->
+
+
+ <sect1 id="partition-sizing">
+ <title
+>Debianin osiot ja osioiden koot</title>
+<para
+>GNU/Linux tarvitsee välttämättä ainakin yhden osion käyttöÂönsä. Koko käyttöjärjestelmä, sovellukset ja henkilökohtaiset tiedostot voidaan tallentaa yhteen levyosioon. Useimpien mielestä erillinen sivutusosio on myös välttämätön, vaikkakin ilman on mahdollista tulla toimeen. <quote
+>sivutus</quote
+> on käyttöjärjestelmän työtilaa, jonka avulla levyä voidaan käyttäÂä <quote
+>näennäismuistina</quote
+>. Kun sivutus on erillisellä osiolla, pystyy Linux käyttämäÂän sitä paljon tehokkaammin. On mahdollista pakottaa Linux käyttämäÂän tavallista tiedostoa sivutustilana, mutta tätä ei suositella. </para
+><para
+>Useimmat käyttävät GNU/Linuxissa kuitenkin vähimmäismäÂäräÂä enemmän osioita. On kaksi syytä jakaa tiedostojärjestelmä useaan pienempäÂän osioon. Ensimmäinen on varmuus. Jos tiedostojärjestelmä menee jostain syystä rikki, vaikutus yleensä rajoittuu yhteen osioon. Näin on palautettava (huolellisesti tallennetuilta varmuuskopioilta) vain osa järjestelmästä. VähitäÂän olisi tehtävä niin sanottu <quote
+>juuriosio</quote
+>. Tässä osiossa on järjestelmän välttämättömimmät osat. Jos mikä tahansa muu osio menee rikki, voidaan GNU/Linux silti käynnistäÂä järjestelmän korjaamiseksi. Näin saatetaan välttäÂä järjestelmän asentaminen kokonaan uudestaan. </para
+><para
+>Toinen syy on useimmiten tärkeämpi yrityskäytössä, mutta riippuu oikeastaan tietokoneen käyttötarkoituksesta. Esimerkiksi roskapostilla kuormitettu sähköpostipalvelin saattaa helposti täyttäÂä osion. Jos <filename
+>/var/mail</filename
+> on erillinen osio sähköpostipalvelimella, jäÂä suurin osa järjestelmästä yhä käyttökelpoiseksi vaikka roskapostia tulvisikin. </para
+><para
+>Useiden osioiden käyttämisen ainoa varsinainen hankaluus on vaikeus tietäÂä etukäteen minkä kokoisia osioita tarvitaan. Jos joku osio on liian pieni, on joko asennettava järjestelmä uudelleen tai jatkuvasti tiedostoja siirtämällä tehtävä tilaa liian pieneen osioon. Toisaalta jos osio on liian iso, tuhlataan levytilaa jota voisi käyttäÂä muuallakin. Levytila on nykyäÂän halpaa, muttei sitä silti pidä tärvätä hukaan. </para>
+ </sect1>
+<!--   End of file partitioning/sizing.xml -->
+
+<!-- Start of file partitioning/tree.xml -->
+<!-- $Id: tree.xml 39465 2006-07-30 15:03:12Z fjp $ -->
+
+
+ <sect1 id="directory-tree">
+ <title
+>Hakemistopuu</title>
+<para
+>&debian; noudattaa <ulink url="&url-fhs-home;"
+>Filesystem Hierarchy Standard</ulink
+>-julkaisua hakemistojen ja tiedostojen nimeämisessä. Standardi auttaa käyttäjiä ja sovelluksia tietämään tiedostojen ja hakemistojen sijainnin. Juurihakemiston nimenä on yksinkertaisesti vinoviiva <filename
+>/</filename
+>. Kaikissa Debian-järjestelmissä on juuressa nämä hakemistot: <informaltable
+> <tgroup cols="2">
+<thead>
+<row>
+  <entry
+>Hakemisto</entry
+><entry
+>Sisältö</entry>
+</row>
+</thead>
+
+<tbody>
+<row>
+  <entry
+><filename
+>bin</filename
+></entry>
+  <entry
+>Välttämättömät komennot</entry>
+</row
+><row>
+  <entry
+><filename
+>boot</filename
+></entry>
+  <entry
+>Käynnistyslataimen pysyvät tiedostot</entry>
+</row
+><row>
+  <entry
+><filename
+>dev</filename
+></entry>
+  <entry
+>Laitetiedostot</entry>
+</row
+><row>
+  <entry
+><filename
+>etc</filename
+></entry>
+  <entry
+>Konekohtaiset järjestelmän asetukset</entry>
+</row
+><row>
+  <entry
+><filename
+>home</filename
+></entry>
+  <entry
+>Käyttäjien kotihakemistot</entry>
+</row
+><row>
+  <entry
+><filename
+>lib</filename
+></entry>
+  <entry
+>Välttämättömät jaetut kirjastot ja ytimen moduulit</entry>
+</row
+><row>
+  <entry
+><filename
+>media</filename
+></entry>
+  <entry
+>Irrotettavien taltioiden liitoskohdat</entry>
+</row
+><row>
+  <entry
+><filename
+>mnt</filename
+></entry>
+  <entry
+>Liitoskohta tiedostojärjestelmien tilapäiseen liittämiseen</entry>
+</row
+><row>
+  <entry
+><filename
+>proc</filename
+></entry>
+  <entry
+>Näennäishakemisto järjestelmätiedoille (2.4 ja 2.6 ytimillä)</entry>
+</row
+><row>
+  <entry
+><filename
+>root</filename
+></entry>
+  <entry
+>Pääkäyttäjän kotihakemisto</entry>
+</row
+><row>
+  <entry
+><filename
+>sbin</filename
+></entry>
+  <entry
+>Järjestelmän välttämättömät komennot</entry>
+</row
+><row>
+  <entry
+><filename
+>sys</filename
+></entry>
+  <entry
+>Näennäishakemisto järjestelmätiedoille (2.6 ytimet)</entry>
+</row
+><row>
+  <entry
+><filename
+>tmp</filename
+></entry>
+  <entry
+>Tilapäisiä tiedostoja</entry>
+</row
+><row>
+  <entry
+><filename
+>usr</filename
+></entry>
+  <entry
+>Alempi järjestelmätaso</entry>
+</row
+><row>
+  <entry
+><filename
+>var</filename
+></entry>
+  <entry
+>Muuttuvaa tietoa</entry>
+</row
+><row>
+  <entry
+><filename
+>srv</filename
+></entry>
+  <entry
+>Järjestelmän tarjoamien palveluiden tietoja</entry>
+</row
+><row>
+  <entry
+><filename
+>opt</filename
+></entry>
+  <entry
+>Lisäsovelluspaketteja</entry>
+</row>
+</tbody
+></tgroup
+></informaltable>
+</para>
+
+<para
+>Seuraavassa luettelossa on tärkeitä huomioita hakemistoista ja levyosioista. Huomaa levytilan käytön vaihtelevan suuresti järjestelmän kokoonpanon ja käyttötavan mukaan. Nämä ovat yleisluonteisia suosituksia ja tarkoitettu auttamaan osioinnin alkuun. </para>
+<itemizedlist>
+<listitem
+><para
+>Juuriosion <filename
+>/</filename
+> on aina sisällettävä hakemistot <filename
+>/etc</filename
+>, <filename
+>/bin</filename
+>, <filename
+>/sbin</filename
+>, <filename
+>/lib</filename
+> and <filename
+>/dev</filename
+>, muuten ei käynnistäminen onnistu. Juuriosiolle tarvitaan normaalisti 150&ndash;250 Mt. </para
+></listitem>
+<listitem
+><para
+><filename
+>/usr</filename
+>: sisältää kaikki käyttäjien ohjelmat (<filename
+>/usr/bin</filename
+>), kirjastot (<filename
+>/usr/lib</filename
+>), ohjeet (<filename
+>/usr/share/doc</filename
+>), jne. Tämä on yleensä tiedostojärjestelmän eniten tilaa vievä osa. Levytilaa olisi oltava ainakin 500 Mt. Määrää lisätään asennettavien ohjelmapakettien määrän ja tyypin mukaan. Runsaasti varusteltu työasema tai palvelin tarvitsisi 4&ndash;6 Gt. </para
+></listitem>
+<listitem
+><para
+><filename
+>/var</filename
+>: muuttuvia tiedostoja kuten usenetin artikkeleita, sähköposteja, seittisivustoja, tietokantoja, paketinhallintajärjestelmän välimuisti, jne. tallennetaan tähän hakemistoon. Järjestelmän käyttötapa vaikuttaa suuresti tämän hakemiston kokoon, mutta useimmiten sen määrää paketinhallintajärjestelmän yleisrasite. Jos aiotaan asentaa suunnilleen kaikki mitä Debianissa on tarjolla yhdellä kertaa, pitäisi 2 tai 3 Gt hakemistossa <filename
+>/var</filename
+> riittää. Jos asennus tehdään useampana eränä (eli asennetaan palvelut ja apuohjelmat, sitten merkkipohjaiset sovellukset, sitten X, ...) riittää 300&ndash;500 Mt. Jos levytilaa on niukasti eikä ole aikomus tehdä isoja järjestelmän päivityksiä, voidaan tulla toimeen niinkin vähällä kuin 30 tai 40 Mt. </para
+></listitem>
+<listitem
+><para
+><filename
+>/tmp</filename
+>: ohjelmien luomat tilapäiset tiedosto menevät luultavimmin tähän hakemistoon. Tavallisesti pitäisi 40&ndash;100 Mt riittää. Jotkin sovellukset &mdash; mukaan lukien pakkausohjelmat, CD/DVD koostamisohjelmat ja multimedia &mdash; saattavat tallentaa otostiedostoja hakemistoon <filename
+>/tmp</filename
+>. Jos näitä ohjelmia aiotaan käyttää, olisi hakemistolle <filename
+>/tmp</filename
+> varattava tilaa vastaavasti. </para
+></listitem>
+<listitem
+><para
+><filename
+>/home</filename
+>: jokainen käyttäjä tallentaa henkilökohtaiset tiedostonsa tämän hakemiston alihakemiston. Koko on riippuvainen järjestelmän käyttäjien määrästä ja mitä tiedostoja he tallentavat kotihakemistoonsa. Suunnitellusta käyttötavasta riippuen olisi varattava noin 100 Mt käyttäjää kohti, mutta varausta muokataan tarpeen mukaan. Tilaa on varattava huomattavasti enemmän jos tallennetaan paljon multimediatiedostoja (kuvia, MP3, elokuvia) kotihakemistoihin. </para
+></listitem>
+</itemizedlist>
+
+ </sect1>
+<!--   End of file partitioning/tree.xml -->
+
+<!-- Start of file partitioning/schemes.xml -->
+<!-- $Id: schemes.xml 39465 2006-07-30 15:03:12Z fjp $ -->
+
+
+ <sect1>
+ <title
+>Osiointisuositus</title>
+<para
+>Uusille käyttäjille, henkilökohtaiseen Debian-työasemaan, kotitietokoneeseen ja muihin yhden käyttäjän järjestelmiin yksi <filename
+>/</filename
+>-osio (ja sivutus) lienee helpoin ja yksinkertaisin tapa. Jos osio on suurempi kuin noin 6 Gt, valitaan osion tyypiksi ext3. Jos osio on ext2, tarvitaan säännölliset tiedostojärjestelmän tarkistukset ja tämä voi aiheuttaa viivettä käynnistyksessä jos osio on suuri.  </para
+><para
+>Monen käyttäjän järjestelmässä tai jos levytilaa on hyvin paljon on parasta antaa hakemistoille <filename
+>/usr</filename
+>, <filename
+>/var</filename
+>, <filename
+>/tmp</filename
+>, ja <filename
+>/home</filename
+> kullekin oma osionsa erillään <filename
+>/</filename
+>-osiosta </para
+><para
+>Jos asennetaan paljon ohjelmia muualta kuin Debian-jakelusta, saatetaan tarvita iso <filename
+>/usr/local</filename
+>-osio. Mikäli tietokone toimii postipalvelimena, saattaa olla tarpeen tehdä erillinen osio <filename
+>/var/mail</filename
+>. Usein on hyvä idea tehdä erillinen osio <filename
+>/tmp</filename
+>, kooltaan esimerkiksi 20&ndash;50 Mt. Jos palvelinkoneessa on paljon käyttäjätunnuksia, on yleensä hyvä tehdä erillinen iso <filename
+>/home</filename
+>-osio. Yleisesti ottaen osiointitilanne vaihtelee konekohtaisesti riippuen koneen käyttötavasta. </para
+><para
+>Hyvin mutkikkaiden järjestelmien ylläpitäjän olisi luettava <ulink url="&url-multidisk-howto;"
+> Multi Disk HOWTO</ulink
+>. Siinä on yksityiskohtaista tietoa, enimmältään Internetpalvelun tarjoajille ja palvelinkoneiden asentajille. </para
+><para
+>Näkemyksiä sivutusosion koosta on monia. Yksi hyvin toimiva perussääntö on käyttää yhtä paljon sivutustilaa kuin järjestelmässä on muistia. Useimmissa tapauksissa osion ei tulisi olla pienempi kuin 16 Mt. Näihin sääntöihin on tietysti poikkeuksia. Jos yritetään ratkaista 10000 yhtälön yhtälöryhmää koneella, jossa 256 Mt muistia, voidaan tarvita gigatavu (tai enemmän) sivutustilaa. </para
+><para arch="m68k"
+>Toisaalta Atari Falconit ja Macit ovat yhtä tuskaa jos ne sivuttavat, eli kannattaa asentaa koneisiin niin paljon muistia kuin mahdollista. </para
+><para
+>32-bittisillä arkkitehtuureilla (i386, m68k, 32-bit SPARC, ja PowerPC) sivutusosion suurin mahdollinen koko on 2 Gt. Tämän pitäisi olla tarpeeksi lähes kaikissa asennuksissa. Jos sivutustilaa tarvitaan näin paljon, olisi luultavimmin hyvä jakaa sivutustila useille levyille ja, jos mahdollista, useille SCSI- tai IDE-kanaville. Ydin pyrkii käyttämään kaikkia sivutusosioita tasaisesti, jolloin suorituskyky paranee. </para
+><para
+>Esimerkiksi vanhahkossa kotikoneessa saattaa olla 32 Mt muistia ja 1,7 Gt kiintolevy <filename
+>/dev/hda</filename
+>. Toisella käyttöjärjestelmällä saattaa olla 500 Mt osio <filename
+>/dev/hda1</filename
+>, 32 Mt sivutusosio <filename
+>/dev/hda3</filename
+> ja noin 1,2 Gt <filename
+>/dev/hda2</filename
+> Linuxin osiona. </para
+><para
+>Luku <xref linkend="tasksel-size-list"/> antaa käsityksen asennuksen jälkeen asennettavien tehtävien levytilan tarpeesta. </para>
+
+ </sect1>
+<!--   End of file partitioning/schemes.xml -->
+
+<!-- Start of file partitioning/device-names.xml -->
+<!-- $Id: device-names.xml 56142 2008-09-26 10:45:40Z lunar $ -->
+
+
+ <sect1 id="device-names">
+ <title
+>Laitenimet Linuxissa</title>
+<para
+>Linuxin käyttämät levyjen ja osioiden nimet saattavat erota muiden käyttöjärjestelmien laitenimistä. Osioita tehtäessä ja liitettäessä on tiedettävä Linuxin käyttämät nimet. Tässä on nimeämiskäytännön perusteet: </para>
+<itemizedlist arch="not-s390">
+<listitem
+><para
+>Ensimmäinen levykeasema on <filename
+>/dev/fd0</filename
+>. </para
+></listitem>
+<listitem
+><para
+>Toinen levykeasema on <filename
+>/dev/fd1</filename
+>. </para
+></listitem>
+<listitem
+><para
+>Ensimmäinen SCSI-levy (SCSI ID mukaan) on <filename
+>/dev/sda</filename
+>. </para
+></listitem>
+<listitem
+><para
+>Toinen SCSI-levy (SCSI ID mukaan) on <filename
+>/dev/sdb</filename
+>, ja niin edelleen. </para
+></listitem>
+<listitem
+><para
+>Ensimmäinen SCSI CD-ROM on <filename
+>/dev/scd0</filename
+>, voi käyttää myös <filename
+>/dev/sr0</filename
+>. </para
+></listitem>
+<listitem
+><para
+>Ensisijaisen IDE-ohjaimen isäntälevy on <filename
+>/dev/hda</filename
+>. </para
+></listitem>
+<listitem
+><para
+>Ensisijaisen IDE-ohjaimen orjalevy on <filename
+>/dev/hdb</filename
+>. </para
+></listitem>
+<listitem
+><para
+>Toissijaisen ohjaimen isäntä- ja orjalevyt ovat <filename
+>/dev/hdc</filename
+> ja <filename
+>/dev/hdd</filename
+>. Uusissa IDE-ohjaimissa saattaa olla kaksi kanavaa, jotka toimivat kuin kaksi ohjainta. <phrase arch="m68k"
+> Kirjaimet saattavat olla erilaiset mac-ohjelman pdisk näyttämiin (t.s. se minkä pdisk näyttää nimellä <filename
+>/dev/hdc</filename
+> näkyy Debianissa nimellä <filename
+>/dev/hda</filename
+> in Debian). </phrase
+> </para
+></listitem>
+
+<listitem arch="m68k"
+><para
+>Ensimmäinen ACSI-laite on <filename
+>/dev/ada</filename
+>, toinen on <filename
+>/dev/adb</filename
+>. </para
+></listitem>
+</itemizedlist>
+
+<itemizedlist arch="s390">
+<listitem
+><para
+>Ensimmäinen DASD-laite on <filename
+>/dev/dasda</filename
+>. </para
+></listitem>
+<listitem
+><para
+>Toinen DASD-laite on <filename
+>/dev/dasdb</filename
+>, ja niin edelleen. </para
+></listitem>
+</itemizedlist>
+
+<para arch="not-s390"
+>Jokaisella levyllä osiot nimetään lisäämällä kymmenjärjestelmän numero levyn nimen perään: <filename
+>sda1</filename
+> ja <filename
+>sda2</filename
+> ovat järjestelmän ensimmäisen SCSI-levyn ensimmäinen ja toinen osio. </para
+><para arch="not-s390"
+>Tässä on esimerkki todellisesta järjestelmästä. Olkoon koneessa 2 SCSI-levyä, toisen SCSI ID on 2 ja toisen 4. Ensimmäinen levy (se jonka ID on 2) on <filename
+>sda</filename
+>, ja toinen on <filename
+>sdb</filename
+>. Jos levyllä <filename
+>sda</filename
+> on kolme osiota, ne ovat <filename
+>sda1</filename
+>, <filename
+>sda2</filename
+>, ja <filename
+>sda3</filename
+>. Levy <filename
+>sdb</filename
+> ja sen osiot nimetään vastaavasti. </para
+><para arch="not-s390"
+>Huomaa kahden SCSI-ohjaimen (eli SCSI-kanavan) tapauksessa levyjen järjestyksen voivan olla sekava. Tällaisessa tapauksessa on parasta katsoa käynnistyksen aikana näkyviä viestejä, ja vertailla levyjen mallia ja/tai kokoja. </para
+><para arch="x86"
+>Linux käyttää ensisijaisille osioille nimenä levyn nimi plus numero 1&ndash;4. Esimerkiksi ensimmäisen IDE-levyn ensimmäinen ensisijainen osio on <filename
+>/dev/hda1</filename
+>. Loogiset osiot numeroidaan viidestä alkaen, joten ensimmäinen looginen osio tuolla samalla levyllä on <filename
+>/dev/hda5</filename
+>. Muista että laajennettu osio, siis se ensisijainen osio johon loogiset osiot tehdään, ei itse ole käyttökelpoinen. Tämä pätee sekä SCSI- että IDE-levyihin. </para
+><para arch="m68k"
+>VMEbus-järjestelmä jossa on TEAC FC-1 SCSI levykeasema näkee sen tavallisena SCSI-levynä. Jotta levyn tuntisi helpommin tekee asennin symbolisen linkin <filename
+>/dev/sfd0</filename
+> osoittamaan oikeaan laitteeseen. </para
+><para arch="sparc"
+>Sun:in levyillä voi olla 8 erillistä osiota (Sunin nimitys on disk slice). Kolmas osio on tavallisesti (ja suositellaan näin olevan) <quote
+>Koko levy</quote
+>-osio. Tämä osio kattaa levyn kaikki sektorit, ja käynnistyslatain (joko SILO tai Sunin oma) käyttää sitä.  </para
+><para arch="s390"
+>Osiot nimetään levykohtaisesti lisäämällä kymmenjärjestelmän numero levyn nimen perään: <filename
+>dasda1</filename
+> ja <filename
+>dasda2</filename
+> ovat järjestelmän ensimmäisen DASD-laitteen ensimmäinen ja toinen osio. </para>
+ </sect1>
+<!--   End of file partitioning/device-names.xml -->
+
+<!-- Start of file partitioning/partition-programs.xml -->
+<!-- $Id: partition-programs.xml 42302 2006-10-28 23:28:36Z fjp $ -->
+
+ <sect1 id="partition-programs">
+ <title
+>Debianin osiointisovellukset</title>
+<para
+>Debianin kehittäjät ovat muokanneet useita erilaisia osiointisovelluksia toimimaan erilaisien kiintolevyjen ja laitearkkitehtuurien kanssa. Tämän ohjeen kattaman arkkitehtuurin osiointisovellus tai osiointisovellukset ovat seuraavassa luettelossa: </para>
+
+<variablelist>
+
+<varlistentry>
+<term
+><command
+>partman</command
+></term>
+<listitem
+><para
+>Debianin suositeltu osiointisovellus. Tämä monitoimityökalu osaa myös muuttaa osion kokoa, luoda tiedostojärjestelmiä <phrase arch="x86"
+> (<quote
+>formatoida</quote
+> Windowsin termeillä)</phrase
+> ja liittää ne liitoskohtiin. </para
+></listitem>
+</varlistentry>
+
+<varlistentry condition="fdisk.txt">
+<term
+><command
+>fdisk</command
+></term>
+<listitem
+><para
+>Alkuperäinen Linuxin osiointityökalu, sopii asiantuntijoille. </para
+><para
+>Ole varovainen jos koneen levyllä on FreeBSD-osioita. Asennusytimet tukevat niitä, mutta <command
+>fdisk</command
+> saattaa nimetä (tai ei nimeä lainkaa) ne muilla laitenimillä. Katso <ulink url="&url-linux-freebsd;"
+>Linux+FreeBSD HOWTO</ulink
+>. </para
+></listitem>
+</varlistentry>
+
+<varlistentry condition="cfdisk.txt">
+<term
+><command
+>cfdisk</command
+></term>
+<listitem
+><para
+>Helppokäyttöinen merkkipohjainen kokoruudun käyttöliittymä meille tavallisille näppäimistönkuluttajille. </para
+><para
+>Huomaa ettei <command
+>cfdisk</command
+> ymmärrä FreeBSD-osioita lainkaan, joten laitenimet voivat taas olla erilaisia. </para
+></listitem>
+</varlistentry>
+
+<varlistentry condition="atari-fdisk.txt">
+<term
+><command
+>atari-fdisk</command
+></term>
+<listitem
+><para
+>Sovelluksen <command
+>fdisk</command
+> Ataria ymmärtävä versio. </para
+></listitem>
+</varlistentry>
+
+<varlistentry condition="amiga-fdisk.txt">
+<term
+><command
+>amiga-fdisk</command
+></term>
+<listitem
+><para
+>Sovelluksen <command
+>fdisk</command
+> Amigaa ymmärtävä versio. </para
+></listitem>
+</varlistentry>
+
+<varlistentry condition="mac-fdisk.txt">
+<term
+><command
+>mac-fdisk</command
+></term>
+<listitem
+><para
+>Sovelluksen <command
+>fdisk</command
+> Mac:iä ymmärtävä versio. </para
+></listitem>
+</varlistentry>
+
+<varlistentry condition="pmac-fdisk.txt">
+<term
+><command
+>pmac-fdisk</command
+></term>
+<listitem
+><para
+>Sovelluksen <command
+>fdisk</command
+> PowerMac:iä ymmärtävä versio, käytetään myös BVM:n  ja Motorolan VMEbus järjestelmille. </para
+></listitem>
+</varlistentry>
+
+<varlistentry condition="fdasd.txt">
+<term
+><command
+>fdasd</command
+></term>
+<listitem
+><para
+>Sovelluksen <command
+>fdisk</command
+> sovitus arkkitehtuurille &arch-title; Lue lisää fdasd:n man-sivulta tai luvusta 13 tiedostosta <ulink url="http://oss.software.ibm.com/developerworks/opensource/linux390/docu/l390dd08.pdf"
+> Device Drivers and Installation Commands</ulink
+>. </para
+></listitem>
+</varlistentry>
+</variablelist>
+
+<para
+>Jokin näistä ohjelmista käynnistetään oletusarvona kun valitaan <guimenuitem
+>Tee levyosiot</guimenuitem
+> (tai vastaavaa). Saattaa olla mahdollista käyttää jotain muuta osiointisovellusta käynnistämällä se komentoriviltä virtuaalikonsolilla kaksi, mutta tätä ei suositella. </para
+><para arch="x86"
+>Muista merkitä käynnistysosio käynnistyskelpoiseksi (<quote
+>Bootable</quote
+>). </para
+><para condition="mac-fdisk.txt"
+>Tärkeä seikka Mac-tyyppisiä levyjä osioitaessa on sivutusosion tunnistaminen nimestä: nimen on oltava <quote
+>swap</quote
+>. Kaikkien Macin linuxosioiden tyyppinä on Apple_UNIX_SRV2. Kannattaa lukea hieno käsikirja. Suositeltavaa lukemista on myös <ulink url="&url-mac-fdisk-tutorial;"
+>mac-fdisk Tutorial</ulink
+>, josta löytyy ohjeet levyn jakamiseen MacOS:n kanssa. </para>
+
+
+<!-- Start of file partitioning/partition/alpha.xml -->
+<!-- $Id: alpha.xml 39920 2006-08-17 17:52:44Z fjp $ -->
+
+
+  <sect2 arch="alpha"
+><title
+>&arch-title; ja osiointi</title>
+<para
+>Debianin käynnistäminen SRM-konsolilta (ainoa käynnistämistapa levyltä jota &releasename; tukee) vaatii käynnistyslevyllä BSD-levynimiön, ei DOS-osiotaulua. (Muista SRM-käynnistyslohkon olevan ei-yhteensopiva DOS-osiotaulujen kanssa &mdash; katso <xref linkend="alpha-firmware"/>.) Tästä syystä komento <command
+>partman</command
+> luo BSD-levynimiöitä toimiessaan arkkitehtuurilla &architecture;, mutta jos levyllä on jo DOS-osiotaulu on levyllä olevat osiot poistettava ennen kuin <command
+>partman</command
+> voi muuntaa levyn käyttämään levynimiötä. </para
+><para
+>Jos on valittu komento <command
+>fdisk</command
+> osioimaan levy, ja osioitavaksi valittu levy ei jo käytä BSD-levynimiötä, on komennolla <quote
+>b</quote
+> siirryttävä levynimiötilaan. </para
+><para
+>Jos käyttöjärjestelmä Tru64 Unix tai joku vapaista 4.4BSD-Lite jakeluista (FreeBSD, OpenBSD tai NetBSD) halutaan tälle samalle levylle, on levyn kolmas osio tehtävä kattamaan <quote
+>koko levy</quote
+> (t.s. alkamaan levyn ensimmäisestä sektorista ja loppumaan viimeiseen). Kolmas osio ei saisi olla koko levy jos mitään näistä muista käyttöjärjestelmistä ei levyllä ole, koska se tekee levyn epäyhteensopivaksi niiden työkalujen kanssa joilla levy tehdään käynnistyslevyksi aboot:lle. Tavallinen kolmas osio tarkoittaa, että asentimen tekemää käynnistyslevyä ei pysty käyttämään edellä mainituista muista käyttöjärjestelmistä. </para
+><para
+>Myöskin on huomattava, että koska <command
+>aboot</command
+> kirjoitetaan levyn ensimmäisille sektoreille (tällä hetkellä se vie noin 70 kilotavua tai 150 sektoria), <emphasis
+>on jätettävä</emphasis
+> riittävästi tyhjää tilaa levyn alkuun. Aikaisemmin ehdotettiin tehtäväksi levyn alkuun pieni osio johon ei luoda tiedostojärjestelmää. Samasta yllä mainitusta syystä nyt ehdotetaan ettei tätä tehtäisi levyille joita vain GNU/Linux käyttää. Kun käytetään komentoa <command
+>partman</command
+>, luodaan silti mukavuussyistä pieni osio <command
+>aboot</command
+>:ia varten.  </para
+><para condition="FIXME"
+>ARC-asennuksissa olisi tehtävä levyn alkuun pieni FAT-osio, johon tallennetaan <command
+>MILO</command
+> ja <command
+>linload.exe</command
+> &mdash; 5 megatavua pitäisi riittää, katso <xref linkend="non-debian-partitioning"/>. Valitettavasti FAT-tiedostojärjestelmien tekeminen valikosta ei ole vielä tuettu, joten ne on tehtävä komentotulkista komennolla <command
+>mkdosfs</command
+> ennen käynnistyslataimen asennusta. </para>
+  </sect2>
+<!--   End of file partitioning/partition/alpha.xml -->
+
+<!-- Start of file partitioning/partition/hppa.xml -->
+<!-- $Id: hppa.xml 35595 2006-03-18 21:15:59Z fjp $ -->
+
+
+  <sect2 arch="hppa"
+><title
+>&arch-title; ja osiointi</title>
+<para
+>HPPA:n käynnistyslatain PALO vaatii osion tyypiltään <quote
+>F0</quote
+> levyn ensimmäisen 2 Gt:n alueella. Osioon tallennetaan käynnistyslatain ja valinnaisesti ydin ja näennäislevyn otos, tee siitä riittävän iso &mdash; ainakin 4 Mt (tämän kirjoittajan mielestä 8&ndash;16 Mt). Lisäksi laiteohjelmisto vaatii Linux-ytimen sijaitsevan levyn ensimmäisen 2 Gt:n alueella. Tavallisesti tämä varmistetaan mahduttamalla ext2 juuriosio kokonaan levyn ensimmäiseen 2 Gtavuun. Toinen tapa on tehdä pieni ext2 osio lähelle levyn alkua ja liittää se kohtaan <filename
+>/boot</filename
+>, joka on se hakemisto johon Linux-ytimet tallennetaan. Hakemistoon <filename
+>/boot</filename
+> on mahduttava käytettävät ytimet (ja varmuuskopiot); 25&ndash;50 Mt on tavallisesti riittävä. </para>
+  </sect2>
+<!--   End of file partitioning/partition/hppa.xml -->
+
+<!-- Start of file partitioning/partition/x86.xml -->
+<!-- $Id: x86.xml 42250 2006-10-26 15:29:36Z fjp $ -->
+
+
+  <sect2 arch="x86"
+><title
+>&arch-title; ja osiointi</title>
+<para
+>Jos tietokoneessa on ennestään muu käyttöjärjestelmä kuten DOS tai Windows, ja tuo käyttöjärjestelmä halutaan säilyttää kun Debian asennetaan, on tuon muun käyttöjärjestelmän levyosion kokoa ehkä muutettava, jotta saadaan vapaata tilaa Debianin asennukselle. Asennin tukee sekä FAT- että NTFS-tiedostojärjestelmien koon muuttamista; asentimen osiointivaiheessa valitaan <guimenuitem
+>Osioi itse</guimenuitem
+> ja sitten yksinkertaisesti valitaan levyllä oleva osio ja muutetaan sen kokoa. </para
+><para
+>PC BIOS aiheuttaa yleensä lisärajoituksia levyn osioinnissa. Levyn <quote
+>ensisijaisten</quote
+> ja <quote
+>loogisten</quote
+> lukumäärä on rajoitettu. Lisäksi ennen noin 1994&ndash;98 tehdyissä BIOSeissa on rajoituksia mistä kohtaa levyä BIOS osaa käynnistää. Tarkempaa tietoa löytyy ohjeista <ulink url="&url-partition-howto;"
+>Linux Partition HOWTO</ulink
+> ja <ulink url="&url-phoenix-bios-faq-large-disk;"
+>Phoenix BIOS FAQ</ulink
+>, mutta tämän luvun pikaohje auttaa useimmissa tapauksissa. </para
+><para
+><quote
+>Ensisijaiset</quote
+> osiot ovat PC-levyjen alkuperäinen osiointitapa. Niitä voi kuitenkin olla enintään neljä kappaletta. Tämän rajoituksen ohittamiseksi keksittiin <quote
+>laajennetut</quote
+> ja <quote
+>loogiset</quote
+> osiot. Muuttamalla yksi ensisijaisista osioista laajennetuksi osioksi, voidaan tuon osion tila jakaa useaan loogiseen osioon. Yhteen laajennettuun osioon voi tehdä jopa 60 loogista osiota; laajennettuja osioita voi kuitenkin olla vain yksi levyä kohti. </para
+><para
+>Linux rajoittaa osioiden määrän levyä kohti 15 osioon SCSI-levyille (käytettävissä on 3 ensisijaista osiota ja 12 loogista osiota), ja 63 osioon IDE-levyille (käytettävissä on 3 ensisijaista osiota ja 60 loogista osiota). Kuitenkin tavallinen &debian; järjestelmä tekee vain 20 laitetiedostoa osioille, joten enempiä osioita ei voi levylle tehdä luomalla ensin itse laitetiedostot ylimääräisille osioille. </para
+><para
+>Jos tietokoneessa on iso IDE-levy eikä käytetä LBA-osoitusta eikä päällysajuria (kiintolevyjen valmistajat saattavat toimittaa niitä), on käynnistysosion (osio jossa ytimen suorituskelpoinen tiedosto sijaitsee) sijaittava levyn 1024 ensimmäisen syliterin alueella (tavallisesti noin 524 Mt, jos BIOS ei muunna osoitteita). </para
+><para
+>Tätä rajoitusta ei ole jos BIOS on uudempi kuin noin 1995&ndash;98 (riippuu valmistajasta) ja ominaisuus <quote
+>Enhanced Disk Drive Support Specification</quote
+> on tuettu. Sekä Lilo, Linuxin käynnistyslatain, että Debianin vaihtoehtoinen <command
+>mbr</command
+> joutuvat käyttämään BIOSia ytimen lukemiseen levyltä keskusmuistiin. Jos BIOSin keskeytystä 0x13 käyttävä lisäys isojen levyjen käyttöön löytyy, sitä käytetään. Muussa tapauksessa peräydytään käyttämään perinteistä levyrajapintaa, joka ei osaa käyttää levyosoitteita 1023. sylinterin jälkeen. Kun Linux on käynnistynyt, ei BIOSilla enää ole merkitystä, koska Linux ei käytä levyä BIOSin kautta. </para
+><para
+>Jos levy on iso, on ehkä käytettävä sylinteriosoitteen muunnosta. Nämä voidaan valita BIOSin asetuksista, esimerkiksi LBA (Logical Block Addressing) tai CHS translation mode (<quote
+>Large</quote
+>). Lisätietoa isojen levyjen käyttämisestä on ohjeessa <ulink url="&url-large-disk-howto;"
+>Large Disk HOWTO</ulink
+>. Jos käytetään sylinteriosoitteen muunnosta eikä BIOS tue lisäystä isojen levyjen käyttöön, on käynnistysosion sijaittava <emphasis
+>muunnettujen</emphasis
+> 1023 ensimmäisen sylinterin alueella. </para
+><para
+>Suositeltu tapa tämän tekemiseen on pienen (25&ndash;50 Mt pitäisi riittää) osion luominen levyn alkuun käytettäväksi käynnistysosiona, ja luoda muut tarvittavat osiot jäljelle jäävään osaan levyä. Tämä käynnistysosio <emphasis
+>on liitettävä</emphasis
+> kohtaan <filename
+>/boot</filename
+>, koska tuohon hakemistoon tallennetaan Linux-ytimet. Tämä järjestely toimii kaikissa järjestelmissä, eikä ole väliä onko käytössä LBA tai CHS translation mode tai tukeeko BIOS lisäystä isojen levyjen käyttöön. </para>
+  </sect2>
+<!--   End of file partitioning/partition/x86.xml -->
+
+<!-- Start of file partitioning/partition/ia64.xml -->
+<!-- $Id: ia64.xml 43254 2006-12-09 19:03:58Z fjp $ -->
+
+
+  <sect2 arch="ia64"
+><title
+>&arch-title; ja osiointi</title>
+<para
+>Osiointisovellus <command
+>partman</command
+> on asentimen oletustyökalu levyjen osiointiin. Se huolehtii osiosta ja niiden liitoskohdista jotta levyt ja tiedostojärjestelmät on tehty oikein menestyksekästä asennusta varten. Se käyttää komentoa <command
+>parted</command
+> tekemään varsinaisen levyn osioinnin. </para>
+
+   <note>
+   <title
+>EFI:n tunnistamat osiotaulut</title>
+<para
+>IA-64 EFI laiteohjelmisto tukee kahta osiotaulun (tai levynimiön) lajia, GPT tai MS-DOS. MS-DOS, jota i386 PC:eissä tavataan käyttää, ei ole enää suositeltu käytettäväksi IA-64-järjestelmissä. Vaikka asentimessa on myös komento <command
+>cfdisk</command
+>, olisi käytettävä vain komentoa <ulink url="parted.txt"
+> <command
+>parted</command
+></ulink
+> koska vain se osaa käyttää sekä GPT että MS-DOS osiotauluja oikein. </para
+></note>
+
+<para
+>Automaattisen osioinnin mallineet joita <command
+>partman</command
+> käyttää varaavat tilan EFI-osiolle levyn ensimmäisenä osiona. Osion asetukset voidaan tehdä myös päävalikon kohdasta <guimenuitem
+>Ohjattu levyosioiden teko</guimenuitem
+> vastaavaan tapaan kuin <emphasis
+>sivutus</emphasis
+>-osio. </para
+><para
+>Osiointisovellus <command
+>partman</command
+> osaa käsitellä useimmat osioasettelut. Niissä harvinaisissa tapauksissa joissa on välttämätöntä tehdä osiot itse, voidaan käynnistää komentotulkki kuten edellä on neuvottu ja käynnistää <command
+>parted</command
+> suoraan käyttäen sen komentorivin käyttöliittymää. Jos halutaan tyhjentää koko levy ja luoda GPT-osiotaulu sekä joitakin osioita, voidaan käyttää seuraavien komentojen tapaista: <informalexample
+><screen>
+      mklabel gpt
+      mkpartfs primary fat 0 50
+      mkpartfs primary linux-swap 51 1000
+      mkpartfs primary ext2 1001 3000
+      set 1 boot on
+      print
+      quit
+</screen
+></informalexample
+> Komennot luovat uuden osiotaulun ja kolme osiota eli EFI-käynnistysosio, sivutus ja juuritiedostojärjestelmä. Lopuksi EFI-osiolle asetetaan käynnistyskelpoisuuden ilmaisin. Osion koko annetaan megatavuina, alun ja lopun kohdat lasketaan levyn alusta. Esimerkiksi yllä luotiin 1999 Mt ext2 tiedostojärjestelmä jonka alkukohta on 1001 Mt levyn alusta. Huomaa että sivutusosion luomiseen <command
+>parted</command
+> saattaa käyttää muutaman minuutin, koska osio tarkistetaan toimimattomien lohkojen varalta. </para>
+  </sect2>
+
+  <sect2 arch="ia64"
+><title
+>Käynnistyslataimen osion ominaisuudet</title>
+<para
+>ELILO, IA—64 käynnistyslatain, vaatii osion jonka tiedostojärjestelmä on FAT ja <userinput
+>käynnistyskelpoisuuden ilmaisin</userinput
+> päällä. Osion on oltava riittävän suuri jotta siihen mahtuu käynnistyslatain ja käytettävät ytimet tai käynnistyslevyn otokset. Vähimmäiskoko olisi noin 20 Mt, mutta jos aiotaan käyttää useita ytimiä 128 Mt lienee parempi. </para
+><para
+>EFI-käynnistyslatain Boot Manager ja -komentotulkki tukevat täysin GPT-ositaulua joten käynnistysosion ei tarvitse olla levyn ensimmäinen eikä edes samalla levyllä. Tämä on kätevää jos unohtuu varata tila osiolle ja tämä huomataan vasta kun levyn muille osioille on jo tiedostojärjestelmäkin tehty. <command
+>partman</command
+> tarkistaa onko EFI-osiota samalla kun se tarkistaa onko <emphasis
+>root</emphasis
+>-osio tehty kuten pitää. Tällöin on mahdollista korjata levyn osioasettelu ennen kuin pakettien asennus alkaa. Helpoin tapa korjata unohtunut EFI-osio on tehdä sille tilaa pienentämällä levyn viimeistä osiota. </para
+><para
+>EFI-käynnistysosion sijoittamista samalle levylle kuin <emphasis
+>root</emphasis
+>-tiedostojärjestelmä suositellaan vahvasti. </para>
+  </sect2>
+
+  <sect2 arch="ia64"
+><title
+>EFI:n vianjäljitysosio</title>
+<para
+>EFI-laiteohjelmisto on merkittävästi edistyneempi kuin useimpien x86 PC-koneiden tavallinen BIOS. Jotkut järjestelmätoimittajat hyödyntävät EFI:n mahdollisuutta lukea ja kirjoittaa tiedostoja ja käynnistää ohjelmia kiintolevyn tiedostojärjestelmältä tallentamaan vianjäljitystietoa ja EFI:in perustuvia järjestelmänhallintaohjelmia kiintolevylle. Tämä on erillinen FAT-tiedostojärjestelmä järjestelmälevyllä. Etsi tarkempaa tietoa järjestelmän mukana tulleista ohjeista ja ohjelmista. Helpoiten vianjäljitysosio on tehtävissä samalla kun tehdään EFI-käynnistysosio. </para>
+  </sect2>
+<!--   End of file partitioning/partition/ia64.xml -->
+
+<!-- Start of file partitioning/partition/mips.xml -->
+<!-- $Id: mips.xml 35613 2006-03-19 04:18:28Z tbm $ -->
+
+
+  <sect2 arch="mips"
+><title
+>&arch-title; ja osiointi</title>
+<para
+>SGI-tietokoneet vaativat SGI-levynimiön jotta järjestelmä voisi käynnistyä kiintolevyltä. Se voidaan tehdä fdiskin expert-valikossa. Näin tehty levyn otsikko (osio numero 9) olisi oltava ainakin 3 Mt. Jos luotu levyn otsikko on liian pieni, voidaan osio numero 9 poistaa ja tehdä se uudestaan eri kokoisena. Huomaa että levyn otsikon alkukohdan on oltava sektori 0. </para>
+  </sect2>
+<!--   End of file partitioning/partition/mips.xml -->
+
+<!-- Start of file partitioning/partition/powerpc.xml -->
+<!-- $Id: powerpc.xml 48741 2007-07-27 00:59:02Z lunar $ -->
+
+
+  <sect2 arch="powerpc"
+><title
+>Uusien PowerMac-koneiden osiointi</title>
+<para
+>Jos asennettava kone on NewWorld PowerMac, on käynnistyslataimelle luotava oma erityisosio. Tämän osio koon on oltava vähintään 819200 tavua ja tyypin <emphasis
+>Apple_Bootstrap</emphasis
+>. Jos tämän käynnistysosion tyyppi ei ole <emphasis
+>Apple_Bootstrap</emphasis
+>, ei konetta voida käynnistää kiintolevyltä. Osio on luotavissa helposti tekemällä ohjelmalla <command
+>partman</command
+> uusi osio ja merkitsemällä se käytöksi <quote
+>NewWorld boot partition</quote
+>, tai komennolla <command
+>mac-fdisk</command
+> jossa käytetään komentoa <userinput
+>b</userinput
+>. </para
+><para
+>Erikoisosion tyyppi Apple_Bootstrap tarvitaan jotta MacOS ei liitä ja riko käynnistysosiota, koska siihen on tehty erikoismuutoksia jotta OpenFirmware käynnistää sen automaattisesti. </para
+><para
+>Huomaa, että käynnistysosiossa on tarkoitus olla vain kolme hyvin pientä tiedostoa: komennon <command
+>yaboot</command
+> suorituskelpoinen tiedosto, sen asetustiedosto <filename
+>yaboot.conf</filename
+> ja OpenFirmwaren ensimmäisen vaiheen latain <command
+>ofboot.b</command
+>. Sitä ei tarvitse eikä saa liittää tiedostojärjestelmää eikä ytimiä tai muutakaan saa siihen kopioida. Osiota käytetään apuohjelmilla <command
+>ybin</command
+> ja <command
+>mkofboot</command
+>. </para
+><para
+>Jotta OpenFirmware osaisi automaattisesti käynnistää &debian;in pitäisi käynnistysosion sijaita ennen muita levyn käynnistysosioita, erityisesti ennen MacOS-käynnistysosioita. Käynnistysosion olisi oltava ensimmäinen luotava osio. Jos kuitenkin käynnistysosio lisätään myöhemmin, voidaan sovelluksen <command
+>mac-fdisk</command
+> komennolla <userinput
+>r</userinput
+> muuttaa osioiden järjestystä siten että käynnistysosio on heti osiotaulun jälkeen (joka on aina osio numero 1). Merkitystä on vain osioiden loogisella järjestyksellä, ei osioiden järjestyksellä levyllä.  </para
+><para
+>Applen levyillä on tavallisesti useita pieniä ajuriosioita. Käytettäessä monikäynnistystä MacOSX:n kanssa, olisi nämä osiot ja pieni HFS-osio (vähimmäiskooltaan 800 kt) säilytettävä. Tämä siitä syystä, että MacOSX tarjoutuu jokaisella käynnistyskerralla alustamaan kaikki levyt joissa ei ole käytössä olevia MacOS osioita ja ajuriosioita. </para>
+  </sect2>
+<!--   End of file partitioning/partition/powerpc.xml -->
+
+<!-- Start of file partitioning/partition/sparc.xml -->
+<!-- $Id: sparc.xml 11648 2004-03-22 00:37:46Z joeyh $ -->
+
+
+  <sect2 arch="sparc"
+><title
+>&arch-title; ja osiointi</title>
+<para
+>Varmistu käynnistyslevylle luotavan <quote
+>Sun-levynimiö</quote
+>. Tämä on ainoa osiotaulu jota OpenBoot PROm ymmärtää, joten ilman Sun-levynimiötä ei kiintolevyltä pysty käynnistämään. Komennossa <command
+>fdisk</command
+> luodaan Sun-levynimiö näppäimellä <keycap
+>s</keycap
+>. </para
+><para
+>Lisäksi &arch-title; levyillä on varmistuttava käynnistyslevyn ensimmäisen osion alkavan sylinteriltä 0. Tästä vaatimuksesta seuraa, että ensimmäisessä osiossa on osiotaulu ja käynnistyslohko, koska ne sijaitsevat levyn kahdella ensimmäisellä sektorilla. Käynnistyslevyn ensimmäinen osio <emphasis
+>ei</emphasis
+> saa olla sivutus, koska sivutusosio ei säilytä osion muutamaa ensimmäistä sektoria. Ensimmäinen osio voi olla ext2 tai UFS, nämä jättävät osiotaulun ja käynnistyslohkon rauhaan. </para
+><para
+>Lisäksi suositellaan levyn kolmannen osion tyypiksi <quote
+>Whole disk</quote
+> (type 5), ja osion kooksi koko levy (ensimmäisestä sylinteristä viimeiseen). Tämä on tapana Sun-levynimiöissä, ja pitää käynnistyslataimen <command
+>SILO</command
+> raiteillaan. </para>
+  </sect2>
+<!--   End of file partitioning/partition/sparc.xml -->
+
+ </sect1>
+<!--   End of file partitioning/partition-programs.xml -->
+
+</appendix>
+<!--   End of file partitioning/partitioning.xml -->
