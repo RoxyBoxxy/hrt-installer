@@ -1,4 +1,4 @@
-<!-- original version: 56827 -->
+<!-- original version: 58146 -->
 
 <!--
 Be carefull with the format of this file as it is parsed to generate
@@ -462,14 +462,14 @@ d'espace de noms et, qui sait ? que nous ajoutions un alias pour vos paramètres
 
 <para>
 
-Le label <literal>auto</literal> n'est pas encore défini pour
-toutes les architectures. Mais il suffit d'ajouter les deux paramètres
+Le paramètre <literal>auto</literal> n'est pas encore défini partout.
+Mais il suffit d'ajouter les deux paramètres
 <literal>auto=true priority=critical</literal> sur la ligne de commande du
 noyau. Le paramètre <literal>auto</literal> est un alias pour
-<literal>auto-install/enable</literal>. Il contrôle le retard apporté aux
-questions sur la locale et le clavier pour qu'elles puissent être préconfigurées.
+<literal>auto-install/enable</literal>. Quand il vaut <literal>true</literal>, son effet est de retarder 
+les questions sur la locale et le clavier pour qu'elles puissent être préconfigurées.
 Le paramètre <literal>priority</literal> est un alias pour <literal>debconf/priority</literal>.
-S'il est défini à <literal>critical</literal>, les questions avec une priorité plus basse
+Quans sa valeur est <literal>critical</literal>, les questions avec une priorité plus basse
 sont évitées.
 </para>
 
@@ -493,7 +493,10 @@ un usage créatif de la préconfiguration.
   <title>Alias utiles avec la préconfiguration</title>
 <para>
 
-Voici des alias utiles avec la préconfiguration (mode auto)&nbsp;:
+Voici des alias utiles avec la préconfiguration (mode auto).
+Il faut remarquer que ce sont simplement des alias pour les noms des questions.
+Vous devez toujours leur donner des valeurs, comme par exemple,
+<literal>auto=true</literal> ou <literal>interface=eth0</literal>.
 
 </para>
 
@@ -824,6 +827,20 @@ de passerelle, vous pouvez positionner cette variable à <quote>none</quote>.
 </para>
   </sect2>
 
+  <sect2 id="preseed-network-console">
+  <title>Console réseau</title>
+
+<informalexample role="example"><screen>
+# Pour utiliser le composant <quote>network-console</quote> et faire une installation
+# par SSH, vous pouvez vous servir des commandes suivantes. Elles n'ont de sens que si
+# vous avez l'intention de poursuivre l'installation <quote>manuellement</quote>.
+#d-i anna/choose_modules string network-console
+#d-i network-console/password password r00tme
+#d-i network-console/password-again password r00tme
+</screen></informalexample>
+
+  </sect2>
+
   <sect2 id="preseed-mirror">
   <title>Valeurs pour les miroirs</title>
 <para>
@@ -998,8 +1015,8 @@ si vous rencontrez des problèmes.
 # La méthode à indiquer est "raid".
 #d-i partman-auto/method string raid
 # Indiquez les disques à partitionner. Ils auront tous les mêmes caractéristiques,
-# aussi cela ne fonctionnera que s'ils ont tous la même taille.
-#d-i partman-auto/disk string /dev/discs/disc0/disc /dev/discs/disc1/disc
+# et donc cela ne fonctionnera que s'ils ont tous la même taille.
+#d-i partman-auto/disk string /dev/sda /dev/sdb
 
 # Ensuite, indiquez les partitions physiques à utiliser. 
 #d-i partman-auto/expert_recipe string \
@@ -1022,14 +1039,14 @@ si vous rencontrez des problèmes.
 #          &lt;devices&gt; &lt;sparedevices&gt;
 # Les niveaux RAID 0, 1, 5, 6 et 10 sont acceptés. Les périphériques sont séparés par "#".
 #d-i partman-auto-raid/recipe string \
-#    1 2 0 ext3 /                                           \
-#          /dev/discs/disc0/part1#/dev/discs/disc1/part1    \
-#    .                                                      \
-#    1 2 0 swap -                                           \
-#          /dev/discs/disc0/part5#/dev/discs/disc1/part5    \
-#    .                                                      \
-#    0 2 0 ext3 /home                                       \
-#          /dev/discs/disc0/part6#/dev/discs/disc1/part6    \
+#    1 2 0 ext3 /                    \
+#          /dev/sda1#/dev/sdb1       \
+#    .                               \
+#    1 2 0 swap -                    \
+#          /dev/sda5#/dev/sdb5       \
+#    .                               \
+#    0 2 0 ext3 /home                \
+#          /dev/sda6#/dev/sdb6       \
 #    .
 
 # Pour que partman partitionne automatiquement sans demander une confirmation :
@@ -1124,7 +1141,7 @@ autre manière, par exemple authentification avec clé SSH, ou <command>sudo</co
 Un hachage MD5 pour le mot de passe peut être obtenu de la manière suivante&nbsp;:
 
 <informalexample><screen>
-$ echo "r00tme" | mkpasswd -s -m md5
+$ printf "r00tme" | mkpasswd -s -m md5
 </screen></informalexample>
 
 </para>
@@ -1358,7 +1375,13 @@ de l'installation.
 # La première commande est exécutée aussi tôt que possible, juste après
 # la lecture du fichier.
 #d-i preseed/early_command string anna-install some-udeb
-
+<phrase condition="squeeze">
+# Cette commande est exécutée juste avant que le partitionneur ne commence. Il peut être
+# utile de préconfigurer le partitionneur en fonction de l'état des disques
+# (qui ne sont peut-être pas visibles quand preseed/early_command est exécutée).
+#d-i partman/early_command \
+#       string debconf-set partman-auto/disk "$(list-devices disk | head -n1)"
+</phrase>
 # Cette commande est exécutée juste avant que l'installation ne se termine,
 # mais quand le répertoire /target est encore utilisable. Vous pouvez exécuter
 # chroot /target et utiliser cet environnement directement&nbsp;; ou bien vous
@@ -1375,7 +1398,7 @@ de l'installation.
 
 Il est possible de changer la réponse par défaut à une question tout en
 maintenant l'interrogation. Pour cela, le drapeau <firstterm>seen</firstterm> doit être
-remis à  <quote>false</quote> après avoir modifié la valeur de la réponse.
+remis à <quote>false</quote> après avoir modifié la valeur de la réponse.
 
 <informalexample><screen>
 d-i foo/bar string value
@@ -1387,11 +1410,18 @@ au moment de l'amorçage pour obtenir le même effet pour
 <emphasis>toutes</emphasis> les questions. Cela peut servir à tester le fichier de
 préconfiguration.
 </para>
+
+<para>
+Le propriétaire <quote>d-i</quote> est utilisé uniquement pour les variables dont se sert
+l'installateur. Pour des variables appartenant à des paquets installés sur le système cible,
+il faut utiliser le nom du paquet. Consultez la note <xref linkend="preseed-bootparms"/>. 
+</para>
 <para>
 Si vous utilisez les paramètres d'amorçage pour la préconfiguration,
 l'opérateur <quote>?=</quote> demande à l'installateur de poser la question
 correspondante, c'est-à-dire,
-<userinput><replaceable>foo</replaceable>/<replaceable>bar</replaceable>?=<replaceable>valeur</replaceable></userinput>.
+<userinput><replaceable>foo</replaceable>/<replaceable>bar</replaceable>?=<replaceable>valeur</replaceable></userinput>
+(or <userinput><replaceable>propriétaire</replaceable>:<replaceable>foo/bar</replaceable>?=<replaceable>valeur</replaceable></userinput>).
 Cela n'aura un effet que sur les paramètres qui correspondent à des questions qui
 sont réellement affichées pendant l'installation et non pas sur les
 paramètres <quote>internes</quote>.

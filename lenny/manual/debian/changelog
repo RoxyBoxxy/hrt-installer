@@ -1,3 +1,44 @@
+installation-guide (2008xxxx) UNRELEASED; urgency=low
+
+  [ Colin Watson ]
+  * Document partman/early_command (added in partman-base 129).
+  * Add note about preseeding ownership to preseed-seenflag section, since I
+    had a user confused by this who hadn't found the note elsewhere
+    explaining owners.
+  * Use /dev/sda and /dev/sdb in the RAID preseeding example rather than
+    /dev/discs/disc0/disc and /dev/discs/disc1/disc, since the latter
+    devices no longer exist.
+  * Document noshell boot parameter. See #504381.
+  * Clarify behaviour of "auto" preseed alias.
+  * Clarify that preseeding aliases are only aliases for question names, and
+    that a value is always needed as well.
+  * Apparently you can pass extra boot parameters to OpenBoot at the end of
+    the 'boot' command. Document this as it has been known to cause some
+    confusion.
+
+  [ Frans Pop ]
+  * Document preseeding of network-console now that its postinst can be
+    relied on to be executed.
+  * Update info on passing boot parameter for PPPoE.
+  * Explain Standard system task.
+  * Add LXDE desktop environment.
+  * Mention option to select desktop environment from boot menu for x86 CDs.
+  * Add task sizes for alternative desktop environments.
+  * chroot install: 'tzconfig' is deprecated for 'dpkg-reconfigure tzdata'.
+    Closes: #520582.
+  * Booting using LILO or GRUB: minor improvements. Closes: #519508.
+  * Fix example how to generate md5-encoded password. Closes: #518018.
+  * Fix missing tags in Japanese translation. Closes: #509372.
+  * Improve script that extracts preconfiguration example file from appendix.
+
+  [ Samuel Thibault ]
+  * Document accessibility support. Closes: #509371.
+
+  [ Frans Pop ]
+  * (Re-)enable Vietnamese translation (not fully up-to-date).
+
+ -- Frans Pop <fjp@debian.org>  Mon, 27 Apr 2009 13:23:30 +0200
+
 installation-guide (20081208) unstable; urgency=low
 
   * Move documentation files to separate subdirectory doc.
@@ -5,8 +46,8 @@ installation-guide (20081208) unstable; urgency=low
   * Correct error spotted by Osamu Aoki: text web browser is w3m, not w3c.
   * Correct two minor errors in preconfiguration examples. With thanks to
     Andreas Beckmann for reporting them. Closes: #507544.
-  * Add new script po-check-preseed to help translators check if their
-    translation of a preseed.po file is complete.
+  * Add new script check-preseed to help translators check if their
+    translation of the appendix about preseeding is complete/correct.
   * Re-enable Spanish translation.
 
  -- Frans Pop <fjp@debian.org>  Mon, 08 Dec 2008 09:50:48 +0100

@@ -43,11 +43,11 @@ END
 	exit 0;
 }
 
-die "Must specify release for which to generate example." if ! $opt_r;
+die "Must specify release for which to generate example.\n" if ! $opt_r;
 
 my $xmlfile = shift;
-die "Must specify XML file to parse!" if ! $xmlfile;
-die "Specified XML file \"$xmlfile\" not found." if ! -f $xmlfile;
+die "Must specify XML file to parse!\n" if ! $xmlfile;
+die "Specified XML file \"$xmlfile\" not found.\n" if ! -f $xmlfile;
 
 my $arch = $opt_a ? "$opt_a" : "i386";
 my $release = $opt_r;
@@ -62,15 +62,35 @@ $p = HTML::Parser->new(
 # Start parsing the specified file
 $p->parse_file($xmlfile);
 
+# Replace entities in examples
+# FIXME: should maybe be extracted from entity definition
+sub replace_entities {
+	my $text = shift;
+
+	$text =~ s/&archive-mirror;/http.us.debian.org/;
+	$text =~ s/&releasename;/$release/;
+
+	# Any unrecognized entities?
+	if ( $text =~ /(&[^ ]+;)/ ) {
+		die "Error: unrecognized entity '$1'\n"
+	}
+
+	return $text;
+}
+
 # Execute when start tag is encountered
 sub start_rtn {
 	my ($tagname, $text, $attr) = @_;
 	print STDERR "\nStart: $tagname\n" if $opt_d;
-	if ( $tagname =~ /appendix|sect1|sect2|sect3|para/ ) {
+
+	if ( $tagname =~ /appendix|sect1|sect2|sect3|para|informalexample|phrase/ ) {
 		$tagstatus{$tagname}{'count'} += 1;
 		print STDERR "$tagname  $tagstatus{$tagname}{'count'}\n" if $opt_d;
 
 		if ( ! exists $ignore{'tag'} ) {
+			# FIXME: this ignores that 'contition' is used for many
+			# other things than the release; should be OK in practice
+			# for the preseed appendix though.
 			if ( exists $attr->{condition} ) {
 				print STDERR "Condition: $attr->{condition}\n" if $opt_d;
 				if ( $attr->{condition} ne $release ) {
@@ -89,6 +109,7 @@ sub start_rtn {
 			}
 		}
 	}
+
 	# Assumes that <title> is the first tag after a section tag
 	if ( $prevtag =~ /sect1|sect2|sect3/ ) {
 		$settitle = ( $tagname eq 'title' );
@@ -107,14 +128,18 @@ sub start_rtn {
 # Execute when text is encountered
 sub text_rtn {
 	my ($text) = @_;
+
 	if ( $settitle ) {
 		# Clean leading and trailing whitespace for titles
 		$text =~ s/^[[:space:]]*//;
 		$text =~ s/[[:space:]]*$//;
+
+		$text = replace_entities($text);
 		$tagstatus{$titletag}{'title'} = $text;
 		$settitle = 0;
 	}
-	if ( $example{'print'} ) {
+
+	if ( $example{'print'} && ! exists $ignore{'tag'} ) {
 		# Print section headers
 		for ($s=1; $s<=3; $s++) {
 			my $sect="sect$s";
@@ -131,10 +156,7 @@ sub text_rtn {
 			$text =~ s/^[[:space:]]*//;
 		}
 
-		# Replace entities in examples
-		# FIXME: should maybe be extracted from entity definition
-		$text =~ s/&archive-mirror;/http.us.debian.org/;
-
+		$text = replace_entities($text);
 		print "$text";
 
 		$example{'first'} = 0;
@@ -147,24 +169,32 @@ sub text_rtn {
 sub end_rtn {
 	my ($tagname) = @_;
 	print STDERR "\nEnd: $tagname\n" if $opt_d;
+
+	# Set of tags must match what's in start_rtn
+	if ( $tagname =~ /appendix|sect1|sect2|sect3|para|informalexample|phrase/ ) {
+		my $ts = $tagstatus{$tagname}{'count'};
+		$tagstatus{$tagname}{'count'} -= 1;
+		print STDERR "$tagname  $tagstatus{$tagname}{'count'}\n" if $opt_d;
+		die "Invalid XML file: negative count for tag <$tagname>!\n" if $tagstatus{$tagname}{'count'} < 0;
+
+		if ( exists $ignore{'tag'} ) {
+			if ( $ignore{'tag'} eq $tagname && $ignore{'depth'} == $ts ) {
+				delete $ignore{'tag'};
+			}
+			return
+		}
+	}
+
 	if ( $tagname eq 'informalexample' ) {
 		$example{'print'} = 0;
 	}
+
 	if ( $tagname =~ /appendix|sect1|sect2|sect3|para/ ) {
 		delete $tagstatus{$tagname}{'title'} if exists $tagstatus{$tagname}{'title'};
-
-		if ( exists $ignore{'tag'} ) {
-			if ( $ignore{'tag'} eq $tagname && $ignore{'depth'} == $tagstatus{$tagname}{'count'} ) {
-				delete $ignore{'tag'};
-			}
-		}
 
 		if ( $example{'in_sect'} ) {
 			print "\n";
 			$example{'in_sect'} = 0;
 		}
-		$tagstatus{$tagname}{'count'} -= 1;
-		print STDERR "$tagname  $tagstatus{$tagname}{'count'}\n" if $opt_d;
-		die "Invalid XML file: negative count for tag <$tagname>!" if $tagstatus{$tagname}{'count'} < 0;
 	}
 }
