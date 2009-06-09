@@ -119,12 +119,23 @@ typedef int (newt_handler)(struct frontend *obj, struct question *q);
 
 static void newt_progress_stop(struct frontend *obj);
 
+/* Result must be freed by the caller */
+static char *get_full_description(struct frontend *obj, struct question *q);
+
 #include "cdebconf_newt.h"
 
 /*  Padding of title width, allows for leading "[!!] " before title
  *  and the two vertical bars and spaces that limit the title.
  */
 #define TITLE_PADDING 9
+
+/*  At least one blue line on top
+ *  One line for the title / top frame
+ *  One line for the bottom frame
+ *  One line for shadow on the bottom
+ *  One line with a menu
+ */
+#define MIN_DECORATION_HEIGHT 5
 
 /* gettext would be much nicer :-( */
 static const char *
@@ -253,15 +264,27 @@ cdebconf_newt_get_text_width(const char *text)
 static int
 min_window_height(struct frontend *obj, struct question *q, int win_width)
 {
+    // start with a blank or description (note and error)
+    // End with <Continue>/boolean buttons + blank
     int height = 3;
     char *type = q->template->type;
-    char *q_ext_text;
+    char *q_text;
 
-    q_ext_text = q_get_extended_description(obj, q);
-    if (q_ext_text != NULL)
-        height = cdebconf_newt_get_text_height(q_ext_text, win_width) + 1;
-    if (strcmp(type, "multiselect") == 0 || strcmp(type, "select") == 0)
-        height += 4; // at least three lines for choices + blank line
+    if (strcmp(q->template->type, "note") == 0 || strcmp(q->template->type, "error") == 0)
+        q_text = q_get_extended_description(obj, q);
+    else
+        q_text = get_full_description(obj, q);
+    if (q_text != NULL) {
+        height += cdebconf_newt_get_text_height(q_text, win_width) + 1;
+        free (q_text);
+    }
+    if (strcmp(type, "multiselect") == 0)
+        height += 4; // x lines for choices + blank line
+    else if (strcmp(type, "select") == 0) {
+        height += 2; // as multiselect, but without a button and blank line
+        if (obj->methods.can_go_back(obj, q))
+            height += 2;
+    }
     else if (strcmp(type, "string") == 0 || strcmp(type, "password") == 0)
         height += 2; // input line + blank line
     // the others don't need more space
@@ -276,7 +299,7 @@ need_separate_window(struct frontend *obj, struct question *q)
 
     newtGetScreenSize(&width, &height);
     x = min_window_height(obj, q, width-7);
-    return (x >= height-5);
+    return (x > height-MIN_DECORATION_HEIGHT);
 }
 
 static char *
@@ -654,6 +677,8 @@ show_select_window(struct frontend *obj, struct question *q, int show_ext_desc)
     int listflags = NEWT_FLAG_RETURNEXIT;
     int width = 80, height = 24;
     int win_width, win_height = -1, t_height, t_width, sel_height, sel_width;
+    int select_list_top;
+    int b_height;
     int t_width_title, t_width_buttons;
     char **choices, **choices_trans, *defval;
     int count = 0, i, ret, defchoice = -1;
@@ -733,18 +758,28 @@ show_select_window(struct frontend *obj, struct question *q, int show_ext_desc)
         t_height = newtTextboxGetNumLines(textbox);
         newtTextboxSetHeight(textbox, t_height);
         newtFormAddComponent(form, textbox);
-    } else
+        select_list_top = 1+t_height+1;
+    } else {
         t_height = 0;
+        select_list_top = 1; // No description. Only insert a blank line.
+    }
+    if (obj->methods.can_go_back(obj, q))
+        b_height = 2;
+    else
+        b_height = 0;
     free(full_description);
-    win_height = t_height + 5 + sel_height;
-    if (win_height > height-5) {
-        win_height = height-5;
-        sel_height = win_height - t_height - 5;
+    win_height  = t_height + sel_height + b_height;
+    //    3 == First blank line + blanks before and after select
+    // or 3 == Blanks before and after select + blank after <Go Back>
+    win_height += 3;
+    if (win_height > height-MIN_DECORATION_HEIGHT) {
+        win_height = height-MIN_DECORATION_HEIGHT;
+        sel_height = win_height - t_height - 3 - b_height;
     }
     if (count > sel_height)
         listflags |= NEWT_FLAG_SCROLL;
     cdebconf_newt_create_window(win_width, win_height, obj->title, q->priority);
-    listbox = newtListbox((win_width-sel_width-3)/2, 1+t_height+1, sel_height, listflags);
+    listbox = newtListbox((win_width-sel_width-3)/2, select_list_top, sel_height, listflags);
     defval = (char *)question_getvalue(q, "");
     for (i = 0; i < count; i++) {
         newtListboxAppendEntry(listbox, choices_trans[i], choices[tindex[i]]);

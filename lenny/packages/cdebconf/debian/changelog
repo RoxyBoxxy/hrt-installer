@@ -1,3 +1,22 @@
+cdebconf (0.138lenny3) UNRELEASED; urgency=low
+
+  [ Nicolas François ]
+  * src/template.c (remove_newlines): Fix the removal of trailing
+    newline for descriptions ending with a verbatim block. This helps
+    optimizing the screen usage in the newt frontend.
+  * Fix the computation and usage of the window's height. If the height is not
+    computed correctly, the newt frontend may decide to put the input box and
+    the explanatory text on the same window, but the text will overlap on the
+    input box, which renders the input impossible.
+    Closes: #508042, #507372, #343119
+  * Optimize the screen usage (2 lines) in the newt frontend when a
+    description and select menu are on the same windows or when a big select
+    menu is displayed on its own window.
+  * Fix select screens with the newt frontend. The <Go Back> button was not
+    taken into account and overlapped with the select list. Closes: #525209
+
+ -- Otavio Salvador <otavio@debian.org>  Mon, 08 Jun 2009 22:40:49 -0300
+
 cdebconf (0.138lenny2) unstable; urgency=high
 
   * Backport from trunk:
