@@ -1,0 +1,8 @@
+#!/bin/sh
+. /usr/share/debconf/confmodule
+. /lib/preseed/preseed.sh
+db_get preseed/url || exit 1
+if [ -n "$RET" ] || [ -n "$(dhcp_preseed_url)" ]; then
+	exit 0
+fi
+exit 1
