@@ -119,6 +119,19 @@ define mkinitramfs
   (cd $(TREE) && find . | cpio --quiet -o -H newc) > 
 endef
 
+define mkfs.ufs
+  set -ex ; \
+  fs=`mktemp` ; \
+  dd if=/dev/zero of=$${fs} bs=1M count=16 ; \
+  md=`mdconfig -a -t vnode -f $${fs}` ; \
+  mkfs.ufs /dev/$${md} ; \
+  mnt=`mktemp -d` ; mount /dev/$${md} $${mnt} ; \
+  cp -a $(TREE)/* $${mnt}/ ; \
+  umount $${mnt} ; rmdir $${mnt} ; \
+  mdconfig -d -u $${md} ; \
+  mv $${fs}
+endef
+
 define e2fsck
   e2fsck -fy
 endef
@@ -353,7 +366,7 @@ ifdef EXTRAFILES
 	done
 endif
 
-ifdef KERNELVERSION
+ifdef KERNELVERSION_FIXME
 	# Set up modules.dep, ensure there is at least one standard dir (kernel
 	# in this case), so depmod will use its prune list for archs with no
 	# modules.
@@ -436,8 +449,8 @@ endif
 	# Create a dev tree.
 	mkdir -p $(TREE)/dev
 	# Always needed, in case udev is not mounted on boot.
-	mknod $(TREE)/dev/console c 5 1
-	mknod $(TREE)/dev/null c 1 3
+	-mknod $(TREE)/dev/console c 5 1
+	-mknod $(TREE)/dev/null c 1 3
 
 	mkdir -p $(EXTRAUDEBSDIR)
 	mkdir -p $(EXTRAUDEBSDPKGDIR)/info $(EXTRAUDEBSDPKGDIR)/updates
@@ -609,6 +622,10 @@ $(TEMP_INITRD): $(STAMPS)tree-$(targetstring)-stamp arch_tree
 	;; \
 	jffs2) \
 		$(mkjffs2) $(TEMP_INITRD); \
+	;; \
+	ufs) \
+		$(mkfs.ufs) $(TEMP)/initrd; \
+		gzip -v9f $(TEMP)/initrd; \
 	;; \
 	*) \
 		echo "Unsupported filesystem type"; \
@@ -860,7 +877,7 @@ tree_mount: $(STAMPS)tree-$(targetstring)-stamp
 
 .PHONY: tree_umount
 tree_umount:
-	-@[ ! -L $(TREE)/proc/self ] || sudo /bin/umount $(TREE)/proc
+	-@[ ! -L $(TREE)/proc/self ] || [ ! -c $(TREE)/dev/tty ] || sudo /bin/umount $(TREE)/proc
 
 # For manual invocation, we provide a demo rule. This starts the
 # d-i demo from the tree in tmp.
