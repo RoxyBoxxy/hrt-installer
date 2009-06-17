@@ -1,0 +1,18 @@
+# This file is used to build up the control file. The kernel version and
+# "-di" are appended to the package names. Section can be left out. So can
+# architecture, which is derived from the files in the modules directory.
+# It overwrites specifications from /usr/share/kernel-wedge/package-list.
+#
+Package: kernel-image
+
+Package: dasd-modules
+Depends: kernel-image
+Priority: standard
+Description: dasd modules
+ This package contains dasd modules.
+
+Package: ext2-modules
+Depends: kernel-image, core-modules
+
+Package: ext3-modules
+Depends: kernel-image, core-modules
