@@ -7,10 +7,14 @@ files_exec = \
 	debian-installer \
 	debian-installer-startup \
 	shutdown \
-	init:init-$(DEB_HOST_ARCH_OS) \
+	init:init-$(DEB_HOST_ARCH_OS)
+
+ifeq ($(DEB_HOST_ARCH_OS),linux)
+  files_exec += \
 	reopen-console \
 	console-type \
 	steal-ctty
+endif
 
 console-type: console-type.c
 	gcc -Os -Wall console-type.c -o console-type
