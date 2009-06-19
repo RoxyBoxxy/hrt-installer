@@ -18,8 +18,7 @@ files = \
 	S01mount \
 	S02module-params \
 	S20templates \
-	S35term \
-	S37speakup
+	S35term
 
 ifeq ($(DEB_HOST_ARCH_OS),linux)
   ifneq (,$(filter i386 amd64,$(DEB_HOST_ARCH_CPU)))
@@ -58,7 +57,8 @@ ifeq ($(DEB_HOST_ARCH_OS),linux)
   endif
 
   files += \
-	S10syslog:S10syslog-linux
+	S10syslog:S10syslog-linux \
+	S37speakup
 else
   files += \
 	S10syslog:S10syslog-generic
