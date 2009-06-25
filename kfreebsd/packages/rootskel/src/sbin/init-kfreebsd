@@ -15,6 +15,10 @@ debugshell "just booted"
 
 echo "Setting up filesystem, please wait ..."
 
+#mount -u -o rw /
+mount -o rw -t ufs /dev/md0 /
+mount -t devfs devfs /dev/
+
 #rm /sbin/init
 mount /proc
 
