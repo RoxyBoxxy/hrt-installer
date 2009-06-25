@@ -96,8 +96,14 @@ static int internal_di_exec (const char *path, bool use_path, const char *const 
         break;
     }
 
+fprintf(stderr, "exec.c: internal_di_exec: (pid == 0) before for loop\n"); fflush(stderr);
     for (i = 1; i <= 2; i++)
+    {
+fprintf(stderr, "exec.c: internal_di_exec: (pid == 0) in for loop, before dup2\n"); fflush(stderr);
       dup2 (realfds[i], i);
+fprintf(stderr, "exec.c: internal_di_exec: (pid == 0) in for loop, after dup2\n"); fflush(stderr);
+    }
+fprintf(stderr, "exec.c: internal_di_exec: (pid == 0) after for loop\n"); fflush(stderr);
 
     close (temp);
   }
