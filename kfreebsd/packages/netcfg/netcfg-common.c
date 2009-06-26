@@ -45,6 +45,10 @@
 #include <time.h>
 #include <netdb.h>
 
+#if defined(__FreeBSD_kernel__)
+#include <net/if.h>
+#endif
+
 /* Set if there is currently a progress bar displayed. */
 int netcfg_progress_displayed = 0;
 
@@ -180,6 +184,7 @@ int check_kill_switch(const char *iface)
 
 #undef SYSCLASSNET
 
+#if defined(WIRELESS)
 int is_raw_80211(const char *iface)
 {
     struct ifreq ifr;
@@ -203,6 +208,7 @@ int is_raw_80211(const char *iface)
         return 0;
     }
 }
+#endif
 
 int is_interface_up(char *inter)
 {
@@ -263,8 +269,10 @@ int get_all_ifs (int all, char*** ptr)
             continue;
         if (!strncmp(ibuf, "sit", 3))        /* ignore tunnel devices */
             continue;
+#if defined(WIRELESS)
         if (is_raw_80211(ibuf))
             continue;
+#endif
         if (all || is_interface_up(ibuf) == 1) {
             list = realloc(list, sizeof(char*) * (len + 1));
             list[len] = strdup(ibuf);
