@@ -652,7 +652,7 @@ int main (int argc __attribute__ ((unused)), char **argv) {
 		}
 fprintf(stderr, "main-menu.c: main: in while, before do_menu_item\n"); fflush(stderr);
 		ret = do_menu_item(p);
-fprintf(stderr, "main-menu.c: main: in while, before do_menu_item\n"); fflush(stderr);
+fprintf(stderr, "main-menu.c: main: in while, after do_menu_item\n"); fflush(stderr);
 		adjust_default_priority();
 		switch (ret) {
 			case EXIT_OK:
