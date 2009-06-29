@@ -96,14 +96,8 @@ static int internal_di_exec (const char *path, bool use_path, const char *const 
         break;
     }
 
-fprintf(stderr, "exec.c: internal_di_exec: (pid == 0) before for loop\n"); fflush(stderr);
     for (i = 1; i <= 2; i++)
-    {
-fprintf(stderr, "exec.c: internal_di_exec: (pid == 0) in for loop, before dup2\n"); fflush(stderr);
       dup2 (realfds[i], i);
-fprintf(stderr, "exec.c: internal_di_exec: (pid == 0) in for loop, after dup2\n"); fflush(stderr);
-    }
-fprintf(stderr, "exec.c: internal_di_exec: (pid == 0) after for loop\n"); fflush(stderr);
 
     close (temp);
   }
@@ -168,6 +162,7 @@ fprintf(stderr, "exec.c: internal_di_exec: (pid == 0) after for loop\n"); fflush
       {
         bool exit = false;
 
+fprintf(stderr, "exec.c: internal_di_exec: (pid > 0) in big else if, in while, first instruction\n"); fflush(stderr);
         for (i = 0; i < pipes; i++)
         {
           if (pollfds[i].revents & POLLIN)
@@ -186,19 +181,26 @@ fprintf(stderr, "exec.c: internal_di_exec: (pid == 0) after for loop\n"); fflush
           }
         }
 
+fprintf(stderr, "exec.c: internal_di_exec: (pid > 0) in big else if, in while, after first for\n"); fflush(stderr);
         if (exit)
           continue;
 
+fprintf(stderr, "exec.c: internal_di_exec: (pid > 0) in big else if, in while, before second for\n"); fflush(stderr);
         for (i = 0; i < pipes; i++)
           if (pollfds[i].revents & POLLHUP)
             exit = true;
+
+fprintf(stderr, "exec.c: internal_di_exec: (pid > 0) in big else if, in while, after second for\n"); fflush(stderr);
 
         if (exit)
           break;
       }
 
+fprintf(stderr, "exec.c: internal_di_exec: (pid > 0) before waitpid\n"); fflush(stderr);
     if (!waitpid (pid, &status, 0))
       return -1;
+
+fprintf(stderr, "exec.c: internal_di_exec: (pid > 0) after waitpid\n"); fflush(stderr);
 
     for (i = 0; i < pipes; i++)
       fclose (files[i].file); /* closes fds[i * 2] */
