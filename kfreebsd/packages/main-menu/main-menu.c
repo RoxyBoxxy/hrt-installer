@@ -750,7 +750,9 @@ static int di_config_package(di_system_package *p,
 	if (asprintf(&configcommand, "exec udpkg --configure --force-configure %s", p->p.package) == -1)
 		return -1;
 
+fprintf(stderr, "main-menu.c: di_config_package: before di_exec_shell_log\n"); fflush(stderr);
 	ret = di_exec_shell_log(configcommand);
+fprintf(stderr, "main-menu.c: di_config_package: after di_exec_shell_log\n"); fflush(stderr);
 	ret = di_exec_mangle_status(ret);
 	free(configcommand);
 	switch (ret) {
