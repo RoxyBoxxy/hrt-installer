@@ -1,3 +1,36 @@
+live-installer (12) UNRELEASED; urgency=low
+
+  [ Otavio Salvador ]
+  * Use a single supporting code for ext[234].
+  * Fix shebang to use -e in dir supporting code.
+  * Calls autogen.sh in case configure isn't found to make sure it
+    properly builds the print-inodes binary.
+  * Add support for Lenny.
+
+  [ Daniel Baumann ]
+  * Mounting extX images read-only in order to not 'corrupt' images in case
+    of a power-loss when installing from a read-write capable installation
+    media, such as usb sticks.
+  * Using dh7 tiny rules and getting rid of cdbs.
+  * Removing xserver-xorg reconfiguration, not needed anymore for Lenny and
+    newer.
+  * Updating year in copyright file.
+
+ -- Otavio Salvador <otavio@debian.org>  Sun, 28 Jun 2009 17:54:49 -0300
+
+live-installer (11) unstable; urgency=low
+
+  * Replacing old left-over from squashfs-installer name in configure.ac.
+  * Removing useless whitespaces in changelog.
+  * Upgrading package to debhelper 7.
+  * Reordering copyright file in machine interpretable format.
+  * Prefixing debhelper files with package name.
+  * Updating packagename of late userspace components of live-initramfs.
+  * Dropping etch support, d-i on etch is unsupported.
+  * Adding support for ext4 images.
+
+ -- Daniel Baumann <daniel@debian.org>  Sun, 28 Jun 2009 10:58:00 -0300
+
 live-installer (10) unstable; urgency=low
 
   [ Chris Lamb ]
@@ -245,7 +278,7 @@ live-installer (1) unstable; urgency=low
   * Tamil (ta.po) by Dr.T.Vasudevan
   * Thai (th.po) by Theppitak Karoonboonyanan
   * Vietnamese (vi.po) by Clytie Siddall
-  
+
  -- Otavio Salvador <otavio@debian.org>  Mon, 06 Aug 2007 16:13:42 -0300
 
 live-installer (0) unstable; urgency=low

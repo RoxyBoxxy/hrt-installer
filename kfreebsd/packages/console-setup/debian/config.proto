@@ -65,7 +65,6 @@ set -e
 
 CONFIGFILE=/etc/default/console-setup
 
-default_ttys=''
 default_charmap=''
 default_codeset=''
 default_fontface=''
@@ -88,10 +87,6 @@ XKBVARIANT=''
 XKBOPTIONS=''
 
 
-## PACKAGE ## Will be replaced by assignment for $package
-
-# package=console-setup
-
 ## FONTSETS ## Will be replaced by assignment for $fontsets:
 
 # fontsets='Arabic-Fixed15
@@ -109,14 +104,17 @@ XKBOPTIONS=''
 # ...
 # UTF-8'
 
-## KBDNAMES ## Will be replaced by assignment for $kbdnames:
+## KBDNAMES ## Will be replaced by all_kbdnames function:
 
-# kbdnames='model*logicdp*Logitech Cordless Desktop Pro
-# model*omnikey101*Northgate OmniKey 101
+# all_kbdnames () {
+#  cat <<'EOF' 
+# C*model*logidinovo*Logitech diNovo Keyboard
+# C*model*amiga*Amiga
 # ...
-# layout*el*Greek
-# ...
-# variant*it*nodeadkeys*Eliminate dead keys'
+# zh_TW*layout*al*阿爾巴尼亞
+# zh_TW*variant*al**阿爾巴尼亞
+# EOF
+# }
 
 ## CODESETS ##
 
@@ -193,6 +191,7 @@ ask_debconf () {
 	db_get $template
     else
 	# There is only one choice - no need to use debconf
+	[ $STATE -gt $old_state ] || return 255
 	RET=$(echo "$choices"|sed 's/ *$//')
     fi
 
@@ -333,11 +332,18 @@ locale_country=$(echo $locale | sed 's/.*_//;s/\..*//;s/@.*//')
 locale_modif=
 echo $locale | grep -v -q @ || locale_modif=$(echo $locale | sed 's/.*@//')
 
-eval kbdnames=\"\${kbdnames_${locale_lang}_${locale_country}__${locale_modif}}\"
-[ -n "$kbdnames" ] || eval kbdnames=\"\${kbdnames_${locale_lang}_${locale_country}}\"
-[ -n "$kbdnames" ] || eval kbdnames=\"\${kbdnames_${locale_lang}__${locale_modif}}\"
-[ -n "$kbdnames" ] || eval kbdnames=\"\${kbdnames_${locale_lang}}\"
-[ -n "$kbdnames" ] || kbdnames="$kbdnames_C"
+lang_kbdnames () {
+    all_kbdnames \
+	| grep "^$1[*]" \
+	| sed "s/^$1[*]//"
+}
+
+kbdnames=$(lang_kbdnames ${locale_lang}_${locale_country}__${locale_modif})
+[ -n "$kbdnames" ] || kbdnames=$(lang_kbdnames ${locale_lang}_${locale_country}__${locale_modif})
+[ -n "$kbdnames" ] || kbdnames=$(lang_kbdnames ${locale_lang}_${locale_country})
+[ -n "$kbdnames" ] || kbdnames=$(lang_kbdnames ${locale_lang})
+[ -n "$kbdnames" ] || kbdnames=$(lang_kbdnames C)
+
 ! type iconv >/dev/null || \
     kbdnames="$(echo "$kbdnames" |
                 iconv -f UTF-8 -t $(locale charmap)//TRANSLIT)"
@@ -1057,7 +1063,7 @@ case "$arch" in
 	model_priority=medium
 	;;
     m68k/sun*)
-	default_model=sun4 # also sun5, pc105
+	default_model=unknown # sun4, sun5 or pc105
 	model_priority=critical
 	;;
     m68k/*vme*)
@@ -1077,7 +1083,7 @@ case "$arch" in
 	model_priority=medium
 	;;
     powerpc/chrp*)
-	default_model=pc105 # also macintosh_old and maybe amiga
+	default_model=unknown # pc105, macintosh_old or maybe amiga
 	model_priority=critical
 	;;
     powerpc/mac)
@@ -1101,7 +1107,7 @@ case "$arch" in
 	model_priority=medium
 	;;
     sparc*)
-	default_model=sun4 # also sun5, pc105
+	default_model=unknown # sun4, sun5 or pc105
 	model_priority=critical
 	;;
     s390*)
@@ -1109,7 +1115,7 @@ case "$arch" in
 	model_priority=medium
 	;;
     *)
-	default_model=pc105
+	default_model=unknown
 	model_priority=critical
 	;;
 esac    
@@ -1128,7 +1134,6 @@ if [ -d /lib/debian-installer ]; then
     fi
     if db_get console-setup/layoutcode && [ "$RET" ]; then
 	default_layout="$RET"
-	layout_priority=medium
     fi
     if db_get console-setup/variantcode && [ "$RET" ]; then
 	default_variant="$RET"
@@ -1136,9 +1141,17 @@ if [ -d /lib/debian-installer ]; then
     if db_get console-setup/optionscode && [ "$RET" ]; then
 	XKBOPTIONS="$RET"
     fi
+    if db_get console-setup/fontface && [ "$RET" ]; then
+	default_fontface="$RET"
+    fi
     if db_get console-setup/fontsize && [ "$RET" ]; then
-	db_set console-setup/fontsize-text "$RET"
-	db_set console-setup/fontsize-fb "$RET"
+	default_fontsize="$RET"
+    fi
+    if db_get console-setup/charmap && [ "$RET" ]; then
+	default_charmap="$RET"
+    fi
+    if db_get console-setup/codeset && [ "$RET" ]; then
+	default_codeset="$RET"
     fi
 fi
 
@@ -1261,9 +1274,6 @@ if [ -e $CONFIGFILE ]; then
     . $CONFIGFILE || true
 fi
 
-if [ "$ACTIVE_CONSOLES" ]; then
-    default_ttys="$ACTIVE_CONSOLES"
-fi
 if [ "$CHARMAP" ]; then
     default_charmap="$CHARMAP"
 fi
@@ -1415,7 +1425,6 @@ if [ "$XKBOPTIONS" ]; then
 fi
 
 # Store some of the default values into debconf db.
-db_default console-setup/ttys "$default_ttys"
 db_default console-setup/charmap "$default_charmap"
 db_default console-setup/codeset "$default_codeset"
 db_default console-setup/fontface "$default_fontface"
@@ -1426,6 +1435,7 @@ db_default console-setup/toggle "$default_toggle"
 db_default console-setup/switch "$default_switch"
 db_default console-setup/altgr "$default_altgr"
 db_default console-setup/compose "$default_compose"
+initial_default_model="$default_model"
 
 #######################################################################
 
@@ -1435,14 +1445,26 @@ while :; do
     starting_state=$STATE
     case "$STATE" in
 	1)
-	    if \
-		ask_debconf console-setup/model $model_priority \
-		    model $default_model
-	    then
-		db_set console-setup/modelcode "$RET"
-		STATE=$(($STATE + 1))
+	    if [ -f /usr/bin/ckbcomp-mini ]; then
+		db_set console-setup/modelcode $default_model
+		db_fset console-setup/model seen true
+		# skip the question without making Debconf loop
+		STATE=$(( $STATE + $STATE - $old_state ))
 	    else
-		STATE=$(($STATE - 1))
+		if [ $default_model = unknown ]; then
+		    model_priority=critical
+		    db_fset console-setup/model seen false
+		fi
+		if \
+		    ask_debconf console-setup/model $model_priority \
+		    model $default_model
+		then
+		    default_model="$RET"
+		    db_set console-setup/modelcode "$RET"
+		    STATE=$(($STATE + 1))
+		else
+		    STATE=$(($STATE - 1))
+		fi
 	    fi
 	    ;;
 	2)
@@ -1490,6 +1512,7 @@ while :; do
 		ask_debconf console-setup/layout "$layout_priority" \
 		    layout "$default_layout"
 	    then
+		default_layout="$RET"
 		layout="$RET"
 		STATE=$(($STATE + 1))
 	    else
@@ -1505,6 +1528,7 @@ while :; do
 		ask_debconf console-setup/variant "$layout_priority" \
                     "variant\*${layout}" "$default_variant"
 	    then
+		default_variant="$RET"
 		variant="$RET"
 		case "$layout" in
 		    cs)
@@ -1877,17 +1901,18 @@ while :; do
 	    fi
 	    ;;		    
 	7)
-	    if [ "$package" = console-setup-mini ]; then
-		if [ "$STATE" -ge "$old_state" ]; then
-		    STATE=$(($STATE + 1))
-		else
-		    STATE=$(($STATE - 1))
-		fi
-		charmap=UTF-8
+	    if
+		[ -d /lib/debian-installer ] \
+		    && db_get debian-installer/charmap \
+		    && [ "$RET" ]
+	    then
+		charmap=$default_charmap
+		# skip the questions without making Debconf loop
+		STATE=$(( $STATE + $STATE - $old_state ))
 	    else
-		# add commas
+                # add commas
 		choices=`echo "$charmaps" | sed -e 's/$/,/g' | sort `
-		# remove newlines
+	        # remove newlines
 		choices=`echo $choices | sed -e 's/,$//' `
 		db_subst console-setup/charmap CHOICES "$choices"
 		db_default console-setup/charmap "$default_charmap"
@@ -1898,6 +1923,7 @@ while :; do
 		    STATE=$(($STATE - 1))
 		fi
 		db_get console-setup/charmap
+		default_charmap="$RET"
 		charmap=$RET
 	    fi
 	    ;;
@@ -1910,6 +1936,7 @@ while :; do
 	    db_input $codeset_priority console-setup/codeset || true
 	    if db_go; then
 		db_get console-setup/codeset
+		default_codeset="$RET"
 		codeset="`encode_codeset $RET`"
 		db_set console-setup/codesetcode "$codeset"
 		STATE=$(($STATE + 1))
@@ -1998,6 +2025,7 @@ while :; do
 		STATE=$(($STATE - 1))
 	    fi
 	    db_get console-setup/fontface
+	    default_fontface=$RET
 	    fontface=$RET
 	    db_metaget console-setup/use_system_font description
 	    if [ "$fontface" = "$RET" ]; then
@@ -2031,16 +2059,6 @@ while :; do
 		STATE=$(( $STATE + $STATE - $old_state ))
 	    fi
 	    ;;
-	11)
-	    db_input medium console-setup/ttys || true
-	    if db_go; then
-		STATE=$(($STATE + 1))
-	    else
-		STATE=$(($STATE - 1))
-	    fi
-	    db_get console-setup/ttys
-	    ttys=$RET
-	    ;;
 	*)
 	    break
 	    ;;
@@ -2057,7 +2075,7 @@ else
     # Brasilian layout on Japanese keyboard and Japanese layout on
     # Brasilian keyboard to be possible.
     db_get console-setup/modelcode
-    if [ "$RET" = "$default_model" ]; then
+    if [ "$RET" = "$initial_default_model" ]; then
 	if [ "$layout" = br ]; then 
 	    db_set console-setup/modelcode abnt2
 	elif [ "$layout" = jp ]; then 

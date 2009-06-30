@@ -7,7 +7,7 @@ set -e
 
 # In d-i the config script is not executed automatically
 if [ -f /usr/share/console-setup-mini/console-setup.config ]; then
-    /usr/share/console-setup-mini/console-setup.config
+    /usr/share/console-setup-mini/console-setup-mini.config
 fi
 
 CONFIGDIR=/etc/console-setup
@@ -26,15 +26,8 @@ if [ "$1" = "configure" ]; then
     db_get console-setup/fontsize
     fontsize="$RET"
 
-    if type ckbcomp-mini 2>/dev/null >/dev/null; then
-	charmap=UTF-8
-    else
-	db_get console-setup/charmap
-	charmap="${RET:-UTF-8}"
-    fi
-
-    db_get console-setup/ttys
-    ttys="$RET"
+    db_get console-setup/charmap
+    charmap="${RET:-UTF-8}"
 
     db_get console-setup/modelcode
     model="$RET"
@@ -86,7 +79,6 @@ if [ "$1" = "configure" ]; then
     done    
     
     sed \
-	-e "s|^ *ACTIVE_CONSOLES=.*|ACTIVE_CONSOLES=\"$ttys\"|" \
 	-e "s|^ *CHARMAP=.*|CHARMAP=\"$charmap\"|" \
 	-e "s|^ *CODESET=.*|CODESET=\"$codeset\"|" \
 	-e "s|^ *FONTFACE=.*|FONTFACE=\"$fontface\"|" \
