@@ -53,7 +53,7 @@ fprintf(stderr, "exec.c: internal_di_exec: use_path = %s\n", use_path ? "true" :
 fprintf(stderr, "exec.c: internal_di_exec: argv[] = { %s, %s, %s, %s }\n", argv[0], argv[1], argv[2], argv[3]); fflush(stderr); // { "sh", "-c", "exec udpkg --configure --force-configure libdebian-installer4-udeb", NULL }
 fprintf(stderr, "exec.c: internal_di_exec: stdout_handler = %s\n", (stdout_handler == di_exec_io_log) ? "di_exec_io_log" : "(!= di_exec_io_log)"); fflush(stderr); // di_exec_io_log
 fprintf(stderr, "exec.c: internal_di_exec: %s\n", ((envp == NULL) && (stderr_handler == NULL) && (io_user_data == NULL) && (parent_prepare_handler == NULL) && (parent_prepare_user_data == NULL) && (child_prepare_handler == NULL) && (child_prepare_user_data == NULL)) ? "all others are NULL" : "not all others are NULL"); fflush(stderr);
-sleep(5);
+//sleep(5);
 
   if (stdout_handler)
   {
@@ -170,10 +170,16 @@ sleep(5);
         bool exit = false;
 
 fprintf(stderr, "exec.c: internal_di_exec: (pid > 0) in big else if, in while, first instruction\n"); fflush(stderr);
-sleep(1);
+//sleep(1);
         for (i = 0; i < pipes; i++)
         {
+#if defined(__FreeBSD_kernel__)
+          // References: http://www.greenend.org.uk/rjk/2001/06/poll.html
+          if ((pollfds[i].revents & POLLIN) && (! (pollfds[i].revents & POLLHUP)))
+#else
           if (pollfds[i].revents & POLLIN)
+#endif
+
           {
             while (fgets (line, sizeof (line), files[i].file) != NULL)
             {
@@ -190,30 +196,30 @@ sleep(1);
         }
 
 fprintf(stderr, "exec.c: internal_di_exec: (pid > 0) in big else if, in while, after first for\n"); fflush(stderr);
-sleep(1);
+//sleep(1);
         if (exit)
           continue;
 
 fprintf(stderr, "exec.c: internal_di_exec: (pid > 0) in big else if, in while, before second for\n"); fflush(stderr);
-sleep(1);
+//sleep(1);
         for (i = 0; i < pipes; i++)
           if (pollfds[i].revents & POLLHUP)
             exit = true;
 
 fprintf(stderr, "exec.c: internal_di_exec: (pid > 0) in big else if, in while, after second for\n"); fflush(stderr);
-sleep(1);
+//sleep(1);
 
         if (exit)
           break;
       }
 
 fprintf(stderr, "exec.c: internal_di_exec: (pid > 0) before waitpid\n"); fflush(stderr);
-sleep(1);
+//sleep(1);
     if (!waitpid (pid, &status, 0))
       return -1;
 
 fprintf(stderr, "exec.c: internal_di_exec: (pid > 0) after waitpid\n"); fflush(stderr);
-sleep(1);
+//sleep(1);
 
     for (i = 0; i < pipes; i++)
       fclose (files[i].file); /* closes fds[i * 2] */
