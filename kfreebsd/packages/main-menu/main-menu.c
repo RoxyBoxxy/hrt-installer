@@ -650,9 +650,7 @@ int main (int argc __attribute__ ((unused)), char **argv) {
 		if (p->installer_menu_item < NEVERDEFAULT && display_menu) {
 			display_menu = 0;
 		}
-fprintf(stderr, "main-menu.c: main: in while, before do_menu_item\n"); fflush(stderr);
 		ret = do_menu_item(p);
-fprintf(stderr, "main-menu.c: main: in while, after do_menu_item\n"); fflush(stderr);
 		adjust_default_priority();
 		switch (ret) {
 			case EXIT_OK:
@@ -750,9 +748,7 @@ static int di_config_package(di_system_package *p,
 	if (asprintf(&configcommand, "exec udpkg --configure --force-configure %s", p->p.package) == -1)
 		return -1;
 
-fprintf(stderr, "main-menu.c: di_config_package: before di_exec_shell_log\n"); fflush(stderr);
 	ret = di_exec_shell_log(configcommand);
-fprintf(stderr, "main-menu.c: di_config_package: after di_exec_shell_log\n"); fflush(stderr);
 	ret = di_exec_mangle_status(ret);
 	free(configcommand);
 	switch (ret) {
