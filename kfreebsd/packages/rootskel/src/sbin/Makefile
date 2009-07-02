@@ -7,13 +7,13 @@ files_exec = \
 	debian-installer \
 	debian-installer-startup \
 	shutdown \
-	init:init-$(DEB_HOST_ARCH_OS)
+	init:init-$(DEB_HOST_ARCH_OS) \
+	reopen-console:reopen-console-$(DEB_HOST_ARCH_OS) \
+	steal-ctty
 
 ifeq ($(DEB_HOST_ARCH_OS),linux)
   files_exec += \
-	reopen-console \
-	console-type \
-	steal-ctty
+	console-type
 endif
 
 console-type: console-type.c
@@ -22,7 +22,11 @@ console-type: console-type.c
 steal-ctty: steal-ctty.c
 	gcc -Os -Wall steal-ctty.c -o steal-ctty
 
+ifeq ($(DEB_HOST_ARCH_OS),kfreebsd)
+build: steal-ctty
+else
 build: console-type steal-ctty
+endif
 
 clean:
 	rm -f console-type steal-ctty

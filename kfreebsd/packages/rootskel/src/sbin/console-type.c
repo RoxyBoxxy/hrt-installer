@@ -10,19 +10,6 @@
 #include <sys/ioctl.h>
 #include <stdio.h>
 
-/* TIOCGSERIAL is Linux specific. */
-#include <termios.h>
-#if !defined(TIOCGSERIAL)
-# if defined(__FreeBSD_kernel__)
-/*
-#  include <sys/compat/linux/linux_ioctl.h>
-#  define TIOCGSERIAL LINUX_TIOCGSERIAL
-*/
-// HACK; copied from http://svn.freebsd.org/viewvc/base/release/7.2.0/sys/compat/linux/linux_ioctl.h?view=markup
-#  define TIOCGSERIAL 0x541E
-# endif
-#endif
-
 enum { VT_GETSTATE = 0x5603 }; /* get global vt state info */
 
 int main(int argc, char ** argv)

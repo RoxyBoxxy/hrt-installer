@@ -1,0 +1,11 @@
+#!/bin/sh
+
+# In order to give proper access to the tty, we need to locate the device
+# corresponding to the console we are actually using.
+
+# HACK: the console device is always /dev/console ?
+console=console
+echo /dev/$console > /var/run/console-device
+
+# Some other session may have it as ctty. Steal it from them
+exec /sbin/steal-ctty $(cat /var/run/console-device) "$@"
