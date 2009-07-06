@@ -1,4 +1,20 @@
-console-setup (1.37) UNRELEASED; urgency=low
+console-setup (1.39) unstable; urgency=low
+
+  * Remove the dependency on sharutils in console-setup.  Thanks to Josh
+    Triplett and Helmut Grohne, closes: #535805.
+
+ -- Anton Zinoviev <zinoviev@debian.org>  Sun, 05 Jul 2009 14:51:41 +0300
+
+console-setup (1.38) unstable; urgency=low
+
+  * Add build-dependency and dependency on sharutils for console-setup.
+    Reask the questions for model/layout/variant with critical priority if
+    version 1.37 has destroyed the value of XKBMODEL or XKBLAYOUT (due to
+    missing uudecode).  Thanks to Max, closes: #535709.
+
+ -- Anton Zinoviev <zinoviev@debian.org>  Sat, 04 Jul 2009 21:58:34 +0300
+
+console-setup (1.37) unstable; urgency=low
 
   [ Otavio Salvador ]
   * Use 'dpkg --print-architecture' in debconf config script. Closes: #529574
@@ -14,7 +30,11 @@ console-setup (1.37) UNRELEASED; urgency=low
     when there is only one available option.  Thanks to Christian Perrier,
     closes: #529643.
   * config.proto: use explicitely pc105 as keyboard model on hppa.  Thanks
-    to Samuel Thibault, closes: #531482.
+    to Samuel Thibault, closes: #531482.  I think hil keyboards were
+    used only with old kernels and we won't find volunteer to test
+    console-setup with such keyboards.
+  * Add support for evdev keycodes.  Thanks to Samuel Thibault.
+  * Do not define keys with only VoidSymbols.
   * Document in README.Debian which package configures the console when
     several console-configuring packages are installed.  Thanks to Kurt
     Roeckx, closes: #524233, #524239.
@@ -43,11 +63,13 @@ console-setup (1.37) UNRELEASED; urgency=low
   * Remove the model question from console-setup-udeb and console-setup-mini.
     By default do not change the keyboard when the model is unknown.
   * Remove the ttys question.
-  * Fix the broken preseeding of font, code set and encoding.
+  * Do not ask questions when no keyboard is present.  Thanks for Frans
+    Pop for requesting the feature and providing information.
+  * Some code cleanup in the config script.
   * Delete .cvsignore and .svn in all udebs.
   * Remove the dependency on console-setup-fonts-udeb in console-setup-udeb.
 
- -- Otavio Salvador <otavio@ossystems.com.br>  Wed, 20 May 2009 09:02:48 -0300
+ -- Anton Zinoviev <zinoviev@debian.org>  Sat, 04 Jul 2009 13:11:07 +0300
 
 console-setup (1.36) unstable; urgency=low
 
