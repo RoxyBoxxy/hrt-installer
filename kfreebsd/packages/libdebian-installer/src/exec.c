@@ -164,7 +164,7 @@ static int internal_di_exec (const char *path, bool use_path, const char *const 
 
         for (i = 0; i < pipes; i++)
         {
-// References: http://www.greenend.org.uk/rjk/2001/06/poll.html
+/* References: http://www.greenend.org.uk/rjk/2001/06/poll.html */
 #if defined(__FreeBSD_kernel__)
           if ((pollfds[i].revents & POLLIN) && (! (pollfds[i].revents & POLLHUP)))
 #else

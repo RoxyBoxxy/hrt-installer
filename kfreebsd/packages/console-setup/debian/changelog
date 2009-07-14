@@ -1,3 +1,70 @@
+console-setup (1.45) UNRELEASED; urgency=low
+
+  [ Anton Zinoviev ]
+  * Do not issue warnings when writing cached.kmap.gz and /etc is mounted
+    read-only.
+
+ -- Anton Zinoviev <zinoviev@debian.org>  Sun, 12 Jul 2009 15:12:31 +0300
+
+console-setup (1.44) unstable; urgency=low
+
+  * console-setup-udeb: postinst preserve the exit code of the config
+    script.  For example 10 is leaved as 10.
+
+ -- Anton Zinoviev <zinoviev@debian.org>  Fri, 10 Jul 2009 15:43:49 +0300
+
+console-setup (1.43) unstable; urgency=low
+
+  * I build 1.42 in the wrong tree.  Sorry.
+
+ -- Anton Zinoviev <zinoviev@debian.org>  Fri, 10 Jul 2009 15:33:48 +0300
+
+console-setup (1.42) unstable; urgency=low
+
+  * Never use 'unknown' as keyboard model because the udeb and mini do not
+    have model question.
+  * Both entering a choice and backing from the layout question goes to
+    the variant question.
+  * Backing from layout question goes to model question even when the
+    variant is not 'other'.
+  * String change: 'The default for the keyboard layout' instead of
+    'No AltGr key'.
+
+ -- Anton Zinoviev <zinoviev@debian.org>  Fri, 10 Jul 2009 14:32:28 +0300
+
+console-setup (1.41) unstable; urgency=low
+
+  * Read the default value for the codeset from console-setup/codesetcode,
+    not from console-setup/codeset (part of preseeding support). 
+  * Remove most default values from the template file or else they are
+    interfering with the guess-work in the config script.
+  * Activate the preseeding code for the regular packages too.  This is in
+    order to catch easier the future bugs related to the preseeding.
+  * Change the default AltGr key to 'No AltGr key' as the layouts that
+    need AltGr define their own AltGr.
+
+ -- Anton Zinoviev <zinoviev@debian.org>  Thu, 09 Jul 2009 18:16:24 +0300
+
+console-setup (1.40) unstable; urgency=low
+
+  * Do not reask the "unsupported layout/option" question on every
+    upgrade.  Thanks to GSR, closes: 535966.
+  * Support for terminate:ctrl_alt_bksp option.  Thanks to GSR, 
+    closes: #535908.
+  * The postinst of the udeb was looking for console-setup.config although
+    in 1.37 this file was renamed as console-setup-mini.config.
+  * Remove the Provides: console-setup from console-setup-mini.
+  * bdf2psf: support fonts that do not cover the whole ASCII set.  Thanks
+    to Samuel Thibault, closes: #533096.
+  * bdf2psf: ignore double-width symbols.
+  * ckbcomp: do not fail when empty string is given as layout.
+  * Ask c-s/variant before c-s/layout.  Do not ask c-s/layout unless the
+    user has requested this by selecting 'Other' in c-s/variant.  The
+    priority of c-s/layout is still critical but most users won't see this
+    question. Thanks to Christian Perrier, closes: #529649.
+
+ -- Anton Zinoviev <zinoviev@debian.org>  Tue, 07 Jul 2009 19:38:13 +0300
+
 console-setup (1.39) unstable; urgency=low
 
   * Remove the dependency on sharutils in console-setup.  Thanks to Josh
