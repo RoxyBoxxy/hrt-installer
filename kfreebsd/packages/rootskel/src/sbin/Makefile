@@ -22,10 +22,10 @@ console-type: console-type.c
 steal-ctty: steal-ctty.c
 	gcc -Os -Wall steal-ctty.c -o steal-ctty
 
-ifeq ($(DEB_HOST_ARCH_OS),kfreebsd)
-build: steal-ctty
-else
+ifeq ($(DEB_HOST_ARCH_OS),linux)
 build: console-type steal-ctty
+else
+build: steal-ctty
 endif
 
 clean:
