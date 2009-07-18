@@ -14,10 +14,7 @@ set -e
 debugshell "just booted"
 
 echo "Setting up filesystem, please wait ..."
-
-#mount -u -o rw /
-# TODO: test "mount -o remount,rw /" or similar (from Lunar^ on #debian-boot, 20090626)
-mount -o rw -t ufs /dev/md0 /
+mount -o update,rw -t ufs /dev/md0 /
 mount -t devfs devfs /dev/
 mount /proc
 ln -s /var/run/log /dev/log
