@@ -19,9 +19,8 @@ echo "Setting up filesystem, please wait ..."
 # TODO: test "mount -o remount,rw /" or similar (from Lunar^ on #debian-boot, 20090626)
 mount -o rw -t ufs /dev/md0 /
 mount -t devfs devfs /dev/
-
-#rm /sbin/init
 mount /proc
+ln -s /var/run/log /dev/log
 
 # Close all open files on the initrd, and run busybox init.
 debugshell "before init"
