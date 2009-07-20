@@ -19,19 +19,19 @@
 # Samuele Giovanni Tonon <samu@linuxasylum.net>
 # Stefano Canepa <sc@linux.it>
 # Stefano Melchior <stefano.melchior@openlabs.it>
-# Milo Casagrande <milo@ubuntu.com>, 2008, 2009
 #
+# Milo Casagrande <milo@ubuntu.com>, 2008, 2009, 2009.
 msgid ""
 msgstr ""
 "Project-Id-Version: debian-installer\n"
-"Report-Msgid-Bugs-To: debian-boot@lists.debian.org\n"
-"POT-Creation-Date: 2008-07-31 22:50+0000\n"
-"PO-Revision-Date: 2009-03-24 22:48+0100\n"
+"Report-Msgid-Bugs-To: partman-md@packages.debian.org\n"
+"POT-Creation-Date: 2009-07-17 22:47+0000\n"
+"PO-Revision-Date: 2009-07-11 14:54+0200\n"
 "Last-Translator: Milo Casagrande <milo@ubuntu.com>\n"
-"Language-Team: Italian <debian-l10n-italian@lists.debian.org>\n"
+"Language-Team: Italian <tp@lists.linux.it>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: 8bit\n"
+"Content-Transfer-Encoding: 8 bit\n"
 
 #. Type: text
 #. Description
@@ -47,10 +47,435 @@ msgstr "Dispositivo RAID software"
 msgid "Configure software RAID"
 msgstr "Configurare il RAID software"
 
+#. Type: text
+#. Description
+#. :sl3:
+#. What is "in use" is a partition
+#: ../partman-md.templates:3001
+#, fuzzy
+msgid "In use by software RAID device ${DEVICE}"
+msgstr "Dispositivo RAID software"
+
+#. Type: error
+#. Description
+#. :sl3:
+#: ../partman-md.templates:4001
+#, fuzzy
+msgid "Software RAID not available"
+msgstr "Dispositivo RAID software"
+
+#. Type: error
+#. Description
+#. :sl3:
+#: ../partman-md.templates:4001
+#, fuzzy
+msgid ""
+"The current kernel doesn't seem to support software RAID (MD) devices. This "
+"should be solved by loading the necessary modules."
+msgstr ""
+"Il kernel in uso non supporta i device multidisk. È possibile ovviare a "
+"questo problema caricando i moduli necessari."
+
+#. Type: select
+#. Choices
+#. Note to translators : Please keep your translations of the choices
+#. below a 65 columns limit (which means 65 characters
+#. in single-byte languages)
+#. :sl3:
+#: ../partman-md.templates:5001
+msgid "Create MD device"
+msgstr "Creare un device multidisk (MD)"
+
+#. Type: select
+#. Choices
+#. Note to translators : Please keep your translations of the choices
+#. below a 65 columns limit (which means 65 characters
+#. in single-byte languages)
+#. :sl3:
+#: ../partman-md.templates:5001
+msgid "Delete MD device"
+msgstr "Cancellare un device multidisk (MD)"
+
+#. Type: select
+#. Choices
+#. Note to translators : Please keep your translations of the choices
+#. below a 65 columns limit (which means 65 characters
+#. in single-byte languages)
+#. :sl3:
+#: ../partman-md.templates:5001
+msgid "Finish"
+msgstr "Termina"
+
+#. Type: select
+#. Description
+#. :sl3:
+#: ../partman-md.templates:5002
+#, fuzzy
+msgid "Software RAID configuration actions"
+msgstr "Passo di configurazione di LVM:"
+
+#. Type: select
+#. Description
+#. :sl3:
+#: ../partman-md.templates:5002
+#, fuzzy
+msgid ""
+"This is the software RAID (or MD, \"multiple device\") configuration menu."
+msgstr ""
+"Questo è il menù di configurazione di Multidisk (MD) e del RAID software."
+
+#. Type: select
+#. Description
+#. :sl3:
+#: ../partman-md.templates:5002
+#, fuzzy
+msgid "Please select one of the proposed actions to configure software RAID."
+msgstr ""
+"Selezionare una delle azioni suggerite per configurare i device multidisk."
+
+#. Type: select
+#. Description
+#. :sl3:
+#: ../partman-md.templates:6001
+#, fuzzy
+msgid "Software RAID device type:"
+msgstr "Dispositivo RAID software"
+
+#. Type: select
+#. Description
+#. :sl3:
+#: ../partman-md.templates:6001
+#, fuzzy
+msgid "Please choose the type of the software RAID device to be created."
+msgstr "Scegliere il tipo di multidisk da creare."
+
+#. Type: error
+#. Description
+#. :sl3:
+#: ../partman-md.templates:7001
+msgid "No RAID partitions available"
+msgstr "Non è disponibile alcuna partizione RAID"
+
+#. Type: error
+#. Description
+#. :sl3:
+#: ../partman-md.templates:7001
+#, fuzzy
+msgid ""
+"No unused partitions of the type \"Linux RAID Autodetect\" are available. "
+"Please create such a partition, or delete an already used software RAID "
+"device to free its partitions."
+msgstr ""
+"Non c'è alcuna partizione inutilizzata di tipo «Linux RAID Autodetect». "
+"Crearne una oppure cancellare un device multidisk già in uso per liberarne "
+"le partizioni."
+
+#. Type: error
+#. Description
+#. :sl3:
+#: ../partman-md.templates:7001
+msgid ""
+"If you have such partitions, they might contain actual file systems, and are "
+"therefore not available for use by this configuration utility."
+msgstr ""
+"Se tali partizioni ci sono, forse contengono un file system e quindi non "
+"sono disponibili per questa utilità di configurazione."
+
+#. Type: multiselect
+#. Description
+#. :sl3:
+#: ../partman-md.templates:8001
+#, fuzzy
+msgid "Active devices for the RAID0 array:"
+msgstr "Numero di device attivi per un array RAID5:"
+
+#. Type: multiselect
+#. Description
+#. :sl3:
+#: ../partman-md.templates:8001
+msgid ""
+"You have chosen to create a RAID0 array. Please choose the active devices in "
+"this array."
+msgstr ""
+"È stato scelto di creare un array RAID0. Selezionare i device attivi in "
+"questo array."
+
+#. Type: string
+#. Description
+#. :sl3:
+#: ../partman-md.templates:9001
+msgid "Number of active devices for the RAID${LEVEL} array:"
+msgstr "Numero di device attivi per l'array RAID${LEVEL}:"
+
+#. Type: string
+#. Description
+#. :sl3:
+#: ../partman-md.templates:9001
+#, fuzzy
+msgid ""
+"The RAID${LEVEL} array will consist of both active and spare devices. The "
+"active devices are those used, while the spare devices will only be used if "
+"one or more of the active devices fail. A minimum of ${MINIMUM} active "
+"devices is required."
+msgstr ""
+"L'array RAID${LEVEL} consisterà di partizioni attive e «spare» (di scorta). "
+"Le partizioni attive sono quelle utilizzate, mentre i device «spare» verranno "
+"utilizzati solamente qualora uno o più di quelli attivi presentino dei "
+"problemi. Sono richiesti almeno ${MINIMUM} device attivi."
+
+#. Type: string
+#. Description
+#. :sl3:
+#. Type: string
+#. Description
+#. :sl3:
+#: ../partman-md.templates:9001 ../partman-md.templates:14001
+msgid "NOTE: this setting cannot be changed later."
+msgstr "Nota: questa configurazione non può essere cambiata successivamente."
+
+#. Type: multiselect
+#. Description
+#. :sl3:
+#: ../partman-md.templates:10001
+#, fuzzy
+msgid "Active devices for the RAID${LEVEL} array:"
+msgstr "Numero di device attivi per l'array RAID${LEVEL}:"
+
+#. Type: multiselect
+#. Description
+#. :sl3:
+#: ../partman-md.templates:10001
+msgid ""
+"You have chosen to create a RAID${LEVEL} array with ${COUNT} active devices."
+msgstr ""
+"È stato scelto di creare un array RAID${LEVEL} con ${COUNT} device attivi."
+
+#. Type: multiselect
+#. Description
+#. :sl3:
+#: ../partman-md.templates:10001
+msgid ""
+"Please choose which partitions are active devices. You must select exactly "
+"${COUNT} partitions."
+msgstr ""
+"Scegliere quali partizioni sono device attivi. È necessario selezionare "
+"esattamente ${COUNT} partizioni."
+
+#. Type: string
+#. Description
+#. :sl3:
+#: ../partman-md.templates:11001
+msgid "Number of spare devices for the RAID${LEVEL} array:"
+msgstr "Numero dei device «spare» per l'array RAID${LEVEL}:"
+
+#. Type: multiselect
+#. Description
+#. :sl3:
+#: ../partman-md.templates:12001
+#, fuzzy
+msgid "Spare devices for the RAID${LEVEL} array:"
+msgstr "Numero dei device «spare» per l'array RAID${LEVEL}:"
+
+#. Type: multiselect
+#. Description
+#. :sl3:
+#: ../partman-md.templates:12001
+msgid ""
+"You have chosen to create a RAID${LEVEL} array with ${COUNT} spare devices."
+msgstr ""
+"È stato scelto di creare un array RAID${LEVEL} con ${COUNT} device «spare»."
+
+#. Type: multiselect
+#. Description
+#. :sl3:
+#: ../partman-md.templates:12001
+#, fuzzy
+msgid ""
+"Please choose which partitions will be used as spare devices. You may choose "
+"up to ${COUNT} partitions. If you choose less than ${COUNT} devices, the "
+"remaining partitions will be added to the array as \"missing\". You will be "
+"able to add them to the array later."
+msgstr ""
+"Scegliere quale partizione verrà usata come device «spare». Si possono "
+"scegliere fino a ${COUNT} partizioni. Qualora si scelgano meno di ${COUNT} "
+"device, le rimanenti partizioni saranno aggiunte all'array come «mancanti». "
+"Sarà possibile aggiungerle successivamente all'array."
+
+#. Type: error
+#. Description
+#. :sl3:
+#: ../partman-md.templates:13001
+msgid "Not enough RAID partitions available"
+msgstr "Non sono disponibili abbastanza partizioni RAID"
+
+#. Type: error
+#. Description
+#. :sl3:
+#: ../partman-md.templates:13001
+msgid ""
+"There are not enough RAID partitions available for your selected "
+"configuration.  You have ${NUM_PART} RAID partitions available but your "
+"configuration requires ${REQUIRED} partitions."
+msgstr ""
+"Non ci sono sufficienti partizioni RAID per la configurazione selezionata. "
+"Sono disponibili ${NUM_PART} partizioni RAID, ma la configurazione necessita "
+"di ${REQUIRED} partizioni."
+
+#. Type: string
+#. Description
+#. :sl3:
+#: ../partman-md.templates:14001
+#, fuzzy
+msgid "Layout of the RAID10 array:"
+msgstr "Disposizione del multidisk RAID10:"
+
+#. Type: string
+#. Description
+#. :sl3:
+#: ../partman-md.templates:14001
+msgid ""
+"The layout must be n, o, or f (arrangement of the copies) followed by a "
+"number (number of copies of each chunk). The number must be smaller or equal "
+"to the number of active devices."
+msgstr ""
+"La disposizione deve essere «n», «o» oppure «f» (sistemazione delle copie) "
+"seguito da un numero (numero delle copie per ogni blocco). Il numero deve "
+"essere minore o uguale al numero dei device attivi."
+
+#. Type: string
+#. Description
+#. :sl3:
+#: ../partman-md.templates:14001
+msgid ""
+"The letter is the arrangement of the copies:\n"
+" n - near copies: Multiple copies of one data block are at similar\n"
+"     offsets in different devices.\n"
+" f - far copies: Multiple copies have very different offsets\n"
+" o - offset copies: Rather than the chunks being duplicated within a\n"
+"     stripe, whole stripes are duplicated but are rotated by one\n"
+"     device so duplicate blocks are on different devices."
+msgstr ""
+"La lettera è la disposizione delle copie:\n"
+" n - copie vicine: molteplici copie di un blocco di dati sono a\n"
+"     offset simili su device differenti.\n"
+" f - copie lontane: molteplici copie hanno offset diversi.\n"
+" o - copie offset: invece di duplicare i blocchi all'interno di un\n"
+"     segmento, gli interi segmenti sono duplicati, ma vengono ruotati di\n"
+"     un device in modo che i blocchi duplicati siano su device differenti."
+
+#. Type: select
+#. Description
+#. :sl3:
+#: ../partman-md.templates:15001
+#, fuzzy
+msgid "Software RAID device to be deleted:"
+msgstr "Dispositivo RAID software"
+
+#. Type: select
+#. Description
+#. :sl3:
+#: ../partman-md.templates:15001
+#, fuzzy
+msgid ""
+"Deleting a software RAID device will stop it and clear the superblock of all "
+"its components."
+msgstr ""
+"La cancellazione di un device multidisk lo terminerà e cancellerà il "
+"«superblock» di tutti i suoi componenti."
+
+#. Type: select
+#. Description
+#. :sl3:
+#: ../partman-md.templates:15001
+#, fuzzy
+msgid ""
+"Please note this will not immediately allow you to reuse the partitions or "
+"devices in a new software RAID device. The array will however be unusable "
+"after the deletion."
+msgstr ""
+"Notare che ciò non permetterà immediatamente di riutilizzare le partizioni o "
+"i device del dispositivo multidisk. L'array non sarà comunque utilizzabile "
+"dopo la cancellazione."
+
+#. Type: select
+#. Description
+#. :sl3:
+#: ../partman-md.templates:15001
+msgid ""
+"If you select a device for deletion, you will get some information about it "
+"and you will be given the option of aborting this operation."
+msgstr ""
+"Se si seleziona un device da cancellare, verranno mostrate alcune "
+"informazioni in merito e si disporrà dell'opzione per annullare questa "
+"operazione."
+
+#. Type: error
+#. Description
+#. :sl3:
+#: ../partman-md.templates:16001
+#, fuzzy
+msgid "No software RAID devices available"
+msgstr "Dispositivo RAID software"
+
+#. Type: error
+#. Description
+#. :sl3:
+#: ../partman-md.templates:16001
+#, fuzzy
+msgid "No software RAID devices are available for deletion."
+msgstr "Non sono disponibili device multidisk da cancellare."
+
 #. Type: boolean
 #. Description
 #. :sl3:
-#: ../partman-md.templates:3001
+#: ../partman-md.templates:17001
+#, fuzzy
+msgid "Really delete this software RAID device?"
+msgstr "Eliminare veramente il device multidisk?"
+
+#. Type: boolean
+#. Description
+#. :sl3:
+#: ../partman-md.templates:17001
+#, fuzzy
+msgid ""
+"Please confirm whether you really want to delete the following software RAID "
+"device:"
+msgstr "Confermare se eliminare veramente il seguente dispositivo multidisk:"
+
+#. Type: boolean
+#. Description
+#. :sl3:
+#: ../partman-md.templates:17001
+msgid ""
+" Device:            ${DEVICE}\n"
+" Type:              ${TYPE}\n"
+" Component devices:"
+msgstr ""
+" Device:            ${DEVICE}\n"
+" Tipo:              ${TYPE}\n"
+" Componenti:"
+
+#. Type: error
+#. Description
+#. :sl3:
+#: ../partman-md.templates:18001
+#, fuzzy
+msgid "Failed to delete the software RAID device"
+msgstr "Eliminazione del multidisk non riuscita"
+
+#. Type: error
+#. Description
+#. :sl3:
+#: ../partman-md.templates:18001
+#, fuzzy
+msgid "There was an error deleting the software RAID device. It may be in use."
+msgstr "Errore nel cancellare il device multidisk. Potrebbe essere in uso."
+
+#. Type: boolean
+#. Description
+#. :sl3:
+#: ../partman-md.templates:19001
 msgid "Write the changes to the storage devices and configure RAID?"
 msgstr ""
 "Scrivere i cambiamenti sui dispositivi di memorizzazione e configurare il "
@@ -59,7 +484,7 @@ msgstr ""
 #. Type: boolean
 #. Description
 #. :sl3:
-#: ../partman-md.templates:3001
+#: ../partman-md.templates:19001
 msgid ""
 "Before RAID can be configured, the changes have to be written to the storage "
 "devices.  These changes cannot be undone."
@@ -73,7 +498,7 @@ msgstr ""
 #. Type: boolean
 #. Description
 #. :sl3:
-#: ../partman-md.templates:3001 ../partman-md.templates:4001
+#: ../partman-md.templates:19001 ../partman-md.templates:20001
 msgid ""
 "When RAID is configured, no additional changes to the partitions in the "
 "disks containing physical volumes are allowed.  Please convince yourself "
@@ -86,21 +511,21 @@ msgstr ""
 #. Type: boolean
 #. Description
 #. :sl3:
-#: ../partman-md.templates:4001
+#: ../partman-md.templates:20001
 msgid "Keep current partition layout and configure RAID?"
 msgstr "Mantenere l'attuale partizionamento e configurare RAID?"
 
 #. Type: error
 #. Description
 #. :sl3:
-#: ../partman-md.templates:5001
+#: ../partman-md.templates:21001
 msgid "RAID configuration failure"
 msgstr "Configurazione del RAID non riuscita"
 
 #. Type: error
 #. Description
 #. :sl3:
-#: ../partman-md.templates:5001
+#: ../partman-md.templates:21001
 msgid "An error occurred while writing the changes to the storage devices."
 msgstr ""
 "Si è verificato un errore durante la scrittura delle modifiche sui "
@@ -109,35 +534,35 @@ msgstr ""
 #. Type: error
 #. Description
 #. :sl3:
-#: ../partman-md.templates:5001
+#: ../partman-md.templates:21001
 msgid "RAID configuration has been aborted."
 msgstr "Configurazione del RAID interrotta."
 
 #. Type: text
 #. Description
 #. :sl3:
-#: ../partman-md.templates:6001
+#: ../partman-md.templates:22001
 msgid "physical volume for RAID"
 msgstr "volume fisico per il RAID"
 
 #. Type: text
 #. Description
 #. :sl3:
-#: ../partman-md.templates:7001
+#: ../partman-md.templates:23001
 msgid "raid"
 msgstr "raid"
 
 #. Type: boolean
 #. Description
 #. :sl3:
-#: ../partman-md.templates:8001
+#: ../partman-md.templates:24001
 msgid "Remove existing software RAID partitions?"
-msgstr "Rimuovere partizioni RAID software esistenti?"
+msgstr "Rimuovere le partizioni RAID software esistenti?"
 
 #. Type: boolean
 #. Description
 #. :sl3:
-#: ../partman-md.templates:8001
+#: ../partman-md.templates:24001
 msgid ""
 "The selected device contains partitions used for software RAID devices. The "
 "following devices and partitions are about to be removed:"
@@ -148,21 +573,21 @@ msgstr ""
 #. Type: boolean
 #. Description
 #. :sl3:
-#: ../partman-md.templates:8001
+#: ../partman-md.templates:24001
 msgid "Software RAID devices about to be removed: ${REMOVED_DEVICES}"
 msgstr "Device RAID software da rimuovere: ${REMOVED_DEVICES}"
 
 #. Type: boolean
 #. Description
 #. :sl3:
-#: ../partman-md.templates:8001
+#: ../partman-md.templates:24001
 msgid "Partitions used by these RAID devices: ${REMOVED_PARTITIONS}"
 msgstr "Partizioni usate da questi device RAID: ${REMOVED_PARTITIONS}"
 
 #. Type: boolean
 #. Description
 #. :sl3:
-#: ../partman-md.templates:8001
+#: ../partman-md.templates:24001
 msgid ""
 "Note that this will also permanently erase any data currently on the "
 "software RAID devices."

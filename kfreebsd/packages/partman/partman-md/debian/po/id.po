@@ -20,8 +20,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: debian-installer (level1)\n"
-"Report-Msgid-Bugs-To: debian-boot@lists.debian.org\n"
-"POT-Creation-Date: 2008-07-31 22:50+0000\n"
+"Report-Msgid-Bugs-To: partman-md@packages.debian.org\n"
+"POT-Creation-Date: 2009-07-17 22:47+0000\n"
 "PO-Revision-Date: 2008-09-08 15:14+0700\n"
 "Last-Translator: Arief S Fitrianto <arief@gurame.fisika.ui.ac.id>\n"
 "Language-Team: Bahasa Indonesia <debian-l10n-id@gurame.fisika.ui.ac.id>\n"
@@ -44,17 +44,451 @@ msgstr "Piranti perangkat lunak RAID"
 msgid "Configure software RAID"
 msgstr "Mengonfigurasi perangkat lunak RAID"
 
+#. Type: text
+#. Description
+#. :sl3:
+#. What is "in use" is a partition
+#: ../partman-md.templates:3001
+#, fuzzy
+msgid "In use by software RAID device ${DEVICE}"
+msgstr "Piranti perangkat lunak RAID"
+
+#. Type: error
+#. Description
+#. :sl3:
+#: ../partman-md.templates:4001
+#, fuzzy
+msgid "Software RAID not available"
+msgstr "Piranti perangkat lunak RAID"
+
+#. Type: error
+#. Description
+#. :sl3:
+#: ../partman-md.templates:4001
+#, fuzzy
+msgid ""
+"The current kernel doesn't seem to support software RAID (MD) devices. This "
+"should be solved by loading the necessary modules."
+msgstr ""
+"Kernel yang dipakai saat ini sepertinya tidak mendukung piranti-piranti "
+"multidisk. Seharusnya dapat diatasi dengan memuat modul-modul yang "
+"diperlukan."
+
+#. Type: select
+#. Choices
+#. Note to translators : Please keep your translations of the choices
+#. below a 65 columns limit (which means 65 characters
+#. in single-byte languages)
+#. :sl3:
+#: ../partman-md.templates:5001
+msgid "Create MD device"
+msgstr "Membuat perangkat MD"
+
+#. Type: select
+#. Choices
+#. Note to translators : Please keep your translations of the choices
+#. below a 65 columns limit (which means 65 characters
+#. in single-byte languages)
+#. :sl3:
+#: ../partman-md.templates:5001
+msgid "Delete MD device"
+msgstr "Menghapus perangkat MD"
+
+#. Type: select
+#. Choices
+#. Note to translators : Please keep your translations of the choices
+#. below a 65 columns limit (which means 65 characters
+#. in single-byte languages)
+#. :sl3:
+#: ../partman-md.templates:5001
+msgid "Finish"
+msgstr "Selesai"
+
+#. Type: select
+#. Description
+#. :sl3:
+#: ../partman-md.templates:5002
+#, fuzzy
+msgid "Software RAID configuration actions"
+msgstr "Tindakan untuk konfigurasi LVM:"
+
+#. Type: select
+#. Description
+#. :sl3:
+#: ../partman-md.templates:5002
+#, fuzzy
+msgid ""
+"This is the software RAID (or MD, \"multiple device\") configuration menu."
+msgstr "Ini adalah menu konfigurasi Multidisk (MD) dan perangkat lunak RAID ."
+
+#. Type: select
+#. Description
+#. :sl3:
+#: ../partman-md.templates:5002
+#, fuzzy
+msgid "Please select one of the proposed actions to configure software RAID."
+msgstr ""
+"Silakan memilih salah satu dari tindakan yang diusulkan untuk "
+"mengonfigurasikan piranti multidisk."
+
+#. Type: select
+#. Description
+#. :sl3:
+#: ../partman-md.templates:6001
+#, fuzzy
+msgid "Software RAID device type:"
+msgstr "Piranti perangkat lunak RAID"
+
+#. Type: select
+#. Description
+#. :sl3:
+#: ../partman-md.templates:6001
+#, fuzzy
+msgid "Please choose the type of the software RAID device to be created."
+msgstr "Silakan pilih jenis piranti multidisk yang akan dibuat."
+
+#. Type: error
+#. Description
+#. :sl3:
+#: ../partman-md.templates:7001
+msgid "No RAID partitions available"
+msgstr "Tak tersedia partisi RAID"
+
+#. Type: error
+#. Description
+#. :sl3:
+#: ../partman-md.templates:7001
+#, fuzzy
+msgid ""
+"No unused partitions of the type \"Linux RAID Autodetect\" are available. "
+"Please create such a partition, or delete an already used software RAID "
+"device to free its partitions."
+msgstr ""
+"Tidak tersedia partisi berjenis \"Linux RAID Autodetect\" yang tidak "
+"digunakan. Silakan buat partisi baru, atau hapus piranti multidisk yang ada "
+"untuk mengosongkan partisinya."
+
+#. Type: error
+#. Description
+#. :sl3:
+#: ../partman-md.templates:7001
+msgid ""
+"If you have such partitions, they might contain actual file systems, and are "
+"therefore not available for use by this configuration utility."
+msgstr ""
+"Jika Anda memiliki partisi dengan jenis tersebut, di dalamnya mungkin berisi "
+"sistem berkas sesungguhnya, dan oleh karenanya tidak dapat digunakan oleh "
+"program konfigurasi ini."
+
+#. Type: multiselect
+#. Description
+#. :sl3:
+#: ../partman-md.templates:8001
+#, fuzzy
+msgid "Active devices for the RAID0 array:"
+msgstr "Jumlah piranti aktif bagi larik RAID5:"
+
+#. Type: multiselect
+#. Description
+#. :sl3:
+#: ../partman-md.templates:8001
+msgid ""
+"You have chosen to create a RAID0 array. Please choose the active devices in "
+"this array."
+msgstr ""
+"Anda telah memutuskan untuk membuat sebuah larik RAID0. Silakan pilih "
+"piranti aktif pada larik ini."
+
+#. Type: string
+#. Description
+#. :sl3:
+#: ../partman-md.templates:9001
+msgid "Number of active devices for the RAID${LEVEL} array:"
+msgstr "Jumlah piranti aktif bagi larik RAID${LEVEL}:"
+
+#. Type: string
+#. Description
+#. :sl3:
+#: ../partman-md.templates:9001
+#, fuzzy
+msgid ""
+"The RAID${LEVEL} array will consist of both active and spare devices. The "
+"active devices are those used, while the spare devices will only be used if "
+"one or more of the active devices fail. A minimum of ${MINIMUM} active "
+"devices is required."
+msgstr ""
+"Larik RAID${LEVEL} akan berisikan partisi aktif dan partisi yang menganggur. "
+"Partisi aktif adalah partisi yang akan digunakan, sedangkan partisi yang "
+"menganggur hanya akan digunakan jika satu atau beberapa piranti aktif gagal "
+"berfungsi. Sedikitnya, dibutuhkan ${MINIMUM} piranti aktif."
+
+#. Type: string
+#. Description
+#. :sl3:
+#. Type: string
+#. Description
+#. :sl3:
+#: ../partman-md.templates:9001 ../partman-md.templates:14001
+msgid "NOTE: this setting cannot be changed later."
+msgstr "CATATAN: susunan ini tidak dapat diubah di lain waktu."
+
+#. Type: multiselect
+#. Description
+#. :sl3:
+#: ../partman-md.templates:10001
+#, fuzzy
+msgid "Active devices for the RAID${LEVEL} array:"
+msgstr "Jumlah piranti aktif bagi larik RAID${LEVEL}:"
+
+#. Type: multiselect
+#. Description
+#. :sl3:
+#: ../partman-md.templates:10001
+msgid ""
+"You have chosen to create a RAID${LEVEL} array with ${COUNT} active devices."
+msgstr ""
+"Anda telah memutuskan untuk membuat sebuah larik RAID${LEVEL} dengan "
+"${COUNT} piranti aktif."
+
+#. Type: multiselect
+#. Description
+#. :sl3:
+#: ../partman-md.templates:10001
+msgid ""
+"Please choose which partitions are active devices. You must select exactly "
+"${COUNT} partitions."
+msgstr ""
+"Silakan pilih partisi yang ditentukan sebagai partisi aktif. Anda harus "
+"memilih secara tepat sebanyak ${COUNT} partisi."
+
+#. Type: string
+#. Description
+#. :sl3:
+#: ../partman-md.templates:11001
+msgid "Number of spare devices for the RAID${LEVEL} array:"
+msgstr "Jumlah piranti yang menganggur bagi larik RAID${LEVEL}:"
+
+#. Type: multiselect
+#. Description
+#. :sl3:
+#: ../partman-md.templates:12001
+#, fuzzy
+msgid "Spare devices for the RAID${LEVEL} array:"
+msgstr "Jumlah piranti yang menganggur bagi larik RAID${LEVEL}:"
+
+#. Type: multiselect
+#. Description
+#. :sl3:
+#: ../partman-md.templates:12001
+msgid ""
+"You have chosen to create a RAID${LEVEL} array with ${COUNT} spare devices."
+msgstr ""
+"Anda telah memilih untuk membuat sebuah larik RAID${LEVEL} dengan piranti "
+"menganggur sebanyak ${COUNT}."
+
+#. Type: multiselect
+#. Description
+#. :sl3:
+#: ../partman-md.templates:12001
+#, fuzzy
+msgid ""
+"Please choose which partitions will be used as spare devices. You may choose "
+"up to ${COUNT} partitions. If you choose less than ${COUNT} devices, the "
+"remaining partitions will be added to the array as \"missing\". You will be "
+"able to add them to the array later."
+msgstr ""
+"Silakan pilih partisi yang akan digunakan sebagai piranti menganggur. Anda "
+"mungkin bisa memilih sampai dengan ${COUNT} partisi. Jika Anda memilih "
+"kurang dari ${COUNT} piranti, partisi yang tersisa akan ditambahkan ke larik "
+"dan dinyatakan sebagai \"hilang\". Anda bisa menambahkannya ke larik di lain "
+"waktu."
+
+#. Type: error
+#. Description
+#. :sl3:
+#: ../partman-md.templates:13001
+msgid "Not enough RAID partitions available"
+msgstr "Partisi RAID tidak cukup tersedia"
+
+#. Type: error
+#. Description
+#. :sl3:
+#: ../partman-md.templates:13001
+msgid ""
+"There are not enough RAID partitions available for your selected "
+"configuration.  You have ${NUM_PART} RAID partitions available but your "
+"configuration requires ${REQUIRED} partitions."
+msgstr ""
+"Partisi RAID tidak cukup tersedia, untuk dapat memenuhi konfigurasi pilihan "
+"Anda. Partisi RAID yang Anda miliki sebanyak ${NUM_PART}, tetapi konfigurasi "
+"pilihan Anda membutuhkan sebanyak ${REQUIRED} partisi."
+
+#. Type: string
+#. Description
+#. :sl3:
+#: ../partman-md.templates:14001
+#, fuzzy
+msgid "Layout of the RAID10 array:"
+msgstr "Susunan piranti multidisk RAID10:"
+
+#. Type: string
+#. Description
+#. :sl3:
+#: ../partman-md.templates:14001
+msgid ""
+"The layout must be n, o, or f (arrangement of the copies) followed by a "
+"number (number of copies of each chunk). The number must be smaller or equal "
+"to the number of active devices."
+msgstr ""
+"Pola yang benar harus n, o, atau f (penyusunan dari salinan) diikuti oleh "
+"suatu angka (jumlah salinan setiap larik). Angka tersebut harus lebih kecil "
+"atau sama dengan jumlah piranti yang aktif."
+
+#. Type: string
+#. Description
+#. :sl3:
+#: ../partman-md.templates:14001
+msgid ""
+"The letter is the arrangement of the copies:\n"
+" n - near copies: Multiple copies of one data block are at similar\n"
+"     offsets in different devices.\n"
+" f - far copies: Multiple copies have very different offsets\n"
+" o - offset copies: Rather than the chunks being duplicated within a\n"
+"     stripe, whole stripes are duplicated but are rotated by one\n"
+"     device so duplicate blocks are on different devices."
+msgstr ""
+"Huruf menyatakan penyusunan dari salinan: \n"
+" n - salinan dekat: Banyak salinan dari satu blok data di offset yang sama \n"
+"     dalam piranti yang berbeda. \n"
+" f - salinan jauh: Banyak salinan memiliki offset yang berbeda \n"
+" o - salinan offset: Daripada setiap potongan disalin dalam sebuah blok, \n"
+"     seluruh blok disalin tetapi dirotasi per-piranti, sehingga blok yang \n"
+"     ganda ada pada piranti yang berbeda."
+
+#. Type: select
+#. Description
+#. :sl3:
+#: ../partman-md.templates:15001
+#, fuzzy
+msgid "Software RAID device to be deleted:"
+msgstr "Piranti perangkat lunak RAID"
+
+#. Type: select
+#. Description
+#. :sl3:
+#: ../partman-md.templates:15001
+#, fuzzy
+msgid ""
+"Deleting a software RAID device will stop it and clear the superblock of all "
+"its components."
+msgstr ""
+"Menghapus sebuah piranti multidisk akan menghentikan dan membersihkan "
+"superblock dari semua komponennya."
+
+#. Type: select
+#. Description
+#. :sl3:
+#: ../partman-md.templates:15001
+#, fuzzy
+msgid ""
+"Please note this will not immediately allow you to reuse the partitions or "
+"devices in a new software RAID device. The array will however be unusable "
+"after the deletion."
+msgstr ""
+"Harap dicatat bahwa proses tersebut tidak akan secara langsung "
+"memperbolehkan Anda untuk menggunakan kembali partisi-partisi atau piranti-"
+"piranti pada multidisk yang baru. Bagaimanapun juga larik tidak akan dapat "
+"digunakan setelah proses penghapusan."
+
+#. Type: select
+#. Description
+#. :sl3:
+#: ../partman-md.templates:15001
+msgid ""
+"If you select a device for deletion, you will get some information about it "
+"and you will be given the option of aborting this operation."
+msgstr ""
+"Jika Anda memilih piranti untuk dihapus, Anda akan mendapatkan beberapa "
+"informasi tentangnya dan Anda akan diberikan pilihan untuk membatalkan "
+"proses ini."
+
+#. Type: error
+#. Description
+#. :sl3:
+#: ../partman-md.templates:16001
+#, fuzzy
+msgid "No software RAID devices available"
+msgstr "Piranti perangkat lunak RAID"
+
+#. Type: error
+#. Description
+#. :sl3:
+#: ../partman-md.templates:16001
+#, fuzzy
+msgid "No software RAID devices are available for deletion."
+msgstr "Tidak terdapat piranti multidisk yang akan dihapus."
+
 #. Type: boolean
 #. Description
 #. :sl3:
-#: ../partman-md.templates:3001
+#: ../partman-md.templates:17001
+#, fuzzy
+msgid "Really delete this software RAID device?"
+msgstr "Benar-benar menghapus piranti multidisk?"
+
+#. Type: boolean
+#. Description
+#. :sl3:
+#: ../partman-md.templates:17001
+#, fuzzy
+msgid ""
+"Please confirm whether you really want to delete the following software RAID "
+"device:"
+msgstr ""
+"Silakan pastikan apakah Anda benar-benar ingin menghapus piranti multidisk "
+"berikut:"
+
+#. Type: boolean
+#. Description
+#. :sl3:
+#: ../partman-md.templates:17001
+msgid ""
+" Device:            ${DEVICE}\n"
+" Type:              ${TYPE}\n"
+" Component devices:"
+msgstr ""
+"Piranti:            ${DEVICE}\n"
+"Tipe:              ${TYPE}\n"
+"Piranti-piranti komponen:"
+
+#. Type: error
+#. Description
+#. :sl3:
+#: ../partman-md.templates:18001
+#, fuzzy
+msgid "Failed to delete the software RAID device"
+msgstr "Gagal menghapus piranti multidisk"
+
+#. Type: error
+#. Description
+#. :sl3:
+#: ../partman-md.templates:18001
+#, fuzzy
+msgid "There was an error deleting the software RAID device. It may be in use."
+msgstr ""
+"Ada kesalahan saat menghapus piranti multidisk. Mungkin sedang digunakan."
+
+#. Type: boolean
+#. Description
+#. :sl3:
+#: ../partman-md.templates:19001
 msgid "Write the changes to the storage devices and configure RAID?"
 msgstr "Tulis semua perubahan ke piranti penyimpanan lalu konfigurasi RAID?"
 
 #. Type: boolean
 #. Description
 #. :sl3:
-#: ../partman-md.templates:3001
+#: ../partman-md.templates:19001
 msgid ""
 "Before RAID can be configured, the changes have to be written to the storage "
 "devices.  These changes cannot be undone."
@@ -68,7 +502,7 @@ msgstr ""
 #. Type: boolean
 #. Description
 #. :sl3:
-#: ../partman-md.templates:3001 ../partman-md.templates:4001
+#: ../partman-md.templates:19001 ../partman-md.templates:20001
 msgid ""
 "When RAID is configured, no additional changes to the partitions in the "
 "disks containing physical volumes are allowed.  Please convince yourself "
@@ -81,56 +515,56 @@ msgstr ""
 #. Type: boolean
 #. Description
 #. :sl3:
-#: ../partman-md.templates:4001
+#: ../partman-md.templates:20001
 msgid "Keep current partition layout and configure RAID?"
 msgstr "Gunakan layout partisi yang ada dan konfigurasikan RAID?"
 
 #. Type: error
 #. Description
 #. :sl3:
-#: ../partman-md.templates:5001
+#: ../partman-md.templates:21001
 msgid "RAID configuration failure"
 msgstr "Kegagalan pada proses konfigurasi RAID"
 
 #. Type: error
 #. Description
 #. :sl3:
-#: ../partman-md.templates:5001
+#: ../partman-md.templates:21001
 msgid "An error occurred while writing the changes to the storage devices."
 msgstr "Terjadi kesalahan saat menuliskan perubahan ke piranti penyimpanan."
 
 #. Type: error
 #. Description
 #. :sl3:
-#: ../partman-md.templates:5001
+#: ../partman-md.templates:21001
 msgid "RAID configuration has been aborted."
 msgstr "Konfigurasi RAID telah dibatalkan."
 
 #. Type: text
 #. Description
 #. :sl3:
-#: ../partman-md.templates:6001
+#: ../partman-md.templates:22001
 msgid "physical volume for RAID"
 msgstr "Isi fisik bagi RAID"
 
 #. Type: text
 #. Description
 #. :sl3:
-#: ../partman-md.templates:7001
+#: ../partman-md.templates:23001
 msgid "raid"
 msgstr "raid"
 
 #. Type: boolean
 #. Description
 #. :sl3:
-#: ../partman-md.templates:8001
+#: ../partman-md.templates:24001
 msgid "Remove existing software RAID partitions?"
 msgstr "Hapus partisi RAID-software yang telah ada?"
 
 #. Type: boolean
 #. Description
 #. :sl3:
-#: ../partman-md.templates:8001
+#: ../partman-md.templates:24001
 msgid ""
 "The selected device contains partitions used for software RAID devices. The "
 "following devices and partitions are about to be removed:"
@@ -141,21 +575,21 @@ msgstr ""
 #. Type: boolean
 #. Description
 #. :sl3:
-#: ../partman-md.templates:8001
+#: ../partman-md.templates:24001
 msgid "Software RAID devices about to be removed: ${REMOVED_DEVICES}"
 msgstr "Piranti RAID-software yang akan dihapus: ${REMOVED_DEVICES}"
 
 #. Type: boolean
 #. Description
 #. :sl3:
-#: ../partman-md.templates:8001
+#: ../partman-md.templates:24001
 msgid "Partitions used by these RAID devices: ${REMOVED_PARTITIONS}"
 msgstr "Partisi yang dipakai oleh piranti RAID ini: ${REMOVED_PARTITIONS}"
 
 #. Type: boolean
 #. Description
 #. :sl3:
-#: ../partman-md.templates:8001
+#: ../partman-md.templates:24001
 msgid ""
 "Note that this will also permanently erase any data currently on the "
 "software RAID devices."

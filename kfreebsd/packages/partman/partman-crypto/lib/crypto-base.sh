@@ -526,6 +526,7 @@ crypto_load_udebs() {
 		mkdir -p $udebdir
 	fi
 
+	local need_depmod=
 	for package in $packages; do
 		if [ -f $udebdir/$package ]; then
 			continue
@@ -541,15 +542,18 @@ crypto_load_udebs() {
 		fi
 
 		touch $udebdir/$package
+		need_depmod=1
 	done
 
-	# The udeb installation run usually adds new kernel modules
-	if [ -x /sbin/depmod ]; then
-		depmod -a > /dev/null 2>&1 || true
-	fi
+	if [ "$need_depmod" ]; then
+		# The udeb installation run usually adds new kernel modules
+		if [ -x /sbin/depmod ]; then
+			depmod -a > /dev/null 2>&1 || true
+		fi
 
-	# Reset the capabilities after anna-install
-	db_capb backup align
+		# Reset the capabilities after anna-install
+		db_capb backup align
+	fi
 
 	return 0
 }

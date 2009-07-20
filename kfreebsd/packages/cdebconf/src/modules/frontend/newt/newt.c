@@ -182,7 +182,7 @@ help_text(struct frontend *obj)
 static const char *
 help_text_f1(struct frontend *obj)
 {
-    return question_get_text(obj, "debconf/help-line", "<F1> for help; <Tab> moves; <Space> selects; <Enter> activates buttons");
+    return question_get_text(obj, "debconf/help-line-f1", "<F1> for help; <Tab> moves; <Space> selects; <Enter> activates buttons");
 }
 
 void
@@ -1155,9 +1155,6 @@ newt_initialize(struct frontend *obj, struct configuration *conf)
         newtAltColorPalette = newtDefaultColorPalette;
     newtSetColors(newtAltColorPalette);
     newtGetScreenSize(&width, &height);
-    // Fill the screen so people can shift-pgup properly
-    for (i = 0; i < height; i++)
-        putchar('\n');
     newtFinished();
     return DC_OK;
 }

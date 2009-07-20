@@ -1,3 +1,34 @@
+cdebconf (0.146) UNRELEASED; urgency=low
+
+  * Remove newt screen clearing code. Closes: #442291
+  * dpkg-reconfigure: Fix -p to set priority. Closes: #442288
+  * dpkg-reconfigure: Fix skipping of seen questions. Closes: #442290
+  * dpkg-reconfigure: Run at low priority by default, like perl debconf.
+  * dpkg-reconfigure: Support --default-priority and --unseen-only.
+  * dpkg-reconfigure: Fix support for -u short option.
+  * Rename DEBCONF_PRIORITY to DEBIAN_PRIORITY for compatability with perl
+    debconf. No code uses the old variable name, the manual
+    has even been changed long ago not to use it.
+  * dpkg-reconfigure: Don't treat config script exit 1 as success.
+    Closes: #443760
+  * dpkg-reconfigure: Run prerm script to simulate package reinstallation.
+    Closes: #469363
+
+ -- Joey Hess <joeyh@debian.org>  Sat, 18 Jul 2009 18:39:53 +0200
+
+cdebconf (0.145) unstable; urgency=low
+
+  * Use correct debconf template for newt help line when F1-help is
+    available.
+
+  [ Updated translations ]
+  * German (de.po) by Holger Wansing
+  * Basque (eu.po) by Piarres Beobide
+  * Italian (it.po) by Milo Casagrande
+  * Turkish (tr.po) by Mert Dirik
+
+ -- Colin Watson <cjwatson@debian.org>  Thu, 16 Jul 2009 16:30:02 +0100
+
 cdebconf (0.144) unstable; urgency=low
 
   * Drop gtk frontend from default cdebconf package (thanks, Neil Williams;
