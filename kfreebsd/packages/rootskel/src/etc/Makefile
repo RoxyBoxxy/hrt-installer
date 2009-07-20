@@ -8,7 +8,7 @@ subdirs_empty = rcS.d
 files = \
 	fstab:fstab-$(DEB_HOST_ARCH_OS) \
 	group \
-	inittab \
+	inittab:inittab-$(DEB_HOST_ARCH_OS) \
 	modules.conf \
 	nsswitch.conf \
 	passwd \
