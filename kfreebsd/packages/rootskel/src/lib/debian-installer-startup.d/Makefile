@@ -17,6 +17,7 @@ endif
 files = \
 	S01mount \
 	S02module-params \
+	S10syslog:S10syslog-$(DEB_HOST_ARCH_OS) \
 	S20templates \
 	S35term
 
@@ -57,11 +58,7 @@ ifeq ($(DEB_HOST_ARCH_OS),linux)
   endif
 
   files += \
-	S10syslog:S10syslog-linux \
 	S37speakup
-else
-  files += \
-	S10syslog:S10syslog-generic
 endif
 
 include ../../../Makefile.inc
