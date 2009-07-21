@@ -17,7 +17,7 @@ endif
 files = \
 	S01mount \
 	S02module-params \
-	S10syslog:S10syslog-$(DEB_HOST_ARCH_OS) \
+	S10syslog \
 	S20templates \
 	S35term
 
