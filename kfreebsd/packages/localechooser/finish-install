@@ -27,33 +27,4 @@ if [ "$LOCALE" != "C" ] ; then
 	esac
 fi
 
-# Install localization-config except when no localization happens
-# Install it anyway for powerpc (to handle subarches)
-# Disabled for etch as l-c is not ready
-#if [ "$LOCALE" != "C" ] || [ "$ARCH" = "powerpc" ]; then
-#        apt-install localization-config || true
-#fi
-
-
-db_get debian-installer/consoledisplay || true
-consoletype=$(echo $RET | sed -e 's/=.*$//')
-case "$consoletype" in
-    kbd)
-	consolefont=$(echo $RET | sed -e 's/^kbd=//')
-	if apt-install kbd; then
-		consolefont=$(echo $consolefont | sed -e 's/(.*//')
-		if echo "$consolefont" | grep -q "Terminus"; then
-			apt-install console-terminus || true
-		fi
-	fi
-	;;
-    cyr)
-	apt-install console-cyrillic || true
-	;;
-    console-setup)
-	apt-install console-setup || true
-	db_set debian-installer/keymap '' || true
-	;;
-esac
-
 exit 0
