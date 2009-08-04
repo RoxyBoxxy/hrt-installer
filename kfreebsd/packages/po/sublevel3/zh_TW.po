@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: debian-installer\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-07-17 22:47+0000\n"
+"POT-Creation-Date: 2009-07-24 22:47+0000\n"
 "PO-Revision-Date: 2008-08-09 00:35+0800\n"
 "Last-Translator: Tetralet <tetralet@gmail.com>\n"
 "Language-Team: Debian-user in Chinese [Big5] <debian-chinese-big5@lists."
@@ -1448,6 +1448,13 @@ msgstr "刪除 MD 裝置"
 #. #-#-#-#-#  templates.pot (PACKAGE VERSION)  #-#-#-#-#
 #. Type: select
 #. Choices
+#. Note to translators : Please keep your translations of the choices
+#. below a 65 columns limit (which means 65 characters
+#. in single-byte languages)
+#. :sl3:
+#. #-#-#-#-#  templates.pot (PACKAGE VERSION)  #-#-#-#-#
+#. Type: select
+#. Choices
 #. :sl5:
 #. #-#-#-#-#  templates.pot (PACKAGE VERSION)  #-#-#-#-#
 #. Type: select
@@ -1460,8 +1467,9 @@ msgstr "刪除 MD 裝置"
 #. TRANSLATORS, please translate "Finish" the same way you translate it in
 #. the " Select "Finish" at the bottom of the list when you are done" string
 #: ../mdcfg-utils.templates:3001 ../partman-md.templates:5001
-#: ../partman-lvm.templates:17001 ../partconf.templates:3001
-#: ../partitioner.templates:1001 ../s390-dasd.templates:1001
+#: ../partman-lvm.templates:17001 ../partman-crypto.templates:55001
+#: ../partconf.templates:3001 ../partitioner.templates:1001
+#: ../s390-dasd.templates:1001
 msgid "Finish"
 msgstr "完成"
 
@@ -2007,9 +2015,13 @@ msgstr "請選擇要給新的 Volume Group 使用的裝置。"
 #. Type: multiselect
 #. Description
 #. :sl3:
+#. #-#-#-#-#  templates.pot (PACKAGE VERSION)  #-#-#-#-#
+#. Type: multiselect
+#. Description
+#. :sl3:
 #: ../lvmcfg-utils.templates:5001 ../lvmcfg-utils.templates:17001
 #: ../partman-lvm.templates:26001 ../partman-lvm.templates:39001
-#: ../partman-lvm.templates:44001
+#: ../partman-lvm.templates:44001 ../partman-crypto.templates:56001
 msgid "You can select one or more devices."
 msgstr "您可以選取一個或多個裝置。"
 
@@ -3364,6 +3376,50 @@ msgstr ""
 "以自動的方式移除它的 LVM 資料被認為是不安全的。如果您希望在這個裝置上進行磁碟"
 "分割，請先移除它的 LVM 資料。"
 
+#. Type: note
+#. Description
+#. :sl3:
+#: ../partman-lvm.templates:64001
+#, fuzzy
+#| msgid "Logical volume name:"
+msgid "Logical Volume Management"
+msgstr "Logical Volume 名稱："
+
+#. Type: note
+#. Description
+#. :sl3:
+#: ../partman-lvm.templates:64001
+msgid ""
+"A common situation for system administrators is to find that some disk "
+"partition (usually the most important one) is short on space, while some "
+"other partition is underused. The Logical Volume Manager (LVM) can help with "
+"this."
+msgstr ""
+
+#. Type: note
+#. Description
+#. :sl3:
+#: ../partman-lvm.templates:64001
+msgid ""
+"LVM allows combining disk or partition devices (\"physical volumes\") to "
+"form a virtual disk (\"volume group\"), which can then be divided into "
+"virtual partitions (\"logical volumes\"). Volume groups and logical volumes "
+"may span several physical disks. New physical volumes may be added to a "
+"volume group at any time, and logical volumes can be resized up to the "
+"amount of unallocated space in the volume group."
+msgstr ""
+
+#. Type: note
+#. Description
+#. :sl3:
+#: ../partman-lvm.templates:64001
+msgid ""
+"The items on the LVM configuration menu can be used to edit volume groups "
+"and logical volumes. After you return to the main partition manager screen, "
+"logical volumes will be displayed in the same way as ordinary partitions, "
+"and should be treated as such."
+msgstr ""
+
 #. Type: string
 #. Description
 #. :sl3:
@@ -4275,6 +4331,54 @@ msgid ""
 msgstr ""
 "似乎沒有足夠的記憶體可用來安裝額外的加密元件。如果您決定無論如何都要繼續進"
 "行，安裝程序將可能會失敗。"
+
+#. Type: select
+#. Choices
+#. Note to translators : Please keep your translations of the choices
+#. below a 65 columns limit (which means 65 characters
+#. in single-byte languages)
+#. :sl3:
+#: ../partman-crypto.templates:55001
+#, fuzzy
+#| msgid "Configure encrypted volumes"
+msgid "Create encrypted volumes"
+msgstr "設定已加密的 Volume"
+
+#. Type: multiselect
+#. Description
+#. :sl3:
+#: ../partman-crypto.templates:56001
+#, fuzzy
+#| msgid "Services to use:"
+msgid "Devices to encrypt:"
+msgstr "要使用的服務："
+
+#. Type: multiselect
+#. Description
+#. :sl3:
+#: ../partman-crypto.templates:56001
+#, fuzzy
+#| msgid "Please select the devices for the new volume group."
+msgid "Please select the devices to be encrypted."
+msgstr "請選擇要給新的 Volume Group 使用的裝置。"
+
+#. Type: error
+#. Description
+#. :sl3:
+#: ../partman-crypto.templates:57001
+#, fuzzy
+#| msgid "No physical volumes selected"
+msgid "No devices selected"
+msgstr "沒有選取任何的 Physical Volume"
+
+#. Type: error
+#. Description
+#. :sl3:
+#: ../partman-crypto.templates:57001
+#, fuzzy
+#| msgid "No partitions have been selected for encryption."
+msgid "No devices were selected for encryption."
+msgstr "未指定任何要進行加密的磁碟分割區。"
 
 #. Type: text
 #. Description

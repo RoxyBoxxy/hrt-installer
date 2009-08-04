@@ -1,6 +1,113 @@
 . /lib/partman/lib/base.sh
 . /lib/partman/lib/commit.sh
 
+# Would this partition be allowed as a physical volume for crypto?
+crypto_allowed() {
+	local dev=$1
+	local id=$2
+
+	# Allow unless this is a crypto device
+	[ ! -f "$dev/crypto_realdev" ]
+}
+
+crypto_list_allowed() {
+	partman_list_allowed crypto_allowed
+}
+
+crypto_list_allowed_free() {
+	local line
+
+	IFS="$NL"
+	for line in $(crypto_list_allowed); do
+		restore_ifs
+		local dev="${line%%$TAB*}"
+		local rest="${line#*$TAB}"
+		local id="${rest%%$TAB*}"
+		if [ -e "$dev/locked" ] || [ -e "$dev/$id/locked" ]; then
+			continue
+		fi
+		echo "$line"
+		IFS="$NL"
+	done
+	restore_ifs
+}
+
+# Prepare a partition for use as a physical volume for encryption. If this
+# returns true, then it did some work and a commit is necessary. Prints the
+# new path.
+crypto_prepare () {
+	local dev="$1"
+	local id="$2"
+	local num size parttype fs path
+
+	cd "$dev"
+	open_dialog PARTITION_INFO "$id"
+	read_line num id size freetype fs path x7
+	close_dialog
+
+	if [ "$fs" = free ]; then
+		local newtype
+
+		case $freetype in
+		    primary)
+			newtype=primary
+			;;
+		    logical)
+			newtype=logical
+			;;
+		    pri/log)
+			local parttype
+			open_dialog PARTITIONS
+			while { read_line x1 x2 x3 parttype x5 x6 x7; [ "$parttype" ]; }; do
+				if [ "$parttype" = primary ]; then
+					has_primary=yes
+				fi
+			done
+			close_dialog
+			if [ "$has_primary" = yes ]; then
+				newtype=logical
+			else
+				newtype=primary
+			fi
+			;;
+		esac
+
+		open_dialog NEW_PARTITION $newtype ext2 $id full $size
+		read_line num id x3 x4 x5 path x7
+		close_dialog
+	fi
+
+	mkdir -p "$id"
+	local method="$(cat "$id/method" 2>/dev/null || true)"
+	if [ "$method" = swap ]; then
+		disable_swap "$id"
+	fi
+	if [ "$method" != crypto ]; then
+		crypto_prepare_method "$id" dm-crypt || return 1
+		rm -f "$id/use_filesystem"
+		rm -f "$id/format"
+		echo dm-crypt >"$id/crypto_type"
+		echo crypto >"$id/method"
+
+		while true; do
+			local code=0
+			ask_active_partition "$dev" "$id" "$num" || code=$?
+			if [ "$code" -ge 128 ] && [ "$code" -lt 192 ]; then
+				exit "$code" # killed by signal
+			elif [ "$code" -ge 100 ]; then
+				break
+			fi
+		done
+
+		update_partition "$dev" "$id"
+		echo "$path"
+		return 0
+	fi
+
+	echo "$path"
+	return 1
+}
+
 dm_dev_is_safe() {
 	local maj min dminfo deps
 	maj="$1"

@@ -139,6 +139,9 @@ case "$machine" in
 			error "apt-install uboot-mkimage failed"
 		fi
 	;;
+	"Lanner EM7210")
+		in-target update-initramfs -u || true
+	;;
 esac
 
 db_progress STEP 1

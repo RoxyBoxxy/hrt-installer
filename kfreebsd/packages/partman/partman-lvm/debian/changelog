@@ -1,4 +1,11 @@
-partman-lvm (67) UNRELEASED; urgency=low
+partman-lvm (68) UNRELEASED; urgency=low
+
+  * Use partman_list_allowed from partman-base and add
+    versioned depends on >= 133 accordingly.
+
+ -- Max Vozeler <xam@debian.org>  Thu, 30 Jul 2009 17:32:32 +0200
+
+partman-lvm (67) unstable; urgency=low
 
   * Merge from Ubuntu:
     - The LVM tools seem to be a bit racy. Add some 'update-dev --settle'
@@ -7,8 +14,25 @@ partman-lvm (67) UNRELEASED; urgency=low
     - swapoff and umount may write to the device and thereby trigger udev
       change events, so wait for udev to settle before calling lvremove (LP:
       #341046).
+    - Rearrange LVM configuration. Instead of requiring partitions to be set
+      for use as LVM physical volumes first, we now offer all partitions
+      that could be used as PVs, and automatically set them up that way on
+      request. This allows us to offer our main menu option more or less all
+      the time, and should require many fewer keystrokes to operate. Thanks
+      to Max Vozeler for review.
+  * Add help text to the LVM configuration menu. Thanks to Otavio Salvador
+    and Christian Perrier for review.
 
- -- Colin Watson <cjwatson@debian.org>  Mon, 15 Jun 2009 15:27:26 +0100
+  [ Updated translations ]
+  * Czech (cs.po) by Miroslav Kure
+  * Esperanto (eo.po) by Felipe Castro
+  * French (fr.po) by Christian Perrier
+  * Hindi (hi.po)
+  * Italian (it.po) by Milo Casagrande
+  * Japanese (ja.po) by Kenshi Muto
+  * Portuguese (pt.po) by Miguel Figueiredo
+
+ -- Colin Watson <cjwatson@debian.org>  Tue, 28 Jul 2009 18:47:57 +0100
 
 partman-lvm (66) unstable; urgency=low
 

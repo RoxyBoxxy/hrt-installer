@@ -229,6 +229,17 @@ if [ -d /sys/bus/pci/devices ] && \
 	sleep 3 || true
 fi
 
+# Load the ethernet gadget network driver (g_ether) on S3C2410/S3C2440 (Openmoko GTA01/02)
+if [ -d /sys/bus/platform/devices/s3c2440-usbgadget -o \
+	-d /sys/bus/platform/devices/s3c2410-usbgadget ] ; then
+	db_subst hw-detect/load_progress_step CARDNAME "S3C2410/S3C2440 SoC"
+	db_subst hw-detect/load_progress_step MODULE "g_ether"
+	db_progress INFO hw-detect/load_progress_step
+	
+	log "Detected S3C2410/S3C2440 SoC, loading g_ether"
+	load_module g_ether
+fi
+
 # If using real hotplug, re-run the rc scripts to pick up new modules.
 # TODO: this just loads modules itself, rather than handing back a list
 # Since we've just run depmod, new modules might be available, so we
@@ -436,6 +447,10 @@ if [ -x "$PCMCIA_INIT" ]; then
 		if db_get hw-detect/pcmcia_resources && [ "$RET" ]; then
 			apply_pcmcia_resource_opts $RET
 		fi
+		# cdebconf doesn't set seen flags, so this would normally be
+		# asked again on subsequent hw-detect runs, which is
+		# annoying.
+		db_fset hw-detect/pcmcia_resources seen true || true
 
 		db_progress INFO hw-detect/pcmcia_step
 		$PCMCIA_INIT start 2>&1 | log
@@ -457,9 +472,9 @@ cardbus_check_netdev()
 {
 	local socket="$1"
 	local netdev="$2"
-	if [ -L $netdev/device ] && \
-		[ -d $socket/device/$(basename $(readlink $netdev/device)) ]; then
-		echo $(basename $netdev) >> /etc/network/devhotplug
+	if [ -L "$netdev/device" ] && \
+		[ -d "$socket/device/$(basename "$(readlink "$netdev/device")")" ]; then
+		echo "$(basename "$netdev")" >> /etc/network/devhotplug
 	fi
 }
 
@@ -471,7 +486,7 @@ if [ "$have_pcmcia" -eq 1 ] && \
 
 	for socket in /sys/class/pcmcia_socket/*; do
 		for netdev in /sys/class/net/*; do
-			cardbus_check_netdev $socket $netdev
+			cardbus_check_netdev "$socket" "$netdev"
 		done
 	done
 

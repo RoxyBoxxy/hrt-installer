@@ -15,7 +15,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: debian-installer\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-07-17 22:47+0000\n"
+"POT-Creation-Date: 2009-07-24 22:47+0000\n"
 "PO-Revision-Date: 2009-04-09 18:28+0600\n"
 "Last-Translator: Md. Rezwan Shahid <rezwan@ankur.org.bd>\n"
 "Language-Team: Bengali <ankur-bd-l10n@googlegroups.com>\n"
@@ -1500,6 +1500,13 @@ msgstr "MD ডিভাইস মুছে ফেলুন"
 #. #-#-#-#-#  templates.pot (PACKAGE VERSION)  #-#-#-#-#
 #. Type: select
 #. Choices
+#. Note to translators : Please keep your translations of the choices
+#. below a 65 columns limit (which means 65 characters
+#. in single-byte languages)
+#. :sl3:
+#. #-#-#-#-#  templates.pot (PACKAGE VERSION)  #-#-#-#-#
+#. Type: select
+#. Choices
 #. :sl5:
 #. #-#-#-#-#  templates.pot (PACKAGE VERSION)  #-#-#-#-#
 #. Type: select
@@ -1512,8 +1519,9 @@ msgstr "MD ডিভাইস মুছে ফেলুন"
 #. TRANSLATORS, please translate "Finish" the same way you translate it in
 #. the " Select "Finish" at the bottom of the list when you are done" string
 #: ../mdcfg-utils.templates:3001 ../partman-md.templates:5001
-#: ../partman-lvm.templates:17001 ../partconf.templates:3001
-#: ../partitioner.templates:1001 ../s390-dasd.templates:1001
+#: ../partman-lvm.templates:17001 ../partman-crypto.templates:55001
+#: ../partconf.templates:3001 ../partitioner.templates:1001
+#: ../s390-dasd.templates:1001
 msgid "Finish"
 msgstr "সম্পন্ন"
 
@@ -2078,9 +2086,13 @@ msgstr "অনুগ্রহপূর্বক নতুন ভলিউম গ
 #. Type: multiselect
 #. Description
 #. :sl3:
+#. #-#-#-#-#  templates.pot (PACKAGE VERSION)  #-#-#-#-#
+#. Type: multiselect
+#. Description
+#. :sl3:
 #: ../lvmcfg-utils.templates:5001 ../lvmcfg-utils.templates:17001
 #: ../partman-lvm.templates:26001 ../partman-lvm.templates:39001
-#: ../partman-lvm.templates:44001
+#: ../partman-lvm.templates:44001 ../partman-crypto.templates:56001
 msgid "You can select one or more devices."
 msgstr "আপনি এক বা একাধিক ডিভাইস বেছে নিতে পারেন।"
 
@@ -3465,6 +3477,50 @@ msgstr ""
 "স্বয়ংক্রীয়ভাবে সরানো নিরাপদ বলে বিবেচিত নয়। আপনি যদি পার্টিশনিং এর জন্য এই "
 "যন্ত্রটি ব্যবহার করতে চান, তাহলে অনুগ্রহ করে এর LVM ডেটা সরিয়ে ফেলুন।"
 
+#. Type: note
+#. Description
+#. :sl3:
+#: ../partman-lvm.templates:64001
+#, fuzzy
+#| msgid "Logical volume name:"
+msgid "Logical Volume Management"
+msgstr "লজিকাল ভলিউমের নাম:"
+
+#. Type: note
+#. Description
+#. :sl3:
+#: ../partman-lvm.templates:64001
+msgid ""
+"A common situation for system administrators is to find that some disk "
+"partition (usually the most important one) is short on space, while some "
+"other partition is underused. The Logical Volume Manager (LVM) can help with "
+"this."
+msgstr ""
+
+#. Type: note
+#. Description
+#. :sl3:
+#: ../partman-lvm.templates:64001
+msgid ""
+"LVM allows combining disk or partition devices (\"physical volumes\") to "
+"form a virtual disk (\"volume group\"), which can then be divided into "
+"virtual partitions (\"logical volumes\"). Volume groups and logical volumes "
+"may span several physical disks. New physical volumes may be added to a "
+"volume group at any time, and logical volumes can be resized up to the "
+"amount of unallocated space in the volume group."
+msgstr ""
+
+#. Type: note
+#. Description
+#. :sl3:
+#: ../partman-lvm.templates:64001
+msgid ""
+"The items on the LVM configuration menu can be used to edit volume groups "
+"and logical volumes. After you return to the main partition manager screen, "
+"logical volumes will be displayed in the same way as ordinary partitions, "
+"and should be treated as such."
+msgstr ""
+
 #. Type: string
 #. Description
 #. :sl3:
@@ -4404,6 +4460,54 @@ msgstr ""
 "অতিরিক্ত ক্রিেপটো কম্পোনেন্ট স্থাপন করার জন্য যথেষ্ট মেমরী ফাঁকা নেই বলে প্রতীয়মান "
 "হচ্ছে। আপনি যদি তারপরও সামনে এগিয়ে যেতে চান, তাহলে হয়তো ইনস্টলেশন প্রক্রিয়া ব্যর্থ "
 "হতে পারে।"
+
+#. Type: select
+#. Choices
+#. Note to translators : Please keep your translations of the choices
+#. below a 65 columns limit (which means 65 characters
+#. in single-byte languages)
+#. :sl3:
+#: ../partman-crypto.templates:55001
+#, fuzzy
+#| msgid "Configure encrypted volumes"
+msgid "Create encrypted volumes"
+msgstr "এনক্রিপ্টেড ভলিউম কনফিগার করো"
+
+#. Type: multiselect
+#. Description
+#. :sl3:
+#: ../partman-crypto.templates:56001
+#, fuzzy
+#| msgid "Services to use:"
+msgid "Devices to encrypt:"
+msgstr "ব্যবহারের সেবাসমূহ:"
+
+#. Type: multiselect
+#. Description
+#. :sl3:
+#: ../partman-crypto.templates:56001
+#, fuzzy
+#| msgid "Please select the devices for the new volume group."
+msgid "Please select the devices to be encrypted."
+msgstr "অনুগ্রহপূর্বক নতুন ভলিউম গ্রুপের জন্য ডিভাইস বেছে নিন।"
+
+#. Type: error
+#. Description
+#. :sl3:
+#: ../partman-crypto.templates:57001
+#, fuzzy
+#| msgid "No physical volumes selected"
+msgid "No devices selected"
+msgstr "কোন প্রকৃত ভলিউম বাছাই করা হয় নি"
+
+#. Type: error
+#. Description
+#. :sl3:
+#: ../partman-crypto.templates:57001
+#, fuzzy
+#| msgid "No partitions have been selected for encryption."
+msgid "No devices were selected for encryption."
+msgstr "কোন পার্টিশনকেই এনক্রিপশন করার জন্য বেছে নেয়া হয় নি।"
 
 #. Type: text
 #. Description

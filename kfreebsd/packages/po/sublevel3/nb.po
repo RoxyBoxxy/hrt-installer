@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: nb\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-07-17 22:47+0000\n"
+"POT-Creation-Date: 2009-07-24 22:47+0000\n"
 "PO-Revision-Date: 2009-02-24 07:56+0100\n"
 "Last-Translator: Hans Fredrik Nordhaug <hans@nordhaug.priv.no>\n"
 "Language-Team: Norwegian Bokmål <i18n-nb@lister.ping.uio.no>\n"
@@ -1491,6 +1491,13 @@ msgstr "Slett MD-enhet "
 #. #-#-#-#-#  templates.pot (PACKAGE VERSION)  #-#-#-#-#
 #. Type: select
 #. Choices
+#. Note to translators : Please keep your translations of the choices
+#. below a 65 columns limit (which means 65 characters
+#. in single-byte languages)
+#. :sl3:
+#. #-#-#-#-#  templates.pot (PACKAGE VERSION)  #-#-#-#-#
+#. Type: select
+#. Choices
 #. :sl5:
 #. #-#-#-#-#  templates.pot (PACKAGE VERSION)  #-#-#-#-#
 #. Type: select
@@ -1503,8 +1510,9 @@ msgstr "Slett MD-enhet "
 #. TRANSLATORS, please translate "Finish" the same way you translate it in
 #. the " Select "Finish" at the bottom of the list when you are done" string
 #: ../mdcfg-utils.templates:3001 ../partman-md.templates:5001
-#: ../partman-lvm.templates:17001 ../partconf.templates:3001
-#: ../partitioner.templates:1001 ../s390-dasd.templates:1001
+#: ../partman-lvm.templates:17001 ../partman-crypto.templates:55001
+#: ../partconf.templates:3001 ../partitioner.templates:1001
+#: ../s390-dasd.templates:1001
 msgid "Finish"
 msgstr "Ferdig"
 
@@ -2064,9 +2072,13 @@ msgstr "Velg enhetene som skal være på det nye grupperte dataområdet."
 #. Type: multiselect
 #. Description
 #. :sl3:
+#. #-#-#-#-#  templates.pot (PACKAGE VERSION)  #-#-#-#-#
+#. Type: multiselect
+#. Description
+#. :sl3:
 #: ../lvmcfg-utils.templates:5001 ../lvmcfg-utils.templates:17001
 #: ../partman-lvm.templates:26001 ../partman-lvm.templates:39001
-#: ../partman-lvm.templates:44001
+#: ../partman-lvm.templates:44001 ../partman-crypto.templates:56001
 msgid "You can select one or more devices."
 msgstr "Du kan velge en eller flere enheter."
 
@@ -3470,6 +3482,50 @@ msgstr ""
 "LVM-data automatisk. Hvis du ønsker å bruke denne enheten til "
 "partisjonering, fjern dens LVM-data først."
 
+#. Type: note
+#. Description
+#. :sl3:
+#: ../partman-lvm.templates:64001
+#, fuzzy
+#| msgid "Logical volume name:"
+msgid "Logical Volume Management"
+msgstr "Navn på det logiske dataområdet:"
+
+#. Type: note
+#. Description
+#. :sl3:
+#: ../partman-lvm.templates:64001
+msgid ""
+"A common situation for system administrators is to find that some disk "
+"partition (usually the most important one) is short on space, while some "
+"other partition is underused. The Logical Volume Manager (LVM) can help with "
+"this."
+msgstr ""
+
+#. Type: note
+#. Description
+#. :sl3:
+#: ../partman-lvm.templates:64001
+msgid ""
+"LVM allows combining disk or partition devices (\"physical volumes\") to "
+"form a virtual disk (\"volume group\"), which can then be divided into "
+"virtual partitions (\"logical volumes\"). Volume groups and logical volumes "
+"may span several physical disks. New physical volumes may be added to a "
+"volume group at any time, and logical volumes can be resized up to the "
+"amount of unallocated space in the volume group."
+msgstr ""
+
+#. Type: note
+#. Description
+#. :sl3:
+#: ../partman-lvm.templates:64001
+msgid ""
+"The items on the LVM configuration menu can be used to edit volume groups "
+"and logical volumes. After you return to the main partition manager screen, "
+"logical volumes will be displayed in the same way as ordinary partitions, "
+"and should be treated as such."
+msgstr ""
+
 #. Type: string
 #. Description
 #. :sl3:
@@ -4416,6 +4472,54 @@ msgstr ""
 "Det ser ikke ut til at det er tilstrekkelig minne tilgjengelig for å kunne "
 "installere ytterligere krypto-komponenter. Hvis du velger å fortsette "
 "likevel kan installasjonsprosessen mislykkes."
+
+#. Type: select
+#. Choices
+#. Note to translators : Please keep your translations of the choices
+#. below a 65 columns limit (which means 65 characters
+#. in single-byte languages)
+#. :sl3:
+#: ../partman-crypto.templates:55001
+#, fuzzy
+#| msgid "Configure encrypted volumes"
+msgid "Create encrypted volumes"
+msgstr "Sett opp krypterte dataområder"
+
+#. Type: multiselect
+#. Description
+#. :sl3:
+#: ../partman-crypto.templates:56001
+#, fuzzy
+#| msgid "Services to use:"
+msgid "Devices to encrypt:"
+msgstr "Tjenester:"
+
+#. Type: multiselect
+#. Description
+#. :sl3:
+#: ../partman-crypto.templates:56001
+#, fuzzy
+#| msgid "Please select the devices for the new volume group."
+msgid "Please select the devices to be encrypted."
+msgstr "Velg enhetene som skal være på det nye grupperte dataområdet."
+
+#. Type: error
+#. Description
+#. :sl3:
+#: ../partman-crypto.templates:57001
+#, fuzzy
+#| msgid "No physical volumes selected"
+msgid "No devices selected"
+msgstr "Ingen fysiske dataområder ble valgt"
+
+#. Type: error
+#. Description
+#. :sl3:
+#: ../partman-crypto.templates:57001
+#, fuzzy
+#| msgid "No partitions have been selected for encryption."
+msgid "No devices were selected for encryption."
+msgstr "Ingen partisjoner er valgt for kryptering."
 
 #. Type: text
 #. Description

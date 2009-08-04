@@ -15,8 +15,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: debian-installer\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-07-17 22:47+0000\n"
-"PO-Revision-Date: 2009-07-19 12:03+0100\n"
+"POT-Creation-Date: 2009-07-24 22:47+0000\n"
+"PO-Revision-Date: 2009-07-26 12:32+0100\n"
 "Last-Translator: Daniel Nylander <po@danielnylander.se>\n"
 "Language-Team: Swedish <debian-l10n-swedish@lists.debian.org>\n"
 "MIME-Version: 1.0\n"
@@ -296,7 +296,7 @@ msgstr "Teckenkodning för konsollen:"
 #. :sl3:
 #: ../console-setup.templates:21001
 msgid "Use Control+Alt+Backspace to terminate the X server?"
-msgstr ""
+msgstr "Använd Control+Alt+Backsteg för att avsluta X-servern?"
 
 #. Type: boolean
 #. Description
@@ -306,6 +306,8 @@ msgid ""
 "By default the combination Control+Alt+Backspace does nothing.  If you want "
 "it can be used to terminate the X server."
 msgstr ""
+"Som standard så gör kombinationen Control+Alt+Backsteg ingenting.  Om du "
+"vill så kan den användas för att avsluta X-servern."
 
 #. Type: boolean
 #. Description
@@ -1470,8 +1472,8 @@ msgid ""
 "The current kernel doesn't seem to support multidisk devices. This should be "
 "solved by loading the needed modules."
 msgstr ""
-"Den nuvarande kärnan verkar inte stödja multidiskenheter. Det här problemet "
-"borde lösas genom att läsa in de moduler som behövs."
+"Den aktuella kärnan verkar inte ha stöd för multidiskenheter. Det här "
+"problemet borde lösas genom att läsa in de moduler som behövs."
 
 #. Type: select
 #. Choices
@@ -1516,6 +1518,13 @@ msgstr "Ta bort MD-enhet"
 #. #-#-#-#-#  templates.pot (PACKAGE VERSION)  #-#-#-#-#
 #. Type: select
 #. Choices
+#. Note to translators : Please keep your translations of the choices
+#. below a 65 columns limit (which means 65 characters
+#. in single-byte languages)
+#. :sl3:
+#. #-#-#-#-#  templates.pot (PACKAGE VERSION)  #-#-#-#-#
+#. Type: select
+#. Choices
 #. :sl5:
 #. #-#-#-#-#  templates.pot (PACKAGE VERSION)  #-#-#-#-#
 #. Type: select
@@ -1528,8 +1537,9 @@ msgstr "Ta bort MD-enhet"
 #. TRANSLATORS, please translate "Finish" the same way you translate it in
 #. the " Select "Finish" at the bottom of the list when you are done" string
 #: ../mdcfg-utils.templates:3001 ../partman-md.templates:5001
-#: ../partman-lvm.templates:17001 ../partconf.templates:3001
-#: ../partitioner.templates:1001 ../s390-dasd.templates:1001
+#: ../partman-lvm.templates:17001 ../partman-crypto.templates:55001
+#: ../partconf.templates:3001 ../partitioner.templates:1001
+#: ../s390-dasd.templates:1001
 msgid "Finish"
 msgstr "Slutför"
 
@@ -2092,9 +2102,13 @@ msgstr "Välj enheter för den nya volymgruppen."
 #. Type: multiselect
 #. Description
 #. :sl3:
+#. #-#-#-#-#  templates.pot (PACKAGE VERSION)  #-#-#-#-#
+#. Type: multiselect
+#. Description
+#. :sl3:
 #: ../lvmcfg-utils.templates:5001 ../lvmcfg-utils.templates:17001
 #: ../partman-lvm.templates:26001 ../partman-lvm.templates:39001
-#: ../partman-lvm.templates:44001
+#: ../partman-lvm.templates:44001 ../partman-crypto.templates:56001
 msgid "You can select one or more devices."
 msgstr "Du kan välja en eller flera enheter."
 
@@ -2660,8 +2674,8 @@ msgid ""
 "The current kernel doesn't support the Logical Volume Manager. You may need "
 "to load the lvm-mod module."
 msgstr ""
-"Den nuvarande kärnan stödjer inte den logiska volymhanteraren. Du kan behöva "
-"läsa in modulen lvm-mod."
+"Den aktuella kärnan saknar stöd för den logiska volymhanteraren. Du kan "
+"behöva läsa in modulen lvm-mod."
 
 #. Type: text
 #. Description
@@ -2682,64 +2696,58 @@ msgstr "Konfigurera programvaru-RAID"
 #. :sl3:
 #. What is "in use" is a partition
 #: ../partman-md.templates:3001
-#, fuzzy
 msgid "In use by software RAID device ${DEVICE}"
-msgstr "Programvaru-RAID-enhet"
+msgstr "Används av programvaru-RAID-enheten ${DEVICE}"
 
 #. Type: error
 #. Description
 #. :sl3:
 #: ../partman-md.templates:4001
-#, fuzzy
 msgid "Software RAID not available"
-msgstr "Programvaru-RAID-enhet"
+msgstr "Programvaru-RAID-enhet är inte tillgängligt"
 
 #. Type: error
 #. Description
 #. :sl3:
 #: ../partman-md.templates:4001
-#, fuzzy
 msgid ""
 "The current kernel doesn't seem to support software RAID (MD) devices. This "
 "should be solved by loading the necessary modules."
 msgstr ""
-"Den nuvarande kärnan verkar inte stödja multidiskenheter. Det här problemet "
-"borde lösas genom att läsa in de moduler som behövs."
+"Den aktuella kärnan verkar inte ha stöd för programvaru-RAID-enheter (MD). "
+"Det här problemet borde lösas genom att läsa in de moduler som behövs."
 
 #. Type: select
 #. Description
 #. :sl3:
 #: ../partman-md.templates:5002
-#, fuzzy
 msgid "Software RAID configuration actions"
-msgstr "Åtgärd på LVM-konfiguration:"
+msgstr "Konfigurationsåtgärder för programvaru-RAID"
 
 #. Type: select
 #. Description
 #. :sl3:
 #: ../partman-md.templates:5002
-#, fuzzy
 msgid ""
 "This is the software RAID (or MD, \"multiple device\") configuration menu."
 msgstr ""
-"Det här är konfigurationsmenyn för Multidisk (MD) och programvaru-RAID."
+"Det här är konfigurationsmenyn för programvaru-RAID (eller MD, \"multiple "
+"device\")."
 
 #. Type: select
 #. Description
 #. :sl3:
 #: ../partman-md.templates:5002
-#, fuzzy
 msgid "Please select one of the proposed actions to configure software RAID."
 msgstr ""
-"Välj en av de föreslagna åtgärderna för att konfigurera multidiskenheterna."
+"Välj en av de föreslagna åtgärderna för att konfigurera programvaru-RAID."
 
 #. Type: select
 #. Description
 #. :sl3:
 #: ../partman-md.templates:6001
-#, fuzzy
 msgid "Software RAID device type:"
-msgstr "Programvaru-RAID-enhet"
+msgstr "Typ av programvaru-RAID-enhet:"
 
 #. Type: select
 #. Description
@@ -3463,6 +3471,62 @@ msgstr ""
 "fysiska volymer på andra enheter så anses det inte säkert att ta bort dess "
 "LVM-data automatiskt. Om du vill använda denna enhet för partitionering så "
 "bör du ta bort dess LVM-data först."
+
+#. Type: note
+#. Description
+#. :sl3:
+#: ../partman-lvm.templates:64001
+msgid "Logical Volume Management"
+msgstr "Logisk volymhantering"
+
+#. Type: note
+#. Description
+#. :sl3:
+#: ../partman-lvm.templates:64001
+msgid ""
+"A common situation for system administrators is to find that some disk "
+"partition (usually the most important one) is short on space, while some "
+"other partition is underused. The Logical Volume Manager (LVM) can help with "
+"this."
+msgstr ""
+"En vanlig situation för systemadministratörer är att någon diskpartition "
+"(oftast den mest viktiga) har lite diskutrymme ledigt, samtidigt som någon "
+"annan partition används lite. Logiska volymhanteraren (LVM) kan hjälpa till "
+"att undvika det."
+
+#. Type: note
+#. Description
+#. :sl3:
+#: ../partman-lvm.templates:64001
+msgid ""
+"LVM allows combining disk or partition devices (\"physical volumes\") to "
+"form a virtual disk (\"volume group\"), which can then be divided into "
+"virtual partitions (\"logical volumes\"). Volume groups and logical volumes "
+"may span several physical disks. New physical volumes may be added to a "
+"volume group at any time, and logical volumes can be resized up to the "
+"amount of unallocated space in the volume group."
+msgstr ""
+"LVM tillåter att disk- eller partitionsenheter kombineras (\"fysiska volymer"
+"\") för att bilda en virtuell disk (\"volymgrupp\"), som sedan kan delas upp "
+"i virtuella partitioner (\"logiska volymer\"). Volymgrupper och logiska "
+"volymer kan sträcka sig över flera fysiska diskar. Nya fysiska volymer kan "
+"läggas till en volymgrupp när som helst, och logiska volymer kan man ändra "
+"storlek på upp till den mängd oallokerat utrymme som finns i volymgruppen."
+
+#. Type: note
+#. Description
+#. :sl3:
+#: ../partman-lvm.templates:64001
+msgid ""
+"The items on the LVM configuration menu can be used to edit volume groups "
+"and logical volumes. After you return to the main partition manager screen, "
+"logical volumes will be displayed in the same way as ordinary partitions, "
+"and should be treated as such."
+msgstr ""
+"Objekten i konfigurationsmenyn för LVM kan användas för att redigera "
+"volymgrupper och logiska volymer. Efter att du har återvänt till "
+"huvudskärmen för partitionshanteraren så kommer logiska volymer att visas på "
+"samma sätt som vanliga partitioner, och de ska behandlas som det också."
 
 #. Type: string
 #. Description
@@ -4417,6 +4481,44 @@ msgstr ""
 "Det verkar inte finnas tillräckligt mycket minne tillgängligt för att "
 "installera ytterligare krypteringskomponenter. Om du väljer att fortsätta "
 "ändå finns det risk för att installationsprocessen misslyckas."
+
+#. Type: select
+#. Choices
+#. Note to translators : Please keep your translations of the choices
+#. below a 65 columns limit (which means 65 characters
+#. in single-byte languages)
+#. :sl3:
+#: ../partman-crypto.templates:55001
+msgid "Create encrypted volumes"
+msgstr "Skapa krypterade volymer"
+
+#. Type: multiselect
+#. Description
+#. :sl3:
+#: ../partman-crypto.templates:56001
+msgid "Devices to encrypt:"
+msgstr "Enheter att kryptera:"
+
+#. Type: multiselect
+#. Description
+#. :sl3:
+#: ../partman-crypto.templates:56001
+msgid "Please select the devices to be encrypted."
+msgstr "Välj enheter att kryptera."
+
+#. Type: error
+#. Description
+#. :sl3:
+#: ../partman-crypto.templates:57001
+msgid "No devices selected"
+msgstr "Inga enheter valda"
+
+#. Type: error
+#. Description
+#. :sl3:
+#: ../partman-crypto.templates:57001
+msgid "No devices were selected for encryption."
+msgstr "Inga enheter har valts för kryptering."
 
 #. Type: text
 #. Description

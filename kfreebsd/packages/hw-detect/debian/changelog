@@ -1,11 +1,35 @@
-hw-detect (1.73) UNRELEASED; urgency=low
+hw-detect (1.74) UNRELEASED; urgency=low
 
+  [ Gaudenz Steinlin ]
+  * The driver which turns the USB chip on the Openmoko phones into a network card
+    is not automatically loaded by udev. This special code in hw-detect loads the 
+    needed kernel module.
+
+ -- Gaudenz Steilin <gaudenz@debian.org>  Sat, 25 Jul 2009 13:02:53 +0200
+
+hw-detect (1.73) unstable; urgency=low
+
+  [ Otavio Salvador ]
   * Skip the start_pcmcia question since it has been enabled by default
     for ages without known problems. In case it fails it ought to be fixed
     in kernel anyway. The question template has been kept to avoid double
     work for translators in case we get too many bug reports about it.
 
- -- Otavio Salvador <otavio@debian.org>  Sun, 19 Jul 2009 16:27:08 -0300
+  [ Colin Watson ]
+  * Improve cardbus_check_netdev quoting.
+  * Explicitly set seen flag of hw-detect/pcmcia_resources to true so that
+    it doesn't get asked on second and subsequent runs of hw-detect if
+    pcmcia_core fails to get loaded for some reason.
+  * Suppress unused-parameter warnings in archdetect.
+
+  [ Updated translations ]
+  * Czech (cs.po) by Miroslav Kure
+  * Esperanto (eo.po) by Felipe Castro
+  * Hindi (hi.po)
+  * Italian (it.po) by Milo Casagrande
+  * Swedish (sv.po) by Daniel Nylander
+
+ -- Colin Watson <cjwatson@debian.org>  Thu, 23 Jul 2009 16:40:23 +0100
 
 hw-detect (1.72) unstable; urgency=low
 

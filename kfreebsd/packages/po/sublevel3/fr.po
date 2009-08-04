@@ -13,8 +13,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: fr\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-07-17 22:47+0000\n"
-"PO-Revision-Date: 2009-07-19 08:12+0200\n"
+"POT-Creation-Date: 2009-07-24 22:47+0000\n"
+"PO-Revision-Date: 2009-07-27 23:05+0200\n"
 "Last-Translator: Christian Perrier <bubulle@debian.org>\n"
 "Language-Team: French <debian-l10n-french@lists.debian.org>\n"
 "MIME-Version: 1.0\n"
@@ -1554,6 +1554,13 @@ msgstr "Supprimer un périphérique multidisque"
 #. #-#-#-#-#  templates.pot (PACKAGE VERSION)  #-#-#-#-#
 #. Type: select
 #. Choices
+#. Note to translators : Please keep your translations of the choices
+#. below a 65 columns limit (which means 65 characters
+#. in single-byte languages)
+#. :sl3:
+#. #-#-#-#-#  templates.pot (PACKAGE VERSION)  #-#-#-#-#
+#. Type: select
+#. Choices
 #. :sl5:
 #. #-#-#-#-#  templates.pot (PACKAGE VERSION)  #-#-#-#-#
 #. Type: select
@@ -1566,8 +1573,9 @@ msgstr "Supprimer un périphérique multidisque"
 #. TRANSLATORS, please translate "Finish" the same way you translate it in
 #. the " Select "Finish" at the bottom of the list when you are done" string
 #: ../mdcfg-utils.templates:3001 ../partman-md.templates:5001
-#: ../partman-lvm.templates:17001 ../partconf.templates:3001
-#: ../partitioner.templates:1001 ../s390-dasd.templates:1001
+#: ../partman-lvm.templates:17001 ../partman-crypto.templates:55001
+#: ../partconf.templates:3001 ../partitioner.templates:1001
+#: ../s390-dasd.templates:1001
 msgid "Finish"
 msgstr "Terminer"
 
@@ -2147,9 +2155,13 @@ msgstr "Veuillez choisir les périphériques pour le nouveau groupe de volumes."
 #. Type: multiselect
 #. Description
 #. :sl3:
+#. #-#-#-#-#  templates.pot (PACKAGE VERSION)  #-#-#-#-#
+#. Type: multiselect
+#. Description
+#. :sl3:
 #: ../lvmcfg-utils.templates:5001 ../lvmcfg-utils.templates:17001
 #: ../partman-lvm.templates:26001 ../partman-lvm.templates:39001
-#: ../partman-lvm.templates:44001
+#: ../partman-lvm.templates:44001 ../partman-crypto.templates:56001
 msgid "You can select one or more devices."
 msgstr "Vous pouvez sélectionner un ou plusieurs périphériques."
 
@@ -3563,6 +3575,65 @@ msgstr ""
 "supprimer les données LVM automatiquement. Si vous souhaitez partitionner ce "
 "périphérique, vous devez d'abord en supprimer les données LVM."
 
+#. Type: note
+#. Description
+#. :sl3:
+#: ../partman-lvm.templates:64001
+msgid "Logical Volume Management"
+msgstr "Gestion de volumes logiques"
+
+#. Type: note
+#. Description
+#. :sl3:
+#: ../partman-lvm.templates:64001
+msgid ""
+"A common situation for system administrators is to find that some disk "
+"partition (usually the most important one) is short on space, while some "
+"other partition is underused. The Logical Volume Manager (LVM) can help with "
+"this."
+msgstr ""
+"Une situation que rencontrent fréquemment les administrateurs système est le "
+"manque d'espace libre sur une partition (souvent la plus importante du "
+"système) alors qu'une autre est sous-utilisée. Le gestionnaire de volumes "
+"logiques (LVM : « Logical Volume Manager ») permet de résoudre ce type de "
+"problème."
+
+#. Type: note
+#. Description
+#. :sl3:
+#: ../partman-lvm.templates:64001
+msgid ""
+"LVM allows combining disk or partition devices (\"physical volumes\") to "
+"form a virtual disk (\"volume group\"), which can then be divided into "
+"virtual partitions (\"logical volumes\"). Volume groups and logical volumes "
+"may span several physical disks. New physical volumes may be added to a "
+"volume group at any time, and logical volumes can be resized up to the "
+"amount of unallocated space in the volume group."
+msgstr ""
+"LVM permet de combiner vos les disques ou les partitions (« volumes "
+"physiques ») en disques virtuels (« groupe de volumes ») qui peut être divisé "
+"en partitions virtuelles (« volumes logiques »). Les groupes de volumes et "
+"les volumes logiques peuvent s'étendre sur plusieurs disques physiques. Des "
+"volumes physiques peuvent être ajoutés à tout moment à un groupe de volumes "
+"et les volumes logiques peuvent être retaillés dans les limites de l'espace "
+"non alloué du groupe de volume."
+
+#. Type: note
+#. Description
+#. :sl3:
+#: ../partman-lvm.templates:64001
+msgid ""
+"The items on the LVM configuration menu can be used to edit volume groups "
+"and logical volumes. After you return to the main partition manager screen, "
+"logical volumes will be displayed in the same way as ordinary partitions, "
+"and should be treated as such."
+msgstr ""
+"Les entrées du menu de configuration du gestionnaire de volumes logiques "
+"permettent de modifier les groupes de volumes et les volumes logiques. Une "
+"fois de retour au menu principal du gestionnaire de partitions, les volumes "
+"logiques seront visibles de manière analogue aux partitions ordinaires et "
+"seront gérés de la même manière."
+
 #. Type: string
 #. Description
 #. :sl3:
@@ -4532,6 +4603,44 @@ msgstr ""
 "La mémoire disponible semble être insuffisante pour installer des composants "
 "de gestion du chiffrement des partitions. Si vous choisissez de continuer "
 "malgré tout, le processus d'installation pourrait échouer."
+
+#. Type: select
+#. Choices
+#. Note to translators : Please keep your translations of the choices
+#. below a 65 columns limit (which means 65 characters
+#. in single-byte languages)
+#. :sl3:
+#: ../partman-crypto.templates:55001
+msgid "Create encrypted volumes"
+msgstr "Créer des volumes chiffrés"
+
+#. Type: multiselect
+#. Description
+#. :sl3:
+#: ../partman-crypto.templates:56001
+msgid "Devices to encrypt:"
+msgstr "Périphériques à chiffrer :"
+
+#. Type: multiselect
+#. Description
+#. :sl3:
+#: ../partman-crypto.templates:56001
+msgid "Please select the devices to be encrypted."
+msgstr "Veuillez choisir les périphériques qui doivent être chiffrés."
+
+#. Type: error
+#. Description
+#. :sl3:
+#: ../partman-crypto.templates:57001
+msgid "No devices selected"
+msgstr "Pas de périphérique choisi"
+
+#. Type: error
+#. Description
+#. :sl3:
+#: ../partman-crypto.templates:57001
+msgid "No devices were selected for encryption."
+msgstr "Aucun périphérique n'a été choisi pour être chiffré."
 
 #. Type: text
 #. Description
