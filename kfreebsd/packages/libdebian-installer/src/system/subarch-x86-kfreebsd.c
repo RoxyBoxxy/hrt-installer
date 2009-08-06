@@ -1,1 +1,1 @@
-link subarch-x86-linux.c
+subarch-x86-linux.c
