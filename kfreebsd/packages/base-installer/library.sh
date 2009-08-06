@@ -456,7 +456,7 @@ pick_kernel () {
 	info "Using kernel '$KERNEL'"
 }
 
-install_linux_kernel () {
+install_kernel_linux () {
 	if [ "$KERNEL" = none ]; then
 		info "Not installing any kernel"
 		return
@@ -659,7 +659,7 @@ EOF
 		fi
 	fi
 
-	# Advance progress bar to 30% of allocated space for install_linux
+	# Advance progress bar to 30% of allocated space for install_kernel_linux
 	update_progress 30 100
 
 	# Install the kernel
@@ -667,7 +667,7 @@ EOF
 	db_progress INFO base-installer/section/install_kernel_package
 	log-output -t base-installer apt-install "$KERNEL" || kernel_install_failed=$?
 
-	# Advance progress bar to 90% of allocated space for install_linux
+	# Advance progress bar to 90% of allocated space for install_kernel_linux
 	update_progress 90 100
 
 	if [ -f /target/etc/kernel-img.conf.$$ ]; then
@@ -763,19 +763,33 @@ addmodule_yaird () {
 	fi
 }
 
-install_kfreebsd_kernel() {
+install_kernel_kfreebsd() {
 	if [ "$KERNEL" = none ]; then
 		info "Not installing any kernel"
 		return
 	fi
 
-	# Nothing else for now
+	# Install the kernel
+	db_subst base-installer/section/install_kernel_package SUBST0 "$KERNEL"
+	db_progress INFO base-installer/section/install_kernel_package
+	log-output -t base-installer apt-install "$KERNEL" || kernel_install_failed=$?
+
+	# Advance progress bar to 100% of allocated space for install_kfreebsd
+	update_progress 100 100
+
+	if [ "$kernel_install_failed" ]; then
+		db_subst base-installer/kernel/failed-install KERNEL "$KERNEL"
+		exit_error base-installer/kernel/failed-install
+	fi
+
+	# FIXME: we should create /etc/kernel-img.conf when we have decided about
+	# the kernel integration with grub.
 }
 
 install_kernel() {
 	case "$OS" in
-		linux) install_linux_kernel ;;
-		kfreebsd) install_kfreebsd_kernel ;;
+		linux) install_kernel_linux ;;
+		kfreebsd) install_kernel_kfreebsd ;;
 		*) ;;
 	esac	
 }
