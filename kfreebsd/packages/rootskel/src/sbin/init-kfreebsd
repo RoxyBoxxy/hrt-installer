@@ -11,9 +11,6 @@ set -e
 . /lib/debian-installer/init-debug
 debugshell "just booted"
 
-# Disable kernel messages on the console
-sysctl "kern.consmute=1"
-
 echo "Setting default module loading path"
 sysctl "kern.module_path=/lib/modules/`uname -r`;/boot/kernel"
 
