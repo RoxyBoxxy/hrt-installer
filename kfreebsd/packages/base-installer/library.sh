@@ -111,18 +111,26 @@ check_target () {
 	fi
 }
 
-setup_dev () {
-	if echo $ARCH | grep -q "^kfreebsd-*" ; then
-		mount -t devfs devfs /target/dev
-	else
-		# Ensure static device nodes created during install are preserved
-		# Tests in MAKEDEV require this is done in the D-I environment
-		mkdir -p /dev/.static/dev
-		chmod 700 /dev/.static/
-		mount --bind /target/dev /dev/.static/dev
-		# Mirror device nodes in D-I environment to target
-		mount --bind /dev /target/dev/
-	fi
+setup_dev_linux () {
+	# Ensure static device nodes created during install are preserved
+	# Tests in MAKEDEV require this is done in the D-I environment
+	mkdir -p /dev/.static/dev
+	chmod 700 /dev/.static/
+	mount --bind /target/dev /dev/.static/dev
+	# Mirror device nodes in D-I environment to target
+	mount --bind /dev /target/dev/
+}
+
+setup_dev_kfreebsd() {
+	mount -t devfs devfs /target/dev
+}
+
+setup_dev() {
+	case "$OS" in
+		linux) setup_dev_linux ;;
+		kfreebsd) setup_dev_kfreebsd ;;
+		*) ;;
+	esac	
 }
 
 # TODO: as we no longer have to create devices here, the apt-install calls
