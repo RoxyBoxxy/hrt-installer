@@ -329,7 +329,7 @@ get_mirror_info () {
 
 kernel_update_list () {
 	# Use 'uniq' to avoid listing the same kernel more then once
-	chroot /target apt-cache search '^(kernel|linux)-image' | \
+	chroot /target apt-cache search '^(kernel|linux|kfreebsd)-image' | \
 	cut -d" " -f1 | uniq > "$KERNEL_LIST.unfiltered"
 	kernels=`sort -r "$KERNEL_LIST.unfiltered" | tr '\n' ' ' | sed -e 's/ $//'`
 	for candidate in $kernels; do
@@ -456,7 +456,7 @@ pick_kernel () {
 	info "Using kernel '$KERNEL'"
 }
 
-install_linux () {
+install_linux_kernel () {
 	if [ "$KERNEL" = none ]; then
 		info "Not installing any kernel"
 		return
@@ -762,6 +762,24 @@ addmodule_yaird () {
 		sed -i "/END GOALS/s/^/\t\tMODULE $1\n/" $CFILE
 	fi
 }
+
+install_kfreebsd_kernel() {
+	if [ "$KERNEL" = none ]; then
+		info "Not installing any kernel"
+		return
+	fi
+
+	# Nothing else for now
+}
+
+install_kernel() {
+	case "$OS" in
+		linux) install_linux_kernel ;;
+		kfreebsd) install_kfreebsd_kernel ;;
+		*) ;;
+	esac	
+}
+
 
 # Assumes the file protocol is only used for CD (image) installs
 configure_apt () {
