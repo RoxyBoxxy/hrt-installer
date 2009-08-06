@@ -10,8 +10,13 @@ dump=$5
 pass=$6
 
 case $type in
-    ext2|vfat)
-	mount ${options:+-o "$options"} $fs /target$mp || exit 1
+    ext2)
+	mount ${options:+-o "$options"} -t ext2fs $fs /target$mp || exit 1
+	echo "umount /target$mp"
+	exit 0
+	;;
+    vfat)
+	mount ${options:+-o "$options"} -t msdos $fs /target$mp || exit 1
 	echo "umount /target$mp"
 	exit 0
 	;;
