@@ -1,0 +1,100 @@
+#!/bin/sh
+
+. /usr/share/debconf/confmodule
+
+db_get mirror/protocol
+protocol="$RET"
+db_get mirror/$protocol/hostname
+hostname="$RET"
+db_get mirror/$protocol/directory
+directory="$RET"
+db_get mirror/$protocol/proxy
+proxy="$RET"
+if [ -n "$proxy" ]; then
+    if [ "$protocol" = http ]; then
+        export http_proxy="$proxy"
+    elif [ "$protocol" = ftp ]; then
+        export ftp_proxy="$proxy"
+    fi
+fi
+
+fetch() {
+    url="${protocol}://${hostname}${directory}/$1"
+    if [ ! -e "$2" ]; then
+      wget -q "$url" -O "$2"
+      return $?
+    else
+      # busybox wget can sometimes become confused while resuming,
+      # so it it fails, restart
+      if wget -c -q "$url" -O "$2"; then
+        return 0
+      else
+	wget -q "$url" -O "$2"
+	return $?
+      fi
+    fi
+}
+
+cmd="$1"
+shift
+
+case "x$cmd" in
+    xretrieve)
+        fetch "$@"
+        exit $?
+        ;;
+
+    xpackages)
+        rm -f "$1"
+        touch "$1"
+        db_get mirror/suite
+        suite="$RET"
+        Release="/tmp/net-retriever-$$-Release"
+        fetch "dists/$suite/Release" "$Release" || exit $?
+        ARCH=`udpkg --print-architecture`
+        components="`grep ^Components: $Release | cut -d' ' -f2-`"
+        ret=1
+        for comp in $components; do
+            for ext in '.gz' ''; do
+                pkgfile="$comp/debian-installer/binary-$ARCH/Packages$ext"
+                line=`grep $pkgfile\$ $Release 2>/dev/null`
+                if [ $? != 0 ]; then
+                    continue
+                fi
+                Packages="/tmp/net-retriever-$$-Packages"
+                rm -f "$Packages"
+                fetch "dists/$suite/$pkgfile" "$Packages" || continue
+                # TODO: Verify the integrity
+                if [ "$ext" = '' ]; then
+                    cat "$Packages" >> "$1"
+                elif [ "$ext" = .gz ]; then
+                    zcat "$Packages" >> "$1"
+                fi
+                ret=0
+                break
+            done
+        done
+        exit $ret
+        ;;
+
+    xerror)
+	T="retriever/net/error"
+	db_set "$T" "Retry"
+	db_input high "$T" || true
+	
+	db_go || true
+	db_get "$T"
+	if [ "$RET" = "Retry" ]; then
+		exit 0
+	elif [ "$RET" = "Change mirror" ]; then
+		choose-mirror || true
+		exit 0
+	elif [ "$RET" = Cancel ]; then
+		exit 2
+	fi
+	;;
+
+    *)
+        # unknown command
+        exit 1
+esac
