@@ -17,10 +17,11 @@ for dev in $DEVICES/*; do
 			[ -f "$id/mountpoint" ] || continue
 			mountpoint=$(cat $id/mountpoint)
 			options=$(get_mountoptions $dev $id)
+			if [ "$options" = defaults ]; then
+				options="rw"
+			fi
 			if [ "$mountpoint" = / ]; then
-				if [ "$options" = defaults ]; then
-					options="rw"
-				else if ! echo "$options" | grep -q '"\(^\|,\)r\(o\|w\)\(,\|$\)"' ; then
+				if ! echo "$options" | grep -q '"\(^\|,\)r\(o\|w\)\(,\|$\)"' ; then
 					options="${options},rw"
 				fi
 				pass=1
