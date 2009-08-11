@@ -21,7 +21,7 @@ for dev in $DEVICES/*; do
 				options="rw"
 			fi
 			if [ "$mountpoint" = / ]; then
-				if ! echo "$options" | grep -q '"\(^\|,\)r\(o\|w\)\(,\|$\)"' ; then
+				if ! echo "$options" | grep -q '\(^\|,\)r\(o\|w\)\(,\|$\)' ; then
 					options="${options},rw"
 				fi
 				pass=1
