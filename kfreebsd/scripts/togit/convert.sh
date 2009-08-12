@@ -1,6 +1,12 @@
 #!/bin/sh
 set -e
 
+# utf-8 ctype needed
+LANG=en_US.UTF-8
+LC_CTYPE=$LANG
+export LANG
+export LC_CTYPE
+
 if [ "$1" = "-r" ]; then
 	lastok=$(egrep '^Exporting revision.*done' log|tail -n 1 | awk '{print $3}')
 	if [ -n "$lastok" ]; then
@@ -37,5 +43,3 @@ if [ -n "$crashes" ]; then
 	echo "* Crashes detected: $crashes" >&2
 	exit 1
 fi
-
-cp log git/svn-all-fast-export.log
