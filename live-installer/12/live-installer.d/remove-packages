@@ -1,0 +1,6 @@
+#!/bin/sh -e
+
+in-target apt-get --yes remove --purge live-initramfs
+if [ -f /target/var/lib/dpkg/live-initscripts.list ]; then
+	in-target apt-get --yes remove --purge live-initscripts
+fi
