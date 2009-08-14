@@ -16,8 +16,8 @@ sysctl "kern.module_path=/lib/modules/`uname -r`;/boot/kernel"
 
 echo "Setting up filesystem, please wait ..."
 mount -o update,rw -t ufs /dev/md0 /
-mount -t devfs devfs /dev/
-mount -t fdescfs fdescfs /dev/fd/
+mount -t devfs devfs /dev
+mount -t fdescfs fdescfs /dev/fd
 mount /proc
 ln -s /var/run/log /dev/log
 
