@@ -18,6 +18,7 @@ files += \
 	S30term \
 	S60frontend \
 	S65theme \
+	S70menu \
 	S72menu-exit
 
 ifeq ($(DEB_HOST_ARCH_CPU),sparc)
@@ -35,9 +36,10 @@ ifeq ($(DEB_HOST_ARCH_OS),linux)
 	S20speakup \
 	S40term-linux \
 	S70menu-linux
-else
+endif
+ifeq ($(DEB_HOST_ARCH_OS),kfreebsd)
   files += \
-	S70menu
+	S40term-kfreebsd
 endif
 
 include ../../../Makefile.inc

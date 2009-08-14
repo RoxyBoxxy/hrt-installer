@@ -1,0 +1,7 @@
+case $(tty) in
+	/dev/ttyv[0-f]*|/dev/ttyd[0-f]*)
+		sysctl "kern.consmute=1" > /dev/null
+		;;
+	*)
+		;;
+esac
