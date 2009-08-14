@@ -11,7 +11,7 @@ set -e
 debugshell "just booted"
 
 echo "Setting default module loading path"
-sysctl "kern.module_path=/lib/modules/`uname -r`;/boot/kernel"
+sysctl "kern.module_path=/lib/modules/`uname -r`;/boot/kernel" > /dev/null
 
 echo "Setting up filesystem, please wait ..."
 mount -o update,rw -t ufs /dev/md0 /
