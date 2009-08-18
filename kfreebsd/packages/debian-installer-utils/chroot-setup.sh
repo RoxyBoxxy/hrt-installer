@@ -47,8 +47,8 @@ EOF
 	# Record the current mounts
 	mountpoints > /tmp/mount.pre
 
-	case `uname` in
-	        "GNU/Linux")
+	case `udpkg --print-os` in
+	        "linux")
 			# Some packages (eg. the kernel-image package) require a mounted
 			# /proc/. Only mount it if not mounted already
 			if [ ! -f /target/proc/cmdline ]; then
@@ -68,7 +68,7 @@ EOF
 					/target/dev/pts
 			fi
 		;;
-	        "GNU/kFreeBSD")
+	        "kfreebsd")
 			# Some packages (eg. the kernel-image package) require a mounted
 			# /proc/. Only mount it if not mounted already
 			if [ ! -f /target/proc/cmdline ]; then
