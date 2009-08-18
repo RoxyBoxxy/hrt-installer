@@ -16,6 +16,7 @@ endif
 
 files += \
 	S30term \
+	S40term:S40term-$(DEB_HOST_ARCH_OS) \
 	S60frontend \
 	S65theme \
 	S70menu \
@@ -34,12 +35,7 @@ ifeq ($(DEB_HOST_ARCH_OS),linux)
 
   files += \
 	S20speakup \
-	S40term-linux \
 	S70menu-linux
-endif
-ifeq ($(DEB_HOST_ARCH_OS),kfreebsd)
-  files += \
-	S40term-kfreebsd
 endif
 
 include ../../../Makefile.inc
