@@ -16,9 +16,9 @@ DISTRIBUTION=
 # used by kernel installation code
 KERNEL=
 KERNEL_LIST=/tmp/available_kernels.txt
-case `uname` in
-	"GNU/Linux") KERNEL_MAJOR="$(uname -r | cut -d . -f 1,2)" ;;
-	"GNU/kFreeBSD") KERNEL_MAJOR="$(uname -r | cut -d . -f 1)" ;;
+case `udpkg --print-os` in
+	linux)		KERNEL_MAJOR="$(uname -r | cut -d . -f 1,2)" ;;
+	kfreebsd)	KERNEL_MAJOR="$(uname -r | cut -d . -f 1)" ;;
 esac
 KERNEL_VERSION="$(uname -r | cut -d - -f 1)"
 KERNEL_ABI="$(uname -r | cut -d - -f 1,2)"

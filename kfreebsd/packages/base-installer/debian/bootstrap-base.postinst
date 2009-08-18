@@ -11,11 +11,7 @@ KEYRING=/usr/share/keyrings/archive.gpg
 
 # Architecture and OS detection
 ARCH=`udpkg --print-architecture`
-case `uname` in
-	"GNU/kFreeBSD") OS="kfreebsd" ;;
-	"GNU/Linux") OS="linux" ;;
-	*) OS="unknown" ;;
-esac
+OS=`udpkg --print-os`
 
 # Set initial value to includes and excludes
 db_get base-installer/includes
