@@ -2,5 +2,7 @@
 
 mkdir -p /var/lib/partman
 
-# FIXME
->/var/lib/partman/ufs
+if kldstat -q -m ufs 2>/dev/null || \
+   kldload ufs >/dev/null 2>/dev/null ; then
+	>/var/lib/partman/ufs
+fi
