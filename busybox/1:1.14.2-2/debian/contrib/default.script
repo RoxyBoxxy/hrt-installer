@@ -1,0 +1,70 @@
+#!/bin/sh -e
+
+# udhcpc client script to be used by Debian Installer
+# Copyright (C) 2009 Otavio Salvador <otavio@debian.org>
+
+do_resolv_conf() {
+	local cfg=/etc/resolv.conf
+
+	if [ -n "$domain" ] || [ -n "$dns" ]; then
+		echo -n > $cfg
+		if [ -n "$domain" ]; then
+			echo search $domain >> $cfg
+		fi
+
+		for i in $dns ; do
+			echo nameserver $i >> $cfg
+		done
+	fi
+}
+
+do_hostname() {
+	local current=$(cat /proc/sys/kernel/hostname)
+
+	if [ -z "$current" ] || [ "$current" = "(none)" ]; then
+		echo "$hostname" > /proc/sys/kernel/hostname
+	fi
+}
+
+case "$1" in
+	deconfig)
+		ip link set "$interface" up
+		ip addr flush dev "$interface"
+		;;
+
+	bound|renew)
+		do_hostname
+		
+		if [ -n "$subnet" ]; then
+			subnet="/$subnet"
+		fi
+
+		if [ -n "$broadcast" ]; then
+			broadcast="broadcast $broadcast"
+		fi
+
+		ip addr add "$ip$subnet" "$broadcast" dev "$interface"
+
+		if [ -n "$mtu" ]; then
+			ip link set "$interface" mtu "$mtu"
+		fi
+
+		for r in "$router"; do
+			ip route add default via "$r"
+		done
+
+		do_resolv_conf
+
+		# Get the domain name into a file suitable for netcfg to read.
+		printf "$domain" > /tmp/domain_name
+
+		if [ -n "$ntpsrv" ]; then
+			printf "$ntpsrv" > /tmp/dhcp-ntp-servers
+		fi
+		;;
+	*)
+		echo "udhcpc: has been called with an unknown param: $1"
+		;;
+esac
+
+exit 0
