@@ -772,21 +772,37 @@ install_kernel_kfreebsd() {
 		return
 	fi
 
+	# Create configuration file for kernel-package
+	if [ -f /target/etc/kernel-img.conf ]; then
+		# Backup old kernel-img.conf
+		mv /target/etc/kernel-img.conf /target/etc/kernel-img.conf.$$
+	fi
+
+	cat > /target/etc/kernel-img.conf <<EOF
+# Kernel image management overrides
+# See kernel-img.conf(5) for details
+do_symlinks = no
+EOF
+	# Advance progress bar to 10% of allocated space for install_kfreebsd
+	update_progress 10 100
+
 	# Install the kernel
 	db_subst base-installer/section/install_kernel_package SUBST0 "$KERNEL"
 	db_progress INFO base-installer/section/install_kernel_package
 	log-output -t base-installer apt-install "$KERNEL" || kernel_install_failed=$?
 
-	# Advance progress bar to 100% of allocated space for install_kfreebsd
-	update_progress 100 100
+	# Advance progress bar to 90% of allocated space for install_kfreebsd
+	update_progress 90 100
+
+	if [ -f /target/etc/kernel-img.conf.$$ ]; then
+		# Revert old kernel-img.conf
+		mv /target/etc/kernel-img.conf.$$ /target/etc/kernel-img.conf
+	fi
 
 	if [ "$kernel_install_failed" ]; then
 		db_subst base-installer/kernel/failed-install KERNEL "$KERNEL"
 		exit_error base-installer/kernel/failed-install
 	fi
-
-	# FIXME: we should create /etc/kernel-img.conf when we have decided about
-	# the kernel integration with grub.
 }
 
 install_kernel() {
