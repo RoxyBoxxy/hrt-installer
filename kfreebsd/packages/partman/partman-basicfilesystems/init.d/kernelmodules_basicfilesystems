@@ -2,11 +2,12 @@
 
 mkdir -p /var/lib/partman
 
-### FIXME: very hackish for now...
-if ! [ -f /var/lib/partman/ext2 ] && \
-   kldload ext2fs  >/dev/null 2>/dev/null; then
+if kldstat -q -m ext2fs 2>/dev/null || \
+   kldload ext2fs >/dev/null 2>/dev/null ; then
 	>/var/lib/partman/ext2
 fi
 
-### FIXME: currently built-in
->/var/lib/partman/vfat
+if kldstat -q -m msdosfs 2>/dev/null || \
+   kldload msdosfs >/dev/null 2>/dev/null ; then
+	>/var/lib/partman/vfat
+fi
