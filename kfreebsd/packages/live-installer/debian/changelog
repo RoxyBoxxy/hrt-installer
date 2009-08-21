@@ -1,9 +1,21 @@
-live-installer (13) UNRELEASED; urgency=low
+live-installer (13) unstable; urgency=low
 
+  [ Daniel Baumann ]
   * Only calling chmod on live-installer-launcher scripts when we
     are actually building the arch all package (Closes: #541385).
 
- -- Daniel Baumann <daniel@debian.org>  Thu, 13 Apr 2009 22:39:45 +0200
+  [ Chris Lamb ]
+  * Bump debhelper 7 dependency to 7.0.50~ as we use override_dh_*
+  * Add dependency on cdebconf-udeb to appease lintian.
+  * Drop unused "maintainer-script-lacks-debhelper-token" override.
+  * Drop "Encoding=UTF-8" from live-installer-laucher's .desktop file.
+  * Add "set -e" to live-installer-laucher's postinst to appease lintian.
+  * Expand the long description of live-installer-launcher/mode.
+  * Don't use an imperative in live-installer-launcher/mode's short name.
+  * Add debconf-is-not-a-registry and no-debconf-config overrides for
+    live-installer-launcher.
+
+ -- Chris Lamb <lamby@debian.org>  Wed, 19 Aug 2009 21:58:05 +0100
 
 live-installer (12) unstable; urgency=low
 
