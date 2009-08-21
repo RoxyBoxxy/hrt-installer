@@ -3,7 +3,7 @@ update_mtab() {
 	[ "$ROOT" ] || return 0
 
 	mtab=$ROOT/etc/mtab
-	rm $mtab
+	rm -f $mtab
 	grep "$ROOT" /proc/mounts | (
 	while read devpath mountpoint fstype options n1 n2 ; do
 		devpath=`mapdevfs $devpath || echo $devpath`
