@@ -30,12 +30,13 @@
 #include <sys/stat.h>
 #include <unistd.h>
 
+#if defined(__linux__)
+
 /* Returns the devfs path name normalized into a "normal" (hdaX, sdaX)
- * name.  The return value is malloced, which means that the caller
- * needs to free it.  This is kinda hairy, but I don't see any other
- * way of operating with non-devfs systems when we use devfs on the
- * boot medium.  The numbers are taken from devices.txt in the
- * Documentation subdirectory off the kernel sources.
+ * name.  This is kinda hairy, but I don't see any other way of operating
+ * with non-devfs systems when we use devfs on the boot medium.  The
+ * numbers are taken from devices.txt in the Documentation subdirectory
+ * of the kernel sources.
  */
 
 ssize_t di_system_devfs_map_from (const char *path, char *buf, size_t n)
@@ -197,6 +198,16 @@ ssize_t di_system_devfs_map_from (const char *path, char *buf, size_t n)
   
   return ret;
 }
+
+#else /* defined(__linux__) */
+
+ssize_t di_system_devfs_map_from (const char *path, char *buf, size_t n)
+{
+    /* Do nothing on other systems */
+    return snprintf (buf, n, "%s", path);
+}
+
+#endif /* defined(__linux__) */
 
 #ifndef TEST
 ssize_t di_mapdevfs (const char *path, char *buf, size_t n) __attribute__ ((alias("di_system_devfs_map_from")));
