@@ -9,10 +9,19 @@ if [ ! -e /cdrom/.disk/base_installable ]; then
 	exit 0
 fi
 
+fs=iso9660
+if db_get cdrom-detect/cdrom_fs && [ "$RET" ]; then
+	fs="$RET"
+fi
+
+if [ "$fs" != iso9660 ]; then
+	exit 0
+fi
+
 remount_cd() {
 	if [ "$ROOT" ] && [ ! -d /hd-media ]; then
 		db_get cdrom-detect/cdrom_device
-		$logoutput mount -t iso9660 -o ro,exec $RET /cdrom || true
+		$logoutput mount -t "$fs" -o ro,exec $RET /cdrom || true
 	fi
 }
 

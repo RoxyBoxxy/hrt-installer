@@ -30,21 +30,43 @@ mkdir /cdrom 2>/dev/null || true
 
 while true
 do
-	mounted=0
+	mounted=
+
+	if db_get cdrom-detect/try-usb && [ "$RET" = true ]; then
+		devices="$(list-devices usb-partition)"
+		for device in $devices; do
+			if mount -t vfat -o ro,exec $device /cdrom &&
+			   [ -e /cdrom/.disk/info ]; then
+				log "CD-ROM mount succeeded: device=$device fstype=vfat"
+				mounted=1
+				db_set cdrom-detect/cdrom_device $device
+				db_set cdrom-detect/cdrom_fs vfat
+				break
+			else
+				log "CD-ROM mount failed: device=$device fstype=vfat"
+				umount /cdrom 2>/dev/null || true
+			fi
+		done
+	fi
+
+	if [ "$mounted" ]; then
+		break
+	fi
 
 	devices="$(list-devices cd; list-devices maybe-usb-floppy)"
 	for device in $devices; do
 		if mount -t iso9660 -o ro,exec $device /cdrom; then
-			log "CD-ROM mount succeeded: device=$device"
+			log "CD-ROM mount succeeded: device=$device fstype=iso9660"
 			mounted=1
 			db_set cdrom-detect/cdrom_device $device
+			db_set cdrom-detect/cdrom_fs iso9660
 			break
 		else
-			log "CD-ROM mount failed: device=$device"
+			log "CD-ROM mount failed: device=$device fstype=iso9660"
 		fi
 	done
 
-	if [ "$mounted" = "1" ]; then
+	if [ "$mounted" ]; then
 		break
 	fi
 
@@ -84,7 +106,7 @@ do
 		modules="$modules, $i"
 	done
     
-	if [ "$RET" = "true" ]; then
+	if [ "$RET" = true ]; then
 		db_subst cdrom-detect/cdrom_module choices "$modules"
 		db_input critical cdrom-detect/cdrom_module || [ $? -eq 30 ]
 		db_go
@@ -98,15 +120,16 @@ do
 		db_get cdrom-detect/cdrom_device
 		device="$RET"
 
-		if [ "$module" != "none" ]; then
+		if [ "$module" != none ]; then
 			modprobe $module
 		fi
 		if mount -t iso9660 -o ro,exec $device /cdrom; then
-			log "CD-ROM mount succeeded: device=$device"
+			log "CD-ROM mount succeeded: device=$device fstype=iso9660"
+			db_set cdrom-detect/cdrom_fs iso9660
 			mounted=1
 			break
 		else
-			log "CD-ROM mount failed: device=$device"
+			log "CD-ROM mount failed: device=$device fstype=iso9660"
 			fail
 		fi
 	else
