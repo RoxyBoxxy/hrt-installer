@@ -125,7 +125,7 @@ setup_dev_linux () {
 }
 
 setup_dev_kfreebsd() {
-	mount -t nullfs /dev /target/dev
+	mount -t devfs devfs /target/dev
 }
 
 setup_dev() {
