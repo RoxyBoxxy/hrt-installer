@@ -1,0 +1,236 @@
+<!-- retain these comments for translator revision tracking -->
+<!-- original version: 59771 -->
+
+  <sect2 arch="arm" id="boot-tftp"><title>Booten per TFTP</title>
+
+&boot-installer-intro-net.xml;
+
+  </sect2>
+
+
+  <sect2 arch="arm"><title>Booten von CD-ROM</title>
+
+&boot-installer-intro-cd.xml;
+
+  </sect2>
+
+
+  <sect2 arch="arm" id="boot-firmware"><title>Booten von Firmware</title>
+
+&boot-installer-intro-firmware.xml;
+
+   <sect3 arch="arm" id="boot-firmware-nslu2"><title>Booten des NSLU2</title>
+<para>
+
+Es gibt drei Wege, die Installer-Firmware in das Flash zu bekommen:
+
+</para>
+
+    <sect4 arch="arm"><title>Das Webinterface des NSLU2 benutzen</title>
+<para>
+
+Gehen Sie zum Abschnitt <literal>Administration</literal> und wählen Sie
+den Menüpunkt <literal>Upgrade</literal>. Sie können dann auf Ihrer Festplatte
+das Firmware-Image suchen, das Sie vorher heruntergeladen haben. Drücken Sie
+dann <literal>Start Upgrade</literal>, bestätigen Sie die Nachfrage, warten
+Sie ein paar Minuten und bestätigen Sie erneut. Das System wird dann direkt
+den Installer booten.
+
+</para>
+    </sect4>
+
+    <sect4 arch="arm"><title>Via Netzwerk mit Linux/Unix</title>
+<para>
+
+Sie können <command>upslug2</command> von jeder Linux- oder Unix-Maschine
+aus benutzen, um den NSLU2 via Netzwerk zu aktualisieren. Diese Software ist
+auch als Debian-Paket verfügbar.
+
+Als erstes müssen Sie Ihren NSLU2 in den Upgrade-Modus bringen:
+
+<orderedlist>
+<listitem><para>
+
+Entfernen Sie alle Festplatten und/oder anderen Geräte von den USB-Ports.
+
+</para></listitem>
+<listitem><para>
+
+Schalten Sie den NSLU2 aus.
+
+</para></listitem>
+<listitem><para>
+
+Drücken und halten Sie den Reset-Knopf (Sie erreichen Ihn durch das kleine
+Loch auf der Rückseite direkt über der Buchse für die Versorgungsspannung).
+
+</para></listitem>
+<listitem><para>
+Drücken Sie den Power-Knopf des NSLU2 und lassen Sie ihn wieder los, um
+das Gerät einzuschalten.
+
+</para></listitem>
+<listitem><para>
+
+Warten Sie 10 Sekunden und beobachten Sie dabei die Ready/Status-LED.
+Nach 10 Sekunden wechselt sie von beige nach rot. Lassen Sie dann den
+Reset-Knopf los.
+
+</para></listitem>
+<listitem><para>
+
+Die Ready/Status-LED des NSLU2 wird abwechselnd rot und grün blinken (es gibt
+eine kleine Verzögerung von einer Sekunde vor dem ersten Aufleuchten).
+Der NSLU2 befindet sich jetzt im Upgrade-Modus.
+
+</para></listitem>
+</orderedlist>
+
+Falls Sie Probleme hiermit haben sollten, besuchen Sie die <ulink
+url="http://www.nslu2-linux.org/wiki/OpenSlug/UsingTheBinary">NSLU2-Linux-Seiten</ulink>.
+
+Sobald Ihr NSLU2 sich im Upgrade-Modus befindet, können Sie das neue
+Image ins Flash übertragen:
+
+<informalexample><screen>
+sudo upslug2 -i di-nslu2.bin
+</screen></informalexample>
+
+Beachten Sie, dass das Programm auch die MAC-Adresse Ihres NSLU2 anzeigt,
+welche nützlich sein könnte, um Ihren DHCP-Server zu konfigurieren. Nachdem
+das komplette Image übertragen und nochmals überprüft wurde, wird das System
+automatisch neu starten. Schließen Sie jetzt unbedingt Ihre USB-Festplatte
+wieder an, ansonsten kann der Installer sie nicht finden.
+
+</para>
+    </sect4>
+
+    <sect4 arch="arm"><title>Via Netzwerk mit Windows</title>
+<para>
+
+Es gibt <ulink
+url="http://www.everbesthk.com/8-download/sercomm/firmware/all_router_utility.zip">ein
+Hilfsprogramm</ulink> für Windows, um die Firmware über das Netzwerk zu aktualisieren.
+
+</para>
+    </sect4>
+   </sect3>
+
+   <sect3 arch="arm" id="boot-firmware-ss4000e">
+   <title>Booten des SS4000-E</title>
+<para>
+
+Aufgrund von Einschränkungen in der SS4000-E-Firmware ist es derzeit
+unglücklicherweise nicht möglich, den Installer ohne Verwendung eines
+seriellen Ports zu booten. Um den Installer zu booten, benötigen Sie
+ein serielles Nullmodem-Kabel, einen Rechner mit einem seriellen
+Port<footnote id="arm-s4ke-port">
+
+<para>
+Ein USB-Seriell-Converter funktioniert auch.
+</para>
+
+</footnote> und ein Flachbandkabel mit einem männlichen DB9-Anschluß
+auf der einen und einem 10-poligen .1" IDC-Stecker auf der anderen
+Seite<footnote id="arm-s4k-rib">
+
+<para>
+Solch ein Kabel findet sich oft in älteren Desktop-Rechnern mit
+eingebauten 9-poligen Anschlüssen für die seriellen Ports.
+</para>
+
+</footnote>.
+
+</para><para>
+
+Um den SS4000-E zu booten, laden Sie zunächst das von Debian bereitgestellte
+Firmware-Image (ss4000e.pkg) über das Web-Interface des SS4000-E (gehen
+Sie auf <quote>Administration</quote>, dann auf <quote>Firmware</quote>
+und laden Sie dann das Image hoch). Als Nächstes verwenden Sie Ihr
+Nullmodem-Kabel und das Flachbandkabel, um sich mit dem seriellen Anschluß
+des SS4000-E zu verbinden und starten Sie die Maschine neu. Sie müssen
+ein serielles Terminal-Programm benutzen, um mit dem Rechner zu kommunizieren;
+auf Debian GNU/Linux-Systemen ist es eine gute Wahl, das Programm
+<command>cu</command> aus dem gleichnamigen Paket zu verwenden.
+Angenommen, der serielle Port auf Ihrem Rechner ist
+<filename>/dev/ttyS0</filename>, benutzen Sie folgende Befehlszeile:
+
+</para>
+
+<informalexample><screen>
+cu -lttyS0 -s115200
+</screen></informalexample>
+
+<para>
+
+Wenn Sie Windows verwenden, sollten Sie vielleicht das Programm
+<classname>hyperterminal</classname> nutzen. Wählen Sie eine
+Baudrate von 115200, 8 Bit Wortlänge, kein Stopbit und ein Parity-Bit.
+
+</para><para>
+
+Beim Starten der Maschine werden Sie folgende Ausgabe sehen:
+
+</para>
+
+<informalexample><screen>
+No network interfaces found
+
+EM-7210 ver.T04 2005-12-12 (For ver.AA)
+== Executing boot script in 1.000 seconds - enter ^C to abort
+</screen></informalexample>
+
+<para>
+
+Drücken Sie an diesem Punkt Strg-C, um den Bootloader zu 
+unterbrechen<footnote id="arm-s4ke-sec">
+
+<para>
+Beachten Sie, dass Sie dazu nur eine Sekunde Zeit haben; falls Sie dies
+Zeitfenster verpasst haben, trennen Sie kurz die Stromzufuhr des Rechners und
+versuchen Sie es nach dem Start erneut.
+</para>
+
+</footnote>. Sie kommen jetzt zum RedBoot-Prompt. Geben Sie folgenden Befehl
+ein:
+
+</para>
+
+<informalexample><screen>
+fconfig boot_script_data
+</screen></informalexample>
+
+<para>
+
+RedBoot wartet jetzt darauf, dass Sie das Boot-Skript eingeben. Stellen Sie
+sicher, dass Sie <emphasis>exakt</emphasis> folgendes eintippen:
+
+</para>
+
+<informalexample><screen>
+fis load ramdisk.gz
+fis load zImage
+exec -c "console=ttyS0,115200 rw root=/dev/ram mem=256M@0xa0000000" -r 0x01800000
+</screen></informalexample>
+
+<para>
+
+Beenden Sie das Skript mit einer leeren Zeile und drücken Sie bei der
+Eingabeaufforderung <quote>y</quote>, um die nicht-flüchtige Konfiguration
+zu aktualisieren. Führen Sie zu guter Letzt einen <quote>Reset</quote>
+durch, um das System neu zu starten, und erlauben Sie ihm, normal zu
+booten. Der Installer sollte nun wie üblich erscheinen. Sie können Debian
+entweder über den seriellen Anschluß installieren oder Sie nutzen einen
+SSH-Klient, um sich mittels SSH zu verbinden.
+
+</para><para>
+
+Beachten Sie, dass es nicht nötig ist, nach der Installation das
+Boot-Skript zu aktualisieren. Das System wird so konfiguriert, dass die
+Informationen zur root-Festplatte aus der Systemkonfiguration bezogen
+werden und nicht von der Kernel-Kommandozeile. Allerdings schadet es auch
+nicht, das Boot-Skript an die neue Situation anzupassen.
+
+</para>
+   </sect3>
+  </sect2>
