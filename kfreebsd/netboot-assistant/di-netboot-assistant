@@ -22,42 +22,52 @@
 
 # Initialize some variables.
 PACKAGE_NAME=di-netboot-assistant
-PACKAGE_VERSION=0.36c
+PACKAGE_VERSION=0.37
 OFFLINE=
 DEBUG=
 DISOURCELIST=/etc/di-netboot-assistant/di-sources.list
 SYSLINUXMENU=menu.c32
 SYSLINUX=/usr/lib/syslinux/
 ELILO=/usr/lib/elilo/
-DL_CACHE=/var/cache/di-netboot-assistant/
+DL_CACHE=/var/cache/di-netboot-assistant
+STATUS_LIB=/var/lib/di-netboot-assistant
+TEMPLATES=/etc/di-netboot-assistant
 TFTP_ROOT=/var/lib/tftpboot
+REPO_ALIAS=""
 REWRITEPKGPATH='\(debian\|ubuntu\)-installer'
 UMASKOLD=`umask -p`
 EXTRA_DL_FILES="MD5SUMS"
+DI_ARGS=
+TARGET_ARGS=
 #MIRROR_REGEXPS=# Not defined on purpose, so user can pass the variable
-umask 0022
+umask $(umask | sed -e 's/.$/2/')              # files must be public.
 
-if [ -f /etc/di-netboot-assistant/di-netboot-assistant.conf ]; then
-	. /etc/di-netboot-assistant/di-netboot-assistant.conf
+if [ -f "$HOME/.di-netboot-assistant/di-netboot-assistant.conf" ]; then
+	. "$HOME/.di-netboot-assistant/di-netboot-assistant.conf"
+else
+	if [ -f "/etc/di-netboot-assistant/di-netboot-assistant.conf" ]; then
+		. "/etc/di-netboot-assistant/di-netboot-assistant.conf"
+	fi
 fi
 
 # Declare some functions
 usage () {
 	cat <<XXX
-Usage: $PACKAGE_NAME [options] install DI-DIST [--offline] [--arch=ARCH]
-       $PACKAGE_NAME [options] purge DI-DIST [--arch=ARCH]
+Usage: $PACKAGE_NAME [options] install DI-DIST [--offline] [--arch=ARCH] [--alias=NAME]
+       $PACKAGE_NAME [options] [purge|uninstall|uncache] DI-DIST [--arch=ARCH]
        $PACKAGE_NAME [options] rebuild-menu
        $PACKAGE_NAME [--help|--version|--rebuild-menu]
 
 A simple tool to grab and extract debian-installer netboot images.
 
-DI-DIST 
+DI-DIST
 	The name of a debian-installer repository (as listed in
 	the file '$DISOURCELIST')
 
 Commands:
     install - download and extract a netboot image.
-    purge - remove a previously installed netboot image.
+    uninstall - remove a previously installed netboot image.
+    purge - equivalent to uninstall plus uncache.
     rebuild-menu - rebuild the top level menu.
 
 Options:
@@ -65,9 +75,12 @@ Options:
   -v, --version   Print script version and exit
   --verbose       Verbose messages
   --offline       Don't download the file (simply re-extract and build menu)
+  --di-args=      DI arguments to be appended to "install" entry.
+  --target-args=  Target system boot arguments to be appended to "install".
+  --alias=NAME    Rename the downloaded repository (optional).
   --arch=ARCH     A comma separated list of architecture to Install/Purge,
                   or the keyword "all". It use the current machine's
-                  architecture by default (APT::Architecture).
+                  architecture by default.
 
 See the $PACKAGE_NAME(1) manual page for more information.
 XXX
@@ -77,7 +90,7 @@ check_di_source_list() {
 	if [ ! -f "$DISOURCELIST" ]; then
 		echo "E: Debian Installer source file missing ($DISOURCELIST)" 1>&2
 		echo "" 1>&2
-		exit 1;
+		exit 1
 	fi
 
 	if grep -vEl '^(#.*|[[:blank:]]*|[[:alnum:]_\.-]+[	][[:alnum:]_\.-]+[	][^	]+([	][^" ]+)+)$'  "$DISOURCELIST" > /dev/null ; then
@@ -85,12 +98,12 @@ check_di_source_list() {
 		grep -vnE '^(#.*|[[:blank:]]*|[[:alnum:]_\.-]+[	][[:alnum:]_\.-]+[	][^	]+([	][^" ]+)+)$' "$DISOURCELIST" | cut -d ":" -f 1 | tr "\n" "," 1>&2
 		echo " in file '$DISOURCELIST'." 1>&2
 		echo "" 1>&2
-		exit 1;
+		exit 1
 	fi
 }
 
 list_declared_arch_for_repo() {
-	echo -n "I: Declared architecures for $1 are: " 1>&2
+	echo -n "I: Declared architecures for $1 are: "
 	grep -E "^$1[[:blank:]]" "$DISOURCELIST" | cut -f 2 | sort -u | tr '\n' ' ' 1>&2
 	echo "" 1>&2
 }
@@ -123,16 +136,16 @@ update_pxelinux_menu() {
 
 	[ ! -d "pxelinux.cfg" ] && mkdir "pxelinux.cfg"
 	echo "I: Building PXE-Linux' top-menu"
-	print_do-not-edit_header "/etc/di-netboot-assistant/pxelinux.HEAD" > pxelinux.cfg/default
+	print_do-not-edit_header "${TEMPLATES}/pxelinux.HEAD" > pxelinux.cfg/default
 	if [ -n "$(find "$TFTP_ROOT/debian-installer" -type d -name pxelinux.cfg.serial-9600 2>/dev/null)" ]; then
 		cp pxelinux.cfg/default pxelinux.cfg/default.serial-9600
 	else
 		[ -f "pxelinux.cfg/default.serial-9600" ] && rm pxelinux.cfg/default.serial-9600
 	fi
-	[ -f /etc/di-netboot-assistant/pxelinux.HEAD ] && grep -Ev "^##" /etc/di-netboot-assistant/pxelinux.HEAD >> pxelinux.cfg/default
+	[ -f ${TEMPLATES}/pxelinux.HEAD ] && grep -Ev "^##" ${TEMPLATES}/pxelinux.HEAD >> pxelinux.cfg/default
 
 	i=0
-	for x in $(ls /var/lib/di-netboot-assistant/*.pxelinux.menu.fragment 2>/dev/null ); do
+	for x in $(ls "${STATUS_LIB}/"*.pxelinux.menu.fragment 2>/dev/null ); do
 		i=$(($i + 1))
 		grep -Ev "^##" $x >> pxelinux.cfg/default
 		echo "" >> pxelinux.cfg/default
@@ -142,8 +155,8 @@ update_pxelinux_menu() {
 	i=0
 	if [ -f "pxelinux.cfg/default.serial-9600" ]; then
 		i=$(($i + 1))
-		[ -f /etc/di-netboot-assistant/pxelinux.HEAD ] && cat /etc/di-netboot-assistant/pxelinux.HEAD >> pxelinux.cfg/default.serial-9600
-		for x in /var/lib/di-netboot-assistant/*pxelinux.menu.serial-9600.fragment ; do
+		[ -f ${TEMPLATES}/pxelinux.HEAD ] && cat ${TEMPLATES}/pxelinux.HEAD >> pxelinux.cfg/default.serial-9600
+		for x in "${STATUS_LIB}/"*pxelinux.menu.serial-9600.fragment ; do
 			grep -Ev "^##" "$x" >> pxelinux.cfg/default.serial-9600
 			echo "" >> pxelinux.cfg/default.serial-9600
 		done
@@ -158,11 +171,11 @@ update_pxelinux_menu() {
 
 update_elilo_menu() {
 	echo "I: Building Elilo's top-menu"
-	print_do-not-edit_header "/etc/di-netboot-assistant/elilo.HEAD" > elilo.conf
-	[ -f /etc/di-netboot-assistant/elilo.HEAD ] && grep -Ev "^##" /etc/di-netboot-assistant/elilo.HEAD >> elilo.conf
+	print_do-not-edit_header "${TEMPLATES}/elilo.HEAD" > elilo.conf
+	[ -f ${TEMPLATES}/elilo.HEAD ] && grep -Ev "^##" "${TEMPLATES}/elilo.HEAD" >> elilo.conf
 
 	i=0
-	for x in $(ls /var/lib/di-netboot-assistant/*.elilo.conf.fragment 2>/dev/null ); do
+	for x in $(ls "${STATUS_LIB}/"*.elilo.conf.fragment 2>/dev/null ); do
 		i=$(($i + 1))
 		grep -Ev "^##" $x >> elilo.conf
 		echo "" >> elilo.conf
@@ -183,31 +196,34 @@ check_tftp_root() {
 	if [ -z "$TFTP_ROOT" -o "$TFTP_ROOT" = "." -o "$TFTP_ROOT" = "/" ]; then
 		echo "E: Invalid TFTP root specified ($TFTP_ROOT)" 1>&2
 		echo "" 1>&2
-		exit 1;
+		exit 1
 	fi
 
 	if [ ! -d "$TFTP_ROOT" ]; then
 		echo "E: TFTP root directory doesn't exists ($TFTP_ROOT)" 1>&2
-		echo "I: Make sure you installed a tftp server like tftpd-hpa or atftpd." 1>&2
+		echo "I: Make sure you installed a tftp server like tftpd-hpa or atftpd."
 		echo "" 1>&2
-		exit 1;
+		exit 1
 	fi
 
 	[ ! -d "$TFTP_ROOT/debian-installer" ] && mkdir "$TFTP_ROOT/debian-installer"
 	if [ ! -w "$TFTP_ROOT/debian-installer" ]; then
 		echo "E: Can't write to DI directory ($TFTP_ROOT/debian-installer)" 1>&2
 		echo "" 1>&2
-		exit 1;
+		exit 1
 	fi
 }
 
-#This function should be kept in sync with function "purge_repo" in debian/postrm
-purge_repo() {
+#This function should be kept in sync with function "uninstall_repo" in debian/postrm
+uninstall_repo() {
 	dist="$1"
 	metadatabasename="$(echo $dist | sed -e 's/\.conf$//' )"
 
+	#remove di-netboot-assistant < 0.37 cached files.
 	tarfile="$(grep -E "^[[:blank:]]*dl_file=" "$dist" | sed -e 's/^[[:blank:]]*dl_file=//')"
-	[ -f "$tarfile" ] && rm "$tarfile"
+	if [ "$(echo $tarfile | sed -n 's/^./\0/p')" = "/" ];then
+		[ -f "$tarfile" ] && rm "$tarfile"
+	fi
 
 	expand_dir="$(grep -E "^[[:blank:]]*expand_dir=" "$dist" | sed -e 's/^[[:blank:]]*expand_dir=//')"
 	[ "$expand_dir" != "/" -a -d "$expand_dir" ] && rm -Rf "$expand_dir"
@@ -238,11 +254,11 @@ purge_repo() {
 	rm "$dist"
 }
 
-
-purge_repos() {
+uninstall_repos() {
 	[ "$DEBUG" ] && set -x
 	del_repo="$1"
-	current_repos="$(find  /var/lib/di-netboot-assistant/  -name $del_repo--\*.conf | sed -e 's/^.*--//' -e 's/\.conf//')"
+	ignore_missing="$2"
+	current_repos="$(find  "${STATUS_LIB}/"  -name $del_repo--\*.conf | sed -e 's/^.*--//' -e 's/\.conf//')"
 
 	if [ "$(echo $ARCH | grep -E "\<all\>")" ]; then
 		archs="$current_repos"
@@ -251,13 +267,15 @@ purge_repos() {
 	fi
 
 	for a in $archs ; do
-		if [ -f "/var/lib/di-netboot-assistant/$del_repo--$a.conf" ]; then
-			purge_repo "/var/lib/di-netboot-assistant/$del_repo--$a.conf"
+		if [ -f "${STATUS_LIB}/$del_repo--$a.conf" ]; then
+			uninstall_repo "${STATUS_LIB}/$del_repo--$a.conf"
 		else
-			echo "E: Repository '$del_repo' for architecture '$a' doesn't exists." 1>&2
-			echo "I: (current repository are: $current_repos)" 1>&2
-			echo "" 1>&2
-			exit 1
+			if [ "$ignore_missing" != "ignore_missing" ]; then
+				echo "E: Repository '$del_repo' for architecture '$a' doesn't exists." 1>&2
+				echo "I: (current repository are: $current_repos)"
+				echo "" 1>&2
+				exit 1
+			fi
 		fi
 	done
 
@@ -265,11 +283,81 @@ purge_repos() {
 	[ "$DEBUG" ] && set +x
 }
 
+#This function should be kept in sync with function "remove_repocache" in debian/postrm
+remove_repocache() {
+	local metadatafile
+	local base
+	local file
+
+	metadatafile="$1"
+	base=$(echo $metadatafile | sed -e 's/~~.*$//' )
+
+	for file in $(sed -n -e 's/^[[:blank:]]*dl_file=[[:blank:]]*//p' $metadatafile); do
+		rm $RM_VERBOSITY ${base}_"$(echo ${file}| sed -e 's#/#_#g')"
+	done
+
+	#Purge remaing files (MD5SUMS...) if there are no more cached
+	#distribution from the same repository.
+	if [ ! "$(ls -1 ${base}~~*.meta | grep -v "$metadatafile")" ]; then
+		rm $RM_VERBOSITY ${base}_*
+	fi
+
+	[ -f $metadatafile ] && rm $metadatafile
+
+}
+
+remove_repocaches() {
+	local COUNT
+	[ "$DEBUG" ] && set -x
+	del_repo="$1"
+
+	if [ ! -d "${DL_CACHE}" ]; then
+		echo "E: Failed to clean the cache, cache folder not found." 1>&2
+		exit 1
+	fi
+
+	current_repos="$(find ${DL_CACHE} -name "*~~$del_repo--*.meta" | sed -e 's/^.*--//' -e 's/\.meta//' | tr '\n' ' ')"
+	if [ ! "$current_repos" ]; then
+		echo "E: Repository '$del_repo' not cached." 1>&2
+		echo "" 1>&2
+		exit 0
+	fi
+
+	if [ "$(echo $ARCH | grep -E "\<all\>")" ]; then
+		archs="$current_repos"
+	else
+		archs="$(echo $ARCH | tr ',' ' ')"
+	fi
+
+	for a in $archs ; do
+		COUNT=0
+		for metadatafile in $(find ${DL_CACHE}/ -name "*~~${del_repo}--${a}.meta"); do
+			remove_repocache "$metadatafile"
+			COUNT=$(( $COUNT + 1 ))
+		done
+
+	        if [ $COUNT -eq 0 ]; then
+			echo "E: Repository '$del_repo' for architecture '$a' doesn't exists." 1>&2
+			echo "I: (current repository are: $current_repos)" 1>&2
+			echo "" 1>&2
+			exit 1
+		fi
+	done
+
+
+	[ "$DEBUG" ] && set +x
+}
+
+
 fetch_files() {
-	local baseurl="$1"
-	local repo_loc="$2"
-	shift 2
-	local files="$@"
+	local release="$1"
+	local arch="$2"
+	local baseurl="$3"
+	local repo_loc="$4"
+	shift 4
+ 	local files="$@"
+	local metadatafile
+
 	[ "$DEBUG" ] && set -x
 
 	if [ ! "$OFFLINE" ]; then
@@ -285,6 +373,8 @@ fetch_files() {
 		echo "I: Downloading..."
 	fi
 
+	metadatafile="${DL_CACHE}/$(echo ${repo_loc}~~${release}--${arch}.meta | sed -e 's#/#_#g')"
+
 	SUCCEED="true"
 	for givenfile in $EXTRA_DL_FILES $files ; do
 		f=$(echo $givenfile | sed -e 's#^\./##' -e 's#^/##' -e 's#//#/#g')
@@ -298,11 +388,10 @@ fetch_files() {
 				fetch_date="$(date -R)"
 			else
 				echo "$EXTRA_DL_FILES" | tr " " "\n" | grep -qx $f || SUCCEED="failed"
-				echo "E: Download has Failed." 1>&2
-				[ "$WGET_VERBOSITY" != "--quiet" ] && echo "E: Can't download '$release' for '$arch' ($url)." 1>&2
+				echo "E: Can't download '$release' for '$arch' ($url)." 1>&2
 				[ -f "$file.tmp" ] && rm $RM_VERBOSITY "$file.tmp"
 				if [ -f "$file" ]; then
-					echo "I: You have a previous version in your cache (see --offline option)." 1>&2
+					echo "I: You have a previous version in your cache (see --offline option)."
 				fi
 			fi
 		else
@@ -313,42 +402,44 @@ fetch_files() {
 				echo "" 1>&2
 				exit 1
 			else
-				echo "I: Reusing previously downloaded file... " 1>&2
-				fetch_date="$( grep "fetch_date" $metadatafile | cut -d "=" -f 2- )"
+				echo "I: Reusing previously downloaded file... "
+				fetch_date="$( grep "fetch_date" "$metadatafile" | cut -d "=" -f 2- )"
+				# Fall back, in case the file is manually added to the cache.
+				[ -z "$fetch_date" ] && fetch_date="$(date -R --reference="$file" )"
 			fi
 		fi
 	done
 
 	csum="${DL_CACHE}/$(echo ${repo_loc}/MD5SUMS.tmp | sed -e 's#/#_#g')"
 	if [ -f "$csum" -a "$SUCCEED" = "true" ] ; then
-		echo -n "I: Computing checksums... " 1>&2
+		echo -n "I: Computing checksums... "
 		for givenfile in $EXTRA_DL_FILES $files ; do
 			f=$(echo $givenfile | sed -e 's#^\./##' -e 's#^/##' -e 's#//#/#g')
 			file="${DL_CACHE}/$(echo ${repo_loc}/$f | sed -e 's#/#_#g')"
 			md5=$(md5sum $file.tmp | cut -d " " -f 1)
 			if [ "$givenfile" == "MD5SUMS" ]; then
-				continue;
+				continue
 			fi
-			echo -n "$givenfile " 1>&2
+			echo -n "$givenfile "
 			if ! grep -qiE "[[:blank:]]+(\./|)$givenfile[[:blank:]]*$" $csum ; then
-				echo -n " (No checksum)" 1>&2
-				continue;
+				echo -n " (No checksum)"
+				continue
 			fi
 			if ! grep -qiE "^$md5[[:blank:]]+(\./|)$givenfile[[:blank:]]*$" $csum ; then
-				echo "FAILED" 1>&2
+				echo "FAILED"
 				echo "E: Checksum verification failed (the file got corrupted somewhere)." 1>&2
 				SUCCEED="failed"
-				break;
+				break
 			fi
 		done
 		[ "$SUCCEED" = "true" ] && echo "... done." 1>&2
 	else
-		[ ! "$OFFLINE" ] && echo "I: No checksum found." 1>&2
-	fi	
+		echo "I: No checksum found."
+	fi
 
 
 	if [ ! "$OFFLINE" ]; then
-		echo "I: Moving/Removing temporary files." 1>&2		
+		echo "I: Moving/Removing temporary files."
 		for givenfile in $EXTRA_DL_FILES $files ; do
 			f=$(echo $givenfile | sed -e 's#^\./##' -e 's#^/##' -e 's#//#/#g')
 			file="${DL_CACHE}/$(echo ${repo_loc}/$f | sed -e 's#/#_#g')"
@@ -362,6 +453,14 @@ fetch_files() {
 	fi
 
 	if [ "$SUCCEED" = "true" ]; then
+		if [ ! "$OFFLINE" ]; then
+			echo "#$PACKAGE_NAME for '$release' ($arch)" > $metadatafile
+			echo "fetch_date=$fetch_date" >> $metadatafile
+			echo "repo=$baseurl" >> $metadatafile
+			echo "dl_file=$files" >> $metadatafile
+			echo "dist=$release" >> $metadatafile
+		fi
+
 		return 0
 	else
 		exit 1
@@ -371,28 +470,38 @@ fetch_files() {
 
 pxelinux_version() {
 	bin="$1"
-	if [ ! -f "$bin" ]; then
-		return
+	if [ -f "$bin" ]; then
+		tr -c '[:print:] ' '\n' < $1 | sed -n -r "/PXELINUX [.0-9]+/ s/^[^ ]* ([0-9^.]+).*/\1/ p" | sort -r | head -n 1
+	else
+		echo ""
 	fi
-	tr -c '[:print:] ' '\n' < $1 | sed -n -r "/PXELINUX [.0-9]+/ s/^[^ ]* ([0-9^.]+).*/\1/ p" | sort -r | head -n 1
+}
+
+tweak_pxelinux_arguments() {
+	sed -e "/^[[:blank:]]*label[[:blank:]]\+install\$/I,/^\([[:blank:]]*label[[:blank:]]^+[^\(install\)]\|[[:blank:]]*\)\$/I{s!append \(.*\)--\(.*\)!append \1 $DI_ARGS -- \2 $TARGET_ARGS!}"
+}
+
+tweak_elilo_arguments() {
+	sed -e "/^[[:blank:]]*label=install\$/,/^\([[:blank:]]*label=[^\(install\)]\|[[:blank:]]*\)\$/{s!append=\"\([^\"]*\)--\([^\"]*\)*\"!append=\"\1 $DI_ARGS -- \2 $TARGET_ARGS\"!}"
 }
 
 install_repo() {
 	local pxelinuxbin
 	local pxelinuxcfg
 	local ver
+	local TAROPTS
 	[ "$DEBUG" ] && set -x
 	release="$1"
 	if [ -z "$release" ]; then
 		echo "E: No repository specified (valid repositories are: $releases)" 1>&2
-		echo "";
-		exit 1;
+		echo ""
+		exit 1
 	fi
 
 	if ! grep -Eq "^$release\>" "$DISOURCELIST" ; then
 		echo "E: Invalid repository name specified ($release)" 1>&2
-		echo "I: Declared repositories are: $releases" 1>&2
-		echo "" 1>&2
+		echo "I: Declared repositories are: $releases"
+		echo ""
 		exit 1
 	fi
 
@@ -403,18 +512,18 @@ install_repo() {
 		archs="$(echo $ARCH | tr ',' ' ')"
 	fi
 
-	
+
 	if [ -z "$( echo "$archs" | sed -e 's/[[:blank:]\?]*//g' )" ]; then
 		echo "E: No architecture specified." 1>&2
 		list_declared_arch_for_repo "$release"
-		echo "" 1>&2
+		echo ""
 		exit 1
 	fi
 
 	for arch in $archs ; do
 		echo "I: Processing $release/$arch ... "
 
-		metadatabasename="/var/lib/di-netboot-assistant/${release}--${arch}"
+		metadatabasename="${STATUS_LIB}/${REPO_ALIAS}--${arch}"
 		metadatafile="$metadatabasename.conf"
 
 		repo_orig="$(grep -E "^$release[[:blank:]]$arch\>" "$DISOURCELIST")"
@@ -430,46 +539,58 @@ install_repo() {
 			echo "E: There is no entry declared for architecture '$arch' for " 1>&2
 			echo "E: repository '$release' in $DISOURCELIST" 1>&2
 			list_declared_arch_for_repo "$release"
-			echo "" 1>&2
+			echo ""
 			exit 1
+		fi
+
+		if [ "$release" != "${REPO_ALIAS}" ]; then
+			echo "I: Repository '$release' filed as '${REPO_ALIAS}'."
 		fi
 
 		repo_proto="$(echo $repo | cut -d ":" -f 1 )"
 		repo_loc="$(echo $repo | sed -e 's#^[^:]\+://##')"
-		expand_dir="$TFTP_ROOT/debian-installer/$release/$arch"
+		expand_dir="$TFTP_ROOT/debian-installer/${REPO_ALIAS}/$arch"
 
 		file=$(grep -E "^$release[[:blank:]]$arch" "$DISOURCELIST" | cut -f 4- )
 		fetch_date=""
-		fetch_files "$repo_mirror" "$repo_loc" $file
+		fetch_files "$release" "$arch" "$repo_mirror" "$repo_loc" $file
 		if [ -z "$fetch_date" ]; then
 			exit 1
 		fi
 		f=$(echo $givenfile | sed -e 's#^\./##' -e 's#^/##' -e 's#//#/#g')
 		dl_file="${DL_CACHE}/$(echo ${repo_loc}/$f | sed -e 's#/#_#g')"
 
-		echo "#$PACKAGE_NAME for '$release' ($arch)" > $metadatafile
-		echo "fetch_date=$fetch_date" >> $metadatafile
+#FIXME
+		# get the metadata from the downloaded repository
+		cat "${DL_CACHE}/$(echo ${repo_loc}~~${release}--${arch}.meta | sed -e 's#/#_#g')" > $metadatafile
+
+#		echo "#$PACKAGE_NAME for '$release' ($arch)" > $metadatafile
+#		echo "fetch_date=$fetch_date" >> $metadatafile
+
 		echo "expand_dir=$expand_dir" >> $metadatafile
-		echo "dist=$release" >> $metadatafile
-		echo "repo=$repo" >> $metadatafile
-		echo "dl_file=$dl_file" >> $metadatafile
-	
-		echo "I: Extracting... " 1>&2
-			
+#		echo "dist=$release" >> $metadatafile
+#		echo "repo=$repo" >> $metadatafile
+#		echo "dl_file=$dl_file" >> $metadatafile
+#		echo "di_args=$DI_ARGS" >> $metadatafile
+#		echo "target_args=$TARGET_ARGS" >> $metadatafile
+
+		echo "I: Extracting... "
+
 		if [ -d "$expand_dir" ]; then
 			rm -Rf "$expand_dir/*"
 		else
 			mkdir -p "$expand_dir"
 		fi
 
+		TAROPTS="'$dl_file' --directory '$expand_dir' --no-same-permissions"
 		case "$(echo "$dl_file" | sed -e 's#^.*/##' )" in
 			*.tar.gz)
-				tar $TAR_VERBOSITY -zxf "$dl_file" --directory "$expand_dir" --strip-components 3 --exclude "./pxelinux.0" --exclude "./pxelinux.cfg"
-				tar $TAR_VERBOSITY -zxf "$dl_file" --directory "$expand_dir" ./version.info 2>/dev/null || true
+				tar $TAR_VERBOSITY -zxf $TAROPTS --strip-components 3 --exclude "./pxelinux.0" --exclude "./pxelinux.cfg"
+				tar $TAR_VERBOSITY -zxf $TAROPTS ./version.info 2>/dev/null || true
 				;;			
 			*.tar.bz2)
-				tar $TAR_VERBOSITY -jxf "$dl_file" --directory "$expand_dir" --strip-components 3 --exclude "./pxelinux.0" --exclude "./pxelinux.cfg"
-				tar $TAR_VERBOSITY -jxf "$dl_file" --directory "$expand_dir" ./version.info 2>/dev/null || true
+				tar $TAR_VERBOSITY -jxf $TAROPTS --strip-components 3 --exclude "./pxelinux.0" --exclude "./pxelinux.cfg"
+				tar $TAR_VERBOSITY -jxf $TAROPTS ./version.info 2>/dev/null || true
 				;;			
 			*.img)
 				cp $CP_VERBOSITY "$dl_file" "$expand_dir/$(basename "$f")"
@@ -495,7 +616,7 @@ install_repo() {
 			PXE_NEW_VER="$(pxelinux_version "$pxelinuxbin")"
 			PXE_CUR_VER="$(pxelinux_version "$TFTP_ROOT/debian-installer/pxelinux.0")"
 			if dpkg --compare-versions "$PXE_NEW_VER" ">>" "$PXE_CUR_VER" ; then
-				echo "I: Upgrading $TFTP_ROOT/debian-installer/pxelinux.0 ($PXE_CUR_VER to $PXE_NEW_VER)" 1>&2
+				echo "I: Upgrading $TFTP_ROOT/debian-installer/pxelinux.0 ($PXE_CUR_VER to $PXE_NEW_VER)"
 				cp -f "$pxelinuxbin" "$TFTP_ROOT/debian-installer/pxelinux.0"
 				for x in $(find "$expand_dir" -type f -name "$SYSLINUXMENU" | head -n 1) ; do
 					cp "$x" "$TFTP_ROOT/debian-installer/pxelinux.cfg/"
@@ -503,8 +624,9 @@ install_repo() {
 			fi
 			for x in $(find "$expand_dir" -type f -a \( -name "default" -o -name "boot.txt" -o -name '*.cfg' \) ); do
 				mv "$x" "$x.ORIG"
-				print_do-not-edit_header "$release" > "$x"
-				sed -e "s#${REWRITEPKGPATH}/$arch/#debian-installer/$release/$arch/#" < "$x.ORIG" >> "$x"
+				print_do-not-edit_header "$release netboot image" > "$x"
+				sed -e "s#${REWRITEPKGPATH}/$arch/#debian-installer/${REPO_ALIAS}/$arch/#" "$x.ORIG" \
+					| tweak_pxelinux_arguments >> "$x"
 			done
 			menufragment="$metadatabasename.pxelinux.menu.fragment"
 			menufragment_serial9600="$metadatabasename.pxelinux.menu.serial-9600.fragment"
@@ -521,8 +643,8 @@ install_repo() {
 				[ -f "$menufragment_serial9600" ] && rm "$menufragment_serial9600"
 			fi
 
-			echo  "LABEL $release-$arch" >> $menufragment
-			printf "	MENU LABEL Debian Installer %-20s       [SUB-MENU]\n" "($release, $arch)" >> $menufragment
+			echo  "LABEL ${REPO_ALIAS}-$arch" >> $menufragment
+			printf "	MENU LABEL Debian Installer %-20s       [SUB-MENU]\n" "(${REPO_ALIAS}, $arch)" >> $menufragment
 
 			if [ ! -z "$(grep -Eiq "^[[:blank:]]*prompt[[:blank:]]+0" "$expand_dir/pxelinux.cfg/default" && grep -Eiq "^[[:blank:]]*default[[:blank:]].*/vesamenu.c32" "$expand_dir/pxelinux.cfg/default" && echo ok)" ]; then
 
@@ -532,33 +654,35 @@ install_repo() {
 				if grep -qEi "^[[:blank:]]*include[[:blank:]]" $expand_dir/pxelinux.cfg/default ; then
 					grep -Ei "^[[:blank:]]*include[[:blank:]]" $expand_dir/pxelinux.cfg/default | sed -e 's/^[[:blank:]]*include[[:blank:]]//' >> $menufragment
 				else
-					echo   "	APPEND debian-installer/$release/$arch/pxelinux.cfg/default" >> $menufragment
+					echo   "	APPEND debian-installer/${REPO_ALIAS}/$arch/pxelinux.cfg/default" >> $menufragment
 				fi
 
 			else
 				echo   "	KERNEL debian-installer/pxelinux.cfg/$SYSLINUXMENU" >> $menufragment
-				echo   "	APPEND debian-installer/$release/$arch/pxelinux.cfg/default" >> $menufragment
+				echo   "	APPEND debian-installer/${REPO_ALIAS}/$arch/pxelinux.cfg/default" >> $menufragment
 			fi
 
 			echo   "" >> $menufragment
-	
+
 			if [ -f "$menufragment_serial9600" ]; then
-				echo   "LABEL $release-$arch" >> $menufragment_serial9600
-				printf "	MENU LABEL Debian Installer %-20s       [SUB-MENU]\n" "($release, $arch)" >> $menufragment_serial9600
+				echo   "LABEL ${REPO_ALIAS}-$arch" >> $menufragment_serial9600
+				printf "	MENU LABEL Debian Installer %-20s       [SUB-MENU]\n" "(${REPO_ALIAS}, $arch)" >> $menufragment_serial9600
 				echo   "	KERNEL debian-installer/pxelinux.cfg/$SYSLINUXMENU" >> $menufragment_serial9600
-				echo   "	APPEND debian-installer/$release/$arch/pxelinux.cfg.serial-9600/default" >> $menufragment_serial9600
+				echo   "	APPEND debian-installer/${REPO_ALIAS}/$arch/pxelinux.cfg.serial-9600/default" >> $menufragment_serial9600
 				echo   "" >> $menufragment_serial9600
 			fi
 		fi
 
 		# ELILO MENU (ia64)
 		if [ ! -z "$(find "$expand_dir" -type f -name 'elilo.conf' )" ]; then
++			#Rewrite existing menus
 			for x in $(find "$expand_dir" -type f -name 'elilo.conf' ); do
 				mv "$x" "$x.ORIG"
 				print_do-not-edit_header "release" > "$x"
-				sed -e "s#^\([[:blank:]]*\(image\|initrd\|message\|f[0-9]\+\)=\)#\1debian-installer/$release/$arch/#" < "$x.ORIG" >> "$x"
+				sed -e "s#^\([[:blank:]]*\(image\|initrd\|message\|f[0-9]\+\)=\)#\1debian-installer/${REPO_ALIAS}/$arch/#" < "$x.ORIG" >> "$x"
 			done
 
+			#Create overview menu.
 			menufragment="$metadatabasename.elilo.conf.fragment"
 			echo "## This is a fragment of elilo menu file." > $menufragment
 			echo "##" >> $menufragment
@@ -567,13 +691,17 @@ install_repo() {
 			echo "## It is automatically generated by $PACKAGE_NAME" >> $menufragment
 			echo "##" >> $menufragment
 
-			echo "# ### $release $arch ### " >> $menufragment
-			awk '/^image=/,/^$/' "${expand_dir}/elilo.conf" | sed -e "s/^[[:blank:]]*label=.*$/\0-$release-$arch/" | sed -e "s/^\([[:blank:]]*description\)=\"\([^\"]\+\)\"/\1=\"\2 (Lenny AMD64)\"/" >> $menufragment
+			echo "# ### $release (${REPO_ALIAS}) $arch ### " >> $menufragment
+			awk '/^image=/,/^$/' "${expand_dir}/elilo.conf" \
+				| tweak_elilo_arguments \
+				| sed -e "s/^[[:blank:]]*label=.*$/\0-${REPO_ALIAS}-$arch/" \
+				| sed -e "s/^\([[:blank:]]*description\)=\"\([^\"]\+\)\"/\1=\"\2 ($release $arch)\"/" \
+				>> $menufragment
 			echo "" >> $menufragment
 		fi
 
 		update_menu
-	done;	
+	done
 	[ "$DEBUG" ] && set +x
 }
 
@@ -585,10 +713,11 @@ MV_VERBOSITY=
 CP_VERBOSITY=
 TAR_VERBOSITY=
 ARCH=
+ACTION=
+COUNT=0
 
 if which apt-config > /dev/null 2>&1 ; then
-	ARCH=
-	eval $(apt-config shell ARCH APT::Architecture )
+	ARCH="$(dpkg --print-architecture)"
 fi
 
 for option in "$@"; do
@@ -607,6 +736,20 @@ for option in "$@"; do
 		echo "" 1>&2
 		exit 1
 	fi ;;
+    --alias| --alias=*)
+	REPO_ALIAS="$(echo $option | sed -e 's/--alias[=]\?//' | grep -E "^[[:alnum:]_-]+$" )"
+	#Note:
+	if [ "$(echo $ARCH | grep -E '^[[:alnum:]_,]\+$')" ]; then
+		echo "E: Invalid alias name ($option)" 1>&2
+		echo "" 1>&2
+		exit 1
+	fi ;;
+    --di-args=*)
+	DI_ARGS="$DI_ARGS ${option#--di-args=}"
+	;;
+    --target-args=*)
+	TARGET_ARGS="$TARGET_ARGS ${option#--target-args=}"
+	;;
     --offline)
 	OFFLINE=yes ;;
     --verbose)
@@ -620,10 +763,27 @@ for option in "$@"; do
     --debug)
 	# This is an undocumented feature...
 	DEBUG=yes ;;
+    --di-args| --target-args)
+	echo "E: Option $option requires a value after equal sign." 1>&2
+	echo "" 1>&2
+	exit 1
+        ;;
     -*)
 	echo "E: Unrecognized option ($option)" 1>&2
 	echo "" 1>&2
 	exit 1
+	;;
+    rebuild-menu|install|uninstall|uncache|purge)
+	#Actions are processed in the loop below
+    	if [ "$ACTION" ]; then
+		echo "E: Unexpected command '$option'. '$ACTION' was already specified." 1>&2
+		echo "" 1>&2
+		exit 1
+	fi
+	ACTION=$option
+	;;
+    *)
+	COUNT=$(( $COUNT + 1 ))
 	;;
     esac
 done
@@ -634,6 +794,39 @@ cd "$TFTP_ROOT/debian-installer"
 check_di_source_list
 releases="$(grep -vE '^#' "$DISOURCELIST" | cut -f 1 | sort -u | tr "\n" " " | sed -e 's/^[[:blank:]]\+//' )"
 
+if [ "$REPO_ALIAS" ]; then
+	if [ "$ACTION" = "install" -a $COUNT -gt 1 ]; then
+        	echo "E: Option --alias can't be used with multiple repositories." 1>&2
+        	echo "" 1>&2
+        	exit 1
+	fi
+fi
+
+case "$ACTION" in
+    rebuild-menu)
+        if [ $COUNT -ne 0 ]; then
+        	echo "E: Unexpected argument after command '$ACTION'." 1>&2
+        	echo "" 1>&2
+        	exit 1
+	fi
+        ;;
+    *)
+        if [ $COUNT -eq 0 ]; then
+        	echo "E: No repository name was passed for '$ACTION'." 1>&2
+        	[ ! "$OFFLINE" -a "$ACTION" = "install" ] && echo "I: Declared repositories are: $releases"
+		cached_repos="$( find ${DL_CACHE} -name "*~~*--*.meta" | sed -e 's/^.*~~//' -e 's/--.*\.meta//' | sort -u | tr "\n" " " )"
+		installed_repos="$( cd /var/lib/di-netboot-assistant/ ; ls | sed -e 's/--.*//' | sort -u | tr "\n" " " )"
+		purgabled_repos="$(echo $cached_repos $installed_repos | tr " " "\n" | sort -u | tr "\n" " ")"
+        	[ "$ACTION" = "uncache" ] && echo "I: Cached repositories are: $cached_repos"
+        	[ "$ACTION" = "uninstall" ] && echo "I: Installed repositories are: $installed_repos"
+        	[ "$ACTION" = "purge" ] && echo "I: Purgable repositories are: $purgabled_repos"
+        	echo "" 1>&2
+        	exit 1
+        fi
+        ;;
+esac
+
+
 ACTION=
 COUNT=0
 for option in "$@"; do
@@ -641,13 +834,7 @@ for option in "$@"; do
     -*)
     	# Ignore options on this pass
     	;;
-    install|purge)
-    	if [ "$ACTION" ]; then
-		echo "E: Unexpected command '$option'. '$ACTION' was already specified." 1>&2
-		echo "" 1>&2
-		exit 1
-	fi
-
+    install|uninstall|uncache|purge)
 	ACTION=$option
 	;;
     rebuild-menu)
@@ -655,12 +842,20 @@ for option in "$@"; do
         update_menu
         ;;
     *)
+	[ ! "$REPO_ALIAS" ] && REPO_ALIAS=$option
 	case "$ACTION" in
 		install)
 			install_repo "$option"
 			;;
+		uninstall)
+			uninstall_repos "$option"
+			;;
+		uncache)
+			remove_repocaches "$option"
+			;;
 		purge)
-			purge_repos "$option"
+			uninstall_repos "$option" ignore_missing 
+			remove_repocaches "$option"
 			;;
 		rebuild-menu)
 			echo "W: Argument '$option' ignored ($ACTION expects no argument)." 1>&2
@@ -680,20 +875,6 @@ if [ "$ACTION" = "" ]; then
 	usage 1>&2
 	exit 1
 fi
-
-case "$ACTION" in
-    rebuild-menu)
-        ;;
-    *)
-        if [ $COUNT -eq 0 ]; then
-        	echo "E: No repository name was passed for '$ACTION'." 1>&2
-        	[ ! "$OFFLINE" -a "$ACTION" = "install" ] && echo "I: Declared repositories are: $releases" 1>&2
-        	[ "$ACTION" = "purge" ] && echo "I: Installed repositories are: $( cd /var/lib/di-netboot-assistant/ ; ls | sed -e 's/--.*//' | sort -u | tr "\n" " " )" 1>&2
-        	echo "" 1>&2
-        	exit 1
-        fi
-        ;;
-esac
 
 $UMASKOLD
 export UMASKOLD=

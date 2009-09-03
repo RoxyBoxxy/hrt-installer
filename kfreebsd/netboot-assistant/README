@@ -16,14 +16,14 @@ QuickStart:
        if you netboot i386 or amd64 clients, also install syslinux.
     2. Run "di-netboot-assistant install lenny" or similar.
     3. Configure the DHCP server, as explained in [1].  Also read the
-       "Architectures Notes" below. and see samples [2].
+       "Architectures Notes" below, and see samples [2].
 
 
 Architectures Notes:
 
 * i386 / amd64
     DebianInstaller uses Syslinux's PXElinux[3] for both platform.
-    Syslinux is a bootloader that provide a menu system to select
+    Syslinux is a boot-loader that provide a menu system to select
     the kernel you want to boot.
 
     di-netboot-assistant creates a "top level" menu, to select among
@@ -84,7 +84,7 @@ Architectures Notes:
 
 * ia64
     IA64 uses  EFI  firmware  instead of  PC's BIOS. DebianInstaller uses the
-    bootloader elilo[4] (which supports boot-time menu).
+    boot-loader elilo[4] (which supports boot-time menu).
 
     Case 1: Configure dhcp3 for a single distribution menu.
 
@@ -112,7 +112,7 @@ Architectures Notes:
 * hppa
 * sparc
     Those  architectures  netboot using  BOOTP  (some  can use RARP or DHCP).
-    They don't have a bootloader that would present a menu at boot-time. This
+    They don't have a boot-loader that would present a menu at boot-time. This
     means that you must  configure the dhcp to  provide one given kernel. (of
     course,  the  DHCP can  provide  different kernel image, based on the MAC
     or IP address).
@@ -146,7 +146,7 @@ MIRRORS
     The file di-sources.list contains the canonical URLs for repositories
     of netboot image.
     You can set the variable MIRROR_REGEXPS to rewrite the URLs to your
-    prefered mirror (you can specify multiple space-separated regexp)
+    preferred mirror (you can specify multiple space-separated regexp)
 
     For example, you want to search "://ftp.debian.org/" and replace it with
     "://ftp.fr.debian.org/debian/", then you declare 
@@ -249,9 +249,55 @@ Using dnsmasq
         di-netboot-assistant install lenny
 
 
+RUNNING AS NON-ROOT
+    It is possible to run di-netboot-assistant as non root. There is actually
+    two ways to acheive that:
+
+  * Delegate to a group (that manage the system wide netboot images)
+
+        In this case, we want to delegate the management of netboot files
+        to one or more people that don't have access to root account.
+
+        Create a group and add those user to the group
+            addgroup dina-admin
+            adduser johndoe dina-admin
+
+        Purge the package (and existing files that are owned by root !).
+            # Note : you will loose existing configuration file!
+            apt-get purge di-netboot-assistant
+
+        Allow that group to modify the files
+            # note: the four lines below are on single command.
+            for dir in /var/cache/di-netboot-assistant \
+                /var/lib/di-netboot-assistant \
+                /var/lib/tftpboot/; do
+                dpkg-statoverride --update --add root dina-admin 2775 $dir
+            done
+
+            # add the following line in di-netboot-assistant.conf, so
+            # so new file are writable by other members of the group.
+            umask 0002
+
+            # Do not grant write permission on di-netboot-assistant.conf to
+            # anybody but root. This would lead to privilege escalation since
+            # the configuration file are executed (sourced) by the script.
+
+        Reinstall the package
+            apt-get install di-netboot-assistant
+
+  * Per-user tftpboot
+        It is possible to have per user configuration files and repositories.
+        The user just have to create a configuration file in
+           ~/.di-netboot-assistant/di-netboot-assistant.conf
+        and configure it. A sample file is provided in
+           /usr/share/doc/di-netboot-assistant/examples/peruser.di-netboot-assistant.conf
+
+  * Sudo
+        Do *NOT* use di-netboot-assistant with sudo.
+        Allowing sudo execution of di-netboot-assistant allows one to 
+        become root (because the sudoer can edit ~/.di-netboot-assistant/*)
+
 TODO:
-    - Allow to specify location of extraction.
-    - Allow to be invoked from non-root user (or explain dpkg-statoverride).
     - Allow to specify alternate name for repository (save 'daily' as '$date')
     - support non pxelinux platforms (yaboot powerpc, mips
       sb1-bcm91250a/sb1a-bcm91480b)
