@@ -1,4 +1,4 @@
-console-setup (1.45) UNRELEASED; urgency=low
+console-setup (1.45) unstable; urgency=low
 
   [ Anton Zinoviev ]
   * Do not issue warnings when writing cached.kmap.gz and /etc is mounted
@@ -6,7 +6,46 @@ console-setup (1.45) UNRELEASED; urgency=low
   * Detection of Atari keyboards.  Use case-insensitive grep to make the
     tests more robust.
 
- -- Anton Zinoviev <zinoviev@debian.org>  Sun, 12 Jul 2009 15:12:31 +0300
+  [ Petter Reinholdtsen ]
+  * Make sure init.d/keyboard-setup can be installed when udev isn't
+    installed (Closes: #545070).
+  * Flag init.d/keyboard-setup and init.d/console-setup as interactive
+    scripts, to make sure they have direct access to the tty when using
+    concurrent booting (Closes: #538438).
+
+  [ Christian Perrier ]
+  * Add ${misc:Depends} to binary packages dependencies as we're using
+    debhelper
+  * Update Standards to 3.8.3 (checked, no change)
+  * Reformat extended description of bdf2psf to avoid exceeding 80
+    columns
+  * Bump debhelper compatibility to 7
+  * Use dh_prep in place of deprecated "dh_clean -k"
+
+  [ Updated translations ]
+  * Amharic (am.po) by Tegegne Tefera
+  * Asturian (ast.po) by Marcos Antonio Alvarez Costales
+  * Czech (cs.po) by Miroslav Kure
+  * German (de.po) by Holger Wansing
+  * Greek (el.po) by Emmanuel Galatoulas
+  * Esperanto (eo.po) by Felipe Castro
+  * Estonian (et.po) by Mattias Põldaru
+  * Basque (eu.po) by Piarres Beobide
+  * French (fr.po) by Christian Perrier
+  * Italian (it.po) by Milo Casagrande
+  * Japanese (ja.po) by Kenshi Muto
+  * Korean (ko.po) by Changwoo Ryu
+  * Marathi (mr.po) by Sampada
+  * Portuguese (pt.po) by Miguel Figueiredo
+  * Romanian (ro.po) by Eddy Petrișor
+  * Russian (ru.po) by Yuri Kozlov
+  * Slovak (sk.po) by Ivan Masár
+  * Swedish (sv.po) by Daniel Nylander
+  * Thai (th.po) by Theppitak Karoonboonyanan
+  * Turkish (tr.po) by Mert Dirik
+  * Simplified Chinese (zh_CN.po) by Deng Xiyue
+
+ -- Christian Perrier <bubulle@debian.org>  Sat, 05 Sep 2009 13:53:59 +0200
 
 console-setup (1.44) unstable; urgency=low
 

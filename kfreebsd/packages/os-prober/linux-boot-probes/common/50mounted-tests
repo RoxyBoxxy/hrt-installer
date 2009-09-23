@@ -10,7 +10,30 @@ if [ ! -d $tmpmnt ]; then
 	mkdir $tmpmnt
 fi
 
-for type in $(grep -v nodev /proc/filesystems); do
+types="$(fs_type "$partition")" || types=NOT-DETECTED
+if [ "$types" = NOT-DETECTED ]; then
+	debug "$1 type not recognised; skipping"
+	exit 0
+elif [ "$types" = swap ]; then
+	debug "$1 is a swap partition; skipping"
+	exit 0
+elif [ "$types" = crypto_LUKS ]; then
+	debug "$1 is a LUKS partition; skipping"
+	exit 0
+elif [ "$types" = ntfs ]; then
+	if type ntfs-3g >/dev/null 2>&1; then
+		types='ntfs-3g ntfs'
+	fi
+elif [ -z "$types" ]; then
+	if type cryptsetup >/dev/null 2>&1 && \
+	   cryptsetup luksDump "$partition" >/dev/null 2>&1; then
+		debug "$1 is a LUKS partition; skipping"
+		exit 0
+	fi
+	types="$(grep -v nodev /proc/filesystems)"
+fi
+
+for type in $types; do
 	if mount -o ro -t $type $partition $tmpmnt 2>/dev/null; then
 		mountboot="$(linux_mount_boot "$partition" "$tmpmnt")"
 		bootpart="${mountboot%% *}"
