@@ -265,7 +265,7 @@ case $prefix in
 	disc_offered_devfs="$prefix"
 	;;
     *)
-	disc_offered_devfs=$(echo "$bootfs_devfs" | sed "s:\(.*\)/.*:\1/disc:")
+	disc_offered_devfs=$(echo "$bootfs_nodevfs" | sed "s:\(.*\)/.*:\1/disc:")
 	;;
 esac
 disc_offered=$(mapdevfs "$disc_offered_devfs")
@@ -436,6 +436,10 @@ case "$grub_package" in
 	;;
     grub-pc)
 	log-output -t grub-installer $chroot $ROOT dpkg -P grub grub-legacy
+	# os-prober is only a Recommends so isn't installed by apt-install,
+	# but we make sure it's installed since it does a better
+	# job than the otheros script.
+	apt-install os-prober || true
 	;;
 esac
 
@@ -625,6 +629,9 @@ if [ -z "$frdisk" ]; then
 
 		if [ "$grub_version" = "grub" ] ; then
 			grub_install_params="$grub_install_params --recheck"
+		else
+			# install even if it requires blocklists
+			grub_install_params="$grub_install_params --force"
 		fi
 
 		info "Running $chroot $ROOT grub-install $grub_install_params \"$bootdev\""
@@ -890,9 +897,9 @@ IFS="$OLDIFS"
 rm -f /tmp/os-probed
 
 if [ -s $tmpfile ] ; then
-	grub_write_divider
 	case $grub_version in
 	    grub)
+		grub_write_divider
 		cat $tmpfile >> $ROOT/boot/grub/$menu_file
 		;;
 	    grub2)
