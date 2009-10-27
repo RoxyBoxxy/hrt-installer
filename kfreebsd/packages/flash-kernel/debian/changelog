@@ -1,11 +1,22 @@
-flash-kernel (2.24) UNRELEASED; urgency=low
+flash-kernel (2.25) unstable; urgency=low
+
+  [ Colin Watson ]
+  * Use the EXIT trap instead of ERR, which is a bashism.
+
+ -- Martin Michlmayr <tbm@cyrius.com>  Mon, 19 Oct 2009 17:16:14 +0100
+
+flash-kernel (2.24) unstable; urgency=low
 
   [ Martin Michlmayr ]
   * Move back flash-kernel to its original location upon failure of
     the udeb postinst, otherwise the postinst will fail when run
     another time.
+  * Don't hardcode the machine ID for Marvell SheevaPlug, OpenRD-Base
+    and OpenRD-Client since the boot loader will (or can be configured
+    to) use the correct machine ID.  This allows installed disks to be
+    shared between these devices.
 
- -- Martin Michlmayr <tbm@cyrius.com>  Tue, 29 Sep 2009 18:21:22 +0100
+ -- Martin Michlmayr <tbm@cyrius.com>  Sun, 18 Oct 2009 18:29:05 +0100
 
 flash-kernel (2.23) unstable; urgency=low
 

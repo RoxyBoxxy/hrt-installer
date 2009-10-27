@@ -22,14 +22,21 @@ QuickStart:
 Architectures Notes:
 
 * i386 / amd64
-    DebianInstaller uses Syslinux's PXElinux[3] for both platform.
+    DebianInstaller uses Syslinux's PXElinux[3] for BIOS platforms.
     Syslinux is a boot-loader that provide a menu system to select
     the kernel you want to boot.
 
     di-netboot-assistant creates a "top level" menu, to select among
     the DebianInstaller netboot menu you previously installed (etch,
-    lenny, testing, daily...)
+    lenny, testing, daily...).
 
+    Absolute filenames in PXELinux:
+    Tftp filenames inside PXELinux configuration files (pxelinux.HEAD,
+    "default"...) must be prefixed with "::/" so pxelinux treats
+    them as absolute filenames. In PXELinux, path starting with a
+    slash ("/") are RELATIVE to the folder of pxelinux.0 !
+    The double column ("::/") forces PXELinux to treat them as absolute.
+    
     DHCP configuration:
     Most PC capable of netbooting use DHCP+PXE (as opposed to BOOTP).
     You can either configure the DHCP to tell the PC to start the "top
@@ -49,10 +56,9 @@ Architectures Notes:
         option pxelinux.reboottime code 211 = unsigned integer 32;
 
 	# Configure PXE options for di-netboot-assistant
-	# Those are compulsory (nothing to change).
+	# This is compulsory (nothing to change).
 	site-option-space		"pxelinux";
 	option pxelinux.magic		f1:00:74:7e;
-	option pxelinux.pathprefix	"/";
 	if exists dhcp-parameter-request-list {
 		# Always send the PXELINUX options (specified in hexadecimal)
 		option dhcp-parameter-request-list = concat(option dhcp-parameter-request-list,d0,d1,d2,d3);
@@ -241,7 +247,6 @@ Using dnsmasq
         #dhcp-option=option:router,192.168.0.1
 
         dhcp-option-force=208,f1:00:74:7e                       #PXE signature
-        dhcp-option-force=210,/                                 #tftp prefix
         dhcp-boot=debian-installer/pxelinux.0
         dhcp-option-force=209,debian-installer/pxelinux.cfg/default
 
@@ -297,12 +302,14 @@ RUNNING AS NON-ROOT
         Allowing sudo execution of di-netboot-assistant allows one to 
         become root (because the sudoer can edit ~/.di-netboot-assistant/*)
 
+Testing:
+    Qemu (and kvm) can a emulate tftp server, to it's easy to test netboot:
+        cd /var/lib/tftpboot
+        qemu -boot n -tftp . -bootp /debian-installer/pxelinux.0
+
 TODO:
-    - Allow to specify alternate name for repository (save 'daily' as '$date')
     - support non pxelinux platforms (yaboot powerpc, mips
       sb1-bcm91250a/sb1a-bcm91480b)
-    - Implement "clean-cache" action to remove cached files.
-    - Implement "remove" action (don't purge DL cache).
     - Default to 64bits on amd64 platform (syslinux DEFAULT64, bug 485656)
     - Use vesamenu rather than menu (for Lenny+1 images).
    
