@@ -24,6 +24,9 @@ static char *protocol = NULL;
 static char *country  = NULL;
 int show_progress = 1;
 
+/* Are we installing from a CD that includes base system packages? */
+static int base_on_cd = 0;
+
 /*
  * Returns a string on the form "DEBCONF_BASE/protocol/supplied". The
  * calling function is responsible for freeing the string afterwards.
@@ -129,7 +132,7 @@ static char *get_default_suite(void) {
 
 	/* Check for a preseeded suite/codename. */
 	debconf_get(debconf, DEBCONF_BASE "suite");
-	if (strlen(debconf->value) > 0) {
+	if (! base_on_cd && strlen(debconf->value) > 0) {
 		suite = strdup(debconf->value);
 	} else {
 		/* Check for default suite/codename set at build time. */
@@ -225,7 +228,6 @@ int find_suite (void) {
 	return ret;
 }
 
-static int base_on_cd = 0;
 static int check_base_on_cd(void) {
 	FILE *fp;
 	if ((fp = fopen("/cdrom/.disk/base_installable", "r"))) {
