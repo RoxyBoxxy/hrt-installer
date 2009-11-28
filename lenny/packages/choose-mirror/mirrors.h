@@ -28,3 +28,21 @@ static const char suites[][SUITE_LENGTH] = {
 };
 
 #define DEBCONF_BASE "mirror/"
+
+/* Allow for one more release than nr. of suites (list terminator) */
+#define MAXRELEASES (sizeof(suites)/SUITE_LENGTH + 1)
+
+/*
+ * Data structure containing information on releases supported by a mirror
+ */
+struct release_t {
+	char *name;
+	char *suite;
+	int status;
+};
+
+/* Values for status field in release_t */
+#define IS_VALID	0x1
+#define IS_DEFAULT	0x2
+#define GET_SUITE	0x4
+#define GET_CODENAME	0x8
