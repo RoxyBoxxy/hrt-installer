@@ -27,6 +27,9 @@ int show_progress = 1;
 /* Are we installing from a CD that includes base system packages? */
 static int base_on_cd = 0;
 
+/* Available releases (suite/codename) on the mirror. */
+static struct release_t releases[MAXRELEASES];
+
 /*
  * Returns a string on the form "DEBCONF_BASE/protocol/supplied". The
  * calling function is responsible for freeing the string afterwards.
@@ -135,6 +138,195 @@ static char *get_default_suite(void) {
 		suite = strdup(PREFERRED_DISTRIBUTION);
 
 	return suite;
+}
+
+void log_invalid_release(const char *name, const char *field) {
+	di_log(DI_LOG_LEVEL_WARNING,
+		"broken mirror: invalid %s in Release file for %s", field, name);
+}
+
+static int get_release(struct release_t *release, const char *name);
+
+/*
+ * Try to fetch a Release file using its codename; if successful, check
+ * that it matches the Release file that was fetched using the suite.
+ * Returns false only if an invalid Release file was found.
+ */
+static int validate_codename(struct release_t *s_release) {
+	struct release_t cn_release;
+	int ret = 1;
+
+	memset(&cn_release, 0, sizeof(cn_release));
+
+	/* s_release->name is the codename to check */
+	if (get_release(&cn_release, s_release->name)) {
+		if ((cn_release.status & IS_VALID) &&
+		    strcmp(cn_release.suite, s_release->suite) == 0) {
+			s_release->status |= (cn_release.status & GET_CODENAME);
+		} else {
+			s_release->status &= ~IS_VALID;
+			ret = 0;
+		}
+	}
+
+	free(cn_release.name);
+	free(cn_release.suite);
+
+	return ret;
+}
+
+/*
+ * Fetch a Release file, extract its Suite and Codename and check its valitity.
+ */
+static int get_release(struct release_t *release, const char *name) {
+	char *command;
+	FILE *f = NULL;
+	char *hostname, *directory;
+	char line[80];
+	char buf[SUITE_LENGTH];
+
+	hostname = add_protocol("hostname");
+	debconf_get(debconf, hostname);
+	free(hostname);
+	hostname = strdup(debconf->value);
+	directory = add_protocol("directory");
+	debconf_get(debconf, directory);
+	free(directory);
+	directory = strdup(debconf->value);
+
+	asprintf(&command, "wget -q %s://%s%s/dists/%s/Release -O - | grep -E '^(Suite|Codename):'",
+		 protocol, hostname, directory, name);
+	di_log(DI_LOG_LEVEL_DEBUG, "command: %s", command);
+	f = popen(command, "r");
+	free(command);
+	free(hostname);
+	free(directory);
+
+	if (f != NULL) {
+		while (fgets(line, sizeof(line), f) != NULL) {
+			char *value;
+
+			if (line[strlen(line) - 1] == '\n')
+				line[strlen(line) - 1] = '\0';
+			if ((value = strstr(line, ": ")) != NULL) {
+				strncpy(buf, value + 2, SUITE_LENGTH - 1);
+				buf[SUITE_LENGTH - 1] = '\0';
+				if (strncmp(line, "Codename:", 9) == 0)
+					release->name = strdup(buf);
+				if (strncmp(line, "Suite:", 6) == 0)
+					release->suite = strdup(buf);
+			}
+		}
+		if (release->name != NULL && strcmp(release->name, name) == 0)
+			release->status |= IS_VALID | GET_CODENAME;
+		if (release->suite != NULL && strcmp(release->suite, name) == 0)
+			release->status |= IS_VALID | GET_SUITE;
+
+		if ((release->name != NULL || release->suite != NULL) &&
+		    !(release->status & IS_VALID))
+			log_invalid_release(name, "Suite or Codename");
+
+		/* Check if release can also be gotten using codename */
+		if ((release->status & IS_VALID) && release->name != NULL &&
+		    !(release->status & GET_CODENAME))
+			if (! validate_codename(release))
+				log_invalid_release(name, "Codename");
+
+		/* In case there is no Codename field */
+		if ((release->status & IS_VALID) && release->name == NULL)
+			release->name = strdup(name);
+
+		// di_log(DI_LOG_LEVEL_DEBUG, "get_release(): %s -> %s:%s (0x%x)",
+		//	name, release->suite, release->name, release->status);
+	}
+
+	pclose(f);
+
+	if (release->name != NULL) {
+		return 1;
+	} else {
+		free(release->suite);
+		return 0;
+	}
+}
+
+static int find_releases(void) {
+	int nbr_suites = sizeof(suites)/SUITE_LENGTH;
+	int i, r = 0, bad_mirror = 0;
+	struct release_t release;
+	char *default_suite;
+
+	default_suite = get_default_suite();
+	if (default_suite == NULL)
+		di_log(DI_LOG_LEVEL_ERROR, "no default release specified");
+
+	if (show_progress) {
+		debconf_progress_start(debconf, 0, nbr_suites,
+				       DEBCONF_BASE "checking_title");
+		debconf_progress_info(debconf,
+				      DEBCONF_BASE "checking_download");
+	}
+
+	/* Initialize releases; also ensures NULL termination of the array */
+	memset(&releases, 0, sizeof(releases));
+
+	/* Get releases for all suites */
+	if (! base_on_cd) {
+		for (i=0; i < nbr_suites && r < MAXRELEASES; i++) {
+			memset(&release, 0, sizeof(release));
+			if (get_release(&release, suites[i])) {
+				if (release.status & IS_VALID) {
+					if (strcmp(release.name, default_suite) == 0 ||
+					    strcmp(release.suite, default_suite) == 0)
+						release.status |= IS_DEFAULT;
+					releases[r++] = release;
+				} else {
+					bad_mirror = 1;
+					break;
+				}
+			}
+
+			if (show_progress)
+				debconf_progress_step(debconf, 1);
+		}
+		if (r == MAXRELEASES)
+			di_log(DI_LOG_LEVEL_ERROR, "array overflow: more releases than allowed by MAXRELEASES");
+		if (! bad_mirror && r == 0)
+			di_log(DI_LOG_LEVEL_INFO, "mirror does not have any suite symlinks");
+	}
+
+	/* Try to get release using the default "suite" */
+	if (! bad_mirror && (base_on_cd || r == 0)) {
+		memset(&release, 0, sizeof(release));
+		if (get_release(&release, default_suite)) {
+			if (release.status & IS_VALID) {
+				release.status |= IS_DEFAULT;
+				releases[r++] = release;
+			} else {
+				bad_mirror = 1;
+			}
+		}
+	}
+
+	if (show_progress) {
+		debconf_progress_step(debconf, nbr_suites);
+		debconf_progress_stop(debconf);
+	}
+
+	free(default_suite);
+
+	if (r == 0 || bad_mirror) {
+		free(release.name);
+		free(release.suite);
+
+		debconf_input(debconf, "critical", DEBCONF_BASE "bad");
+		if (debconf_go(debconf) == 30)
+			exit(10); /* back up to menu */
+		else
+			return 1; /* back to beginning of questions */
+	}
+
+	return 0;
 }
 
 /*
@@ -309,15 +501,6 @@ static int get_protocol(void) {
 	return 0;
 }
 
-static int choose_suite(void) {
-	/* If the base system can be installed from CD, don't allow to
-	 * select a different suite
-	 */
-	if (! base_on_cd)
-		debconf_input(debconf, "medium", DEBCONF_BASE "suite");
-	return 0;
-}
-
 static int manual_entry;
 
 static int choose_mirror(void) {
@@ -455,54 +638,82 @@ static int check_mirror(void) {
 	}
 }
 
-/* Get the codename for the selected suite. */
-int get_codename (void) {
-	char *command;
-	FILE *f = NULL;
-	char *hostname, *directory, *suite = NULL;
-	int ret = 1;
+static int choose_suite(void) {
+	char *choices_c[MAXRELEASES], *choices[MAXRELEASES], *list;
+	int i, ret;
 
-	hostname = add_protocol("hostname");
-	debconf_get(debconf, hostname);
-	free(hostname);
-	hostname = strdup(debconf->value);
-	directory = add_protocol("directory");
-	debconf_get(debconf, directory);
-	free(directory);
-	directory = strdup(debconf->value);
+	ret = find_releases();
+	if (ret)
+		return ret;
+
+	/* Also ensures NULL termination */
+	memset(choices, 0, sizeof(choices));
+	memset(choices_c, 0, sizeof(choices_c));
+
+	/* Arrays can never overflow as we've already checked releases */
+	for (i=0; releases[i].name != NULL; i++) {
+		char *name;
+
+		if (releases[i].status & GET_SUITE)
+			name = releases[i].suite;
+		else
+			name = releases[i].name;
+
+		choices_c[i] = name;
+		if (strcmp(name, releases[i].name) != 0)
+			asprintf(&choices[i], "%s - %s", releases[i].name, name);
+		else
+			choices[i] = strdup(name);
+		if (releases[i].status & IS_DEFAULT)
+			debconf_set(debconf, DEBCONF_BASE "suite", name);
+	}
+
+	list = debconf_list(choices_c);
+	debconf_subst(debconf, DEBCONF_BASE "suite", "CHOICES-C", list);
+	free(list);
+	list = debconf_list(choices);
+	debconf_subst(debconf, DEBCONF_BASE "suite", "CHOICES", list);
+	free(list);
+
+	/* If the base system can be installed from CD, don't allow to
+	 * select a different suite
+	 */
+	if (! base_on_cd)
+		debconf_input(debconf, "medium", DEBCONF_BASE "suite");
+
+	return 0;
+}
+
+/* Set the codename for the selected suite. */
+int set_codename (void) {
+	char *suite;
+	int i;
 
 	/* As suite has been determined previously, this should not fail */
 	debconf_get(debconf, DEBCONF_BASE "suite");
 	if (strlen(debconf->value) > 0) {
 		suite = strdup(debconf->value);
+		di_log(DI_LOG_LEVEL_INFO, "suite set to: %s", suite);
 
-		asprintf(&command, "wget -q %s://%s%s/dists/%s/Release -O - | grep ^Codename: | cut -d' ' -f 2",
-			 protocol, hostname, directory, suite);
-		di_log(DI_LOG_LEVEL_DEBUG, "command: %s", command);
-		f = popen(command, "r");
-		free(command);
+		for (i=0; releases[i].name != NULL; i++) {
+			if (strcmp(releases[i].name, suite) == 0 ||
+			    strcmp(releases[i].suite, suite) == 0) {
+				char *codename;
 
-		if (f != NULL) {
-			char buf[SUITE_LENGTH];
-			if (fgets(buf, SUITE_LENGTH - 1, f)) {
-				if (buf[strlen(buf) - 1] == '\n')
-					buf[strlen(buf) - 1] = '\0';
-				debconf_set(debconf, DEBCONF_BASE "codename", buf);
-				di_log(DI_LOG_LEVEL_INFO, "codename set to: %s", buf);
-				ret = 0;
+				if (releases[i].status & GET_CODENAME)
+					codename = releases[i].name;
+				else
+					codename = releases[i].suite;
+				debconf_set(debconf, DEBCONF_BASE "codename", codename);
+				di_log(DI_LOG_LEVEL_INFO, "codename set to: %s", codename);
+				break;
 			}
 		}
-		pclose(f);
+
+		free(suite);
 	}
 
-	free(hostname);
-	free(directory);
-	if (suite)
-		free(suite);
-
-	if (ret != 0)
-		di_log(DI_LOG_LEVEL_ERROR, "Error getting codename");
-	return ret;
+	return 0;
 }
 
 /* Check if the mirror carries the architecture that's being installed. */
@@ -559,6 +770,7 @@ int check_arch (void) {
 }
 
 int main (int argc, char **argv) {
+	int i;
 	/* Use a state machine with a function to run in each state */
 	int state = 0;
 	int (*states[])() = {
@@ -571,9 +783,8 @@ int main (int argc, char **argv) {
 		validate_mirror,
 		choose_proxy,
 		set_proxy,
-		check_mirror,
 		choose_suite,
-		get_codename,
+		set_codename,
 		check_arch,
 		NULL,
 	};
@@ -600,5 +811,11 @@ int main (int argc, char **argv) {
 		else
 			state++;
 	}
+
+	for (i=0; releases[i].name != NULL; i++) {
+		free(releases[i].name);
+		free(releases[i].suite);
+	}
+
 	return (state >= 0) ? 0 : 10; /* backed all the way out */
 }
