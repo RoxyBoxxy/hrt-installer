@@ -118,6 +118,23 @@ static char *mirror_root(char *mirror) {
 }
 
 /*
+ * Get the default suite (can be a codename) to use; this is either a
+ * preseeded value or a value set at build time.
+ */
+static char *get_default_suite(void) {
+	char *suite = NULL;
+
+	/* Check for a preseeded suite/codename. */
+	debconf_get(debconf, DEBCONF_BASE "suite");
+	if (strlen(debconf->value) > 0)
+		suite = strdup(debconf->value);
+	else
+		suite = strdup(PREFERRED_DISTRIBUTION);
+
+	return suite;
+}
+
+/*
  * Using the current debconf settings for a mirror, figure out which suite
  * to use from the mirror and set mirror/suite.
  *
@@ -157,11 +174,9 @@ int find_suite (void) {
 		char *suite;
 
 		if (i == 0) {
-			/* First check for a preseeded suite. */
-			debconf_get(debconf, DEBCONF_BASE "suite");
-			if (strlen(debconf->value) > 0)
-				suite = strdup(debconf->value);
-			else
+			/* First check for a (preseeded) default suite. */
+			suite = get_default_suite();
+			if (suite == NULL)
 				continue;
 		} else {
 			suite = strdup(suites[i - 1]);
