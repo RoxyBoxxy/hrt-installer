@@ -320,11 +320,6 @@ static int get_protocol(void) {
 }
 
 static int choose_suite(void) {
-	/* Skip question if installation of oldstable has been preseeded. */
-	debconf_get(debconf, DEBCONF_BASE "suite");
-	if (strcmp(debconf->value, "oldstable") == 0) {
-		return 0;
-	}
 	/* If the base system can be installed from CD, don't allow to
 	 * select a different suite
 	 */
