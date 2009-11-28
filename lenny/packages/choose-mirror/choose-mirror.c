@@ -32,7 +32,7 @@ static char *add_protocol(char *string) {
 	char *ret;
 
 	assert(protocol != NULL); /* Fetched by choose_protocol */
-	asprintf(&ret,DEBCONF_BASE "%s/%s",protocol,string);
+	asprintf(&ret, DEBCONF_BASE "%s/%s", protocol, string);
 	return ret;
 }
 
@@ -67,14 +67,12 @@ static struct mirror_t *mirror_list(void) {
 	assert(protocol != NULL);
 
 #ifdef WITH_HTTP
-	if (strcasecmp(protocol,"http") == 0) {
+	if (strcasecmp(protocol, "http") == 0)
 		return mirrors_http;
-	}
 #endif
 #ifdef WITH_FTP
-	if (strcasecmp(protocol,"ftp") == 0) {
+	if (strcasecmp(protocol, "ftp") == 0)
 		return mirrors_ftp;
-	}
 #endif
 	return 0; // should never happen
 }
@@ -87,15 +85,14 @@ static char **mirrors_in(char *country) {
 
 	ret = malloc(num * sizeof(char *));
 	for (i = j = 0; mirrors[i].country != NULL; i++) {
-		if (j == num-1) {
+		if (j == num - 1) {
 			num *= 2;
-			ret = realloc(ret,num * sizeof(char*));
+			ret = realloc(ret, num * sizeof(char*));
 		}
-		if (strcmp(mirrors[i].country, country) == 0) {
-			ret[j++]=mirrors[i].site;
-		}
+		if (strcmp(mirrors[i].country, country) == 0)
+			ret[j++] = mirrors[i].site;
 	}
-	ret[j]=NULL;
+	ret[j] = NULL;
 	return ret;
 }
 
@@ -166,8 +163,7 @@ int find_suite (void) {
 			debconf_get(debconf, DEBCONF_BASE "suite");
 			if (strlen(debconf->value) > 0) {
 				suite = strdup(debconf->value);
-			}
-			else {
+			} else {
 				/* Read this file to find the default suite
 				 * to use. */
 				f = fopen("/etc/default-release", "r");
@@ -177,19 +173,16 @@ int find_suite (void) {
 							buf[strlen(buf) - 1] = '\0';
 						suite = strdup(buf);
 						fclose(f);
-					}
-					else {
+					} else {
 						fclose(f);
 						continue;
 					}
-				}
-				else {
+				} else {
 					continue;
 				}
 			}
 			
-		}
-		else {
+		} else {
 			suite = strdup(suites[i - 1]);
 		}
 
@@ -240,7 +233,7 @@ static int choose_country(void) {
 
 #if defined (WITH_FTP_MANUAL)
 	assert(protocol != NULL);
-	if (strcasecmp(protocol,"ftp") == 0)
+	if (strcasecmp(protocol, "ftp") == 0)
 		return 0;
 #endif
 
@@ -252,15 +245,13 @@ static int choose_country(void) {
 			country = strdup (debconf->value);
 			debconf_set(debconf, DEBCONF_BASE "country", country);
 		}
-	}
-	else {
+	} else {
 		country = debconf->value;
 	}
 
 	/* Ensure 'country' is set to something. */
-	if (country == NULL || *country == 0) {
+	if (country == NULL || *country == 0)
 		country = "US";
-	}
 
 	char *countries;
 	countries = add_protocol("countries");
@@ -280,7 +271,7 @@ static int set_country(void) {
 
 #if defined (WITH_FTP_MANUAL)
 	assert(protocol != NULL);
-	if (strcasecmp(protocol,"ftp") == 0)
+	if (strcasecmp(protocol, "ftp") == 0)
 		return 0;
 #endif
 
@@ -338,7 +329,7 @@ static int choose_mirror(void) {
 	manual_entry = ! strcmp(debconf->value, MANUAL_ENTRY) ||
 		       ! strcmp(debconf->value, MANUAL_ENTRY_OLD);
 #else
-	if (! strcasecmp(protocol,"ftp") == 0)
+	if (! strcasecmp(protocol, "ftp") == 0)
 		manual_entry = ! strcmp(debconf->value, MANUAL_ENTRY) ||
 			       ! strcmp(debconf->value, MANUAL_ENTRY_OLD);
 	else
@@ -349,14 +340,13 @@ static int choose_mirror(void) {
 		char *mir = add_protocol("mirror");
 
 		/* Prompt for mirror in selected country. */
-		list=debconf_list(mirrors_in(country));
+		list = debconf_list(mirrors_in(country));
 		debconf_subst(debconf, mir, "mirrors", list);
 		free(list);
 
 		debconf_input(debconf, "high", mir);
 		free(mir);
-	}
-	else {
+	} else {
 		char *host = add_protocol("hostname");
 		char *dir = add_protocol("directory");
 
@@ -389,16 +379,15 @@ static int set_proxy(void) {
 
 	debconf_get(debconf, px);
 	if (debconf->value != NULL && strlen(debconf->value)) {
-		if (strchr(debconf->value, ':'))
+		if (strchr(debconf->value, ':')) {
 			setenv(proxy_var, debconf->value, 1);
-		else {
+		} else {
 			char *proxy_value;
 			asprintf(&proxy_value, "http://%s", debconf->value);
 			setenv(proxy_var, proxy_value, 1);
 			free(proxy_value);
 		}
-	}
-	else {
+	} else {
 		unsetenv(proxy_var);
 	}
 
@@ -412,7 +401,7 @@ static int validate_mirror(void) {
 	char *mir;
 	char *host;
 	char *dir;
-	int valid;
+	int valid = 0;
 
 	mir = add_protocol("mirror");
 	host = add_protocol("hostname");
@@ -433,32 +422,23 @@ static int validate_mirror(void) {
 		debconf_set(debconf, host, mirror);
 		root = mirror_root(mirror);
 		free(mirror);
-		if (root == NULL) {
-			valid = 0;
-		}
-		else {
+		if (root != NULL) {
 			debconf_set(debconf, dir, root);
 			valid = find_suite();
 		}
-	}
-	else {
+	} else {
 		/* check to see if the entered data is basically ok */
 		int ok = 1;
 		debconf_get(debconf, host);
-		if (debconf->value == NULL || strcmp(debconf->value, "") == 0 || strchr(debconf->value, '/') != NULL) {
+		if (debconf->value == NULL || strcmp(debconf->value, "") == 0 ||
+		    strchr(debconf->value, '/') != NULL)
 			ok = 0;
-		}
 		debconf_get(debconf, dir);
-		if (debconf->value == NULL || strcmp(debconf->value, "") == 0) {
+		if (debconf->value == NULL || strcmp(debconf->value, "") == 0)
 			ok = 0;
-		}
 
-		if (ok) {
+		if (ok)
 			valid = find_suite();
-		}
-		else {
-			valid = 0;
-		}
 	}
 
 	free(mir);
@@ -467,8 +447,7 @@ static int validate_mirror(void) {
 
 	if (valid) {
 		return 0;
-	}
-	else {
+	} else {
 		debconf_input(debconf, "critical", DEBCONF_BASE "bad");
 		if (debconf_go(debconf) == 30)
 			exit(10); /* back up to menu */
@@ -570,8 +549,7 @@ int check_arch (void) {
 
 	if (valid) {
 		return 0;
-	}
-	else {
+	} else {
 		di_log(DI_LOG_LEVEL_DEBUG, "Architecture not supported by selected mirror");
 		debconf_input(debconf, "critical", DEBCONF_BASE "noarch");
 		if (debconf_go(debconf) == 30)
@@ -601,7 +579,7 @@ int main (int argc, char **argv) {
 	};
 
 	if (argc > 1 && strcmp(argv[1], "-n") == 0)
-		show_progress=0;
+		show_progress = 0;
 
 	debconf = debconfclient_new();
 	debconf_capb(debconf, "backup");
@@ -610,15 +588,12 @@ int main (int argc, char **argv) {
 	di_system_init("choose-mirror");
 
 	while (state >= 0 && states[state]) {
-		if (states[state]() != 0) { /* back up to start */
+		if (states[state]() != 0) /* back up to start */
 			state = 0;
-		}
-		else if (debconf_go(debconf)) { /* back up */
+		else if (debconf_go(debconf)) /* back up */
 			state = state - 1;
-		}
-		else {
+		else
 			state++;
-		}
 	}
 	return (state >= 0) ? 0 : 10; /* backed all the way out */
 }
