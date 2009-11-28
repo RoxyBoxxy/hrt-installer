@@ -252,7 +252,8 @@ static int get_release(struct release_t *release, const char *name) {
 
 static int find_releases(void) {
 	int nbr_suites = sizeof(suites)/SUITE_LENGTH;
-	int i, r = 0, bad_mirror = 0;
+	int i, r = 0;
+	int bad_mirror = 0, have_default = 0;
 	struct release_t release;
 	char *default_suite;
 
@@ -277,8 +278,10 @@ static int find_releases(void) {
 			if (get_release(&release, suites[i])) {
 				if (release.status & IS_VALID) {
 					if (strcmp(release.name, default_suite) == 0 ||
-					    strcmp(release.suite, default_suite) == 0)
+					    strcmp(release.suite, default_suite) == 0) {
 						release.status |= IS_DEFAULT;
+						have_default = 1;
+					}
 					/* Only list oldstable if it's the default */
 					if (strcmp(suites[i], "oldstable") != 0 ||
 					    (release.status & IS_DEFAULT))
@@ -308,6 +311,10 @@ static int find_releases(void) {
 			} else {
 				bad_mirror = 1;
 			}
+		} else {
+			di_log(DI_LOG_LEVEL_WARNING,
+				"mirror does not support the specified release (%s)",
+				default_suite);
 		}
 	}
 
@@ -568,6 +575,7 @@ static int validate_mirror(void) {
 static int choose_suite(void) {
 	char *choices_c[MAXRELEASES], *choices[MAXRELEASES], *list;
 	int i, ret;
+	int have_default = 0;
 
 	ret = find_releases();
 	if (ret)
@@ -592,8 +600,10 @@ static int choose_suite(void) {
 				 l10n_suite(name));
 		else
 			choices[i] = l10n_suite(name);
-		if (releases[i].status & IS_DEFAULT)
+		if (releases[i].status & IS_DEFAULT) {
 			debconf_set(debconf, DEBCONF_BASE "suite", name);
+			have_default = 1;
+		}
 	}
 
 	list = debconf_list(choices_c);
@@ -606,8 +616,11 @@ static int choose_suite(void) {
 	/* If the base system can be installed from CD, don't allow to
 	 * select a different suite
 	 */
+	if (! have_default)
+		debconf_fset(debconf, DEBCONF_BASE "suite", "seen", "false");
 	if (! base_on_cd)
-		debconf_input(debconf, "medium", DEBCONF_BASE "suite");
+		debconf_input(debconf, have_default ? "medium" : "critical",
+			      DEBCONF_BASE "suite");
 
 	return 0;
 }
