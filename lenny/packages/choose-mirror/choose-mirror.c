@@ -610,7 +610,7 @@ static int choose_suite(void) {
 
 		choices_c[i] = name;
 		if (strcmp(name, releases[i].name) != 0)
-			asprintf(&choices[i], "%s - %s", releases[i].name,
+			asprintf(&choices[i], "%s${!TAB}-${!TAB}%s", releases[i].name,
 				 l10n_suite(name));
 		else
 			choices[i] = l10n_suite(name);
@@ -742,7 +742,7 @@ int main (int argc, char **argv) {
 		show_progress = 0;
 
 	debconf = debconfclient_new();
-	debconf_capb(debconf, "backup");
+	debconf_capb(debconf, "backup align");
 	debconf_version(debconf, 2);
 
 	di_system_init("choose-mirror");
