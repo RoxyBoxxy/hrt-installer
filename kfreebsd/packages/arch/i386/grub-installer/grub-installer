@@ -326,7 +326,7 @@ case $ARCH in
 		grub_package="grub"
 	fi
 	;;
-    i386/*|amd64/*|lpia/*)
+    i386/*|amd64/*)
 	# On PC/BIOS, default to GRUB Legacy
 	grub_package="grub"
 	;;
@@ -341,6 +341,9 @@ esac
 case "$frtype:$bootfstype:$bootfslabel:$grub_package" in
     sataraid:*:*:*)
 	# Serial ATA RAID partition, currently only grub is supported
+	: ;;
+    multipath:*:*:*)
+	# Multipath requires GRUB Legacy for now
 	: ;;
     lvm:*:*:*)
 	# Booting from LVM requires grub2
@@ -357,7 +360,7 @@ case "$frtype:$bootfstype:$bootfslabel:$grub_package" in
 	;;
     *:*:*:grub)
 	db_input low grub-installer/grub2_instead_of_grub_legacy || [ $? -eq 30 ]
-	db_go || true
+	db_go || exit 10
 	db_get grub-installer/grub2_instead_of_grub_legacy
 	if [ "$RET" = true ]; then
 		grub_package="grub-pc"
@@ -370,7 +373,7 @@ case "$frtype:$bootfstype:$bootfslabel:$grub_package" in
     *:*:*:*)
 	db_subst grub-installer/grub_not_mature_on_this_platform ARCH $ARCH
 	db_input low grub-installer/grub_not_mature_on_this_platform || [ $? -eq 30 ]
-	db_go || true
+	db_go || exit 10
 	db_get grub-installer/grub_not_mature_on_this_platform
 	if [ "$RET" != true ]; then
 		exit 10
@@ -419,6 +422,12 @@ if [ "$grub_version" = grub2 ]; then
 	$chroot $ROOT 'debconf-set-selections' <<EOF
 $grub_package grub2/linux_cmdline string $kopt_params
 $grub_package grub2/linux_cmdline_default string $defopt_params
+EOF
+fi
+if [ "$grub_package" = grub-pc ]; then
+	# Empty this for now to stop it being asked. We'll fix this up later.
+	chroot /target 'debconf-set-selections' <<EOF
+$grub_package grub-pc/install_devices multiselect
 EOF
 fi
 
@@ -681,6 +690,13 @@ EOF
 
 fi
 
+if [ "$grub_package" = "grub-pc" ]; then
+	# Do the same thing on upgrades.
+	$chroot $ROOT 'debconf-set-selections' <<EOF
+$grub_package grub-pc/install_devices multiselect $bootdevs
+EOF
+fi
+
 db_progress STEP 1
 db_progress INFO grub-installer/progress/step_config_loader
 
@@ -806,9 +822,9 @@ if [ "$serial" ] ; then
 			echo "GRUB_TERMINAL=serial" >> $ROOT/etc/default/grub
 		fi
 		if grep -q "^GRUB_SERIAL_COMMAND=" $ROOT/etc/default/grub ; then
-			sed -i $ROOT/etc/default/grub -e "s/^\(GRUB_SERIAL_COMMAND\)=.*/\1=\"`grub_serial_console`\"/g"
+			sed -i $ROOT/etc/default/grub -e "s/^\(GRUB_SERIAL_COMMAND\)=.*/\1=\"`grub_serial_console $serial`\"/g"
 		else
-			echo "GRUB_SERIAL_COMMAND=\"`grub_serial_console`\"" >> $ROOT/etc/default/grub
+			echo "GRUB_SERIAL_COMMAND=\"`grub_serial_console $serial`\"" >> $ROOT/etc/default/grub
 		fi
 		update_grub # propagate to grub.cfg
 		;;

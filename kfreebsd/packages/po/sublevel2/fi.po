@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: debian-installer\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-09-04 22:47+0000\n"
+"POT-Creation-Date: 2009-11-27 22:47+0000\n"
 "PO-Revision-Date: 2009-10-13 23:01+0300\n"
 "Last-Translator: Esko Arajärvi <edu@iki.fi>\n"
 "Language-Team: Finnish <debian-l10n-finnish@lists.debian.org>\n"
@@ -273,34 +273,64 @@ msgstr ""
 #. Type: select
 #. Description
 #. :sl2:
-#: ../localechooser.templates-in:2001
-msgid "Choose a locale:"
+#: ../localechooser.templates-in:4001
+#, fuzzy
+#| msgid "Choose a locale:"
+msgid "System locale:"
 msgstr "Maa-asetuston valinta:"
 
 #. Type: select
 #. Description
 #. :sl2:
-#: ../localechooser.templates-in:2001
-msgid ""
-"Based on your language and country choices, the following locale parameters "
-"are supported."
+#: ../localechooser.templates-in:4001
+#, fuzzy
+#| msgid "Please enter the hostname for this system."
+msgid "Select the default locale for the installed system."
+msgstr "Kirjoita tämän järjestelmän konenimi."
+
+#. Type: multiselect
+#. Description
+#. :sl2:
+#: ../localechooser.templates-in:25001
+msgid "Additional locales:"
 msgstr ""
-"Valitsemasi kielen ja maan perusteella ovat seuraavat maa-asetuston "
-"parametrit tuettuja."
 
 #. Type: multiselect
 #. Description
 #. :sl2:
-#: ../localechooser.templates-in:22001
-msgid "Choose other locales to be supported:"
-msgstr "Valitse muut tuettavat maa-asetustot:"
+#: ../localechooser.templates-in:25001
+msgid ""
+"Based on the selected language and country, the default locale selected for "
+"the installed system is '${LOCALE}'."
+msgstr ""
 
 #. Type: multiselect
 #. Description
 #. :sl2:
-#: ../localechooser.templates-in:22001
-msgid "You may choose additional locales to be installed from this list."
-msgstr "Tästä listasta voidaan valita lisää maa-asetustoja asennettaviksi."
+#: ../localechooser.templates-in:25001
+msgid ""
+"If you wish to use a different default or to also have other locales "
+"available, you may choose additional locales to be installed. If you are "
+"unsure it is best to just use the selected default."
+msgstr ""
+
+#. Type: note
+#. Description
+#. :sl2:
+#: ../localechooser.templates-in:27001
+#, fuzzy
+#| msgid "logical"
+msgid "locale"
+msgstr "looginen"
+
+#. Type: note
+#. Description
+#. :sl2:
+#: ../localechooser.templates-in:27001
+msgid ""
+"A locale determines character encoding and contains information on for "
+"example currency, date format and alphabetical sort order."
+msgstr ""
 
 #. Type: select
 #. Description
@@ -407,16 +437,9 @@ msgstr "HP HIL -näppäimistö"
 #. Type: text
 #. Description
 #. :sl2:
-#: ../console-setup.templates:3001
+#: ../console-setup.templates:2001
 msgid "Do not change the boot/kernel font"
 msgstr "Älä muuta käynnistyksen/ytimen fonttia"
-
-#. Type: select
-#. Description
-#. :sl2:
-#: ../console-setup.templates:6001
-msgid "Keyboard model:"
-msgstr "Näppäimistön malli:"
 
 #. Type: select
 #. Description
@@ -424,7 +447,7 @@ msgstr "Näppäimistön malli:"
 #. lists.  If you decide to use formatted lists then keep the lines
 #. relatively short.
 #. :sl2:
-#: ../console-setup.templates:13001
+#: ../console-setup.templates:4001
 msgid "Font for the console:"
 msgstr "Konsolissa käytettävä fontti:"
 
@@ -434,7 +457,7 @@ msgstr "Konsolissa käytettävä fontti:"
 #. lists.  If you decide to use formatted lists then keep the lines
 #. relatively short.
 #. :sl2:
-#: ../console-setup.templates:13001
+#: ../console-setup.templates:4001
 msgid ""
 "\"VGA\" has a traditional appearance and has medium coverage of "
 "international scripts. \"Fixed\" has a simplistic appearance and has better "
@@ -454,7 +477,7 @@ msgstr ""
 #. lists.  If you decide to use formatted lists then keep the lines
 #. relatively short.
 #. :sl2:
-#: ../console-setup.templates:13001
+#: ../console-setup.templates:4001
 msgid ""
 "If you prefer a bold version of the Terminus font, choose either "
 "TerminusBold (if you use a framebuffer) or TerminusBoldVGA (otherwise)."
@@ -469,14 +492,14 @@ msgstr ""
 #. Type: select
 #. Description
 #. :sl2:
-#: ../console-setup.templates:14001 ../console-setup.templates:15001
+#: ../console-setup.templates:5001 ../console-setup.templates:6001
 msgid "Font size:"
 msgstr "Fontin koko:"
 
 #. Type: select
 #. Description
 #. :sl2:
-#: ../console-setup.templates:14001
+#: ../console-setup.templates:5001
 msgid ""
 "Please select the size of the font for the Linux console. For reference, the "
 "font used when the computer boots has size 16."
@@ -487,7 +510,7 @@ msgstr ""
 #. Type: select
 #. Description
 #. :sl2:
-#: ../console-setup.templates:15001
+#: ../console-setup.templates:6001
 msgid ""
 "Please select the size of the font for the Linux console. Simple integers "
 "corresponding to fonts can be used with all console drivers. The number then "
@@ -507,7 +530,7 @@ msgstr ""
 #. Type: select
 #. Description
 #. :sl2:
-#: ../console-setup.templates:15001
+#: ../console-setup.templates:6001
 msgid ""
 "Font heights can be useful for figuring out the real size of the symbols on "
 "the console. For reference, the font used when the computer boots has size "
@@ -516,139 +539,6 @@ msgstr ""
 "Fonttien korkeuksia voidaan käyttää apuna määritettäessä konsolilla näkyvien "
 "symbolien kokoa. Vertailukohtana voidaan käyttää tietokoneen käynnistyessä "
 "käytettävää koon 16 fonttia."
-
-#. Type: select
-#. Choices
-#. :sl2:
-#: ../console-setup.templates:18001
-msgid "No temporary switch"
-msgstr "Ei väliaikaista muuntajaa"
-
-#. Type: select
-#. Choices
-#. :sl2:
-#. Type: select
-#. Choices
-#. :sl2:
-#: ../console-setup.templates:18001 ../console-setup.templates:19001
-msgid "Both Logo keys"
-msgstr "Molemmat Logo-näppäimet"
-
-#. Type: select
-#. Description
-#. :sl2:
-#: ../console-setup.templates:18002
-msgid "Method for temporarily toggling between national and Latin input:"
-msgstr "Tapa paikallisen ja Latin-merkistön välillä vaihtamiseen:"
-
-#. Type: select
-#. Description
-#. :sl2:
-#: ../console-setup.templates:18002
-msgid ""
-"When the keyboard is in national mode and one wants to type only a few Latin "
-"letters, it might be more appropriate to switch temporarily to Latin mode. "
-"The keyboard remains in that mode as long as the chosen key is kept pressed. "
-"That key may also be used to input national letters when the keyboard is in "
-"Latin mode."
-msgstr ""
-"Kun näppäimistö on paikallisessa tilassa ja halutaan kirjoittaa vain "
-"muutamia Latin-merkkejä, on kätevää jos paikallinen näppäimistö voidaan "
-"väliaikaisesti muuntaa Latin-näppäimistöksi. Näppäimistö pysyy muunnetussa "
-"tilassa niin kauan kuin valittua näppäintä painetaan. Näppäimen avulla "
-"voidaan myös kirjoittaa paikallisia merkkejä, kun näppäimistö on Latin-"
-"tilassa."
-
-#. Type: select
-#. Description
-#. :sl2:
-#: ../console-setup.templates:18002
-msgid "You can disable this feature by choosing \"No temporary switch\"."
-msgstr ""
-"Voit poistaa ominaisuuden käytöstä valitsemalla ”Ei väliaikaista muuntajaa”."
-
-#. Type: select
-#. Choices
-#. :sl2:
-#: ../console-setup.templates:19001
-msgid "The default for the keyboard layout"
-msgstr "Valitse näppäinasettelun oletusarvo"
-
-#. Type: select
-#. Choices
-#. :sl2:
-#: ../console-setup.templates:19001
-msgid "Keypad Enter key"
-msgstr "Numeronäppäimistön Enter-näppäin"
-
-#. Type: select
-#. Choices
-#. :sl2:
-#: ../console-setup.templates:19001
-msgid "Both Alt keys"
-msgstr "Molemmat Alt-näppäimet"
-
-#. Type: select
-#. Description
-#. :sl2:
-#: ../console-setup.templates:19002
-msgid "AltGr key replacement:"
-msgstr "AltGr-näppäimen korvaaja:"
-
-#. Type: select
-#. Description
-#. :sl2:
-#: ../console-setup.templates:19002
-msgid ""
-"With some keyboard layouts, AltGr is a modifier key used to input some "
-"characters, primarily ones that are unusual for the language of the keyboard "
-"layout, such as foreign currency symbols and accented letters. These are "
-"often printed as an extra symbol on keys."
-msgstr ""
-"Joissain näppäinasetteluissa AltGr on muuntonäppäin, jonka avulla voidaan "
-"syöttää joitain merkkejä. Nämä on yleensä näppäinasettelun kielelle "
-"epätyypillisiä, kuten ulkomaisia valuuttasymboleita ja aksentoituja "
-"kirjaimia. Nämä merkit on usein merkitty ylimääräisenä symbolina näppäimiin."
-
-#. Type: select
-#. Choices
-#. :sl2:
-#: ../console-setup.templates:20001
-msgid "No compose key"
-msgstr "Ei yhdistelmänäppäintä"
-
-#. Type: select
-#. Description
-#. :sl2:
-#: ../console-setup.templates:20002
-msgid "Compose key:"
-msgstr "Yhdistelmänäppäin:"
-
-#. Type: select
-#. Description
-#. :sl2:
-#: ../console-setup.templates:20002
-msgid ""
-"The Compose key (known also as Multi_key) causes the computer to interpret "
-"the next few keystrokes as a combination in order to produce a character not "
-"found on the keyboard."
-msgstr ""
-"Yhdistelmänäppäin (Compose key tai Multi_key) käskee tietokonetta "
-"tulkitsemaan pari seuraavaa näppäilyä yhdistelmäksi. Näin voidaan tuottaa "
-"merkkejä, joita ei löydy näppäimistöltä."
-
-#. Type: select
-#. Description
-#. :sl2:
-#: ../console-setup.templates:20002
-msgid ""
-"On the text console the Compose key does not work in Unicode mode. If not in "
-"Unicode mode, regardless of what you choose here, you can always also use "
-"the Control+period combination as a Compose key."
-msgstr ""
-"Tekstikonsolilla yhdistelmänäppäin ei toimi Unicode-tilassa. Muussa kuin "
-"Unicode-tilassa voidaan tästä valinnasta riippumatta aina käyttää "
-"yhdistelmää Control+piste yhdistelmänäppäimenä."
 
 #. Type: boolean
 #. Description
@@ -1466,37 +1356,16 @@ msgstr ""
 "yhdyskäytävän."
 
 #. Type: select
-#. Choices
-#. :sl2:
-#: ../choose-mirror-bin.templates-in:3001
-msgid "stable"
-msgstr "vakaa"
-
-#. Type: select
-#. Choices
-#. :sl2:
-#: ../choose-mirror-bin.templates-in:3001
-msgid "testing"
-msgstr "testattava"
-
-#. Type: select
-#. Choices
-#. :sl2:
-#: ../choose-mirror-bin.templates-in:3001
-msgid "unstable"
-msgstr "epävakaa"
-
-#. Type: select
 #. Description
 #. :sl2:
-#: ../choose-mirror-bin.templates-in:3002
+#: ../choose-mirror-bin.templates-in:3001
 msgid "Debian version to install:"
 msgstr "Mikä Debianin versio asennetaan:"
 
 #. Type: select
 #. Description
 #. :sl2:
-#: ../choose-mirror-bin.templates-in:3002
+#: ../choose-mirror-bin.templates-in:3001
 msgid ""
 "Debian comes in several flavors. Stable is well-tested and rarely changes. "
 "Unstable is untested and frequently changing. Testing is a middle ground, "
@@ -1508,23 +1377,109 @@ msgstr ""
 "väliltä, useat uudet versiot epävakaasta siirtyvät siihen, jos niissä ei ole "
 "liikaa vikoja."
 
-#. Type: error
+#. Type: select
+#. Description
+#. :sl2:
+#: ../choose-mirror-bin.templates-in:3001
+msgid "Only flavors available on the selected mirror are listed."
+msgstr ""
+
+#. Type: boolean
 #. Description
 #. :sl2:
 #: ../choose-mirror-bin.templates-in:7001
+msgid "Go back and try a different mirror?"
+msgstr ""
+
+#. Type: boolean
+#. Description
+#. :sl2:
+#: ../choose-mirror-bin.templates-in:7001
+msgid ""
+"The specified (default) Debian version (${RELEASE}) is not available from "
+"the selected mirror. It is possible to continue and select a different "
+"release for your installation, but normally you should go back and select a "
+"different mirror that does support the correct version."
+msgstr ""
+
+#. Type: error
+#. Description
+#. :sl2:
+#: ../choose-mirror-bin.templates-in:8001
 msgid "Bad archive mirror"
 msgstr "Debian-asennuspalvelin ei toimi"
 
 #. Type: error
 #. Description
 #. :sl2:
-#: ../choose-mirror-bin.templates-in:7001
+#: ../choose-mirror-bin.templates-in:8001
+#, fuzzy
+#| msgid ""
+#| "An error was returned while trying to install the kernel into the target "
+#| "system."
 msgid ""
-"The specified Debian archive mirror is either not available, or does not "
-"have a valid Release file on it. Please try a different mirror."
+"An error has been detected while trying to use the specified Debian archive "
+"mirror."
+msgstr "Tapahtui virhe yritettäessä asentaa ydintä kohdejärjestelmään."
+
+#. Type: error
+#. Description
+#. :sl2:
+#: ../choose-mirror-bin.templates-in:8001
+msgid ""
+"Possible reasons for the error are: incorrect mirror specified; mirror is "
+"not available (possibly due to an unreliable network connection); mirror is "
+"broken (for example because an invalid Release file was found); mirror does "
+"not support the correct Debian version."
 msgstr ""
-"Debian-asennuspalvelin joko ei ole käytettävissä tai siinä ei ole "
-"kunnollista Release-tiedostoa. Käytä jotain muuta asennuspalvelinta."
+
+#. Type: error
+#. Description
+#. :sl2:
+#: ../choose-mirror-bin.templates-in:8001
+msgid ""
+"Additional details may be available in /var/log/syslog or on virtual console "
+"4."
+msgstr ""
+
+#. Type: error
+#. Description
+#. :sl2:
+#: ../choose-mirror-bin.templates-in:8001
+#, fuzzy
+#| msgid "Please check the syslog for more information."
+msgid "Please check the specified mirror or try a different one."
+msgstr "Lue syslogista lisätietoja."
+
+#. Type: text
+#. Description
+#. :sl2:
+#: ../choose-mirror-bin.templates-in:10001
+#, fuzzy
+#| msgid "stable"
+msgid "oldstable"
+msgstr "vakaa"
+
+#. Type: text
+#. Description
+#. :sl2:
+#: ../choose-mirror-bin.templates-in:11001
+msgid "stable"
+msgstr "vakaa"
+
+#. Type: text
+#. Description
+#. :sl2:
+#: ../choose-mirror-bin.templates-in:12001
+msgid "testing"
+msgstr "testattava"
+
+#. Type: text
+#. Description
+#. :sl2:
+#: ../choose-mirror-bin.templates-in:13001
+msgid "unstable"
+msgstr "epävakaa"
 
 #. Type: string
 #. Description
@@ -3502,47 +3457,29 @@ msgstr ""
 "voida käynnistää, jos se ei ole toinen näistä. Palaa takaisin ja käytä ext2- "
 "tai ext3-tiedostojärjestelmää."
 
-#. #-#-#-#-#  templates.pot (PACKAGE VERSION)  #-#-#-#-#
 #. Type: boolean
 #. Description
 #. :sl2:
 #. Type: boolean
 #. Description
 #. :sl2:
-#. #-#-#-#-#  templates.pot (PACKAGE VERSION)  #-#-#-#-#
-#. Type: boolean
-#. Description
-#. :sl4:
-#. Type: boolean
-#. Description
-#. :sl4:
-#. Type: boolean
-#. Description
-#. :sl4:
 #: ../partman-ext3.templates:12001 ../partman-ext3.templates:13001
-#: ../partman-ext2r0.templates:11001 ../partman-ext2r0.templates:12001
-#: ../partman-ext2r0.templates:13001
 msgid ""
 "If you do not go back to the partitioning menu and correct this error, the "
-"partition will be used as is.  This means that you may not be able to boot "
+"partition will be used as is. This means that you may not be able to boot "
 "from your hard disk."
 msgstr ""
 "Mikäli et palaa osiointivalikkoon ja korjaa tätä virhettä, käytetään osiota "
 "sellaisena kuin se on. Tämä tarkoittaa ettet ehkä pysty käynnistämään "
 "järjestelmää kiintolevyltä."
 
-#. #-#-#-#-#  templates.pot (PACKAGE VERSION)  #-#-#-#-#
 #. Type: boolean
 #. Description
 #. :sl2:
-#. #-#-#-#-#  templates.pot (PACKAGE VERSION)  #-#-#-#-#
-#. Type: boolean
-#. Description
-#. :sl4:
-#: ../partman-ext3.templates:13001 ../partman-ext2r0.templates:12001
+#: ../partman-ext3.templates:13001
 msgid ""
 "Your boot partition is not located on the first primary partition of your "
-"hard disk.  This is needed by your machine in order to boot.  Please go back "
+"hard disk. This is needed by your machine in order to boot.  Please go back "
 "and use your first primary partition as a boot partition."
 msgstr ""
 "Käynnistysosio ei ole kiintolevyn ensimmäisellä ensisijaisella levyosiolla. "

@@ -1,5 +1,5 @@
 <!-- retain these comments for translator revision tracking -->
-<!-- original version: 59840 -->
+<!-- original version: 61147 -->
 
  <sect1 id="hardware-supported">
  <title>Unterstützte Hardware</title>
@@ -50,13 +50,6 @@ dieser Architekturen, auch als <quote>Flavours</quote> bekannt.
 <row>
   <entry>AMD64 &amp; Intel EM64T</entry>
   <entry>amd64</entry>
-  <entry></entry>
-  <entry></entry>
-</row>
-
-<row arch="alpha">
-  <entry>DEC Alpha</entry>
-  <entry>alpha</entry>
   <entry></entry>
   <entry></entry>
 </row>
@@ -126,26 +119,6 @@ dieser Architekturen, auch als <quote>Flavours</quote> bekannt.
   <entry>5kc-malta</entry>
 </row>
 
-<row arch="m68k">
-  <entry morerows="5">Motorola 680x0</entry>
-  <entry morerows="5">m68k</entry>
-  <entry>Atari</entry>
-  <entry>atari</entry>
-</row><row arch="m68k">
-  <entry>Amiga</entry>
-  <entry>amiga</entry>
-</row><row arch="m68k">
-  <entry>68k Macintosh</entry>
-  <entry>mac</entry>
-</row><row arch="m68k">
-  <entry morerows="2">VME</entry>
-  <entry>bvme6000</entry>
-</row><row arch="m68k">
-  <entry>mvme147</entry>
-</row><row arch="m68k">
-  <entry>mvme16x</entry>
-</row>
-
 <row>
   <entry morerows="1">IBM/Motorola PowerPC</entry>
   <entry morerows="1">powerpc</entry>
@@ -184,7 +157,18 @@ Dieses Dokument umfasst die Installation für die
 der anderen von Debian unterstützten Architekturen suchen, besuchen Sie die
 <ulink url="http://www.debian.org/ports/">Debian Portierungs-Seiten</ulink>.
 
-</para><para condition="new-arch">
+</para>
+<caution arch="ia64"><para>
+
+Die &arch-title;-Architektur unterstützt nur Intel Itanium-Prozessoren,
+nicht die viel weiter verbreiteten 64-Bit-Prozessoren der EM64T-Familie
+(inklusive dem Pentium&nbsp;D and the Core2&nbsp;Duo). Diese Systeme
+werden von der <emphasis>amd64</emphasis>-Architektur unterstützt oder,
+falls Sie eine 32-Bit-Userland-Umgebung bevorzugen, von der
+<emphasis>i386</emphasis>-Architektur.
+
+</para></caution>
+<para condition="new-arch">
 
 Dies ist die erste offizielle Veröffentlichung von &debian; für die
 &arch-title;-Architektur. Wir finden, dass sie sich ausreichend bewährt hat, um
@@ -202,13 +186,11 @@ zu kontaktieren.
   </sect2>
 
 <!-- supported cpu docs -->
-&supported-alpha.xml;
 &supported-amd64.xml;
 &supported-arm.xml;
 &supported-hppa.xml;
 &supported-i386.xml;
 &supported-ia64.xml;  <!-- FIXME: currently missing -->
-&supported-m68k.xml;
 &supported-mips.xml;
 &supported-mipsel.xml;
 &supported-powerpc.xml;

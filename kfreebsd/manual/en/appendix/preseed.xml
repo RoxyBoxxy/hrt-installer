@@ -529,6 +529,8 @@ always need to specify a value as well: for example,
 <row><entry>auto</entry><entry>auto-install/enable</entry></row>
 <row><entry>classes</entry><entry>auto-install/classes</entry></row>
 <row><entry>fb</entry><entry>debian-installer/framebuffer</entry></row>
+<row><entry>language</entry><entry>debian-installer/language</entry></row>
+<row><entry>country</entry><entry>debian-installer/country</entry></row>
 <row><entry>locale</entry><entry>debian-installer/locale</entry></row>
 <row><entry>priority</entry><entry>debconf/priority</entry></row>
 <row><entry>file</entry><entry>preseed/file</entry></row>
@@ -725,9 +727,31 @@ select a locale that is valid for the selected language.
 To specify the locale as a boot parameter, use
 <userinput>locale=<replaceable>en_US</replaceable></userinput>.
 
+</para><para>
+
+Although this method is very easy to use, it does not allow preseeding of
+all possible combinations of language, country and locale<footnote>
+
+<para>
+Preseeding <literal>locale</literal> to <userinput>en_NL</userinput> would
+for example result in <literal>en_US.UTF-8</literal> as default locale for
+the installed system. If e.g. <literal>en_GB.UTF-8</literal> is preferred
+instead, the values will need to be preseeded individually.
+</para>
+
+</footnote>. So alternatively the values can be preseeded individually.
+Language and country can also be specified as boot parameters.
+
 <informalexample role="example"><screen>
-# Locale sets language and country.
+# Preseeding only locale sets language, country and locale.
 d-i debian-installer/locale string en_US
+
+# The values can also be preseeded individually for greater flexibility.
+#d-i debian-installer/language string en
+#d-i debian-installer/country string NL
+#d-i debian-installer/locale string en_GB.UTF-8
+# Optionally specify additional locales to be generated.
+#d-i localechooser/supported-locales en_US.UTF-8, nl_NL.UTF-8
 </screen></informalexample>
 
 </para><para>
@@ -899,9 +923,8 @@ The parameter <classname>mirror/udeb/suite</classname> determines the suite
 for additional components for the installer. It is only useful to set this
 if components are actually downloaded over the network and should match the
 suite that was used to build the initrd for the installation method used for
-the installation.
-By default the value for <classname>mirror/udeb/suite</classname> is the
-same as <classname>mirror/suite</classname>.
+the installation. Normally the installer will automatically use the correct
+value and there should be no need to set this.
 
 </para>
 
@@ -1143,6 +1166,11 @@ installation. The only questions asked concern the installation of the kernel.
 </para>
 
 <informalexample role="example"><screen>
+# Configure APT to not install recommended packages by default. Use of this
+# option can result in an incomplete system and should only be used by very
+# experienced users.
+#d-i base-installer/install-recommends boolean false
+
 # Select the initramfs generator used to generate the initrd for 2.6 kernels.
 #d-i base-installer/kernel/linux/initramfs-generators string yaird
 
@@ -1258,7 +1286,7 @@ earlier questions. You can optionally add other (local) repositories.
 # By default the installer requires that repositories be authenticated
 # using a known gpg key. This setting can be used to disable that
 # authentication. Warning: Insecure, not recommended.
-#d-i debian-installer/allow_unauthenticated string true
+#d-i debian-installer/allow_unauthenticated boolean true
 </screen></informalexample>
 
   </sect2>
@@ -1334,8 +1362,6 @@ to be used easily on the kernel command line as well.
 #d-i pkgsel/include string openssh-server build-essential
 # By default, packages that are only Recommended by packages installed using
 # pkgsel/include (as opposed to their dependencies) will not be installed.
-# Uncomment this line to install Recommends as well.
-#d-i pkgsel/include/install-recommends boolean true
 # Whether to upgrade packages after debootstrap.
 # Allowed values: none, safe-upgrade, full-upgrade
 #d-i pkgsel/upgrade select none

@@ -18,7 +18,11 @@
  */
 
 #include <windows.h>
+#ifdef HAVE_EXDLL_H
+#include "exdll.h"
+#else
 #include <nsis/pluginapi.h>
+#endif
 
 char buf[1024];
 
@@ -84,4 +88,9 @@ void __declspec(dllexport) find_system_partition (HWND hwndParent, int string_si
 	}
     }
   pushstring ("failed");
+}
+
+BOOL WINAPI DllMain(HANDLE hInst, ULONG ul_reason_for_call, LPVOID lpReserved)
+{
+ return TRUE;
 }

@@ -28,9 +28,6 @@ IP que ha d'emprar. Una altra manera és fer servir el protocol BOOTP.</phrase>
 indica a l'ordinador la seua pròpia adreça IP i el lloc de la xarxa
 on obtenir la imatge d'arrencada.</phrase>
 
-<phrase arch="m68k">Hi ha una altra alternativa en sistemes VMEbus:
-l'adreça IP es pot configurar manualment en una ROM d'arrencada.</phrase>
-
 El DHCP (Protocol de configuració
 dinàmica d'ordinadors centrals) és una extensió més flexible, i
 compatible, del BOOTP. Alguns sistemes sols es poden configurar fent
@@ -41,23 +38,6 @@ servir el DHCP.
 Per als PowerPC, si teniu una màquina NewWorld Power Macintosh, és bona
 idea emprar el DHCP en lloc del BOOTP. Algunes de les màquines més noves
 no poden arrencar si empreu el BOOTP.
-
-</para><para arch="alpha">
-
-A diferència de l'Open Firmware de màquines Sparc i PowerPC, la consola
-SRM <emphasis>no</emphasis> fa servir el RARP per obtenir les adreces
-IP, i per tant heu d'emprar el BOOTP per arrencar en xarxa l'Alpha<footnote>
-
-<para>
-Els sistemes Alpha també es poden arrencar en xarxa amb el DECNet MOP
-(Protocol d'operacions de manteniment), però això no s'explica aquí.
-Probablement el vostre operador OpenVMS local estarà disposat a
-ajudar-vos en cas que realment tingueu necessitat d'emprar el MOP per
-arrencar Linux al vostre Alpha.
-</para>
-
-</footnote>. També podeu introduir la configuració IP de les interfícies
-de xarxa directament en la consola SRM.
 
 </para><para arch="hppa">
 
@@ -230,24 +210,6 @@ que el servidor dhcp està configurat per passar
 
 </para>
 
-   <sect3 arch="alpha">
-   <title>Arrencada TFTP dels Alpha</title>
-<para>
-
-En els Alpha, heu d'especificar el nom del fitxer (com un camí relatiu al
-directori de la imatge d'arrencada) amb l'argument
-<userinput>-file</userinput> de l'ordre <userinput>boot</userinput> a l'SRM,
-o bé ajustant la variable d'entorn <userinput>BOOT_FILE</userinput>. També
-es pot proporcionar el nom del fitxer a través del BOOTP (en ISC
-<command>dhcpd</command>, feu servir la directriu
-<userinput>filename</userinput>). A diferència de l'Open Firmware, en SRM
-<emphasis>no hi ha nom del fitxer per defecte</emphasis>, per tant
-<emphasis>heu</emphasis> d'especificar un nom de fitxer amb algun d'aquests
-mètodes.
-
-</para>
-   </sect3>
-
    <sect3 arch="sparc">
    <title>Arrencada TFTP de l'SPARC</title>
 <para>
@@ -281,24 +243,6 @@ També podeu obligar alguns sistemes sparc a cercar un nom específic
 afegint-lo al final de l'ordre d'arrencada de
 l'OpenPROM, p.ex. <userinput>boot net my-sparc.image</userinput>. Aquest
 ha de ser-hi al directori on cerca el servidor TFTP.
-
-</para>
-   </sect3>
-
-   <sect3 arch="m68k">
-   <title>Arrencada TFTP dels BVM/Motorola</title>
-<para>
-
-En els sistemes BVM i Motorola VMEbus copieu els fitxers
-&bvme6000-tftp-files; a <filename>/tftpboot/</filename>.
-
-</para><para>
-
-Després, configureu les ROM d'arrencada o el servidor BOOTP per a carregar
-inicialment el fitxers <filename>tftplilo.bvme</filename> o el
-<filename>tftplilo.mvme</filename> des del servidor TFTP. Dirigiu-vos
-al fitxer <filename>tftplilo.txt</filename> de la subarquitectura per
-obtenir informació addicional específica del sistema.
 
 </para>
    </sect3>

@@ -1,5 +1,5 @@
 <!-- retain these comments for translator revision tracking -->
-<!-- original version: 59840 untranslated -->
+<!-- original version: 61147 untranslated -->
 
  <sect1 condition="supports-tftp" id="install-tftp">
  <title>Preparing Files for TFTP Net Booting</title>
@@ -28,9 +28,6 @@ way is to use the BOOTP protocol.</phrase>
 informs a computer of its IP address and where on the network to obtain
 a boot image.</phrase>
 
-<phrase arch="m68k">Yet another alternative exists on VMEbus
-systems: the IP address can be manually configured in boot ROM.</phrase>
-
 The DHCP (Dynamic Host Configuration Protocol) is a more flexible,
 backwards-compatible extension of BOOTP.
 Some systems can only be configured via DHCP.
@@ -40,23 +37,6 @@ Some systems can only be configured via DHCP.
 For PowerPC, if you have a NewWorld Power Macintosh machine, it is a
 good idea to use DHCP instead of BOOTP.  Some of the latest machines
 are unable to boot using BOOTP.
-
-</para><para arch="alpha">
-
-Unlike the Open Firmware found on Sparc and PowerPC machines, the SRM
-console will <emphasis>not</emphasis> use RARP to obtain its IP
-address, and therefore you must use BOOTP for net booting your
-Alpha<footnote>
-
-<para>
-Alpha systems can also be net-booted using the DECNet MOP (Maintenance
-Operations Protocol), but this is not covered here.  Presumably, your
-local OpenVMS operator will be happy to assist you should you have
-some burning need to use MOP to boot Linux on your Alpha.
-</para>
-
-</footnote>. You can also enter the IP configuration for network
-interfaces directly in the SRM console.
 
 </para><para arch="hppa">
 
@@ -224,22 +204,6 @@ to <command>tftpd</command> as the filename to boot.
 
 </para>
 
-   <sect3 arch="alpha">
-   <title>Alpha TFTP Booting</title>
-<para>
-On Alpha, you must specify the filename (as a relative path to the
-boot image directory) using the <userinput>-file</userinput> argument
-to the SRM <userinput>boot</userinput> command, or by setting the
-<userinput>BOOT_FILE</userinput> environment variable.  Alternatively,
-the filename can be given via BOOTP (in ISC <command>dhcpd</command>,
-use the <userinput>filename</userinput> directive).  Unlike Open
-Firmware, there is <emphasis>no default filename</emphasis> on SRM, so
-you <emphasis>must</emphasis> specify a filename by either one of
-these methods.
-
-</para>
-   </sect3>
-
    <sect3 arch="sparc">
    <title>SPARC TFTP Booting</title>
 <para>
@@ -273,24 +237,6 @@ You can also force some sparc systems to look for a specific file name
 by adding it to the end of the OpenPROM boot command, such as
 <userinput>boot net my-sparc.image</userinput>. This must still reside
 in the directory that the TFTP server looks in.
-
-</para>
-   </sect3>
-
-   <sect3 arch="m68k">
-   <title>BVM/Motorola TFTP Booting</title>
-<para>
-
-For BVM and Motorola VMEbus systems copy the files
-&bvme6000-tftp-files; to <filename>/tftpboot/</filename>.
-
-</para><para>
-
-Next, configure your boot ROMs or BOOTP server to initially load the
-<filename>tftplilo.bvme</filename> or
-<filename>tftplilo.mvme</filename> files from the TFTP server.  Refer
-to the <filename>tftplilo.txt</filename> file for your subarchitecture
-for additional system-specific configuration information.
 
 </para>
    </sect3>

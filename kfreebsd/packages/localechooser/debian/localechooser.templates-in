@@ -7,19 +7,6 @@ Type: text
 # :sl1:
 _Description: Choose language
 
-Template: debian-installer/locale
-Type: select
-Choices: ${LOCALELIST}
-# :sl2:
-_Description: Choose a locale:
- Based on your language and country choices, the following locale
- parameters are supported.
-
-Template: debian-installer/fallbacklocale
-Type: select
-Choices: ${LOCALELIST}
-Description: for internal use only
-
 Template: debian-installer/language
 Type: string
 Description: for internal use only
@@ -28,14 +15,17 @@ Template: debian-installer/country
 Type: string
 Description: for internal use; can be preseeded
 
+Template: debian-installer/locale
+Help: localechooser/help/locale
+Type: select
+Choices: ${LOCALELIST}
+# :sl2:
+_Description: System locale:
+ Select the default locale for the installed system.
+
 Template: debian-installer/consoledisplay
 Type: string
 Description: for internal use only
-
-Template: debian-installer/charmap
-Type: string
-Description: for internal use; cannot be preseeded
- This variable is meant for console-setup use.
 
 Template: finish-install/progress/localechooser
 Type: text
@@ -49,9 +39,9 @@ Choices-C: ${CODES}
 Choices: ${NAMES_EN}
 Choices-en.UTF-8: ${NAMES_BOTH}
 Default: en
-Description: Choose a language:
- Please choose the language used for the installation process. This
- language will be the default language for the final system.
+Description: Language:
+ Choose the language to be used for the installation process. The selected
+ language will also be the default language for the installed system.
 
 Template: localechooser/translation/none-yet
 Type: note
@@ -140,17 +130,55 @@ Type: select
 # Italy, Switzerland, other
 # :sl1:
 __Choices: ${SHORTLIST}, other
+Description: ${TXT1}
+ ${TXT2}
+ .
+ ${TXT3}
+
+Template: localechooser/text/country1
+Type: text
 # :sl1:
-_Description: Choose a country, territory or area:
- Based on your language, you are probably located in one of these countries
- or regions.
+_Description: Country, territory or area:
+
+Template: localechooser/text/country2
+Type: text
+# :sl1:
+_Description: The country selected here will be used to set your time zone and also for example in the determination of the system locale. Normally this should be the country where you live.
+
+Template: localechooser/text/country3
+Type: text
+# :sl1:
+_Description: Choose <Go Back> if your country is not listed.
+
+Template: localechooser/text/country3-short
+Type: text
+# :sl1:
+_Description: This is a shortlist based on the language you selected. Choose "other" if your country is not listed.
+
+Template: localechooser/preferred-locale
+Help: localechooser/help/locale
+Choices-C: ${CHOICES-C}
+Choices: ${CHOICES}
+Type: select
+# :sl1:
+_Description: Country to base default locale settings on:
+ There is no locale defined for the combination of language and country
+ you have selected. You can now select your preference from the locales
+ available for the selected language. The locale that will be used is
+ listed in the second column.
 
 Template: localechooser/supported-locales
+Help: localechooser/help/locale
 Type: multiselect
 Choices: ${LOCALELIST}
 # :sl2:
-_Description: Choose other locales to be supported:
- You may choose additional locales to be installed from this list.
+_Description: Additional locales:
+ Based on the selected language and country, the default locale selected for
+ the installed system is '${LOCALE}'.
+ .
+ If you wish to use a different default or to also have other locales available,
+ you may choose additional locales to be installed. If you are unsure it is
+ best to just use the selected default.
 
 # This template does not really belong in localechooser, but it is probably
 # the best place for it. It is used to display the language currently being
@@ -159,3 +187,10 @@ _Description: Choose other locales to be supported:
 Template: babelbox/info
 Type: title
 Description: Demo - ${LANGNAME}
+
+Template: localechooser/help/locale
+Type: note
+# :sl2:
+_Description: locale
+ A locale determines character encoding and contains information on for example
+ currency, date format and alphabetical sort order.

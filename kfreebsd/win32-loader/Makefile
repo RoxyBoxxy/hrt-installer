@@ -6,7 +6,13 @@ VERSION	:= $(shell head -n 1 debian/changelog | sed -e "s/^$(PACKAGE) (\(.*\)).*
 
 NSIS_CC		:= i586-mingw32msvc-gcc -Os
 NSIS_STRIP	:= i586-mingw32msvc-strip
-NSIS_CFLAGS	:= -Wl,--file-alignment,512 -Werror -D_WIN32_WINNT=0x0500 -L/usr/i586-mingw32msvc/lib/nsis -lpluginapi
+NSIS_CFLAGS	:= -Wl,--file-alignment,512 -Werror -D_WIN32_WINNT=0x0500
+
+ifeq ($(wildcard /usr/i586-mingw32msvc/include/exdll.h), /usr/i586-mingw32msvc/include/exdll.h)
+NSIS_CFLAGS	+= -DHAVE_EXDLL_H
+else
+NSIS_CFLAGS	+= -L/usr/i586-mingw32msvc/lib/nsis -lpluginapi
+endif
 
 MAKENSIS	:= makensis -O/dev/null
 ifdef NETWORK_BASE_URL
@@ -16,23 +22,23 @@ endif
 # hard disk
 GRUB_MODULES	+= biosdisk
 # partmap
-GRUB_MODULES	+= pc gpt
+GRUB_MODULES	+= part_msdos part_gpt
 # fs
 GRUB_MODULES	+= fat ntfs ntfscomp
 # used in our grub.cfg
-GRUB_MODULES	+= search linux boot
+GRUB_MODULES	+= search linux vbe boot
 # might be useful for debugging
 GRUB_MODULES	+= minicmd cat cpuid chain halt help ls reboot
 
 all: win32-loader.exe g2ldr g2ldr.mbr
 
 core.img:
-	grub-mkimage -o $@ --prefix / $(GRUB_MODULES)
+	grub-mkimage -o $@ --prefix /win32-loader $(GRUB_MODULES)
 
-g2ldr: /usr/lib/grubutil/g2hdr.bin core.img
+g2ldr: /usr/lib/grub/i386-pc/g2hdr.bin core.img
 	cat $^ > $@
 
-g2ldr.mbr: /usr/lib/grubutil/g2ldr.mbr
+g2ldr.mbr: /usr/lib/grub/i386-pc/g2ldr.mbr
 	cp $^ $@
 
 loadlin.pif: genpif
@@ -43,7 +49,8 @@ loadlin.exe: /usr/lib/loadlin/loadlin.exe.gz
 
 win32-loader.exe: main.nsi getwindowsversion.nsh maps.ini \
 		templates/binary_choice.ini templates/graphics.ini templates/custom.ini templates/4_choices.ini \
-		plugins/win32-loader.dll swirl.ico license loadlin.pif loadlin.exe
+		plugins/cpuid/test64.dll plugins/systeminfo/systeminfo.dll plugins/string.dll \
+		swirl.ico license loadlin.pif loadlin.exe
 	$(MAKE) -C l10n
 	$(MAKENSIS) main.nsi
 	du -h win32-loader.exe
@@ -51,7 +58,15 @@ win32-loader.exe: main.nsi getwindowsversion.nsh maps.ini \
 license: license.in debian/changelog
 	sed -e "s/@VERSION@/$(VERSION)/g" < $< > $@
 
-plugins/win32-loader.dll: plugins/cpuid/cpuid.c plugins/cpuid/plugin.c plugins/systeminfo/systeminfo.c plugins/string.c
+plugins/cpuid/test64.dll: plugins/cpuid/cpuid.c plugins/cpuid/plugin.c
+	$(NSIS_CC) $^ $(NSIS_CFLAGS) -shared -o $@
+	$(NSIS_STRIP) $@
+
+plugins/systeminfo/systeminfo.dll: plugins/systeminfo/systeminfo.c
+	$(NSIS_CC) $^ $(NSIS_CFLAGS) -shared -o $@
+	$(NSIS_STRIP) $@
+
+plugins/string.dll: plugins/string.c
 	$(NSIS_CC) $^ $(NSIS_CFLAGS) -shared -o $@
 	$(NSIS_STRIP) $@
 

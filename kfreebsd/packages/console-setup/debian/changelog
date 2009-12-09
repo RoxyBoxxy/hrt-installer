@@ -1,4 +1,97 @@
-console-setup (1.46) UNRELEASED; urgency=low
+console-setup (1.51) UNRELEASED; urgency=low
+
+  [ Anton Zinoviev]
+  * Correct typo in the FAQ.  Thanks to Luís Picciochi Oliveira, 
+    closes: #559036.
+  * Remove Fonts/bdf/legacy8h.bdf.  This font was produced from
+    lat2u-08.psf which is also broken.  This should fix the Ubuntu bug
+    #190746.
+  * Midnight Commander is not mecriful to the console.  Add support (by
+    approximations) for WHITE DIAMOND CONTAINING BLACK SMALL DIAMOND and
+    BLACK (up, down, left and right) SMALL TRIANGLEs.
+  * Treat af and iq as non-Latin layouts.  This probably fixes the Ubuntu
+    bug #209703.
+
+ -- Anton Zinoviev <zinoviev@debian.org>  Tue, 01 Dec 2009 20:31:03 +0200
+
+console-setup (1.50) unstable; urgency=low
+
+  * When deciding about whether cached.kmap.gz is actual test against
+    /etc/default/keyboard rather than agains /etc/default/console-setup.
+    Thanks to Kurt Roeckx and Renato S. Yamane, closes: #558448, #558475.
+  * Do not use files in /usr/share/doc as templates.  Thanks to Trent
+    W. Buck, closes: #558229.
+  * Update the FAQ.  Thanks to Luís Picciochi Oliveira, closes: #548837.
+  * bdf2psf: do not discard gliphs with zero rows in the bitmap matrix.
+    Thanks to Tim Allen, closes: #539108.
+  * Fix a bug causing the 'unsupported_layout' question to be asked on
+    every other installation.
+  * Changes in the template file in order to close some bugs:
+    - The AltGr question.  Also add a new option 'Do not use AltGr key'.
+      Rename 'Right Alt' => 'Right Alt (AltGr)'.  Thanks to Kurt Roeckx,
+      closes: #524235.
+    - Do not use 'configuration program' and 'unsupported'.  Thanks to GSR
+      and Yann Dirson, closes: #535965, #538397.
+    - Add long descriptions to keyboard-configuration/model and
+      keyboard-configuration/layout.  Thanks to Paul Vojta, closes: #531646.
+
+ -- Anton Zinoviev <zinoviev@debian.org>  Mon, 30 Nov 2009 21:04:24 +0200
+
+console-setup (1.49) unstable; urgency=low
+
+  * Extend Fonts/standard.equivalents in order to support the symbols
+    required by toilet-fonts.  Thanks to Francesco Poli.
+  * New version of the Terminus font in the source package.
+
+ -- Anton Zinoviev <zinoviev@debian.org>  Fri, 20 Nov 2009 13:05:43 +0200
+
+console-setup (1.48) unstable; urgency=low
+
+  [ Frans Pop ]
+  * When console-setup.config is run in the D-I environment, simply set the
+    charmap to UTF-8; the installer internally always uses the locale C.UTF-8.
+
+  [ Anton Zinoviev]
+  * config file: document that Goha and GohaClassic are available only
+    with CODESET=Ethiopian.
+  * When repairing errors in the config file cause by previous versions do
+    not ask unconditionaly the layout/variant questions if there are
+    values in the configuration file.
+  * Do not install kbdnames.gz in console-setup-mini but only in the
+    udeb.
+  * keyboard-configuration(config): do not give --mini option to the
+    preprocessor.  This returns back the keyboard model names in the
+    file.  Thanks to Mario 'BitKoenig' Holbe, closes: #557001.
+  * setupcon: Do not substitute empty FONTFACE and FONTSIZE (I had
+    forgotten that setupcon supported this mode of operation).  Thanks to
+    Josh Triplett, closes: #556882.
+  * There is no need to escape the single quotes in kbdnames-maker.
+    Thanks to Gerfried Fuchs, closes: #548332.
+  * (Debconf) Do not overwrite non-standard keyboard layouts.  Thanks to
+    Shai Berger, closes: #556426.
+  * console-setup: Ensure that /etc/default/keyboard is sourced in
+    /etc/default/console-setup.
+
+ -- Anton Zinoviev <zinoviev@debian.org>  Thu, 19 Nov 2009 22:17:42 +0200
+
+console-setup (1.47) unstable; urgency=low
+
+  * Separate the keyboard configuration in a new package
+    keyboard-configuration.  No font configuration in console-setup-mini
+    and console-setup-udeb.  Thanks to Celejar, Luís Picciochi Oliveira,
+    Francesco Poli and Bill Brelsford.  
+    Closes: #542003, #548837, #546983, #548262, #536600, #536614.
+  * Use CONSOLE_MAP configuration variable instead of ACM (to be the same
+    as kbd).
+  * Use Uni2 instead of Uni1 when no good default codeset can be detected.
+    Its better to have one more fully supported language (Greek) than two
+    unsupported right to left languages (Arabic and Hebrew).
+  * Configuration variable KMAP for personnal keymaps.  Thanks to Samuel
+    Thibault, closes: #546740.
+
+ -- Anton Zinoviev <zinoviev@debian.org>  Fri, 13 Nov 2009 18:03:11 +0200
+
+console-setup (1.46) unstable; urgency=low
 
   [ Christian Perrier ]
   * Add kbd to Should-Start in init script. Thanks to Michael Schutte
@@ -13,7 +106,26 @@ console-setup (1.46) UNRELEASED; urgency=low
   [ Jordi Mallach ]
   * Set XKBVARIANT to "cat" for Catalan.
 
- -- Jordi Mallach <jordi@debian.org>  Mon, 28 Sep 2009 13:44:51 +0200
+  [ Anton Zinoviev]
+  * Protect the special symbols in the regular expressions of ask_debconf.
+    Thanks to Tibor Zenis, Rogério Brito, Michael Gold, W. Goesgens, Martin
+    Ziegler, Andreas Juch, Colin Tuckley, Samuel Thibault and Arnaud Giersch.  
+    Closes: #536683, #546654, #551586.
+  * Do not load fonts when splashy is active.  Thanks to Mathieu Parent and
+    Adam Trickett, closes: #510211, #548354.
+  * Make keys of type ONE_LEVEL, TWO_LEVEL or THREE_LEVEL realy such.
+    Thanks to Samuel Thibault and aCaB, closes: #542832, #536723.
+  * New configuration option: UNIMAP.  Thanks to Samuel Thibault, 
+    closes: #543478.
+  * Execute kbd_mode for all consoles (doesn't work with console-tools).
+    Thanks to Samuel Thibault, closes: #546702.
+  * New question in the FAQ: "The non-ASCII characters don't work".
+    Thanks to Harald Braumann, closes: #541291.
+  * Use LC_MESSAGES in order to determine the output language of the
+    keyboard models and layouts.  Thanks to Harald Braumann, 
+    closes: #543214.  
+
+ -- Anton Zinoviev <zinoviev@debian.org>  Wed, 11 Nov 2009 23:30:08 +0200
 
 console-setup (1.45) unstable; urgency=low
 
