@@ -1,0 +1,17 @@
+#! /usr/bin/make -f
+%:
+	dh $@
+
+TERMS=/usr/share/terminfo/a/ansi /usr/share/terminfo/d/dumb \
+      /usr/share/terminfo/l/linux /usr/share/terminfo/v/vt102
+
+ifeq ($(DEB_HOST_ARCH_OS),kfreebsd)
+TERMS+=/usr/share/terminfo/c/cons25
+endif
+
+override_dh_auto_install:
+	for file in $(TERMS); do \
+		mkdir -p debian/di-utils-terminfo/`dirname $$file`; \
+		cp -pL $$file debian/di-utils-terminfo/$$file; \
+		chmod 644 debian/di-utils-terminfo/$$file; \
+	done
