@@ -1,4 +1,25 @@
-hw-detect (1.74) UNRELEASED; urgency=low
+hw-detect (1.76) UNRELEASED; urgency=low
+
+  * check-missing-firmware: Try probing once for missing firmware before
+    prompting for it to be provided.
+  * Add new preseedable ethdetect/prompt_missing_firmware, which will
+    be used by oldsys-preseed to avoid firmware prompting happening
+    before network-console starts.
+
+ -- Joey Hess <joeyh@debian.org>  Wed, 30 Dec 2009 12:50:58 -0500
+
+hw-detect (1.75) unstable; urgency=low
+
+  * check-missing-firmware: not all drivers register themselves if firmware
+    is missing; in that case fall back to determining the module using the
+    device's modalias. Patch provided by Jérémy Bobbio. Closes: #562594.
+
+  [ Updated translations ]
+  * Slovenian (sl.po) by Vanja Cvelbar
+
+ -- Frans Pop <fjp@debian.org>  Tue, 29 Dec 2009 13:08:20 +0100
+
+hw-detect (1.74) unstable; urgency=low
 
   [ Gaudenz Steinlin ]
   * The driver which turns the USB chip on the Openmoko phones into a network
@@ -6,8 +27,7 @@ hw-detect (1.74) UNRELEASED; urgency=low
     loads the needed kernel module.
 
   [ Colin Watson ]
-  * Exec ethdetect/disk-detect from their respective postinsts, saving a
-    fork.
+  * Exec ethdetect/disk-detect from their respective postinsts, saving a fork.
   * Upgrade to debhelper v7.
 
   [ Joey Hess ]
@@ -18,19 +38,33 @@ hw-detect (1.74) UNRELEASED; urgency=low
   * Sync firmware.agent with udev, and make check-missing-firmware
     use /dev/.udev/firmware-missing/
 
-  [ Frans Pop ]
-  * Remove code to wait for initialization of megaraid_mbox driver. Should
-    no longer be needed with current kernels.
-
   [ Ian Campbell ]
   * Do not present an error to the user if loading ide-generic fails.
 
   [ Frans Pop ]
-  * Remove no longer needed Lintian override for missing Standards-
-    Version field.
+  * Remove code to wait for initialization of megaraid_mbox driver. Should
+    no longer be needed with current kernels.
+  * Remove no longer needed Lintian override for missing Standards-Version
+    field.
   * Always test for USB support using /sys/bus/usb. Closes: #534413.
+  * Drop firmware.agent udev script; it's been included in udev-udeb since
+    version 146-2. Closes: #552497.
+  * hw-detect.sh: avoid pulling in console-{common,data} through console-tools
+    when apt-installing acpid and acpi-support-base.
+    Requires di-utils 1.73 and base-installer 1.104.
 
- -- Gaudenz Steilin <gaudenz@debian.org>  Sat, 25 Jul 2009 13:02:53 +0200
+  [ Updated translations ]
+  * Amharic (am.po) by Tegegne Tefera
+  * Asturian (ast.po) by Marcos Antonio Alvarez Costales
+  * Belarusian (be.po) by Pavel Piatruk
+  * Bulgarian (bg.po) by Damyan Ivanov
+  * Esperanto (eo.po) by Felipe Castro
+  * Estonian (et.po) by Mattias Põldaru
+  * Galician (gl.po) by Marce Villarino
+  * Italian (it.po) by Milo Casagrande
+  * Slovenian (sl.po) by Vanja Cvelbar
+
+ -- Frans Pop <fjp@debian.org>  Thu, 24 Dec 2009 03:23:27 +0100
 
 hw-detect (1.73) unstable; urgency=low
 

@@ -649,9 +649,13 @@ download_release () {
 
 download_main_indices () {
 	local m1="${MIRRORS%% *}"
+	local comp="${USE_COMPONENTS}"
 	progress 0 100 DOWNMAINPKGS "Downloading Packages file"
 	progress_next 100
-	COMPONENTS=main
+
+	if [ -z "$comp" ]; then comp=main; fi
+	COMPONENTS="$(echo $comp | tr '|' ' ')"
+
 	export COMPONENTS
 	for m in $MIRRORS; do
 	    for c in $COMPONENTS; do
@@ -680,7 +684,10 @@ download_main () {
 			local pkgdest="$TARGET/$($DLDEST pkg "$SUITE" "$c" "$ARCH" "$m" "$path")"
 			if [ ! -e "$pkgdest" ]; then continue; fi
 			details="$($PKGDETAILS PKGS "$m" "$pkgdest" "$p")"
-			if [ "$details" = "$p -" ]; then continue; fi
+			if [ "$details" = "$p -" ]; then
+				details=""
+				continue
+			fi
 			size="${details##* }"; details="${details% *}"
 			md5="${details##* }"; details="${details% *}"
 			local debdest="$($DLDEST deb $details)"
@@ -836,7 +843,7 @@ in_target () {
 
 conditional_cp () {
 	if [ ! -e "$2/$1" ]; then
-		if [ -L "$1" ]; then
+		if [ -L "$1" ] && [ -e "$1" ]; then
 			cat "$1" >"$2/$1"
 		elif [ -e "$1" ]; then
 			cp -a "$1" "$2/$1"

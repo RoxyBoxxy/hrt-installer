@@ -5,8 +5,31 @@ set -e
 MISSING=/dev/.udev/firmware-missing
 DENIED=/tmp/missing-firmware-denied
 
+if [ "x$1" = "x-n" ]; then
+	NONINTERACTIVE=1
+else
+	NONINTERACTIVE=""
+fi
+
 log () {
 	logger -t check-missing-firmware "$@"
+}
+
+# Not all drivers register themselves if firmware is missing; in that
+# case determine the module via the device's modalias.
+get_module () {
+	local devpath=$1
+
+	if [ -d $devpath/driver ]; then
+		# The realpath of the destination of the driver/module
+		# symlink should be something like "/sys/module/e100"
+		basename $(realpath $devpath/driver/module) || true
+	elif [ -e $devpath/modalias ]; then
+		modalias="$(cat $devpath/modalias)"
+		# Take the last module returned by modprobe
+		modprobe --show-depends "$modalias" 2>/dev/null | \
+			sed -n -e '$s#^.*/\([^.]*\)\.ko.*$#\1#p'
+	fi
 }
 
 check_missing () {
@@ -28,10 +51,7 @@ check_missing () {
 				devpath="/sys$devpath"
 			fi
 
-			# The realpath of the destination of the
-			# driver/module symlink should be
-			# something like "/sys/module/e100"
-			module=$(basename $(realpath $devpath/driver/module)) || true
+			module=$(get_module "$devpath")
 			if [ -z "$module" ]; then
 				log "failed to determine module from $devpath"
 				continue
@@ -57,14 +77,29 @@ check_missing () {
 	fi
 }
 
-first=1
+first_try=1
+first_ask=1
 ask_load_firmware () {
+	if [ "$first_try" ]; then
+		first_try=""
+		return 0
+	fi
+
+	if [ "$NONINTERACTIVE" ]; then
+		if [ ! "$first_ask" ]; then
+			return 1
+		else
+			first_ask=""
+			return 0
+		fi
+	fi
+
 	db_subst hw-detect/load_firmware FILES "$files"
 	if ! db_input high hw-detect/load_firmware; then
-		if [ ! "$first" ]; then
+		if [ ! "$first_ask" ]; then
 			exit 1;
 		else
-			first=""
+			first_ask=""
 		fi
 	fi
 	if ! db_go; then

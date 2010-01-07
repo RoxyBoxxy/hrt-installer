@@ -1,3 +1,37 @@
+kernel-wedge (2.63) UNRELEASED; urgency=low
+
+  [ Frans Pop ]
+  * Updates for 2.6.32.
+    - Add dependency on nls-core-modules to usb-modules.
+    - Add dependency on usb-modules to sound-modules.
+    - New udeb for basic i2c modules. Currently only contains i2c-core, which
+      is needed by nic-extra and sound on amd64.
+  * Cleanup; reduces compatibility with old kernel versions.
+    - Drop generic modules that have been renamed or no longer exist. And
+      remove the "optional" indicator for some of the replacement modules.
+    - Drop no longer used udebs isa-pnp-modules and socket-modules.
+    - Drop the cdrom-modules udeb for linux. No architecture kernel provides
+      any of the modules listed in it any more.
+    - Drop various obsolete modules:
+      - ide-modules: adma100, hpt34x, ataraid, hptraid, medley, pdcraid, silraid
+      - multipath-modules: dm-emc
+      - nic-extra-modules: eepro100, sk98lin, dgrs, arl1
+      - nic-pcmcia-modules: xircom_tulip_cb
+      - nic-wireless-modules: bcm43xx, iwl4965
+      - sata-modules: carmel
+      - scsi-modules: NCR53C9x, eata_pio, mca_53c9x, psi240i, qlogicfc,
+        qla2100, qla2200, qla2300, qla2322, qla6312, qlogicisp
+      - usb-serial-modules: whiteheat, cp2101
+  * core-modules: drop firmware_class as it's compiled in for recent kernels.
+  * Define standard input-modules and mouse-modules. For input-modules add
+    selected modules with vendor-specific hid quirks needed to support some
+    keyboards (see e.g. #561036).
+
+  [ Frederik Schüler ]
+  * Add mpt2sas module to scsi-extra-modules.
+
+ -- Frederik Schüler <fs@debian.org>  Tue, 05 Jan 2010 16:34:34 +0100
+
 kernel-wedge (2.62) unstable; urgency=low
 
   [ Colin Watson ]

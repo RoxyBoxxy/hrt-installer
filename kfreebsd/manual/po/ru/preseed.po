@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: preseed\n"
 "Report-Msgid-Bugs-To: debian-boot@lists.debian.org\n"
 "POT-Creation-Date: 2009-11-18 01:11+0000\n"
-"PO-Revision-Date: 2009-10-04 18:29+0400\n"
+"PO-Revision-Date: 2009-12-25 20:20+0300\n"
 "Last-Translator: Yuri Kozlov <yuray@komyakino.ru>\n"
 "Language-Team: Russian <debian-l10n-russian@lists.debian.org>\n"
 "MIME-Version: 1.0\n"
@@ -859,27 +859,25 @@ msgstr "debian-installer/framebuffer"
 #: preseed.xml:512
 #, no-c-format
 msgid "language"
-msgstr ""
+msgstr "language"
 
 #. Tag: entry
 #: preseed.xml:512
-#, fuzzy, no-c-format
-#| msgid "debian-installer/locale"
+#, no-c-format
 msgid "debian-installer/language"
-msgstr "debian-installer/locale"
+msgstr "debian-installer/language"
 
 #. Tag: entry
 #: preseed.xml:513
 #, no-c-format
 msgid "country"
-msgstr ""
+msgstr "country"
 
 #. Tag: entry
 #: preseed.xml:513
-#, fuzzy, no-c-format
-#| msgid "debian-installer/locale"
+#, no-c-format
 msgid "debian-installer/country"
-msgstr "debian-installer/locale"
+msgstr "debian-installer/country"
 
 #. Tag: entry
 #: preseed.xml:514
@@ -1325,6 +1323,15 @@ msgid ""
 "footnote>. So alternatively the values can be preseeded individually. "
 "Language and country can also be specified as boot parameters."
 msgstr ""
+"Хотя этот метод очень прост в использовании, с его помощью нельзя задать "
+"любые комбинации языка, страны и локали<footnote> <para> При задании "
+"значения для <literal>locale</literal> равным <userinput>en_NL</userinput>, "
+"например, приведёт к установке системы с локалью по умолчанию <literal>en_US."
+"UTF-8</literal>. Если, например, требуется <literal>en_GB.UTF-8</literal>, "
+"то значения для автоматического ответа нужно задавать отдельно для каждого "
+"параметра. </para> </footnote>. Поэтому есть возможность задать "
+"автоматический ответ для каждого параметра отдельно. Язык и страну также "
+"можно указывать в параметрах запуска."
 
 #. Tag: screen
 #: preseed.xml:716
@@ -1340,6 +1347,15 @@ msgid ""
 "# Optionally specify additional locales to be generated.\n"
 "#d-i localechooser/supported-locales en_US.UTF-8, nl_NL.UTF-8"
 msgstr ""
+"# Автоответ для языка и страны на основе локали.\n"
+"d-i debian-installer/locale string en_US\n"
+"\n"
+"# Значения можно указывать отдельно для каждого параметра.\n"
+"#d-i debian-installer/language string en\n"
+"#d-i debian-installer/country string NL\n"
+"#d-i debian-installer/locale string en_GB.UTF-8\n"
+"# В добавок, можно указать дополнительные локали для генерации.\n"
+"#d-i localechooser/supported-locales en_US.UTF-8, nl_NL.UTF-8"
 
 #. Tag: para
 #: preseed.xml:718
@@ -1641,15 +1657,7 @@ msgstr ""
 
 #. Tag: para
 #: preseed.xml:817
-#, fuzzy, no-c-format
-#| msgid ""
-#| "The parameter <classname>mirror/udeb/suite</classname> determines the "
-#| "suite for additional components for the installer. It is only useful to "
-#| "set this if components are actually downloaded over the network and "
-#| "should match the suite that was used to build the initrd for the "
-#| "installation method used for the installation. By default the value for "
-#| "<classname>mirror/udeb/suite</classname> is the same as <classname>mirror/"
-#| "suite</classname>."
+#, no-c-format
 msgid ""
 "The parameter <classname>mirror/udeb/suite</classname> determines the suite "
 "for additional components for the installer. It is only useful to set this "
@@ -1662,9 +1670,9 @@ msgstr ""
 "дистрибутива для дополнительных компонент программы установки. Он нужен "
 "только если компоненты загружаются по сети и должны соответствовать версии, "
 "которая была использована для сборки initrd, который используется для "
-"установки с помощью одноимённого метода. По умолчанию значение "
-"<classname>mirror/udeb/suite</classname> совпадает со значением "
-"<classname>mirror/suite</classname>."
+"установки с помощью одноимённого метода. Обычно программа установки "
+"автоматически определяет правильное значение, и этот параметр задавать "
+"ненужно."
 
 #. Tag: screen
 #: preseed.xml:828
@@ -2120,16 +2128,7 @@ msgstr ""
 
 #. Tag: screen
 #: preseed.xml:931
-#, fuzzy, no-c-format
-#| msgid ""
-#| "# Select the initramfs generator used to generate the initrd for 2.6 "
-#| "kernels.\n"
-#| "#d-i base-installer/kernel/linux/initramfs-generators string yaird\n"
-#| "\n"
-#| "# The kernel image (meta) package to be installed; \"none\" can be used "
-#| "if no\n"
-#| "# kernel is to be installed.\n"
-#| "#d-i base-installer/kernel/image string linux-image-2.6-486"
+#, no-c-format
 msgid ""
 "# Configure APT to not install recommended packages by default. Use of this\n"
 "# option can result in an incomplete system and should only be used by very\n"
@@ -2145,8 +2144,14 @@ msgid ""
 "# kernel is to be installed.\n"
 "#d-i base-installer/kernel/image string linux-image-2.6-486"
 msgstr ""
-"# Выбрать генератор initramfs, используемый для создания initrd для ядер "
-"2.6.\n"
+"# Настроить APT для отмены автоматической установки рекомендуемых пакетов.\n"
+"# Использование данного параметра может привести к установке неполноценной\n"
+"# системы, и он должен использоваться только\n"
+"# очень опытными пользователями.\n"
+"#d-i base-installer/install-recommends boolean false\n"
+"\n"
+"# Выбрать генератор initramfs, используемый для создания initrd\n"
+"# для ядер 2.6.\n"
 "#d-i base-installer/kernel/linux/initramfs-generators string yaird\n"
 "\n"
 "# Устанавливаемый пакет (мета) с образом ядра; можно указать \"none\",\n"
@@ -2472,32 +2477,7 @@ msgstr ""
 
 #. Tag: screen
 #: preseed.xml:1050
-#, fuzzy, no-c-format
-#| msgid ""
-#| "#tasksel tasksel/first multiselect standard, web-server\n"
-#| "# If the desktop task is selected, install the kde and xfce desktops\n"
-#| "# instead of the default gnome desktop.\n"
-#| "#tasksel tasksel/desktop multiselect kde, xfce\n"
-#| "\n"
-#| "# Individual additional packages to install\n"
-#| "#d-i pkgsel/include string openssh-server build-essential\n"
-#| "# By default, packages that are only Recommended by packages installed "
-#| "using\n"
-#| "# pkgsel/include (as opposed to their dependencies) will not be "
-#| "installed.\n"
-#| "# Uncomment this line to install Recommends as well.\n"
-#| "#d-i pkgsel/include/install-recommends boolean true\n"
-#| "# Whether to upgrade packages after debootstrap.\n"
-#| "# Allowed values: none, safe-upgrade, full-upgrade\n"
-#| "#d-i pkgsel/upgrade select none\n"
-#| "\n"
-#| "# Some versions of the installer can report back on what software you "
-#| "have\n"
-#| "# installed, and what software you use. The default is not to report "
-#| "back,\n"
-#| "# but sending reports helps the project determine what software is most\n"
-#| "# popular and include it on CDs.\n"
-#| "#popularity-contest popularity-contest/participate boolean false"
+#, no-c-format
 msgid ""
 "#tasksel tasksel/first multiselect standard, web-server\n"
 "# If the desktop task is selected, install the kde and xfce desktops\n"
@@ -2520,7 +2500,7 @@ msgid ""
 "#popularity-contest popularity-contest/participate boolean false"
 msgstr ""
 "#tasksel tasksel/first multiselect standard, web-server\n"
-"# Если выбрана задача Рабочий стол, то установить рабочий стол\n"
+"# Если выбрана задача Рабочий стол, то установить рабочие столы\n"
 "# kde и xfce вместо рабочего стола gnome по умолчанию.\n"
 "#tasksel tasksel/desktop multiselect kde, xfce\n"
 "\n"
@@ -2529,8 +2509,6 @@ msgstr ""
 "# По умолчанию, пакеты, которые только рекомендованы установленными\n"
 "# через pkgsel/include (в отличие от их зависимостей) пакетами,\n"
 "# не устанавливаются.\n"
-"# Раскомментируйте эту строку для установки рекомендуемых пакетов.\n"
-"#d-i pkgsel/include/install-recommends boolean true\n"
 "# Обновлять ли пакеты после debootstrap.\n"
 "# Возможные значения: none, safe-upgrade, full-upgrade\n"
 "#d-i pkgsel/upgrade select none\n"
@@ -2948,10 +2926,3 @@ msgstr ""
 "разных по сути метода автоматизации, что, например, приведёт к выполнению "
 "команды из preseed/early дважды: один раз из первого метода, второй раз "
 "после включения сети."
-
-#~ msgid ""
-#~ "# Locale sets language and country.\n"
-#~ "d-i debian-installer/locale string en_US"
-#~ msgstr ""
-#~ "# настройка языка и страны согласно локали.\n"
-#~ "d-i debian-installer/locale string ru_RU"
