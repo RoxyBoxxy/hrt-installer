@@ -1,0 +1,34 @@
+#! /usr/bin/make -f
+%:
+	dh $@
+
+override_dh_install:
+	dh_install
+	install -m755 netcfg-static debian/netcfg-static/bin/netcfg
+
+override_dh_installdebconf:
+	dh_installdebconf
+	(echo ; po2debconf debian/netcfg-common.templates ) \
+	   >> debian/netcfg-static/DEBIAN/templates	
+	(echo ; po2debconf debian/netcfg-common.templates )\
+	   >> debian/netcfg/DEBIAN/templates	
+	(echo ; po2debconf debian/netcfg-dhcp.templates )\
+	   >> debian/netcfg/DEBIAN/templates	
+	(echo ; po2debconf debian/netcfg-static.templates )\
+	   >> debian/netcfg/DEBIAN/templates	
+
+ARCH=$(shell dpkg-architecture -qDEB_HOST_ARCH)
+
+NETCFG_DEPENDS =
+ifeq ($(ARCH), kfreebsd-i386)
+NETCFG_DEPENDS = dhcp3-client-udeb
+endif
+ifeq ($(ARCH), kfreebsd-amd64)
+NETCFG_DEPENDS = dhcp3-client-udeb
+endif
+
+override_dh_gencontrol:
+	 dh_gencontrol -s -- -Vnetcfg:Depends="$(NETCFG_DEPENDS)"
+
+override_dh_builddeb:
+	 dh_builddeb -s
