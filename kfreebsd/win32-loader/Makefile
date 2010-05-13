@@ -15,8 +15,14 @@ NSIS_CFLAGS	+= -L/usr/i586-mingw32msvc/lib/nsis -lpluginapi
 endif
 
 MAKENSIS	:= makensis -O/dev/null
+# Standalone version : Not linked to a website with preseed.cfg
+ifdef STANDALONE
+MAKENSIS	+= -DNOCD=yes
+endif
+
+# Network version : Linked to a website with preseed.cfg
 ifdef NETWORK_BASE_URL
-MAKENSIS	+= -DNETWORK_BASE_URL=$(NETWORK_BASE_URL)
+MAKENSIS	+= -DNETWORK_BASE_URL=$(NETWORK_BASE_URL) -DNOCD=yes
 endif
 
 # hard disk
@@ -26,7 +32,7 @@ GRUB_MODULES	+= part_msdos part_gpt
 # fs
 GRUB_MODULES	+= fat ntfs ntfscomp
 # used in our grub.cfg
-GRUB_MODULES	+= search linux vbe boot
+GRUB_MODULES	+= search linux bsd vbe boot
 # might be useful for debugging
 GRUB_MODULES	+= minicmd cat cpuid chain halt help ls reboot
 
@@ -47,10 +53,10 @@ loadlin.pif: genpif
 loadlin.exe: /usr/lib/loadlin/loadlin.exe.gz
 	gunzip -c $^ > $@
 
-win32-loader.exe: main.nsi getwindowsversion.nsh maps.ini \
+win32-loader.exe: main.nsi maps.ini \
 		templates/binary_choice.ini templates/graphics.ini templates/custom.ini templates/4_choices.ini \
 		plugins/cpuid/test64.dll plugins/systeminfo/systeminfo.dll plugins/string.dll \
-		swirl.ico license loadlin.pif loadlin.exe
+		swirl.ico license loadlin.pif loadlin.exe g2ldr g2ldr.mbr
 	$(MAKE) -C l10n
 	$(MAKENSIS) main.nsi
 	du -h win32-loader.exe
@@ -104,17 +110,17 @@ netboot/download-stable-stamp:
 
 netboot/download-daily-stamp:
 	mkdir -p netboot/daily/install.{386,amd}/gtk
-	wget http://people.debian.org/~joeyh/d-i/images/daily/netboot/debian-installer/i386/linux \
+	wget http://d-i.debian.org/daily-images/i386/daily/netboot/debian-installer/i386/linux \
 		-O netboot/daily/install.386/vmlinuz
-	wget http://people.debian.org/~joeyh/d-i/images/daily/netboot/debian-installer/i386/initrd.gz \
+	wget http://d-i.debian.org/daily-images/i386/daily/netboot/debian-installer/i386/initrd.gz \
 		-O netboot/daily/install.386/initrd.gz
-	wget http://people.debian.org/~joeyh/d-i/images/daily/netboot/gtk/debian-installer/i386/initrd.gz \
+	wget http://d-i.debian.org/daily-images/i386/daily/netboot/gtk/debian-installer/i386/initrd.gz \
 		-O netboot/daily/install.386/gtk/initrd.gz
-	wget http://people.debian.org/~aba/d-i/images/daily/netboot/debian-installer/amd64/linux \
+	wget http://d-i.debian.org/daily-images/amd64/daily/netboot/debian-installer/amd64/linux \
 		-O netboot/daily/install.amd/vmlinuz
-	wget http://people.debian.org/~aba/d-i/images/daily/netboot/debian-installer/amd64/initrd.gz \
+	wget http://d-i.debian.org/daily-images/amd64/daily/netboot/debian-installer/amd64/initrd.gz \
 		-O netboot/daily/install.amd/initrd.gz
-	wget http://people.debian.org/~aba/d-i/images/daily/netboot/gtk/debian-installer/amd64/initrd.gz \
+	wget http://d-i.debian.org/daily-images/amd64/daily/netboot/gtk/debian-installer/amd64/initrd.gz \
 		-O netboot/daily/install.amd/gtk/initrd.gz
 	touch $@
 

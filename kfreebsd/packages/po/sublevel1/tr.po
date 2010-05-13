@@ -13,8 +13,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: debian-installer\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-01-01 22:47+0000\n"
-"PO-Revision-Date: 2009-12-12 08:39+0200\n"
+"POT-Creation-Date: 2010-03-19 22:53+0000\n"
+"PO-Revision-Date: 2010-01-12 13:48+0200\n"
 "Last-Translator: Mert Dirik <mertdirik@gmail.com>\n"
 "Language-Team: Debian L10n Turkish <debian-l10n-turkish@lists.debian.org>\n"
 "MIME-Version: 1.0\n"
@@ -79,6 +79,13 @@ msgstr ""
 "Kablosuz ağlar Planlı (Managed) veya Plansız (Ad-hoc) olarak sınıflanır. "
 "Gerçek türde bir erişim noktası kullanıyorsanız bu bir Planlı ağdır. Eğer "
 "erişim noktanız bir başka bilgisayar ise ağınız Plansız ağdır."
+
+#. Type: select
+#. Choices
+#: ../choose-mirror-bin.templates.http-in:2001
+#: ../choose-mirror-bin.templates.ftp.sel-in:2001
+msgid "enter information manually"
+msgstr "bilgileri elle girin"
 
 #. Type: text
 #. Description
@@ -1629,11 +1636,6 @@ msgstr "Kıta veya bölge:"
 #. Description
 #. :sl1:
 #: ../localechooser.templates-in:25001
-#, fuzzy
-#| msgid ""
-#| "The country selected here will be used to set your time zone and also for "
-#| "example in the determination of the system locale. Normally this should "
-#| "be the country where you live."
 msgid ""
 "The selected location will be used to set your time zone and also for "
 "example to help select the system locale. Normally this should be the "
@@ -1647,10 +1649,6 @@ msgstr ""
 #. Description
 #. :sl1:
 #: ../localechooser.templates-in:26001
-#, fuzzy
-#| msgid ""
-#| "This is a shortlist based on the language you selected. Choose \"other\" "
-#| "if your country is not listed."
 msgid ""
 "This is a shortlist of locations based on the language you selected. Choose "
 "\"other\" if your location is not listed."
@@ -1662,10 +1660,8 @@ msgstr ""
 #. Description
 #. :sl1:
 #: ../localechooser.templates-in:27001
-#, fuzzy
-#| msgid "Select the continent or region in which your country is located."
 msgid "Select the continent or region to which your location belongs."
-msgstr "Ülkenizin içinde bulunduğu kıta ya da bölgeyi seçin."
+msgstr "Bulunduğunuz yerin içinde olduğu kıta ya da bölgeyi seçin."
 
 #. Type: text
 #. Description
@@ -1677,6 +1673,8 @@ msgid ""
 "Listed are locations for: %s. Use the <Go Back> option to select a different "
 "continent or region if your location is not listed."
 msgstr ""
+"Bu konumlar %s için listelenmektedir. Başka bir kıta ya da bölge seçmek için "
+"<Geri Dön> seçeneğini kullanın."
 
 #. Type: select
 #. Description
@@ -1685,10 +1683,10 @@ msgstr ""
 msgid "Country to base default locale settings on:"
 msgstr "Öntanımlı yerel ayarlarının temel alınacağı ülke:"
 
-#. Type: select
+#. Type: text
 #. Description
 #. :sl1:
-#: ../localechooser.templates-in:29001
+#: ../localechooser.templates-in:30001
 msgid ""
 "There is no locale defined for the combination of language and country you "
 "have selected. You can now select your preference from the locales available "
@@ -1698,6 +1696,19 @@ msgstr ""
 "Seçtiğiniz dil ve bölge bileşimi için tanımlı bir yerel yok. Şimdi "
 "seçtiğiniz dile uygun yerellerden birini seçebilirsiniz. Yereller ikinci "
 "sütunda listelenecektir."
+
+#. Type: text
+#. Description
+#. :sl1:
+#: ../localechooser.templates-in:31001
+msgid ""
+"There are multiple locales defined for the language you have selected. You "
+"can now select your preference from those locales. The locale that will be "
+"used is listed in the second column."
+msgstr ""
+"Seçtiğiniz dil için tanımlı birden fazla yerel var. Şimdi bu yereller "
+"arasından seçim yapabilirsiniz. Kullanılacak olan yerel ikinci sütunda "
+"listelenecektir."
 
 #. Type: text
 #. Description
@@ -2320,17 +2331,6 @@ msgid "Choose a mirror of the Debian archive"
 msgstr "Bir Debian arşivi yansısı seç"
 
 #. Type: select
-#. Choices
-#. :sl1:
-#. Type: select
-#. Choices
-#. :sl2:
-#: ../choose-mirror-bin.templates.http-in:2001
-#: ../choose-mirror-bin.templates.ftp.sel-in:2001
-msgid "enter information manually"
-msgstr "bilgileri elle girin"
-
-#. Type: select
 #. Default
 #. Translators, you should put here the ISO 3166 code of a country
 #. which you know hosts at least one Debian HTTP mirror. Please check
@@ -2529,7 +2529,7 @@ msgstr "Bölümleme uygulaması başlatılıyor"
 #. Type: text
 #. Description
 #. :sl1:
-#: ../partman-base.templates:2001 ../partman-base.templates:24001
+#: ../partman-base.templates:2001 ../partman-base.templates:25001
 #: ../partman-auto.templates:1001
 msgid "Please wait..."
 msgstr "Lütfen bekleyin..."
@@ -2566,14 +2566,20 @@ msgstr ""
 #. Type: boolean
 #. Description
 #. :sl1:
-#: ../partman-base.templates:11001
+#. Type: boolean
+#. Description
+#. :sl1:
+#: ../partman-base.templates:11001 ../partman-base.templates:12001
 msgid "Write the changes to disks?"
 msgstr "Değişiklikler diske kaydedilsin mi?"
 
 #. Type: boolean
 #. Description
 #. :sl1:
-#: ../partman-base.templates:11001
+#. Type: boolean
+#. Description
+#. :sl1:
+#: ../partman-base.templates:11001 ../partman-base.templates:12001
 msgid ""
 "If you continue, the changes listed below will be written to the disks. "
 "Otherwise, you will be able to make further changes manually."
@@ -2595,28 +2601,28 @@ msgstr ""
 #. Type: text
 #. Description
 #. :sl1:
-#: ../partman-base.templates:25001
+#: ../partman-base.templates:26001
 msgid "Partitions formatting"
 msgstr "Bölüm biçimleme"
 
 #. Type: text
 #. Description
 #. :sl1:
-#: ../partman-base.templates:26001
+#: ../partman-base.templates:27001
 msgid "Processing..."
 msgstr "İşlem yapılıyor..."
 
 #. Type: text
 #. Description
 #. :sl1:
-#: ../partman-base.templates:30001
+#: ../partman-base.templates:31001
 msgid "Finish partitioning and write changes to disk"
 msgstr "Bölümlendirmeyi bitir ve değişiklikleri diske kaydet"
 
 #. Type: text
 #. Description
 #. :sl1:
-#: ../partman-base.templates:31001
+#: ../partman-base.templates:32001
 msgid "Undo changes to partitions"
 msgstr "Bölümlerdeki değişiklikleri geri al"
 
@@ -2624,7 +2630,7 @@ msgstr "Bölümlerdeki değişiklikleri geri al"
 #. Description
 #. Keep short
 #. :sl1:
-#: ../partman-base.templates:34001
+#: ../partman-base.templates:35001
 msgid "FREE SPACE"
 msgstr "BOŞ ALAN"
 
@@ -2632,7 +2638,7 @@ msgstr "BOŞ ALAN"
 #. Description
 #. "unusable free space".  No more than 8 symbols.
 #. :sl1:
-#: ../partman-base.templates:35001
+#: ../partman-base.templates:36001
 msgid "unusable"
 msgstr "kullanılamaz"
 
@@ -2640,7 +2646,7 @@ msgstr "kullanılamaz"
 #. Description
 #. "primary partition".  No more than 8 symbols.
 #. :sl1:
-#: ../partman-base.templates:36001
+#: ../partman-base.templates:37001
 msgid "primary"
 msgstr "birincil"
 
@@ -2648,7 +2654,7 @@ msgstr "birincil"
 #. Description
 #. "logical partition".  No more than 8 symbols.
 #. :sl1:
-#: ../partman-base.templates:37001
+#: ../partman-base.templates:38001
 msgid "logical"
 msgstr "mantıksal"
 
@@ -2656,7 +2662,7 @@ msgstr "mantıksal"
 #. Description
 #. "primary or logical".  No more than 8 symbols.
 #. :sl1:
-#: ../partman-base.templates:38001
+#: ../partman-base.templates:39001
 msgid "pri/log"
 msgstr "bir/man"
 
@@ -2668,7 +2674,7 @@ msgstr "bir/man"
 #. No %s
 #. N. %s
 #. :sl1:
-#: ../partman-base.templates:39001
+#: ../partman-base.templates:40001
 #, no-c-format
 msgid "#%s"
 msgstr "#%s"
@@ -2677,7 +2683,7 @@ msgstr "#%s"
 #. Description
 #. For example ATA1 (ad0)
 #. :sl1:
-#: ../partman-base.templates:40001
+#: ../partman-base.templates:41001
 #, no-c-format
 msgid "ATA%s (%s)"
 msgstr "ATA%s (%s)"
@@ -2686,7 +2692,7 @@ msgstr "ATA%s (%s)"
 #. Description
 #. For example ATA1, partition #5 (ad0s5)
 #. :sl1:
-#: ../partman-base.templates:41001
+#: ../partman-base.templates:42001
 #, no-c-format
 msgid "ATA%s, partition #%s (%s)"
 msgstr "ATA%s, bölüm #%s (%s)"
@@ -2695,7 +2701,7 @@ msgstr "ATA%s, bölüm #%s (%s)"
 #. Description
 #. For example IDE0 master (hda)
 #. :sl1:
-#: ../partman-base.templates:42001
+#: ../partman-base.templates:43001
 #, no-c-format
 msgid "IDE%s master (%s)"
 msgstr "IDE%s birincil (%s)"
@@ -2704,7 +2710,7 @@ msgstr "IDE%s birincil (%s)"
 #. Description
 #. For example IDE1 slave (hdd)
 #. :sl1:
-#: ../partman-base.templates:43001
+#: ../partman-base.templates:44001
 #, no-c-format
 msgid "IDE%s slave (%s)"
 msgstr "IDE%s ikincil (%s)"
@@ -2713,7 +2719,7 @@ msgstr "IDE%s ikincil (%s)"
 #. Description
 #. For example IDE1 master, partition #5 (hdc5)
 #. :sl1:
-#: ../partman-base.templates:44001
+#: ../partman-base.templates:45001
 #, no-c-format
 msgid "IDE%s master, partition #%s (%s)"
 msgstr "IDE%s birincil, bölüm #%s (%s)"
@@ -2722,7 +2728,7 @@ msgstr "IDE%s birincil, bölüm #%s (%s)"
 #. Description
 #. For example IDE2 slave, partition #5 (hdf5)
 #. :sl1:
-#: ../partman-base.templates:45001
+#: ../partman-base.templates:46001
 #, no-c-format
 msgid "IDE%s slave, partition #%s (%s)"
 msgstr "IDE%s ikincil, bölüm #%s (%s)"
@@ -2730,7 +2736,7 @@ msgstr "IDE%s ikincil, bölüm #%s (%s)"
 #. Type: text
 #. Description
 #. :sl1:
-#: ../partman-base.templates:46001
+#: ../partman-base.templates:47001
 #, no-c-format
 msgid "SCSI%s (%s,%s,%s) (%s)"
 msgstr "SCSI%s (%s,%s,%s) (%s)"
@@ -2738,7 +2744,7 @@ msgstr "SCSI%s (%s,%s,%s) (%s)"
 #. Type: text
 #. Description
 #. :sl1:
-#: ../partman-base.templates:47001
+#: ../partman-base.templates:48001
 #, no-c-format
 msgid "SCSI%s (%s,%s,%s), partition #%s (%s)"
 msgstr "SCSI%s (%s,%s,%s), bölüm #%s (%s)"
@@ -2746,7 +2752,7 @@ msgstr "SCSI%s (%s,%s,%s), bölüm #%s (%s)"
 #. Type: text
 #. Description
 #. :sl1:
-#: ../partman-base.templates:48001
+#: ../partman-base.templates:49001
 #, no-c-format
 msgid "SCSI%s (%s)"
 msgstr "SCSI%s (%s)"
@@ -2754,7 +2760,7 @@ msgstr "SCSI%s (%s)"
 #. Type: text
 #. Description
 #. :sl1:
-#: ../partman-base.templates:49001
+#: ../partman-base.templates:50001
 #, no-c-format
 msgid "SCSI%s, partition #%s (%s)"
 msgstr "SCSI%s, bölüm #%s (%s)"
@@ -2762,7 +2768,7 @@ msgstr "SCSI%s, bölüm #%s (%s)"
 #. Type: text
 #. Description
 #. :sl1:
-#: ../partman-base.templates:64001
+#: ../partman-base.templates:65001
 msgid "Cancel this menu"
 msgstr "Bu menüyü iptal et"
 
@@ -2770,7 +2776,7 @@ msgstr "Bu menüyü iptal et"
 #. Description
 #. Main menu entry
 #. :sl1:
-#: ../partman-base.templates:65001
+#: ../partman-base.templates:66001
 msgid "Partition disks"
 msgstr "Diskleri bölümle"
 
@@ -3040,7 +3046,7 @@ msgstr "Yeni bölümün türü:"
 #. Type: text
 #. Description
 #. :sl1:
-#: ../partman-basicfilesystems.templates:1001 ../partman-ext3.templates:1001
+#: ../partman-basicfilesystems.templates:1001
 msgid ""
 "Checking the ${TYPE} file system in partition #${PARTITION} of ${DEVICE}..."
 msgstr ""
@@ -3129,7 +3135,7 @@ msgstr "takas"
 #. Description
 #. :sl1:
 #. Short file system name (untranslatable in many languages)
-#: ../partman-ext3.templates:6001 ../partman-ext3.templates:8001
+#: ../partman-ext3.templates:1001 ../partman-ext3.templates:3001
 msgid "ext3"
 msgstr "ext3"
 
@@ -3141,7 +3147,7 @@ msgstr "ext3"
 #. Description
 #. :sl1:
 #. Short file system name (untranslatable in many languages)
-#: ../partman-ext3.templates:9001 ../partman-ext3.templates:11001
+#: ../partman-ext3.templates:4001 ../partman-ext3.templates:6001
 msgid "ext4"
 msgstr "ext4"
 
@@ -3149,7 +3155,7 @@ msgstr "ext4"
 #. Description
 #. :sl1:
 #. Short file system name (untranslatable in many languages)
-#: ../partman-reiserfs.templates:8001
+#: ../partman-reiserfs.templates:3001
 msgid "reiserfs"
 msgstr "reiserfs"
 
@@ -3161,7 +3167,7 @@ msgstr "reiserfs"
 #. Description
 #. Short file system name (untranslatable in many languages)
 #. :sl1:
-#: ../partman-jfs.templates:6001 ../partman-jfs.templates:8001
+#: ../partman-jfs.templates:1001 ../partman-jfs.templates:3001
 msgid "jfs"
 msgstr "jfs"
 
@@ -3173,7 +3179,7 @@ msgstr "jfs"
 #. Description
 #. :sl1:
 #. Short file system name (untranslatable in many languages)
-#: ../partman-xfs.templates:6001 ../partman-xfs.templates:8001
+#: ../partman-xfs.templates:1001 ../partman-xfs.templates:3001
 msgid "xfs"
 msgstr "xfs"
 
@@ -4662,6 +4668,91 @@ msgstr "Mantıksal Disk Yöneticisini (LVM) yapılandır"
 msgid "Guided - use entire disk and set up LVM"
 msgstr "Kılavuzla - diskin tamamını LVM ile ayarlayarak kullan"
 
+#~ msgid "Invalid disk"
+#~ msgstr "Geçersiz disk"
+
+#~ msgid ""
+#~ "Checking the ReiserFS file system in partition #${PARTITION} of "
+#~ "${DEVICE}..."
+#~ msgstr ""
+#~ "${DEVICE} aygıtındaki #${PARTITION} bölümünde ReiserFS dosya sistemi "
+#~ "denetleniyor..."
+
+#~ msgid ""
+#~ "The test of the file system with type ReiserFS in partition #${PARTITION} "
+#~ "of ${DEVICE} found uncorrected errors."
+#~ msgstr ""
+#~ "${DEVICE} aygıtının ReiserFS türündeki #${PARTITION} bölümünde, dosya "
+#~ "sistemi denetlenirken düzeltilmemiş hatalar bulundu."
+
+#~ msgid ""
+#~ "The ReiserFS file system creation in partition #${PARTITION} of ${DEVICE} "
+#~ "failed."
+#~ msgstr ""
+#~ "${DEVICE} aygıtındaki #${PARTITION} bölümünde ReiserFS dosya sistemi "
+#~ "oluşturulamıyor."
+
+#~ msgid ""
+#~ "No mount point is assigned for the ReiserFS file system in partition #"
+#~ "${PARTITION} of ${DEVICE}."
+#~ msgstr ""
+#~ "${DEVICE} aygıtının ReiserFS türündeki #${PARTITION} bölümü için bir "
+#~ "bağlama noktası atanmamış."
+
+#~ msgid ""
+#~ "Checking the jfs file system in partition #${PARTITION} of ${DEVICE}..."
+#~ msgstr ""
+#~ "${DEVICE} aygıtındaki #${PARTITION} bölümünde jfs dosya sistemi "
+#~ "denetleniyor..."
+
+#~ msgid ""
+#~ "The test of the file system with type jfs in partition #${PARTITION} of "
+#~ "${DEVICE} found uncorrected errors."
+#~ msgstr ""
+#~ "${DEVICE} aygıtındaki #${PARTITION} bölümünde, jfs dosya sistemi "
+#~ "denetlenirken düzeltilmemiş hatalar bulundu."
+
+#~ msgid ""
+#~ "The jfs file system creation in partition #${PARTITION} of ${DEVICE} "
+#~ "failed."
+#~ msgstr ""
+#~ "${DEVICE} aygıtındaki #${PARTITION} bölümünde jfs dosya sistemi "
+#~ "oluşturulamıyor."
+
+#~ msgid ""
+#~ "No mount point is assigned for the jfs file system in partition #"
+#~ "${PARTITION} of ${DEVICE}."
+#~ msgstr ""
+#~ "${DEVICE} aygıtındaki #${PARTITION} bölümündeki jfs dosya sistemi için "
+#~ "bir bağlama noktası atanmamış."
+
+#~ msgid ""
+#~ "Checking the xfs file system in partition #${PARTITION} of ${DEVICE}..."
+#~ msgstr ""
+#~ "${DEVICE} aygıtındaki #${PARTITION} bölümünde xfs dosya sistemi "
+#~ "denetleniyor..."
+
+#~ msgid ""
+#~ "The test of the file system with type xfs in partition #${PARTITION} of "
+#~ "${DEVICE} found uncorrected errors."
+#~ msgstr ""
+#~ "${DEVICE} aygıtındaki #${PARTITION} bölümünde, xfs dosya sistemi "
+#~ "denetlenirken düzeltilmemiş hatalar bulundu."
+
+#~ msgid ""
+#~ "The xfs file system creation in partition #${PARTITION} of ${DEVICE} "
+#~ "failed."
+#~ msgstr ""
+#~ "${DEVICE} aygıtındaki #${PARTITION} bölümünde xfs dosya sistemi "
+#~ "oluşturulamıyor."
+
+#~ msgid ""
+#~ "No mount point is assigned for the xfs file system in partition #"
+#~ "${PARTITION} of ${DEVICE}."
+#~ msgstr ""
+#~ "${DEVICE} aygıtındaki #${PARTITION} bölümündeki xfs dosya sistemi için "
+#~ "bir bağlama noktası atanmamış."
+
 #~ msgid "Choose <Go Back> if your country is not listed."
 #~ msgstr "Eğer ülkeniz bu listede yoksa \"Geri Dön\"ü seçin."
 
@@ -4953,34 +5044,6 @@ msgstr "Kılavuzla - diskin tamamını LVM ile ayarlayarak kullan"
 
 #~ msgid "Too small size"
 #~ msgstr "Boyut çok küçük"
-
-#~ msgid "SiByl boot loader installation failed.  Continue anyway?"
-#~ msgstr ""
-#~ "SiByl önyükleyici kurulumu başarısız. Yine de devam etmek istiyor musunuz?"
-
-#~ msgid ""
-#~ "The SiByl package failed to install into /target/.  Installing SiByl as a "
-#~ "boot loader is a required step.  The install problem might however be "
-#~ "unrelated to SiByl, so continuing the installation may be possible."
-#~ msgstr ""
-#~ "Colo paketi /target/'a kurulamadı. Bir önyükleyici olarak Colo'nun "
-#~ "kurulması gerekiyor. Kurulum problemi Colo ile ilgili olmayabileceğinden, "
-#~ "kuruluma devam etmeniz mümkün olabilir."
-
-#~ msgid "Installing the SiByl boot loader"
-#~ msgstr "SiByl açılış önyükleyici kuruluyor"
-
-#~ msgid "Installing the SiByl package"
-#~ msgstr "SiByl paketi kuruluyor"
-
-#~ msgid "Creating SiByl configuration"
-#~ msgstr "SiByl yapılandırılması oluşturuluyor"
-
-#~ msgid "Install the SiByl boot loader on a hard disk"
-#~ msgstr "SiByl önyükleyiciyi bir sabit diske kur"
-
-#~ msgid "SiByl boot partition"
-#~ msgstr "SiByl önyükleme bölümü"
 
 #~ msgid "No AltGr key"
 #~ msgstr "AltGr tuşu yok"

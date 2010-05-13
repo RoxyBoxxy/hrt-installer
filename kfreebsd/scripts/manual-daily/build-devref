@@ -99,7 +99,7 @@ NR_BUILDS=0
 
 # Build the developers reference
 if is_updated; then
-    make
+    make >>$mainlog 2>&1
     checkfatal "$?" "building D-I Internals"
 
     if [ "$DI_LOCAL_BUILD" = 1 ]; then
@@ -107,7 +107,7 @@ if is_updated; then
     else
         ## Copy the created files to alioth.debian.org
         echo "rsyncing files to alioth..." >>$mainlog
-        rsync -qzr --perms index.html alioth.debian.org\:$ALIOTH_DEVREF_PATH/ >>$mainlog 2>&1
+        rsync -qzr --perms *.html *.css alioth.debian.org:$ALIOTH_DEVREF_PATH/ >>$mainlog 2>&1
         checkfatal "$?" "rsyncing D-I Internals"
     fi
 else

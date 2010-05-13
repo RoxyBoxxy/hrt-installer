@@ -1,12 +1,12 @@
 # Debian Installation Guide random-bits
-# Tapio Lehtonen <tale@debian.org>, 2006, 2008, 2009.
+# Tapio Lehtonen <tale@debian.org>, 2006, 2008 - 2010.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: Debian Installation Guide random-bits\n"
 "Report-Msgid-Bugs-To: debian-boot@lists.debian.org\n"
-"POT-Creation-Date: 2009-11-08 01:11+0000\n"
-"PO-Revision-Date: 2009-08-29 16:25+0300\n"
+"POT-Creation-Date: 2010-04-19 00:12+0000\n"
+"PO-Revision-Date: 2010-05-11 08:40+0300\n"
 "Last-Translator: Tapio Lehtonen <tale@debian.org>\n"
 "Language-Team: Finnish <debian-l10n-finnish@lists.debian.org>\n"
 "MIME-Version: 1.0\n"
@@ -1071,14 +1071,14 @@ msgid ""
 "the archive when you run it. You can substitute any Debian archive mirror "
 "for <userinput>&archive-mirror;/debian</userinput> in the command example "
 "below, preferably a mirror close to you network-wise. Mirrors are listed at "
-"<ulink url=\"http://www.debian.org/misc/README.mirrors\"></ulink>."
+"<ulink url=\"http://www.debian.org/mirror/list\"></ulink>."
 msgstr ""
 "Komento <command>debootstrap</command> osaa noutaa tarvittavat tiedostot "
 "suoraan varastoalueelta. <userinput>&archive-mirror;/debian</userinput> "
 "tilalle voi kirjoittaa minkä tahansa Debianin asennuspalvelimen kopion, "
 "mieluiten verkon topologiassa lähellä olevan. Asennuspalvelimen kopioiden "
-"luettelo on osoitteessa <ulink url=\"http://www.debian.org/misc/README."
-"mirrors\"></ulink>."
+"luettelo on osoitteessa <ulink url=\"http://www.debian.org/mirror/list\"></"
+"ulink>."
 
 #. Tag: para
 #: random-bits.xml:503
@@ -1420,7 +1420,8 @@ msgid ""
 "# echo DebianHostName &gt; /etc/hostname\n"
 "</screen></informalexample> And a basic <filename>/etc/hosts</filename> with "
 "IPv6 support: <informalexample><screen>\n"
-"127.0.0.1 localhost DebianHostName\n"
+"127.0.0.1 localhost\n"
+"127.0.1.1 DebianHostName\n"
 "\n"
 "# The following lines are desirable for IPv6 capable hosts\n"
 "::1     ip6-localhost ip6-loopback\n"
@@ -1481,7 +1482,8 @@ msgstr ""
 "</screen></informalexample> Vielä perusversio tiedostosta <filename>/etc/"
 "hosts</filename> jossa on mukana IPv6-tuki:\n"
 "<informalexample><screen>\n"
-"127.0.0.1 localhost DebianHostName\n"
+"127.0.0.1 localhost \n"
+"127.0.1.1 DebianHostName\n"
 "\n"
 "# The following lines are desirable for IPv6 capable hosts\\\n"
 "::1     ip6-localhost ip6-loopback\\\n"
@@ -2448,21 +2450,13 @@ msgstr ""
 #, no-c-format
 msgid ""
 "Just as with the regular installer it is possible to add boot parameters "
-"when starting the graphical installer. One of those parameters allows to "
-"configure the mouse for left-handed use. Others allow to select the mouse "
-"device (e.g. for a serial mouse) and the mouse protocol. See <xref linkend="
-"\"boot-parms\"/> for valid parameters<phrase arch=\"x86\"> and <xref linkend="
-"\"boot-screen\"/> for information on how to pass them</phrase>."
+"when starting the graphical installer."
 msgstr ""
-"Graafista asenninta käynnistettäessä voidaan antaa käynnistysparametrejä "
-"samalla tavalla kuin tavalliselle asentimelle. Yksi parametreista muuttaa "
-"hiiren asetuksen vasenkätiseen käyttöön. Muilla voidaan valita hiirilaite "
-"(esim. sarjahiiri) ja hiiren yhteyskäytäntö. <xref linkend=\"boot-parms\"/> "
-"kertoo käytettävissä olevat parametrit<phrase arch=\"x86\"> ja <xref linkend="
-"\"boot-screen\"/> kertoo miten ne välitetään</phrase>."
+"Kuten tavalliselle asentimelle, on graafista käyttöliittymää käyttävälle "
+"asentimellekin mahdollista antaa käynnistysvalitsimia."
 
 #. Tag: para
-#: random-bits.xml:1223
+#: random-bits.xml:1219
 #, no-c-format
 msgid ""
 "The graphical installer requires significantly more memory to run than the "
@@ -2475,7 +2469,7 @@ msgstr ""
 "automaattisesti käyttämään tavallista <quote>newt</quote>-käyttöliittymää."
 
 #. Tag: para
-#: random-bits.xml:1230
+#: random-bits.xml:1226
 #, no-c-format
 msgid ""
 "If the amount of memory in your system is below &minimum-memory;, the "
@@ -2489,13 +2483,13 @@ msgstr ""
 "suositellaan koneissa joissa on niukasti käytettävissä olevaa muistia."
 
 #. Tag: title
-#: random-bits.xml:1240
+#: random-bits.xml:1236
 #, no-c-format
 msgid "Using the graphical installer"
 msgstr "Graafisen asentimen käyttö"
 
 #. Tag: para
-#: random-bits.xml:1241
+#: random-bits.xml:1237
 #, no-c-format
 msgid ""
 "As already mentioned, the graphical installer basically works the same as "
@@ -2507,7 +2501,7 @@ msgstr ""
 "asennusohjeena."
 
 #. Tag: para
-#: random-bits.xml:1247
+#: random-bits.xml:1243
 #, no-c-format
 msgid ""
 "If you prefer using the keyboard over the mouse, there are two things you "
@@ -2528,16 +2522,19 @@ msgstr ""
 "painamista."
 
 #. Tag: para
-#: random-bits.xml:1257
+#: random-bits.xml:1253
 #, no-c-format
 msgid ""
 "If a dialog offers additional help information, a <guibutton>Help</"
 "guibutton> button will be displayed. The help information can be accessed "
 "either by activating the button or by pressing the <keycap>F1</keycap> key."
 msgstr ""
+"Jos valintaikkuna tarjoaa opastusta, näkyy painike <guibutton>Ohje</"
+"guibutton>. Ohje tulee näkyviin joko aktivoimalla painike tai näppäilemällä "
+"<keycap>F1</keycap>. "
 
 #. Tag: para
-#: random-bits.xml:1263
+#: random-bits.xml:1259
 #, no-c-format
 msgid ""
 "To switch to another console, you will also need to use the <keycap>Ctrl</"
@@ -2554,35 +2551,3 @@ msgstr ""
 "keycap> </keycombo>. Graafinen asennin toimii konsolissa VT5, joten siihen "
 "pääsee takaisin näppäilemällä <keycombo> <keycap>Vasen Alt</keycap> "
 "<keycap>F5</keycap> </keycombo>."
-
-#. Tag: title
-#: random-bits.xml:1277
-#, no-c-format
-msgid "Known issues"
-msgstr "Tunnetut viat"
-
-#. Tag: para
-#: random-bits.xml:1278
-#, no-c-format
-msgid ""
-"The graphical frontend to the installer is relatively new and because of "
-"that there are some known issues. We continue to work on resolving these."
-msgstr ""
-"Asentimen graafinen käyttöliittymä on uudehko mistä syystä siinä on muutamia "
-"tunnettuja puutteita. Työtä niiden korjaamiseksi jatketaan."
-
-#. Tag: para
-#: random-bits.xml:1286
-#, no-c-format
-msgid ""
-"Information on some screens is not yet nicely formatted into columns as it "
-"should be."
-msgstr ""
-"Joissakin ruuduissa tiedot eivät vielä ole siististi muotoiltuja "
-"sarakkeisiin kuten pitäisi."
-
-#. Tag: para
-#: random-bits.xml:1292
-#, no-c-format
-msgid "Support for touchpads is not yet optimal."
-msgstr "Tasohiirien tuki ei vielä ole paras mahdollinen"

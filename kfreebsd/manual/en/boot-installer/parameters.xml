@@ -243,16 +243,10 @@ Useful for unattended installations where physical security is limited.
 
 Some architectures use the kernel framebuffer to offer installation in
 a number of languages. If framebuffer causes a problem on your system
-you can disable the feature by the parameter
-<userinput>fb=false</userinput>. Problem symptoms are error messages
-about bterm or bogl, a blank screen, or a freeze within a few minutes after
-starting the install.
-
-</para><para arch="x86">
-
-The <userinput>video=vga16:off</userinput> argument may also be used
-to disable the kernel's use of the framebuffer. Such problems have been
-reported on a Dell Inspiron with Mobile Radeon card.
+you can disable the feature using the parameter
+<userinput arch="x86">vga=normal</userinput> <userinput>fb=false</userinput>.
+Problem symptoms are error messages about bterm or bogl, a blank screen,
+or a freeze within a few minutes after starting the install.
 
 </para><para arch="hppa">
 
@@ -408,19 +402,10 @@ installation.
 <term>base-installer/install-recommends (recommends)</term>
 <listitem><para>
 
-When packages are installed using the package management system, it will
-by default also install packages that are recommended by those packages.
-Recommended packages are not strictly required for the core functionality
-of the selected software, but they do enhance that software and should,
-in the view of the package maintainers, normally be installed together
-with that software.
-
-</para><para>
-
 By setting this option to <userinput>false</userinput>, the package
-management system will be configured to not automatically install such
+management system will be configured to not automatically install
 <quote>Recommends</quote>, both during the installation and for the
-installed system.
+installed system. See also <xref linkend="di-install-base"/>.
 
 </para><para>
 
@@ -452,62 +437,6 @@ disable that authentication.
 This parameter should already be set to a correct value where needed;
 set it only it you see errors during the boot that indicate the ramdisk
 could not be loaded completely. The value is in kB.
-
-</para></listitem>
-</varlistentry>
-
-<varlistentry condition="gtk">
-<term>mouse/protocol</term>
-<listitem><para>
-
-For the gtk frontend (graphical installer), users can set the mouse
-protocol to be used by setting this parameter.
-Supported values are<footnote>
-
-<para>
-See the man page for
-<citerefentry><refentrytitle>directfbrc</refentrytitle>
-<manvolnum>5</manvolnum></citerefentry> for additional information.
-</para>
-
-</footnote>:
-<userinput>PS/2</userinput>, <userinput>IMPS/2</userinput>,
-<userinput>MS</userinput>, <userinput>MS3</userinput>,
-<userinput>MouseMan</userinput> and <userinput>MouseSystems</userinput>.
-In most cases the default protocol should work correctly.
-
-</para></listitem>
-</varlistentry>
-
-<varlistentry condition="gtk">
-<term>mouse/device</term>
-<listitem><para>
-
-For the gtk frontend (graphical installer), users can specify the mouse
-device to be used by setting this parameter. This is mostly useful if the
-mouse is connected to a serial port (serial mouse). Example:
-<userinput>mouse/device=<replaceable>/dev/ttyS1</replaceable></userinput>.
-
-</para></listitem>
-</varlistentry>
-
-<varlistentry condition="gtk">
-<term>mouse/left</term>
-<listitem><para>
-
-For the gtk frontend (graphical installer), users can switch the mouse to
-left-handed operation by setting this parameter to <userinput>true</userinput>.
-
-</para></listitem>
-</varlistentry>
-
-<varlistentry condition="gtk">
-<term>directfb/hw-accel</term>
-<listitem><para>
-
-For the gtk frontend (graphical installer), hardware acceleration in directfb
-is disabled by default. Set this parameter to <userinput>true</userinput> to
-enable it.
 
 </para></listitem>
 </varlistentry>

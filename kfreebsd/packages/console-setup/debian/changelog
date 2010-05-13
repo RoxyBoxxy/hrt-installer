@@ -1,6 +1,73 @@
-console-setup (1.51) UNRELEASED; urgency=low
+console-setup (1.55) UNRELEASED; urgency=low
 
+  [ Frans Pop ]
+  * Add auto-install support for console-setup-udeb.
+    Requires preseed (>= 1.45).
+  
   [ Anton Zinoviev]
+  * *.init: add a comment to make clear that the init scripts are not used
+    by keyboard-configuration, only by console-setup(-mini).
+
+ -- Anton Zinoviev <zinoviev@debian.org>  Tue, 23 Mar 2010 22:10:32 +0200
+
+console-setup (1.54) unstable; urgency=low
+
+  * keyboard-configuration.postinst (udeb): use existing variables for the
+    arguments of setxkbmap.  Patch provided by Cyril Brulebois.
+  * Correct the svn address of the repository in the copyright file.
+    Thanks to Daniel Richard G. for finding the problem.
+  * Build resized VGA32x16 and VGA28x16 fonts.  Thanks to Daniel Richard G.
+    for the suggestion and the initial patch.
+  * Improved text of the keyboard-configuration/layout (origin) question.
+    Suggestion given by Frans Pop.
+  * Debconf: leave the "Other" choice unsorted as last option.  Thanks to
+    Frans Pop, closes: #573987.
+  * Finally properly working (I hope) workaround for #352697.
+  * keyboard-configuration.config: initialise the *_allocated variables.
+    This is important in case the user backs up to the previous dialog.
+  * No need to use XKBMODEL=pc104 as default when debian-installer/keymap
+    is br, dvorak or us.  Thanks to Piotr Engelking, closes: #568475.
+  * console-setup(-mini).postinst: do not attempt to configure the
+    console.  s/leaved/left/ in setupcon.  Thanks to Sven Joachim, 
+    closes: #570341.
+  * console-setup-udeb: do not configure the console if used from X.
+  * keyboard-configuration.postinst: properly test for the udeb and
+    execute setupcon and setxkbmap only there.
+  * bdf2psf: correct some false warnings for no space in the font when in
+    fact no gliph is defined in the source bdf font.
+  * bdf2psf: fix a bug in the computation of %equiv causing some fonts
+    (for example VGA14) to be compiled with inconsistent look of the
+    characters (different characters were taken from different fonts).
+
+ -- Anton Zinoviev <zinoviev@debian.org>  Tue, 23 Mar 2010 22:10:32 +0200
+
+console-setup (1.53) unstable; urgency=low
+
+  * console-setup-udeb.base-installer: fix bad package name for the
+    templates to mark as seen (keyboard-configuration instead of
+    keyboard-setup).
+
+ -- Anton Zinoviev <zinoviev@debian.org>  Wed, 17 Feb 2010 19:55:24 +0200
+
+console-setup (1.52) unstable; urgency=low
+
+  * Use lv3:ralt_alt only if there is no other option for the right Alt
+    key.  Thanks to GW, closes: #566009.
+  * Some installer related changes (thanks to Cyril Brulebois for finding
+    the problems and proposing some patches):
+    - keyboard-configuration.config: properly test that we are in the
+      installer (in which case the model question has to be skipped).
+    - mark the questions of keyboard-configuration as seen in
+      console-setup-udeb.base-installer to avoid asking them by the main
+      package.
+    - run setxkbmap in the postinst of the udeb.
+  * setupcon: print error message when not started from the console.
+    Thanks to Michal Suchanek, closes: #569057.
+
+ -- Anton Zinoviev <zinoviev@debian.org>  Wed, 17 Feb 2010 17:59:38 +0200
+
+console-setup (1.51) unstable; urgency=low
+
   * Correct typo in the FAQ.  Thanks to Luís Picciochi Oliveira, 
     closes: #559036.
   * Remove Fonts/bdf/legacy8h.bdf.  This font was produced from
@@ -14,8 +81,21 @@ console-setup (1.51) UNRELEASED; urgency=low
   * Add default keyboard layouts for South Africa and Liechtenstein.
   * Do not load fonts when usplash is active.  Thanks to Daniel Schepler,
     closes: #560262.
+  * Do not use soft link for Keyboard/ckb/rules/base.xml.  Thanks to Lucas
+    Nussbaum and Samuel Thibault, closes: #560570.
+  * When the layout has three groups swithch them in the following order:
+    group1 -> group2 -> group1 -> group3.  Document this problem in the
+    FAQ.  Thanks to Goran Vulić, closes: #560814.
+  * Do not remove /etc/console-setup in the postrm script if one of
+    console-setup or console-setup-mini is still installed.  Thanks to
+    Francesco Poli, closes: #561005.
+  * setupcon: do not test for the existence of ckbcomp.  Thanks to Eric
+    Valette, closes: #562557.
+  * Install ckbcomp-mini in /bin.  Otherwise before /usr is mounted it
+    would be impossible to test whether console-setup is installed or
+    console-setup-mini.
 
- -- Anton Zinoviev <zinoviev@debian.org>  Tue, 01 Dec 2009 20:31:03 +0200
+ -- Anton Zinoviev <zinoviev@debian.org>  Thu, 14 Jan 2010 22:25:13 +0200
 
 console-setup (1.50) unstable; urgency=low
 

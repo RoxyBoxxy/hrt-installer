@@ -1,6 +1,15 @@
 #!/usr/bin/make -f
-include /usr/share/cdbs/1/rules/debhelper.mk
-include /usr/share/cdbs/1/class/makefile.mk
 
-# override "clean" in cdbs
-DEB_MAKE_CLEAN_TARGET = distclean
+%:
+	dh $@
+
+override_dh_auto_build:
+	# Build the standalone version
+	STANDALONE=yes dh_auto_build
+	mv win32-loader.exe win32-loader-standalone.exe
+	# Build the cdrom version
+	dh_auto_build
+
+override_dh_auto_clean:
+	dh_auto_clean
+	rm -f win32-loader-standalone.exe

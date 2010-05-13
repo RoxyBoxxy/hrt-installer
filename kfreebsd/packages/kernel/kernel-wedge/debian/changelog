@@ -1,4 +1,10 @@
-kernel-wedge (2.63) UNRELEASED; urgency=low
+kernel-wedge (2.64) UNRELEASED; urgency=low
+
+  * nic-extra-modules: add bnx2x.
+
+ -- Otavio Salvador <otavio@ossystems.com.br>  Sat, 27 Feb 2010 20:53:05 -0300
+
+kernel-wedge (2.63) unstable; urgency=low
 
   [ Frans Pop ]
   * Updates for 2.6.32.
@@ -25,12 +31,21 @@ kernel-wedge (2.63) UNRELEASED; urgency=low
   * core-modules: drop firmware_class as it's compiled in for recent kernels.
   * Define standard input-modules and mouse-modules. For input-modules add
     selected modules with vendor-specific hid quirks needed to support some
-    keyboards (see e.g. #561036).
+    keyboards (see e.g. #561036). Closes: #567431.
+  * Change priority of reiserfs-modules from standard to extra.
+  * Add mmc-core-modules udeb as the b44 driver in nic-pcmcia-modules has a
+    dependency on mmc_core (because of Sonics Silicon Backplane support).
 
   [ Frederik Schüler ]
   * Add mpt2sas module to scsi-extra-modules.
+  * Add 3w-sas module to scsi-extra-modules.
 
- -- Frederik Schüler <fs@debian.org>  Tue, 05 Jan 2010 16:34:34 +0100
+  [ Otavio Salvador ]
+  * Bump Standards-Version; no changes needed.
+  * net-wireless-modules: add b43. Closes: #547731.
+  * debian/control: add ${misc:Depends}.
+
+ -- Otavio Salvador <otavio@debian.org>  Tue, 23 Feb 2010 12:13:01 -0300
 
 kernel-wedge (2.62) unstable; urgency=low
 

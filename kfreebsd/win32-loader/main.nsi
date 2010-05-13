@@ -1,5 +1,6 @@
 ; Debian-Installer Loader
 ; Copyright (C) 2007,2008,2009  Robert Millan <rmh@aybabtu.com>
+; Copyright (C) 2010            Didier Raboud <didier@raboud.com>
 ;
 ; This program is free software: you can redistribute it and/or modify
 ; it under the terms of the GNU General Public License as published by
@@ -32,12 +33,12 @@ RequestExecutionLevel admin
 !include LogicLib.nsh
 !include FileFunc.nsh
 !include WinMessages.nsh
+!include WinVer.nsh
 !insertmacro GetRoot
 
 !addplugindir plugins
 !addplugindir plugins/cpuid
 !addplugindir plugins/systeminfo
-!include getwindowsversion.nsh
 
 ;--------------------------------
 
@@ -50,8 +51,9 @@ LicenseData $(license)
 Page license
 Page custom ShowExpert
 Page custom ShowRescue
+Page custom ShowKernel
 Page custom ShowGraphics
-!ifdef NETWORK_BASE_URL
+!ifdef NOCD
 Page custom ShowBranch
 !endif
 Page custom ShowDesktop
@@ -122,7 +124,7 @@ Function ShowExpert
 ; ********************************************** Initialise $preseed_cmdline
   StrCpy $preseed_cmdline " "
 
-!ifndef NETWORK_BASE_URL
+!ifndef NOCD
 ; ********************************************** Initialise $d
   ${GetRoot} $EXEDIR $d
 
@@ -151,7 +153,7 @@ readme_file_not_found:
 ; ********************************************** Initialise $arch
   test64::get_arch
   StrCpy $arch $0
-!ifndef NETWORK_BASE_URL
+!ifndef NOCD
   ReadINIStr $0 $d\win32-loader.ini "installer" "arch"
   ${If} "$0:$arch" == "amd64:i386"
     MessageBox MB_OK|MB_ICONSTOP $(amd64_on_i386)
@@ -165,30 +167,23 @@ readme_file_not_found:
 !endif
 
   ; Windows version is another abort condition
-  Var /GLOBAL windows_version
   Var /GLOBAL windows_boot_method
-  Call GetWindowsVersion
-  Pop $windows_version
-  StrCpy $1 $windows_version 3
-  ${If} $1 == "NT "
+  ${If} ${IsNT}
     StrCpy $windows_boot_method ntldr
     Goto windows_version_ok
   ${Endif}
-  ${If} $windows_version == "95"
-  ${OrIf} $windows_version == "98"
+  ${If} ${AtMostWinME}
     StrCpy $windows_boot_method direct
     Goto windows_version_ok
   ${Endif}
-  ${If} $windows_version == "2000"
-  ${OrIf} $windows_version == "XP"
-  ${OrIf} $windows_version == "2003"
+  ${If} ${AtMostWin2003}
     StrCpy $windows_boot_method ntldr
     Goto windows_version_ok
   ${Endif}
-  ${If} $windows_version == "Vista"
+  ${If} ${AtMostWinVista}
 ; In the default install, "system partition" is not mounted.  We need a way
 ; around this before Windows 7 can be enabled.
-;  ${OrIf} $windows_version == "7"
+;  ${OrIf} ${IsWin7}
     StrCpy $windows_boot_method bootmgr
     Goto windows_version_ok
   ${Endif}
@@ -234,9 +229,6 @@ c_is_initialized:
   ${Else}
     StrCpy $expert false
   ${Endif}
-
-  Var /GLOBAL debian_release
-  StrCpy $debian_release squeeze
 FunctionEnd
 
 Function ShowRescue
@@ -254,17 +246,45 @@ d-i rescue/enable boolean true"
   ${Endif}
 FunctionEnd
 
+Function ShowKernel
+  Var /GLOBAL kernel 
+!ifdef NOCD
+  ${If} $expert == true
+  ${AndIf} $windows_boot_method != direct ; loadlin can only load linux
+    File /oname=$PLUGINSDIR\kernel.ini	templates/binary_choice.ini
+    WriteINIStr $PLUGINSDIR\kernel.ini "Field 1" "Text" $(kernel1)
+    WriteINIStr $PLUGINSDIR\kernel.ini "Field 2" "Text" $(kernel2)
+    WriteINIStr $PLUGINSDIR\kernel.ini "Field 3" "Text" $(kernel3)
+    InstallOptions::dialog $PLUGINSDIR\kernel.ini
+ 
+    ReadINIStr $0 $PLUGINSDIR\kernel.ini "Field 3" "State"
+    ${If} $0 == "1"
+      StrCpy $kernel kfreebsd
+    ${Else}
+      StrCpy $kernel linux
+    ${Endif}
+  ${Else}
+    ; ** Default to GNU/Linux
+    StrCpy $kernel linux
+  ${Endif}
+!else
+  ; TODO: detect the CD architecture
+  StrCpy $kernel linux
+!endif
+FunctionEnd
+
 Function ShowGraphics
   Var /GLOBAL user_interface
   Var /GLOBAL gtk
 
-!ifndef NETWORK_BASE_URL
+!ifndef NOCD
   Var /GLOBAL predefined_user_interface
   ReadINIStr $predefined_user_interface $d\win32-loader.ini "installer" "user_interface"
 
   ${If} $predefined_user_interface == ""
 !endif
     ${If} $expert == true
+     ${AndIf} $kernel == "linux"
       File /oname=$PLUGINSDIR\graphics.ini	templates/graphics.ini
       File /oname=$PLUGINSDIR\gtk.bmp	templates/gtk.bmp
       File /oname=$PLUGINSDIR\text.bmp	templates/text.bmp
@@ -278,10 +298,11 @@ Function ShowGraphics
       ${If} $0 == "1"
         StrCpy $user_interface graphical
       ${EndIf}
-    ${Else}
-        StrCpy $user_interface graphical
+    ${ElseIf} $kernel == linux
+      ; ** Default to graphical interface for linux
+      StrCpy $user_interface graphical
     ${Endif}
-!ifndef NETWORK_BASE_URL
+!ifndef NOCD
   ${Else}
     StrCpy $user_interface $predefined_user_interface
   ${Endif}
@@ -299,7 +320,7 @@ ${Endif}
   ${EndIf}
 FunctionEnd
 
-!ifdef NETWORK_BASE_URL
+!ifdef NOCD
 
 Function Download
     ; Base URL
@@ -333,7 +354,6 @@ FunctionEnd
 Function ShowBranch
   Var /GLOBAL di_branch
   StrCpy $di_branch stable
-  StrCpy $debian_release lenny
   File /oname=$PLUGINSDIR\di_branch.ini	templates/binary_choice.ini
   ${If} $expert == true
     WriteINIStr $PLUGINSDIR\di_branch.ini "Field 1" "Text" $(di_branch1)
@@ -343,7 +363,6 @@ Function ShowBranch
     ReadINIStr $0 $PLUGINSDIR\di_branch.ini "Field 3" "State"
     ${If} $0 == "1"
       StrCpy $di_branch daily
-      StrCpy $debian_release squeeze
     ${Endif}
   ${Endif}
 
@@ -353,15 +372,25 @@ Function ShowBranch
   ${If} $di_branch == "daily"
     MessageBox MB_YESNO|MB_ICONQUESTION $(di_branch4) IDNO +2
     ExecShell "open" "http://wiki.debian.org/DebianInstaller/Today"
-    Var /GLOBAL hacker
-    ${If} $arch == "amd64"
-      StrCpy $hacker aba
-    ${Else}
-      StrCpy $hacker joeyh
-    ${Endif}
-    StrCpy $base_url "http://people.debian.org/~$hacker/d-i/images/daily/netboot/$gtkdebian-installer/$arch"
+
+    ; Daily images URL
+    ; See http://svn.debian.org/viewsvn/d-i/trunk/scripts/daily-build-aggregator for the canonical list
+    ${If} $kernel == "linux"
+      ${If} $arch == "i386"
+        StrCpy $base_url "http://people.debian.org/~joeyh/d-i/images/daily/netboot/$gtkdebian-installer/$arch"
+      ${Else} ; We have only two arches, then Else means $arch == "amd64"
+        StrCpy $base_url "http://d-i.debian.org/daily-images/$arch/daily/netboot/$gtkdebian-installer/$arch"
+      ${Endif}
+    ${ElseIf} $kernel == "kfreebsd"
+      StrCpy $base_url "http://d-i.debian.org/daily-images/kfreebsd-$arch/daily/monolithic"
+    ${EndIf}
   ${Else}
-    StrCpy $base_url "http://ftp.se.debian.org/debian/dists/stable/main/installer-$arch/current/images/netboot/$gtkdebian-installer/$arch"
+    ${If} $kernel == "linux"
+      StrCpy $base_url "http://ftp.se.debian.org/debian/dists/stable/main/installer-$arch/current/images/netboot/$gtkdebian-installer/$arch"
+    ${ElseIf} $kernel == "kfreebsd"
+      # TODO: CHECK THIS (no stable image so far)
+      StrCpy $base_url "http://ftp.se.debian.org/debian/dists/stable/main/installer-kfreebsd-$arch/current/images/netboot/$gtkdebian-installer/kfreebsd-$arch"
+    ${EndIf}
   ${Endif}
 FunctionEnd
 !endif
@@ -418,22 +447,28 @@ FunctionEnd
 Function ShowCustom
 ; Gather all the missing information before ShowCustom is displayed
 
-!ifndef NETWORK_BASE_URL
+!ifndef NOCD
 
 ; ********************************************** Media-based install
-  Var /GLOBAL linux
-  Var /GLOBAL initrd
-  Var /GLOBAL g2ldr
-  Var /GLOBAL g2ldr_mbr
-  ReadINIStr $linux	$d\win32-loader.ini "installer" "$arch/$gtklinux"
-  ReadINIStr $initrd	$d\win32-loader.ini "installer" "$arch/$gtkinitrd"
-  ReadINIStr $g2ldr	$d\win32-loader.ini "grub" "g2ldr"
-  ReadINIStr $g2ldr_mbr	$d\win32-loader.ini "grub" "g2ldr.mbr"
-  StrCmp $linux		"" incomplete_ini
-  StrCmp $initrd	"" incomplete_ini
-  StrCmp $g2ldr		"" incomplete_ini
-  StrCmp $g2ldr_mbr	"" incomplete_ini
-  Goto ini_is_ok
+  ${If} $kernel == "linux"
+    Var /GLOBAL linux
+    Var /GLOBAL initrd
+    Var /GLOBAL g2ldr
+    Var /GLOBAL g2ldr_mbr
+    ReadINIStr $linux	$d\win32-loader.ini "installer" "$arch/$gtklinux"
+    ReadINIStr $initrd	$d\win32-loader.ini "installer" "$arch/$gtkinitrd"
+    ReadINIStr $g2ldr	$d\win32-loader.ini "grub" "g2ldr"
+    ReadINIStr $g2ldr_mbr	$d\win32-loader.ini "grub" "g2ldr.mbr"
+    StrCmp $linux		"" incomplete_ini
+    StrCmp $initrd	"" incomplete_ini
+    StrCmp $g2ldr		"" incomplete_ini
+    StrCmp $g2ldr_mbr	"" incomplete_ini
+    Goto ini_is_ok
+  ${ElseIf} $kernel == "kfreebsd"
+    # TODO: Check if kfreebsd will ever ship a media-based installed.
+    # If so, make sure it works here.
+    Goto incomplete_ini
+  ${EndIf}
 incomplete_ini:
   MessageBox MB_OK|MB_ICONSTOP "$(error_incomplete_ini)"
   Quit
@@ -578,13 +613,13 @@ $1"
     WriteINIStr $PLUGINSDIR\custom.ini "Field 4" "Text" "Linux cmdline:"
     WriteINIStr $PLUGINSDIR\custom.ini "Field 5" "Text" $(custom5)
     WriteINIStr $PLUGINSDIR\custom.ini "Field 6" "State" "$proxy"
-!ifdef NETWORK_BASE_URL
+!ifdef NOCD
     WriteINIStr $PLUGINSDIR\custom.ini "Field 8" "State" "$base_url"
 !endif
     WriteINIStr $PLUGINSDIR\custom.ini "Field 9" "State" "$preseed_cmdline"
     InstallOptions::dialog $PLUGINSDIR\custom.ini
     ReadINIStr $proxy		$PLUGINSDIR\custom.ini "Field 6" "State"
-!ifdef NETWORK_BASE_URL
+!ifdef NOCD
     ReadINIStr $base_url	$PLUGINSDIR\custom.ini "Field 8" "State"
 !endif
     ReadINIStr $preseed_cmdline	$PLUGINSDIR\custom.ini "Field 9" "State"
@@ -617,31 +652,51 @@ Section "Installer Loader"
   WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\Debian-Installer Loader" "DisplayName" $(program_name)
   WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\Debian-Installer Loader" "UninstallString" "$INSTDIR\uninstall.exe"
 
-!ifndef NETWORK_BASE_URL
-  ClearErrors
-  StrCpy $0 "$EXEDIR\$linux"
-  StrCpy $1 "$INSTDIR\linux"
-  CopyFiles /FILESONLY "$0" "$1"
-  IfErrors 0 +3
+!ifndef NOCD
+  ${If} $kernel == "linux"
+    ClearErrors
+    StrCpy $0 "$EXEDIR\$linux"
+    StrCpy $1 "$INSTDIR\linux"
+    CopyFiles /FILESONLY "$0" "$1"
+    IfErrors 0 +3
+      MessageBox MB_OK|MB_ICONSTOP "$(error_copyfiles)"
+      Quit
+    StrCpy $0 "$EXEDIR\$initrd"
+    StrCpy $1 "$INSTDIR\initrd.gz"
+    CopyFiles /FILESONLY "$0" "$1"
+    IfErrors 0 +3
+      MessageBox MB_OK|MB_ICONSTOP "$(error_copyfiles)"
+      Quit
+  ${ElseIf} $kernel == "kfreebsd"
+    # TODO: Check if kfreebsd will ever ship a media-based installed.
+    # If so, make sure it works here.
     MessageBox MB_OK|MB_ICONSTOP "$(error_copyfiles)"
     Quit
-  StrCpy $0 "$EXEDIR\$initrd"
-  StrCpy $1 "$INSTDIR\initrd.gz"
-  CopyFiles /FILESONLY "$0" "$1"
-  IfErrors 0 +3
-    MessageBox MB_OK|MB_ICONSTOP "$(error_copyfiles)"
-    Quit
+  ${EndIf}
 !else
-  Push "false"
-  Push "linux"
-  Push "$INSTDIR"
-  Push "$base_url"
-  Call Download
-  Push "false"
-  Push "initrd.gz"
-  Push "$INSTDIR"
-  Push "$base_url"
-  Call Download
+  ${If} $kernel == "linux"
+    Push "false"
+    Push "linux"
+    Push "$INSTDIR"
+    Push "$base_url"
+    Call Download
+    Push "false"
+    Push "initrd.gz"
+    Push "$INSTDIR"
+    Push "$base_url"
+    Call Download
+  ${ElseIf} $kernel == "kfreebsd"
+    Push "false"
+    Push "kfreebsd.gz"
+    Push "$INSTDIR"
+    Push "$base_url"
+    Call Download
+    Push "false"
+    Push "initrd.gz"
+    Push "$INSTDIR"
+    Push "$base_url"
+    Call Download
+  ${EndIf}
 !endif
 
 ; We're about to write down our preseed line.  This would be a nice place
@@ -657,10 +712,20 @@ Section "Installer Loader"
   StrCpy $0 "$c\win32-loader\grub.cfg"
   DetailPrint "$(generating)"
   FileOpen $0 $c\win32-loader\grub.cfg w
-  FileWrite $0 "\
+  ${If} $kernel == "linux"
+    FileWrite $0 "\
 linux	/win32-loader/linux $preseed_cmdline$\n\
 initrd	/win32-loader/initrd.gz$\n\
 boot$\n"
+  ${ElseIf} $kernel == "kfreebsd"
+    FileWrite $0 "\
+kfreebsd	/win32-loader/kfreebsd.gz$\n\
+kfreebsd_module	/win32-loader/initrd.gz type=mfs_root$\n\
+set kFreeBSD.vfs.root.mountfrom=ufs:/dev/md0$\n\
+set kFreeBSD.hw.ata.ata_dma=0   # needed for qemu hard disk # TODO: delete$\n\
+set kFreeBSD.hw.ata.atapi_dma=0 # needed for qemu cd # TODO: 1$\n\
+boot$\n"
+  ${EndIf}
   FileClose $0
 
 ; ********************************************** cpio hack
@@ -690,7 +755,8 @@ attrib -r initrd.gz$\r$\n\
 gzip.exe -1 < newc_chunk >> initrd.gz$\r$\n\
 "
   FileClose $0
-
+; TODO: FIX THIS FOR kFreeBSD
+${If} $kernel == "linux"
   nsExec::Exec '"$INSTDIR\cpio.bat"'
   Pop $0
   ${If} $0 != 0
@@ -698,20 +764,26 @@ gzip.exe -1 < newc_chunk >> initrd.gz$\r$\n\
     MessageBox MB_OK|MB_ICONSTOP "$(error_exec)"
     Quit
   ${Endif}
+${EndIf}
 
 ; ********************************************** Do bootloader last, because it's the most dangerous
   ${If} $windows_boot_method == ntldr
-!ifdef NETWORK_BASE_URL
-    Push "false"
-    Push "g2ldr"
-    Push "$c"
-    Push "${NETWORK_BASE_URL}"
-    Call Download
-    Push "false"
-    Push "g2ldr.mbr"
-    Push "$c"
-    Push "${NETWORK_BASE_URL}"
-    Call Download
+!ifdef NOCD
+    !ifdef NETWORK_BASE_URL
+        Push "false"
+        Push "g2ldr"
+        Push "$c"
+        Push "${NETWORK_BASE_URL}"
+        Call Download
+        Push "false"
+        Push "g2ldr.mbr"
+        Push "$c"
+        Push "${NETWORK_BASE_URL}"
+        Call Download
+    !else
+       File /oname=$c\g2ldr g2ldr
+       File /oname=$c\g2ldr.mbr g2ldr.mbr
+    !endif
 !else
     ClearErrors
     StrCpy $0 "$EXEDIR\$g2ldr"
@@ -730,9 +802,16 @@ gzip.exe -1 < newc_chunk >> initrd.gz$\r$\n\
     DetailPrint "$(registering_ntldr)"
     SetFileAttributes "$c\boot.ini" NORMAL
     SetFileAttributes "$c\boot.ini" SYSTEM|HIDDEN
+
     ; Sometimes timeout isn't set.  This may result in ntldr booting straight to
     ; Windows (bad) or straight to Debian-Installer (also bad)!  Force it to 30
-    ; just in case.
+    ; just in case. Store its eventual old value alongside
+    ; Read the already defined timeout
+    ReadIniStr $0 "$c\boot.ini" "boot loader" "timeout"
+    IfErrors 0 no_boot_ini_timeout
+       ClearErrors
+       WriteIniStr "$c\boot.ini" "boot loader" "old_timeout_win32-loader" $0
+    no_boot_ini_timeout:
     WriteIniStr "$c\boot.ini" "boot loader" "timeout" "30"
     WriteIniStr "$c\boot.ini" "operating systems" "$c\g2ldr.mbr" '"$(d-i_ntldr)"'
   ${Endif}
@@ -743,17 +822,22 @@ gzip.exe -1 < newc_chunk >> initrd.gz$\r$\n\
   ${Endif}
 
   ${If} $windows_boot_method == bootmgr
-!ifdef NETWORK_BASE_URL
-    Push "false"
-    Push "g2ldr"
-    Push "$c"
-    Push "${NETWORK_BASE_URL}"
-    Call Download
-    Push "false"
-    Push "g2ldr.mbr"
-    Push "$c"
-    Push "${NETWORK_BASE_URL}"
-    Call Download
+!ifdef NOCD
+    !ifdef NETWORK_BASE_URL
+        Push "false"
+        Push "g2ldr"
+        Push "$c"
+        Push "${NETWORK_BASE_URL}"
+        Call Download
+        Push "false"
+        Push "g2ldr.mbr"
+        Push "$c"
+        Push "${NETWORK_BASE_URL}"
+        Call Download
+    !else
+       File /oname=$c\g2ldr g2ldr
+       File /oname=$c\g2ldr.mbr g2ldr.mbr
+    !endif
 !else
     ClearErrors
     StrCpy $0 "$EXEDIR\$g2ldr"
@@ -803,8 +887,13 @@ gzip.exe -1 < newc_chunk >> initrd.gz$\r$\n\
 
 ; ********************************************** Needed for systems with compressed NTFS
   DetailPrint "$(disabling_ntfs_compression)"
-  nsExec::Exec '"compact" /u $c\g2ldr $c\g2ldr.mbr $c\grub.cfg $INSTDIR\linux $INSTDIR\initrd.gz'
+  nsExec::Exec '"compact" /u $c\g2ldr $c\g2ldr.mbr $c\grub.cfg'
   ; in my tests, uncompressing $c\grub.cfg wasn't necessary, but better be safe than sorry
+  ${If} $kernel == "linux"
+    nsExec::Exec '"compact" /u $INSTDIR\linux $INSTDIR\initrd.gz'
+  ${ElseIf} $kernel == "kfreebsd"
+    nsExec::Exec '"compact" /u $INSTDIR\kfreebsd.gz $INSTDIR\initrd.gz'
+  ${EndIf}
 
 SectionEnd
 
@@ -835,6 +924,14 @@ Section "Uninstall"
   SetFileAttributes "$c\boot.ini" NORMAL
   SetFileAttributes "$c\boot.ini" SYSTEM|HIDDEN
   DeleteINIStr "$c\boot.ini" "operating systems" "$c\g2ldr.mbr"
+    
+  ReadIniStr $0 "$c\boot.ini" "boot loader" "old_timeout_win32-loader"
+  IfErrors 0 no_saved_boot_ini_timeout
+     ; Restore original timeout
+     ClearErrors
+     WriteIniStr "$c\boot.ini" "boot loader" "timeout" $0
+     DeleteINIStr "$c\boot.ini" "boot loader" "old_timeout_win32-loader"
+  no_saved_boot_ini_timeout:
 
   ReadRegStr $0 HKLM "Software\Debian\Debian-Installer Loader" "bootmgr"
   ${If} $0 != ""

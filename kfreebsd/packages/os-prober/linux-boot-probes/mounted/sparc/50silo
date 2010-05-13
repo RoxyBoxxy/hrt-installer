@@ -36,7 +36,7 @@ recordstanza () {
 				if [ "$rootdev" ]; then
 					parameters="root=$rootdev $parameters"
 				fi
-				parameters=${parameters% }
+				parameters="${parameters% }"
 				result "$rootpart:$bootpart:$title:$kernel:$initrd:$parameters"
 				found_item=1
 			else
@@ -69,7 +69,7 @@ parse_silo_conf () {
 	while read line; do
 		debug "parsing: $line"
 		set -- $line
-		case $1 in
+		case "$1" in
 			root)
 				rootdev=$(dequote "$2")
 			;;
@@ -77,9 +77,9 @@ parse_silo_conf () {
 				recordstanza
 				# Dereference if symbolic link
 				if echo "$2" | grep -qs "/boot/"; then
-					kernel=$(readlink -f $(dequote "$mpoint$2") | sed -e 's#'$mpoint'##g')
+					kernel="$(readlink -f "$(dequote "$mpoint$2")" | sed -e 's#'"$mpoint"'##g')"
 				else
-					kernel=$(readlink -f $(dequote "$mpoint/boot$2") | sed -e 's#'$mpoint'/boot##g')
+					kernel="$(readlink -f "$(dequote "$mpoint/boot$2")" | sed -e 's#'"$mpoint"'/boot##g')"
 				fi
 			;;
 			append)
@@ -89,9 +89,9 @@ parse_silo_conf () {
 			initrd)
 				# Dereference if symbolic link
 				if echo "$2" | grep -qs "/boot/"; then
-					initrd=$(readlink -f $(dequote "$mpoint$2") | sed -e 's#'$mpoint'##g')
+					initrd="$(readlink -f "$(dequote "$mpoint$2")" | sed -e 's#'"$mpoint"'##g')"
 				else
-					initrd=$(readlink -f $(dequote "$mpoint/boot$2") | sed -e 's#'$mpoint'/boot##g')
+					initrd="$(readlink -f "$(dequote "$mpoint/boot$2")" | sed -e 's#'"$mpoint"'/boot##g')"
 				fi
 			;;
 			label)

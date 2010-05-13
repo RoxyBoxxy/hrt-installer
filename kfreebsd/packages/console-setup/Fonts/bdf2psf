@@ -504,14 +504,16 @@ for my $equivalent (@equivalents) {
 	    my $v = hex ($1);
 	    next if (! printable ($v));
 	    if (! defined $equiv{$v}) {
-		$equiv{$v} = [ $v ];
-	    }
-	    if ($equiv{$u} != $equiv{$v}) {
+		unshift @{$equiv{$u}}, $v;
+		$equiv{$v} = $equiv{$u};
+	    } elsif ($equiv{$u} != $equiv{$v}) {
 		my @vv = @{$equiv{$v}};
-		while (my $w = pop @vv) {
+		while (my $w = shift @vv) {
 		    unshift @{$equiv{$u}}, $w;
 		    $equiv{$w} = $equiv{$u};
 		}
+	    } else {
+		unshift @{$equiv{$u}}, $v;
 	    }
 	    $_ = $2;
 	}
@@ -552,9 +554,11 @@ for my $symbolfile (@symbols) {
 for my $u (@requested) {
     next if ($positioned{$u});
     next if (! printable ($u));
+    my $defined_gliph = 0;
     if (@delayed < free_positions () || ascii ($u)) {
 	foreach my $v (@{equivalence_class ($u)}) {
 	    next if ! defined $gliphs{$v};
+	    $defined_gliph = 1;
 	    if (ascii ($v)) {
 		$sfm_table[ascii ($v)] = equivalence_class ($v);
 	    } elsif ($types{$v} == $dont_copy_8th) {
@@ -573,10 +577,10 @@ for my $u (@requested) {
 	}
     }
     if (defined $issue_warnings{$u} && ! $positioned{$u}) {
-	if (@delayed < free_positions ()) {
-	    warning sprintf ("U+%04X: no gliph defined\n", $u);
-	} else {
+	if ($defined_gliph) {
 	    warning sprintf ("U+%04X: no space in the font\n", $u);
+	} else {
+	    warning sprintf ("U+%04X: no gliph defined\n", $u);
 	}
     }
 }

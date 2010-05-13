@@ -1,9 +1,74 @@
-win32-loader (0.6.14) UNRELEASED; urgency=low
+win32-loader (0.6.17) UNRELEASED; urgency=low
+
+  [ Updated translations ]
+    - Bulgarian (Damyan Ivanov)
+    - Czech (Miroslav Kure)
+    - German (Holger Wansing). Closes: #580755
+    - Norwegian Bokmal (Hans Fredrik Nordhaug)
+    - Portuguese (Miguel Figueiredo)
+    - Slovak (Ivan Masár)
+    - Simplified Chinese (YunQiang Su)
+    - Thai (Theppitak Karoonboonyanan)
+
+ -- Didier Raboud <didier@raboud.com>  Mon, 10 May 2010 10:05:29 +0200
+
+win32-loader (0.6.16) unstable; urgency=low
+
+  * Add basic kFreeBSD support (Closes: #579742)
+    + What works: fetching and booting a kFreeBSD d-i from standalone version
+    - What doesn't: preseeding, stable install, g-i, media install
+
+  * Move files to /usr/share/win32/ to be consistent with other win32 packages.
+  * Sync linux bootparam VIDEO_MODE definition with rest of d-i
+    - Revert the grub.cfg generation code update (aka s/vga=/set gfxpayload/g)
+
+ -- Didier Raboud <didier@raboud.com>  Wed, 05 May 2010 18:28:39 +0200
+
+win32-loader (0.6.15) unstable; urgency=low
+
+  * Update the daily images URLs.
+  * Remove hardcoded release codenames.
+  * Remove the getwindowsversion.nsh code duplicate (included in nsis).
+    - Take the opportunity to widen Windows version conditions.
+  * Separate network (with a http shipped preseed.cfg) from standalone
+    functionality (completely lonely executable).
+  * Store the old boot.ini timeout value. Closes: #476777
+  * Update the grub.cfg generation code to cope with recent grub-pc
+    (aka s/vga=/set gfxpayload/g)
+  * Update Build-Dependency on cpio-win32 to >= 2.11-4 to fix initramfs
+    preseed.cfg embedding which broke the installer boot.
+
+  * Add myself to copyright files.
+  * Add the DM-Upload-Allowed field to debian/control.
+
+ -- Didier Raboud <didier@raboud.com>  Fri, 30 Apr 2010 10:00:00 +0200
+
+win32-loader (0.6.14) unstable; urgency=high
 
   [ Updated translations ]
     - Simplified Chinese (苏运强).
+    - German (Holger Wansing). Closes: #566567
+    - Slovak (Ivan Masár). Closes: #568370
+    - Bengali (Sadia Afroz).
+    - Vietnamese (Clytie Siddall). Closes: #568978
+    - Japanese.
+    - Tamil added (but not activated as not supported in NSIS)
+      Closes: #578501.
 
- -- Christian Perrier <bubulle@debian.org>  Tue, 29 Dec 2009 18:05:02 +0100
+  [ Didier Raboud ]
+  * Add myself to Uploaders.
+  * Add mingw32-runtime to Build-Depends. Closes: #569389
+    - Urgency high for RC bug fixing.
+  * Convert packaging to tiny debhelper style.
+    - Drop cdbs B-D, bump debhelper B-D version and compat.
+  * Use 3.0 (native) source format.
+  * Provide the standalone version. Closes: #464233
+  * Point to specific GPL version in debian/copyright
+  * Rewrite description. Closes: #578567
+  * Add Vcs-* fields to debian/control.
+  * Bump Standards to 3.8.4 without changes needed.
+
+ -- Christian Perrier <bubulle@debian.org>  Fri, 23 Apr 2010 07:14:40 +0200
 
 win32-loader (0.6.13) unstable; urgency=low
 

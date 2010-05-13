@@ -14,7 +14,7 @@ require_tmpdir() {
 }
 
 count_for() {
-  _labelprefix=$1
+  _labelprefix="$1"
   _result=$(grep "^${_labelprefix} " /var/lib/os-prober/labels 2>/dev/null || true)
 
   if [ -z "$_result" ]; then
@@ -27,8 +27,8 @@ count_for() {
 count_next_label() {
   require_tmpdir
 
-  _labelprefix=$1
-  _cfor="$(count_for ${_labelprefix})"
+  _labelprefix="$1"
+  _cfor="$(count_for "${_labelprefix}")"
 
   if [ -z "$_cfor" ]; then
     echo "${_labelprefix} 1" >> /var/lib/os-prober/labels
@@ -44,7 +44,7 @@ progname=
 cache_progname() {
   case $progname in
     '')
-      progname="$(basename $0)"
+      progname="$(basename "$0")"
       ;;
   esac
 }
@@ -105,7 +105,7 @@ fs_type () {
 parse_proc_mounts () {
 	while read -r line; do
 		set -- $line
-		printf '%s %s %s\n' "$(mapdevfs $1)" "$2" "$3"
+		printf '%s %s %s\n' "$(mapdevfs "$1")" "$2" "$3"
 	done
 }
 
@@ -170,10 +170,7 @@ linux_mount_boot () {
 			smart_ldlp=
 			smart_mount=mount
 			if mount --help 2>&1 | head -n1 | grep -iq busybox; then
-				if [ -x "$tmpmnt/bin/mount" ]; then
-					smart_ldlp="$tmpmnt/lib"
-					smart_mount="$tmpmnt/bin/mount"
-				elif [ -x /target/bin/mount ]; then
+				if [ -x /target/bin/mount ]; then
 					smart_ldlp=/target/lib
 					smart_mount=/target/bin/mount
 				fi

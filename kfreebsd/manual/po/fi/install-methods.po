@@ -1,12 +1,12 @@
 # Debian Installation Guide install-methods
-# Tapio Lehtonen <tale@debian.org>, 2006, 2008, 2009.
+# Tapio Lehtonen <tale@debian.org>, 2006, 2008-2010.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: Debian Installation Guide install-methods\n"
 "Report-Msgid-Bugs-To: debian-boot@lists.debian.org\n"
-"POT-Creation-Date: 2009-11-18 01:11+0000\n"
-"PO-Revision-Date: 2009-09-09 21:43+0300\n"
+"POT-Creation-Date: 2010-02-26 01:12+0000\n"
+"PO-Revision-Date: 2010-05-04 11:14+0300\n"
 "Last-Translator: Tapio Lehtonen <tale@debian.org>\n"
 "Language-Team: Finnish <debian-l10n-finnish@lists.debian.org>\n"
 "MIME-Version: 1.0\n"
@@ -272,13 +272,17 @@ msgid ""
 "img; and for QNAP TS-110, TS-119, TS-210, TS-219, TS-219P from &qnap-"
 "kirkwood-firmware-img;."
 msgstr ""
+"QNAP Turbo Stationin asennustiedostoissa on ydin ja muistilevy sekä "
+"komentotiedosto jolla nämä otokset kirjoitetaan flash-muistiin. "
+"Asennustiedostot malleille QNAP TS-109 ja TS-209 löytyvät osoitteesta &qnap-"
+"orion-firmware-img; ja malleille QNAP TS-110, TS-119, TS-210, TS-219, TS-"
+"219P osoitteesta &qnap-kirkwood-firmware-img;."
 
 #. Tag: title
 #: install-methods.xml:186
-#, fuzzy, no-c-format
-#| msgid "Alpha Installation Files"
+#, no-c-format
 msgid "SheevaPlug and OpenRD Installation Files"
-msgstr "Alphan asennustiedostot"
+msgstr "SheevaPlug:in ja OpenRD:n asennustiedostot"
 
 #. Tag: para
 #: install-methods.xml:187
@@ -288,6 +292,9 @@ msgid ""
 "of a kernel and initrd for U-Boot. You can obtain these files from &kirkwood-"
 "marvell-firmware-img;."
 msgstr ""
+"Marvell Sheevaplug:in ja OpenRD:n asennustiedostoissa on ydin ja initrd U-"
+"Boot:lle. Nämä tiedostot ovat saatavilla osoitteesta &kirkwood-marvell-"
+"firmware-img;."
 
 #. Tag: title
 #: install-methods.xml:237
@@ -975,17 +982,7 @@ msgstr ""
 
 #. Tag: para
 #: install-methods.xml:670
-#, fuzzy, no-c-format
-#| msgid ""
-#| "Since most USB sticks come pre-configured with a single FAT16 partition, "
-#| "you probably won't have to repartition or reformat the stick. If you have "
-#| "to do that anyway, use <command>cfdisk</command> or any other "
-#| "partitioning tool to create a FAT16 partition, and then create the "
-#| "filesystem using: <informalexample><screen>\n"
-#| "# mkdosfs /dev/<replaceable>sdX1</replaceable>\n"
-#| "</screen></informalexample> Take care that you use the correct device "
-#| "name for your USB stick. The <command>mkdosfs</command> command is "
-#| "contained in the <classname>dosfstools</classname> Debian package."
+#, no-c-format
 msgid ""
 "Since most USB sticks come pre-configured with a single FAT16 partition, you "
 "probably won't have to repartition or reformat the stick. If you have to do "
@@ -1001,8 +998,9 @@ msgstr ""
 "Koska useimmissa USB-muisteissa on tehtaan jäljiltä yksi FAT16-osio, ei "
 "liene tarpeen tehdä osioita uudestaan tai formatoida muistia. Jos niin "
 "kuitenkin on tehtävä, tee FAT16-osio komennolla <command>cfdisk</command> "
-"tai millä tahansa osiointityökalulla, ja luo osiolle sitten "
-"tiedostojärjestelmä seuraavasti:<informalexample><screen>\n"
+"tai millä tahansa osiointityökalulla<footnote><para>Muista tehdä osiosta "
+"bootable.</para></footnote>, ja luo osiolle sitten tiedostojärjestelmä "
+"seuraavasti:<informalexample><screen>\n"
 "# mkdosfs /dev/<replaceable>sdX1</replaceable>\n"
 "</screen></informalexample> Varmistu käyttäväsi USB-muistin oikeaa "
 "laitenimeä. Komento <command>mkdosfs</command> sisältyy Debianin pakettiin "
@@ -1059,18 +1057,7 @@ msgstr "Asentimen levyotoksen lisääminen"
 
 #. Tag: para
 #: install-methods.xml:717
-#, fuzzy, no-c-format
-#| msgid ""
-#| "Mount the partition (<userinput>mount /dev/<replaceable>sdX1</"
-#| "replaceable> /mnt</userinput>) and copy the following installer image "
-#| "files to the stick: <itemizedlist> <listitem><para> <filename>vmlinuz</"
-#| "filename> (kernel binary) </para></listitem> <listitem><para> "
-#| "<filename>initrd.gz</filename> (initial ramdisk image) </para></listitem> "
-#| "</itemizedlist> You can choose between either the regular version or the "
-#| "graphical version of the installer. The latter can be found in the "
-#| "<filename>gtk</filename> subdirectory. If you want to rename the files, "
-#| "please note that <classname>syslinux</classname> can only process DOS "
-#| "(8.3) file names."
+#, no-c-format
 msgid ""
 "Mount the partition (<userinput>mount /dev/<replaceable>sdX1</replaceable> /"
 "mnt</userinput>) and copy the following installer image files to the stick: "
@@ -1086,25 +1073,19 @@ msgstr ""
 "Liitä osio (<userinput>mount /dev/<replaceable>sdX1</replaceable> /mnt</"
 "userinput>) ja kopioi seuraavat tiedostot Debianin asennuspalvelimelta "
 "muistille: \n"
-"<itemizedlist> <listitem><para> <filename>vmlinuz</filename> (ytimen "
-"ohjelmatiedosto) </para></listitem> \n"
+"<itemizedlist> <listitem><para> <filename>vmlinuz</filename> tai "
+"<filename>linux</filename> (ytimen ohjelmatiedosto) </para></listitem> \n"
 "<listitem><para> <filename>initrd.gz</filename> (käynnistysmuistilevyn "
 "levyotos) </para></listitem> \n"
-"</itemizedlist> Jos tiedostojen nimiä halutaan muuttaa, on huomattava ettei "
-"<classname>SYSLINUX</classname> osaa käsitellä muita kuin DOS:n (8.3) "
+"</itemizedlist> Asennin on valittavissa tavallisena tai graafisen "
+"käyttöliittymän kera. Jälkimmäinen on alihakemistossa <filename>gtk</"
+"filename>. Jos tiedostojen nimiä halutaan muuttaa, on huomattava ettei "
+"<classname>syslinux</classname> osaa käsitellä muita kuin DOS:n (8.3) "
 "tiedostonimiä."
 
 #. Tag: para
 #: install-methods.xml:741
-#, fuzzy, no-c-format
-#| msgid ""
-#| "Next you should create a <filename>syslinux.cfg</filename> configuration "
-#| "file, which at a bare minimum should contain the following two lines: "
-#| "<informalexample><screen>\n"
-#| "default vmlinuz\n"
-#| "append initrd=initrd.gz\n"
-#| "</screen></informalexample> For the graphical installer you should add "
-#| "<userinput>video=vesa:ywrap,mtrr vga=788</userinput> to the second line."
+#, no-c-format
 msgid ""
 "Next you should create a <filename>syslinux.cfg</filename> configuration "
 "file, which at a bare minimum should contain the following two lines (change "
@@ -1118,7 +1099,9 @@ msgid ""
 msgstr ""
 "Seuraavaksi olisi tehtävä asetustiedosto\n"
 "<filename>syslinux.cfg</filename>, jossa yksinkertaisimmillaan on\n"
-"seuraavat kaksi riviä:\n"
+"seuraavat kaksi riviä (muuta ytimen ohjelmatiedoston nimeksi "
+"<quote><filename>linux</filename></quote> jos käytit <filename>netboot</"
+"filename>-otosta):\n"
 "<informalexample><screen>\n"
 "default vmlinuz\n"
 "append initrd=initrd.gz\n"
@@ -1128,12 +1111,7 @@ msgstr ""
 
 #. Tag: para
 #: install-methods.xml:753
-#, fuzzy, no-c-format
-#| msgid ""
-#| "If you used an <filename>hd-media</filename> image, you should now copy a "
-#| "Debian ISO image (businesscard, netinst or full CD image; be sure to "
-#| "select one that fits) onto the stick. When you are done, unmount the USB "
-#| "memory stick (<userinput>umount /mnt</userinput>)."
+#, no-c-format
 msgid ""
 "If you used an <filename>hd-media</filename> image, you should now copy a "
 "Debian ISO image<footnote> <para> You can use either a businesscard, a "
@@ -1144,8 +1122,11 @@ msgid ""
 "(<userinput>umount /mnt</userinput>)."
 msgstr ""
 "Jos käytit <filename>hd-media</filename>-otosta, on nyt kopioitava Debianin "
-"ISO-otos (businesscard, netinst tai täysi CD-otos; varmista valitsevasi se "
-"mikä mahtuu) muistille. Kun tämä on valmista, irroita USB-muisti "
+"ISO-otos<footnote> <para> voidaan käyttää joko businesscard, netinst tai "
+"täyttä CD-otosta (katso <xref linkend=\"official-cdrom\"/>. Varmista "
+"valitsevasi se mikä mahtuu muistille. Huomaa ettei <quote>netboot "
+"<filename>mini.iso</filename></quote> -otos sovi tähän tarkoitukseen. </"
+"para> </footnote> tikulle. Kun tämä on valmista, irroita USB-muisti "
 "(<userinput>umount /mnt</userinput>)."
 
 #. Tag: para
@@ -1580,25 +1561,25 @@ msgstr ""
 "kiintolevyn kuvakkeeseen."
 
 #. Tag: filename
-#: install-methods.xml:1034 install-methods.xml:1372
+#: install-methods.xml:1034 install-methods.xml:1360
 #, no-c-format
 msgid "vmlinux"
 msgstr "vmlinux"
 
 #. Tag: filename
-#: install-methods.xml:1039 install-methods.xml:1377
+#: install-methods.xml:1039 install-methods.xml:1365
 #, no-c-format
 msgid "initrd.gz"
 msgstr "initrd.gz"
 
 #. Tag: filename
-#: install-methods.xml:1044 install-methods.xml:1382
+#: install-methods.xml:1044 install-methods.xml:1370
 #, no-c-format
 msgid "yaboot"
 msgstr "yaboot"
 
 #. Tag: filename
-#: install-methods.xml:1049 install-methods.xml:1387
+#: install-methods.xml:1049 install-methods.xml:1375
 #, no-c-format
 msgid "yaboot.conf"
 msgstr "yaboot.conf"
@@ -1720,25 +1701,25 @@ msgstr ""
 #: install-methods.xml:1124
 #, no-c-format
 msgid ""
-"To use the Pre-boot Execution Environment (PXE) method of TFTP booting, you "
-"will need a TFTP server with <userinput>tsize</userinput> support. On a "
-"&debian; server, the <classname>atftpd</classname> and <classname>tftpd-hpa</"
-"classname> packages qualify; we recommend <classname>tftpd-hpa</classname>."
+"For a &debian; server we recommend <classname>tftpd-hpa</classname>. It's "
+"written by the same author as the <classname>syslinux</classname> bootloader "
+"and is therefore least likely to cause issues. A good alternative is "
+"<classname>atftpd</classname>."
 msgstr ""
-"Käytettäesssä TFTP-käynnistyksessä Pre-boot Execution Environment (PXE) -"
-"menetelmää, tarvitaan <userinput>tsize</userinput>:a tukeva  TFTP-palvelin. "
-"&debian;-palvelimella paketit <classname>atftpd</classname> ja "
-"<classname>tftpd-hpa</classname> kelpaavat; suositellaan pakettia "
-"<classname>tftpd-hpa</classname>."
+"&debian;-palvelimelle suositellaan sovellusta <classname>tftpd-hpa</"
+"classname>. Siinä on tekijä sama kuin käynnistyslataimella "
+"<classname>syslinux</classname>, joten todennäköisesti yhteistoiminnan "
+"kanssa on vähiten vaikeuksia. Hyvä vaihtoehto on <classname>atftpd</"
+"classname>."
 
 #. Tag: title
-#: install-methods.xml:1142
+#: install-methods.xml:1140
 #, no-c-format
 msgid "Setting up RARP server"
 msgstr "RARP-palvelimen asetukset"
 
 #. Tag: para
-#: install-methods.xml:1143
+#: install-methods.xml:1141
 #, no-c-format
 msgid ""
 "To set up RARP, you need to know the Ethernet address (a.k.a. the MAC "
@@ -1746,7 +1727,7 @@ msgid ""
 "information, you can <phrase arch=\"sparc\"> pick it off the initial "
 "OpenPROM boot messages, use the OpenBoot <userinput>.enet-addr</userinput> "
 "command, or </phrase> boot into <quote>Rescue</quote> mode (e.g., from the "
-"rescue floppy) and use the command <userinput>/sbin/ifconfig eth0</"
+"rescue floppy) and use the command <userinput>ip addr show dev eth0</"
 "userinput>."
 msgstr ""
 "RARP:n asetuksia varten on tiedettävä asennettavien asiakaskoneiden Ethernet-"
@@ -1754,11 +1735,11 @@ msgstr ""
 "voidaan <phrase arch=\"sparc\"> katsoa se OpenROM:n ensimmäisistä "
 "käynnistysviesteistä, käytä OpenBootin komentoa <userinput>.enet-addr</"
 "userinput>, tai </phrase> käynnistää <quote>Rescue</quote>-tilaan (esim. "
-"hätäkäynnistyslevykkeeltä) ja komentaa <userinput>/sbin/ifconfig eth0</"
+"hätäkäynnistyslevykkeeltä) ja komentaa <userinput>ip addr show dev eth0</"
 "userinput>."
 
 #. Tag: para
-#: install-methods.xml:1155
+#: install-methods.xml:1153
 #, no-c-format
 msgid ""
 "On a RARP server system using a Linux 2.4 or 2.6 kernel, or Solaris/SunOS, "
@@ -1784,13 +1765,183 @@ msgstr ""
 "käyttöjärjestelmässä SunOS 4 (Solaris 1)."
 
 #. Tag: title
-#: install-methods.xml:1177
+#: install-methods.xml:1174
+#, no-c-format
+msgid "Setting up a DHCP server"
+msgstr "DHCP-palvelimen asetukset"
+
+#. Tag: para
+#: install-methods.xml:1175
+#, no-c-format
+msgid ""
+"One free software DHCP server is ISC <command>dhcpd</command>. For &debian;, "
+"the <classname>dhcp3-server</classname> package is recommended. Here is a "
+"sample configuration file for it (see <filename>/etc/dhcp3/dhcpd.conf</"
+"filename>):"
+msgstr ""
+"Eräs vapaa DHCP-palvelinohjelmisto on ISC <command>dhcpd</command>. &debian;"
+"ille suositellaan pakettia <classname>dhcp3-server</classname>. Tässä on "
+"esimerkki sen asetustiedostosta (katso <filename>/etc/dhcp3/dhcpd.conf</"
+"filename>):"
+
+#. Tag: screen
+#: install-methods.xml:1182
+#, no-c-format
+msgid ""
+"option domain-name \"example.com\";\n"
+"option domain-name-servers ns1.example.com;\n"
+"option subnet-mask 255.255.255.0;\n"
+"default-lease-time 600;\n"
+"max-lease-time 7200;\n"
+"server-name \"servername\";\n"
+"\n"
+"subnet 192.168.1.0 netmask 255.255.255.0 {\n"
+"  range 192.168.1.200 192.168.1.253;\n"
+"  option routers 192.168.1.1;\n"
+"}\n"
+"\n"
+"host clientname {\n"
+"  filename \"/tftpboot.img\";\n"
+"  server-name \"servername\";\n"
+"  next-server servername;\n"
+"  hardware ethernet 01:23:45:67:89:AB;\n"
+"  fixed-address 192.168.1.90;\n"
+"}"
+msgstr ""
+"option domain-name \"example.com\";\n"
+"option domain-name-servers ns1.example.com;\n"
+"option subnet-mask 255.255.255.0;\n"
+"default-lease-time 600;\n"
+"max-lease-time 7200;\n"
+"server-name \"servername\";\n"
+"\n"
+"subnet 192.168.1.0 netmask 255.255.255.0 {\n"
+"  range 192.168.1.200 192.168.1.253;\n"
+"  option routers 192.168.1.1;\n"
+"}\n"
+"\n"
+"host clientname {\n"
+"  filename \"/tftpboot.img\";\n"
+"  server-name \"servername\";\n"
+"  next-server servername;\n"
+"  hardware ethernet 01:23:45:67:89:AB;\n"
+"  fixed-address 192.168.1.90;\n"
+"}"
+
+#. Tag: para
+#: install-methods.xml:1184
+#, no-c-format
+msgid ""
+"In this example, there is one server <replaceable>servername</replaceable> "
+"which performs all of the work of DHCP server, TFTP server, and network "
+"gateway. You will almost certainly need to change the domain-name options, "
+"as well as the server name and client hardware address. The "
+"<replaceable>filename</replaceable> option should be the name of the file "
+"which will be retrieved via TFTP."
+msgstr ""
+"Tässä esimerkissa on yksi palvelin, <replaceable>servername</replaceable>, "
+"joka tekee kaikki DHCP-palvelimen, TFTP-palvelimen ja verkon yhdyskäytävän "
+"työt. Asetuksen domain-name arvoa joudut lähes varmasti muuttamaan, samoin "
+"kuin palvelimen nimen ja asiakaskoneen MAC-osoitteen. Asetuksen "
+"<replaceable>filename</replaceable> on oltava TFTP:llä noudettavan tiedoston "
+"nimi."
+
+#. Tag: para
+#: install-methods.xml:1194
+#, no-c-format
+msgid ""
+"After you have edited the <command>dhcpd</command> configuration file, "
+"restart it with <userinput>/etc/init.d/dhcpd3-server restart</userinput>."
+msgstr ""
+"Kun <command>dhcpd</command>:n asetustiedosto on muokattu, käynnistetään se "
+"uudestaan komennolla <userinput>/etc/init.d/dhcpd3-server restart</"
+"userinput>."
+
+#. Tag: title
+#: install-methods.xml:1202
+#, no-c-format
+msgid "Enabling PXE Booting in the DHCP configuration"
+msgstr "PXE-käynnistyksen käyttöönotto DHCP-asetuksissa"
+
+#. Tag: para
+#: install-methods.xml:1203
+#, no-c-format
+msgid ""
+"Here is another example for a <filename>dhcp.conf</filename> using the Pre-"
+"boot Execution Environment (PXE) method of TFTP. <informalexample><screen>\n"
+"option domain-name \"example.com\";\n"
+"\n"
+"default-lease-time 600;\n"
+"max-lease-time 7200;\n"
+"\n"
+"allow booting;\n"
+"allow bootp;\n"
+"\n"
+"# The next paragraph needs to be modified to fit your case\n"
+"subnet 192.168.1.0 netmask 255.255.255.0 {\n"
+"  range 192.168.1.200 192.168.1.253;\n"
+"  option broadcast-address 192.168.1.255;\n"
+"# the gateway address which can be different\n"
+"# (access to the internet for instance)\n"
+"  option routers 192.168.1.1;\n"
+"# indicate the dns you want to use\n"
+"  option domain-name-servers 192.168.1.3;\n"
+"}\n"
+"\n"
+"group {\n"
+"  next-server 192.168.1.3;\n"
+"  host tftpclient {\n"
+"# tftp client hardware address\n"
+"  hardware ethernet  00:10:DC:27:6C:15;\n"
+"  filename \"/pxelinux.0\";\n"
+" }\n"
+"}\n"
+"</screen></informalexample> Note that for PXE booting, the client filename "
+"<filename>pxelinux.0</filename> is a boot loader, not a kernel image (see "
+"<xref linkend=\"tftp-images\"/> below)."
+msgstr ""
+"Tässä on toinen esimerkki tiedostosta <filename>dhcp.conf</filename>. Tässä "
+"käytetään TFTP:n käynnistystapaa Pre-boot Execution Environment (PXE). "
+"<informalexample><screen>\n"
+"option domain-name \"example.com\";\n"
+"\n"
+"default-lease-time 600;\n"
+"max-lease-time 7200;\n"
+"\n"
+"allow booting;\n"
+"allow bootp;\n"
+"\n"
+"# The next paragraph needs to be modified to fit your case\n"
+"subnet 192.168.1.0 netmask 255.255.255.0 {\n"
+"  range 192.168.1.200 192.168.1.253;\n"
+"  option broadcast-address 192.168.1.255;\n"
+"# the gateway address which can be different\n"
+"# (access to the internet for instance)\n"
+"  option routers 192.168.1.1;\n"
+"# indicate the dns you want to use\n"
+"  option domain-name-servers 192.168.1.3;\n"
+"}\n"
+"\n"
+"group {\n"
+"  next-server 192.168.1.3;\n"
+"  host tftpclient {\n"
+"# tftp client hardware address\n"
+"  hardware ethernet  00:10:DC:27:6C:15;\n"
+"  filename \"/pxelinux.0\";\n"
+" }\n"
+"}\n"
+"</screen></informalexample> Huomaa, että PXE-käynnistyksessä asiakkaan "
+"tiedostonimi <filename>pxelinux.0</filename> on käynnistyslatain eikä ytimen "
+"ohjelmatiedosto (katso <xref linkend=\"tftp-images\"/> tuonnempana)."
+
+#. Tag: title
+#: install-methods.xml:1223
 #, no-c-format
 msgid "Setting up a BOOTP server"
 msgstr "BOOTP-palvelimen käyttöönotto"
 
 #. Tag: para
-#: install-methods.xml:1178
+#: install-methods.xml:1224
 #, no-c-format
 msgid ""
 "There are two BOOTP servers available for GNU/Linux. The first is CMU "
@@ -1805,7 +1956,7 @@ msgstr ""
 "<classname>bootp</classname> ja <classname>dhcp3-server</classname>."
 
 #. Tag: para
-#: install-methods.xml:1186
+#: install-methods.xml:1232
 #, no-c-format
 msgid ""
 "To use CMU <command>bootpd</command>, you must first uncomment (or add) the "
@@ -1870,7 +2021,7 @@ msgstr ""
 "osoite. </phrase>"
 
 #. Tag: para
-#: install-methods.xml:1219
+#: install-methods.xml:1265
 #, no-c-format
 msgid ""
 "By contrast, setting up BOOTP with ISC <command>dhcpd</command> is really "
@@ -1894,200 +2045,36 @@ msgstr ""
 "<userinput>/etc/init.d/dhcpd3-server restart</userinput>."
 
 #. Tag: title
-#: install-methods.xml:1241
-#, no-c-format
-msgid "Setting up a DHCP server"
-msgstr "DHCP-palvelimen asetukset"
-
-#. Tag: para
-#: install-methods.xml:1242
-#, no-c-format
-msgid ""
-"One free software DHCP server is ISC <command>dhcpd</command>. For &debian;, "
-"the <classname>dhcp3-server</classname> package is recommended. Here is a "
-"sample configuration file for it (see <filename>/etc/dhcp3/dhcpd.conf</"
-"filename>):"
-msgstr ""
-"Eräs vapaa DHCP-palvelinohjelmisto on ISC <command>dhcpd</command>. &debian;"
-"ille suositellaan pakettia <classname>dhcp3-server</classname>. Tässä on "
-"esimerkki sen asetustiedostosta (katso <filename>/etc/dhcp3/dhcpd.conf</"
-"filename>):"
-
-#. Tag: screen
-#: install-methods.xml:1249
-#, no-c-format
-msgid ""
-"option domain-name \"example.com\";\n"
-"option domain-name-servers ns1.example.com;\n"
-"option subnet-mask 255.255.255.0;\n"
-"default-lease-time 600;\n"
-"max-lease-time 7200;\n"
-"server-name \"servername\";\n"
-"\n"
-"subnet 192.168.1.0 netmask 255.255.255.0 {\n"
-"  range 192.168.1.200 192.168.1.253;\n"
-"  option routers 192.168.1.1;\n"
-"}\n"
-"\n"
-"host clientname {\n"
-"  filename \"/tftpboot/tftpboot.img\";\n"
-"  server-name \"servername\";\n"
-"  next-server servername;\n"
-"  hardware ethernet 01:23:45:67:89:AB;\n"
-"  fixed-address 192.168.1.90;\n"
-"}"
-msgstr ""
-"option domain-name \"example.com\";\n"
-"option domain-name-servers ns1.example.com;\n"
-"option subnet-mask 255.255.255.0;\n"
-"default-lease-time 600;\n"
-"max-lease-time 7200;\n"
-"server-name \"servername\";\n"
-"\n"
-"subnet 192.168.1.0 netmask 255.255.255.0 {\n"
-"  range 192.168.1.200 192.168.1.253;\n"
-"  option routers 192.168.1.1;\n"
-"}\n"
-"\n"
-"host clientname {\n"
-"  filename \"/tftpboot/tftpboot.img\";\n"
-"  server-name \"servername\";\n"
-"  next-server servername;\n"
-"  hardware ethernet 01:23:45:67:89:AB;\n"
-"  fixed-address 192.168.1.90;\n"
-"}"
-
-#. Tag: para
-#: install-methods.xml:1251
-#, no-c-format
-msgid ""
-"In this example, there is one server <replaceable>servername</replaceable> "
-"which performs all of the work of DHCP server, TFTP server, and network "
-"gateway. You will almost certainly need to change the domain-name options, "
-"as well as the server name and client hardware address. The "
-"<replaceable>filename</replaceable> option should be the name of the file "
-"which will be retrieved via TFTP."
-msgstr ""
-"Tässä esimerkissa on yksi palvelin, <replaceable>servername</replaceable>, "
-"joka tekee kaikki DHCP-palvelimen, TFTP-palvelimen ja verkon yhdyskäytävän "
-"työt. Asetuksen domain-name arvoa joudut lähes varmasti muuttamaan, samoin "
-"kuin palvelimen nimen ja asiakaskoneen MAC-osoitteen. Asetuksen "
-"<replaceable>filename</replaceable> on oltava TFTP:llä noudettavan tiedoston "
-"nimi."
-
-#. Tag: para
-#: install-methods.xml:1261
-#, no-c-format
-msgid ""
-"After you have edited the <command>dhcpd</command> configuration file, "
-"restart it with <userinput>/etc/init.d/dhcpd3-server restart</userinput>."
-msgstr ""
-"Kun <command>dhcpd</command>:n asetustiedosto on muokattu, käynnistetään se "
-"uudestaan komennolla <userinput>/etc/init.d/dhcpd3-server restart</"
-"userinput>."
-
-#. Tag: title
-#: install-methods.xml:1269
-#, no-c-format
-msgid "Enabling PXE Booting in the DHCP configuration"
-msgstr "PXE-käynnistyksen käyttöönotto DHCP-asetuksissa"
-
-#. Tag: para
-#: install-methods.xml:1270
-#, no-c-format
-msgid ""
-"Here is another example for a <filename>dhcp.conf</filename> using the Pre-"
-"boot Execution Environment (PXE) method of TFTP. <informalexample><screen>\n"
-"option domain-name \"example.com\";\n"
-"\n"
-"default-lease-time 600;\n"
-"max-lease-time 7200;\n"
-"\n"
-"allow booting;\n"
-"allow bootp;\n"
-"\n"
-"# The next paragraph needs to be modified to fit your case\n"
-"subnet 192.168.1.0 netmask 255.255.255.0 {\n"
-"  range 192.168.1.200 192.168.1.253;\n"
-"  option broadcast-address 192.168.1.255;\n"
-"# the gateway address which can be different\n"
-"# (access to the internet for instance)\n"
-"  option routers 192.168.1.1;\n"
-"# indicate the dns you want to use\n"
-"  option domain-name-servers 192.168.1.3;\n"
-"}\n"
-"\n"
-"group {\n"
-"  next-server 192.168.1.3;\n"
-"  host tftpclient {\n"
-"# tftp client hardware address\n"
-"  hardware ethernet  00:10:DC:27:6C:15;\n"
-"  filename \"pxelinux.0\";\n"
-" }\n"
-"}\n"
-"</screen></informalexample> Note that for PXE booting, the client filename "
-"<filename>pxelinux.0</filename> is a boot loader, not a kernel image (see "
-"<xref linkend=\"tftp-images\"/> below)."
-msgstr ""
-"Tässä on toinen esimerkki tiedostosta <filename>dhcp.conf</filename>. Tässä "
-"käytetään TFTP:n käynnistystapaa Pre-boot Execution Environment (PXE). "
-"<informalexample><screen>\n"
-"option domain-name \"example.com\";\n"
-"\n"
-"default-lease-time 600;\n"
-"max-lease-time 7200;\n"
-"\n"
-"allow booting;\n"
-"allow bootp;\n"
-"\n"
-"# The next paragraph needs to be modified to fit your case\n"
-"subnet 192.168.1.0 netmask 255.255.255.0 {\n"
-"  range 192.168.1.200 192.168.1.253;\n"
-"  option broadcast-address 192.168.1.255;\n"
-"# the gateway address which can be different\n"
-"# (access to the internet for instance)\n"
-"  option routers 192.168.1.1;\n"
-"# indicate the dns you want to use\n"
-"  option domain-name-servers 192.168.1.3;\n"
-"}\n"
-"\n"
-"group {\n"
-"  next-server 192.168.1.3;\n"
-"  host tftpclient {\n"
-"# tftp client hardware address\n"
-"  hardware ethernet  00:10:DC:27:6C:15;\n"
-"  filename \"pxelinux.0\";\n"
-" }\n"
-"}\n"
-"</screen></informalexample> Huomaa, että PXE-käynnistyksessä asiakkaan "
-"tiedostonimi <filename>pxelinux.0</filename> on käynnistyslatain eikä ytimen "
-"ohjelmatiedosto (katso <xref linkend=\"tftp-images\"/> tuonnempana)."
-
-#. Tag: title
-#: install-methods.xml:1286
+#: install-methods.xml:1284
 #, no-c-format
 msgid "Enabling the TFTP Server"
 msgstr "TFTP-palvelimen käyttöönotto"
 
 #. Tag: para
-#: install-methods.xml:1287
+#: install-methods.xml:1285
 #, no-c-format
 msgid ""
 "To get the TFTP server ready to go, you should first make sure that "
-"<command>tftpd</command> is enabled. This is usually enabled by having "
-"something like the following line in <filename>/etc/inetd.conf</filename>: "
-"<informalexample><screen>\n"
-"tftp dgram udp wait nobody /usr/sbin/tcpd in.tftpd /tftpboot\n"
-"</screen></informalexample> Debian packages will in general set this up "
-"correctly by default when they are installed."
+"<command>tftpd</command> is enabled."
 msgstr ""
-"Jotta TFTP-palvelin saataisiin toimintakuntoon, on ensin varmistettava "
-"<command>tftpd</command>:n olevan käytettävissä. Tavallisesti se otetaan "
-"käyttöön kirjoittamalla tämän tapaista tiedostoon <filename>/etc/inetd.conf</"
-"filename>: <informalexample><screen>\n"
-"tftp dgram udp wait nobody /usr/sbin/tcpd in.tftpd /tftpboot\n"
-"</screen></informalexample> Debianin paketit tekevät tämän asetuksen yleensä "
-"oikein kun ne asennetaan."
+"Valmisteltaessa TFTP-palvelimen käyttöönottoa tulisi ensin tarkistaa "
+"komennon <command>tftpd</command> olevan käytettävissä."
+
+#. Tag: para
+#: install-methods.xml:1290
+#, no-c-format
+msgid ""
+"In the case of <classname>tftpd-hpa</classname> there are two ways the "
+"service can be run. It can be started on demand by the system's "
+"<classname>inetd</classname> daemon, or it can be set up to run as an "
+"independent daemon. Which of these methods is used is selected when the "
+"package is installed and can be changed by reconfiguring the package."
+msgstr ""
+"Palvelua <classname>tftpd-hpa</classname> voidaan käyttää kahdella tavalla. "
+"Järjestelmän taustaprosessi <classname>inetd</classname> voi käynnistää sen "
+"tarvittaessa tai se voidaan käynnistää omana taustaprosessinaan. Käyttötapa "
+"valitaan pakettia asennettaessa ja sitä voidaan vaihtaan tekemällä paketin "
+"asetukset uudestaan. "
 
 #. Tag: para
 #: install-methods.xml:1299
@@ -2112,37 +2099,21 @@ msgstr ""
 #: install-methods.xml:1309
 #, no-c-format
 msgid ""
-"Look in <filename>/etc/inetd.conf</filename> and remember the directory "
-"which is used as the argument of <command>in.tftpd</command><footnote> "
-"<para> All <command>in.tftpd</command> alternatives available in Debian "
-"should log TFTP requests to the system logs by default. Some of them support "
-"a <userinput>-v</userinput> argument to increase verbosity. It is "
-"recommended to check these log messages in case of boot problems as they are "
-"a good starting point for diagnosing the cause of errors. </para> </"
-"footnote>; you'll need that below. If you've had to change <filename>/etc/"
-"inetd.conf</filename>, you'll have to notify the running <command>inetd</"
-"command> process that the file has changed. On a Debian machine, run "
-"<userinput>/etc/init.d/inetd reload</userinput>; on other machines, find out "
-"the process ID for <command>inetd</command>, and run <userinput>kill -HUP "
-"<replaceable>inetd-pid</replaceable></userinput>."
+"All <command>in.tftpd</command> alternatives available in Debian should log "
+"TFTP requests to the system logs by default. Some of them support a "
+"<userinput>-v</userinput> argument to increase verbosity. It is recommended "
+"to check these log messages in case of boot problems as they are a good "
+"starting point for diagnosing the cause of errors."
 msgstr ""
-"Lue tiedosto <filename>/etc/inetd.conf</filename> ja muista <command>in."
-"tftpd</command>:n parametrina oleva hakemisto<footnote><para>Kaikkien "
-"Debianissa saatavilla olevien vaihtoehtoisten <command>in.tftpd</command>-"
-"komentojen pitäisi lokata TFTP-pyynnöt oletuksena järjestelmän lokeihin. "
-"Jotkin niistä tukevat valitsinta <userinput>-v</userinput> lisäämään lokiin "
-"tulostettavaa tietoa. Näiden lokien tarkistusta suositellaan mikäli "
-"käynnistysongelmia ilmenee koska ne ovat hyvä aloituskohta vikoja "
-"jäljitettäessä. </para> </footnote>; sitä tarvitaan tuonnempana. Jos "
-"tiedostoa <filename>/etc/inetd.conf</filename> on jouduttu muuttamaan, on "
-"käynnissä olevalle <command>inetd</command>-prosessille huomautettava "
-"muutoksesta. Debian-koneella komennetaan <userinput>/etc/init.d/inetd "
-"reload</userinput>; muilla koneilla etsitään prosessin <command>inetd</"
-"command> numero ja komennetaan <userinput>kill -HUP <replaceable>inetd-pid</"
-"replaceable></userinput>."
+"Kaikissa komennon <command>in.tftpd</command> vaihtoehdoissa Debianissa on "
+"vakiona asetus lokin kirjoittamisesta järjestelmälokiin. Jotkin niistä "
+"tukevat tarkenninta <userinput>-v</userinput> jolla lokiin kirjoitetaan "
+"yksityiskohtaisempaa tietoa. Näiden lokitietojen lukemista suositellaan "
+"mikäli käynnistyksessä on pulmia, lokitiedoilla pääsee hyvään alkuun "
+"virheiden syytä etsittäessä."
 
 #. Tag: para
-#: install-methods.xml:1329
+#: install-methods.xml:1317
 #, no-c-format
 msgid ""
 "If you intend to install Debian on an SGI machine and your TFTP server is a "
@@ -2173,13 +2144,13 @@ msgstr ""
 "palvelimen valitsee käyttämänsä lähdeporttit."
 
 #. Tag: title
-#: install-methods.xml:1351
+#: install-methods.xml:1339
 #, no-c-format
 msgid "Move TFTP Images Into Place"
 msgstr "Siirretään TFTP-otokset paikalleen"
 
 #. Tag: para
-#: install-methods.xml:1352
+#: install-methods.xml:1340
 #, no-c-format
 msgid ""
 "Next, place the TFTP boot image you need, as found in <xref linkend=\"where-"
@@ -2196,7 +2167,7 @@ msgstr ""
 "nimeämiskäytännölle ole kunnollisia standardeja."
 
 #. Tag: para
-#: install-methods.xml:1361
+#: install-methods.xml:1349
 #, no-c-format
 msgid ""
 "On NewWorld Power Macintosh machines, you will need to set up the "
@@ -2211,13 +2182,13 @@ msgstr ""
 "<filename>netboot</filename> on noudettava seuraavat tiedostot:"
 
 #. Tag: filename
-#: install-methods.xml:1392
+#: install-methods.xml:1380
 #, no-c-format
 msgid "boot.msg"
 msgstr "boot.msg"
 
 #. Tag: para
-#: install-methods.xml:1397
+#: install-methods.xml:1385
 #, no-c-format
 msgid ""
 "For PXE booting, everything you should need is set up in the "
@@ -2234,7 +2205,7 @@ msgstr ""
 "filename>."
 
 #. Tag: para
-#: install-methods.xml:1405
+#: install-methods.xml:1393
 #, no-c-format
 msgid ""
 "For PXE booting, everything you should need is set up in the "
@@ -2251,13 +2222,13 @@ msgstr ""
 "ia64/elilo.efi</filename>."
 
 #. Tag: title
-#: install-methods.xml:1417
+#: install-methods.xml:1405
 #, no-c-format
 msgid "SPARC TFTP Booting"
 msgstr "SPARC:n käynnistys TFTP:llä"
 
 #. Tag: para
-#: install-methods.xml:1418
+#: install-methods.xml:1406
 #, no-c-format
 msgid ""
 "Some SPARC architectures add the subarchitecture names, such as "
@@ -2288,7 +2259,7 @@ msgstr ""
 "nimen."
 
 #. Tag: para
-#: install-methods.xml:1434
+#: install-methods.xml:1422
 #, no-c-format
 msgid ""
 "If you've done all this correctly, giving the command <userinput>boot net</"
@@ -2301,7 +2272,7 @@ msgstr ""
 "yritä tarkistaa tftp-palvelimen lokeista mitä otoksen nimeä yritetään noutaa."
 
 #. Tag: para
-#: install-methods.xml:1441
+#: install-methods.xml:1429
 #, no-c-format
 msgid ""
 "You can also force some sparc systems to look for a specific file name by "
@@ -2315,13 +2286,13 @@ msgstr ""
 "hakemistossa josta TFTP-palvelin sitä etsii."
 
 #. Tag: title
-#: install-methods.xml:1452
+#: install-methods.xml:1440
 #, no-c-format
 msgid "SGI TFTP Booting"
 msgstr "SGI:n käynnistys TFTP:llä"
 
 #. Tag: para
-#: install-methods.xml:1453
+#: install-methods.xml:1441
 #, no-c-format
 msgid ""
 "On SGI machines you can rely on the <command>bootpd</command> to supply the "
@@ -2335,13 +2306,13 @@ msgstr ""
 "tiedostossa <filename>/etc/dhcpd.conf</filename>."
 
 #. Tag: title
-#: install-methods.xml:1561
+#: install-methods.xml:1549
 #, no-c-format
 msgid "Automatic Installation"
 msgstr "Automaattinen asennus"
 
 #. Tag: para
-#: install-methods.xml:1562
+#: install-methods.xml:1550
 #, no-c-format
 msgid ""
 "For installing on multiple computers it's possible to do fully automatic "
@@ -2357,13 +2328,13 @@ msgstr ""
 "classname>, ja Debianin asennin itse."
 
 #. Tag: title
-#: install-methods.xml:1575
+#: install-methods.xml:1563
 #, no-c-format
 msgid "Automatic Installation Using the Debian Installer"
 msgstr "Automaattinen asennus Debianin asentimella"
 
 #. Tag: para
-#: install-methods.xml:1576
+#: install-methods.xml:1564
 #, no-c-format
 msgid ""
 "The Debian Installer supports automating installs via preconfiguration "
@@ -2377,7 +2348,7 @@ msgstr ""
 "asennusprosessin aikana kysyttyihin kysymyksiin."
 
 #. Tag: para
-#: install-methods.xml:1583
+#: install-methods.xml:1571
 #, no-c-format
 msgid ""
 "Full documentation on preseeding including a working example that you can "
@@ -2385,183 +2356,3 @@ msgid ""
 msgstr ""
 "Kaikki ohjeet valmiista vastauksista mukaan lukien toimiva esimerkki jota "
 "voi muokata on <xref linkend=\"appendix-preseed\"/>."
-
-#~ msgid ""
-#~ "The QNAP Turbo Station (TS-109, TS-209 and TS-409) requires a kernel and "
-#~ "ramdisk which can be obtained from &qnap-orion-firmware-img;. A script is "
-#~ "provided to write these images to flash."
-#~ msgstr ""
-#~ "QNAP Turbo Station (TS-109, TS-209 and TS-409) vaatii ytimen ja "
-#~ "muistilevyn, jotka ovat saatavilla osoitteesta &qnap-orion-firmware-img;. "
-#~ "Saatavilla on komentotiedosto joka kirjoittaa nämä otokset flashmuistiin."
-
-#~ msgid ""
-#~ "If you choose to boot from ARC console firmware using <command>MILO</"
-#~ "command>, you will also need to prepare a disk containing <command>MILO</"
-#~ "command> and <command>LINLOAD.EXE</command> from the provided disk "
-#~ "images. See <xref linkend=\"alpha-firmware\"/> for more information on "
-#~ "Alpha firmware and boot loaders. The floppy images can be found in the "
-#~ "<filename>MILO</filename> directory as "
-#~ "<filename>milo_<replaceable>subarchitecture</replaceable>.bin</filename>."
-#~ msgstr ""
-#~ "Haluttaessa käynnistää ARC-konsolin laiteohjelmistosta <command>MILO</"
-#~ "command>:n avulla, on lisäksi valmisteltava levy johon on asennettu "
-#~ "<command>MILO</command> ja <command>LINLOAD.EXE</command> tarjotuista "
-#~ "levyotoksista. Katso kohdasta <xref linkend=\"alpha-firmware\"/> löytyy "
-#~ "lisää tietoa Alphan laiteohjelmistosta ja käynnistyslataimista. "
-#~ "Levykeotokset <filename>MILO</filename>:n hakemistosta tiedostoina "
-#~ "<filename>milo_<replaceable>subarchitecture</replaceable>.bin</filename>."
-
-#~ msgid ""
-#~ "Unfortunately, these <command>MILO</command> images could not be tested "
-#~ "and might not work for all subarchitectures. If you find it doesn't work "
-#~ "for you, try copying the appropriate <command>MILO</command> binary onto "
-#~ "the floppy (<ulink url=\"&disturlftp;main/disks-alpha/current/MILO/\"></"
-#~ "ulink>). Note that those <command>MILO</command>s don't support ext2 "
-#~ "<quote>sparse superblocks</quote>, so you can't use them to load kernels "
-#~ "from newly generated ext2 file systems. As a workaround, you can put your "
-#~ "kernel onto the FAT partition next to the <command>MILO</command>."
-#~ msgstr ""
-#~ "Harmittavasti näitä <command>MILO</command>:n otoksia ei voitu testata ja "
-#~ "ne eivät ehkä toimi kaikilla arkkitehtuurin muunnoksilla. Jos havaitset "
-#~ "ettei se toimi, yritä kopioida sopiva komennon <command>MILO</command> "
-#~ "suorituskelpoinen versio levykkeelle (<ulink url=\"&disturlftp;main/disks-"
-#~ "alpha/current/MILO/\"></ulink>). Huomaa, että nuo <command>MILO</command>-"
-#~ "komennot eivät tue ext2:n ominaisuutta  <quote>sparse superblocks</"
-#~ "quote>, joten niitä ei voi käyttää ytimen lataamiseen juuri luodulta ext2-"
-#~ "tiedostojärjestelmältä. Tämän voi kiertää tallentamalla ytimen FAT-"
-#~ "osiolle komennon <command>MILO</command> kanssa."
-
-#~ msgid ""
-#~ "<command>MILO</command> binaries are platform-specific. See <xref linkend="
-#~ "\"alpha-cpus\"/> to determine the appropriate <command>MILO</command> "
-#~ "image for your Alpha platform."
-#~ msgstr ""
-#~ "<command>MILO</command>:n suorituskelpoiset tiedostot toimivat vain "
-#~ "tietyllä laitealustalla. Katso kohdasta <xref linkend=\"alpha-cpus\"/> "
-#~ "sopiva <command>MILO</command>-otos käytettävälle Alpha-koneelle."
-
-#~ msgid ""
-#~ "Unlike the Open Firmware found on Sparc and PowerPC machines, the SRM "
-#~ "console will <emphasis>not</emphasis> use RARP to obtain its IP address, "
-#~ "and therefore you must use BOOTP for net booting your Alpha<footnote> "
-#~ "<para> Alpha systems can also be net-booted using the DECNet MOP "
-#~ "(Maintenance Operations Protocol), but this is not covered here. "
-#~ "Presumably, your local OpenVMS operator will be happy to assist you "
-#~ "should you have some burning need to use MOP to boot Linux on your Alpha. "
-#~ "</para> </footnote>. You can also enter the IP configuration for network "
-#~ "interfaces directly in the SRM console."
-#~ msgstr ""
-#~ "Toisin kuin Open Firmware jota käytetään Sparc- ja PowerPC-koneilla, "
-#~ "<emphasis>ei</emphasis> SRM-konsoli käytä RARP:ia IP-osoitteensa "
-#~ "hakemiseen, ja niin ollen on Alpha on käynnistettävä BOOTP:llä<footnote> "
-#~ "<para> Alpha-järjestelmät voidaan käynnistää myös verkosta käyttämällä "
-#~ "DECNet MOP:ia (Maintenance Operations Protocol), mutta sitä ei käsitellä "
-#~ "tässä. Luultavasti lähin OpenVMS-operaattori auttaa ilomielin js on "
-#~ "pakottava tarve käynnistää Linux Alphalla MOP:llä. </para> </footnote>. "
-#~ "Verkkoliitäntöjen IP-asetukset voidaan myös kirjoittaa suoraan SRM-"
-#~ "konsolissa."
-
-#~ msgid "Alpha TFTP Booting"
-#~ msgstr "Alphan käynnistys TFTP:llä"
-
-#~ msgid ""
-#~ "On Alpha, you must specify the filename (as a relative path to the boot "
-#~ "image directory) using the <userinput>-file</userinput> argument to the "
-#~ "SRM <userinput>boot</userinput> command, or by setting the "
-#~ "<userinput>BOOT_FILE</userinput> environment variable. Alternatively, the "
-#~ "filename can be given via BOOTP (in ISC <command>dhcpd</command>, use the "
-#~ "<userinput>filename</userinput> directive). Unlike Open Firmware, there "
-#~ "is <emphasis>no default filename</emphasis> on SRM, so you "
-#~ "<emphasis>must</emphasis> specify a filename by either one of these "
-#~ "methods."
-#~ msgstr ""
-#~ "Alphalla on määritettävä tiedoston nimi (suhteellisena polkuna "
-#~ "käynnistysotosten hakemistoon) käyttämällä parametria <userinput>-file</"
-#~ "userinput> SRM:n komennolle <userinput>boot</userinput>, tai asettamalla "
-#~ "ympäristömuuttuja <userinput>BOOT_FILE</userinput>. Toinen tapa on "
-#~ "välittää tiedoston nimi BOOTP:n kautta (käytä direktiiviä "
-#~ "<userinput>filename</userinput> ISC:n <command>dhcpd</command>:ssä). "
-#~ "Toisin kuin Open Firmwaressa, SRM:ssä <emphasis>ei ole mitään "
-#~ "oletusnimeä</emphasis> tiedostolle, joten tiedoston nimi <emphasis>on "
-#~ "määritettävä</emphasis> jommalla kummalla näistä tavoista."
-
-#~ msgid "Choosing a Kernel"
-#~ msgstr "Ytimen valinta"
-
-#~ msgid ""
-#~ "Some m68k subarchs have a choice of kernels to install. In general we "
-#~ "recommend trying the most recent version first. If your subarch or "
-#~ "machine needs to use a 2.2.x kernel, make sure you choose one of the "
-#~ "images that supports 2.2.x kernels (see the <ulink url=\"&disturl;/main/"
-#~ "installer-&architecture;/current/images/MANIFEST\">MANIFEST</ulink>)."
-#~ msgstr ""
-#~ "Joillakin laiteperheen m68k muunnoksilla on lukuisia asennusytimiä. "
-#~ "Yleensä suositellaan uusimman version kokeilemista ensin. Jos muunnoksen "
-#~ "tai tietokoneen on käytettävä version 2.2.x-ydintä, varmista että "
-#~ "käytetään otosta joka tukee 2.2.x-ytimiä (katso <ulink url=\"&disturl;/"
-#~ "main/installer-&architecture;/current/images/MANIFEST\">MANIFEST</ulink>)."
-
-#~ msgid ""
-#~ "All of the m68k images for use with 2.2.x kernels, require the kernel "
-#~ "parameter &ramdisksize;."
-#~ msgstr ""
-#~ "Kaikki laiteperneen m68k ytimien 2.2.x kanssa käytettävät otokset "
-#~ "vaativat ytimen parametrin &ramdisksize;."
-
-#~ msgid ""
-#~ "Booting the installer from floppy disk is not supported on Amigas or 68k "
-#~ "Macs."
-#~ msgstr ""
-#~ "Asentimen käynnistämistä levykkeeltä ei tueta Amigalla tai 68k Maceillä."
-
-#~ msgid "Writing Disk Images on Atari Systems"
-#~ msgstr "Levyotosten kirjoittaminen Atari-järjestelmissä"
-
-#~ msgid ""
-#~ "You'll find the &rawwrite.ttp; program in the same directory as the "
-#~ "floppy disk images. Start the program by double clicking on the program "
-#~ "icon, and type in the name of the floppy image file you want written to "
-#~ "the floppy at the TOS program command line dialog box."
-#~ msgstr ""
-#~ "Ohjelma &rawwrite.ttp; löytyy samasta hakemistota kuin levykeotokset. "
-#~ "Käynnistä ohjelma kaksoisnapsauttamalla ohjelman kuvaketta, ja kirjoita "
-#~ "halutun levykeotostiedoston nimi TOS-ohjelman komentorivin "
-#~ "valintaikkunaan."
-
-#~ msgid "Writing Disk Images on Macintosh Systems"
-#~ msgstr "Levykeotosten kirjoittaminen Macintosh-järjestelmissä"
-
-#~ msgid ""
-#~ "Since the current release does not yet support booting from floppies to "
-#~ "start the installation, there would be no point in doing this on "
-#~ "Macintosh Systems. However, these files are needed for the installation "
-#~ "of the operating system and modules, later in the process."
-#~ msgstr ""
-#~ "Koska nykyinen julkaisu ei vielä tue asennusjärjestelmän käynnistämistä "
-#~ "levykkeiltä, levykkeiden kirjoittamisesta ei olisi hyötyä Macintosh-"
-#~ "järjestelmissä. Näitä tiedostoja kuitenkin tarvitaan myöhemmin "
-#~ "käyttöjärjestelmän ja moduulien asentamiseen."
-
-#~ msgid "BVM/Motorola TFTP Booting"
-#~ msgstr "BVM/Motorolan käynnistys TFTP:llä"
-
-#~ msgid ""
-#~ "For BVM and Motorola VMEbus systems copy the files &bvme6000-tftp-files; "
-#~ "to <filename>/tftpboot/</filename>."
-#~ msgstr ""
-#~ "BVM ja Motorola VMEbus -järjestelmissä kopioi tiedostot &bvme6000-tftp-"
-#~ "files; hakemistoon <filename>/tftpboot/</filename>."
-
-#~ msgid ""
-#~ "Next, configure your boot ROMs or BOOTP server to initially load the "
-#~ "<filename>tftplilo.bvme</filename> or <filename>tftplilo.mvme</filename> "
-#~ "files from the TFTP server. Refer to the <filename>tftplilo.txt</"
-#~ "filename> file for your subarchitecture for additional system-specific "
-#~ "configuration information."
-#~ msgstr ""
-#~ "Tee seuraavaksi käynnistys-ROM:essa tai BOOTP-palvelimella asetukset "
-#~ "siten, että TFTP-palvelimelta ladataan ensimmäiseksi tiedostot "
-#~ "<filename>tftplilo.bvme</filename> tai <filename>tftplilo.mvme</"
-#~ "filename>. Katso suoritinarkkitehtuurin tiedostosta <filename>tftplilo."
-#~ "txt</filename> lisää järjestelmäkohtaisia asetustietoja."

@@ -5,12 +5,12 @@ stylesheet=/usr/share/sgml/docbook/stylesheet/xsl/nwalsh/html/chunk.xsl
 
 if [ -n "$xsltproc" ] ; then
     if [ -e "$stylesheet" ]; then
-	$xsltproc style-html.xsl internals.xml
+	$xsltproc --xinclude style-html.xsl internals.xml
     else
-	echo stylesheet missing. Please install the docbook-xsl Debian package
+	echo stylesheet missing; please install the docbook-xsl Debian package
 	exit 1
     fi
 else
-    echo xsltproc not found. Please install the xsltproc Debian package
+    echo xsltproc not found; please install the xsltproc Debian package
     exit 1
 fi

@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: debian-boot@lists.debian.org\n"
-"POT-Creation-Date: 2009-11-08 01:11+0000\n"
-"PO-Revision-Date: 2009-04-22 22:17+0900\n"
+"POT-Creation-Date: 2010-04-19 00:12+0000\n"
+"PO-Revision-Date: 2010-03-03 23:26+0900\n"
 "Last-Translator: KURASAWA Nozomu <nabetaro@caldron.jp>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -1062,13 +1062,13 @@ msgid ""
 "the archive when you run it. You can substitute any Debian archive mirror "
 "for <userinput>&archive-mirror;/debian</userinput> in the command example "
 "below, preferably a mirror close to you network-wise. Mirrors are listed at "
-"<ulink url=\"http://www.debian.org/misc/README.mirrors\"></ulink>."
+"<ulink url=\"http://www.debian.org/mirror/list\"></ulink>."
 msgstr ""
 "<command>debootstrap</command> を実行すると、アーカイブから必要なファイルを直"
 "接ダウンロードできます。以下のコマンドの例では、<userinput>&archive-mirror;/"
 "debian</userinput> としていますが、ネットワーク的に近い Debian アーカイブミ"
 "ラーサイトで代用できます。ミラーサイトは、<ulink url=\"http://www.debian.org/"
-"misc/README.mirrors\"></ulink> でリストされています。"
+"mirror/list\"></ulink> でリストされています。"
 
 #. Tag: para
 #: random-bits.xml:503
@@ -1405,7 +1405,8 @@ msgid ""
 "# echo DebianHostName &gt; /etc/hostname\n"
 "</screen></informalexample> And a basic <filename>/etc/hosts</filename> with "
 "IPv6 support: <informalexample><screen>\n"
-"127.0.0.1 localhost DebianHostName\n"
+"127.0.0.1 localhost\n"
+"127.0.1.1 DebianHostName\n"
 "\n"
 "# The following lines are desirable for IPv6 capable hosts\n"
 "::1     ip6-localhost ip6-loopback\n"
@@ -1420,8 +1421,8 @@ msgid ""
 "with the interface name (eth0, eth1, etc.) that you expect."
 msgstr ""
 "ネットワークの設定をするには、<filename>/etc/network/interfaces</filename>, "
-"<filename>/etc/resolv.conf</filename>, <filename>/etc/hostname</filename>, "
-"<filename>/etc/hosts</filename> を編集してください。"
+"<filename>/etc/resolv.conf</filename>, <filename>/etc/hostname</filename> "
+"and <filename>/etc/hosts</filename> を編集してください。"
 "<informalexample><screen>\n"
 "# editor /etc/network/interfaces\n"
 "</screen></informalexample> 次は、<filename>/usr/share/doc/ifupdown/"
@@ -1464,7 +1465,8 @@ msgstr ""
 "# echo DebianHostName &gt; /etc/hostname\n"
 "</screen></informalexample>また、IPv6 をサポートした基本的な <filename>/etc/"
 "hosts</filename> は以下のようにします。<informalexample><screen>\n"
-"127.0.0.1 localhost DebianHostName\n"
+"127.0.0.1 localhost\n"
+"127.0.1.1 DebianHostName\n"
 "\n"
 "# The following lines are desirable for IPv6 capable hosts\n"
 "::1     ip6-localhost ip6-loopback\n"
@@ -1476,7 +1478,7 @@ msgstr ""
 "</screen></informalexample>複数のネットワークカードを持っているなら、"
 "<filename>/etc/modules</filename> ファイルに希望の順番で、ドライバモジュール"
 "の名前を配置してください。その後起動中に、各カードは期待通りにインターフェー"
-"ス名 (eth0, eth1など) と結びつけられます。"
+"ス名 (eth0, eth1 など) と結びつけられます。"
 
 #. Tag: title
 #: random-bits.xml:687
@@ -1530,7 +1532,7 @@ msgid ""
 msgstr ""
 "英語以外の言語を使用するようロケールの設定をするために、ロケールをサポートす"
 "るパッケージ (<classname>locales</classname>) をインストール・設定してくださ"
-"い。現在は UTF-8 ロケールを使用するのをお奨めします。"
+"い。現在は UTF-8 ロケールを使用するのをお勧めします。"
 "<informalexample><screen>\n"
 "# aptitude install locales\n"
 "# dpkg-reconfigure locales\n"
@@ -1625,7 +1627,7 @@ msgid ""
 msgstr ""
 "このファイルや様々なオプションの詳細は、<classname>kernel-package</"
 "classname> パッケージインストール後に有効になる man ページで説明しています。"
-"これで、あなたのシステムに適切な値をチェックするのをお奨めします。"
+"これで、あなたのシステムに適切な値をチェックするのをお勧めします。"
 
 #. Tag: para
 #: random-bits.xml:750
@@ -2431,20 +2433,11 @@ msgstr ""
 #, no-c-format
 msgid ""
 "Just as with the regular installer it is possible to add boot parameters "
-"when starting the graphical installer. One of those parameters allows to "
-"configure the mouse for left-handed use. Others allow to select the mouse "
-"device (e.g. for a serial mouse) and the mouse protocol. See <xref linkend="
-"\"boot-parms\"/> for valid parameters<phrase arch=\"x86\"> and <xref linkend="
-"\"boot-screen\"/> for information on how to pass them</phrase>."
+"when starting the graphical installer."
 msgstr ""
-"グラフィカルインストーラ起動時に、通常のインストーラと同様にブートパラメータ"
-"を追加できます。そういったパラメータのひとつに、マウスを左手用に設定するもの"
-"もあります。また、他にはマウスデバイス (例: シリアルマウス用) やマウスプロト"
-"コルを選択できます。有効なパラメータについては、<xref linkend=\"boot-parms\"/"
-"> をご覧ください。"
 
 #. Tag: para
-#: random-bits.xml:1223
+#: random-bits.xml:1219
 #, no-c-format
 msgid ""
 "The graphical installer requires significantly more memory to run than the "
@@ -2457,7 +2450,7 @@ msgstr ""
 "の <quote>newt</quote> フロントエンドに自動的にフォールバックします。"
 
 #. Tag: para
-#: random-bits.xml:1230
+#: random-bits.xml:1226
 #, no-c-format
 msgid ""
 "If the amount of memory in your system is below &minimum-memory;, the "
@@ -2467,16 +2460,16 @@ msgid ""
 msgstr ""
 "システムのメモリが &minimum-memory; 未満の場合、通常のインストーラは起動する"
 "のに、グラフィカルインストーラはまったく起動しないかも知れません。利用できる"
-"メモリが少ない場合は、通常のインストーラを利用するのをお奨めします。"
+"メモリが少ない場合は、通常のインストーラを利用するのをお勧めします。"
 
 #. Tag: title
-#: random-bits.xml:1240
+#: random-bits.xml:1236
 #, no-c-format
 msgid "Using the graphical installer"
-msgstr "グラフィカルインストーラの使用"
+msgstr "グラフィカルインストーラの使用法"
 
 #. Tag: para
-#: random-bits.xml:1241
+#: random-bits.xml:1237
 #, no-c-format
 msgid ""
 "As already mentioned, the graphical installer basically works the same as "
@@ -2488,7 +2481,7 @@ msgstr ""
 "に役に立ちます。"
 
 #. Tag: para
-#: random-bits.xml:1247
+#: random-bits.xml:1243
 #, no-c-format
 msgid ""
 "If you prefer using the keyboard over the mouse, there are two things you "
@@ -2507,16 +2500,19 @@ msgstr ""
 "選択が切り替わるだけで、&BTN-CONT; が有効にはなりません。"
 
 #. Tag: para
-#: random-bits.xml:1257
+#: random-bits.xml:1253
 #, no-c-format
 msgid ""
 "If a dialog offers additional help information, a <guibutton>Help</"
 "guibutton> button will be displayed. The help information can be accessed "
 "either by activating the button or by pressing the <keycap>F1</keycap> key."
 msgstr ""
+"ダイアログが追加ヘルプ情報を提供する場合、<guibutton>ヘルプ</guibutton> ボタ"
+"ンを表示します。ボタンを押すか、 <keycap>F1</keycap> キーを押すとヘルプ情報に"
+"アクセスできます。"
 
 #. Tag: para
-#: random-bits.xml:1263
+#: random-bits.xml:1259
 #, no-c-format
 msgid ""
 "To switch to another console, you will also need to use the <keycap>Ctrl</"
@@ -2533,37 +2529,40 @@ msgstr ""
 "は、VT5 で動作しています。そのため元に戻るには、<keycombo> <keycap>Left Alt</"
 "keycap> <keycap>F5</keycap> </keycombo> としてください。"
 
-#. Tag: title
-#: random-bits.xml:1277
-#, no-c-format
-msgid "Known issues"
-msgstr "既知の問題"
+#~ msgid ""
+#~ "Just as with the regular installer it is possible to add boot parameters "
+#~ "when starting the graphical installer. One of those parameters allows to "
+#~ "configure the mouse for left-handed use. Others allow to select the mouse "
+#~ "device (e.g. for a serial mouse) and the mouse protocol. See <xref "
+#~ "linkend=\"boot-parms\"/> for valid parameters<phrase arch=\"x86\"> and "
+#~ "<xref linkend=\"boot-screen\"/> for information on how to pass them</"
+#~ "phrase>."
+#~ msgstr ""
+#~ "グラフィカルインストーラ起動時に、通常のインストーラと同様にブートパラメー"
+#~ "タを追加できます。そういったパラメータのひとつに、マウスを左手用に設定する"
+#~ "ものもあります。また、他にはマウスデバイス (例: シリアルマウス用) やマウス"
+#~ "プロトコルを選択できます。有効なパラメータについては、<xref linkend="
+#~ "\"boot-parms\"/> をご覧ください。"
 
-#. Tag: para
-#: random-bits.xml:1278
-#, no-c-format
-msgid ""
-"The graphical frontend to the installer is relatively new and because of "
-"that there are some known issues. We continue to work on resolving these."
-msgstr ""
-"インストーラのグラフィカルフロントエンドは比較的新しく、いくつか既知の問題が"
-"あります。それらは解決するべく作業中です。"
+#~ msgid "Known issues"
+#~ msgstr "既知の問題"
 
-#. Tag: para
-#: random-bits.xml:1286
-#, no-c-format
-msgid ""
-"Information on some screens is not yet nicely formatted into columns as it "
-"should be."
-msgstr ""
-"うまく列の整形ができず、あるべき姿のように情報を表示できない画面がまだありま"
-"す。"
+#~ msgid ""
+#~ "The graphical frontend to the installer is relatively new and because of "
+#~ "that there are some known issues. We continue to work on resolving these."
+#~ msgstr ""
+#~ "インストーラのグラフィカルフロントエンドは比較的新しく、いくつか既知の問題"
+#~ "があります。それらは解決するべく作業中です。"
 
-#. Tag: para
-#: random-bits.xml:1292
-#, no-c-format
-msgid "Support for touchpads is not yet optimal."
-msgstr "タッチパッドのサポートは、まだ最適化されていません。"
+#~ msgid ""
+#~ "Information on some screens is not yet nicely formatted into columns as "
+#~ "it should be."
+#~ msgstr ""
+#~ "うまく列の整形ができず、あるべき姿のように情報を表示できない画面がまだあり"
+#~ "ます。"
+
+#~ msgid "Support for touchpads is not yet optimal."
+#~ msgstr "タッチパッドのサポートは、まだ最適化されていません。"
 
 #~ msgid ""
 #~ "The <emphasis>Desktop</emphasis> task will install the GNOME desktop "

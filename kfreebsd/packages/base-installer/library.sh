@@ -140,46 +140,13 @@ setup_dev() {
 	esac	
 }
 
-# TODO: as we no longer have to create devices here, the apt-install calls
-# could possibly better be done as post-base-installer hooks from partman
-install_filesystems () {
-	# RAID
-	if [ -e /proc/mdstat ] && grep -q ^md /proc/mdstat ; then
-		apt-install mdadm
-	fi
-	# device-mapper
-	if grep -q " device-mapper$" /proc/misc; then
-		# Avoid warnings from lvm2 tools about open file descriptors
-		export LVM_SUPPRESS_FD_WARNINGS=1
-
-		# We can't check the root node directly as is done above because
-		# root could be on an LVM LV on top of an encrypted device
-		if type dmsetup >/dev/null 2>&1 && \
-		   dmsetup table | cut -d' ' -f4 | grep -q "crypt" 2>/dev/null; then
-			apt-install cryptsetup
-		fi
-
-		if type dmraid >/dev/null 2>&1; then
-			if dmraid -s -c >/dev/null 2>&1; then
-				apt-install dmraid
-			fi
-		fi
-
-		if pvdisplay | grep -iq "physical volume ---"; then
-			apt-install lvm2
-		fi
-	fi
-}
-
 configure_apt_preferences () {
 	[ ! -d "$APT_CONFDIR" ] && mkdir -p "$APT_CONFDIR"
 
-	# Install Recommends?
-	if db_get base-installer/install-recommends && [ "$RET" = false ]; then
-		cat >$APT_CONFDIR/00InstallRecommends <<EOT
+	# Don't install Recommends during base-installer
+	cat >$APT_CONFDIR/00InstallRecommends <<EOT
 APT::Install-Recommends "false";
 EOT
-	fi
 
 	# Make apt trust Debian CDs. This is not on by default (we think).
 	# This will be left in place on the installed system.
@@ -202,6 +169,14 @@ EOT
 	fi
 }
 
+final_apt_preferences () {
+	# From here on install Recommends as configured
+	db_get base-installer/install-recommends
+	if [ "$RET" = true ]; then
+		rm -f $APT_CONFDIR/00InstallRecommends
+	fi
+}
+
 apt_update () {
 	log-output -t base-installer chroot /target apt-get update \
 		|| apt_update_failed=$?
@@ -215,7 +190,7 @@ install_extra () {
 	local IFS
 	info "Installing queued packages into /target/."
 
-	if [ -f /var/lib/apt-install/queue ] ; then
+	if [ -f /var/lib/apt-install/queue ]; then
 		# We need to install these one by one in case one fails.
 		PKG_COUNT=$(cat /var/lib/apt-install/queue | wc -w)
 		CURR_PKG=0
@@ -227,9 +202,8 @@ install_extra () {
 			db_subst base-installer/section/install_extra_package SUBST0 "$PKG"
 			db_progress INFO base-installer/section/install_extra_package
 
-			if ! log-output -t base-installer apt-install $OPTS $PKG; then
+			log-output -t base-installer apt-install $OPTS $PKG || \
 				warning "Failed to install $PKG into /target/: $?"
-			fi
 
 			# Advance progress bar within space allocated for install_extra
 			CURR_PKG=$(($CURR_PKG + 1))
@@ -831,22 +805,27 @@ install_kernel() {
 # Assumes the file protocol is only used for CD (image) installs
 configure_apt () {
 	if [ "$PROTOCOL" = file ]; then
+		local tdir=/target/media$DIRECTORY
 		rm -f /var/lib/install-cd.id
 
 		# Let apt inside the chroot see the cdrom
-		if [ -n "$DIRECTORY" ]; then
-			umount /target$DIRECTORY 2>/dev/null || true
-			if [ ! -e /target/$DIRECTORY ]; then
-				mkdir -p /target/$DIRECTORY
-			fi
+		umount $tdir 2>/dev/null || true
+		if [ ! -e $tdir ]; then
+			mkdir -p $tdir
 		fi
 
 		# The bind mount is left mounted, for future apt-install
 		# calls to use.
-		if ! mount -o bind $DIRECTORY /target$DIRECTORY; then
-			warning "failed to bind mount /target$DIRECTORY"
+		if ! mount -o bind $DIRECTORY $tdir; then
+			warning "failed to bind mount $tdir"
 		fi
 
+		# Define the mount point for apt-cdrom
+		cat > $APT_CONFDIR/00CDMountPoint << EOT
+Acquire::cdrom {
+  mount "/media/cdrom";
+}
+EOT
 		# Make apt-cdrom and apt not unmount/mount CD-ROMs;
 		# needed to support CD images (hd-media installs).
 		# This file will be left in place until the end of the
@@ -855,11 +834,11 @@ configure_apt () {
 		cat > $APT_CONFDIR/00NoMountCDROM << EOT
 APT::CDROM::NoMount "true";
 Acquire::cdrom {
-  mount "/cdrom";
-  "/cdrom/" {
+  "/media/cdrom/" {
     Mount  "true";
     UMount "true";
   };
+  AutoDetect "false";
 }
 EOT
 

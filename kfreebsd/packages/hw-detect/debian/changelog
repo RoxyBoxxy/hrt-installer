@@ -1,12 +1,35 @@
-hw-detect (1.76) UNRELEASED; urgency=low
+hw-detect (1.77) UNRELEASED; urgency=low
 
+  [ Frans Pop ]
+  * check-missing-firmware: install loose firmware files in subdirectories
+    if that's where the kernel expects them. Closes: #572785.
+
+  [ Petter Reinholdtsen ]
+  * Use discover-pkginstall to install hardware related packages
+    automatically during installation (Closes: #577451).
+
+ -- Petter Reinholdtsen <pere@debian.org>  Sat, 17 Apr 2010 19:34:39 +0200
+
+hw-detect (1.76) unstable; urgency=low
+
+  [ Joey Hess ]
   * check-missing-firmware: Try probing once for missing firmware before
     prompting for it to be provided.
   * Add new preseedable ethdetect/prompt_missing_firmware, which will
     be used by oldsys-preseed to avoid firmware prompting happening
     before network-console starts.
 
- -- Joey Hess <joeyh@debian.org>  Wed, 30 Dec 2009 12:50:58 -0500
+  [ Frans Pop ]
+  * Queue pciutils for installation if the system has a pci bus.
+  * Drop --no-recommends option for installation of acpi-related packages.
+    Requires base-installer 1.105.
+
+  [ Updated translations ]
+  * Bengali (bn.po) by Israt Jahan
+  * German (de.po) by Holger Wansing
+  * Slovenian (sl.po) by Vanja Cvelbar
+
+ -- Frans Pop <fjp@debian.org>  Mon, 22 Feb 2010 04:29:28 +0100
 
 hw-detect (1.75) unstable; urgency=low
 

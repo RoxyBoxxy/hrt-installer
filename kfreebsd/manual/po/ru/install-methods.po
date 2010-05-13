@@ -2,13 +2,13 @@
 # Russian L10N Team <debian-l10n-russian@lists.debian.org>, 2004.
 # Yuri Kozlov <yuray@id.ru>, 2004, 2005.
 # Yuri Kozlov <kozlov.y@gmail.com>, 2005, 2006, 2007, 2008.
-# Yuri Kozlov <yuray@komyakino.ru>, 2009.
+# Yuri Kozlov <yuray@komyakino.ru>, 2009, 2010.
 msgid ""
 msgstr ""
 "Project-Id-Version: install-methods\n"
 "Report-Msgid-Bugs-To: debian-boot@lists.debian.org\n"
-"POT-Creation-Date: 2009-11-18 01:11+0000\n"
-"PO-Revision-Date: 2009-12-25 20:04+0300\n"
+"POT-Creation-Date: 2010-02-26 01:12+0000\n"
+"PO-Revision-Date: 2010-03-04 22:03+0300\n"
 "Last-Translator: Yuri Kozlov <yuray@komyakino.ru>\n"
 "Language-Team: Russian <debian-l10n-russian@lists.debian.org>\n"
 "MIME-Version: 1.0\n"
@@ -1565,25 +1565,25 @@ msgstr ""
 "перетаскивания каждого файла на иконку жёсткого диска)."
 
 #. Tag: filename
-#: install-methods.xml:1034 install-methods.xml:1372
+#: install-methods.xml:1034 install-methods.xml:1360
 #, no-c-format
 msgid "vmlinux"
 msgstr "vmlinux"
 
 #. Tag: filename
-#: install-methods.xml:1039 install-methods.xml:1377
+#: install-methods.xml:1039 install-methods.xml:1365
 #, no-c-format
 msgid "initrd.gz"
 msgstr "initrd.gz"
 
 #. Tag: filename
-#: install-methods.xml:1044 install-methods.xml:1382
+#: install-methods.xml:1044 install-methods.xml:1370
 #, no-c-format
 msgid "yaboot"
 msgstr "yaboot"
 
 #. Tag: filename
-#: install-methods.xml:1049 install-methods.xml:1387
+#: install-methods.xml:1049 install-methods.xml:1375
 #, no-c-format
 msgid "yaboot.conf"
 msgstr "yaboot.conf"
@@ -1707,25 +1707,24 @@ msgstr ""
 #: install-methods.xml:1124
 #, no-c-format
 msgid ""
-"To use the Pre-boot Execution Environment (PXE) method of TFTP booting, you "
-"will need a TFTP server with <userinput>tsize</userinput> support. On a "
-"&debian; server, the <classname>atftpd</classname> and <classname>tftpd-hpa</"
-"classname> packages qualify; we recommend <classname>tftpd-hpa</classname>."
+"For a &debian; server we recommend <classname>tftpd-hpa</classname>. It's "
+"written by the same author as the <classname>syslinux</classname> bootloader "
+"and is therefore least likely to cause issues. A good alternative is "
+"<classname>atftpd</classname>."
 msgstr ""
-"Для использования загрузки по TFTP в методе Pre-boot Execution Environment "
-"(PXE) , вам нужен TFTP сервер с поддержкой <userinput>tsize</userinput>. На "
-"сервере &debian; этому условию удовлетворяют пакеты <classname>atftpd</"
-"classname> и <classname>tftpd-hpa</classname>; мы рекомендуем "
-"<classname>tftpd-hpa</classname>."
+"Для сервера &debian; мы рекомендуем <classname>tftpd-hpa</classname>. Он "
+"написан автором системного загрузчика <classname>syslinux</classname> и "
+"поэтому, скорее всего, не вызовет проблем. Также неплох <classname>atftpd</"
+"classname>."
 
 #. Tag: title
-#: install-methods.xml:1142
+#: install-methods.xml:1140
 #, no-c-format
 msgid "Setting up RARP server"
 msgstr "Настройка RARP сервера"
 
 #. Tag: para
-#: install-methods.xml:1143
+#: install-methods.xml:1141
 #, no-c-format
 msgid ""
 "To set up RARP, you need to know the Ethernet address (a.k.a. the MAC "
@@ -1733,7 +1732,7 @@ msgid ""
 "information, you can <phrase arch=\"sparc\"> pick it off the initial "
 "OpenPROM boot messages, use the OpenBoot <userinput>.enet-addr</userinput> "
 "command, or </phrase> boot into <quote>Rescue</quote> mode (e.g., from the "
-"rescue floppy) and use the command <userinput>/sbin/ifconfig eth0</"
+"rescue floppy) and use the command <userinput>ip addr show dev eth0</"
 "userinput>."
 msgstr ""
 "Для настройки RARP вам нужно знать Ethernet адрес (так называемый MAC адрес) "
@@ -1741,11 +1740,11 @@ msgstr ""
 "знаете адреса, то можете <phrase arch=\"sparc\"> получить её из сообщений "
 "начальной загрузки OpenPROM, воспользоваться командой OpenBoot <userinput>."
 "enet-addr</userinput> или </phrase> загрузиться в <quote>Rescue</quote> "
-"режиме (например, со спасательной дискеты) и выполнить команду <userinput>/"
-"sbin/ifconfig eth0</userinput>."
+"режиме (например, со дискеты восстановления) и выполнить команду <userinput>/"
+"ip addr show dev eth0</userinput>."
 
 #. Tag: para
-#: install-methods.xml:1155
+#: install-methods.xml:1153
 #, no-c-format
 msgid ""
 "On a RARP server system using a Linux 2.4 or 2.6 kernel, or Solaris/SunOS, "
@@ -1769,13 +1768,182 @@ msgstr ""
 "или <userinput>/usr/etc/rarpd -a</userinput> в SunOS 4 (Solaris 1)."
 
 #. Tag: title
-#: install-methods.xml:1177
+#: install-methods.xml:1174
+#, no-c-format
+msgid "Setting up a DHCP server"
+msgstr "Настройка DHCP сервера"
+
+#. Tag: para
+#: install-methods.xml:1175
+#, no-c-format
+msgid ""
+"One free software DHCP server is ISC <command>dhcpd</command>. For &debian;, "
+"the <classname>dhcp3-server</classname> package is recommended. Here is a "
+"sample configuration file for it (see <filename>/etc/dhcp3/dhcpd.conf</"
+"filename>):"
+msgstr ""
+"Одним из свободных DHCP серверов является ISC <command>dhcpd</command>. В "
+"&debian; он доступен из пакета <classname>dhcp3-server</classname>. Вот "
+"пример его конфигурационного файла (обычно <filename>/etc/dhcp3/dhcpd.conf</"
+"filename>):"
+
+#. Tag: screen
+#: install-methods.xml:1182
+#, no-c-format
+msgid ""
+"option domain-name \"example.com\";\n"
+"option domain-name-servers ns1.example.com;\n"
+"option subnet-mask 255.255.255.0;\n"
+"default-lease-time 600;\n"
+"max-lease-time 7200;\n"
+"server-name \"servername\";\n"
+"\n"
+"subnet 192.168.1.0 netmask 255.255.255.0 {\n"
+"  range 192.168.1.200 192.168.1.253;\n"
+"  option routers 192.168.1.1;\n"
+"}\n"
+"\n"
+"host clientname {\n"
+"  filename \"/tftpboot.img\";\n"
+"  server-name \"servername\";\n"
+"  next-server servername;\n"
+"  hardware ethernet 01:23:45:67:89:AB;\n"
+"  fixed-address 192.168.1.90;\n"
+"}"
+msgstr ""
+"option domain-name \"example.com\";\n"
+"option domain-name-servers ns1.example.com;\n"
+"option subnet-mask 255.255.255.0;\n"
+"default-lease-time 600;\n"
+"max-lease-time 7200;\n"
+"server-name \"servername\";\n"
+"\n"
+"subnet 192.168.1.0 netmask 255.255.255.0 {\n"
+"  range 192.168.1.200 192.168.1.253;\n"
+"  option routers 192.168.1.1;\n"
+"}\n"
+"\n"
+"host clientname {\n"
+"  filename \"/tftpboot.img\";\n"
+"  server-name \"servername\";\n"
+"  next-server servername;\n"
+"  hardware ethernet 01:23:45:67:89:AB;\n"
+"  fixed-address 192.168.1.90;\n"
+"}"
+
+#. Tag: para
+#: install-methods.xml:1184
+#, no-c-format
+msgid ""
+"In this example, there is one server <replaceable>servername</replaceable> "
+"which performs all of the work of DHCP server, TFTP server, and network "
+"gateway. You will almost certainly need to change the domain-name options, "
+"as well as the server name and client hardware address. The "
+"<replaceable>filename</replaceable> option should be the name of the file "
+"which will be retrieved via TFTP."
+msgstr ""
+"В этом примере определён единственный сервер <replaceable>servername</"
+"replaceable>, который работает в качестве DHCP, TFTP серверов и шлюза сети. "
+"Вам почти наверняка нужно изменить опцию domain-name, а также имя сервера и "
+"аппаратный адрес клиента. Опция <replaceable>filename</replaceable> должна "
+"содержать имя файла, который нужно получить по TFTP."
+
+#. Tag: para
+#: install-methods.xml:1194
+#, no-c-format
+msgid ""
+"After you have edited the <command>dhcpd</command> configuration file, "
+"restart it with <userinput>/etc/init.d/dhcpd3-server restart</userinput>."
+msgstr ""
+"После редактирования конфигурационного файла для <command>dhcpd</command>, "
+"перезагрузите сервер командой <userinput>/etc/init.d/dhcpd3-server restart</"
+"userinput>."
+
+#. Tag: title
+#: install-methods.xml:1202
+#, no-c-format
+msgid "Enabling PXE Booting in the DHCP configuration"
+msgstr "Включение загрузки PXE в конфигурацию DHCP"
+
+#. Tag: para
+#: install-methods.xml:1203
+#, no-c-format
+msgid ""
+"Here is another example for a <filename>dhcp.conf</filename> using the Pre-"
+"boot Execution Environment (PXE) method of TFTP. <informalexample><screen>\n"
+"option domain-name \"example.com\";\n"
+"\n"
+"default-lease-time 600;\n"
+"max-lease-time 7200;\n"
+"\n"
+"allow booting;\n"
+"allow bootp;\n"
+"\n"
+"# The next paragraph needs to be modified to fit your case\n"
+"subnet 192.168.1.0 netmask 255.255.255.0 {\n"
+"  range 192.168.1.200 192.168.1.253;\n"
+"  option broadcast-address 192.168.1.255;\n"
+"# the gateway address which can be different\n"
+"# (access to the internet for instance)\n"
+"  option routers 192.168.1.1;\n"
+"# indicate the dns you want to use\n"
+"  option domain-name-servers 192.168.1.3;\n"
+"}\n"
+"\n"
+"group {\n"
+"  next-server 192.168.1.3;\n"
+"  host tftpclient {\n"
+"# tftp client hardware address\n"
+"  hardware ethernet  00:10:DC:27:6C:15;\n"
+"  filename \"/pxelinux.0\";\n"
+" }\n"
+"}\n"
+"</screen></informalexample> Note that for PXE booting, the client filename "
+"<filename>pxelinux.0</filename> is a boot loader, not a kernel image (see "
+"<xref linkend=\"tftp-images\"/> below)."
+msgstr ""
+"Вот другой пример <filename>dhcp.conf</filename>, который можно "
+"использовать, если включён метод предстартового выполнения среды (PXE) по "
+"TFTP. <informalexample><screen>\n"
+"option domain-name \"example.com\";\n"
+"\n"
+"default-lease-time 600;\n"
+"max-lease-time 7200;\n"
+"\n"
+"allow booting;\n"
+"allow bootp;\n"
+"\n"
+"# нужно изменить согласно вашим настройкам\n"
+"subnet 192.168.1.0 netmask 255.255.255.0 {\n"
+"  range 192.168.1.200 192.168.1.253;\n"
+"  option broadcast-address 192.168.1.255;\n"
+"# адрес шлюза, который может быть другим\n"
+"# (для доступа в интернет, например)\n"
+"  option routers 192.168.1.1;\n"
+"# используемый dns\n"
+"  option domain-name-servers 192.168.1.3;\n"
+"}\n"
+"\n"
+"group {\n"
+" next-server 192.168.1.3;\n"
+" host tftpclient {\n"
+"# аппаратный адрес клиента tftp\n"
+"  hardware ethernet  00:10:DC:27:6C:15;\n"
+"  filename \"/pxelinux.0\";\n"
+" }\n"
+"}\n"
+"</screen></informalexample> Заметим, что для PXE загрузки в filename клиента "
+"<filename>pxelinux.0</filename> записан системный загрузчик, а не образ ядра "
+"(смотрите ниже <xref linkend=\"tftp-images\"/>)."
+
+#. Tag: title
+#: install-methods.xml:1223
 #, no-c-format
 msgid "Setting up a BOOTP server"
 msgstr "Настройка BOOTP сервера"
 
 #. Tag: para
-#: install-methods.xml:1178
+#: install-methods.xml:1224
 #, no-c-format
 msgid ""
 "There are two BOOTP servers available for GNU/Linux. The first is CMU "
@@ -1791,7 +1959,7 @@ msgstr ""
 "соответственно."
 
 #. Tag: para
-#: install-methods.xml:1186
+#: install-methods.xml:1232
 #, no-c-format
 msgid ""
 "To use CMU <command>bootpd</command>, you must first uncomment (or add) the "
@@ -1854,7 +2022,7 @@ msgstr ""
 "userinput> содержит MAC адрес машины.</phrase>"
 
 #. Tag: para
-#: install-methods.xml:1219
+#: install-methods.xml:1265
 #, no-c-format
 msgid ""
 "By contrast, setting up BOOTP with ISC <command>dhcpd</command> is really "
@@ -1878,198 +2046,36 @@ msgstr ""
 "restart</userinput>."
 
 #. Tag: title
-#: install-methods.xml:1241
-#, no-c-format
-msgid "Setting up a DHCP server"
-msgstr "Настройка DHCP сервера"
-
-#. Tag: para
-#: install-methods.xml:1242
-#, no-c-format
-msgid ""
-"One free software DHCP server is ISC <command>dhcpd</command>. For &debian;, "
-"the <classname>dhcp3-server</classname> package is recommended. Here is a "
-"sample configuration file for it (see <filename>/etc/dhcp3/dhcpd.conf</"
-"filename>):"
-msgstr ""
-"Одним из свободных DHCP серверов является ISC <command>dhcpd</command>. В "
-"&debian; он доступен из пакета <classname>dhcp3-server</classname>. Вот "
-"пример его конфигурационного файла (обычно <filename>/etc/dhcp3/dhcpd.conf</"
-"filename>):"
-
-#. Tag: screen
-#: install-methods.xml:1249
-#, no-c-format
-msgid ""
-"option domain-name \"example.com\";\n"
-"option domain-name-servers ns1.example.com;\n"
-"option subnet-mask 255.255.255.0;\n"
-"default-lease-time 600;\n"
-"max-lease-time 7200;\n"
-"server-name \"servername\";\n"
-"\n"
-"subnet 192.168.1.0 netmask 255.255.255.0 {\n"
-"  range 192.168.1.200 192.168.1.253;\n"
-"  option routers 192.168.1.1;\n"
-"}\n"
-"\n"
-"host clientname {\n"
-"  filename \"/tftpboot/tftpboot.img\";\n"
-"  server-name \"servername\";\n"
-"  next-server servername;\n"
-"  hardware ethernet 01:23:45:67:89:AB;\n"
-"  fixed-address 192.168.1.90;\n"
-"}"
-msgstr ""
-"option domain-name \"example.com\";\n"
-"option domain-name-servers ns1.example.com;\n"
-"option subnet-mask 255.255.255.0;\n"
-"default-lease-time 600;\n"
-"max-lease-time 7200;\n"
-"server-name \"servername\";\n"
-"\n"
-"subnet 192.168.1.0 netmask 255.255.255.0 {\n"
-"  range 192.168.1.200 192.168.1.253;\n"
-"  option routers 192.168.1.1;\n"
-"}\n"
-"\n"
-"host clientname {\n"
-"  filename \"/tftpboot/tftpboot.img\";\n"
-"  server-name \"servername\";\n"
-"  next-server servername;\n"
-"  hardware ethernet 01:23:45:67:89:AB;\n"
-"  fixed-address 192.168.1.90;\n"
-"}"
-
-#. Tag: para
-#: install-methods.xml:1251
-#, no-c-format
-msgid ""
-"In this example, there is one server <replaceable>servername</replaceable> "
-"which performs all of the work of DHCP server, TFTP server, and network "
-"gateway. You will almost certainly need to change the domain-name options, "
-"as well as the server name and client hardware address. The "
-"<replaceable>filename</replaceable> option should be the name of the file "
-"which will be retrieved via TFTP."
-msgstr ""
-"В этом примере определён единственный сервер <replaceable>servername</"
-"replaceable>, который работает в качестве DHCP, TFTP серверов и шлюза сети. "
-"Вам почти наверняка нужно изменить опцию domain-name, а также имя сервера и "
-"аппаратный адрес клиента. Опция <replaceable>filename</replaceable> должна "
-"содержать имя файла, который нужно получить по TFTP."
-
-#. Tag: para
-#: install-methods.xml:1261
-#, no-c-format
-msgid ""
-"After you have edited the <command>dhcpd</command> configuration file, "
-"restart it with <userinput>/etc/init.d/dhcpd3-server restart</userinput>."
-msgstr ""
-"После редактирования конфигурационного файла для <command>dhcpd</command>, "
-"перезагрузите сервер командой <userinput>/etc/init.d/dhcpd3-server restart</"
-"userinput>."
-
-#. Tag: title
-#: install-methods.xml:1269
-#, no-c-format
-msgid "Enabling PXE Booting in the DHCP configuration"
-msgstr "Включение загрузки PXE в конфигурацию DHCP"
-
-#. Tag: para
-#: install-methods.xml:1270
-#, no-c-format
-msgid ""
-"Here is another example for a <filename>dhcp.conf</filename> using the Pre-"
-"boot Execution Environment (PXE) method of TFTP. <informalexample><screen>\n"
-"option domain-name \"example.com\";\n"
-"\n"
-"default-lease-time 600;\n"
-"max-lease-time 7200;\n"
-"\n"
-"allow booting;\n"
-"allow bootp;\n"
-"\n"
-"# The next paragraph needs to be modified to fit your case\n"
-"subnet 192.168.1.0 netmask 255.255.255.0 {\n"
-"  range 192.168.1.200 192.168.1.253;\n"
-"  option broadcast-address 192.168.1.255;\n"
-"# the gateway address which can be different\n"
-"# (access to the internet for instance)\n"
-"  option routers 192.168.1.1;\n"
-"# indicate the dns you want to use\n"
-"  option domain-name-servers 192.168.1.3;\n"
-"}\n"
-"\n"
-"group {\n"
-"  next-server 192.168.1.3;\n"
-"  host tftpclient {\n"
-"# tftp client hardware address\n"
-"  hardware ethernet  00:10:DC:27:6C:15;\n"
-"  filename \"pxelinux.0\";\n"
-" }\n"
-"}\n"
-"</screen></informalexample> Note that for PXE booting, the client filename "
-"<filename>pxelinux.0</filename> is a boot loader, not a kernel image (see "
-"<xref linkend=\"tftp-images\"/> below)."
-msgstr ""
-"Вот другой пример <filename>dhcp.conf</filename>, который можно "
-"использовать, если включён метод предстартового выполнения среды (PXE) по "
-"TFTP. <informalexample><screen>\n"
-"option domain-name \"example.com\";\n"
-"\n"
-"default-lease-time 600;\n"
-"max-lease-time 7200;\n"
-"\n"
-"allow booting;\n"
-"allow bootp;\n"
-"\n"
-"# нужно изменить согласно вашим настройкам\n"
-"subnet 192.168.1.0 netmask 255.255.255.0 {\n"
-"  range 192.168.1.200 192.168.1.253;\n"
-"  option broadcast-address 192.168.1.255;\n"
-"# адрес шлюза, который может быть другим\n"
-"# (для доступа в интернет, например)\n"
-"  option routers 192.168.1.1;\n"
-"# используемый dns\n"
-"  option domain-name-servers 192.168.1.3;\n"
-"}\n"
-"\n"
-"group {\n"
-" next-server 192.168.1.3;\n"
-" host tftpclient {\n"
-"# аппаратный адрес клиента tftp\n"
-"  hardware ethernet  00:10:DC:27:6C:15;\n"
-"  filename \"pxelinux.0\";\n"
-" }\n"
-"}\n"
-"</screen></informalexample> Заметим, что для PXE загрузки в filename клиента "
-"<filename>pxelinux.0</filename> записан системный загрузчик, а не образ ядра "
-"(смотрите ниже <xref linkend=\"tftp-images\"/>)."
-
-#. Tag: title
-#: install-methods.xml:1286
+#: install-methods.xml:1284
 #, no-c-format
 msgid "Enabling the TFTP Server"
 msgstr "Включение TFTP сервера"
 
 #. Tag: para
-#: install-methods.xml:1287
+#: install-methods.xml:1285
 #, no-c-format
 msgid ""
 "To get the TFTP server ready to go, you should first make sure that "
-"<command>tftpd</command> is enabled. This is usually enabled by having "
-"something like the following line in <filename>/etc/inetd.conf</filename>: "
-"<informalexample><screen>\n"
-"tftp dgram udp wait nobody /usr/sbin/tcpd in.tftpd /tftpboot\n"
-"</screen></informalexample> Debian packages will in general set this up "
-"correctly by default when they are installed."
+"<command>tftpd</command> is enabled."
 msgstr ""
-"Для запуска TFTP сервера вы должны убедиться, что <command>tftpd</command> "
-"включён. Обычно, это делается добавлением в <filename>/etc/inetd.conf</"
-"filename> строки вида: <informalexample><screen>\n"
-"tftp dgram udp wait nobody /usr/sbin/tcpd in.tftpd /tftpboot\n"
-"</screen></informalexample> Пакеты Debian сами создают такую строку при "
-"установке."
+"Чтобы сервер TFTP заработал, во-первых нужно проверить что включена "
+"<command>tftpd</command>."
+
+#. Tag: para
+#: install-methods.xml:1290
+#, no-c-format
+msgid ""
+"In the case of <classname>tftpd-hpa</classname> there are two ways the "
+"service can be run. It can be started on demand by the system's "
+"<classname>inetd</classname> daemon, or it can be set up to run as an "
+"independent daemon. Which of these methods is used is selected when the "
+"package is installed and can be changed by reconfiguring the package."
+msgstr ""
+"Программа <classname>tftpd-hpa</classname> может быть запущена двумя "
+"способами. Она может запускаться по требованию службой <classname>inetd</"
+"classname>, или может быть настроена для работы как независимая служба. "
+"Выбор метода происходит при при установке пакета, и его можно изменить через "
+"перенастройку пакета."
 
 #. Tag: para
 #: install-methods.xml:1299
@@ -2093,36 +2099,21 @@ msgstr ""
 #: install-methods.xml:1309
 #, no-c-format
 msgid ""
-"Look in <filename>/etc/inetd.conf</filename> and remember the directory "
-"which is used as the argument of <command>in.tftpd</command><footnote> "
-"<para> All <command>in.tftpd</command> alternatives available in Debian "
-"should log TFTP requests to the system logs by default. Some of them support "
-"a <userinput>-v</userinput> argument to increase verbosity. It is "
-"recommended to check these log messages in case of boot problems as they are "
-"a good starting point for diagnosing the cause of errors. </para> </"
-"footnote>; you'll need that below. If you've had to change <filename>/etc/"
-"inetd.conf</filename>, you'll have to notify the running <command>inetd</"
-"command> process that the file has changed. On a Debian machine, run "
-"<userinput>/etc/init.d/inetd reload</userinput>; on other machines, find out "
-"the process ID for <command>inetd</command>, and run <userinput>kill -HUP "
-"<replaceable>inetd-pid</replaceable></userinput>."
+"All <command>in.tftpd</command> alternatives available in Debian should log "
+"TFTP requests to the system logs by default. Some of them support a "
+"<userinput>-v</userinput> argument to increase verbosity. It is recommended "
+"to check these log messages in case of boot problems as they are a good "
+"starting point for diagnosing the cause of errors."
 msgstr ""
-"Загляните в файл <filename>/etc/inetd.conf</filename>и запомните каталог, "
-"который используется в качестве аргумента <command>in.tftpd</"
-"command><footnote> <para> Все доступные в Debian альтернативы <command>in."
-"tftpd</command> по умолчанию протоколируют TFTP запросы в системные журналы. "
-"Некоторые из них имеют параметр <userinput>-v</userinput>, который "
-"увеличивает подробность протокола. В случае проблем с загрузкой "
-"рекомендуется проверять сообщения журналов, чтобы понять причину ошибки. </"
-"para> </footnote> &mdash; он вам понадобиться позже. Если вы изменили "
-"<filename>/etc/inetd.conf</filename>, вам нужно уведомить об этом запущенный "
-"процесс <command>inetd</command>. На машине Debian выполните <userinput>/etc/"
-"init.d/inetd reload</userinput>; на других ОС определите ID процесса "
-"<command>inetd</command> и запустите <userinput>kill -HUP <replaceable>inetd-"
-"pid</replaceable></userinput>."
+"По умолчанию, все альтернативные программы <command>in.tftpd</command>, "
+"доступные в Debian, протоколируют запросы TFTP в системный журнал. Некоторые "
+"из них имеют параметр <userinput>-v</userinput>, позволяющий включить более "
+"подробный протокол. Рекомендуется проверитьэти сообщения в журнале в случае "
+"возникновения проблем с загрузкой; это хорошая отправная точка при поиске "
+"причин ошибок."
 
 #. Tag: para
-#: install-methods.xml:1329
+#: install-methods.xml:1317
 #, no-c-format
 msgid ""
 "If you intend to install Debian on an SGI machine and your TFTP server is a "
@@ -2152,13 +2143,13 @@ msgstr ""
 "используемого Linux TFTP сервером."
 
 #. Tag: title
-#: install-methods.xml:1351
+#: install-methods.xml:1339
 #, no-c-format
 msgid "Move TFTP Images Into Place"
 msgstr "Копирование TFTP образов в каталог TFTP сервера"
 
 #. Tag: para
-#: install-methods.xml:1352
+#: install-methods.xml:1340
 #, no-c-format
 msgid ""
 "Next, place the TFTP boot image you need, as found in <xref linkend=\"where-"
@@ -2174,7 +2165,7 @@ msgstr ""
 "зависит от клиента TFTP и никак не стандартизовано."
 
 #. Tag: para
-#: install-methods.xml:1361
+#: install-methods.xml:1349
 #, no-c-format
 msgid ""
 "On NewWorld Power Macintosh machines, you will need to set up the "
@@ -2189,13 +2180,13 @@ msgstr ""
 "следующие файлы из каталога <filename>netboot/</filename>:"
 
 #. Tag: filename
-#: install-methods.xml:1392
+#: install-methods.xml:1380
 #, no-c-format
 msgid "boot.msg"
 msgstr "boot.msg"
 
 #. Tag: para
-#: install-methods.xml:1397
+#: install-methods.xml:1385
 #, no-c-format
 msgid ""
 "For PXE booting, everything you should need is set up in the "
@@ -2211,7 +2202,7 @@ msgstr ""
 "имени загружаемого файла."
 
 #. Tag: para
-#: install-methods.xml:1405
+#: install-methods.xml:1393
 #, no-c-format
 msgid ""
 "For PXE booting, everything you should need is set up in the "
@@ -2227,13 +2218,13 @@ msgstr ""
 "command> в качестве имени загружаемого файла."
 
 #. Tag: title
-#: install-methods.xml:1417
+#: install-methods.xml:1405
 #, no-c-format
 msgid "SPARC TFTP Booting"
 msgstr "Загрузка SPARC по TFTP"
 
 #. Tag: para
-#: install-methods.xml:1418
+#: install-methods.xml:1406
 #, no-c-format
 msgid ""
 "Some SPARC architectures add the subarchitecture names, such as "
@@ -2265,7 +2256,7 @@ msgstr ""
 "заглавными и если нужно, добавить имя субархитектуры."
 
 #. Tag: para
-#: install-methods.xml:1434
+#: install-methods.xml:1422
 #, no-c-format
 msgid ""
 "If you've done all this correctly, giving the command <userinput>boot net</"
@@ -2278,7 +2269,7 @@ msgstr ""
 "сообщения в логах сервера tftp, какое имя образа было запрошено."
 
 #. Tag: para
-#: install-methods.xml:1441
+#: install-methods.xml:1429
 #, no-c-format
 msgid ""
 "You can also force some sparc systems to look for a specific file name by "
@@ -2292,13 +2283,13 @@ msgstr ""
 "в котором его будет искать TFTP сервер."
 
 #. Tag: title
-#: install-methods.xml:1452
+#: install-methods.xml:1440
 #, no-c-format
 msgid "SGI TFTP Booting"
 msgstr "Загрузка SGI по TFTP"
 
 #. Tag: para
-#: install-methods.xml:1453
+#: install-methods.xml:1441
 #, no-c-format
 msgid ""
 "On SGI machines you can rely on the <command>bootpd</command> to supply the "
@@ -2312,13 +2303,13 @@ msgstr ""
 "<filename>/etc/dhcpd.conf</filename>."
 
 #. Tag: title
-#: install-methods.xml:1561
+#: install-methods.xml:1549
 #, no-c-format
 msgid "Automatic Installation"
 msgstr "Автоматическая установка"
 
 #. Tag: para
-#: install-methods.xml:1562
+#: install-methods.xml:1550
 #, no-c-format
 msgid ""
 "For installing on multiple computers it's possible to do fully automatic "
@@ -2334,13 +2325,13 @@ msgstr ""
 "сама программа установки Debian."
 
 #. Tag: title
-#: install-methods.xml:1575
+#: install-methods.xml:1563
 #, no-c-format
 msgid "Automatic Installation Using the Debian Installer"
 msgstr "Автоматическая установка с помощью программы установки Debian"
 
 #. Tag: para
-#: install-methods.xml:1576
+#: install-methods.xml:1564
 #, no-c-format
 msgid ""
 "The Debian Installer supports automating installs via preconfiguration "
@@ -2354,7 +2345,7 @@ msgstr ""
 "задаваемые во время процесса установки."
 
 #. Tag: para
-#: install-methods.xml:1583
+#: install-methods.xml:1571
 #, no-c-format
 msgid ""
 "Full documentation on preseeding including a working example that you can "

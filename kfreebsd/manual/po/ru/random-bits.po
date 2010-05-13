@@ -2,13 +2,13 @@
 # Russian L10N Team <debian-l10n-russian@lists.debian.org>, 2004.
 # Yuri Kozlov <yuray@id.ru>, 2004, 2005.
 # Yuri Kozlov <kozlov.y@gmail.com>, 2005, 2006, 2007, 2008.
-# Yuri Kozlov <yuray@komyakino.ru>, 2009.
+# Yuri Kozlov <yuray@komyakino.ru>, 2009, 2010.
 msgid ""
 msgstr ""
 "Project-Id-Version: random-bits\n"
 "Report-Msgid-Bugs-To: debian-boot@lists.debian.org\n"
-"POT-Creation-Date: 2009-11-08 01:11+0000\n"
-"PO-Revision-Date: 2009-12-25 20:21+0300\n"
+"POT-Creation-Date: 2010-04-19 00:12+0000\n"
+"PO-Revision-Date: 2010-05-01 11:50+0400\n"
 "Last-Translator: Yuri Kozlov <yuray@komyakino.ru>\n"
 "Language-Team: Russian <debian-l10n-russian@lists.debian.org>\n"
 "MIME-Version: 1.0\n"
@@ -1080,13 +1080,13 @@ msgid ""
 "the archive when you run it. You can substitute any Debian archive mirror "
 "for <userinput>&archive-mirror;/debian</userinput> in the command example "
 "below, preferably a mirror close to you network-wise. Mirrors are listed at "
-"<ulink url=\"http://www.debian.org/misc/README.mirrors\"></ulink>."
+"<ulink url=\"http://www.debian.org/mirror/list\"></ulink>."
 msgstr ""
 "Команда <command>debootstrap</command> может загружать необходимые файлы "
 "прямо из архива. В примере ниже вы можете заменить <userinput>&archive-"
 "mirror;/debian</userinput> на любой сервер-зеркало архива Debian, лучше "
 "всего использовать из наиболее близкой к вам сети. Список серверов <ulink "
-"url=\"http://www.debian.org/misc/README.mirrors\"></ulink>."
+"url=\"http://www.debian.org/mirror/list\"></ulink>."
 
 #. Tag: para
 #: random-bits.xml:503
@@ -1427,7 +1427,8 @@ msgid ""
 "# echo DebianHostName &gt; /etc/hostname\n"
 "</screen></informalexample> And a basic <filename>/etc/hosts</filename> with "
 "IPv6 support: <informalexample><screen>\n"
-"127.0.0.1 localhost DebianHostName\n"
+"127.0.0.1 localhost\n"
+"127.0.1.1 DebianHostName\n"
 "\n"
 "# The following lines are desirable for IPv6 capable hosts\n"
 "::1     ip6-localhost ip6-loopback\n"
@@ -1473,20 +1474,29 @@ msgstr ""
 "#     netmask 255.255.255.0\n"
 "#     broadcast 192.168.0.255\n"
 "#     gateway 192.168.0.1\n"
+"</screen></informalexample> Enter your nameserver(s) and search directives "
+"in <filename>/etc/resolv.conf</filename>: <informalexample><screen>\n"
+"# editor /etc/resolv.conf\n"
+"</screen></informalexample> A simple example <filename>/etc/resolv.conf</"
+"filename>: <informalexample><screen>\n"
+"search hqdom.local\n"
+"nameserver 10.1.1.36\n"
+"nameserver 192.168.9.100\n"
 "</screen></informalexample> Укажите DNS-сервер(ы) и директивы search в "
 "<filename>/etc/resolv.conf</filename>: <informalexample><screen>\n"
 "# editor /etc/resolv.conf\n"
 "</screen></informalexample> Простой пример <filename>/etc/resolv.conf</"
 "filename>: <informalexample><screen>\n"
-"search hqdom.local\\000\n"
+"search hqdom.local\n"
 "nameserver 10.1.1.36\n"
 "nameserver 192.168.9.100\n"
-"</screen></informalexample> Укажите имя системы (от 2 до 63 символов): "
+"</screen></informalexample> Укажите имя узла (от 2 до 63 символов): "
 "<informalexample><screen>\n"
 "# echo DebianHostName &gt; /etc/hostname\n"
-"</screen></informalexample> И простой <filename>/etc/hosts</filename> с "
+"</screen></informalexample> И базовый <filename>/etc/hosts</filename> с "
 "поддержкой IPv6: <informalexample><screen>\n"
-"127.0.0.1 localhost DebianHostName\n"
+"127.0.0.1 localhost\n"
+"127.0.1.1 DebianHostName\n"
 "\n"
 "# The following lines are desirable for IPv6 capable hosts\n"
 "::1     ip6-localhost ip6-loopback\n"
@@ -1498,7 +1508,7 @@ msgstr ""
 "</screen></informalexample> Если у вас несколько сетевых карт, то вам нужно "
 "разместить имена драйверов в файле <filename>/etc/modules</filename> в "
 "желаемом порядке. Позже при загрузке каждая карта будет связана с именем "
-"интерфейса (eth0, eth1 и т.д.) как вы и хотели."
+"интерфейса (eth0, eth1 и т.д.) как вы и ожидали."
 
 #. Tag: title
 #: random-bits.xml:687
@@ -2452,21 +2462,13 @@ msgstr ""
 #, no-c-format
 msgid ""
 "Just as with the regular installer it is possible to add boot parameters "
-"when starting the graphical installer. One of those parameters allows to "
-"configure the mouse for left-handed use. Others allow to select the mouse "
-"device (e.g. for a serial mouse) and the mouse protocol. See <xref linkend="
-"\"boot-parms\"/> for valid parameters<phrase arch=\"x86\"> and <xref linkend="
-"\"boot-screen\"/> for information on how to pass them</phrase>."
+"when starting the graphical installer."
 msgstr ""
-"Вы можете добавлять параметры загрузки при запуске графической версии также "
-"как и для обычной программы установки. Есть параметр, который позволяет "
-"настроить мышь под левую руку, выбрать устройство мыши (например, для мыши с "
-"последовательным интерфейсом) и протокол обмена с мышью. В <xref linkend="
-"\"boot-parms\"/> указаны доступные параметры<phrase arch=\"x86\">, а в <xref "
-"linkend=\"boot-screen\"/> дана информация как их передавать</phrase>."
+"Как и для обычной программы установки можно добавлять параметры "
+"загрузки при запуске её графической версии."
 
 #. Tag: para
-#: random-bits.xml:1223
+#: random-bits.xml:1219
 #, no-c-format
 msgid ""
 "The graphical installer requires significantly more memory to run than the "
@@ -2480,7 +2482,7 @@ msgstr ""
 "<quote>newt</quote>."
 
 #. Tag: para
-#: random-bits.xml:1230
+#: random-bits.xml:1226
 #, no-c-format
 msgid ""
 "If the amount of memory in your system is below &minimum-memory;, the "
@@ -2495,13 +2497,13 @@ msgstr ""
 "консольным интерфейсом."
 
 #. Tag: title
-#: random-bits.xml:1240
+#: random-bits.xml:1236
 #, no-c-format
 msgid "Using the graphical installer"
 msgstr "Использование программы установки с графическим интерфейсом"
 
 #. Tag: para
-#: random-bits.xml:1241
+#: random-bits.xml:1237
 #, no-c-format
 msgid ""
 "As already mentioned, the graphical installer basically works the same as "
@@ -2513,7 +2515,7 @@ msgstr ""
 "использовать для выполнения процесса установки."
 
 #. Tag: para
-#: random-bits.xml:1247
+#: random-bits.xml:1243
 #, no-c-format
 msgid ""
 "If you prefer using the keyboard over the mouse, there are two things you "
@@ -2533,19 +2535,19 @@ msgstr ""
 "активировать &BTN-CONT;."
 
 #. Tag: para
-#: random-bits.xml:1257
+#: random-bits.xml:1253
 #, no-c-format
 msgid ""
 "If a dialog offers additional help information, a <guibutton>Help</"
 "guibutton> button will be displayed. The help information can be accessed "
 "either by activating the button or by pressing the <keycap>F1</keycap> key."
 msgstr ""
-"Если есть дополнительная справочная информация, то появляется "
-"кнопка <guibutton>Справка</guibutton>. Справочная инфомация доступна "
-"по нажатию кнопки или клавиши <keycap>F1</keycap>."
+"Если есть дополнительная справочная информация, то появляется кнопка "
+"<guibutton>Справка</guibutton>. Справочная информация доступна по нажатию "
+"кнопки или клавиши <keycap>F1</keycap>."
 
 #. Tag: para
-#: random-bits.xml:1263
+#: random-bits.xml:1259
 #, no-c-format
 msgid ""
 "To switch to another console, you will also need to use the <keycap>Ctrl</"
@@ -2562,36 +2564,4 @@ msgstr ""
 "keycap> </keycombo>. Сама программа установки с графическим интерфейсом "
 "работает на VT5, так что вы можете использовать <keycombo> <keycap>левый "
 "Alt</keycap> <keycap>F5</keycap> </keycombo> для обратного переключения."
-
-#. Tag: title
-#: random-bits.xml:1277
-#, no-c-format
-msgid "Known issues"
-msgstr "Известные проблемы"
-
-#. Tag: para
-#: random-bits.xml:1278
-#, no-c-format
-msgid ""
-"The graphical frontend to the installer is relatively new and because of "
-"that there are some known issues. We continue to work on resolving these."
-msgstr ""
-"Графическая версия программы установки была написана не так давно, и поэтому "
-"имеет несколько известных проблем. Мы продолжаем работать над их устранением."
-
-#. Tag: para
-#: random-bits.xml:1286
-#, no-c-format
-msgid ""
-"Information on some screens is not yet nicely formatted into columns as it "
-"should be."
-msgstr ""
-"Информация на нескольких экранах не очень красиво отформатирована по "
-"столбцам как должна."
-
-#. Tag: para
-#: random-bits.xml:1292
-#, no-c-format
-msgid "Support for touchpads is not yet optimal."
-msgstr "Поддержка сенсорных панелей (touchpad) пока не оптимальна."
 

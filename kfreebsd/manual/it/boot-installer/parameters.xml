@@ -1,5 +1,5 @@
 <!-- retain these comments for translator revision tracking -->
-<!-- original version: 61147 -->
+<!-- original version: 62943 -->
 
  <sect1 id="boot-parms">
  <!-- <title>Boot Parameters </title> -->
@@ -434,30 +434,19 @@ sicurezza fisica.
 <!--
 Some architectures use the kernel framebuffer to offer installation in
 a number of languages. If framebuffer causes a problem on your system
-you can disable the feature by the parameter
-<userinput>fb=false</userinput>. Problem symptoms are error messages
-about bterm or bogl, a blank screen, or a freeze within a few minutes after
-starting the install.
+you can disable the feature using the parameter
+<userinput arch="x86">vga=normal</userinput> <userinput>fb=false</userinput>.
+Problem symptoms are error messages about bterm or bogl, a blank screen,
+or a freeze within a few minutes after starting the install.
 -->
 
 Su alcune architetture si usa il framebuffer del kernel per fornire
 l'installazione in più lingue. Se sul proprio sistema il framebuffer
 crea problemi è possibile disabilitarlo usando il parametro
-<userinput>fb=false</userinput>. Dei sintomi di questo problema sono dei
-messaggi d'errore riguardo bterm o bogl, lo schermo nero oppure un blocco
-entro pochi minuti dall'inizio dell'installazione.
-
-</para><para arch="x86">
-
-<!--
-The <userinput>video=vga16:off</userinput> argument may also be used
-to disable the kernel's use of the framebuffer. Such problems have been
-reported on a Dell Inspiron with Mobile Radeon card.
--->
-
-Si può anche usare l'argomento <userinput>video=vga16:off</userinput> per
-disabilitare l'uso del framebuffer da parte del kernel. Problemi di questo
-tipo sono stati segnalati sui Dell Inspiron con schede Mobile Radeon.
+<userinput arch="x86">vga=normal</userinput> <userinput>fb=false</userinput>.
+Dei sintomi di questo problema sono dei messaggi d'errore riguardo bterm
+o bogl, lo schermo nero oppure un blocco entro pochi minuti dall'inizio
+dell'installazione.
 
 </para><para arch="hppa">
 
@@ -712,6 +701,41 @@ nuovamente l'avvio dal lettore CD dopo l'installazione iniziale.
 </varlistentry>
 
 <varlistentry>
+<term>base-installer/install-recommends (recommends)</term>
+<listitem><para>
+
+<!--
+By setting this option to <userinput>false</userinput>, the package
+management system will be configured to not automatically install
+<quote>Recommends</quote>, both during the installation and for the
+installed system. See also <xref linkend="di-install-base"/>.
+-->
+
+Impostando questa opzione a <userinput>false</userinput>, il sistema di
+gestione dei pacchetti verrà configurato per non installare automaticamente
+i <quote>Raccomandati</quote>, sia durante l'installazione che sul sistema
+finale. Vedere anche <xref linkend="di-install-base"/>.
+
+</para><para>
+
+<!--
+Note that this option allows to have a leaner system, but can also result
+in features being missing that you might normally expect to be available.
+You may have to manually install some of the recommended packages to
+obtain the full functionality you want. This option should therefore only
+be used by very experienced users.
+-->
+
+Notare che questa opzione permette di avere un sistema più snello, ma può
+comportare la perdita di alcune delle funzionalità che sono solitamente
+disponibili. Potrebbe essere necessario installare manualmente alcuni dei
+pacchetti raccomandati per avere tutte le funzionalità desiderate. Questa
+opzione dovrebbe essere usata solo dagli utenti molto esperti.
+
+</para></listitem>
+</varlistentry>
+
+<varlistentry>
 <term>debian-installer/allow_unauthenticated</term>
 <listitem><para>
 
@@ -744,105 +768,6 @@ Quando è necessario, questo parametro dovrebbe già essere impostato con
 un valore corretto; impostarlo solo se durante l'avvio si verificano degli
 errori che indicano che il ramdisk non può essere completamente caricato.
 Il valore è in kB.
-
-</para></listitem>
-</varlistentry>
-
-<varlistentry condition="gtk">
-<term>mouse/protocol</term>
-<listitem><para>
-
-<!--
-For the gtk frontend (graphical installer), users can set the mouse
-protocol to be used by setting this parameter.
-Supported values are<footnote>
--->
-
-Con l'interfaccia gtk (la versione grafica dell'installatore) gli utenti
-possono impostare quale protocollo del mouse usare tramite questo
-parametro. I valori supportati sono<footnote>
-
-<para>
-
-<!--
-See the man page for
-<citerefentry><refentrytitle>directfbrc</refentrytitle>
-<manvolnum>5</manvolnum></citerefentry> for additional information.
--->
-
-Si veda la pagina man di 
-<citerefentry><refentrytitle>directfbrc</refentrytitle>
-<manvolnum>5</manvolnum></citerefentry> per ulteriori informazioni.
-
-</para>
-
-<!--
-</footnote>:
-<userinput>PS/2</userinput>, <userinput>IMPS/2</userinput>,
-<userinput>MS</userinput>, <userinput>MS3</userinput>,
-<userinput>MouseMan</userinput> and <userinput>MouseSystems</userinput>.
-In most cases the default protocol should work correctly.
--->
-
-</footnote>:
-<userinput>PS/2</userinput>, <userinput>IMPS/2</userinput>,
-<userinput>MS</userinput>, <userinput>MS3</userinput>,
-<userinput>MouseMan</userinput> e <userinput>MouseSystems</userinput>.
-Nella maggior parte dei casi il protocollo predefinito dovrebbe funzionare
-correttamente.
-
-</para></listitem>
-</varlistentry>
-
-<varlistentry condition="gtk">
-<term>mouse/device</term>
-<listitem><para>
-
-<!--
-For the gtk frontend (graphical installer), users can specify the mouse
-device to be used by setting this parameter. This is mostly useful if the
-mouse is connected to a serial port (serial mouse). Example:
-<userinput>mouse/device=<replaceable>/dev/ttyS1</replaceable></userinput>.
--->
-
-Con l'interfaccia gtk (la versione grafica dell'installatore) gli utenti
-possono indicare quale device usare per il mouse impostando questo
-parametro. Questa funzione è utile se il mouse è collegato a una porta
-seriale. Esempio:
-<userinput>mouse/device=<replaceable>/dev/ttyS1</replaceable></userinput>.
-
-</para></listitem>
-</varlistentry>
-
-<varlistentry condition="gtk">
-<term>mouse/left</term>
-<listitem><para>
-
-<!--
-For the gtk frontend (graphical installer), users can switch the mouse to
-left-handed operation by setting this parameter to <userinput>true</userinput>.
--->
-
-Con l'interfaccia gtk (la versione grafica dell'installatore) gli utenti
-possono indicare che usano il mouse con la mano sinistra impostando questo
-parametro a <userinput>true</userinput>.
-
-</para></listitem>
-</varlistentry>
-
-<varlistentry condition="gtk">
-<term>directfb/hw-accel</term>
-<listitem><para>
-
-<!--
-For the gtk frontend (graphical installer), hardware acceleration in directfb
-is disabled by default. Set this parameter to <userinput>true</userinput> to
-enable it.
--->
-
-Con l'interfaccia gtk (ovvero la versione grafica dell'installatore)
-l'accelerazione hardware di directfb è disabilitata; impostare questo
-parametro a <userinput>true</userinput> per attivarla.
 
 </para></listitem>
 </varlistentry>
@@ -888,6 +813,8 @@ seguono anche alcuni esempi.
 <variablelist>
 
 <varlistentry>
+<term>debian-installer/language (language)</term>
+<term>debian-installer/country (country)</term>
 <term>debian-installer/locale (locale)</term>
 <listitem><para>
 
@@ -898,10 +825,56 @@ For example, use <userinput>locale=de_CH</userinput> to select German as
 language and Switzerland as country.
 -->
 
-Può essere usato per impostare lingua e paese per l'installazione. Funziona
-solo se il <quote>locale</quote> specificato è supportato da Debian.
-Per esempio con <userinput>locale=de_CH</userinput> si imposta il tedesco
-come lingua e la Svizzera come paese.
+Può essere usato per impostare lingua e nazione per l'installazione.
+Funziona solo se il <quote>locale</quote> specificato è supportato da
+Debian. Per esempio con <userinput>locale=de_CH</userinput> si imposta
+il tedesco come lingua e la Svizzera come nazione.
+
+</para><para>
+
+<!--
+There are two ways to specify the language, country and locale to use for
+the installation and the installed system.
+-->
+
+Esistono due modi per specificare quali sono lingua, nazione e locale da
+usare per l'installazione e sul sistema installato.
+
+</para><para>
+
+<!--
+The first and easiest is to pass only the parameter <literal>locale</literal>.
+Language and country will then be derived from its value. You can for example
+use <userinput>locale=de_CH</userinput> to select German as language and
+Switzerland as country (<literal>de_CH.UTF-8</literal> will be set as default
+locale for the installed system). Limitation is that not all possible
+combinations of language, country and locale can be achieved this way.
+-->
+
+Il primo (più semplice) è passare solo il parametro
+<literal>locale</literal>. Lingua e nazione sono impostati a partire da
+questo valore. Per esempio è possibile usare
+<userinput>locale=de_CH</userinput> per scegliere il tedesco come lingua
+e la Svizzera come nazione (il locale predefinito sul sistema installato
+sarà <literal>de_CH.UTF-8</literal>). Questa modalità ha il limite che
+non sono possibili tutte le combinazioni di lingua, nazione e locale.
+
+</para><para>
+
+<!--
+The second, more flexible option is to specify <literal>language</literal>
+and <literal>country</literal> separately. In this case
+<literal>locale</literal> can optionally be added to specify a specific
+default locale for the installed system. Example:
+<userinput>language=en country=DE locale=en_GB.UTF-8</userinput>.
+-->
+
+Il secondo (più flessibile) è specificare separatamente i valori per
+<literal>language</literal> (lingua) e <literal>country</literal>
+(nazione). In questo caso è possibile aggiungere anche
+<literal>locale</literal> per indicare il locale predefinito sul sistema
+installato. Per esempio: <userinput>language=en country=DE
+locale=en_GB.UTF-8</userinput>.
 
 </para></listitem>
 </varlistentry>

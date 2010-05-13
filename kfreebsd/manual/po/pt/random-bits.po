@@ -2,14 +2,14 @@
 # Miguel Figueiredo <elmig@debianpt.org>, 2005-02-27.
 # Miguel Figueiredo <elmig@debianpt.org>, 2005
 # Etur, 2005
-# Miguel Figueiredo <elmig@debianpt.org>, 2006, 2007, 2008, 2009
+# Miguel Figueiredo <elmig@debianpt.org>, 2006, 2007, 2008, 2009, 2010
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: random-bits\n"
 "Report-Msgid-Bugs-To: debian-boot@lists.debian.org\n"
-"POT-Creation-Date: 2009-11-08 01:11+0000\n"
-"PO-Revision-Date: 2009-12-02 21:18+0000\n"
+"POT-Creation-Date: 2010-04-19 00:12+0000\n"
+"PO-Revision-Date: 2010-04-19 21:15+0100\n"
 "Last-Translator: Miguel Figueiredo <elmig@debianpt.org>\n"
 "Language-Team: Portuguese <traduz@debianpt.org>\n"
 "MIME-Version: 1.0\n"
@@ -1079,14 +1079,14 @@ msgid ""
 "the archive when you run it. You can substitute any Debian archive mirror "
 "for <userinput>&archive-mirror;/debian</userinput> in the command example "
 "below, preferably a mirror close to you network-wise. Mirrors are listed at "
-"<ulink url=\"http://www.debian.org/misc/README.mirrors\"></ulink>."
+"<ulink url=\"http://www.debian.org/mirror/list\"></ulink>."
 msgstr ""
 "O <command>debootstrap</command> pode fazer o download dos ficheiros "
 "necessários directamente do arquivo quando o executar. Você pode substituir "
 "qualquer mirror de arquivo por <userinput>&archive-mirror;/debian</"
 "userinput> no exemplo do comando abaixo, de preferência um mirror perto da "
 "sua rede. Os mirrors estão listados em <ulink url=\"http://www.debian.org/"
-"misc/README.mirrors\"></ulink>."
+"mirror/list\"></ulink>."
 
 #. Tag: para
 #: random-bits.xml:503
@@ -1372,7 +1372,67 @@ msgstr "Configurar a Rede"
 
 #. Tag: para
 #: random-bits.xml:646
-#, no-c-format
+#, fuzzy, no-c-format
+#| msgid ""
+#| "To configure networking, edit <filename>/etc/network/interfaces</"
+#| "filename>, <filename>/etc/resolv.conf</filename>, <filename>/etc/"
+#| "hostname</filename> and <filename>/etc/hosts</filename>. "
+#| "<informalexample><screen>\n"
+#| "# editor /etc/network/interfaces\n"
+#| "</screen></informalexample> Here are some simple examples from <filename>/"
+#| "usr/share/doc/ifupdown/examples</filename>: <informalexample><screen>\n"
+#| "######################################################################\n"
+#| "# /etc/network/interfaces -- configuration file for ifup(8), ifdown(8)\n"
+#| "# See the interfaces(5) manpage for information on what options are\n"
+#| "# available.\n"
+#| "######################################################################\n"
+#| "\n"
+#| "# We always want the loopback interface.\n"
+#| "#\n"
+#| "auto lo\n"
+#| "iface lo inet loopback\n"
+#| "\n"
+#| "# To use dhcp:\n"
+#| "#\n"
+#| "# auto eth0\n"
+#| "# iface eth0 inet dhcp\n"
+#| "\n"
+#| "# An example static IP setup: (broadcast and gateway are optional)\n"
+#| "#\n"
+#| "# auto eth0\n"
+#| "# iface eth0 inet static\n"
+#| "#     address 192.168.0.42\n"
+#| "#     network 192.168.0.0\n"
+#| "#     netmask 255.255.255.0\n"
+#| "#     broadcast 192.168.0.255\n"
+#| "#     gateway 192.168.0.1\n"
+#| "</screen></informalexample> Enter your nameserver(s) and search "
+#| "directives in <filename>/etc/resolv.conf</filename>: "
+#| "<informalexample><screen>\n"
+#| "# editor /etc/resolv.conf\n"
+#| "</screen></informalexample> A simple example <filename>/etc/resolv.conf</"
+#| "filename>: <informalexample><screen>\n"
+#| "search hqdom.local\n"
+#| "nameserver 10.1.1.36\n"
+#| "nameserver 192.168.9.100\n"
+#| "</screen></informalexample> Enter your system's host name (2 to 63 "
+#| "characters): <informalexample><screen>\n"
+#| "# echo DebianHostName &gt; /etc/hostname\n"
+#| "</screen></informalexample> And a basic <filename>/etc/hosts</filename> "
+#| "with IPv6 support: <informalexample><screen>\n"
+#| "127.0.0.1 localhost DebianHostName\n"
+#| "\n"
+#| "# The following lines are desirable for IPv6 capable hosts\n"
+#| "::1     ip6-localhost ip6-loopback\n"
+#| "fe00::0 ip6-localnet\n"
+#| "ff00::0 ip6-mcastprefix\n"
+#| "ff02::1 ip6-allnodes\n"
+#| "ff02::2 ip6-allrouters\n"
+#| "ff02::3 ip6-allhosts\n"
+#| "</screen></informalexample> If you have multiple network cards, you "
+#| "should arrange the names of driver modules in the <filename>/etc/modules</"
+#| "filename> file into the desired order. Then during boot, each card will "
+#| "be associated with the interface name (eth0, eth1, etc.) that you expect."
 msgid ""
 "To configure networking, edit <filename>/etc/network/interfaces</filename>, "
 "<filename>/etc/resolv.conf</filename>, <filename>/etc/hostname</filename> "
@@ -1418,7 +1478,8 @@ msgid ""
 "# echo DebianHostName &gt; /etc/hostname\n"
 "</screen></informalexample> And a basic <filename>/etc/hosts</filename> with "
 "IPv6 support: <informalexample><screen>\n"
-"127.0.0.1 localhost DebianHostName\n"
+"127.0.0.1 localhost\n"
+"127.0.1.1 DebianHostName\n"
 "\n"
 "# The following lines are desirable for IPv6 capable hosts\n"
 "::1     ip6-localhost ip6-loopback\n"
@@ -2451,21 +2512,13 @@ msgstr ""
 #, no-c-format
 msgid ""
 "Just as with the regular installer it is possible to add boot parameters "
-"when starting the graphical installer. One of those parameters allows to "
-"configure the mouse for left-handed use. Others allow to select the mouse "
-"device (e.g. for a serial mouse) and the mouse protocol. See <xref linkend="
-"\"boot-parms\"/> for valid parameters<phrase arch=\"x86\"> and <xref linkend="
-"\"boot-screen\"/> for information on how to pass them</phrase>."
+"when starting the graphical installer."
 msgstr ""
-"Tal como no instalador normal é possível indicar parâmetros de arranque ao "
-"iniciar o instalador gráfico. Um desses parâmetros permite configurar o rato "
-"para ser utilizado com a mão esquerda. Outros permitem escolher o "
-"dispositivo (e.g. para um rato série) e o protocolo do rato. Para parâmetros "
-"válidos veja <xref linkend=\"boot-parms\"/><phrase arch=\"x86\"> e <xref "
-"linkend=\"boot-screen\"/> para informação acerca de como os passar</phrase>."
+"Tal como no instalador usual é possível adicionar parâmetros de arranque ao "
+"iniciar o instalador gráfico."
 
 #. Tag: para
-#: random-bits.xml:1223
+#: random-bits.xml:1219
 #, no-c-format
 msgid ""
 "The graphical installer requires significantly more memory to run than the "
@@ -2479,7 +2532,7 @@ msgstr ""
 "usual <quote>newt</quote>."
 
 #. Tag: para
-#: random-bits.xml:1230
+#: random-bits.xml:1226
 #, no-c-format
 msgid ""
 "If the amount of memory in your system is below &minimum-memory;, the "
@@ -2493,13 +2546,13 @@ msgstr ""
 "sistemas com pouca memória."
 
 #. Tag: title
-#: random-bits.xml:1240
+#: random-bits.xml:1236
 #, no-c-format
 msgid "Using the graphical installer"
 msgstr "Utilizar o instalador gráfico"
 
 #. Tag: para
-#: random-bits.xml:1241
+#: random-bits.xml:1237
 #, no-c-format
 msgid ""
 "As already mentioned, the graphical installer basically works the same as "
@@ -2511,7 +2564,7 @@ msgstr ""
 "utilizado para o guiar através do processo de instalação."
 
 #. Tag: para
-#: random-bits.xml:1247
+#: random-bits.xml:1243
 #, no-c-format
 msgid ""
 "If you prefer using the keyboard over the mouse, there are two things you "
@@ -2531,7 +2584,7 @@ msgstr ""
 "irá mudar uma escolha, e não activar o &BTN-CONT;."
 
 #. Tag: para
-#: random-bits.xml:1257
+#: random-bits.xml:1253
 #, no-c-format
 msgid ""
 "If a dialog offers additional help information, a <guibutton>Help</"
@@ -2543,7 +2596,7 @@ msgstr ""
 "activar o botão ou carregando na tecla <keycap>F1</keycap>."
 
 #. Tag: para
-#: random-bits.xml:1263
+#: random-bits.xml:1259
 #, no-c-format
 msgid ""
 "To switch to another console, you will also need to use the <keycap>Ctrl</"
@@ -2561,37 +2614,42 @@ msgstr ""
 "<keycombo> <keycap>Alt Esquerdo</keycap> <keycap>F5</keycap> </keycombo> "
 "para voltar."
 
-#. Tag: title
-#: random-bits.xml:1277
-#, no-c-format
-msgid "Known issues"
-msgstr "Problemas conhecidos"
+#~ msgid ""
+#~ "Just as with the regular installer it is possible to add boot parameters "
+#~ "when starting the graphical installer. One of those parameters allows to "
+#~ "configure the mouse for left-handed use. Others allow to select the mouse "
+#~ "device (e.g. for a serial mouse) and the mouse protocol. See <xref "
+#~ "linkend=\"boot-parms\"/> for valid parameters<phrase arch=\"x86\"> and "
+#~ "<xref linkend=\"boot-screen\"/> for information on how to pass them</"
+#~ "phrase>."
+#~ msgstr ""
+#~ "Tal como no instalador normal é possível indicar parâmetros de arranque "
+#~ "ao iniciar o instalador gráfico. Um desses parâmetros permite configurar "
+#~ "o rato para ser utilizado com a mão esquerda. Outros permitem escolher o "
+#~ "dispositivo (e.g. para um rato série) e o protocolo do rato. Para "
+#~ "parâmetros válidos veja <xref linkend=\"boot-parms\"/><phrase arch=\"x86"
+#~ "\"> e <xref linkend=\"boot-screen\"/> para informação acerca de como os "
+#~ "passar</phrase>."
 
-#. Tag: para
-#: random-bits.xml:1278
-#, no-c-format
-msgid ""
-"The graphical frontend to the installer is relatively new and because of "
-"that there are some known issues. We continue to work on resolving these."
-msgstr ""
-"O 'frontend' gráfico do instalador é relativamente novo e por isso existem "
-"alguns problemas. Nós continuamos a trabalhar para os resolver."
+#~ msgid "Known issues"
+#~ msgstr "Problemas conhecidos"
 
-#. Tag: para
-#: random-bits.xml:1286
-#, no-c-format
-msgid ""
-"Information on some screens is not yet nicely formatted into columns as it "
-"should be."
-msgstr ""
-"A informação em alguns ecrãs ainda é agradavelmente formatada em colunas tal "
-"como deveria ser."
+#~ msgid ""
+#~ "The graphical frontend to the installer is relatively new and because of "
+#~ "that there are some known issues. We continue to work on resolving these."
+#~ msgstr ""
+#~ "O 'frontend' gráfico do instalador é relativamente novo e por isso "
+#~ "existem alguns problemas. Nós continuamos a trabalhar para os resolver."
 
-#. Tag: para
-#: random-bits.xml:1292
-#, no-c-format
-msgid "Support for touchpads is not yet optimal."
-msgstr "O suporte para touchpads ainda não é óptimo."
+#~ msgid ""
+#~ "Information on some screens is not yet nicely formatted into columns as "
+#~ "it should be."
+#~ msgstr ""
+#~ "A informação em alguns ecrãs ainda é agradavelmente formatada em colunas "
+#~ "tal como deveria ser."
+
+#~ msgid "Support for touchpads is not yet optimal."
+#~ msgstr "O suporte para touchpads ainda não é óptimo."
 
 #~ msgid ""
 #~ "The <emphasis>Desktop</emphasis> task will install the GNOME desktop "

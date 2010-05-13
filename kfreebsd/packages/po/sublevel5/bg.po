@@ -5,13 +5,13 @@
 #
 # Ognyan Kulev <ogi@fmi.uni-sofia.bg>, 2004, 2005, 2006.
 # Nikola Antonov <nikola@linux-bg.org>, 2004.
-# Damyan Ivanov <dmn@debian.org>, 2006, 2007, 2008, 2009.
+# Damyan Ivanov <dmn@debian.org>, 2006, 2007, 2008, 2009, 2010.
 msgid ""
 msgstr ""
 "Project-Id-Version: bg\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-09-04 22:47+0000\n"
-"PO-Revision-Date: 2009-11-25 01:10+0200\n"
+"POT-Creation-Date: 2010-03-30 23:19+0000\n"
+"PO-Revision-Date: 2010-04-01 23:54+0300\n"
 "Last-Translator: Damyan Ivanov <dmn@debian.org>\n"
 "Language-Team: Bulgarian <dict@fsa-bg.org>\n"
 "MIME-Version: 1.0\n"
@@ -22,7 +22,7 @@ msgstr ""
 #. Type: text
 #. Description
 #. :sl5:
-#: ../partman-base.templates:60001
+#: ../partman-base.templates:61001
 #, no-c-format
 msgid "DASD %s (%s)"
 msgstr "DASD %s (%s)"
@@ -30,7 +30,7 @@ msgstr "DASD %s (%s)"
 #. Type: text
 #. Description
 #. :sl5:
-#: ../partman-base.templates:61001
+#: ../partman-base.templates:62001
 #, no-c-format
 msgid "DASD %s (%s), partition #%s"
 msgstr "DASD %s (%s), дял №%s"
@@ -89,12 +89,12 @@ msgid ""
 "Most installations place the EFI partition on the first primary partition of "
 "the same hard disk that holds the root file system."
 msgstr ""
-"За да стартирате Вашата нова система, firmware-ът на Вашата система Itanium "
+"За да стартирате Вашата нова система, фърмуерът на Вашата система Itanium "
 "зарежда програмата за начално зареждане от собствения си дял EFI на твърдия "
-"диск. Програмата за начално зареждане тогава зарежда операционната система "
-"от същия дял. Дяловете EFI са форматирани с файлова система FAT16 и са "
-"активирани за начално зареждане. Повечето инсталации слагат дяловете EFI на "
-"първия главен дял на същия твърд диск, който съдържа кореновата файлова "
+"диск. След това програмата за начално зареждане зарежда операционната "
+"система от същия дял. Дяловете EFI са форматирани с файлова система FAT16 и "
+"са активирани за начално зареждане. Повечето инсталации слагат дяловете EFI "
+"на първия главен дял на същия твърд диск, който съдържа кореновата файлова "
 "система."
 
 #. Type: text
@@ -1119,8 +1119,8 @@ msgid ""
 "If you want to connect to multiple peers, separate the names by colons, e."
 "g.  tcpip:linux1."
 msgstr ""
-"Ако искате да се свържете с няколко съседа, отделете имената с двуеточие, "
-"напр. tcpip:linux1."
+"Ако искате да се свържете с няколко съседа, отделете имената с двоеточие, "
+"например tcpip:linux1."
 
 #. Type: string
 #. Description
@@ -1148,15 +1148,15 @@ msgstr "Настройка на мрежовото устройство"
 #. Description
 #. :sl5:
 #: ../s390-dasd.templates:1002
-msgid "Available disks:"
-msgstr "Достъпни дискове:"
+msgid "Available devices:"
+msgstr "Достъпни устройства:"
 
 #. Type: select
 #. Description
 #. :sl5:
 #: ../s390-dasd.templates:1002
 msgid ""
-"The following disk access storage devices (DASD) are available. Please "
+"The following direct access storage devices (DASD) are available. Please "
 "select each device you want to use one at a time."
 msgstr ""
 "Достъпни са следните DASD (Disk Access Storage Device) устройства. Моля, "
@@ -1166,26 +1166,26 @@ msgstr ""
 #. Description
 #. :sl5:
 #: ../s390-dasd.templates:2001
-msgid "Choose disk:"
-msgstr "Изберете диск:"
+msgid "Choose device:"
+msgstr "Изберете устройство:"
 
 #. Type: string
 #. Description
 #. :sl5:
 #: ../s390-dasd.templates:2001
 msgid ""
-"Please choose a disk. You have to specify the complete device number, "
+"Please choose a device. You have to specify the complete device number, "
 "including leading zeros."
 msgstr ""
-"Моля, изберете диск. Трябва да зададете пълния номер на устройството, "
+"Моля, изберете устройство. Трябва да зададете пълния номер на устройството, "
 "включително водещите нули."
 
 #. Type: error
 #. Description
 #. :sl5:
 #: ../s390-dasd.templates:3001
-msgid "Invalid disk"
-msgstr "Невалиден диск"
+msgid "Invalid device"
+msgstr "Неправилно устройство"
 
 #. Type: error
 #. Description
@@ -1198,8 +1198,8 @@ msgstr "Беше избран невалиден номер на устройс�
 #. Description
 #. :sl5:
 #: ../s390-dasd.templates:4001
-msgid "Format the disk?"
-msgstr "Форматиране на диска?"
+msgid "Format the device?"
+msgstr "Форматиране на устройството?"
 
 #. Type: boolean
 #. Description
@@ -1207,22 +1207,23 @@ msgstr "Форматиране на диска?"
 #: ../s390-dasd.templates:4001
 msgid ""
 "The installer is unable to detect if the device ${device} has already been "
-"formatted or not. Disks need to be formatted before you can create "
+"formatted or not. Devices need to be formatted before you can create "
 "partitions."
 msgstr ""
-"Не може да се установи дали устройството ${device} е форматирано. Дисковете "
-"трябва да бъдат форматирани преди да се създават дялове върху тях."
+"Не може да се установи дали устройството ${device} е вече форматирано. "
+"Устройствата трябва да бъдат форматирани преди да се създават дялове върху "
+"тях."
 
 #. Type: boolean
 #. Description
 #. :sl5:
 #: ../s390-dasd.templates:4001
 msgid ""
-"If you are sure the disk has already been correctly formatted, you don't "
+"If you are sure the device has already been correctly formatted, you don't "
 "need to do so again."
 msgstr ""
-"Ако сте сигурни, че дискът вече е форматиран не е нужно да го форматирате "
-"отново."
+"Ако сте сигурни, че устройството вече е форматирано, не е нужно да го "
+"форматирате отново."
 
 #. Type: text
 #. Description
@@ -1236,7 +1237,7 @@ msgstr "Форматиране на ${device}..."
 #. Main menu item. Keep translations below 55 columns
 #. :sl5:
 #: ../s390-dasd.templates:6001
-msgid "Configure disk access storage devices (DASD)"
+msgid "Configure direct access storage devices (DASD)"
 msgstr "Настройка на DASD (Disk Access Storage Device)"
 
 #. Type: text

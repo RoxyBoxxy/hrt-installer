@@ -47,7 +47,7 @@ recordstanza () {
 			if [ "$rootdev" ]; then
 				parameters="root=$rootdev $parameters"
 			fi
-			parameters=${parameters% }
+			parameters="${parameters% }"
 			result "$rootpart:$bootpart:$title:$kernel:$initrd:$parameters"
 			found_item=1
 		else
@@ -78,25 +78,25 @@ parse_lilo_conf () {
 	while read line; do
 		debug "parsing: $line"
 		set -- $line
-		case $1 in
+		case "$1" in
 			root)
 				rootdev=$(dequote "$2")
 			;;
 			image)
 				recordstanza
 				# Dereference if symbolic link
-				kernel=$(readlink -f $(dequote "$2"))
+				kernel="$(readlink -f "$(dequote "$2")")"
 			;;
 			append)
 				addparams "$(dequote "${line#append=}")"
 			;;
 			initrd)
 				# Dereference if symbolic link
-				initrd=$(readlink -f $(dequote "$2"))
+				initrd="$(readlink -f "$(dequote "$2")")"
 				;;
 			label)
 				shift 1
-				title=$(dequote "$*" | sed -e 's/:/ /g')
+				title="$(dequote "$*" | sed -e 's/:/ /g')"
 			;;
 			other)
 				recordstanza
