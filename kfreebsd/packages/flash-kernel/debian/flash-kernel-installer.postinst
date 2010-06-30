@@ -32,13 +32,22 @@ write_to_flash() {
 		"GLAN Tank")
 			return 1
 		;;
+		"HP t5325 Thin Client")
+			return 1
+		;;
 		"HP Media Vault mv2120")
+			return 1
+		;;
+		"Marvell GuruPlug Reference Board")
 			return 1
 		;;
 		"Marvell OpenRD Base Board")
 			return 1
 		;;
 		"Marvell OpenRD Client Board")
+			return 1
+		;;
+		"Marvell OpenRD Ultimate Board")
 			return 1
 		;;
 		"Marvell SheevaPlug Reference Board")
@@ -94,6 +103,12 @@ case "$machine" in
 	"GLAN Tank")
 		in-target update-initramfs -u || true
 	;;
+	"HP t5325 Thin Client")
+		in-target update-initramfs -u || true
+		if ! apt-install uboot-mkimage; then
+			error "apt-install uboot-mkimage failed"
+		fi
+	;;
 	"HP Media Vault mv2120")
 		if ! apt-install mv2120-utils; then
 			# mv2120-utils includes some initramfs-tools scripts
@@ -134,7 +149,7 @@ case "$machine" in
 			error "apt-install apex-nslu2 failed"
 		fi
 	;;
-	"Marvell OpenRD Base Board" | "Marvell OpenRD Client Board" | "Marvell SheevaPlug Reference Board" | "Marvell eSATA SheevaPlug Reference Board")
+	"Marvell GuruPlug Reference Board" | "Marvell OpenRD Base Board" | "Marvell OpenRD Client Board" | "Marvell OpenRD Ultimate Board" | "Marvell SheevaPlug Reference Board" | "Marvell eSATA SheevaPlug Reference Board")
 		in-target update-initramfs -u || true
 		if ! apt-install uboot-mkimage; then
 			error "apt-install uboot-mkimage failed"

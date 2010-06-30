@@ -1,4 +1,31 @@
-hw-detect (1.77) UNRELEASED; urgency=low
+hw-detect (1.79) UNRELEASED; urgency=low
+
+  * Reviewed driver injection disks templates with the help
+    of debian-l10n-english. Unjargonized and wordig aligned with
+    other D-I templates. Moved strings to sublevel 3 as this template
+    is used in some corner cases.
+
+ -- Christian Perrier <bubulle@debian.org>  Sat, 29 May 2010 09:32:36 +0200
+
+hw-detect (1.78) unstable; urgency=low
+
+  [ Petter Reinholdtsen ]
+  * Add support for Dell Driver Injection disk v1, an integrated flash
+    media based solution for adding in drivers after OS launches.
+    Patch from Mario Limonciello and Ubuntu (LP: #341526).  This
+    add some untranslated strings the the .po files.
+  * Install mouseemu on systems likely to have single-button mice
+    (i.e.  non-desktop Macs LP: #251830), but not powerpc64 since it
+    is said to cause an oops in the input layer.  Patch from Colin
+    Watson and Ubuntu.
+  * Depend on pciutils-udeb for lspci.  Patch from Colin Watson and
+    Ubuntu.
+  * Adjust code reloading modules in check-missing-firmware.sh to
+    only reload once when a module need several firmware files.
+
+ -- Petter Reinholdtsen <pere@debian.org>  Wed, 26 May 2010 08:04:02 +0200
+
+hw-detect (1.77) unstable; urgency=low
 
   [ Frans Pop ]
   * check-missing-firmware: install loose firmware files in subdirectories
@@ -6,9 +33,38 @@ hw-detect (1.77) UNRELEASED; urgency=low
 
   [ Petter Reinholdtsen ]
   * Use discover-pkginstall to install hardware related packages
-    automatically during installation (Closes: #577451).
+    automatically during installation (Closes: #577451).  Run it
+    from pre-pkgsel to make sure a upgraded discover package is
+    available.
+  * Make sure check-missing-firmware follow symlinks and copy the
+    content to make sure symlinked firmware files work too.
+  * Move code checking for firmware in check-missing-firmware to a
+    separate function, to allow it to be used several places.
+  * Also look for firmware debs and udebs in the PXE initrd and
+    on the CD media, in a firmware/ directory (Closes: #574116).
+  * Add cross building support (Closes: #572369).  Patch from
+    Hector Oron.
+  * Run preinst script of firmware debs in case there is a license
+    question there to accept, and do not activate firmware if the
+    preinst script return non-zero exit code (Closes: #574158).
 
- -- Petter Reinholdtsen <pere@debian.org>  Sat, 17 Apr 2010 19:34:39 +0200
+  [ Joey Hess ]
+  * Remove myself from Uploaders.
+
+   [ Updated translations ]
+   * Asturian (ast.po) by Iñigo Varela
+   * Danish (da.po) by Jacob Sparre Andersen
+   * German (de.po) by Holger Wansing
+   * French (fr.po) by Christian Perrier
+   * Hebrew (he.po) by Lior Kaplan
+   * Korean (ko.po) by Changwoo Ryu
+   * Lithuanian (lt.po) by Kęstutis Biliūnas
+   * Marathi (mr.po) by Sampada
+   * Norwegian Nynorsk (nn.po) by Eirik U. Birkeland
+   * Romanian (ro.po) by ioan-eugen stan
+   * Slovenian (sl.po) by Vanja Cvelbar
+
+ -- Petter Reinholdtsen <pere@debian.org>  Sat, 22 May 2010 17:58:26 +0200
 
 hw-detect (1.76) unstable; urgency=low
 

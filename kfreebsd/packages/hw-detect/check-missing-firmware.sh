@@ -91,7 +91,7 @@ try_copy () {
 			log "copying loose file $file from '$(dirname $f)' to '$target'"
 			mkdir -p "$target"
 			rm -f "$target/$file"
-			cp -a "$f" "$target" || true
+			cp -aL "$f" "$target" || true
 			break
 		fi
 	done
@@ -146,19 +146,67 @@ check_deb_arch () {
 	[ "$arch" = all ] || [ "$arch" = "$(udpkg --print-architecture)" ]
 }
 
+# Remove non-accepted firmware package
+remove_pkg() {
+	pkgname="$1"
+	# Remove all files listed in /var/lib/dpkg/info/$pkgname.md5sum
+	for file in $(cut -d" " -f 2- /var/lib/dpkg/info/$pkgname.md5sum) ; do
+		rm /$file
+	done
+}
+
 install_firmware_pkg () {
 	if echo "$1" | grep -q '\.deb$'; then
 		# cache deb for installation into /target later
 		mkdir -p /var/cache/firmware/
-		cp -a "$1" /var/cache/firmware/ || true
-		udpkg --unpack "/var/cache/firmware/$(basename "$1")"
+		cp -aL "$1" /var/cache/firmware/ || true
+		filename="$(basename "$1")"
+		pkgname="$(echo $filename |cut -d_ -f1)"
+		udpkg --unpack "/var/cache/firmware/$filename"
+		if [ -f /var/lib/dpkg/info/$pkgname.preinst ] ; then
+			# Run preinst script to see if the firmware
+			# license is accepted Exit code of preinst
+			# decide if the package should be installed or
+			# not.
+			if /var/lib/dpkg/info/$pkgname.preinst ; then
+				:
+			else
+				remove_pkg "$pkgname"
+				rm "/var/cache/firmware/$filename"
+			fi
+		fi
 	else
 		udpkg --unpack "$1"
 	fi
 }
 
+# Try to load udebs (or debs) that contain the missing firmware.
+# This does not use anna because debs can have arbitrary
+# dependencies, which anna might try to install.
+check_for_firmware() {
+	echo "$files" | sed -e 's/ /\n/g' >/tmp/grepfor
+	for filename in $@; do
+		if [ -f "$filename" ]; then
+			if check_deb_arch "$filename" && list_deb_firmware "$filename" | grep -qf /tmp/grepfor; then
+				log "installing firmware package $filename"
+				install_firmware_pkg "$filename" || true
+			fi
+		fi
+	done
+	rm -f /tmp/grepfor
+}
+
 while check_missing && ask_load_firmware; do
-	# first, look for loose firmware files on the media.
+	# first, check if needed firmware (u)debs are available on the
+	# PXE initrd or the installation CD.
+	if [ -d /firmware ]; then
+		check_for_firmware /firmware/*.deb /firmware/*.udeb
+	fi
+	if [ -d /cdrom/firmware ]; then
+		check_for_firmware /cdrom/firmware/*.deb /cdrom/firmware/*.udeb
+	fi
+
+	# second, look for loose firmware files on the media device.
 	if mountmedia; then
 		for file in $files; do
 			try_copy "$file"
@@ -166,25 +214,16 @@ while check_missing && ask_load_firmware; do
 		umount /media || true
 	fi
 
-	# Try to load udebs (or debs) that contain the missing firmware.
-	# This does not use anna because debs can have arbitrary
-	# dependencies, which anna might try to install.
+	# last, look for firmware (u)debs on the media device
 	if mountmedia driver; then
-		echo "$files" | sed -e 's/ /\n/g' >/tmp/grepfor
-		for filename in /media/*.deb /media/*.udeb /media/*.ude /media/firmware/*.deb /media/firmware/*.udeb /media/firmware/*.ude; do
-			if [ -f "$filename" ]; then
-				if check_deb_arch "$filename" && list_deb_firmware "$filename" | grep -qf /tmp/grepfor; then
-					log "installing firmware package $filename"
-					install_firmware_pkg "$filename" || true
-				fi
-			fi
-		done
-		rm -f /tmp/grepfor
+		check_for_firmware /media/*.deb /media/*.udeb /media/*.ude /media/firmware/*.deb /media/firmware/*.udeb /media/firmware/*.ude
 		umount /media || true
 	fi
 
 	# remove and reload modules so they see the new firmware
-	for module in $modules; do
+	# Sort to only reload a given module once if it ask for more
+	# than one firmware file (example iwlagn)
+	for module in $(echo $modules | tr " " "\n" | sort -u); do
 		modprobe -r $module || true
 		modprobe $module || true
 	done
