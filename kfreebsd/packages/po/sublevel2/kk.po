@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: debian-installer\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-06-01 22:47+0000\n"
-"PO-Revision-Date: 2010-07-03 12:08+0600\n"
+"POT-Creation-Date: 2010-07-17 06:23+0000\n"
+"PO-Revision-Date: 2010-07-20 21:00+0600\n"
 "Last-Translator: Baurzhan Muftakhidinov <baurthefirst@gmail.com>\n"
 "Language-Team: Kazakh\n"
 "MIME-Version: 1.0\n"
@@ -33,7 +33,7 @@ msgid ""
 "An installation step failed. You can try to run the failing item again from "
 "the menu, or skip it and choose something else. The failing step is: ${ITEM}"
 msgstr ""
-"Орнату барысының ${ITEM} қадамының сәті түскан жоқ. Оны орнатуды мәзірден "
+"Орнату барысының ${ITEM} қадамының сәті түскен жоқ. Оны орнатуды мәзірден "
 "қайталап көруге болады немесе бұл қадамды өткізіп жіберіңіз."
 
 #. Type: select
@@ -3263,9 +3263,13 @@ msgstr "Журналданушы Ext4 файлдың жүйесі"
 #. Type: boolean
 #. Description
 #. :sl4:
+#. #-#-#-#-#  templates.pot (PACKAGE VERSION)  #-#-#-#-#
+#. Type: boolean
+#. Description
+#. :sl3:
 #: ../partman-ext3.templates:7001 ../partman-ext3.templates:8001
 #: ../partman-ext2r0.templates:9001 ../partman-ext2r0.templates:10001
-#: ../partman-ext2r0.templates:11001
+#: ../partman-ext2r0.templates:11001 ../partman-ufs.templates:6001
 msgid "Go back to the menu and correct this problem?"
 msgstr "Мәзірге оралып, қателерді түзетуді қалайсыз ба?"
 
@@ -3344,6 +3348,81 @@ msgstr ""
 #. Type: text
 #. Description
 #. :sl2:
+#. File system name
+#: ../partman-btrfs.templates:2001
+msgid "btrfs journaling file system"
+msgstr "btrfs журналдаушы файлдық жүйесі"
+
+#. Type: error
+#. Description
+#. :sl2:
+#: ../partman-btrfs.templates:4001
+msgid "btrfs root file system not supported without separate /boot"
+msgstr ""
+"бөлек /boot бөлімінсіз btrfs файлдық жүйесін түбірлік ретінде қолдануға "
+"қолдау жоқ"
+
+#. Type: error
+#. Description
+#. :sl2:
+#: ../partman-btrfs.templates:4001
+msgid ""
+"Your root file system is a btrfs file system. This is not supported by the "
+"boot loader used by default by this installer."
+msgstr ""
+"Түбірлік бөлімнің файлдық жүйесі - btrfs. Осыған байланысты орнату "
+"бағдарламасы қолданатын әдеттегі жүктеуші тарапынан қиындықтар тууы мүмкін."
+
+#. #-#-#-#-#  templates.pot (PACKAGE VERSION)  #-#-#-#-#
+#. Type: error
+#. Description
+#. :sl2:
+#. #-#-#-#-#  templates.pot (PACKAGE VERSION)  #-#-#-#-#
+#. Type: boolean
+#. Description
+#. :sl2:
+#: ../partman-btrfs.templates:4001 ../partman-jfs.templates:4001
+msgid ""
+"You should use a small /boot partition with another file system, such as "
+"ext3."
+msgstr ""
+"Сіз шағын /boot бөлімін басқа файлдық жүйемен (мысалы ext3) пайдалануыңыз "
+"керек."
+
+#. Type: error
+#. Description
+#. :sl2:
+#: ../partman-btrfs.templates:5001
+msgid "btrfs file system not supported for /boot"
+msgstr "btrfs файлдық жүйесінің /boot үшін қолдауы жоқ"
+
+#. Type: error
+#. Description
+#. :sl2:
+#: ../partman-btrfs.templates:5001
+msgid ""
+"You have mounted a btrfs file system as /boot. This is not supported by the "
+"boot loader used by default by this installer."
+msgstr ""
+"Сіз btrfs файлдық жүйесін /boot ретінде тіркедіңіз. Осыған байланысты орнату "
+"бағдарламасы қолданатын әдеттегі жүктеуші тарапынан қиындықтар тууы мүмкін."
+
+#. #-#-#-#-#  templates.pot (PACKAGE VERSION)  #-#-#-#-#
+#. Type: error
+#. Description
+#. :sl2:
+#. #-#-#-#-#  templates.pot (PACKAGE VERSION)  #-#-#-#-#
+#. Type: boolean
+#. Description
+#. :sl2:
+#: ../partman-btrfs.templates:5001 ../partman-jfs.templates:5001
+msgid ""
+"You should use another file system, such as ext3, for the /boot partition."
+msgstr "/boot бөлімі үшін басқа файлдық жүйесін (мысалы ext3) қолдану керек."
+
+#. Type: text
+#. Description
+#. :sl2:
 #. File system name (untranslatable in many languages)
 #: ../partman-reiserfs.templates:1001
 msgid "ReiserFS"
@@ -3382,18 +3461,7 @@ msgid ""
 "boot loader used by default by this installer."
 msgstr ""
 "Түбірлік бөлімнің файлдық жүйесі - JFS. Осыған байланысты орнату "
-"бағдарламасы қолданатын әдеттегі жегуші тарапынан қиындықтар тууы мүмкін."
-
-#. Type: boolean
-#. Description
-#. :sl2:
-#: ../partman-jfs.templates:4001
-msgid ""
-"You should use a small /boot partition with another file system, such as "
-"ext3."
-msgstr ""
-"Сіз шағын /boot бөлімін басқа файлдық жүйемен (мысалы ext3) пайдалануыңыз "
-"керек."
+"бағдарламасы қолданатын әдеттегі жұктеуші тарапынан қиындықтар тууы мүмкін."
 
 #. Type: boolean
 #. Description
@@ -3411,15 +3479,7 @@ msgid ""
 "problems with the boot loader used by default by this installer."
 msgstr ""
 "Сіз JFS файлдық жүйесін /boot ретінде тіркедіңіз. Осыған байланысты орнату "
-"бағдарламасы қолданатын әдеттегі жегуші тарапынан қиындықтар тууы мүмкін."
-
-#. Type: boolean
-#. Description
-#. :sl2:
-#: ../partman-jfs.templates:5001
-msgid ""
-"You should use another file system, such as ext3, for the /boot partition."
-msgstr "/boot бөлімі үшін басқа файлдық жүйесін (мысалы ext3) қолдану керек."
+"бағдарламасы қолданатын әдеттегі жүктеуші тарапынан қиындықтар тууы мүмкін."
 
 #. Type: text
 #. Description

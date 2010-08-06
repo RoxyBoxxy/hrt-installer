@@ -1,10 +1,36 @@
-linux-kernel-di-armel-2.6 (1.43) UNRELEASED; urgency=low
+linux-kernel-di-armel-2.6 (1.45) unstable; urgency=low
 
+  * beeper-modules: Add description.
+
+ -- Martin Michlmayr <tbm@cyrius.com>  Mon, 19 Jul 2010 16:01:02 +0100
+
+linux-kernel-di-armel-2.6 (1.44) unstable; urgency=low
+
+  [ Martin Michlmayr ]
+  * ixp4xx: Add event-modules.
+
+ -- Martin Michlmayr <tbm@cyrius.com>  Mon, 19 Jul 2010 15:10:22 +0100
+
+linux-kernel-di-armel-2.6 (1.43) unstable; urgency=low
+
+  [ Otavio Salvador ]
   * btrfs-modules: add.
   * zlib-modules: add; in kirkwood it is built-in and so provided by
     kernel-image.
 
- -- Otavio Salvador <otavio@ossystems.com.br>  Mon, 05 Jul 2010 20:15:19 -0300
+  [ Martin Michlmayr ]
+  * kirkwood, orion5x: include inet_lro in nic-modules since it's no
+    longer built in but required by mv643xx_eth.
+  * Get rid of the input-modules since the meaning conflicts with the
+    input-modules from kernel-wedge:
+    - iop32: Add event-modules and drop input-modules which is now
+      obsolete.
+    - ixp4xx: Rename input-modules to beeper-modules.
+    - kirkwood, orion5x: Rename input-modules to event-modules.
+  * kirkwood: Add fb-modules, input-modules, mouse-modules and
+    uinput-modules so we can run d-i in framebuffer mode and g-i.
+
+ -- Martin Michlmayr <tbm@cyrius.com>  Mon, 19 Jul 2010 14:16:33 +0100
 
 linux-kernel-di-armel-2.6 (1.42) unstable; urgency=low
 

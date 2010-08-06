@@ -42,16 +42,12 @@ partman/partman-basicmethods
 partman/partman-partitioning
 partman/partman-basicfilesystems
 partman/partman-ext3
-#partman/partman-btrfs
+# Don't calculate translation stats as not released with squeeze beta1
+# The minus sign should be removed after bsqueeze beta1
+partman/partman-btrfs -
 partman/partman-reiserfs
 partman/partman-jfs
 partman/partman-xfs
-partman/partman-ext2r0
-
-partman/partman-reiserfs
-partman/partman-jfs
-partman/partman-xfs
-partman/partman-ext2r0
 partman/partman-target
 
 # Second half
@@ -85,10 +81,15 @@ installation-report
 cdrom-checker
 network-console
 live-installer
+debian-installer-launcher
 
 # Other architectures partman and bootloader
 partman/partman-palo
 partman/partman-efi
+partman/partman-ext2r0
+# Don't calculate translation stats as not released with squeeze beta1
+# The minus sign should be removed after bsqueeze beta1
+partman/partman-ufs -
 arch/ia64/elilo-installer
 # alpha and m68k are no longer release arches: ignore for translation stats
 arch/alpha/aboot-installer -

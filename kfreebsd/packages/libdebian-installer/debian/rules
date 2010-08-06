@@ -1,6 +1,6 @@
 #! /usr/bin/make -f
 %:
-	dh --builddirectory=build $@
+	dh $@ --builddirectory=build
 
 DEB_HOST_ARCH_OS    := $(shell dpkg-architecture -qDEB_HOST_ARCH_OS 2>/dev/null)
 
@@ -21,9 +21,7 @@ configure:
 
 override_dh_auto_build:
 	dh_auto_build
-ifneq ($(DEB_HOST_ARCH_OS),hurd)
 	$(MAKE) -C build/doc doc
-endif
 
 override_dh_clean:
 ifneq "$(wildcard /usr/share/misc/config.sub)" ""
