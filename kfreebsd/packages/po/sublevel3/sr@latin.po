@@ -11,9 +11,10 @@ msgstr ""
 "Project-Id-Version: debian-installer\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2010-08-05 20:58+0000\n"
-"PO-Revision-Date: 2010-07-25 17:32+0100\n"
+"PO-Revision-Date: 2010-08-08 01:41+0100\n"
 "Last-Translator: Karolina Kalic <karolina@janos.in.rs>\n"
 "Language-Team: Serbian/Latin\n"
+"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -342,7 +343,7 @@ msgstr "Multipath %s (WWID %s)"
 #. Description
 #. :sl3:
 #: ../partman-base.templates:58001
-#, fuzzy, no-c-format
+#, no-c-format
 msgid "Multipath %s (partition #%s)"
 msgstr "Multipath %s (particija br. %s)"
 
@@ -424,6 +425,10 @@ msgid ""
 "smaller targeted initrd there is a very small chance that not all needed "
 "drivers are included."
 msgstr ""
+"Generički initrd je mnogo veći od ciljanog i može biti toliko veliki da neki "
+"but louderi neće moći da ga učitaju, ali ima prednost da se može koristiti "
+"na bilo kom hardversom sistemu. Sa ciljanim initrd-om postoji veoma mala da "
+"nisu uključeni svi drajveri."
 
 #. Type: note
 #. Description
@@ -513,39 +518,35 @@ msgstr "Instalacija GRUB-a je prekinuta."
 #. Description
 #. :sl3:
 #: ../grub-installer.templates:5001
-#, fuzzy
 msgid "Install the GRUB boot loader to the multipath device?"
-msgstr "Instalirati GRUB but louder u ?"
+msgstr "Instalirati GRUB but louder na multipath uređaj?"
 
 #. Type: boolean
 #. Description
 #. :sl3:
 #: ../grub-installer.templates:5001
-#, fuzzy
 msgid "Installation of GRUB on multipath is experimental."
-msgstr "Instalacija GRUB-a na SATA RAID je eksperimentalno."
+msgstr "Instalacija GRUB-a na multipath uređaju je eksperimentalna."
 
 #. Type: boolean
 #. Description
 #. :sl3:
 #: ../grub-installer.templates:5001
-#, fuzzy
 msgid ""
 "GRUB is always installed to the master boot record (MBR) of the multipath "
 "device. It is also assumed that the WWID of this device is selected as boot "
 "device in the system's FibreChannel adapter BIOS."
 msgstr ""
-"GRUB je uvek instaliran na master but zapisu (MBR) SATA RAID diska. Takođese "
-"pretpostavlja da je taj disk označen kao prvi hard disk u redosledu "
-"butovanja definisanom u podešavanjima sistemskog BIOS-a."
+"GRUB je uvek instaliran na master but zapis (MBR) multipath uređaja. Takođe "
+"se pretpostavlja da je WWID tog uređaja izabran kao but uređaj na sistemskom "
+"FibreChannel adaptiranom BIOS-u."
 
 #. Type: error
 #. Description
 #. :sl3:
 #: ../grub-installer.templates:6001
-#, fuzzy
 msgid "An error occurred while setting up GRUB for the multipath device."
-msgstr "Došlo je do greške prilikom podešavanja GRUB-a na SATA RAID disk."
+msgstr "Došlo je do greške prilikom podešavanja GRUB-a na multipath uređaju."
 
 #. Type: select
 #. Choices
@@ -595,7 +596,7 @@ msgstr "Drugi izbor (napredno)"
 #: ../lilo-installer.templates:1002 ../lilo-installer.templates:2002
 #: ../lilo-installer.templates:3001
 msgid "LILO installation target:"
-msgstr ""
+msgstr "Mesto instalacije LILO-a:"
 
 #. Type: select
 #. Description
@@ -607,6 +608,10 @@ msgid ""
 "control of the boot process, but if you want to use a different boot "
 "manager, just install LILO on the new Debian partition instead."
 msgstr ""
+"Potrebno je instalirati LILO da bi sistem bio butabilan. Instaliranjem na "
+"MBR-u LILO će preuzeti potpunu kontrolu but procesa, ali ako želite da "
+"koristite drugi but menadžer, instalirajte LILO na particiju na kojoj je "
+"instaliran Debian."
 
 #. Type: select
 #. Description
@@ -634,7 +639,7 @@ msgid ""
 "may choose to install it onto a software RAID array or another device."
 msgstr ""
 "Potrebno je instalirati LILO da bi sistem bio butabilan. Možete ga "
-"instalirati na softverskom RAID nizu ili na nekom drugom uređaju."
+"instalirati na softverski RAID niz ili na neki drugi uređaj."
 
 #. Type: string
 #. Description
@@ -740,6 +745,9 @@ msgid ""
 "boot loader. This may cause you to be unable to boot into the system that is "
 "being installed."
 msgstr ""
+"Izabrali ste da instalirate LILO na particiji koja nije aktivna. Ako "
+"particija nije označena kao aktivna, LILO neće biti učitan od but loudera. "
+"Zbog ovoga nećete moći da butujete u sistem koji je instaliran."
 
 #. Type: boolean
 #. Description
@@ -817,6 +825,10 @@ msgid ""
 "be unpartitioned. If you wish, you may investigate this from a shell in the "
 "installer environment."
 msgstr ""
+"Instaler ne može da nađe particije, nećete moći da montirate root fajl "
+"sistem. Do ovoga je možda došlo jer kernel nije mogao da detektuje hard disk "
+"ili nije uspeo da pročita particionu tabelu, ili disk nije particionisan. "
+"Ako želite, možete ovo da proverite iz shell-a u instaleru."
 
 #. Type: error
 #. Description
@@ -952,6 +964,9 @@ msgid ""
 "did not find an installer ISO image. It's possible that a more thorough "
 "search will find the ISO image, but it may take a long time."
 msgstr ""
+"Brza pretraga za ISO slikom instalera, koja pretražuje samo uobičajena "
+"mesta, nije pronašla ISO sliku instalera. Moguće je da će detaljnija "
+"pretraga pronaći ISO sliku instalera, ali može da potraje."
 
 #. Type: error
 #. Description
@@ -1057,6 +1072,9 @@ msgid ""
 "debug info. However, the network is not set up yet. The web server will be "
 "left running, and will be accessible once the network is configured."
 msgstr ""
+"Veb server koji opslužuje log fajlove i debag informacije je pokrenut na "
+"ovom računaru. Međutim, mreža nije podešena. Bev server će nastaviti da radi "
+"i biće dostupan kada mreža bude konfigurisana."
 
 #. Type: note
 #. Description
@@ -1074,6 +1092,8 @@ msgid ""
 "debug info. An index of all the available log files can be found at http://"
 "${ADDRESS}/"
 msgstr ""
+"Veb server koji opslužuje log fajlove i debag informacije je pokrenut na "
+"ovom računaru. Indeks dostupnih log fajlova se nalazi na http://${ADDRESS}/"
 
 #. Type: boolean
 #. Description
@@ -1158,6 +1178,8 @@ msgid ""
 "Opening the MD5 file on the CD-ROM failed. This file contains the checksums "
 "of the files located on the CD-ROM."
 msgstr ""
+"Nije uspelo otvaranje MD5 fajla sa CD-ROM-a. Fajl sadrži sume fajlova koji "
+"se nalaze na CD-ROM-u."
 
 #. Type: note
 #. Description
@@ -1324,14 +1346,14 @@ msgstr ""
 #. :sl3:
 #: ../debian-installer-launcher.templates:1001
 msgid "Kernel version mismatch"
-msgstr ""
+msgstr "Verzije kernela se ne podudaraju"
 
 #. Type: error
 #. Description
 #. :sl3:
 #: ../debian-installer-launcher.templates:2001
 msgid "Live system kernel and installer kernel don't match"
-msgstr ""
+msgstr "Kernel live sistema i kernel instalera se ne podudaraju"
 
 #. Type: error
 #. Description
@@ -1343,6 +1365,8 @@ msgid ""
 "The installer can only be used if the kernel versions of the live system "
 "(${LIVE_KERNEL}) and of the installer (${DI_KERNEL}) are the same."
 msgstr ""
+"Instaler se može koristiti samo ako su verzije kernela live sistema "
+"(${LIVE_KERNEL}) i instalera (${DI_KERNEL}) iste."
 
 #. Type: error
 #. Description
@@ -1351,7 +1375,7 @@ msgstr ""
 #. 2.6.32-5-486, 2.6.32-5-amd64, or 2.6.32-5-powerpc etc.
 #: ../debian-installer-launcher.templates:2001
 msgid "Please reboot with the correct kernel (${DI_KERNEL})."
-msgstr ""
+msgstr "Restartujte računar sa kernelom (${DI_KERNEL})."
 
 #. #-#-#-#-#  templates.pot (PACKAGE VERSION)  #-#-#-#-#
 #. Type: boolean
@@ -1435,6 +1459,8 @@ msgid ""
 "The current kernel doesn't seem to support multidisk devices. This should be "
 "solved by loading the needed modules."
 msgstr ""
+"Trenutni kernel ne podržava multidisk uređaje. Učitavanjem potrebnih modula "
+"se može dodati podrška."
 
 #. Type: select
 #. Choices
@@ -1542,6 +1568,9 @@ msgid ""
 "Please create such a partition, or delete an already used multidisk device "
 "to free its partitions."
 msgstr ""
+"Nisu dostupne neupotrebljene particije tipa „Linux RAID Autodetect“. "
+"Kreirajte takvu particiju ili obrišite multidisk uređaj koji je već u "
+"upotrebi da oslobodite njegove particije."
 
 #. Type: error
 #. Description
@@ -1621,6 +1650,10 @@ msgid ""
 "if one or more of the active devices fail. A minimum of ${MINIMUM} active "
 "devices is required."
 msgstr ""
+"RAID${LEVEL} niz će se sastojati od aktivnih i rezervnih particija. Aktivne "
+"particije su one u upotrebi, dok će rezrvni uređaji biti u upotrebi samo ako "
+"su jedan ili više aktivnih uređaja neupotrebljivi. Najmanje ${MINIMUM} "
+"aktivnih uređaja je potrebno."
 
 #. Type: string
 #. Description
@@ -1665,14 +1698,14 @@ msgstr ""
 #. :sl3:
 #: ../mdcfg-utils.templates:10001 ../partman-md.templates:11001
 msgid "Number of spare devices for the RAID${LEVEL} array:"
-msgstr "Broj slobodnih uređaja za RAID${LEVEL} niz:"
+msgstr "Broj rezervnih uređaja za RAID${LEVEL} niz:"
 
 #. Type: multiselect
 #. Description
 #. :sl3:
 #: ../mdcfg-utils.templates:11001
 msgid "Spare devices for the RAID${LEVEL} multidisk device:"
-msgstr "Slobodni uređaji za RAID${LEVEL} multidisk udeđaj:"
+msgstr "Rezervni uređaji za RAID${LEVEL} multidisk udeđaj:"
 
 #. Type: multiselect
 #. Description
@@ -1681,7 +1714,7 @@ msgstr "Slobodni uređaji za RAID${LEVEL} multidisk udeđaj:"
 msgid ""
 "You have chosen to create a RAID${LEVEL} array with ${COUNT} spare devices."
 msgstr ""
-"Izabrali ste da kreirate RAID${LEVEL} niz sa ${COUNT} slobodnih uređaja."
+"Izabrali ste da kreirate RAID${LEVEL} niz sa ${COUNT} rezervnih uređaja."
 
 #. Type: multiselect
 #. Description
@@ -1693,14 +1726,17 @@ msgid ""
 "remaining partitions will be added to the array as \"missing\". You will be "
 "able to add them later to the array."
 msgstr ""
+"Izaberite koje će se particije koristiti kao rezervni uređaji. Možete "
+"izabrati do ${COUNT} particija. Ako izaberete manje od ${COUNT} uređaja, "
+"preostale particije će biti dodate nizu kao „missing“. Moćićete da ih dodate "
+"nizu kasnije."
 
 #. Type: string
 #. Description
 #. :sl3:
 #: ../mdcfg-utils.templates:12001
-#, fuzzy
 msgid "Layout of the RAID10 multidisk device:"
-msgstr "Aktivni uređaji za RAID0 multidisk udeđaj:"
+msgstr "Redosled za RAID10 multidisk udeđaj:"
 
 #. Type: string
 #. Description
@@ -1711,6 +1747,8 @@ msgid ""
 "number (number of copies of each chunk). The number must be smaller or equal "
 "to the number of active devices."
 msgstr ""
+"Raspored mora biti n, o ili f (poredak kopija) praćen brojem (broj kopija "
+"svakog dela). Broj mora biti manji ili jednak broju aktivnih uređaja."
 
 #. Type: string
 #. Description
@@ -1725,6 +1763,13 @@ msgid ""
 "     stripe, whole stripes are duplicated but are rotated by one\n"
 "     device so duplicate blocks are on different devices."
 msgstr ""
+"Slovo u poretku kopija:\n"
+" n - bliske kopije: Višestruke kopije istog bloka podataka\n"
+"     imaju sličan ofset na različitim uređajima.\n"
+" f - daleke kopije: Višestruke kopije imaju vrlo različite ofsete\n"
+" o - ofset kopije: Umesto dupliranja delova u okviru linije\n"
+"     cele linije se dupliraju i rotiraju za jedan uređaj tako da\n"
+"     su duplirani blokovi na različitim uređajima."
 
 #. Type: select
 #. Description
@@ -1741,6 +1786,8 @@ msgid ""
 "Deleting a multidisk device will stop it and clear the superblock of all its "
 "components."
 msgstr ""
+"Brisanje multidisk uređaja će ga zaustaviti i obrisati superblok svih "
+"njegovih komponenti."
 
 #. Type: select
 #. Description
@@ -1751,6 +1798,8 @@ msgid ""
 "devices in a new multidisk device. The array will however be unusable after "
 "the deletion."
 msgstr ""
+"Ovo vam neće odmah dozvoliti da ponovo koristite particije ili uređaje u "
+"novom multidisk uređaju. Ali će niz biti neupotrebljiv nakon brisanja."
 
 #. Type: select
 #. Description
@@ -2661,6 +2710,7 @@ msgstr "Konfigurisanje softverskog RAID-a"
 msgid ""
 "This is the software RAID (or MD, \"multiple device\") configuration menu."
 msgstr ""
+"Ovo je konfiguracioni meni za softverski RAID (ili MD, „višestruki uređaj“)."
 
 #. Type: select
 #. Description
@@ -2714,6 +2764,10 @@ msgid ""
 "one or more of the active devices fail. A minimum of ${MINIMUM} active "
 "devices is required."
 msgstr ""
+"RAID${LEVEL} niz će se sastojati od aktivnih i rezervnih uređaja. Aktivni "
+"uređaji su oni u upotrebi, dok će rezrvni uređaji biti u upotrebi samo ako "
+"su jedan ili više aktivnih uređaja neupotrebljivi. Najmanje ${MINIMUM} "
+"aktivnih uređaja je potrebno."
 
 #. Type: multiselect
 #. Description
@@ -2727,7 +2781,7 @@ msgstr "Aktivni uređaji za RAID${LEVEL} niz:"
 #. :sl3:
 #: ../partman-md.templates:12001
 msgid "Spare devices for the RAID${LEVEL} array:"
-msgstr "Slobodni uređaji za RAID${LEVEL} niz:"
+msgstr "Rezervni uređaji za RAID${LEVEL} niz:"
 
 #. Type: multiselect
 #. Description
@@ -2739,14 +2793,17 @@ msgid ""
 "remaining partitions will be added to the array as \"missing\". You will be "
 "able to add them to the array later."
 msgstr ""
+"Izaberite koje će se particije koristiti kao rezervni uređaji. Možete "
+"izabrati do ${COUNT} particija. Ako izaberete manje od ${COUNT} uređaja, "
+"preostale particije će biti dodate nizu kao „missing“. Moćićete da ih dodate "
+"nizu kasnije."
 
 #. Type: string
 #. Description
 #. :sl3:
 #: ../partman-md.templates:14001
-#, fuzzy
 msgid "Layout of the RAID10 array:"
-msgstr "Aktivni uređaji za RAID0 multidisk udeđaj:"
+msgstr "Redosled za RAID10 niz:"
 
 #. Type: select
 #. Description
@@ -2763,6 +2820,8 @@ msgid ""
 "Deleting a software RAID device will stop it and clear the superblock of all "
 "its components."
 msgstr ""
+"Brisanje softverskog RAID uređaja će ga zaustaviti i obrisati superblok svih "
+"njegovih komponenti."
 
 #. Type: select
 #. Description
@@ -2773,6 +2832,8 @@ msgid ""
 "devices in a new software RAID device. The array will however be unusable "
 "after the deletion."
 msgstr ""
+"Ovo vam neće odmah dozvoliti da ponovo koristite particije ili uređaje u "
+"novom softverskom RAID uređaju. Ali će niz biti neupotrebljiv nakon brisanja."
 
 #. Type: error
 #. Description
@@ -2835,6 +2896,8 @@ msgid ""
 "Before RAID can be configured, the changes have to be written to the storage "
 "devices.  These changes cannot be undone."
 msgstr ""
+"Pre konfiguracije RAID-a, treba primeniti promene na uređaju za "
+"skladištenje. Ove promene nije moguće poništiti."
 
 #. Type: boolean
 #. Description
@@ -2848,13 +2911,16 @@ msgid ""
 "disks containing physical volumes are allowed.  Please convince yourself "
 "that you are satisfied with the current partitioning scheme in these disks."
 msgstr ""
+"Kada je RAID konfigurisan, nisu dozvoljene dodatne promene na particijama "
+"diskova koji sadrže fizičke volumene. Ubedite sebe da ste zadovoljni sa "
+"trenutnom particionom šemom na ovim diskovima."
 
 #. Type: boolean
 #. Description
 #. :sl3:
 #: ../partman-md.templates:20001
 msgid "Keep current partition layout and configure RAID?"
-msgstr ""
+msgstr "Zadržati trenutni raspored particija i konfigurisati RAID?"
 
 #. Type: error
 #. Description
@@ -2932,7 +2998,7 @@ msgstr ""
 #. :sl3:
 #: ../partman-lvm.templates:1001
 msgid "Unallocated physical volumes:"
-msgstr ""
+msgstr "Neodređeni fizički volumeni:"
 
 #. Type: text
 #. Description
@@ -3094,7 +3160,7 @@ msgstr ""
 #. :sl3:
 #: ../partman-lvm.templates:19001
 msgid "Keep current partition layout and configure LVM?"
-msgstr ""
+msgstr "Zadržati trenutni raspored particija i konfigurisati LVM?"
 
 #. Type: boolean
 #. Description
@@ -3295,6 +3361,11 @@ msgid ""
 "or less and may not begin with a hyphen. The names \".\" and \"..\" are not "
 "allowed. In addition, logical volume names may not begin with \"snapshot\"."
 msgstr ""
+"Nazivi logičkih volumena ili grupe volumena mogu da sadrže samo "
+"alfanumeričke karaktere, crtu, plus, tačku i donju crtu. Mogu da imaju "
+"najviše 128 karaktera i ne mogu da počinju crtom. Nazivi „.“ i „..“ nisu "
+"dozvoljeni. Dodatno, nazivi logičkih volumena ne mogu da počinju sa "
+"„snapshot“."
 
 #. Type: error
 #. Description
@@ -3379,9 +3450,8 @@ msgstr ""
 #. Description
 #. :sl3:
 #: ../partman-lvm.templates:64001
-#, fuzzy
 msgid "Logical Volume Management"
-msgstr "Konfiguriši LVM"
+msgstr "LVM"
 
 #. Type: note
 #. Description
@@ -3393,6 +3463,9 @@ msgid ""
 "other partition is underused. The Logical Volume Manager (LVM) can help with "
 "this."
 msgstr ""
+"Česta situacija za sistem administratore je da nađu neke particije koje "
+"imaju manjak prostora (obično najvažnije), dok su neke druge particije slabo "
+"u upotrebi. LVM može tu da pomogne."
 
 #. Type: note
 #. Description
@@ -3406,6 +3479,12 @@ msgid ""
 "volume group at any time, and logical volumes can be resized up to the "
 "amount of unallocated space in the volume group."
 msgstr ""
+"LVM omogućava kombinovanje disk ili particionih uređaja („fizički volumeni“) "
+"za formiranje virtualnog diska („grupa volumena“), koji onda može biti "
+"podeljen na virtualne particije („logički volumeni“). Grupe volumena i "
+"logički volumeni mogu da se prostiru na više fizičkih diskova. Novi fizički "
+"volumeni mogu biti dodati grupi volumena bilo kad i logički volumeni mogu "
+"biti prošireni za veličinu nealociranog prostora u grupi volumena."
 
 #. Type: note
 #. Description
@@ -3417,6 +3496,10 @@ msgid ""
 "logical volumes will be displayed in the same way as ordinary partitions, "
 "and should be treated as such."
 msgstr ""
+"Stavke u LVM konfiguracionom meniju mogu biti upotrebljene za uređivanje "
+"grupa volumena i logičkih volumena. Nakon što se vratite na uređivanje "
+"particija, logički volumeni će biti prikazani kao obične particije i kao "
+"takve ih treba tretirati."
 
 #. Type: string
 #. Description
@@ -3505,7 +3588,7 @@ msgstr ""
 #: ../partman-auto-lvm.templates:8001
 #, no-c-format
 msgid "Multiple disks (%s)"
-msgstr ""
+msgstr "Više diskova (%s)"
 
 #. Type: error
 #. Description
@@ -3532,6 +3615,8 @@ msgid ""
 "Please check that all devices are properly connected. Alternatively, please "
 "check the automatic partitioning recipe."
 msgstr ""
+"Proverite da li su svi uređaji dobro povezani ili proverite automatsko "
+"particionisanje."
 
 #. Type: error
 #. Description
@@ -3548,14 +3633,15 @@ msgid ""
 "The automatic partitioning recipe contains the definition of a volume group "
 "that does not contain any physical volume."
 msgstr ""
+"Automatsko particionisanje sadrži definiciju grupe volumena koja ne sadrži "
+"nijedan fizički volumen."
 
 #. Type: error
 #. Description
 #. :sl3:
 #: ../partman-auto-lvm.templates:10001
-#, fuzzy
 msgid "Please check the automatic partitioning recipe."
-msgstr "Ispravite ovo u meniju za particionisanje."
+msgstr "Proverite automatsko particionisanje."
 
 #. Type: error
 #. Description
@@ -3568,10 +3654,10 @@ msgstr "Greška pri nameštanju RAID-a"
 #. Description
 #. :sl3:
 #: ../partman-auto-raid.templates:1001
-#, fuzzy
 msgid ""
 "An unexpected error occurred while setting up a preseeded RAID configuration."
-msgstr "Došlo je do neočekivane greške prilikom otkačinjanja particija."
+msgstr ""
+"Došlo je do neočekivane greške prilikom podešavanja RAID konfiguracije."
 
 #. Type: error
 #. Description
@@ -3588,6 +3674,8 @@ msgid ""
 "There are not enough RAID partitions specified for your preseeded "
 "configuration. You need at least 3 devices for a RAID5 array."
 msgstr ""
+"Nema dovoljno RAID particija navedenih za vašu konfiguraciju. Treba vam "
+"najmanje 3 uređaja za RAID5 niz."
 
 #. Type: text
 #. Description
@@ -3625,7 +3713,7 @@ msgstr "Povratna petlja (loop-AES)"
 #. :sl3:
 #: ../partman-crypto.templates:4001
 msgid "Device-mapper (dm-crypt)"
-msgstr ""
+msgstr "Maper uređaja (dm-crypt)"
 
 #. Type: text
 #. Description
@@ -3709,7 +3797,7 @@ msgstr "IV algoritam:"
 #. :sl3:
 #: ../partman-crypto.templates:14001
 msgid "Initialization vector generation algorithm for this partition:"
-msgstr ""
+msgstr "Algoritam generisanja inicijalizacionog vektora za ovu particiju:"
 
 #. Type: select
 #. Description
@@ -3723,6 +3811,9 @@ msgid ""
 "no reason to change this from the recommended default, except for "
 "compatibility with older systems."
 msgstr ""
+"Postoje različiti algoritmi koji izvlače inicijalizacioni vektor za svaki "
+"sektor. Izbor utiče na sigurnost enkripcije. Normalno, nije potrebno menjati "
+"podrazumevano, osim zbog kompatibilnosti sa starijim sistemima."
 
 #. Type: text
 #. Description
@@ -3745,15 +3836,14 @@ msgstr "Tip enkripcionog ključa za ovu particiju:"
 #. :sl3:
 #: ../partman-crypto.templates:17001
 msgid "Encryption key hash:"
-msgstr ""
+msgstr "Haš ključa za enkripciju:"
 
 #. Type: select
 #. Description
 #. :sl3:
 #: ../partman-crypto.templates:18001
-#, fuzzy
 msgid "Type of encryption key hash for this partition:"
-msgstr "Tačka kačenja za ovu particiju:"
+msgstr "Tip haša za ključ enkripcije za ovu particiju:"
 
 #. Type: select
 #. Description
@@ -3765,6 +3855,9 @@ msgid ""
 "recommended default and doing so in the wrong way can reduce the encryption "
 "strength."
 msgstr ""
+"Ključ za enkripciju se generiše iz lozinke pomoću haš funkcije. Normalno, ne "
+"postoji razlog za promenu podrazumevanog, jer može smanjiti jačinu "
+"enkripcije."
 
 #. Type: text
 #. Description
@@ -3981,7 +4074,7 @@ msgstr ""
 #. :sl3:
 #: ../partman-crypto.templates:35001
 msgid "Keep current partition layout and configure encrypted volumes?"
-msgstr ""
+msgstr "Konfigurisati enkritovane volumene na postojeći raspored particija?"
 
 #. Type: error
 #. Description
@@ -4038,7 +4131,7 @@ msgstr "Lozinka"
 #. This text is one of these choices, so keep it short
 #: ../partman-crypto.templates:39001
 msgid "Keyfile (GnuPG)"
-msgstr ""
+msgstr "Fajl sa ključem (GnuPG)"
 
 #. Type: text
 #. Description
@@ -4213,7 +4306,7 @@ msgstr "Ključ za enkripciju za ${DEVICE} je sada kreiran."
 #: ../cdebconf-gtk-entropy.templates:3001
 #: ../cdebconf-text-entropy.templates:3001
 msgid "Key data has been created successfully."
-msgstr ""
+msgstr "Ključ je uspešno kreiran."
 
 #. Type: error
 #. Description
@@ -4226,9 +4319,8 @@ msgstr "Problem pri kreiranju ključa"
 #. Description
 #. :sl3:
 #: ../partman-crypto.templates:49001
-#, fuzzy
 msgid "An error occurred while creating the keyfile."
-msgstr "Došlo je do greške prilikom zapisivanja izmena da diskove."
+msgstr "Došlo je do greške prilikom kreiranja fajla sa ključem."
 
 #. Type: error
 #. Description
