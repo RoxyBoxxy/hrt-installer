@@ -1,0 +1,114 @@
+<!-- retain these comments for translator revision tracking -->
+<!-- original version: 43641 -->
+
+
+  <sect2 arch="arm" id="arm-firmware-overview"><title>ARM-Firmware</title>
+
+    <para>
+      Wie bereits vorher erwähnt, gibt es unglücklicherweise keinen
+      Standard für System-Firmware auf ARM-Systemen. Sogar das Verhalten
+      verschiedener Systeme, die nominal die gleiche Firmware verwenden,
+      kann ziemlich unterschiedlich sein. Dies liegt an der Tatsache,
+      dass ein großer Teil der Geräte, die die ARM-Architektur nutzen,
+      eingebettete (embedded) Systeme sind, für die die Hersteller
+      üblicherweise stark angepasste Firmware-Versionen erstellen
+      und gerätespezifische Patches integrieren.
+      Unglücklicherweise melden die Hersteller oft ihre Änderungen
+      nicht zurück an die ursprünglichen Firmware-Entwickler, so dass
+      die Änderungen nicht in neuere Versionen der Original-Firmware
+      einfließen.
+    </para>
+    <para>
+      Als Ergebnis daraus verwenden sogar neu verkaufte Systeme oft eine
+      Firmware, die auf einer mehrere Jahre alten, durch den Hersteller
+      angepassten Version einer Firmware basiert, deren Original-Codebasis
+      sich in der Zwischenzeit erheblich weiterentwickelt hat und
+      zusätzliche Funktionalitäten enthält oder bei bestimmten Aspekten
+      ein verändertes Verhalten zeigt.
+      Zusätzlich dazu ist die Benamung von Onboard-Geräten nicht
+      konsistent zwischen hersteller-modifizierten Versionen der gleichen
+      Firmware, daher ist es nahezu unmöglich, nützliche geräteunabhängige
+      Dokumentation für ARM-basierte Systeme bereitzustellen.
+    </para>
+  </sect2>
+
+  <sect2 arch="arm" id="uboot-macsetting">
+    <title>Setzen der Ethernet-MAC-Adresse in u-boot</title>
+    <para>
+      Die MAC-Adresse jeder Ethernet-Schnittstelle sollte eigentlich
+      global eindeutig sein, und technisch muss sie innerhalb ihrer 
+      Ethernet-Broadcast-Domain eindeutig sein.
+      Um dies zu erreichen, reserviert der Hersteller normalerweise
+      einen Block von MAC-Adressen aus einem zentral administrierten
+      Pool (für den eine Gebühr gezahlt werden muss) und vergibt dann
+      eine dieser Adressen an jedes verkaufte Gerät.
+    </para>
+    <para>
+      Im Falle von Development-Boards wollen Hersteller manchmal
+      die Zahlung der Gebühr vermeiden und stellen daher keine global
+      eindeutigen Adressen bereit. In diesen Fällen muss der Benutzer
+      selbst MAC-Adressen für seine Systeme vergeben. Wenn für eine
+      Ethernet-Schnittstelle keine MAC-Adresse festgelegt ist, generieren
+      einige Netzwerktreiber eine zufällige MAC-Adresse, die sich dann
+      bei jedem Neustart ändern kann, und dabei wäre ein Netzwerkzugriff
+      möglich, ohne dass der Benutzer händisch eine Adresse festgelegt
+      hat; wenn jedoch z.B. die IP-Adressen über DHCP aus der MAC-Adresse
+      des anfordernden Clients abgeleitet werden, würde dies
+      natürlich nicht zuverlässig funktionieren.
+    </para>
+    <para>
+      Um Konflikte mit vorhandenen offiziell vergebenen MAC-Adressen
+      zu vermeiden, gibt es einen Adress-Pool, der für sogenannte
+      <quote>lokal administrierte</quote> Adressen reserviert ist.
+      Er wird über den Wert von zwei speziellen Bits im ersten Byte
+      der Adresse definiert (der Artikel <quote>MAC address</quote>
+      in der englisch-sprachigen Wikipedia enthält hierzu eine gute
+      Beschreibung). In der Praxis bedeutet dies, dass z.B. jede
+      Adresse, die mit dem hexadezimalen Wert ca beginnt (wie
+      ca:ff:ee:12:34:56), als lokal administrierte Adresse
+      verwendet werden kann.
+    </para>
+    <para>
+      Auf Systemen, die u-boot als System-Firmware nutzen, ist die
+      Ethernet-MAC-Adresse in der Umgebungsvariablen <quote>ethaddr</quote>
+      abgelegt. Sie kann über den u-boot-Befehlsprompt mit dem
+      Befehl <quote>printenv ethaddr</quote> überprüft und mit
+      <quote>setenv ethaddr ca:ff:ee:12:34:56</quote> gesetzt werden.
+      Nach dem Ändern des Wertes wird mit dem Befehl
+      <quote>saveenv</quote> diese Einstellung fest abgespeichert.
+    </para>
+  </sect2>
+
+  <sect2 arch="arm" id="uboot-relocation-issues">
+    <title>Probleme bei der Speicherzuweisung für Kernel/Initrd/Gerätebaum in u-boot</title>
+    <para>
+      Auf einigen Systemen mit älteren u-boot-Versionen können Probleme
+      bei der korrekten Speicherzuweisung für Linux-Kernel, Initial-Ramdisk
+      und Gerätebaum-Abbild während des Boot-Prozesses
+      auftreten. In diesem Fall zeigt u-boot die Meldung <quote>Starting
+      kernel ...</quote> an, aber das System friert danach ohne weitere
+      Ausgabe ein. Diese Probleme wurden in neueren u-boot-Versionen
+      ab v2014.07 aufwärts behoben.
+    </para>
+    <para>
+      Falls das System im Originalzustand eine u-boot-Version älter als
+      v2014.07 genutzt hat und dann auf eine neuere Version aktualisiert
+      wurde, könnte das Problem auch nach dem Upgrade von u-boot noch
+      auftreten. Das Aktualisieren von u-boot modifiziert üblicherweise
+      nicht die vorhandenen Umgebungsvariablen und der Fix zur Fehlerbehebung
+      erfordert das Setzen einer zusätzlichen Umgebungsvariable (bootm_size),
+      was jedoch nur bei frischen Neuinstallationen ohne vorhandene
+      Umgebungsdaten von u-boot automatisch erledigt wird. Es ist
+      möglich, bootm_size händisch auf den neuen u-boot-Standardwert
+      zu setzen, indem <quote>env default bootm_size; saveenv</quote>
+      am u-boot-Prompt ausgeführt wird.
+    </para>
+    <para>
+      Eine andere Möglichkeit, solche Probleme bei Speicherzuweisungen
+      zu verhindern, wäre die Ausführung von
+      <quote>setenv fdt_high ffffffff; setenv initrd_high 0xffffffff;
+      saveenv</quote> am u-boot-Prompt; damit wird die
+      dynamische Speicherzuweisung für Initial-Ramdisk und 
+      Gerätebaum-Abbild vollständig deaktiviert.         
+    </para>
+  </sect2>
