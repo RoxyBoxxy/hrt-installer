@@ -259,7 +259,7 @@ my $ua = LWP::UserAgent->new();
 foreach my $source (sort keys %sources) {
     next if $source eq 'kfreebsd-10';
 
-  if ($sources{$source}{min} eq $sources{$source}{max}) {
+  if (($sources{$source}{min}||'unknown') eq ($sources{$source}{max}||'unknown')) {
       print "$source didn't change, skipping\n";
       next;
   }
@@ -352,7 +352,7 @@ foreach my $source (sort keys %sources) {
   next if $source eq '__error__';
   next if $source eq 'kfreebsd-10';
 
-  if ($sources{$source}{min} eq $sources{$source}{max}) {
+  if (($sources{$source}{min}||'unknown') eq ($sources{$source}{max}||'unknown')) {
       print "$source didn't change, skipping\n";
       next;
   }
