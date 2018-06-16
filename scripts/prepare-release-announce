@@ -372,7 +372,16 @@ foreach my $source (sort keys %sources) {
                               to    => $sources{$source}{max}
                             });
   if (@data) {
-    print $changelogs ("<hr>\n" . $changes . "\n");
+    my $improved_changes = '';
+    my @lines = split /\n/, $changes;
+    foreach my $line (@lines) {
+      # Don't try to modify titles or links:
+      if ($line !~ /Debian Changelog for/ and $line !~ /^\s*<a/) {
+        $line =~ s{(udebs?|installer)}{<span style="background-color: red; font-weight: bold">$1</span>}g;
+      }
+      $improved_changes .= "$line\n";
+  }
+    print $changelogs ("<hr>\n" . $improved_changes . "\n");
   }
   else {
     print $changelogs ("<hr>\n" . "<b>warning:</b> no changelog available for $source (from $sources{$source}{min} to $sources{$source}{max})". "\n");
