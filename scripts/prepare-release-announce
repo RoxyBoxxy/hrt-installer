@@ -267,7 +267,7 @@ foreach my $source (sort keys %sources) {
   my $name = $source ne '__error__' ? "<a href=\"#$source\">$source</a>" : "No source/changelog match";
 
   my @binaries = @{$sources{$source}{binaries} || ['<i>no more binaries</i>']};
-  my $binaries = "<li>" . join("</li><li>", @binaries) . "</li>";
+  my $binaries = "<li>" . join("</li><li>", sort @binaries) . "</li>";
   my $entry = << "EOF";
   <tr>
   <td>$name</td>
