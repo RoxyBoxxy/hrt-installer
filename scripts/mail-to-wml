@@ -8,6 +8,8 @@ use warnings;
 
 use File::Slurp;
 
+my $output = '';
+
 my $source = shift @ARGV
   or die "Usage: $0 release-draft.txt";
 
@@ -18,7 +20,7 @@ sub debug {
 
 sub emit {
     my ($line) = @_;
-    printf STDOUT "$line";
+    $output .= $line;
 }
 
 my $previous;
@@ -60,3 +62,11 @@ foreach my $line (read_file($source)) {
     debug $this, $line;
     $previous = $this;
 }
+
+# Nom nom nom newlines before closing li tags which aren't after a tag:
+$output =~ s{([^>])\n</li}{$1</li}msg;
+
+# Nom nom nom newlines before non-tags, but leave a space:
+$output =~ s{\n([^<])}{ $1}msg;
+
+print $output
