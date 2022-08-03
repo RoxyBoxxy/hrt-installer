@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: debian-installer\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-11-21 20:02+0000\n"
+"POT-Creation-Date: 2022-08-03 20:02+0000\n"
 "PO-Revision-Date: 2012-10-15 05:36+0100\n"
 "Last-Translator: Milan Kostic <kosticmilan77@open.telekom.rs>\n"
 "Language-Team: Serbian <debian-l10n-serbian@lists.debian.org>\n"
@@ -913,75 +913,20 @@ msgstr "Restartujte računar sa kernelom (${DI_KERNEL})."
 #. Description
 #. :sl3:
 #: ../grub-installer.templates:3001
-msgid "Install the GRUB boot loader to the Serial ATA RAID disk?"
-msgstr "Instalirati GRUB but louder na SATA RAID hard disku?"
-
-#. Type: boolean
-#. Description
-#. :sl3:
-#: ../grub-installer.templates:3001
-msgid "Installation of GRUB on Serial ATA RAID is experimental."
-msgstr "Instaliranje GRUB-a na SATA RAID je eksperimentalno."
-
-#. Type: boolean
-#. Description
-#. :sl3:
-#: ../grub-installer.templates:3001
-msgid ""
-"GRUB is always installed to the master boot record (MBR) of the Serial ATA "
-"RAID disk. It is also assumed that disk is listed as the first hard disk in "
-"the boot order defined in the system's BIOS setup."
-msgstr ""
-"GRUB je uvek instaliran na master but zapisu (MBR) SATA RAID diska. Takođe "
-"se pretpostavlja da je taj disk označen kao prvi hard disk u redosledu "
-"butovanja definisanom u podešavanjima sistemskog BIOS-a."
-
-#. Type: boolean
-#. Description
-#. :sl3:
-#. Type: boolean
-#. Description
-#. :sl3:
-#: ../grub-installer.templates:3001 ../grub-installer.templates:5001
-msgid "The GRUB root device is: ${GRUBROOT}."
-msgstr "Root uređaj za GRUB je: ${GRUBROOT}."
-
-#. Type: error
-#. Description
-#. :sl3:
-#: ../grub-installer.templates:4001
-msgid "An error occurred while setting up GRUB for your Serial ATA RAID disk."
-msgstr ""
-"Došlo je do greške prilikom podešavanja GRUB-a na SATA RAID hard disku."
-
-#. Type: error
-#. Description
-#. :sl3:
-#. Type: error
-#. Description
-#. :sl3:
-#: ../grub-installer.templates:4001 ../grub-installer.templates:6001
-msgid "The GRUB installation has been aborted."
-msgstr "Instalacija GRUB-a je prekinuta."
-
-#. Type: boolean
-#. Description
-#. :sl3:
-#: ../grub-installer.templates:5001
 msgid "Install the GRUB boot loader to the multipath device?"
 msgstr "Instalirati GRUB but louder na multipath uređaj?"
 
 #. Type: boolean
 #. Description
 #. :sl3:
-#: ../grub-installer.templates:5001
+#: ../grub-installer.templates:3001
 msgid "Installation of GRUB on multipath is experimental."
 msgstr "Instalacija GRUB-a na multipath uređaju je eksperimentalna."
 
 #. Type: boolean
 #. Description
 #. :sl3:
-#: ../grub-installer.templates:5001
+#: ../grub-installer.templates:3001
 msgid ""
 "GRUB is always installed to the master boot record (MBR) of the multipath "
 "device. It is also assumed that the WWID of this device is selected as boot "
@@ -991,12 +936,26 @@ msgstr ""
 "se pretpostavlja da je WWID tog uređaja izabran kao but uređaj na sistemskom "
 "FibreChannel adaptiranom BIOS-u."
 
+#. Type: boolean
+#. Description
+#. :sl3:
+#: ../grub-installer.templates:3001
+msgid "The GRUB root device is: ${GRUBROOT}."
+msgstr "Root uređaj za GRUB je: ${GRUBROOT}."
+
 #. Type: error
 #. Description
 #. :sl3:
-#: ../grub-installer.templates:6001
+#: ../grub-installer.templates:4001
 msgid "An error occurred while setting up GRUB for the multipath device."
 msgstr "Došlo je do greške prilikom podešavanja GRUB-a na multipath uređaju."
+
+#. Type: error
+#. Description
+#. :sl3:
+#: ../grub-installer.templates:4001
+msgid "The GRUB installation has been aborted."
+msgstr "Instalacija GRUB-a je prekinuta."
 
 #. #-#-#-#-#  templates.pot (grub-installer)  #-#-#-#-#
 #. Type: select
@@ -1005,7 +964,7 @@ msgstr "Došlo je do greške prilikom podešavanja GRUB-a na multipath uređaju.
 #. Type: select
 #. Choices
 #. :sl3:
-#: ../grub-installer.templates:8001 ../iso-scan.templates:14001
+#: ../grub-installer.templates:6001 ../iso-scan.templates:14001
 msgid "Enter device manually"
 msgstr "Unesi uređaj ručno"
 
@@ -3197,24 +3156,6 @@ msgstr "Šifrovani volumen (%s)"
 
 #. Type: text
 #. Description
-#. For example: Serial ATA RAID isw_dhiiedgihc_Volume0 (mirror)
-#. :sl3:
-#: ../partman-base.templates:55001
-#, no-c-format
-msgid "Serial ATA RAID %s (%s)"
-msgstr "SATA RAID %s (%s)"
-
-#. Type: text
-#. Description
-#. For example: Serial ATA RAID isw_dhiiedgihc_Volume01 (partition #1)
-#. :sl3:
-#: ../partman-base.templates:56001
-#, no-c-format
-msgid "Serial ATA RAID %s (partition #%s)"
-msgstr "SATA RAID %s (particija br. %s)"
-
-#. Type: text
-#. Description
 #. Translators: "multipath" is a pretty tricky term to translate
 #. You'll find some documentation about it at
 #. http://www.redhat.com/docs/manuals/csgfs/browse/4.6/DM_Multipath/index.html
@@ -3227,7 +3168,7 @@ msgstr "SATA RAID %s (particija br. %s)"
 #. aggregated paths.
 #. WWID stands for World-Wide IDentification
 #. :sl3:
-#: ../partman-base.templates:57001
+#: ../partman-base.templates:55001
 #, no-c-format
 msgid "Multipath %s (WWID %s)"
 msgstr "Multipath %s (WWID %s)"
@@ -3235,7 +3176,7 @@ msgstr "Multipath %s (WWID %s)"
 #. Type: text
 #. Description
 #. :sl3:
-#: ../partman-base.templates:58001
+#: ../partman-base.templates:56001
 #, no-c-format
 msgid "Multipath %s (partition #%s)"
 msgstr "Multipath %s (particija br. %s)"
@@ -3243,7 +3184,7 @@ msgstr "Multipath %s (particija br. %s)"
 #. Type: text
 #. Description
 #. :sl3:
-#: ../partman-base.templates:59001
+#: ../partman-base.templates:57001
 #, no-c-format
 msgid "LVM VG %s, LV %s"
 msgstr "LVM VG %s, LV %s"
@@ -3251,7 +3192,7 @@ msgstr "LVM VG %s, LV %s"
 #. Type: text
 #. Description
 #. :sl3:
-#: ../partman-base.templates:61001
+#: ../partman-base.templates:59001
 #, no-c-format
 msgid "Loopback (loop%s)"
 msgstr "Povratna petlja (loop%s)"

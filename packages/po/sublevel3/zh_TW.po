@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: debian-installer\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-11-21 20:02+0000\n"
+"POT-Creation-Date: 2022-08-03 20:02+0000\n"
 "PO-Revision-Date: 2020-10-23 16:26+0000\n"
 "Last-Translator: Walter Cheuk <wwycheuk@gmail.com>\n"
 "Language-Team: Debian-user in Chinese [Big5] <debian-chinese-big5@lists."
@@ -846,73 +846,20 @@ msgstr "請使用正確的 Kernel (${DI_KERNEL}) 重新開機。"
 #. Description
 #. :sl3:
 #: ../grub-installer.templates:3001
-msgid "Install the GRUB boot loader to the Serial ATA RAID disk?"
-msgstr "是否要將 GRUB 開機程式安裝至 Serial ATA RAID 硬碟上？"
-
-#. Type: boolean
-#. Description
-#. :sl3:
-#: ../grub-installer.templates:3001
-msgid "Installation of GRUB on Serial ATA RAID is experimental."
-msgstr "在 Serial ATA RAID 上安裝 GRUB 尚處於實驗階段。"
-
-#. Type: boolean
-#. Description
-#. :sl3:
-#: ../grub-installer.templates:3001
-msgid ""
-"GRUB is always installed to the master boot record (MBR) of the Serial ATA "
-"RAID disk. It is also assumed that disk is listed as the first hard disk in "
-"the boot order defined in the system's BIOS setup."
-msgstr ""
-"GRUB 必定會被安裝在 Serial ATA RAID 磁碟的主要開機記錄 (MBR) 上。同時也會假設"
-"在系統 BIOS 設定的開機順序裡，這個磁碟是被列為第一個硬碟。"
-
-#. Type: boolean
-#. Description
-#. :sl3:
-#. Type: boolean
-#. Description
-#. :sl3:
-#: ../grub-installer.templates:3001 ../grub-installer.templates:5001
-msgid "The GRUB root device is: ${GRUBROOT}."
-msgstr "GRUB 的 root 裝置是：${GRUBROOT}。"
-
-#. Type: error
-#. Description
-#. :sl3:
-#: ../grub-installer.templates:4001
-msgid "An error occurred while setting up GRUB for your Serial ATA RAID disk."
-msgstr "在替 Serial ATA RAID 磁碟設定 GRUB 時發生錯誤。"
-
-#. Type: error
-#. Description
-#. :sl3:
-#. Type: error
-#. Description
-#. :sl3:
-#: ../grub-installer.templates:4001 ../grub-installer.templates:6001
-msgid "The GRUB installation has been aborted."
-msgstr "GBUB 的安裝已被中止。"
-
-#. Type: boolean
-#. Description
-#. :sl3:
-#: ../grub-installer.templates:5001
 msgid "Install the GRUB boot loader to the multipath device?"
 msgstr "是否要將 GRUB 開機程式安裝至 multipath 裝置上？"
 
 #. Type: boolean
 #. Description
 #. :sl3:
-#: ../grub-installer.templates:5001
+#: ../grub-installer.templates:3001
 msgid "Installation of GRUB on multipath is experimental."
 msgstr "在 multipath 上安裝 GRUB 尚處於實驗階段。"
 
 #. Type: boolean
 #. Description
 #. :sl3:
-#: ../grub-installer.templates:5001
+#: ../grub-installer.templates:3001
 msgid ""
 "GRUB is always installed to the master boot record (MBR) of the multipath "
 "device. It is also assumed that the WWID of this device is selected as boot "
@@ -921,12 +868,26 @@ msgstr ""
 "GRUB 必定會被安裝在 multipath 磁碟的主要開機記錄 (MBR) 上。同時也會假設在系統"
 "的 FibreChannel 介面卡上的 BIOS 裡，已將該裝置的 WWID 設定為開機磁碟。"
 
+#. Type: boolean
+#. Description
+#. :sl3:
+#: ../grub-installer.templates:3001
+msgid "The GRUB root device is: ${GRUBROOT}."
+msgstr "GRUB 的 root 裝置是：${GRUBROOT}。"
+
 #. Type: error
 #. Description
 #. :sl3:
-#: ../grub-installer.templates:6001
+#: ../grub-installer.templates:4001
 msgid "An error occurred while setting up GRUB for the multipath device."
 msgstr "在替 multipath 磁碟設定 GRUB 時發生錯誤。"
+
+#. Type: error
+#. Description
+#. :sl3:
+#: ../grub-installer.templates:4001
+msgid "The GRUB installation has been aborted."
+msgstr "GBUB 的安裝已被中止。"
 
 #. #-#-#-#-#  templates.pot (grub-installer)  #-#-#-#-#
 #. Type: select
@@ -935,7 +896,7 @@ msgstr "在替 multipath 磁碟設定 GRUB 時發生錯誤。"
 #. Type: select
 #. Choices
 #. :sl3:
-#: ../grub-installer.templates:8001 ../iso-scan.templates:14001
+#: ../grub-installer.templates:6001 ../iso-scan.templates:14001
 msgid "Enter device manually"
 msgstr "手動輸入裝置"
 
@@ -3072,24 +3033,6 @@ msgstr "已加密的 Volume (%s)"
 
 #. Type: text
 #. Description
-#. For example: Serial ATA RAID isw_dhiiedgihc_Volume0 (mirror)
-#. :sl3:
-#: ../partman-base.templates:55001
-#, no-c-format
-msgid "Serial ATA RAID %s (%s)"
-msgstr "序列 ATA RAID %s (%s)"
-
-#. Type: text
-#. Description
-#. For example: Serial ATA RAID isw_dhiiedgihc_Volume01 (partition #1)
-#. :sl3:
-#: ../partman-base.templates:56001
-#, no-c-format
-msgid "Serial ATA RAID %s (partition #%s)"
-msgstr "Serial ATA RAID %s (分割區 #%s)"
-
-#. Type: text
-#. Description
 #. Translators: "multipath" is a pretty tricky term to translate
 #. You'll find some documentation about it at
 #. http://www.redhat.com/docs/manuals/csgfs/browse/4.6/DM_Multipath/index.html
@@ -3102,7 +3045,7 @@ msgstr "Serial ATA RAID %s (分割區 #%s)"
 #. aggregated paths.
 #. WWID stands for World-Wide IDentification
 #. :sl3:
-#: ../partman-base.templates:57001
+#: ../partman-base.templates:55001
 #, no-c-format
 msgid "Multipath %s (WWID %s)"
 msgstr "多重路徑 %s (WWID %s)"
@@ -3110,7 +3053,7 @@ msgstr "多重路徑 %s (WWID %s)"
 #. Type: text
 #. Description
 #. :sl3:
-#: ../partman-base.templates:58001
+#: ../partman-base.templates:56001
 #, no-c-format
 msgid "Multipath %s (partition #%s)"
 msgstr "Multipath %s (分割區 #%s)"
@@ -3118,7 +3061,7 @@ msgstr "Multipath %s (分割區 #%s)"
 #. Type: text
 #. Description
 #. :sl3:
-#: ../partman-base.templates:59001
+#: ../partman-base.templates:57001
 #, no-c-format
 msgid "LVM VG %s, LV %s"
 msgstr "LVM VG %s，LV %s"
@@ -3126,7 +3069,7 @@ msgstr "LVM VG %s，LV %s"
 #. Type: text
 #. Description
 #. :sl3:
-#: ../partman-base.templates:61001
+#: ../partman-base.templates:59001
 #, no-c-format
 msgid "Loopback (loop%s)"
 msgstr "回送 (循環%s)"

@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: debian-installer\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-11-21 20:02+0000\n"
+"POT-Creation-Date: 2022-08-03 20:02+0000\n"
 "PO-Revision-Date: 2021-05-06 03:32+0000\n"
 "Last-Translator: Norimitsu SUGIMOTO <dictoss@live.jp>\n"
 "Language-Team: Debian L10n Japanese <debian-japanese@lists.debian.org>\n"
@@ -884,75 +884,20 @@ msgstr "正しいカーネル (${DI_KERNEL}) で再起動してください。"
 #. Description
 #. :sl3:
 #: ../grub-installer.templates:3001
-msgid "Install the GRUB boot loader to the Serial ATA RAID disk?"
-msgstr "シリアル ATA RAID ディスクに GRUB ブートローダをインストールしますか?"
-
-#. Type: boolean
-#. Description
-#. :sl3:
-#: ../grub-installer.templates:3001
-msgid "Installation of GRUB on Serial ATA RAID is experimental."
-msgstr "シリアル ATA RAID への GRUB のインストールは実験段階です。"
-
-#. Type: boolean
-#. Description
-#. :sl3:
-#: ../grub-installer.templates:3001
-msgid ""
-"GRUB is always installed to the master boot record (MBR) of the Serial ATA "
-"RAID disk. It is also assumed that disk is listed as the first hard disk in "
-"the boot order defined in the system's BIOS setup."
-msgstr ""
-"GRUB は常にシリアル ATA RAID ディスクのマスターブートレコード (MBR) にインス"
-"トールされます。また、このディスクが、システムの BIOS セットアップで定義され"
-"たブート順序で最初のハードディスクとしてリストされているとも想定しています。"
-
-#. Type: boolean
-#. Description
-#. :sl3:
-#. Type: boolean
-#. Description
-#. :sl3:
-#: ../grub-installer.templates:3001 ../grub-installer.templates:5001
-msgid "The GRUB root device is: ${GRUBROOT}."
-msgstr "GRUB のルートデバイスは ${GRUBROOT} です。"
-
-#. Type: error
-#. Description
-#. :sl3:
-#: ../grub-installer.templates:4001
-msgid "An error occurred while setting up GRUB for your Serial ATA RAID disk."
-msgstr ""
-"シリアル ATA RAID ディスクへの GRUB のセットアップ中にエラーが発生しました。"
-
-#. Type: error
-#. Description
-#. :sl3:
-#. Type: error
-#. Description
-#. :sl3:
-#: ../grub-installer.templates:4001 ../grub-installer.templates:6001
-msgid "The GRUB installation has been aborted."
-msgstr "GRUB のインストールは中止されました。"
-
-#. Type: boolean
-#. Description
-#. :sl3:
-#: ../grub-installer.templates:5001
 msgid "Install the GRUB boot loader to the multipath device?"
 msgstr "マルチパスデバイスに GRUB ブートローダをインストールしますか?"
 
 #. Type: boolean
 #. Description
 #. :sl3:
-#: ../grub-installer.templates:5001
+#: ../grub-installer.templates:3001
 msgid "Installation of GRUB on multipath is experimental."
 msgstr "マルチパスへの GRUB のインストールは実験段階です。"
 
 #. Type: boolean
 #. Description
 #. :sl3:
-#: ../grub-installer.templates:5001
+#: ../grub-installer.templates:3001
 msgid ""
 "GRUB is always installed to the master boot record (MBR) of the multipath "
 "device. It is also assumed that the WWID of this device is selected as boot "
@@ -962,12 +907,26 @@ msgstr ""
 "れます。また、このデバイスの WWID が、システムの FibreChannel アダプタの "
 "BIOS でブートデバイスとして選択されているとも想定しています。"
 
+#. Type: boolean
+#. Description
+#. :sl3:
+#: ../grub-installer.templates:3001
+msgid "The GRUB root device is: ${GRUBROOT}."
+msgstr "GRUB のルートデバイスは ${GRUBROOT} です。"
+
 #. Type: error
 #. Description
 #. :sl3:
-#: ../grub-installer.templates:6001
+#: ../grub-installer.templates:4001
 msgid "An error occurred while setting up GRUB for the multipath device."
 msgstr "マルチパスデバイスへの GRUB のセットアップ中にエラーが発生しました。"
+
+#. Type: error
+#. Description
+#. :sl3:
+#: ../grub-installer.templates:4001
+msgid "The GRUB installation has been aborted."
+msgstr "GRUB のインストールは中止されました。"
 
 #. #-#-#-#-#  templates.pot (grub-installer)  #-#-#-#-#
 #. Type: select
@@ -976,7 +935,7 @@ msgstr "マルチパスデバイスへの GRUB のセットアップ中にエラ
 #. Type: select
 #. Choices
 #. :sl3:
-#: ../grub-installer.templates:8001 ../iso-scan.templates:14001
+#: ../grub-installer.templates:6001 ../iso-scan.templates:14001
 msgid "Enter device manually"
 msgstr "デバイスを手動で入力"
 
@@ -3191,24 +3150,6 @@ msgstr "暗号化ボリューム (%s)"
 
 #. Type: text
 #. Description
-#. For example: Serial ATA RAID isw_dhiiedgihc_Volume0 (mirror)
-#. :sl3:
-#: ../partman-base.templates:55001
-#, no-c-format
-msgid "Serial ATA RAID %s (%s)"
-msgstr "シリアル ATA RAID %s (%s)"
-
-#. Type: text
-#. Description
-#. For example: Serial ATA RAID isw_dhiiedgihc_Volume01 (partition #1)
-#. :sl3:
-#: ../partman-base.templates:56001
-#, no-c-format
-msgid "Serial ATA RAID %s (partition #%s)"
-msgstr "シリアル ATA RAID %s (パーティション #%s)"
-
-#. Type: text
-#. Description
 #. Translators: "multipath" is a pretty tricky term to translate
 #. You'll find some documentation about it at
 #. http://www.redhat.com/docs/manuals/csgfs/browse/4.6/DM_Multipath/index.html
@@ -3221,7 +3162,7 @@ msgstr "シリアル ATA RAID %s (パーティション #%s)"
 #. aggregated paths.
 #. WWID stands for World-Wide IDentification
 #. :sl3:
-#: ../partman-base.templates:57001
+#: ../partman-base.templates:55001
 #, no-c-format
 msgid "Multipath %s (WWID %s)"
 msgstr "マルチパス %s (WWID %s)"
@@ -3229,7 +3170,7 @@ msgstr "マルチパス %s (WWID %s)"
 #. Type: text
 #. Description
 #. :sl3:
-#: ../partman-base.templates:58001
+#: ../partman-base.templates:56001
 #, no-c-format
 msgid "Multipath %s (partition #%s)"
 msgstr "マルチパス %s (パーティション #%s)"
@@ -3237,7 +3178,7 @@ msgstr "マルチパス %s (パーティション #%s)"
 #. Type: text
 #. Description
 #. :sl3:
-#: ../partman-base.templates:59001
+#: ../partman-base.templates:57001
 #, no-c-format
 msgid "LVM VG %s, LV %s"
 msgstr "LVM VG %s, LV %s"
@@ -3245,7 +3186,7 @@ msgstr "LVM VG %s, LV %s"
 #. Type: text
 #. Description
 #. :sl3:
-#: ../partman-base.templates:61001
+#: ../partman-base.templates:59001
 #, no-c-format
 msgid "Loopback (loop%s)"
 msgstr "ループバック (loop%s)"
