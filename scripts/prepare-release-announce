@@ -77,6 +77,7 @@ my @VERSIONS = (
   ['20210415T151642Z', '20210415', 'Bullseye RC 1'   ],
   ['20210607T150724Z', '20210606', 'Bullseye RC 2'   ],
   ['20210731T143510Z', '20210731', 'Bullseye RC 3'   ],
+  ['20220920T122342Z', '20220917', 'Bookworm Alpha 1'],
 );
 
 # Compare the last two:
@@ -86,9 +87,9 @@ my ($ts2, $new_di, $new) = @{$VERSIONS[-1]};
 mkdir $workdir;
 chdir $workdir;
 
-`wget http://snapshot.debian.org/archive/debian/${ts1}/dists/bullseye/main/source/Sources.gz -O ${ts1}_Sources.gz`
+`wget http://snapshot.debian.org/archive/debian/${ts1}/dists/testing/main/source/Sources.gz -O ${ts1}_Sources.gz`
     if ! -f "${ts1}_Sources.gz";
-`wget http://snapshot.debian.org/archive/debian/${ts2}/dists/bullseye/main/source/Sources.gz -O ${ts2}_Sources.gz`
+`wget http://snapshot.debian.org/archive/debian/${ts2}/dists/testing/main/source/Sources.gz -O ${ts2}_Sources.gz`
     if ! -f "${ts2}_Sources.gz";
 
 if (! -f "${ts1}_udebs.db") {
