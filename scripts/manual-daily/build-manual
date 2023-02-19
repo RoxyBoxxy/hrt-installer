@@ -24,18 +24,6 @@ usage() {
     exit 1
 }
 
-## Function to check result of executed programs and exit on error
-##### DO NOT USE THIS ANYMORE. IN CASE OF ERRORS, SIMPLY WAIT FOR FIXES TO ARRIVE, AND THEN JUST TRY TO BUILD AGAIN.
-#####checkfatal() {
-#####    if [ ! "$1" = "0" ]; then
-#####        echo "Unexpected error $1 while $2" >>$mainlog
-#####        touch $ROOT/do_not_build
-#####        echo "!!!! Autobuilding has been disabled !!!!" >>$mainlog
-#####        rm -f $ROOT/lockfile
-#####        exit 999
-#####    fi
-#####}
-
 uses_po() {
     local lang=$1
 
@@ -122,7 +110,6 @@ update_from_git() {
         exit 1
     fi
     if [ -n "$(git status -s -uno .)" ] ; then
-#####        checkfatal "checking for conflicts after 'git pull'"
         echo
     fi
 }
@@ -229,8 +216,6 @@ build_lang() {
                 fi
                 ./clear.sh
 
-                # Sleep a bit to allow the system to cool down...
-                #sleep 30s
             else
                 echo "*** Not building installation-guide for $lang.$arch" >>$langlog
             fi
@@ -244,8 +229,6 @@ build_lang() {
             NR_BUILDS=$(($NR_BUILDS + 1))
         fi
 
-        # Sleep a bit to allow the system to cool down...
-        #sleep 1m
     else
         echo "No updates for $lang" >>$mainlog
     fi
@@ -333,7 +316,6 @@ if is_updated en || global_build_options_changed; then
     echo "Info: building installation-guide from XML files" >>$langlog
 
     build_lang en
-#####    checkfatal "$?" "build for English"
     echo >>$mainlog
 fi
 
@@ -341,7 +323,6 @@ fi
 cd $source
 if is_updated en || [ ! -d "$source/integrated/en" ] || global_build_options_changed; then
     update_templates >>$mainlog 2>&1
-#####    checkfatal "$?" "updating templates"
     echo >>$mainlog
 
 # Extract release codename for example-preseed from entity file
@@ -376,7 +357,6 @@ for lang in $translations; do
         if is_updated "$lang" || [ "$EN_UPDATED" ]; then
             echo "Info: updating PO files for $lang" >>$mainlog
             update_po $lang >>$langlog 2>&1
-#####            checkfatal "$?" "updating po for $lang"
         fi
     fi
 
@@ -384,7 +364,6 @@ for lang in $translations; do
         if uses_po "$lang"; then
             echo "Info: building installation-guide from PO files" >>$langlog
             generate_xml $lang >>$langlog 2>&1
-#####            checkfatal "$?" "generating xml for $lang"
             echo "Info: generation of XML files complete" >>$langlog
         else
             echo "Info: building installation-guide from XML files" >>$langlog
