@@ -153,6 +153,9 @@ p_dirs=$(real_contents packages_list | sort)
 procs=$(grep -c ^processor /proc/cpuinfo)
 echo $p_dirs | xargs -n 1 -P $procs ./calc-release-status-helper
 
+# Cheat for the late apt-setup/non-free-firmware addition:
+rm -f stats/apt-setup.5
+
 log "Calculating statistics..."
 
 : > translation-status
