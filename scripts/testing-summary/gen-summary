@@ -430,7 +430,9 @@ foreach my $bdep (sort @di_bdeps) {
 	$source = $sourceversions{unstable}{$package}{source} || '';
 	my $tv = join '<br/>', sort @{$sourceversions{testing}{$package}{version} || []};
 	my $uv = join '<br/>', sort @{$sourceversions{unstable}{$package}{version} || []};
-	$tdstyle = 'style="color: black; background-color: orange;"'
+	# Common problem: Built-Using on grub2 or grub-efi-*-signed
+	my $color = $package !~ /^grub/ ? "orange" : "crimson";
+	$tdstyle = "style=\"color: black; background-color: $color;\""
 		if $tv ne $uv;
 	print "<tr><td>$bdep</td><td>$package</td><td>$version</td><td>$arch</td><td>$source</td><td $tdstyle>$tv</td><td $tdstyle>$uv</td></tr>\n";
 }
