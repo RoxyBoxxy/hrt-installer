@@ -185,8 +185,8 @@ compute_lang() {
 			fuzzy=$(echo "$stat" | awk '{print $3}')
 			untrans=$(echo "$stat" | awk '{print $4}')
 
-			# grub-installer 1.188:
-			if [ "$plfile" = 'stats/grub-installer.1' ] && [ "$untrans" = 2 ]; then
+			# grub-installer 1.188 and 1.189:
+			if [ "$plfile" = 'stats/grub-installer.1' ] && [ "$untrans" -ge 2 ] && [ "$untrans" -le 6 ]; then
 				untrans=0
 			fi
 
