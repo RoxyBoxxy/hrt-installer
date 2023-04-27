@@ -427,7 +427,7 @@ print "<h2>d-i build-deps</h2>\n";
 print "<p>(taken from unstable's <code>debian-installer</code> source package)</p>\n";
 
 print "<table>\n";
-print "<tr><th>Build-dep</th><th>Package</th><th>Version</th><th>Architecture</th><th>Source</th><th>Testing</th><th>Unstable</th></tr>\n";
+print "<tr><th>Package</th><th>Version</th><th>Architecture</th><th>Source</th><th>Testing</th><th>Unstable</th></tr>\n";
 foreach my $bdep (sort @di_bdeps) {
 	my $package = $bdep;
 	my ($version, $arch, $source, $tdstyle) = ('', '', '', '');
@@ -441,7 +441,7 @@ foreach my $bdep (sort @di_bdeps) {
 	my $color = $package !~ /^grub/ ? "skyblue" : "crimson";
 	$tdstyle = "style=\"color: black; background-color: $color;\""
 		if $tv ne $uv;
-	print "<tr><td>$bdep</td><td>$package</td><td>$version</td><td>$arch</td><td>$source</td><td $tdstyle>$tv</td><td $tdstyle>$uv</td></tr>\n";
+	print "<tr><td>$package</td><td>$version</td><td>$arch</td><td>$source</td><td $tdstyle>$tv</td><td $tdstyle>$uv</td></tr>\n";
 }
 print "</table>\n";
 
