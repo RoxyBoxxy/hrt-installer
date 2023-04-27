@@ -402,13 +402,20 @@ print <<"HEADER";
         background-color: #80ff80;
       }
       tr.unwanted {
-        background-color: #808080;
+        background-color: dimgrey;
       }
       tr.needsreview {
-        background-color: orange;
+        background-color: slategrey;
+      }
+      th, td {
+        padding-left: 5px;
+        padding-right: 5px;
       }
       .noborder {
         border: 0;
+      }
+      a {
+        text-decoration: none;
       }
     </style>
   </head>
@@ -431,7 +438,7 @@ foreach my $bdep (sort @di_bdeps) {
 	my $tv = join '<br/>', sort @{$sourceversions{testing}{$package}{version} || []};
 	my $uv = join '<br/>', sort @{$sourceversions{unstable}{$package}{version} || []};
 	# Common problem: Built-Using on grub2 or grub-efi-*-signed
-	my $color = $package !~ /^grub/ ? "orange" : "crimson";
+	my $color = $package !~ /^grub/ ? "skyblue" : "crimson";
 	$tdstyle = "style=\"color: black; background-color: $color;\""
 		if $tv ne $uv;
 	print "<tr><td>$bdep</td><td>$package</td><td>$version</td><td>$arch</td><td>$source</td><td $tdstyle>$tv</td><td $tdstyle>$uv</td></tr>\n";
@@ -454,7 +461,7 @@ foreach my $package (sort keys %seenpackages) {
 	foreach my $transition (keys %{$transitions{$package}}) {
 		$row .= "<tr class=##CLASS##><td><a href=\"https://tracker.debian.org/pkg/$uri_pkg\">$package</a></td>";
 		if (exists $has_debs{$package} && $has_debs{$package}==1) {
-			$row .= "<td align=\"center\">x</td>";
+			$row .= "<td align=\"center\">✓</td>";
 		} else {
 			$row .= "<td>\&nbsp;</td>";
 		}
@@ -487,9 +494,9 @@ foreach my $package (sort keys %seenpackages) {
 		my $minage = defined($unstable_version)&&defined($ages{$package}{$unstable_version}) ? $ages{$package}{$unstable_version} : 'unknown';
 		$row .= "<td>".$minage."</td>";
 		if (exists $frozen{$package}) {
-			$row .= "<td align=\"center\">yes</td>";
+			$row .= "<td align=\"center\" style=\"color: seagreen\">yes</td>";
 		} else {
-			$row .= "<td align=\"center\"><font color=\"red\">NO</font></td>";
+			$row .= "<td align=\"center\" style=\"color: crimson\">no</td>";
 		}
 
 		$row .= "<td>" . (join('<br>', @{$unstable_version ? $normal_unblocks{"$package/$unstable_version"}||[] : []})) . "</td>";
