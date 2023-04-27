@@ -451,7 +451,7 @@ print "<table><tr align=left><th>source package</th><th>debs</th><th>arches</th>
 foreach my $dist (@dists) {
 	print "<th>$dist</th>";
 }
-print "<th>age (days)</th><th>frozen</th><th>unblock</th><th>unblock-udeb</th><th>age-days</th><th>utils</th><th>commits in git</th></tr>\n";
+print "<th>age (days)</th><th>frozen</th><th>unblock</th><th>unblock-udeb</th><th>age-days</th><th>links</th><th>commits in git</th></tr>\n";
 my $numcols=9 + @dists;
 
 foreach my $package (sort keys %seenpackages) {
@@ -508,9 +508,7 @@ foreach my $package (sort keys %seenpackages) {
 			$class = 'unblocked';
 		}
 
-		$row .= "<td><a href=\"https://qa.debian.org/excuses.php?package=$uri_pkg\">t</a>
-               <a href=\"https://buildd.debian.org/status/package.php?p=$uri_pkg\">b</a>
-               <a href=\"https://tracker.debian.org/pkg/$uri_pkg\">s</a></td>";
+		$row .= "<td><a href=\"https://packages.debian.org/changelog:$uri_pkg\">changelog</a> - <a href=\"https://tracker.debian.org/pkg/$uri_pkg\">tracker</a></td>";
 
 		my $commits = '?';
 		my $gitdir = "../../packages/$package";
