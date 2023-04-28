@@ -176,11 +176,13 @@ foreach my $dist (@dists) {
 			}
 			else {
 				my ($source)=m/Source: (.*)\n/;
+				my $source_version;
 				if (! defined $source) {
 					$source=$package;
 				}
 				else {
 					# Source line can include a version if binNMU'ed
+					($source_version=$source)=~s/^.* [(](.+)[)]$/$1/;
 					$source=~s/ .*$//;
 				}
 
@@ -198,6 +200,10 @@ foreach my $dist (@dists) {
 						push @annotations, {arch => $arch, package => $source, annotation => "has binary NMU in $dist" };
 					}
 					$version =~ s/\+b[1-9]$//
+				}
+				# Signed packages:
+				if ($source_version and $source_version =~ /[+]\d+$/) {
+				    $version = $source_version;
 				}
 				if ($dist eq 'testing' &&
 				    exists $packageversions{$source}{$dist}{$arch} &&
