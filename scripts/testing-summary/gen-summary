@@ -39,6 +39,7 @@ my %has_debs;
 my @annotations;
 my %ages;
 my %sourceversions;
+my %sourcebinaries;
 my @di_bdeps;
 
 sub markup {
@@ -145,6 +146,7 @@ foreach my $dist (@dists) {
 		for my $binary_item (split /, /, $binary) {
 			$sourceversions{$dist}{$binary_item}{source} = $package;
 			push @{$sourceversions{$dist}{$binary_item}{version}}, $version;
+			$sourcebinaries{$dist}{$package}{$binary_item} = 0;
 		}
 		if ($package eq 'debian-installer' and $dist eq 'unstable') {
 			@di_bdeps = split /, /, $bdeps;
@@ -186,7 +188,9 @@ foreach my $dist (@dists) {
 					$source=~s/ .*$//;
 				}
 
-				$has_debs{$source}='?';
+				# Register that binary package as seen (seeing
+				# some udeb on one arch is sufficient):
+				$sourcebinaries{$dist}{$source}{$package} = 1;
 
 				# Check for binNMUs; correct version to source version
 				if ($version =~ /\+b[1-9]$/) {
@@ -432,7 +436,7 @@ print "</table>\n";
 
 print "<h2><a name=\"udebs\">udebs</a></h2>\n";
 
-print "<table><tr align=left><th>source package</th><th>debs</th><th>arches</th>";
+print "<table><tr align=left><th>source package</th><th>debs</th><th>udebs</th><th>arches</th>";
 foreach my $dist (@dists) {
 	print "<th>$dist</th>";
 }
@@ -444,8 +448,15 @@ foreach my $package (sort keys %seenpackages) {
 	my $class='';
 	my $uri_pkg = uri_escape($package);
 	foreach my $transition (keys %{$transitions{$package}}) {
+		# Not sure how relevant debs/udebs presence (and count) is, but
+		# let's just look at unstable:
+		my %binaries = %{$sourcebinaries{unstable}{$package}};
+		my $debs = grep { $binaries{$_} == 0 } keys %binaries;
+		my $udebs = grep { $binaries{$_} == 1 } keys %binaries;
+
 		$row .= "<tr class=##CLASS##><td><a href=\"https://tracker.debian.org/pkg/$uri_pkg\">$package</a></td>";
-		$row .= "<td align=\"center\">$has_debs{$package}</td>";
+		$row .= "<td align=\"center\">$debs</td>";
+		$row .= "<td align=\"center\">$udebs</td>";
 		$row .= "<td>".archname(@{$transitions{$package}{$transition}})."</td>";
 		my $some_arch=@{$transitions{$package}{$transition}}[0];
 		my @vers;
