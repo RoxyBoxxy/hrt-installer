@@ -407,19 +407,34 @@ print <<"HEADER";
         text-decoration: none;
       }
     </style>
+    <script src="/static/jquery.min.js"></script>
+    <script>
+      \$(document).ready(function(){
+        \$(".uninteresting").hide();
+
+        \$('#bdep-toggle').change(function () {
+          if (this.checked) {
+            \$(".uninteresting").show();
+          } else {
+            \$(".uninteresting").hide();
+          }
+        });
+      });
+    </script>
   </head>
   <body>
     <h1>udeb testing summary</h1>
 HEADER
 
 print "<h2><a name=\"build-deps\">d-i build-deps</a></h2>\n";
-print "<p>(taken from unstable's <code>debian-installer</code> source package)</p>\n";
+print "<p>(taken from unstable's <code>debian-installer</code> source package) — ";
+print "<input id=\"bdep-toggle\" type=\"checkbox\"><label for=\"bdep-toggle\">show all build-deps</label></input></p>\n";
 
 print "<table>\n";
 print "<tr><th>Package</th><th>Version</th><th>Architecture</th><th>Source</th><th>Testing</th><th>Unstable</th></tr>\n";
 foreach my $bdep (sort @di_bdeps) {
 	my $package = $bdep;
-	my ($version, $arch, $source, $tdstyle) = ('', '', '', '');
+	my ($version, $arch, $source, $tdstyle, $class) = ('', '', '', '', 'uninteresting');
 	$package =~ s/ .*//;
 	$version = $1 if $bdep =~ /\((.+)\)/;
 	$arch = $1 if $bdep =~ /\[(.+)\]/;
@@ -428,9 +443,11 @@ foreach my $bdep (sort @di_bdeps) {
 	my $uv = join '<br/>', sort @{$sourceversions{unstable}{$package}{version} || []};
 	# Common problem: Built-Using on grub2 or grub-efi-*-signed
 	my $color = $package !~ /^grub/ ? "skyblue" : "crimson";
-	$tdstyle = "style=\"color: black; background-color: $color;\""
-		if $tv ne $uv;
-	print "<tr><td>$package</td><td>$version</td><td>$arch</td><td>$source</td><td $tdstyle>$tv</td><td $tdstyle>$uv</td></tr>\n";
+	if ($tv ne $uv) {
+		$tdstyle = "style=\"color: black; background-color: $color;\"";
+		$class = 'interesting';
+	}
+	print "<tr class=\"$class\"><td>$package</td><td>$version</td><td>$arch</td><td>$source</td><td $tdstyle>$tv</td><td $tdstyle>$uv</td></tr>\n";
 }
 print "</table>\n";
 
