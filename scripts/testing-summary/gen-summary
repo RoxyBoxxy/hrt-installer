@@ -396,6 +396,9 @@ print <<"HEADER";
       tr.needsreview {
         background-color: slategrey;
       }
+      tr.just-migrated {
+        background-color: plum;
+      }
       th, td {
         padding-left: 5px;
         padding-right: 5px;
@@ -515,6 +518,15 @@ foreach my $package (sort keys %seenpackages) {
 		if ((@{$unstable_version ? $normal_unblocks{"$package/$unstable_version"}||[] : []}) &&
 		    @{$unstable_version ? $udeb_unblocks{"$package/$unstable_version"}  ||[] : []}) {
 			$class = 'unblocked';
+		} else {
+			# hints might have gone away after a britney run and hint clean, without
+			# packages being dinstalled just yet; check the DB:
+			my $testing_version = `rmadison -s testing -a source $package`;
+			$testing_version = (split /\s+\|\s+/, $testing_version)[1] || '';
+			# and exclude lvm2 with its usual version discrepancy:
+			if ($testing_version eq $unstable_version and $package ne 'lvm2') {
+				$class = 'just-migrated';
+			}
 		}
 
 		$row .= "<td><a href=\"https://packages.debian.org/changelog:$uri_pkg\">changelog</a> - <a href=\"https://tracker.debian.org/pkg/$uri_pkg\">tracker</a></td>";
