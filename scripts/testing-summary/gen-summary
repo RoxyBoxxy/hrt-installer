@@ -524,7 +524,7 @@ foreach my $package (sort keys %seenpackages) {
 			my $testing_version = `rmadison -s testing -a source $package`;
 			$testing_version = (split /\s+\|\s+/, $testing_version)[1] || '';
 			# and exclude lvm2 with its usual version discrepancy:
-			if ($testing_version eq $unstable_version and $package ne 'lvm2') {
+			if (defined($unstable_version) and $testing_version eq $unstable_version and $package ne 'lvm2') {
 				$class = 'just-migrated';
 			}
 		}
