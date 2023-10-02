@@ -70,10 +70,12 @@ for my $suite (@suites) {
     # For debugging purposes, this sync can be disabled (--nosync):
     if ($sync) {
       system("zcat $arch_dir/Packages.gz > $udeb_file")==0
-        or die "Unable to zcat $arch_dir/Packages.gz";
-      if (-f "$deb_arch_dir/Packages.gz") {
+        or system("xzcat $arch_dir/Packages.xz > $udeb_file")==0
+        or die "Unable to zcat/xzcat $arch_dir/Packages.gz/xz";
+      if (-f "$deb_arch_dir/Packages.gz" or -f "$deb_arch_dir/Packages.xz") {
         system("zcat $deb_arch_dir/Packages.gz > $deb_file")==0
-          or die "Unable to zcat $deb_arch_dir/Packages.gz";
+          or system("xzcat $deb_arch_dir/Packages.xz > $deb_file")==0
+          or die "Unable to zcat/xzcat $deb_arch_dir/Packages.gz/xz";
 
         # Prepare for adding a few deb packages in there; during the
         # build, that only happens when the package pops up through
