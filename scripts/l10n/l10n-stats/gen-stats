@@ -248,7 +248,7 @@ if [ "$FETCH" ]; then
 	mkdir $TEMPDIR
 	cd $TEMPDIR
 
-	apt-get $APT_OPT update >/dev/null
+	apt-get $APT_OPT update --allow-releaseinfo-change >/dev/null
 	for dist in testing unstable ; do #####  removed cvs here. There is no need to apt-get sources for vcs sources here. That is done by the l10n/config/packages.vcs.commandsX scripts.
 		date -u >> $TARGET_DIR/packages-list-$dist
 #		echo -n "  $dist:	"
