@@ -532,8 +532,8 @@ for i in $LEVELS; do
 	sed -i 's/charset=UTF-8/charset=CHARSET/g' $pot_sublevel.new
 
 	# If the only change is the POT-Creation-Date, then ignore it
-	oldfiltered=`tempfile`
-	newfiltered=`tempfile`
+	oldfiltered=`mktemp`
+	newfiltered=`mktemp`
 	filter="^\"POT-Creation-Date:"
 	egrep -v "$filter" $pot_sublevel >$oldfiltered
 	egrep -v "$filter" $pot_sublevel.new >$newfiltered
@@ -714,8 +714,8 @@ EOF
 				# using a carefully crafted regexp.
 				# Comment lines (^\#.*$) are filtered, EXCEPT for
 				# the fuzzy markers (^\#,.*$).
-				oldfiltered=`tempfile`
-				newfiltered=`tempfile`
+				oldfiltered=`mktemp`
+				newfiltered=`mktemp`
 				filter="^(\"(PO-Revision-Date|Project-Id-Version|Report-Msgid-Bugs-To|POT-Creation-Date|Last-Translator|Language-Team|Language|Plural-Forms|MIME-Version|Content-Type|Content-Transfer-Encoding|X-.*):|#[^,]|#$)"
 				msgattrib --width=500 $lang.po | egrep -v "$filter" >$oldfiltered
 				msgattrib --width=500 $lang.po.new | egrep -v "$filter" >$newfiltered

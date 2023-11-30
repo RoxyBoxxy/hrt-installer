@@ -192,7 +192,7 @@ fi
     fi
 
 if [ ${DICT} != "null" ] ; then
-	EXTRADICT=`tempfile`
+	EXTRADICT=`mktemp`
 	cat ${WLS_PATH}/${LANG}_wl.txt  ${WLS_PATH}/di_common_wl.txt 2>/dev/null | \
 		grep -E -v "^#.*" | \
 		grep -v -E "^$" | \
