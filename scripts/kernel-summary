@@ -166,7 +166,14 @@ foreach my $dist (qw(testing unstable experimental)) {
     chomp $line;
     my ($package, $version, $dist, $archs) = split /\s*[|]\s*/, $line;
     $package =~ s/\s*linux-image-//;
-    (my $abi = $package) =~ s/(-(?:rc\d+|\d+|trunk))-.*/$1/;
+    my $abi;
+    if ($dist ne 'testing') {
+      ($abi = $package) =~ s/^(\d+\.\d+\.\d+)-.*/$1/;
+    }
+    else {
+      ($abi = $package) =~ s/(-(?:rc\d+|\d+|trunk))-.*/$1/;
+    }
+
     my $flavour = substr $package, 1+length($abi);
     #print STDERR "$abi; $package; $version; $dist; $archs\n";
     foreach my $arch (split /,\s*/, $archs) {
