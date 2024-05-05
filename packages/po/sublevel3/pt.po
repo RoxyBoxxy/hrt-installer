@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: debian-installer\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-05-04 20:03+0000\n"
-"PO-Revision-Date: 2023-08-27 16:14+0100\n"
+"PO-Revision-Date: 2024-05-05 16:21+0100\n"
 "Last-Translator:  Miguel Figueiredo <elmig@debianpt.org>\n"
 "Language-Team:  Portuguese <traduz@debianpt.org>\n"
 "Language: pt\n"
@@ -446,7 +446,6 @@ msgstr "Tipo de letra para a consola:"
 #. relatively short.
 #. :sl3:
 #: ../console-setup.templates:6001
-#, fuzzy
 #| msgid ""
 #| "\"VGA\" has a traditional appearance and has medium coverage of "
 #| "international scripts. \"Fixed\" has a simplistic appearance and has "
@@ -464,7 +463,7 @@ msgstr ""
 "internacionais. \"Fixed\" tem uma aparência simplista mas melhor suporte "
 "para alfabetos internacionais. \"Terminus\" pode ajudar a reduzir a fadiga "
 "ocular, embora alguns símbolos tenham aspecto semelhante, o que pode ser um "
-"problema para programadores."
+"problema para programadores. \"DejaVu\" é adequado para ecrãs com HiDPI."
 
 #. Type: select
 #. Description
@@ -3273,6 +3272,8 @@ msgstr "Device-mapper (dm-crypt)"
 msgid ""
 "Firmware-backed self-encrypting disk (vendor-implemented OPAL with LUKS2)"
 msgstr ""
+"Disco com auto-encriptação através de firmware (OPAL implementado pelo "
+"fabricante com LUKS2)"
 
 #. Type: text
 #. Description
@@ -3429,7 +3430,7 @@ msgstr ""
 #. :sl3:
 #: ../partman-crypto.templates:19001 ../partman-crypto.templates:20001
 msgid "OPAL self-encryption nested with dm-crypt:"
-msgstr ""
+msgstr "Auto-encriptação OPAL encaixada com dm-crypt:"
 
 #. Type: select
 #. Description
@@ -3440,6 +3441,9 @@ msgid ""
 "enabled via this option, will be used together with dm-crypt to provide a "
 "double layer of encryption."
 msgstr ""
+"Alguns discos suportam auto-encriptação. Isto é uma funcionalidade de "
+"hardware que, se for habilitada através desta opção, será utilizada em "
+"conjunto com dm-crypt para disponibilizar uma dupla camada de encriptação."
 
 #. Type: text
 #. Description
@@ -3462,7 +3466,7 @@ msgstr "Apagar dados nesta partição"
 #. :sl3:
 #: ../partman-crypto.templates:25001
 msgid "Factory reset this entire disk (ALL data will be lost)"
-msgstr ""
+msgstr "Reset de fábrica a este disco completo (TODOS os dados serão perdidos)"
 
 #. Type: boolean
 #. Description
@@ -3959,7 +3963,7 @@ msgstr ""
 #. :sl3:
 #: ../partman-crypto.templates:55001
 msgid "OPAL admin password:"
-msgstr ""
+msgstr "Palavra-passe de admin OPAL:"
 
 #. Type: password
 #. Description
@@ -3969,6 +3973,8 @@ msgid ""
 "You need to choose a new, or provide the existing, OPAL admin password for "
 "${DEVICE}."
 msgstr ""
+"Tem de escolher uma palavra-passe de OPAL admin nova, ou indicar a existente, "
+"para ${DISPOSITIVO}."
 
 #. Type: password
 #. Description
@@ -3980,21 +3986,23 @@ msgid ""
 "will need to be factory reset to be recovered, losing all data from all "
 "partitions."
 msgstr ""
+"Esta palavra-passa será utilizada para gerir todo o dispositivo - acrescentar "
+"novas partições OPAL, removê-las e apagá-las. Se esta palavra-passe for "
+"perdida, tem de ser feito reset de fábrica ao dispositivo para o recuperar, "
+"perdendo todos os dados de todas as partições."
 
 #. Type: password
 #. Description
 #. :sl3:
 #: ../partman-crypto.templates:56001
-#, fuzzy
 #| msgid "Re-enter password to verify:"
 msgid "Re-enter OPAL admin password to verify:"
-msgstr "Introduza novamente a password para verificação:"
+msgstr "Introduza novamente a palavra-passe de admin OPAL para verificação:"
 
 #. Type: password
 #. Description
 #. :sl3:
 #: ../partman-crypto.templates:56001
-#, fuzzy
 #| msgid ""
 #| "Please enter the same root password again to verify that you have typed "
 #| "it correctly."
@@ -4002,15 +4010,15 @@ msgid ""
 "Please enter the same password again to verify that you have typed it "
 "correctly."
 msgstr ""
-"Por favor introduza novamente a mesma palavra-passe de root para verificar "
-"se a introduziu correctamente."
+"Por favor introduza novamente a mesma palavra-passe para verificar se a "
+"introduziu corretamente."
 
 #. Type: password
 #. Description
 #. :sl3:
 #: ../partman-crypto.templates:59001
 msgid "OPAL PSID:"
-msgstr ""
+msgstr "OPAL PSID:"
 
 #. Type: password
 #. Description
@@ -4020,48 +4028,45 @@ msgid ""
 "You need to provide the OPAL PSID for ${DEVICE}. This is typically found on "
 "the drive's label."
 msgstr ""
+"Necessita disponibilizar o OPAL PSID para {$DEVICE}. Isto é encontrado "
+"normalmente na etiqueta do disco."
 
 #. Type: password
 #. Description
 #. :sl3:
 #: ../partman-crypto.templates:60001
-#, fuzzy
 #| msgid "Re-enter password to verify:"
 msgid "Re-enter OPAL PSID to verify:"
-msgstr "Introduza novamente a password para verificação:"
+msgstr "Introduza novamente o OPAL PSID para verificação:"
 
 #. Type: password
 #. Description
 #. :sl3:
 #: ../partman-crypto.templates:60001
-#, fuzzy
 #| msgid ""
 #| "Please enter the same passphrase again to verify that you have typed it "
 #| "correctly."
 msgid ""
 "Please enter the same PSID again to verify that you have typed it correctly."
 msgstr ""
-"Por favor introduza a mesma frase-chave para verificar que você a escreveu "
-"correctamente."
+"Por favor introduza novamente o mesmo PSID para verificar se o escreveu "
+"corretamente."
 
 #. Type: error
 #. Description
 #. :sl3:
 #: ../partman-crypto.templates:61001
-#, fuzzy
 #| msgid "Password input error"
 msgid "OPAL PSID input error"
-msgstr "Erro na introdução da palavra-passe"
+msgstr "Erro na introdução de OPAL PSID"
 
 #. Type: error
 #. Description
 #. :sl3:
 #: ../partman-crypto.templates:61001
-#, fuzzy
 #| msgid "The two passwords you entered were not the same. Please try again."
 msgid "The two OPAL PSIDs you entered were not the same. Please try again."
-msgstr ""
-"As duas palavra-passe que você introduziu não são iguais. Por favor, tente "
+msgstr "Os dois OPAL PSIDs que introduziu não são iguais. Por favor, tente "
 "novamente."
 
 #. Type: error
@@ -4069,13 +4074,12 @@ msgstr ""
 #. :sl3:
 #: ../partman-crypto.templates:62001
 msgid "Empty OPAL PSID"
-msgstr ""
+msgstr "OPAL PSID vazio"
 
 #. Type: error
 #. Description
 #. :sl3:
 #: ../partman-crypto.templates:62001
-#, fuzzy
 #| msgid ""
 #| "You entered an empty password, which is not allowed. Please choose a non-"
 #| "empty password."
@@ -4083,8 +4087,7 @@ msgid ""
 "You entered an empty PSID, which is not allowed. Please provide a non-empty "
 "PSID."
 msgstr ""
-"Introduziu uma palavra-passe vazia, o que não é permitido. Por favor escolha "
-"uma palavra-passe não-vazia."
+"Introduziu um PSID vazio, o que não é permitido. Por favor forneça um PSID não-vazio."
 
 #. Type: entropy
 #. Description
