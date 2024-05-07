@@ -15,7 +15,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: debian-installer\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-05-04 20:03+0000\n"
+"POT-Creation-Date: 2024-05-07 20:02+0000\n"
 "PO-Revision-Date: 2023-09-06 15:06+0000\n"
 "Last-Translator: Boyuan Yang <073plan@gmail.com>\n"
 "Language-Team: <debian-l10n-chinese@lists.debian.org>\n"
@@ -3891,24 +3891,29 @@ msgstr "创建密钥文件失败"
 msgid "An error occurred while creating the keyfile."
 msgstr "在创建密钥文件时出现一个错误。"
 
-#. Type: error
-#. Description
-#. :sl3:
-#. Type: error
-#. Description
-#. :sl3:
-#: ../partman-crypto.templates:66001 ../partman-crypto.templates:67001
-msgid "Encryption configuration failure"
-msgstr "配置加密失败"
-
-#. Type: error
+#. Type: boolean
 #. Description
 #. :sl3:
 #: ../partman-crypto.templates:66001
+#, fuzzy
+#| msgid "btrfs root file system not supported without separate /boot"
+msgid "Configure encryption without separate /boot?"
+msgstr "不支持在不使用单独的 /boot 的情况下，使用 btrfs 作为根文件系统"
+
+#. Type: boolean
+#. Description
+#. :sl3:
+#: ../partman-crypto.templates:66001
+#, fuzzy
+#| msgid ""
+#| "You have selected the root file system to be stored on an encrypted "
+#| "partition. This feature requires a separate /boot partition on which the "
+#| "kernel and initrd can be stored."
 msgid ""
 "You have selected the root file system to be stored on an encrypted "
-"partition. This feature requires a separate /boot partition on which the "
-"kernel and initrd can be stored."
+"partition. When using GRUB, usually this feature requires a separate /boot "
+"partition on which the kernel and initrd can be stored. This is not required "
+"when using systemd-boot/UKIs, as the ESP is used instead."
 msgstr ""
 "您选择了将根文件系统放在一个加密分区上。此功能需要一个用来存放内核和 initrd "
 "的单独 /boot 分区。"
@@ -3916,9 +3921,9 @@ msgstr ""
 #. Type: error
 #. Description
 #. :sl3:
-#: ../partman-crypto.templates:66001
-msgid "You should go back and setup a /boot partition."
-msgstr "您应当返回并设置一个 /boot 分区。"
+#: ../partman-crypto.templates:67001
+msgid "Encryption configuration failure"
+msgstr "配置加密失败"
 
 #. Type: error
 #. Description

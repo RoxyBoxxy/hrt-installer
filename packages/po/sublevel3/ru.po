@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ru\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-05-04 20:03+0000\n"
+"POT-Creation-Date: 2024-05-07 20:02+0000\n"
 "PO-Revision-Date: 2020-11-16 06:47+0300\n"
 "Last-Translator: Yuri Kozlov <yuray@komyakino.ru>\n"
 "Language-Team: Russian <debian-l10n-russian@lists.debian.org>\n"
@@ -4059,24 +4059,29 @@ msgstr "Не удалось создать файл ключа"
 msgid "An error occurred while creating the keyfile."
 msgstr "Произошла ошибка при создании файла ключа."
 
-#. Type: error
-#. Description
-#. :sl3:
-#. Type: error
-#. Description
-#. :sl3:
-#: ../partman-crypto.templates:66001 ../partman-crypto.templates:67001
-msgid "Encryption configuration failure"
-msgstr "Отказ настройки шифрования"
-
-#. Type: error
+#. Type: boolean
 #. Description
 #. :sl3:
 #: ../partman-crypto.templates:66001
+#, fuzzy
+#| msgid "btrfs root file system not supported without separate /boot"
+msgid "Configure encryption without separate /boot?"
+msgstr "Корневая файловая система btrfs не поддерживается без отдельного /boot"
+
+#. Type: boolean
+#. Description
+#. :sl3:
+#: ../partman-crypto.templates:66001
+#, fuzzy
+#| msgid ""
+#| "You have selected the root file system to be stored on an encrypted "
+#| "partition. This feature requires a separate /boot partition on which the "
+#| "kernel and initrd can be stored."
 msgid ""
 "You have selected the root file system to be stored on an encrypted "
-"partition. This feature requires a separate /boot partition on which the "
-"kernel and initrd can be stored."
+"partition. When using GRUB, usually this feature requires a separate /boot "
+"partition on which the kernel and initrd can be stored. This is not required "
+"when using systemd-boot/UKIs, as the ESP is used instead."
 msgstr ""
 "Вы указали, что корневая файловая система будет располагаться на шифрованном "
 "разделе. Для этого требуется отдельный раздел /boot, на котором можно было "
@@ -4085,9 +4090,9 @@ msgstr ""
 #. Type: error
 #. Description
 #. :sl3:
-#: ../partman-crypto.templates:66001
-msgid "You should go back and setup a /boot partition."
-msgstr "Вы должны вернуться назад и настроить раздел /boot."
+#: ../partman-crypto.templates:67001
+msgid "Encryption configuration failure"
+msgstr "Отказ настройки шифрования"
 
 #. Type: error
 #. Description

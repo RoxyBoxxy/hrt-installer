@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: debian-installer\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-05-04 20:03+0000\n"
+"POT-Creation-Date: 2024-05-07 20:02+0000\n"
 "PO-Revision-Date: 2023-08-30 22:32+0200\n"
 "Last-Translator: Holger Wansing <hwansing@mailbox.org>\n"
 "Language-Team: German <debian-l10n-german@lists.debian.org>\n"
@@ -4174,24 +4174,29 @@ msgstr "Schlüsseldateierstellung fehlgeschlagen"
 msgid "An error occurred while creating the keyfile."
 msgstr "Es trat ein Fehler beim Erzeugen der Schlüsseldatei auf."
 
-#. Type: error
-#. Description
-#. :sl3:
-#. Type: error
-#. Description
-#. :sl3:
-#: ../partman-crypto.templates:66001 ../partman-crypto.templates:67001
-msgid "Encryption configuration failure"
-msgstr "Verschlüsselungskonfiguration fehlgeschlagen"
-
-#. Type: error
+#. Type: boolean
 #. Description
 #. :sl3:
 #: ../partman-crypto.templates:66001
+#, fuzzy
+#| msgid "btrfs root file system not supported without separate /boot"
+msgid "Configure encryption without separate /boot?"
+msgstr "btrfs-Root-Dateisystem ohne separate /boot-Partition nicht unterstützt"
+
+#. Type: boolean
+#. Description
+#. :sl3:
+#: ../partman-crypto.templates:66001
+#, fuzzy
+#| msgid ""
+#| "You have selected the root file system to be stored on an encrypted "
+#| "partition. This feature requires a separate /boot partition on which the "
+#| "kernel and initrd can be stored."
 msgid ""
 "You have selected the root file system to be stored on an encrypted "
-"partition. This feature requires a separate /boot partition on which the "
-"kernel and initrd can be stored."
+"partition. When using GRUB, usually this feature requires a separate /boot "
+"partition on which the kernel and initrd can be stored. This is not required "
+"when using systemd-boot/UKIs, as the ESP is used instead."
 msgstr ""
 "Sie haben gewählt, dass das Root-Dateisystem auf einer verschlüsselten "
 "Partition abgelegt werden soll. Dieses Merkmal erfordert eine separate /boot-"
@@ -4200,9 +4205,9 @@ msgstr ""
 #. Type: error
 #. Description
 #. :sl3:
-#: ../partman-crypto.templates:66001
-msgid "You should go back and setup a /boot partition."
-msgstr "Sie sollten zurückgehen und eine /boot-Partition einrichten."
+#: ../partman-crypto.templates:67001
+msgid "Encryption configuration failure"
+msgstr "Verschlüsselungskonfiguration fehlgeschlagen"
 
 #. Type: error
 #. Description
