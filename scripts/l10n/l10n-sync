@@ -447,7 +447,7 @@ if [ "$UPDATEPO" = "Y" ]; then
 				git status >>$COMMITLOGFILE
 				echo "" >>$COMMITLOGFILE
 				git commit -uno -m "$COMMIT_MARKER Update templates.pot (from l10n-sync run at dillon)"
-				git push
+				git push || giterr
 				log ""
 			fi
 		fi
@@ -675,7 +675,7 @@ if [ "$COMMIT" = "Y" ] ; then
 		git status >>$COMMITLOGFILE
 		echo "" >>$COMMITLOGFILE
 		git commit -uno -m "$COMMIT_MARKER Updated packages/po/* against package templates (from l10n-sync run at dillon)"
-		git push
+		git push || gitpoerr
 	fi
 fi
 log ""
@@ -757,7 +757,7 @@ EOF
 				git status >>$COMMITLOGFILE
 				echo "" >>$COMMITLOGFILE
 				git commit -uno -m "$COMMIT_MARKER Commit changed/added po files (from l10n-sync run at dillon)"
-				git push
+				git push || giterr
 				log ""
 			fi
 		fi
