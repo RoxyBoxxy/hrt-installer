@@ -9,7 +9,7 @@
 # Copyright (C) 2006, Matthias Julius
 # Copyright (C) 2007-2009 Helge Kreutzmann
 # Holger Wansing <hwansing@mailbox.org>, 2019, 2020.
-# Holger Wansing <linux@wansing-online.de>, 2008, 2009, 2010, 2011, 2014, 2015, 2017, 2018, 2023.
+# Holger Wansing <linux@wansing-online.de>, 2008, 2009, 2010, 2011, 2014, 2015, 2017, 2018, 2023, 2024.
 # Jens Seidel <jensseidel@users.sf.net>, 2005, 2006, 2007, 2008.
 # Dennis Stampfer <seppy@debian.org>, 2003, 2004, 2005.
 # Alwin Meschede <ameschede@gmx.de>, 2003, 2004.
@@ -21,7 +21,7 @@ msgstr ""
 "Project-Id-Version: debian-installer\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-05-07 20:02+0000\n"
-"PO-Revision-Date: 2023-08-30 22:32+0200\n"
+"PO-Revision-Date: 2024-05-27 22:44+0200\n"
 "Last-Translator: Holger Wansing <hwansing@mailbox.org>\n"
 "Language-Team: German <debian-l10n-german@lists.debian.org>\n"
 "Language: de\n"
@@ -29,7 +29,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Lokalize 20.12.0\n"
+"X-Generator: Lokalize 22.12.3\n"
 
 #. Type: boolean
 #. Description
@@ -461,13 +461,6 @@ msgstr "Schriftart für die Konsole:"
 #. relatively short.
 #. :sl3:
 #: ../console-setup.templates:6001
-#, fuzzy
-#| msgid ""
-#| "\"VGA\" has a traditional appearance and has medium coverage of "
-#| "international scripts. \"Fixed\" has a simplistic appearance and has "
-#| "better coverage of international scripts. \"Terminus\" may help to reduce "
-#| "eye fatigue, though some symbols have a similar aspect which may be a "
-#| "problem for programmers."
 msgid ""
 "\"VGA\" has a traditional appearance and has medium coverage of "
 "international scripts. \"Fixed\" has a simplistic appearance and has better "
@@ -475,11 +468,12 @@ msgid ""
 "fatigue, though some symbols have a similar aspect which may be a problem "
 "for programmers. \"DejaVu\" is suited to screens with HiDPI."
 msgstr ""
-"»VGA« sieht traditionell aus und hat eine mittlere Abdeckung von "
-"internationalen Schriften. »Fixed« hat ein einfaches Aussehen und eine "
+"»VGA« sieht traditionell aus und hat eine mittelmäßige Abdeckung "
+"internationaler Schriften. »Fixed« hat ein einfaches Aussehen und eine "
 "bessere Abdeckung von internationalen Schriften; »Terminus« kann dabei "
 "helfen, die Ermüdung der Augen zu reduzieren. Allerdings haben manche "
-"Symbole ein ähnliches Aussehen, was ein Problem für Programmierer sein kann."
+"Symbole ein ähnliches Aussehen, was ein Problem für Programmierer sein kann. "
+"»DejaVu« ist passend für Bildschirme mit HiDPI-Auflösung."
 
 #. Type: select
 #. Description
@@ -3324,6 +3318,8 @@ msgstr "Device-mapper (dm-crypt)"
 msgid ""
 "Firmware-backed self-encrypting disk (vendor-implemented OPAL with LUKS2)"
 msgstr ""
+"Firmware-basierte selbst-verschlüsselnde Disk (hersteller-implementiertes"
+" OPAL mit LUKS2)"
 
 #. Type: text
 #. Description
@@ -3482,7 +3478,7 @@ msgstr ""
 #. :sl3:
 #: ../partman-crypto.templates:19001 ../partman-crypto.templates:20001
 msgid "OPAL self-encryption nested with dm-crypt:"
-msgstr ""
+msgstr "OPAL-basierte Selbstverschlüsselung mit dm-crypt:"
 
 #. Type: select
 #. Description
@@ -3493,6 +3489,10 @@ msgid ""
 "enabled via this option, will be used together with dm-crypt to provide a "
 "double layer of encryption."
 msgstr ""
+"Einige Laufwerke unterstützen Selbstverschlüsselung. Dies ist eine "
+"Hardware-Funktionalität, die - wenn über diese Option aktiviert - zusammen"
+" mit "
+"dm-crypt verwendet wird, um eine zweischichtige Verschlüsselung einzurichten."
 
 #. Type: text
 #. Description
@@ -3515,7 +3515,7 @@ msgstr "Löschen von Daten auf dieser Partition"
 #. :sl3:
 #: ../partman-crypto.templates:25001
 msgid "Factory reset this entire disk (ALL data will be lost)"
-msgstr ""
+msgstr "Diese Disk auf Werkszustand zurücksetzen (ALLE Daten werden gelöscht)"
 
 #. Type: boolean
 #. Description
@@ -4026,7 +4026,7 @@ msgstr ""
 #. :sl3:
 #: ../partman-crypto.templates:55001
 msgid "OPAL admin password:"
-msgstr ""
+msgstr "OPAL-Admin-Passwort:"
 
 #. Type: password
 #. Description
@@ -4036,6 +4036,9 @@ msgid ""
 "You need to choose a new, or provide the existing, OPAL admin password for "
 "${DEVICE}."
 msgstr ""
+"Sie müssen entweder ein neues, oder das bereits vorhandene"
+" OPAL-Admin-Passwort "
+"für ${DEVICE} eingeben."
 
 #. Type: password
 #. Description
@@ -4047,29 +4050,28 @@ msgid ""
 "will need to be factory reset to be recovered, losing all data from all "
 "partitions."
 msgstr ""
+"Das Passwort wird verwendet, um die vollständige Festplatte zu verwalten -"
+" neue "
+"OPAL-Partitionen hinzufügen, entfernen oder löschen. Wenn Sie dieses Passwort "
+"verlieren, müssen Sie die Disk auf den Werkszustand zurücksetzen, um sie wieder "
+"verwenden zu können. Dabei verlieren Sie alle Daten auf allen Partitionen."
 
 #. Type: password
 #. Description
 #. :sl3:
 #: ../partman-crypto.templates:56001
-#, fuzzy
-#| msgid "Re-enter password to verify:"
 msgid "Re-enter OPAL admin password to verify:"
-msgstr "Bitte geben Sie das Passwort zur Bestätigung nochmals ein:"
+msgstr "Bitte geben Sie das OPAL-Admin-Passwort zur Bestätigung nochmals ein:"
 
 #. Type: password
 #. Description
 #. :sl3:
 #: ../partman-crypto.templates:56001
-#, fuzzy
-#| msgid ""
-#| "Please enter the same root password again to verify that you have typed "
-#| "it correctly."
 msgid ""
 "Please enter the same password again to verify that you have typed it "
 "correctly."
 msgstr ""
-"Bitte geben Sie dasselbe root-Passwort nochmals ein, um sicherzustellen, "
+"Bitte geben Sie dasselbe Passwort nochmals ein, um sicherzustellen, "
 "dass Sie sich nicht vertippt haben."
 
 #. Type: password
@@ -4077,7 +4079,7 @@ msgstr ""
 #. :sl3:
 #: ../partman-crypto.templates:59001
 msgid "OPAL PSID:"
-msgstr ""
+msgstr "OPAL PSID:"
 
 #. Type: password
 #. Description
@@ -4087,48 +4089,41 @@ msgid ""
 "You need to provide the OPAL PSID for ${DEVICE}. This is typically found on "
 "the drive's label."
 msgstr ""
+"Sie müssen die OPAL PSID für ${DEVICE} eingeben. Diese finden Sie für"
+" gewöhnlich "
+"auf dem Aufkleber auf der Disk."
 
 #. Type: password
 #. Description
 #. :sl3:
 #: ../partman-crypto.templates:60001
-#, fuzzy
-#| msgid "Re-enter password to verify:"
 msgid "Re-enter OPAL PSID to verify:"
-msgstr "Bitte geben Sie das Passwort zur Bestätigung nochmals ein:"
+msgstr "Bitte geben Sie die OPAL PSID zur Bestätigung nochmals ein:"
 
 #. Type: password
 #. Description
 #. :sl3:
 #: ../partman-crypto.templates:60001
-#, fuzzy
-#| msgid ""
-#| "Please enter the same passphrase again to verify that you have typed it "
-#| "correctly."
 msgid ""
 "Please enter the same PSID again to verify that you have typed it correctly."
 msgstr ""
-"Bitte geben Sie dieselbe Passphrase noch einmal ein, um sicherzustellen, "
+"Bitte geben Sie dieselbe PSID noch einmal ein, um sicherzustellen, "
 "dass Sie sich nicht vertippt haben."
 
 #. Type: error
 #. Description
 #. :sl3:
 #: ../partman-crypto.templates:61001
-#, fuzzy
-#| msgid "Password input error"
 msgid "OPAL PSID input error"
-msgstr "Passworteingabefehler"
+msgstr "Fehler bei der Eingabe der OPAL PSID"
 
 #. Type: error
 #. Description
 #. :sl3:
 #: ../partman-crypto.templates:61001
-#, fuzzy
-#| msgid "The two passwords you entered were not the same. Please try again."
 msgid "The two OPAL PSIDs you entered were not the same. Please try again."
 msgstr ""
-"Die beiden Passwörter, die Sie eingegeben haben, sind nicht identisch. Bitte "
+"Die beiden OPAL PSIDs, die Sie eingegeben haben, sind nicht identisch. Bitte "
 "versuchen Sie es noch einmal."
 
 #. Type: error
@@ -4136,22 +4131,18 @@ msgstr ""
 #. :sl3:
 #: ../partman-crypto.templates:62001
 msgid "Empty OPAL PSID"
-msgstr ""
+msgstr "Leere OPAL PSID"
 
 #. Type: error
 #. Description
 #. :sl3:
 #: ../partman-crypto.templates:62001
-#, fuzzy
-#| msgid ""
-#| "You entered an empty password, which is not allowed. Please choose a non-"
-#| "empty password."
 msgid ""
 "You entered an empty PSID, which is not allowed. Please provide a non-empty "
 "PSID."
 msgstr ""
-"Sie haben ein leeres Passwort bzw. kein Passwort eingegeben, was nicht "
-"erlaubt ist. Bitte geben Sie ein Passwort ein."
+"Sie haben eine leere OPAL PSID eingegeben, was nicht "
+"erlaubt ist. Bitte geben Sie die PSID ein."
 
 #. Type: entropy
 #. Description
@@ -4178,20 +4169,13 @@ msgstr "Es trat ein Fehler beim Erzeugen der Schlüsseldatei auf."
 #. Description
 #. :sl3:
 #: ../partman-crypto.templates:66001
-#, fuzzy
-#| msgid "btrfs root file system not supported without separate /boot"
 msgid "Configure encryption without separate /boot?"
-msgstr "btrfs-Root-Dateisystem ohne separate /boot-Partition nicht unterstützt"
+msgstr "Verschlüsselung ohne separate /boot-Partition einrichten?"
 
 #. Type: boolean
 #. Description
 #. :sl3:
 #: ../partman-crypto.templates:66001
-#, fuzzy
-#| msgid ""
-#| "You have selected the root file system to be stored on an encrypted "
-#| "partition. This feature requires a separate /boot partition on which the "
-#| "kernel and initrd can be stored."
 msgid ""
 "You have selected the root file system to be stored on an encrypted "
 "partition. When using GRUB, usually this feature requires a separate /boot "
@@ -4199,8 +4183,13 @@ msgid ""
 "when using systemd-boot/UKIs, as the ESP is used instead."
 msgstr ""
 "Sie haben gewählt, dass das Root-Dateisystem auf einer verschlüsselten "
-"Partition abgelegt werden soll. Dieses Merkmal erfordert eine separate /boot-"
-"Partition, auf die der Kernel und die initrd gespeichert werden können."
+"Partition abgelegt werden soll. Wenn GRUB verwendet wird, erfordert dieses"
+" Merkmal "
+"für gewöhnlich eine separate /boot-Partition, auf die der Kernel und die"
+" initrd gespeichert "
+"werden können. Dies ist nicht erforderlich, wenn systemd-boot/UKIs genutzt"
+" wird, "
+"weil dabei stattdessen die ESP zum Einsatz kommt."
 
 #. Type: error
 #. Description
